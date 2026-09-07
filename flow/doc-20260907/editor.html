@@ -1,0 +1,52 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>文档 · 编辑</title>
+<style>
+:root{--ink:#333;--ink3:#999;--line:#e6e6e6;--cs-primary:#4857e2;--font:"PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:#f5f5f7;color:var(--ink);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased}body{display:inline-block;vertical-align:top;min-width:0}
+.wrap{padding:24px}
+.doc{width:920px;background:#fff;border-radius:8px;box-shadow:0 0 10px rgba(0,0,0,.05);padding:32px 60px;display:flex;flex-direction:column;gap:18px;position:relative}
+.hd{display:flex;flex-direction:column;gap:4px;border-bottom:1px solid var(--line)}.hd h1{margin:0 0 8px;font-size:24px;font-weight:600;line-height:normal}
+.meta{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}.meta .l{display:flex;align-items:center;gap:16px;color:var(--ink3);font-size:14px}.meta .who{display:flex;align-items:center;gap:4px}.meta .who img{width:14px;height:14px;border-radius:50%;display:block}.meta .who small{font-size:10px}.meta .sep{width:1px;height:14px;background:var(--line)}
+.meta .r{display:flex;align-items:center;gap:16px;color:var(--ink3);font-size:14px}.meta .r span{display:flex;align-items:center;gap:4px;height:20px;cursor:pointer}.meta .r img{display:block}.meta .r span:hover{color:var(--cs-primary)}
+.body{display:flex;flex-direction:column;gap:32px}
+.sec{display:flex;flex-direction:column;gap:8px;padding:0 4px;position:relative}.sec.sub{gap:24px}.sec.sub .blk{display:flex;flex-direction:column;gap:8px}
+.sec h2{margin:0;font-size:24px;font-weight:600;line-height:normal}.sec h3{margin:0;font-size:20px;font-weight:600;line-height:normal}
+.sec p{margin:0;font-size:16px;line-height:normal;outline:none}.sec p:focus{background:#fafaff}
+.fold{position:absolute;left:-16px;top:10px;width:14px;height:14px;border:0;background:none;padding:0;cursor:pointer;transition:transform .2s}.fold img{width:14px;height:14px;display:block;transform:rotate(90deg)}.sec.closed .fold img{transform:none}.sec.closed>p,.sec.closed>.blk{display:none}.blk.sec.closed>p{display:none}
+.cm{position:absolute;right:-32px;top:44px;width:16px;height:16px;cursor:pointer}.cm img{position:absolute;inset:-46.88%;width:auto;height:auto}.cm .n{position:absolute;inset:0;font-size:12px;color:#fff;text-align:center;line-height:16px;font-weight:500}
+.cm img.badge{inset:0;width:16px;height:16px}
+.pop{position:absolute;right:-300px;top:36px;width:252px;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.08);padding:12px;font-size:13px;display:none;z-index:3}.pop.on{display:block}.pop b{display:block;font-size:12px;color:var(--ink3);margin-bottom:4px;font-weight:400}.pop .c{margin-bottom:8px}.pop input{width:100%;border:1px solid var(--line);border-radius:6px;padding:6px 8px;font:13px var(--font);outline:none}.pop input:focus{border-color:var(--cs-primary)}
+.ul{position:absolute;left:433px;top:88px;width:128px;border-top:1px solid var(--cs-primary)}
+.cur{position:absolute;width:20px;height:20px;pointer-events:none;transition:left 1.6s cubic-bezier(.4,.1,.2,1),top 1.6s cubic-bezier(.4,.1,.2,1);z-index:2}.cur img{width:20px;height:20px;display:block}.cur i{position:absolute;left:16px;top:16px;font-style:normal;font-size:10px;background:#4857e2;color:#fff;padding:1px 5px;border-radius:3px;white-space:nowrap}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0b0b10;color:#fff;font-size:13px;padding:8px 14px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none}.toast.on{opacity:1}
+</style></head><body>
+<div class="wrap"><div class="doc" id="doc">
+  <div class="hd"><h1>会议纪要</h1>
+    <div class="meta"><div class="l"><span class="who"><img src="assets/img74.png" alt="">张静远 <small>UI设计/设计部</small></span><span class="sep"></span><span>今日 13：23 创建</span></div>
+      <div class="r"><span title="收藏"><img src="assets/img.svg" width="14" height="14" alt="">32</span><span title="关注"><img src="assets/imgGroup1000006632.svg" width="14" height="14" alt="">32</span><span title="点赞"><img src="assets/img31.svg" width="12" height="12" alt="">32</span><span title="评论"><img src="assets/imgMessageTyping.svg" width="12" height="12" alt="">203</span><span title="浏览"><img src="assets/imgEyeOpen.svg" width="12" height="12" alt="">152</span></div></div>
+  </div>
+  <div class="body">
+    <div class="sec"><button class="fold"><img src="assets/imgChevronRight.svg" alt=""></button><h2 contenteditable="true">1.文档库改版方向</h2><p contenteditable="true">市场对于人工智能的应用场景已经有非常多的想象和尝试，例如自动驾驶、金融风控、药物研发等。其中，办公软件是最有效和切入最便利的场景之一。办公场景处理的信息繁多，又高度程序化，非常适合人工智能工具。微软的这款工具名为Office 365 Copilot，可以基本完成当前的多数办公室工作，包括写文档、做PPT、制作Excel表格等。甚至可以在企业环境中对业务数据进行推理，提出问题并从网络上获取答案。微软有关负责人表示，“Copilot揭开了一个全新的计算时代，将从根本上改变我们的工作方式”。</p></div>
+    <div class="sec sub" id="sec2"><div class="blk"><h2 contenteditable="true">2.我国高速电力线载波技术获重大突破</h2><p contenteditable="true">烈日炎炎的戈壁滩上，细长的谷神星一号遥六运载火箭直冲云霄，在一片欢呼声中，很快消失在人们的视野。另一头，指挥中心内仍然一片安静，所有人屏息凝神，注视着屏幕上高度、速度两条曲线缓缓爬升——整流罩分离，卫星从火箭末端探出头来；乾坤一号分离，卫星轻盈脱身，缓缓展开太阳翼；终于，随着乾坤一号成功入轨的数据传回，大厅里爆发出热烈、持久的掌声。</p><div class="ul"></div>
+        <span class="cm" id="cm" title="1 条评论"><img class="badge" src="assets/imgVector.svg" alt=""><span class="n">1</span></span>
+        <div class="pop" id="pop"><b>汤佩芸 · 刚刚</b><div class="c">「乾坤一号」这一段是否需要补充发射时间？</div><input placeholder="回复…"></div></div>
+      <div class="blk"><h3 contenteditable="true">2.1 从大众到冷门，这些 APP 经历了什么</h3><p contenteditable="true">近日，有科普博主发帖称，某社交平台上刷到游客晒出手持野生鼠兔的照片，并质疑，“在青海祁连山草原，抓鼠兔和喂旱獭（俗称土拨鼠）是否成为了旅游项目？”网友担心，游客这些举动有感染传播鼠疫的风险。</p></div>
+      <div class="blk"><h3 contenteditable="true">2.2 无人机全程拍摄！时隔三十多年再探切尔诺贝利核电站 如今变成什么样</h3><p contenteditable="true">盛夏时节，四川绵竹市汉旺镇一株900多年的古紫薇树满树繁花，十分壮观。据了解，这棵紫薇树树龄已超过900年，南宋时期种植，是绵竹市人民政府挂牌保护的一级古树名木。古树曾于10年前被盗，古树被追回后移栽到绵竹市汉旺镇紫薇广场，经过专业人员3年时间的精心护理，该树成活并逐年恢复开花。</p></div></div>
+    <div class="sec sub"><h2 contenteditable="true">3.基金取消净值估算，有什么影响？会不会影响基金的收益？</h2>
+      <div class="blk sec closed" style="padding:0"><button class="fold" style="left:-20px;top:4px"><img src="assets/imgChevronRight1.svg" alt="" style="transform:none"></button><h3 contenteditable="true">3.1 亚洲最大的洞穴腾龙洞，里面可升降直升飞机，长达60公里</h3><p contenteditable="true">腾龙洞位于湖北利川，洞口高 74 米、宽 64 米，洞内可容纳直升机起降；已探明长度约 60 公里，是亚洲已知最大的溶洞之一。</p></div>
+      <div class="blk sec" style="padding:0"><button class="fold" style="left:-20px;top:4px"><img src="assets/imgChevronRight.svg" alt=""></button><h3 contenteditable="true">3.2 无人机全程拍摄！时隔三十多年再探切尔诺贝利核电站 如今变成什么样</h3><p contenteditable="true">热到融化的马路、无穷无尽的野火、被山洪淹没的城镇……在全球多个地区因气候变化而“水深火热之际”，创纪录的海水温度还在为之“火上浇油”。今年6月，全球海洋表面温度达到有数据记录以来的最高水平，而厄尔尼诺天气模式的出现加剧了这一长期趋势。近日，美国佛罗里达州附近海域水温更接连飙升至100华氏度（37.7摄氏度）以上，已经热得像“温泉”。</p></div>
+      <h3 contenteditable="true">3.3 我国高速电力线载波技术获重大突破</h3></div>
+  </div>
+  <div class="cur" id="cur" style="left:120px;top:210px"><img src="assets/imgCursorArrow.svg" alt=""><i>汤佩芸</i></div>
+</div></div>
+<div class="toast" id="toast"></div>
+<script>
+document.querySelectorAll('.fold').forEach(function(b){b.addEventListener('click',function(){var s=b.closest('.sec');s.classList.toggle('closed');});});
+var cm=document.getElementById('cm'),pop=document.getElementById('pop');cm.addEventListener('click',function(e){e.stopPropagation();pop.classList.toggle('on');});document.addEventListener('click',function(e){if(!pop.contains(e.target))pop.classList.remove('on');});
+pop.querySelector('input').addEventListener('keydown',function(e){if(e.key==='Enter'&&this.value.trim()){var d=document.createElement('div');d.className='c';d.innerHTML='<b>我 · 刚刚</b>'+this.value;pop.insertBefore(d,this);this.value='';cm.querySelector('.n').textContent=+cm.querySelector('.n').textContent+1;}});
+document.querySelectorAll('.meta .r span').forEach(function(s){s.addEventListener('click',function(){var n=s.childNodes[1];n.textContent=' '+(parseInt(n.textContent)+1);say(s.title+'：+1');});});
+var cur=document.getElementById('cur'),pts=[[120,210],[640,420],[300,560],[720,760],[180,880]],pi=0;setInterval(function(){pi=(pi+1)%pts.length;cur.style.left=pts[pi][0]+'px';cur.style.top=pts[pi][1]+'px';},2200);
+var tt;function say(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},1400);}
+</script>
+<script src="../guide.js?v=815acc0b"></script>
+</body></html>

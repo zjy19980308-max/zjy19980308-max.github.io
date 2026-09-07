@@ -1,0 +1,184 @@
+/* ═══════════════════════════════════════════════════════════════
+   line-sidebar.css —— 章节导航
+   移植自 React Bits 的 LineSidebar，类名与自定义属性保持一致。
+   --effect（0~1）由 JS 每帧写入，下面所有派生属性都读同一个值，
+   所以位移、变色、标线缩放严格同步；这里不写 transition，
+   写了反而会和 rAF 打架、看起来是散的。
+   ═══════════════════════════════════════════════════════════════ */
+
+.line-sidebar {
+  --accent-color: #B5B4ED;
+  --text-color: #8C8CA0;
+  --marker-color: #3A3A44;
+  --marker-length: 52px;
+  --marker-gap: 0px;
+  --tick-scale: 0.5;
+  --max-shift: 22px;
+  --item-gap: 18px;
+  --font-size: 0.86rem;
+  --smoothing: 100ms;
+
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.line-sidebar--markers { padding-left: calc(var(--marker-length) + var(--marker-gap)); }
+
+.line-sidebar__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--item-gap);
+}
+
+.line-sidebar__item { position: relative; cursor: pointer; }
+
+/* 把命中区往外扩，光标还没到就开始有反应 */
+.line-sidebar__item::before {
+  content: '';
+  position: absolute;
+  inset: -6px -40px -6px -60px;
+}
+
+.line-sidebar__label {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  font-size: var(--font-size);
+  line-height: 1.25;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--accent-color) calc(var(--effect, 0) * 100%), var(--text-color));
+  transform: translateX(calc(var(--effect, 0) * var(--max-shift)));
+}
+
+.line-sidebar__index {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  margin-right: 0.62rem;
+  font-size: 0.8em;
+  letter-spacing: .04em;
+  opacity: calc(0.45 + var(--effect, 0) * 0.55);
+}
+
+/* h2 那一级：更亮、字重更实，和小标题拉开层级 */
+.line-sidebar__item--lv1 .line-sidebar__label { font-weight: 500; letter-spacing: -.01em; }
+.line-sidebar__item--lv1 .line-sidebar__index { opacity: calc(0.3 + var(--effect, 0) * 0.5); }
+
+.line-sidebar__marker {
+  position: absolute;
+  top: 50%;
+  left: calc(-1 * var(--marker-length) - var(--marker-gap));
+  height: 1px;
+  width: var(--marker-length);
+  background-color: color-mix(in srgb, var(--accent-color) calc(var(--effect, 0) * 100%), var(--marker-color));
+  transform-origin: left center;
+  transform: translateY(-50%) scaleX(calc(0.7 + var(--effect, 0) * 0.5));
+}
+
+/* 两项之间那根短刻度 */
+.line-sidebar--markers .line-sidebar__item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: calc(100% + var(--item-gap) / 2);
+  left: calc(-1 * var(--marker-length) - var(--marker-gap));
+  height: 1px;
+  width: calc(var(--marker-length) * var(--tick-scale));
+  background-color: var(--marker-color);
+  opacity: .5;
+  transform: translateY(-50%);
+}
+.line-sidebar--scale-tick .line-sidebar__item:not(:last-child)::after {
+  transform-origin: left center;
+  transform: translateY(-50%) scaleX(calc(0.7 + var(--effect, 0) * 0.6));
+}
+
+/* ── 贴在视口左侧的固定导轨 ──────────────────────────────
+   版心 1280px，1600 窗口两侧只剩 160px，
+   带文字的导轨要 230px —— 直接放会压住正文。
+   所以默认只露刻度线（52px，塞得进 1440 的边距），
+   光标进来才把文字展开；展开时给一层背景，压在正文上也读得清。 */
+.rail {
+  position: fixed;
+  left: max(12px, calc(50vw - 640px - 60px));
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  display: none;
+  max-height: 78vh;
+  padding: 10px 0;
+}
+@media (min-width: 1400px) { .rail { display: block; } }
+
+/* 收起态：只剩刻度。
+   注意 opacity:0 的文字依然占布局、依然吃指针事件 ——
+   不把命中区收回来，导轨的实际感应带有 230px 宽、正压在正文上，
+   光标还没走到刻度就已经触发展开了。 */
+.rail { width: 60px; overflow: visible; }
+
+.rail .line-sidebar { width: 60px; }
+.rail .line-sidebar__list { width: 60px; }
+.rail .line-sidebar__item {
+  width: 60px;
+  /* 文字被绝对定位之后 li 就没内容撑高了，高度会塌成 0 ——
+     间距全靠 gap 撑，而且邻近判定里的 offsetHeight/2 恒为 0。
+     这里补回一个实际行高。 */
+  min-height: 18px;
+}
+
+/* 收起时文字不接收指针，展开后才接管，这样移到文字上不会闪回 */
+.rail .line-sidebar__label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-10px, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s cubic-bezier(.22,1,.36,1),
+              transform .3s cubic-bezier(.22,1,.36,1);
+}
+.rail:hover .line-sidebar__label {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(calc(var(--effect, 0) * var(--max-shift)), -50%);
+}
+
+/* 命中区只覆盖刻度那一列，不外扩到正文上 */
+.rail .line-sidebar__item::before {
+  inset: -5px auto -5px calc(-1 * var(--marker-length) - 8px);
+  width: calc(var(--marker-length) + 68px);
+}
+
+/* 展开时文字会压到正文上，给一层底 */
+.rail::before {
+  content: '';
+  position: absolute;
+  inset: -14px -14px -14px -18px;
+  width: 300px;
+  border-radius: 12px;
+  background: rgba(6,6,10,.84);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity .3s cubic-bezier(.22,1,.36,1);
+  pointer-events: none;
+}
+.rail:hover::before { opacity: 1; }
+
+/* 静止时当前段只留一点点提示，别看着像已经被触发 */
+.rail .line-sidebar__marker { opacity: calc(.5 + var(--effect, 0) * .5); }
+.rail:hover .line-sidebar__marker { opacity: 1; }
+
+/* 首屏不出现，滚过去之后再淡入 */
+.rail { opacity: 0; pointer-events: none;
+        transition: opacity .4s cubic-bezier(.22,1,.36,1); }
+.rail.rail--on { opacity: 1; pointer-events: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .line-sidebar__label { transform: none !important; }
+}
+
+/* h2 那一级没有编号，留一段等宽占位，两级标题的文字才对得齐 */
+.line-sidebar__index--empty { display: inline-block; width: 1.55em; margin-right: .62rem; }
+.line-sidebar__index--empty::before { content: ''; }

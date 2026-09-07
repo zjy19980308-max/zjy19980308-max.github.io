@@ -1,0 +1,892 @@
+/* =====================================================
+   语义设计变量 / Semantic Design Variables
+   所有值引用 token.css 中的基础令牌，业务样式统一使用本文件变量
+   所有语义变量统一加 --cs- 前缀
+   ===================================================== */
+
+:root {
+
+  /* ==========================================================
+     功能色 / Functional Colors
+     ========================================================== */
+
+  /* ---- 主色 / Primary ---- */
+  --cs-color-primary: var(--color-blue-500);
+  --cs-color-primary-hover: #4958de;
+  --cs-color-primary-active: #4351cd;
+  --cs-color-primary-disabled: #ced3ff;
+  --cs-color-primary-a2: #4857e214;
+  --cs-color-primary-light: #a4aeff; /* Figma: doc icon border */
+  --cs-color-primary-bg: #edf1ff; /* Figma: 淡主色底（info 条 / tint 背景） */
+
+  /* ---- 错误色 / Error ---- */
+  --cs-color-error: #f53f3f;
+  --cs-color-error-hover: rgba(245, 63, 63, 0.15);   /* 危险动作 hover 淡红底 · error@15% 真透明度（删除/办理离职按钮·行菜单红项 hover · owner 2026-07-02 锁定 15%）*/
+  --cs-color-error-light: #ffece8;            /* 错误淡底 · 状态浅底 / 图标瓦片 */
+
+  /* ---- 警告色 / Warning ---- */
+  --cs-color-warning: #ff7d00;
+  --cs-color-warning-hover: #ffc892;
+  --cs-color-warning-light: #fff7e8;          /* 警告淡底 · callout 暖色背景 */
+
+  /* ---- 成功色 / Success ---- */
+  --cs-color-success: #00b42a;
+  --cs-color-success-light: #e8faed;          /* 成功淡底 · 状态浅底 / 图标瓦片 */
+
+  /* ---- 图表数据可视化色板 / Data-viz（仪表盘图表系列 · Figma 2017:17909/18592 采样）---- */
+  --cs-color-chart-blue:   #306ce4;           /* 系列蓝 · 项目总金额 / 应收款主系列 */
+  --cs-color-chart-teal:   #18ccb4;           /* 系列青 · 剩余应收 / 已回款 */
+  --cs-color-chart-yellow: #fcc000;           /* 系列黄 · 已回款金额 */
+  --cs-color-chart-purple: #8d7be8;           /* 系列紫 · 面积图第4系列 */
+  --cs-color-chart-red:    #f0653e;           /* 系列橙红 · 面积图第5系列 */
+
+  /* ---- 危险色 / Danger（= error 别名，补缺口，组件引 danger 不空）---- */
+  --cs-color-danger: var(--cs-color-error);
+
+  /* ==========================================================
+     文字色 / Text Colors
+     ========================================================== */
+  --cs-color-text: #333333;
+  --cs-color-text-light: #666666;
+  --cs-color-text-light2: #999999;
+  --cs-color-text-dark: #2e3043; /* Figma: filter btn text */
+  --cs-color-text-disabled: #efefef;
+  --cs-color-text-inverse: var(--color-neutral-0);
+  --cs-color-text-anchor: #0062ff;
+
+  /* ---- 中性色文字 / Neutral Text ---- */
+  --cs-color-text-primary: var(--color-neutral-800);
+  --cs-color-text-secondary: var(--color-neutral-600);
+  --cs-color-text-tertiary: var(--color-neutral-400);
+
+  /* ---- 图标色 / Icon Colors ---- */
+  --cs-color-icon-navprimary-default: #8c8c8d;
+  --cs-color-icon-navprimary-active: var(--color-neutral-0);
+  --cs-color-icon-muted: #c9c9c9; /* Figma: right-sidebar space icon/text */
+  --cs-color-icon-light: #e3e3e3; /* Figma: right-sidebar message icon */
+
+  /* ---- 深色模式文字 / Dark Mode Text ---- */
+  --cs-color-text-dark-primary: rgba(255, 255, 255, 0.7);
+  --cs-color-text-dark-secondary: rgba(255, 255, 255, 0.5);
+  --cs-color-text-dark-muted: rgba(255, 255, 255, 0.6);
+  --cs-color-text-dark-strong: var(--cs-color-white);          /* 深色容器内强调白文字（如徽标数字）*/
+
+  /* ---- 深色模式分割线 / Dark Mode Divider ---- */
+  --cs-color-divider-dark: rgba(255, 255, 255, 0.1);
+
+  /* ---- 深色模式边框 + Hover / Dark Mode Border + Hover ---- */
+  --cs-color-border-on-dark: rgba(255, 255, 255, 0.15);        /* 深色容器内细描边 */
+  --cs-color-bg-on-dark-hover: rgba(255, 255, 255, 0.08);      /* 深色容器内 hover 背景 */
+
+  /* ==========================================================
+     背景色 / Background Colors
+     ========================================================== */
+  --cs-color-bg: var(--color-neutral-0);
+  --cs-color-bg-light: var(--color-neutral-100);
+  --cs-color-bg-lighter: #eaeaea;
+  --cs-color-bg-disabled: #f9f9f9;
+  --cs-color-bg-hover: var(--color-neutral-50);
+  --cs-color-bg-mask: #00000066;
+  --cs-color-bg-mask-60: #00000099;       /* 60% 黑蒙层（弹窗 scrim · owner 2026-06-18 指定 · 管理后台除外→用 bg-mask-8，见 design.md §九） */
+  --cs-color-bg-mask-5: rgba(0, 0, 0, 0.05);   /* 卡片悬浮时那条「可拖拽」小横条（owner 2026-08-20 指定 5%）*/
+  --cs-color-bg-mask-8: rgba(0, 0, 0, 0.08);   /* 极淡蒙层（管理后台覆盖层统一·成员详情那种·顶栏/侧栏/内容保持亮·owner 2026-07-03 定）*/
+  --cs-color-shadow-edge: rgba(0,0,0,0.08); /* 钉列/sticky 边缘渐变阴影色（横滚时内容滑入下方的投影·owner 2026-06-30 调淡 0.13→0.08） */
+  --cs-color-bg-container-disabled: #0000000a;
+  --cs-color-bg-app-dark: #2C2A3A;
+  --cs-color-bg-secondary: #F7F9FC;
+  --cs-color-bg-tab-trough: #f5f6f7;                              /* 折页标签栏槽底（浅灰蓝·选中卡为白浮出·Figma 智能表格 2017:948） */
+  --cs-color-bg-card: #f3f5f6;                                    /* 详情记录卡浅灰填充（人员详情 主/子部门·合同记录卡·Figma 1026:10680） */
+  --cs-color-bg-input-dark: rgba(255, 255, 255, 0.08);
+  --cs-color-bg-hover-dark: rgba(255, 255, 255, 0.06);
+  --cs-color-bg-active-dark: rgba(255, 255, 255, 0.1);          /* 深色容器内 active 背景（比 hover 0.06 更深）*/
+
+  /* ==========================================================
+     边框色 / Border Colors
+     ========================================================== */
+  --cs-color-border: #e6e6e6;
+  --cs-color-border-light: #eef0f2;      /* 更浅分隔线（卡内分组 / 详情区段线 · 比 border 淡一档） */
+  --cs-color-scrollbar-thumb: #b3b3b3;   /* 滚动条拖块「拖箱」中性灰（横滚表格/长内容区·Figma 1026:10815 采样 b3b3b3） */
+  --cs-color-scrollbar-thumb-hover: #999999;  /* 拖块 hover 加深 */
+  /* 成员状态徽章色（5 态各异色 · owner 2026-07-02：正常蓝/未激活紫/已暂停橙/未加入青/主动退出灰 · 紫青为近似估值待精确）*/
+  --cs-color-status-active: var(--cs-color-primary);         /* 正常 */
+  --cs-color-status-active-bg: var(--cs-color-primary-bg);
+  --cs-color-status-inactive: #7159e8;                       /* 未激活 紫 */
+  --cs-color-status-inactive-bg: #eeeafd;
+  --cs-color-status-paused: var(--cs-color-warning);         /* 已暂停 橙 */
+  --cs-color-status-paused-bg: var(--cs-color-warning-light);
+  --cs-color-status-unjoined: #0fa198;                       /* 未加入 青 */
+  --cs-color-status-unjoined-bg: #e4f6f4;
+  --cs-color-status-quit: #86909c;                           /* 主动退出 灰 */
+  --cs-color-status-quit-bg: #f2f3f5;
+
+  /* ---- 客服工作台 语义色 / Service Desk（service-desk P1 · 反哺 2026-08-12 · 见 design-system-extension.md DR-01 · 全部指向既有色板，无新增色值）---- */
+  /* 渠道 channel（多渠道汇聚·各渠道一色） */
+  --cs-color-channel-im: var(--color-green-500);       /* 在线 IM 绿 */
+  --cs-color-channel-mail: var(--color-sky-500);       /* 邮件 天蓝 */
+  --cs-color-channel-phone: var(--color-orange-500);   /* 电话 橙 */
+  --cs-color-channel-form: var(--color-purple-500);    /* 表单 紫 */
+  /* VIP 徽章 金 */
+  --cs-color-vip: var(--color-yellow-700);
+  --cs-color-vip-bg: var(--color-yellow-100);
+  /* SLA 已超时 深红（将超时用 error，已超时更深一档以拉开语义梯度） */
+  --cs-color-sla-overdue: var(--color-red-700);
+  --cs-color-sla-overdue-bg: var(--color-red-100);
+
+  /* ---- 会议 语义色 / Meeting（会议中全屏专注界面 · 反哺 2026-08-13 · 见 design-system-extension.md DR-02）----
+     为什么单开一组：会议中是全屏专注形态，底色体系跟后台白底体系本来就不是一套（窗底是浅灰不是白、
+     控制条是白玻璃、视频卡上是黑 scrim）。硬借 primary/error 语义会打架——挂断不是「错误态」是一个功能键。
+     文字色不在这里重复定义，直接复用 --cs-color-text(#333) / --cs-color-text-light2(#999)。*/
+  --cs-color-meeting-bg: #efefef;                        /* 会议窗底（Figma 变量 --bg）· 同时兼任卡上那 1px 内描边（同色=看不见，稿子就这么设计的）*/
+  --cs-color-meeting-sheet: #ffffff;                     /* 🔴 卡/面板的「纸面」。跟 --cs-color-white 分开的理由：
+                                                            页面里 white 有一半是「深底上的白前景」（视频名字条、彩色 chip 里的白字、
+                                                            KR 渐变卡上的白字），深色模式下那些必须还是白。只有纸面才跟着主题翻。*/
+  --cs-color-meeting-surface: rgba(255, 255, 255, 0.4);  /* 浮起控制条 / 无摄像头时的圆形头像底（40% 白玻璃）*/
+  --cs-color-meeting-scrim: rgba(0, 0, 0, 0.5);          /* 视频画面上的姓名条 / 圆形操作键底（50% 黑 + 背景模糊）*/
+  --cs-color-meeting-icon: #0a090b;                      /* 控制条图标墨色（Figma Global/Neutral Grey/1300）*/
+  --cs-color-meeting-accent: #4857e2;                    /* 活跃控件（麦克风开启 / 弹幕）靛蓝 */
+  --cs-color-meeting-speaking: #34ff5d;                  /* 正在说话的麦克风指示 亮绿 */
+  --cs-color-meeting-hangup: #d85140;                    /* 挂断键 砖红 */
+  --cs-color-meeting-orb: #40414e;                       /* AI 助手球底 */
+  --cs-color-meeting-card: #fdfdfd;                      /* 右栏成员条卡底 */
+  --cs-color-meeting-card-border: #e9e9e9;               /* 右栏卡描边 */
+  --cs-color-meeting-panel: #f8f8f8;                     /* 浅灰面板底。⚠️ 2026-08-13 owner 把转写卡改成纯白后，
+                                                            这个 token 暂时没人引用；留着给宽窗态的信息流卡底 */
+  --cs-color-meeting-dashed: #dedede;                    /* 空态虚线框 */
+  --cs-color-meeting-transcript-bg: #daebff;             /* 「等待对话…」药丸底 */
+  --cs-color-meeting-transcript-text: #70b8ff;           /* 「等待对话…」药丸字 */
+  --cs-color-meeting-input: #dfdfdf;                     /* 底部 AI 输入条底 */
+  --cs-color-meeting-send: #c8c8c8;                      /* 输入条发送键底 */
+  --cs-color-meeting-dot: #dcdcdc;                       /* 宫格翻页指示点（未选中）/ 上翻箭头 */
+  /* 成员列表（右栏展开态 · Figma 53:10231 · 2026-08-13 反哺）*/
+  --cs-color-meeting-row-active: #f4f4f4;                /* 当前发言人那行的底 */
+  --cs-color-meeting-tag-host-bg: #cee5ff;               /* 「主持人」标签底 */
+  --cs-color-meeting-tag-host: #3694ff;                  /* 「主持人」标签字 */
+  --cs-color-meeting-tag-guest-bg: #ffe9c0;              /* 「嘉宾」标签底 */
+  --cs-color-meeting-tag-guest: #ff981a;                 /* 「嘉宾」标签字 */
+  /* 实时转写 / 待办（Figma 53:10787 · owner 2026-08-14）*/
+  --cs-color-meeting-check: #d9d9d9;
+  --cs-color-meeting-mark-bg: #e5ecff;
+  --cs-color-meeting-soft-fill: #f5f5f5;                  /* 小圆钮/浅填充（会话头那个 > 钮）*/
+  --cs-color-meeting-vote-card: #f5f5f5;                  /* 投票态 KR 卡底（Figma 77:2881）*/
+  --cs-color-meeting-mark-src: #fff1c1;                   /* 「这几句话分析出了这条」的黄色标记（Figma 56:13061 实测取色）*/
+  /* 未识别说话人的编号头像渐变（owner 2026-08-14）*/
+  --cs-color-meeting-spk1-a: #7b8cff;  --cs-color-meeting-spk1-b: #b6a2ff;
+  --cs-color-meeting-spk2-a: #ff9d7e;  --cs-color-meeting-spk2-b: #ffc48c;
+  --cs-color-meeting-spk3-a: #4fc7b8;  --cs-color-meeting-spk3-b: #86e0c4;
+  --cs-color-meeting-spk4-a: #f58fb4;  --cs-color-meeting-spk4-b: #ffb6c9;
+  --cs-color-meeting-danger-soft: rgba(216, 81, 64, .1);  /* 「移除」这类危险项 hover 的浅红底 = 挂断红降透明度 */                   /* 转写里「系统内人名」胶囊底（Figma 57:13730）*/
+  --cs-color-meeting-pause: #ffaaaa;                     /* 悬浮暂停键渐变的右端（Figma 57:13712 · 402 宽铺满药丸）*/
+  --cs-color-meeting-pause-ink: #cd6060;                 /* 暂停图标描边 */                      /* 待办前面的空心圆圈 */
+  /* 会话弹窗（Figma 53:10559 · owner 2026-08-14 D 态）*/
+  --cs-color-meeting-chat-mine: #f4f5ff;                 /* 自己发的气泡底 */
+  --cs-color-meeting-chat-close: #9496a2;                /* 弹窗右上关闭叉 */
+  --cs-color-meeting-chat-ph: #8f8f8f;                   /* 输入框占位文字 */
+  --cs-color-meeting-ink: #000000;                       /* 右栏纯黑文字（Figma 变量 --black）*/
+  /* 协同画板（Figma 53:11079 · owner 2026-08-14 UC-05）*/
+  --cs-color-meeting-board-pin: #1993ff;                 /* 标题旁定位针 亮蓝（DIN 卡里那个是灰的，别混）*/
+  /* DIN! 卡片流（Figma 56:12627 · owner 2026-08-14 UC-06）*/
+  --cs-color-meeting-din-chip: #ffeded;                  /* chips 药丸底（协同画板/Bug/会议）*/
+  --cs-color-meeting-din-chip-gray: #f6f6f6;             /* chips 药丸底（日程这张是灰的）*/
+  --cs-color-meeting-din-share: #f2f2f2;                 /* 右下分享键底 */
+  --cs-color-meeting-din-text: #e5848b;                  /* 「文」字圆的哑光粉底 */
+  --cs-color-meeting-din-lock: #ff6666;                  /* 锁文件圆的红底 */
+  --cs-color-meeting-din-bug: #ce1c1c;                   /* Bug 药丸文字 */
+  --cs-color-meeting-din-bug-bg: #ffe7e7;                /* Bug 药丸底 */
+  --cs-color-meeting-din-ring: #e6e6e6;                  /* 待办行那个 12×12 空心圆描边 */
+  --cs-color-meeting-din-off: #bbbbbb;                   /* 日程卡里置灰的锁图标 */
+  /* KR 面板（Figma 56:13553 · owner 2026-08-14 UC-04）*/
+  --cs-color-meeting-kr-pill: #e7f4ff;                   /* 标题「KR」旁边的浅蓝药丸底 */
+  --cs-color-meeting-kr-pin: #0c8dff;                    /* 药丸里 marker-02 定位针描边 */
+  --cs-color-meeting-kr-title: #051549;                  /* 「KR填写中」深藏蓝 */
+  --cs-color-meeting-kr-gold: #cbaa64;                   /* 卡片上那个金色大「1」*/
+  --cs-color-meeting-kr-dot: #bfc5f9;                    /* 分页指示器非当前的小圆点 */
+  --cs-color-meeting-kr-field: #f5f5f5;                  /* 三个填写框的 1px 边框 */
+  --cs-color-meeting-kr-ph: rgba(51, 51, 51, .2);        /* 填写框占位文字 */
+  --cs-color-meeting-kr-ph-soft: rgba(51, 51, 51, .1);   /* 卡片里「期待...」更淡的占位 */
+  --cs-color-meeting-glass: #f6f6f6;                     /* 左右翻页圆钮的毛玻璃底 */
+  --cs-color-meeting-glass-inner: rgba(255, 255, 255, .35); /* 圆钮内阴影 */
+  /* 轮次卡的渐变：Figma 里是两张 mesh 位图，量不到「角度+stop」。
+     下面 4 个是分身在渲染结果上按点采样出来的真实像素色，用来做 CSS 近似（约 135°）。*/
+  --cs-color-meeting-kr-g1: #b7a8fa;                     /* 左上 淡紫 */
+  --cs-color-meeting-kr-g2: #9bb6e8;                     /* 中段 蓝紫 */
+  --cs-color-meeting-kr-g3: #5670ea;                     /* 右下 靛蓝（最深）*/
+  --cs-color-meeting-kr-gpink: #b47bce;                  /* 上部中央那抹品红，叠一层径向色斑 */
+  --cs-color-meeting-kr-b1: #ef767b;                     /* 后卡片 左下 珊瑚红 */
+  --cs-color-meeting-kr-b2: #e49bff;                     /* 后卡片 右上 亮品红 */
+  --cs-color-meeting-kr-b3: #a3a4fe;                     /* 后卡片 右侧 淡紫蓝 */
+  --cs-shadow-meeting-kr: 0 9.984px 16.896px -6.144px rgba(119, 99, 234, .2);  /* 后卡片紫调投影 */
+  /* 交互态（Figma 静态稿里没有，是做「无死按钮」补的 · 全部由上面几个基色派生）*/
+  --cs-color-meeting-scrim-hover: rgba(0, 0, 0, 0.68);       /* 视频卡玻璃键 hover */
+  --cs-color-meeting-ctrl-hover: rgba(255, 255, 255, 0.55);  /* 控制条按钮 hover */
+  --cs-color-meeting-ctrl-active: rgba(255, 255, 255, 1);   /* 控制条按钮**激活态**填充（弹窗开着时那枚水滴）
+                                                               稿 53:10345 实测是纯白，不是 hover 那档半透明 · owner 2026-08-20 */
+  --cs-color-meeting-accent-soft: rgba(72, 87, 226, 0.12);   /* 控件激活底（accent 12%）*/
+  --cs-color-meeting-accent-ghost: rgba(72, 87, 226, 0.04);  /* 空态卡 hover 底（accent 4%）*/
+  --cs-shadow-meeting-bar: 0 4px 50px 0 rgba(0, 0, 0, 0.04);  /* 浮起控制条投影 */
+
+  /* 字母头像色池（低饱和 8 色 · 组织架构后台成员表统一取这套 · 采样自「成员与部门」页 · owner 2026-07-21：
+     组件 data-color 那套语义纯色（primary/error/success…）饱和太高、且会和状态语义色打架，人像底色一律走这里）*/
+  --cs-color-avatar-1: #e0796f;   /* 低饱和 珊瑚红 */
+  --cs-color-avatar-2: #5cc6a8;   /* 低饱和 薄荷绿 */
+  --cs-color-avatar-3: #7b9cf0;   /* 低饱和 雾蓝 */
+  --cs-color-avatar-4: #c98ad6;   /* 低饱和 藕紫 */
+  --cs-color-avatar-5: #2bb673;   /* 低饱和 松绿 */
+  --cs-color-avatar-6: #e2a04b;   /* 低饱和 琥珀 */
+  --cs-color-avatar-7: #5a6acb;   /* 低饱和 靛蓝 */
+  --cs-color-avatar-8: #67c23a;   /* 低饱和 草绿 */
+
+  /* ==========================================================
+     交互色 / Interactive Colors
+     ========================================================== */
+  --cs-color-highlight: #ebedef;
+  --cs-color-selected: #eaecff;
+  --cs-color-fill-neutral: #bcbcbc;   /* 无色/未激活填充按钮底（如"无改动时的确认"·纯中性灰·Figma 1026:12563。不用 neutral-300 它偏青绿） */
+  --cs-color-white: var(--color-neutral-0);
+  --cs-color-white-0: rgba(255, 255, 255, 0);   /* 透明白（白色 0 透明度）· 白色淡出渐变的终点，如模板卡 hover 底部白渐变 · owner 2026-07-15 */
+
+  /* ==========================================================
+     Doc Block 色板 / 文档块
+     文档编辑器/卡片缩略专用（引用块/代码块/标签/封面/进度槽）
+     单列成段，不混进通用语义
+     ========================================================== */
+  --cs-color-doc-quote-bg: #f7f7f9;            /* 引用块底 */
+  --cs-color-doc-quote-bar: #9199b4;           /* 引用竖条 */
+  --cs-color-doc-quote-text: #4b5471;          /* 引用文字 */
+  --cs-color-doc-code-bg: #2C2A3A;             /* 代码块深底 */
+  --cs-color-doc-code-green: #6ee7a8;          /* 代码语法绿 */
+  --cs-color-doc-tag-bg: #d9e3ff;              /* 外部标签底 · 浅蓝 */
+  --cs-color-doc-cover-green: #d3daca;         /* 绿封面卡 */
+  --cs-color-doc-cover-blue: #a7cde3;          /* 蓝封面卡（Figma 123:10591 模板卡封面） */
+  --cs-color-doc-progress-track: #dcdee0;      /* 进度槽底 · 中性灰 */
+
+  /* ==========================================================
+     PPT Deck 色板 / 上传的月度导向 PPT
+     预览就是这份 pptx 导出的 11 页原图（workspace/assets/deck/md0904/），
+     只有封面/封底那颗「分享人」白药丸是我们重画上去换名字的 —— 这两个色是从原图取样的。
+     外来文档的自有配色，不参与产品三套皮，别混进通用语义。
+     ========================================================== */
+  /* 视频章节标记（owner 2026-08-06：「上边用小黄线标记，代表哪里是一个小章节」） */
+  --cs-color-video-chapter: #F5C542;                     /* 小黄线本体 */
+  --cs-color-video-chapter-soft: rgba(245, 197, 66, 0.28); /* 悬浮时那一段的高亮底 */
+
+  --cs-color-ppt-pill: #FEFEFE;                /* 分享人药丸底（取样 #FEFEFE） */
+  --cs-color-ppt-pill-ink: #1D1D1F;            /* 药丸里的主字（分享人 + 姓名） */
+  --cs-color-ppt-pill-ink-soft: #6E6E73;       /* 药丸里的次字（部门/岗位） */
+
+  /* ==========================================================
+     Text & Icon (带透明度，兼容旧设计)
+     ========================================================== */
+  --cs-color-font-gy1-90: var(--color-neutral-1000);
+  --cs-color-font-gy1-90-primary: var(--color-neutral-1000);
+  --cs-color-font-gy2-60-secondary: var(--color-neutral-1000);
+  --cs-color-font-gy3-40-placeholder: var(--color-neutral-1000);
+
+  /* ==========================================================
+     阴影 / Shadow
+     ========================================================== */
+  --cs-shadow:
+    0 2px 4px -1px #0000001f,
+    0 4px 5px 0 #00000014,
+    0 1px 10px 0 #0000000d;
+  --cs-shadow-lg:
+    0 5px 5px -3px #0000001a,
+    0 8px 10px 1px #0000000f,
+    0 3px 14px 2px #0000000d;
+  --cs-shadow-xl:
+    0 8px 10px -5px #00000014,
+    0 16px 24px 2px #0000000a,
+    0 6px 30px 5px #0000000d;
+  --cs-shadow-card: 0 0 20px 0 #0000001a;
+  --cs-shadow-card-soft: 0 6px 30px 5px rgba(0, 0, 0, 0.05);  /* 文档卡片柔和投影 */
+  --cs-shadow-seg-active: 0 0 2.5px rgba(0, 0, 0, 0.1);       /* segment 选中态微投影 */
+  --cs-shadow-nav-lit: 0 0 2px rgba(0, 0, 0, 0.15);           /* 竖导航点亮态圆角块微投影（Figma O5AzlQ 2-249）*/
+  --cs-shadow-up:
+    0 -2px 4px -1px rgba(0, 0, 0, 0.08),
+    0 -4px 5px 0 rgba(0, 0, 0, 0.05),
+    0 -1px 10px 0 rgba(0, 0, 0, 0.03);
+
+  /* ==========================================================
+     语义化字体组合 / Semantic Typography
+     ========================================================== */
+  --cs-typo-display-medium: 600 48px/56px "PingFang SC", sans-serif;
+  --cs-typo-title-extra-large: 600 20px/28px "PingFang SC", sans-serif;
+  --cs-typo-body-large: 400 16px/24px "PingFang SC", sans-serif;
+  --cs-typo-body-medium: 400 14px/22px "PingFang SC", sans-serif;
+
+  /* ==========================================================
+     Figma 语义令牌 / Figma Semantic Tokens (--cs-sem-*)
+     ========================================================== */
+
+  /* ---- 背景色语义 / Semantic Background ---- */
+  /* Figma: color/bg/primary → neutral/0 */
+  --cs-sem-bg-primary: var(--cs-color-bg);
+  /* Figma: color/bg/secondary → neutral/50 */
+  --cs-sem-bg-secondary: var(--cs-color-bg-hover);
+  /* Figma: color/bg/tertiary → neutral/100 */
+  --cs-sem-bg-tertiary: var(--cs-color-bg-light);
+  /* Figma: color/bg/disabled → neutral/200 */
+  --cs-sem-bg-disabled: var(--color-neutral-200);
+  /* Figma: color/bg/overlay → #000000 50% */
+  --cs-sem-bg-overlay: rgba(0, 0, 0, 0.5);
+  /* Figma: color/bg/brand → blue/500 */
+  --cs-sem-bg-brand: var(--cs-color-primary);
+  /* Figma: color/bg/success → green/100 */
+  --cs-sem-bg-success: var(--color-green-100);
+  /* Figma: color/bg/warning → orange/100 */
+  --cs-sem-bg-warning: var(--color-orange-100);
+  /* Figma: color/bg/error → red/100 */
+  --cs-sem-bg-error: var(--color-red-100);
+
+  /* ---- 文字色语义 / Semantic Text ---- */
+  /* Figma: color/text/primary → neutral/800 */
+  --cs-sem-text-primary: var(--cs-color-text-primary);
+  /* Figma: color/text/secondary → neutral/600 */
+  --cs-sem-text-secondary: var(--cs-color-text-secondary);
+  /* Figma: color/text/tertiary → neutral/400 */
+  --cs-sem-text-tertiary: var(--cs-color-text-tertiary);
+  /* Figma: color/text/inverse → neutral/0 */
+  --cs-sem-text-inverse: var(--cs-color-white);
+  /* Figma: color/text/link → blue/500 */
+  --cs-sem-text-link: var(--cs-color-primary);
+  /* Figma: color/text/link-hover → blue/600 */
+  --cs-sem-text-link-hover: var(--color-blue-600);
+  /* Figma: color/text/brand → blue/500 */
+  --cs-sem-text-brand: var(--cs-color-primary);
+  /* Figma: color/text/success → green/500 */
+  --cs-sem-text-success: var(--color-green-500);
+  /* Figma: color/text/warning → orange/500 */
+  --cs-sem-text-warning: var(--color-orange-500);
+  /* Figma: color/text/error → red/500 */
+  --cs-sem-text-error: var(--color-red-500);
+  /* Figma: color/text/disabled → neutral/200 */
+  --cs-sem-text-disabled: var(--color-neutral-200);
+  /* Figma: color/text/on-color → neutral/0 */
+  --cs-sem-text-on-color: var(--cs-color-white);
+
+  /* ---- 边框色语义 / Semantic Border ---- */
+  /* Figma: color/border/primary → neutral/300 */
+  --cs-sem-border-primary: var(--color-neutral-300);
+  /* Figma: color/border/secondary → neutral/200 */
+  --cs-sem-border-secondary: var(--color-neutral-200);
+  /* Figma: color/border/strong → blue/500 */
+  --cs-sem-border-strong: var(--cs-color-primary);
+  /* Figma: color/border/disabled → neutral/100 */
+  --cs-sem-border-disabled: var(--cs-color-bg-light);
+  /* Figma: color/border/interactive → blue/500 */
+  --cs-sem-border-interactive: var(--cs-color-primary);
+  /* Figma: color/border/focus → blue/500 */
+  --cs-sem-border-focus: var(--cs-color-primary);
+  /* Figma: color/border/error → red/500 */
+  --cs-sem-border-error: var(--color-red-500);
+  /* Figma: color/border/success → green/500 */
+  --cs-sem-border-success: var(--color-green-500);
+
+  /* ---- 交互色语义 / Semantic Interactive ---- */
+  /* Figma: color/interactive/primary → blue/500 */
+  --cs-sem-interactive-primary: var(--cs-color-primary);
+  /* Figma: color/interactive/primary-hover → blue/600 */
+  --cs-sem-interactive-primary-hover: var(--color-blue-600);
+  /* Figma: color/interactive/primary-active → blue/700 */
+  --cs-sem-interactive-primary-active: var(--color-blue-700);
+  /* Figma: color/interactive/primary-disabled → blue/300 */
+  --cs-sem-interactive-primary-disabled: var(--color-blue-300);
+  /* Figma: color/interactive/tertiary → blue/500 */
+  --cs-sem-interactive-tertiary: var(--cs-color-primary);
+  /* Figma: color/interactive/destructive → red/500 */
+  --cs-sem-interactive-destructive: var(--color-red-500);
+  /* Figma: color/interactive/link → blue/500 */
+  --cs-sem-interactive-link: var(--cs-color-primary);
+  /* Figma: color/interactive/link-hover → blue/600 */
+  --cs-sem-interactive-link-hover: var(--color-blue-600);
+
+  /* ---- 状态色语义 / Semantic Status ---- */
+  --cs-sem-status-success: var(--color-green-500);
+  --cs-sem-status-success-light: var(--color-green-100);
+  --cs-sem-status-error: var(--color-red-500);
+  --cs-sem-status-error-light: var(--color-red-100);
+  --cs-sem-status-warning: var(--color-orange-500);
+  --cs-sem-status-warning-light: var(--color-orange-100);
+  --cs-sem-status-info: var(--color-sky-500);
+  --cs-sem-status-info-light: var(--color-sky-100);
+
+  /* ---- 功能色语义 / Semantic Functional ---- */
+  --cs-sem-func-favorite: var(--color-pink-500);
+  --cs-sem-func-upvote: var(--color-purple-500);
+  --cs-sem-func-downvote: var(--color-red-500);
+  --cs-sem-func-bookmark: var(--color-violet-500);
+  --cs-sem-func-share: var(--color-sky-500);
+  --cs-sem-func-download: var(--cs-color-primary);
+
+  /* ---- 窗口控制色 / Window Control ---- */
+  /* Figma: 客户端_关闭 Ellipse bg */
+  --cs-color-window-close: #ff6e5c;
+  /* Figma: 客户端_最小化 Ellipse bg（补齐 mac 三圆点中段 · 黄色装饰圆点 · 不复用 warning #ff7d00 因色相不符） */
+  --cs-color-window-minimize: #f4be4f;
+  /* Figma: 客户端_放大 Ellipse bg */
+  --cs-color-window-maximize: #61c654;
+
+  /* ---- 客户端 Tab / 通知 / 状态色 / Client Tab & Notification & Status ---- */
+  /* Figma: tab 激活底（深底之上 · 实色不是透明叠加，不复用 --cs-color-bg-active-dark） */
+  --cs-color-bg-tab-active-on-dark: #413f50;
+  /* Figma: 通知红点（高饱和度纯红 · 与语义错误色 --cs-color-error 区分，专用未读徽标装饰） */
+  --cs-color-notification-dot: #ff0004;
+  /* Figma: 头像在线圈（视觉等价 #00ef34 · 复用色板 green-400 不引入新 hex） */
+  --cs-color-status-online: var(--color-green-400);
+  /* Figma: 头像呼吸装饰圈 · 双层 ring 透明度阶梯（LESSONS § 1.4 例外族 · figma 原值 rgba(18,208,59,0.15/0.30）
+     命名绑死视觉语义（呼吸圈强弱），不绑交互态 · 不复用 status-online 实色 */
+  --cs-color-status-online-ring-outer: rgba(18, 208, 59, 0.15);
+  --cs-color-status-online-ring-mid: rgba(18, 208, 59, 0.30);
+
+  /* ---- 深底玻璃覆盖层 / Glass Overlay on Dark Bg (LESSONS § 1.1 例外族) ---- */
+  /* 用途：cs-space-switcher / 任何深色容器内的"半透明白色装饰背景"
+     语义：图层 = 深底之上的高光玻璃层（glass）· 渐进透明度阶梯（0.06 → 0.14）
+     不复用 --cs-color-bg-hover-dark / --cs-color-bg-input-dark / --cs-color-bg-active-dark：
+       那 3 个名字绑死交互态（hover/input/active），本族绑死视觉语义（glass 强弱阶梯） */
+  --cs-color-bg-glass-soft:    rgba(255, 255, 255, 0.06);  /* 默认底（最弱 · 如 space-card 默认） */
+  --cs-color-bg-glass-default: rgba(255, 255, 255, 0.08);  /* 默认（如 add-btn 默认） */
+  --cs-color-bg-glass-hover:   rgba(255, 255, 255, 0.10);  /* hover（如 space-card hover） */
+  --cs-color-bg-glass-active:  rgba(255, 255, 255, 0.12);  /* active（如 space-card active） */
+  --cs-color-bg-glass-strong:  rgba(255, 255, 255, 0.14);  /* hover 强（如 add-btn hover） */
+
+  /* ---- 文件类型色 / File Type Colors ---- */
+  /* Figma: 旧设计规范 d9kycxUY4aY265OHlImwdr 节点 4:21211「文件」 */
+  --cs-color-filetype-pdf: #fa4e4e;
+  --cs-color-filetype-word: #4876f9;
+  --cs-color-filetype-excel: #32bd79;
+  --cs-color-filetype-ppt: #ff9333;
+  --cs-color-filetype-image: #f6ad00;
+  --cs-color-filetype-video: #7c8eee;
+  --cs-color-filetype-audio: #f16c00;
+  --cs-color-filetype-text: #8289ad;
+  --cs-color-filetype-zip: #576a95;
+  --cs-color-filetype-unknown: #cccccc;
+  --cs-color-filetype-mindmap: var(--color-purple-500);
+
+  /* ---- 语义间距 / Semantic Spacing ---- */
+  /* Figma: spacing/content */
+  --cs-sem-spacing-content-inline: var(--space-md);                /* 16px */
+  --cs-sem-spacing-content-stack: var(--spacing-24);               /* 24px */
+  --cs-sem-spacing-content-inset: var(--space-sm);                 /* 12px */
+  --cs-sem-spacing-content-inset-lg: var(--spacing-14);            /* 14px */
+
+  /* Figma: spacing/component */
+  --cs-sem-spacing-comp-padding-xs: var(--spacing-6);              /* 6px */
+  --cs-sem-spacing-comp-padding-sm: var(--space-xs);               /* 8px */
+  --cs-sem-spacing-comp-padding-md: var(--space-sm);               /* 12px */
+  --cs-sem-spacing-comp-padding-lg: var(--space-md);               /* 16px */
+  --cs-sem-spacing-comp-padding-xl: var(--spacing-20);             /* 20px */
+  --cs-sem-spacing-comp-margin-sm: var(--spacing-20);              /* 20px */
+  --cs-sem-spacing-comp-margin-md: var(--spacing-20);              /* 20px */
+  --cs-sem-spacing-comp-margin-lg: var(--spacing-20);              /* 20px */
+  --cs-sem-spacing-comp-gap-sm: var(--space-2xs);                  /* 4px */
+  --cs-sem-spacing-comp-gap-md: var(--space-xs);                   /* 8px */
+
+  /* Figma: spacing/layout */
+  --cs-sem-spacing-layout-gutter: var(--spacing-24);               /* 24px */
+  --cs-sem-spacing-layout-section: var(--spacing-96);              /* 96px */
+  --cs-sem-spacing-layout-container: var(--cs-sem-size-container); /* 1280px */
+
+  /* Figma: spacing/icon-text */
+  --cs-sem-spacing-icon-text-inline: var(--space-xs);              /* 8px */
+  --cs-sem-spacing-icon-text-stack: var(--space-sm);               /* 12px */
+
+  /* Figma: spacing/form */
+  --cs-sem-spacing-form-label-input: var(--space-xs);              /* 8px */
+  --cs-sem-spacing-form-input-input: var(--spacing-24);            /* 24px */
+
+  /* ---- 语义尺寸 - 图标 / Semantic Size - Icon ---- */
+  --cs-sem-size-icon-xs: 12px;
+  --cs-sem-size-icon-sm: 14px;
+  --cs-sem-size-icon-md: 16px;
+  --cs-sem-size-icon-lg: 20px;
+  --cs-sem-size-icon-xl: 24px;
+  --cs-sem-size-icon-2xl: 32px;
+  --cs-sem-size-icon-3xl: 40px;
+  --cs-sem-size-icon-4xl: 48px;
+  --cs-sem-size-icon-5xl: 56px;
+
+  /* ---- 语义尺寸 - 交互目标 / Semantic Size - Interactive ---- */
+  --cs-sem-size-interactive-xs: 24px;
+  --cs-sem-size-interactive-sm: 32px;
+  --cs-sem-size-interactive-sm-plus: 36px;
+  --cs-sem-size-interactive-md: 40px;
+  --cs-sem-size-interactive-lg: 48px;
+  --cs-sem-size-interactive-xl: 56px;
+
+  /* ---- 语义尺寸 - 容器 / Semantic Size - Container ---- */
+  --cs-sem-size-container-sm: 640px;
+  --cs-sem-size-container-md: 708px;
+  --cs-sem-size-container: 1280px;
+  --cs-sem-size-container-lg: 1024px;
+  --cs-sem-size-container-xl: 1536px;
+  --cs-sem-size-container-full: 100%;
+  --cs-sem-size-min-tap-target: 44px;
+  --cs-sem-size-max-content-width: 1200px;
+  --cs-sem-size-sidebar-width: 240px;
+  --cs-sem-size-header-height: 64px;
+
+  /* ---- 语义尺寸 - 内容宽度 / Semantic Size - Content ---- */
+  --cs-sem-size-content-xs: 480px;
+  --cs-sem-size-content-sm: 640px;
+  --cs-sem-size-content-md: 708px;
+  --cs-sem-size-content-lg: 896px;
+  --cs-sem-size-content-xl: 1024px;
+  --cs-sem-size-content-2xl: 1152px;
+  --cs-sem-size-content-3xl: 1280px;
+  --cs-sem-size-content-full: 100%;
+
+  /* ---- 语义透明度 / Semantic Opacity ---- */
+  --cs-sem-opacity-disabled: var(--opacity-50);   /* 0.5 */
+  --cs-sem-opacity-hover: var(--opacity-80);      /* 0.8 */
+  --cs-sem-opacity-overlay: var(--opacity-60);    /* 0.6 */
+  --cs-sem-opacity-ghost: var(--opacity-90);      /* 0.9 */
+  --cs-sem-opacity-loading: var(--opacity-70);    /* 0.7 */
+
+  /* ---- 语义文档排版 / Semantic Doc Typography ---- */
+  --cs-sem-doc-heading-1: var(--font-size-32);    /* 32px */
+  --cs-sem-doc-heading-2: var(--font-size-28);    /* 28px */
+  --cs-sem-doc-body: var(--font-size-18);         /* 18px */
+  --cs-sem-doc-caption: var(--font-size-md);      /* 14px */
+
+  /* ==========================================================
+     补充原始令牌扩展（raw token extensions，无 --cs- 前缀）
+     这些是 token.css 的补充原始值，后续应迁移至 token.css
+     ========================================================== */
+
+  /* ---- 补充间距 ---- */
+  --spacing-1: 1px;
+  --spacing-12: 12px;
+  --spacing-28: 28px;
+  --spacing-36: 36px;
+  --spacing-120: 120px;
+  --spacing-160: 160px;
+  --spacing-200: 200px;
+  --spacing-320: 320px;
+  --space-3xs: 2px;
+  --space-xxs: var(--space-2xs);               /* 4px — 别名 */
+  --space-xl: var(--spacing-24);               /* 24px */
+
+  /* ---- 补充边框 ---- */
+  --border-width: var(--line-width);           /* 1px — 别名 */
+
+  /* ==========================================================
+     补充语义变量（--cs- 前缀）
+     ========================================================== */
+
+  /* ---- 补充颜色别名 ---- */
+  --cs-color-fill-light: var(--cs-color-bg-light);   /* #f5f5f5 — 别名 */
+  --cs-opacity-disabled: var(--opacity-50);           /* 0.5 */
+
+  /* ---- AI 辅色 + 庆祝色 / AI Accent & Celebration (emp-learn-dash 2026-05-15) ---- */
+  --cs-color-ai-accent: var(--color-violet-600);     /* #7f22fe · AI 紫色辅色（第二视角 / AI 标签 / AI 建议高亮） */
+  --cs-color-celebration: var(--color-yellow-400);   /* #fdc700 · 庆祝金（学习徽章 / 完成里程碑 / 达成时刻） */
+
+  /* ---- 工作流/自动化节点类型瓦片色（标杆多维表格自动化·彩底白 glyph 瓦片·无 Figma 源·近似真值 · 智能表格 M5 2026-07-02）---- */
+  --cs-color-wf-orange: #ff7a2f;   /* AI 分析 / 新增记录 橙 */
+  --cs-color-wf-teal:   #16b8c4;   /* 发送 CSES 消息 青 */
+  --cs-color-wf-dark:   #2c2f36;   /* 条件判断 / 多分支 / AI 分类 / 循环 深 */
+  --cs-color-wf-purple: #7b5cff;   /* AI Agent 紫 */
+  --cs-color-wf-blue:   #3a7bfa;   /* AI 生成文本 / 查找记录 蓝 */
+  --cs-color-wf-pink:   #ec4e9c;   /* 修改记录 粉 */
+
+  /* ---- 纸墨色系 / Paper & Ink（「东方极简」宣纸主题 · T度导向 2026-07-29 从旧项目 pd 迁入时反哺）----
+     v5 原本只有冷白/蓝的界面色，没有任何暖色面。这一组是一套完整的「宣纸 + 墨」语义面，
+     用于需要沉静、书写感、非工具感的场景（成长记录 / 感悟 / 时间轴 / 个人主页）。
+     用法：底 paper-bg → 面 paper-bg-raised → 线 paper-border → 字 paper-ink 系（4 档由深到浅）。
+     强调色只有三个且各有语义：朱红 cinnabar（感悟·主强调）、青绿 sage（成果/大事件）、赭黄 amber（互动）。 */
+  --cs-color-paper-bg:            #FBF7EE;   /* 纸面底（内容区大面积底色） */
+  --cs-color-paper-bg-raised:     #FDF9EF;   /* 抬起面：比纸面再浅一档（二级导航 / 浮层） */
+  --cs-color-paper-bg-sunken:     #F5EDDA;   /* 下沉面：比纸面深一档（名片 / 高亮卡渐变起点） */
+  --cs-color-paper-hover:         #F3EDD9;   /* 悬浮态 */
+  --cs-color-paper-hover-soft:    #F0E9D6;   /* 悬浮态·更轻（日期格 / 文字按钮） */
+  --cs-color-paper-active:        #EFE6CC;   /* 选中态 */
+  --cs-color-paper-border:        #E8E0CE;   /* 分隔线 / 描边 */
+  --cs-color-paper-border-strong: #D9CFA9;   /* 描边·加重（hover 边框） */
+  --cs-color-paper-ink:           #1F1912;   /* 主墨：标题 / 选中底 / 主按钮底 */
+  --cs-color-paper-ink-hover:     #2E251C;   /* 主墨 hover */
+  --cs-color-paper-ink-soft:      #4A3E30;   /* 次墨：正文 */
+  --cs-color-paper-ink-muted:     #6B5946;   /* 弱墨：辅助说明 */
+  --cs-color-paper-ink-faint:     #8A7A5C;   /* 更弱：标签 / 分组名 */
+  --cs-color-paper-ink-ghost:     #9E9075;   /* 最弱：星期 / 时间戳 */
+  --cs-color-paper-cream:         #FFF6E5;   /* 米白：墨底之上的字 */
+  --cs-color-paper-cream-78:      rgba(255, 246, 229, 0.78);
+  --cs-color-paper-cream-70:      rgba(255, 246, 229, 0.70);
+  --cs-color-paper-cream-65:      rgba(255, 246, 229, 0.65);
+  --cs-color-paper-cream-18:      rgba(255, 246, 229, 0.18);  /* 墨底上的分隔线 */
+  --cs-color-paper-cinnabar:      #B23A2E;   /* 朱红 · 主强调（感悟标记 / 选中项） */
+  --cs-color-paper-sage:          #5A6F3F;   /* 青绿 · 成果导向 / 团队大事件 */
+  --cs-color-paper-amber:         #9A6B12;   /* 赭黄 · 团队互动 */
+  --cs-color-paper-bronze-from:   #B08444;   /* 铜金渐变起（墨底上的头像） */
+  --cs-color-paper-bronze-to:     #8B6532;   /* 铜金渐变止 */
+  --cs-color-paper-hero-from:     #3A2E1F;   /* 头图兜底渐变（图未加载时） */
+  --cs-color-paper-hero-to:       #4A3E30;
+  --cs-color-paper-bg-0:          rgba(251, 247, 238, 0);      /* 纸面·全透明（渐变遮罩起点·同色相避免灰边） */
+  --cs-color-paper-bg-tint:       #F7F1E0;   /* 纸面·着色块（点赞评论汇总卡那种嵌入式浅底） */
+  --cs-color-paper-divider:       #E1D5B8;   /* 着色块内部分隔线（比 paper-border 深一档） */
+  --cs-color-paper-liked:         #FF6B4A;   /* 已点赞·暖朱（墨底之上，比 cinnabar 亮，作"已激活"信号） */
+  --cs-color-paper-cinnabar-10:   rgba(178, 58, 46, 0.10);     /* 朱红淡底（选中/展开态） */
+  --cs-color-paper-bg-08:         rgba(251, 247, 238, 0.08);   /* 墨底之上的 hover */
+  --cs-color-paper-bg-18:         rgba(251, 247, 238, 0.18);   /* 墨底之上的分隔线 */
+
+  /* ---- 实底 / 实底之上的字（T度导向 2026-08-03 反哺）----
+     purpose：--cs-color-paper-ink 原本是**双关变量** —— 32 处当「墨色文字」，8 处当「墨色实底」
+       （主按钮 / 选中日期格 / toast / 视频时长角标）；--cs-color-paper-cream 同理，9 处里
+       5 处压在深色头图上、4 处压在墨色实底上。浅色主题下两种用法的底都是深的，一个值糊得过去；
+       一旦做深色主题（夜宣 / 科技）实底要翻亮、而头图仍旧是深的，两种用法就分道扬镳，
+       白底白字。正解是拆变量，不是调值。
+     谁用：t-guidance/20260729-1005 T度导向首页（.tg-new-btn / .date-tl .tl-d.on / .tg-toast /
+       .goal-media .gm-dur / .goal-media .gm-play）。别的业务做深色主题时同样适用。
+     🔴 下面 5 个的浅色值跟拆之前**完全等价**，所以浅色模式像素级零变化（已逐像素 diff 验证）。 */
+  --cs-color-paper-ink-solid:       #1F1912;   /* 墨色**实底**（≠ 墨色文字）：主按钮 / 选中格 / toast */
+  --cs-color-paper-ink-solid-hover: #2E251C;
+  --cs-color-paper-on-ink:          #FFF6E5;   /* 压在上面那块实底上的字 */
+  --cs-color-paper-ink-fixed:       #1F1912;   /* 恒深墨：压在照片等「两个模式都深」的面上，永不翻 */
+  --cs-color-paper-on-ink-70:       rgba(255, 246, 229, 0.70);  /* 实底上的次级字（选中格的星期）*/
+  --cs-color-paper-on-ink-30:       rgba(255, 246, 229, 0.30);  /* 实底上的轨道底（播放器进度条未播段）*/
+  --cs-color-paper-bg-mask-60:      rgba(31, 25, 18, 0.60);     /* 六成遮罩：播放器控件条渐变底 / 提示气泡 */
+  --cs-shadow-paper-pop:          0 12px 28px -8px rgba(31, 25, 18, 0.18);  /* 纸墨浮层投影（下拉 / 气泡） */
+  --cs-shadow-paper-soft:         0 3px 8px -4px rgba(31, 25, 18, 0.14);    /* 纸墨轻投影（贴在纸面上的卡片/文件夹 · 比 pop 轻一档 · T度导向成果文件夹扇 2026-07-30 反哺）*/
+  --cs-shadow-ink-pop:            0 4px 12px -4px rgba(31, 25, 18, 0.30);   /* 墨色实体投影（深色胶囊 / 主按钮） */
+  /* 强调色辉光：只有「科技」皮发光；宣纸/夜宣缺省 none（design.md §八：满屏发光 = 装饰过度）*/
+  --cs-shadow-glow-accent:        none;
+  --cs-shadow-glow-accent-strong: none;
+
+  /* ---- 照片之上的可读性（图上白字 / 图上描边 · T度导向 2026-07-29 反哺）---- */
+  --cs-color-bg-mask-15:          rgba(0, 0, 0, 0.15);         /* 头图渐变中段 */
+  --cs-color-bg-mask-30:          rgba(0, 0, 0, 0.30);         /* 头图渐变顶部（保白字可读） */
+  --cs-color-border-on-dark-strong: rgba(255, 255, 255, 0.5);  /* 深底上的强描边（hover） */
+  --cs-shadow-text-on-photo:      0 2px 12px rgba(0, 0, 0, 0.40);  /* 图上大字 */
+  --cs-shadow-text-on-photo-sm:   0 1px 6px  rgba(0, 0, 0, 0.30);  /* 图上小字 */
+  --cs-shadow-text-on-photo-xs:   0 1px 4px  rgba(0, 0, 0, 0.35);  /* 图上数字 / 名字 */
+  --cs-shadow-pill-dark:          0 2px 8px -4px rgba(20, 26, 44, 0.25); /* 深色胶囊浮层投影 */
+
+  /* ---- 补充过渡 ---- */
+  --cs-transition-fast: 0.15s ease;
+  --cs-transition-duration: 0.2s;
+  --cs-transition-duration-fast: 0.15s;
+
+  /* ---- 补充层级 / Z-Index ---- */
+  --cs-z-dropdown: 1000;
+  --cs-z-popover: 1010;
+  --cs-z-tooltip: 1020;
+
+  /* ---- 补充组件变量 ---- */
+  --cs-popover-max-width: 320px;
+  --cs-progress: 0%;
+}
+
+/* =====================================================================
+ * 主题层 · 「科技」深色（T度导向 2026-08-03 反哺 · owner 拍板）
+ * ---------------------------------------------------------------------
+ * 用法：给 <html> 打 data-theme="tech" 即可整页切换，业务 CSS 一行不用改 ——
+ *   这是红线三（颜色全走 var）攒下来的红利。
+ *
+ * 🔴 选择器写 html[data-theme="tech"] 而不是 [data-theme="tech"]：
+ *   ① 带 html 类型选择器特指度 (0,1,1) > :root 的 (0,1,0)，不依赖源码顺序就能盖住；
+ *   ② 项目里已经有别的地方把 data-theme 当**普通属性**用（doc-library/多维表格/仪表盘
+ *      的图表配色卡 data-theme="0/1/2"，挂在内层 div 上），加 html 前缀才不会误伤。
+ *
+ * 设计意图（照 20260729-1006/0-requirement/requirement.md 记的参考图）：
+ *   「深色玻璃 + 3D 卡片扇」「文件夹面 = 白色半透明玻璃 + backdrop-filter」
+ *   「边界 = 亮边」，token 族 = 画布 / 玻璃面 / 描边 / 发光 / 强调绿。
+ *   跟「夜宣」（暖褐墨色纸）是两条路：这套是冷黑带蓝 + 亮边 + **强调蓝 #2563EB**。
+ *   ⚠️ 2026-08-03 owner：「科技不都是蓝色吗」—— 主关键色由强调绿 #00E5A0 改为科技蓝。
+ *      成果/已完成(sage) 一并从霓虹绿改成青 #2DD4F5：同蓝家族但跟主色分得开，
+ *      要是也用主蓝，「已完成」会跟主按钮撞成一片，语义色就白设了。
+ *   🔴 玻璃的签名是「边比面亮」（浅色是边比面暗）—— 这条不做，怎么调色都不像玻璃。
+ *
+ * ⚠️ 玻璃质感光靠变量做不出来，半透明面还得配 backdrop-filter。那部分是**组件级规则**、
+ *   绑在具体选择器上（.side-card / .fan .fd-front / cs-navbar.navbar-container …），
+ *   不属于变量库，留在 T度导向 page.html 里。别的业务要玻璃得自己挂 backdrop-filter。
+ * ===================================================================== */
+html[data-theme="tech"] {
+  /* 画布 / 玻璃面 */
+  --cs-color-paper-bg:            #0D0F13;                    /* 画布：冷黑带蓝，一点暖都不带 */
+  --cs-color-paper-bg-raised:     rgba(255, 255, 255, 0.045); /* 玻璃面（导航 / 右栏卡 / 文件夹面）*/
+  --cs-color-paper-bg-sunken:     rgba(255, 255, 255, 0.028);
+  --cs-color-paper-bg-tint:       rgba(255, 255, 255, 0.035);
+  --cs-color-paper-bg-0:          rgba(13, 15, 19, 0);
+  /* 墨：纯白分档，冷调 */
+  --cs-color-paper-ink:           rgba(255, 255, 255, 0.94);
+  --cs-color-paper-ink-hover:     #FFFFFF;
+  --cs-color-paper-ink-soft:      rgba(255, 255, 255, 0.70);
+  --cs-color-paper-ink-muted:     rgba(255, 255, 255, 0.52);
+  --cs-color-paper-ink-faint:     rgba(255, 255, 255, 0.38);
+  --cs-color-paper-ink-ghost:     rgba(255, 255, 255, 0.28);
+  /* 亮边：玻璃的签名 */
+  --cs-color-paper-border:        rgba(255, 255, 255, 0.10);
+  --cs-color-paper-border-strong: rgba(255, 255, 255, 0.22);
+  --cs-color-paper-divider:       rgba(255, 255, 255, 0.07);
+  /* 态：选中用强调绿的淡底 */
+  --cs-color-paper-hover:         rgba(255, 255, 255, 0.06);
+  --cs-color-paper-hover-soft:    rgba(255, 255, 255, 0.04);
+  --cs-color-paper-active:        rgba(37, 99, 235, 0.26);   /* 主色变深了，淡底得加不透明度才看得出来 */
+  /* 语义：霓虹档。强调绿当主角（照参考图），语义映射不变 —— 成果/完成还是绿、感悟还是红系 */
+  --cs-color-paper-sage:          #2DD4F5;   /* 成果/已完成 · 青。同蓝家族但跟主色分得开 —— 都用主蓝的话「已完成」会跟主按钮撞成一片，语义就没了 */
+  --cs-color-paper-cinnabar:      #FF5C7A;
+  --cs-color-paper-amber:         #FFC24D;
+  --cs-color-paper-cinnabar-10:   rgba(255, 92, 122, 0.14);
+  /* 实底 = 强调绿：主按钮 / 选中日期格，上面压深绿黑 */
+  --cs-color-paper-ink-solid:       #2563EB;
+  --cs-color-paper-ink-solid-hover: #3B7BF5;
+  --cs-color-paper-on-ink:          #EAF2FF;   /* 🔴 深蓝底 → 字必须是白的。
+                                                  实测 #2563EB 配深字只有 4.33，压不住；配 #EAF2FF 是 4.59，过 AA。
+                                                  owner 2026-08-03「蓝色再深一些」时一起翻的，不是笔误 */
+  --cs-color-paper-on-ink-70:       rgba(234, 242, 255, 0.74);
+  --cs-color-paper-on-ink-30:       rgba(234, 242, 255, 0.32);
+  --cs-color-paper-bg-mask-60:      rgba(12, 24, 48, 0.60);
+  /* 投影：深底上黑影等于没有，改「更深的黑」+ 主按钮那条换成强调色辉光 */
+  --cs-shadow-paper-pop:          0 12px 32px -8px rgba(0, 0, 0, 0.72);
+  --cs-shadow-paper-soft:         0 3px 10px -4px rgba(0, 0, 0, 0.55);
+  --cs-shadow-ink-pop:            0 4px 16px -4px rgba(37, 99, 235, 0.55);
+  /* 辉光：原来硬编码 rgba 写在业务页里（我 2026-08-03 自己违的红线三），收成 token。
+     以后改主色只动这一处，业务页不用跟着改。 */
+  /* 辉光比实底亮一档 —— 辉光跟底同色就看不出在发光了 */
+  --cs-shadow-glow-accent:        0 0 20px -4px rgba(59, 130, 246, 0.55);
+  --cs-shadow-glow-accent-strong: 0 0 26px -2px rgba(59, 130, 246, 0.72);
+}
+
+/* =====================================================================
+ * 主题层 · 「夜宣」深色（T度导向 2026-08-03 反哺 · owner 拍板）
+ * ---------------------------------------------------------------------
+ * 用法：给 <html> 打 data-theme="dark"。跟 tech 是**两条完全不同的路**，不是深浅之别：
+ *   夜宣 = 暖褐墨色纸，色相守在 40° 上下，气质是宣纸夜读；
+ *   tech = 冷黑带蓝 + 半透明玻璃 + 亮边 + 强调绿。
+ *
+ * 设计意图：宣纸的味道来自「暖」—— 纸是暖白、墨是暖黑，色相都在 40° 附近。
+ *   所以深色不另取一套色，而是**沿同一根暖色轴翻过来**：纸变墨色纸、墨变暖白。
+ *   🔴 别改成中性灰黑：一改就变成随处可见的灰黑后台，宣纸的气质全丢。
+ *
+ * ⚠️ 已知缺口（反哺时按原样搬，没顺手改 —— css.md §3.4「不许偷偷改值」）：
+ *   --cs-shadow-paper-pop / -soft / --cs-shadow-ink-pop 是**黑色**投影，压在深底上几乎看不见。
+ *   tech 那套已经把这 3 个换成「更深的黑 + 强调色辉光」，夜宣还没有。
+ *   补的时候思路是「亮边 + 更深投影」，不是简单调不透明度。
+ * ===================================================================== */
+html[data-theme="dark"] {
+  /* 实底整个反过来：深色下主按钮是「亮底暗字」，才是对的强调 */
+  --cs-color-paper-ink-solid:       #F4EBD8;
+  --cs-color-paper-ink-solid-hover: #FFF8E9;
+  --cs-color-paper-on-ink:          #17130C;
+  --cs-color-paper-on-ink-70:       rgba(23, 19, 12, 0.70);
+  --cs-color-paper-on-ink-30:       rgba(23, 19, 12, 0.30);
+  --cs-color-paper-bg-mask-60:      rgba(244, 235, 216, 0.60);
+  /* ink-fixed 故意不写 —— 它必须两个模式都深 */
+
+  /* 面：墨色纸，不是纯黑 —— 留着暖褐色相 */
+  --cs-color-paper-bg:            #17130C;
+  --cs-color-paper-bg-raised:     #1E1911;   /* 抬起面：浮层 / 右栏卡 */
+  --cs-color-paper-bg-sunken:     #100D07;   /* 下沉面 */
+  --cs-color-paper-bg-tint:       #1C170F;   /* 嵌入着色块 */
+  --cs-color-paper-bg-0:          rgba(23, 19, 12, 0);   /* 渐变遮罩起点·同色相免灰边 */
+  /* 墨：翻成暖白，五档明度关系照浅色原样保持 */
+  --cs-color-paper-ink:           #F4EBD8;
+  --cs-color-paper-ink-hover:     #FFF8E9;
+  --cs-color-paper-ink-soft:      #D5C9B2;
+  --cs-color-paper-ink-muted:     #AEA088;
+  --cs-color-paper-ink-faint:     #8C806A;
+  --cs-color-paper-ink-ghost:     #6E6455;
+  /* 线：暗金，比面亮一点点就够，别拉太开显脏 */
+  --cs-color-paper-border:        #302819;
+  --cs-color-paper-border-strong: #483D28;
+  --cs-color-paper-divider:       #3A3020;
+  /* 态 */
+  --cs-color-paper-hover:         #241E14;
+  --cs-color-paper-hover-soft:    #201B12;
+  --cs-color-paper-active:        #2C2517;
+  /* 语义三色必须提亮 —— 原值是配暖白纸的，压在深底上读不出来 */
+  --cs-color-paper-cinnabar:      #E2705C;   /* 朱红 · 感悟 */
+  --cs-color-paper-sage:          #A0B87C;   /* 青绿 · 成果 / 已完成 */
+  --cs-color-paper-amber:         #DCA84C;   /* 赭黄 · 互动 / 标签 */
+  --cs-color-paper-cinnabar-10:   rgba(226, 112, 92, 0.14);
+}
+
+/* =====================================================================
+ * 主题层 · 「会议」深色（owner 2026-08-14：夜里开会白得晃眼，要一深一浅两套）
+ * ---------------------------------------------------------------------
+ * 用法：给 <html> 打 data-theme="meeting-dark"。
+ *
+ * 🔴 为什么另起一个名字，不复用上面那套 data-theme="dark"：
+ *   那套是「夜宣」，只管 --cs-color-paper-* 这一族，服务 T度导向，色相锁在暖褐 40°。
+ *   会议是视频会场，主角是画面里的人，界面要**往后退**——冷中性深灰，不带色相倾向，
+ *   混在一起会把两边都改坏。
+ *
+ * 设计意图：视频画面自带高对比，所以外壳越安静越好。
+ *   面用三档中性深灰拉开层次（窗底 → 纸面 → 抬起），线一律用白色低透明度，
+ *   不用实色描边 —— 实色线在深底上会显脏。
+ *   主色必须**提亮**：#4857e2 压在深底上读不出来，提到 #7b88ff 才有同样的存在感。
+ *
+ * ⚠️ 不许翻的三类（翻了就瞎，每一条都是页面里真实存在的用法）：
+ *   ① --cs-color-white：视频名字条 / 彩色 chip 里的白字 / KR 渐变卡上的白字，本来就该是白
+ *   ② spk1~4 头像渐变、pause 红渐变：它们压在自己的彩色底上，跟明暗无关
+ *   ③ --cs-color-meeting-scrim：视频画面上的黑蒙层，两个模式都得是黑
+ * ===================================================================== */
+html[data-theme="meeting-dark"] {
+  /* ---- 面：三档中性深灰 ---- */
+  --cs-color-meeting-bg:            #1b1d23;   /* 窗内底 + 卡上那 1px 内描边（同色，仍然看不见）*/
+  --cs-color-meeting-sheet:         #24262e;   /* 卡 / 面板 / 弹窗的纸面 */
+  --cs-color-meeting-card:          #24262e;   /* 成员条卡底 */
+  --cs-color-meeting-panel:         #20222a;   /* 下沉一档 */
+  --cs-color-bg-light:              #20222a;
+  /* ---- 线：一律白色低透明，别用实色 ---- */
+  --cs-color-meeting-card-border:   rgba(255, 255, 255, .10);
+  --cs-color-border-light:          rgba(255, 255, 255, .10);
+  --cs-color-meeting-dashed:        rgba(255, 255, 255, .16);
+  --cs-color-meeting-input:         rgba(255, 255, 255, .12);
+  --cs-color-meeting-kr-field:      rgba(255, 255, 255, .14);
+  --cs-color-meeting-din-ring:      rgba(255, 255, 255, .22);
+  /* ---- 墨：文字四档 ---- */
+  --cs-color-meeting-ink:           #f0f1f5;   /* 原来是纯黑 */
+  --cs-color-meeting-icon:          #e8e9ee;   /* 控制条图标 */
+  --cs-color-text:                  #e4e5ea;
+  --cs-color-text-light:            #b3b5be;
+  --cs-color-text-light2:           #8e909a;
+  --cs-color-meeting-chat-close:    #9ea0ad;
+  --cs-color-meeting-chat-ph:       #8a8c96;
+  --cs-color-meeting-din-off:       rgba(255, 255, 255, .30);
+  /* ---- 态 ---- */
+  --cs-color-bg-hover:              rgba(255, 255, 255, .07);
+  --cs-color-meeting-row-active:    rgba(255, 255, 255, .07);
+  --cs-color-meeting-ctrl-hover:    rgba(255, 255, 255, .12);
+  --cs-color-meeting-ctrl-active:   rgba(255, 255, 255, .22);  /* 深色皮里纯白会炸眼，压到 .22 */
+  --cs-color-meeting-surface:       rgba(255, 255, 255, .08);
+  --cs-color-meeting-glass:         rgba(255, 255, 255, .14);
+  --cs-color-meeting-glass-inner:   rgba(255, 255, 255, .10);
+  --cs-color-meeting-dot:           rgba(255, 255, 255, .18);   /* 滚动条拖块 */
+  --cs-color-meeting-send:          rgba(255, 255, 255, .28);
+  --cs-color-meeting-check:         rgba(255, 255, 255, .22);
+  /* ---- 主色：必须提亮，否则深底上读不出来 ---- */
+  --cs-color-meeting-accent:        #7b88ff;
+  --cs-color-meeting-accent-soft:   rgba(123, 136, 255, .20);
+  --cs-color-meeting-accent-ghost:  rgba(123, 136, 255, .08);
+  --cs-color-meeting-hangup:        #e2604f;
+  --cs-color-meeting-mark-bg:       rgba(123, 136, 255, .22);   /* 转写里人名胶囊底 */
+  --cs-color-meeting-soft-fill:     rgba(255, 255, 255, .08);
+  --cs-color-meeting-vote-card:     rgba(255, 255, 255, .06);
+  --cs-color-meeting-mark-src:      rgba(255, 209, 102, .24);   /* 深色下黄标记压成半透明琥珀，白字才读得清 */
+  --cs-color-meeting-transcript-bg: rgba(123, 136, 255, .20);
+  --cs-color-meeting-transcript-text: #8fc6ff;
+  --cs-color-meeting-chat-mine:     #2c3050;                    /* 自己发的气泡 */
+  --cs-color-meeting-tag-host-bg:   rgba(54, 148, 255, .22);
+  --cs-color-meeting-tag-guest-bg:  rgba(255, 152, 26, .22);
+  /* ---- KR 面板 ---- */
+  --cs-color-meeting-kr-pill:       rgba(12, 141, 255, .20);
+  --cs-color-meeting-kr-pin:        #63b5ff;
+  --cs-color-meeting-board-pin:     #63b5ff;
+  --cs-color-meeting-kr-title:      #b9c2ff;
+  --cs-color-meeting-kr-dot:        rgba(123, 136, 255, .45);
+  --cs-color-meeting-kr-ph:         rgba(240, 241, 245, .28);
+  --cs-color-meeting-kr-ph-soft:    rgba(255, 255, 255, .22);
+  /* ---- DIN 卡 ---- */
+  --cs-color-meeting-din-chip:      rgba(255, 109, 109, .16);
+  --cs-color-meeting-din-chip-gray: rgba(255, 255, 255, .08);
+  --cs-color-meeting-din-share:     rgba(255, 255, 255, .10);
+  --cs-color-meeting-din-bug:       #ff8b8b;
+  --cs-color-meeting-din-bug-bg:    rgba(206, 28, 28, .24);
+  /* ---- 投影：浅色那套是淡黑，压在深底上等于没有，要加深 ---- */
+  --cs-shadow-lg:            0 12px 40px 0 rgba(0, 0, 0, .55);
+  --cs-shadow-xl:            0 20px 60px 0 rgba(0, 0, 0, .65);
+  --cs-shadow-card-soft:     0 1px 3px 0 rgba(0, 0, 0, .5);
+  --cs-shadow-seg-active:    0 1px 3px 0 rgba(0, 0, 0, .5);
+  --cs-shadow-meeting-bar:   0 4px 50px 0 rgba(0, 0, 0, .35);
+  --cs-shadow-meeting-kr:    0 9.984px 16.896px -6.144px rgba(0, 0, 0, .5);
+}

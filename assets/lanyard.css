@@ -1,0 +1,29 @@
+/* ═══════════════════════════════════════════════════════════════
+   lanyard.css —— 挂绳工牌
+   放在个人介绍最下方。窄屏、低端机、关了动效的设备上模块自己不启动，
+   容器也就不占高度，不会留一块空白。
+   ═══════════════════════════════════════════════════════════════ */
+.lanyard{
+  position:relative;
+  height:min(70vh,640px);
+  margin:clamp(40px,6vw,72px) 0 clamp(8px,2vw,20px);
+  border-top:1px solid var(--line);
+  padding-top:clamp(28px,4vw,48px);
+}
+.lanyard:empty{display:none}          /* 没启动就彻底不占位 */
+.lanyard-canvas{
+  position:absolute; inset:0; width:100%; height:100%;
+  display:block; touch-action:none;   /* 拖拽时别被页面滚动抢走 */
+}
+.lanyard-hint{
+  position:absolute; left:0; bottom:6px;
+  font-family:var(--font-mono); font-size:10px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--fg-4); pointer-events:none;
+}
+@media (max-width:900px){ .lanyard{display:none} }
+
+/* qr.js 的取源画布：必须留在视口内（它靠 rect 判进场），
+   所以用透明 + 不可交互隐藏，而不是 display:none 或挪到屏幕外。 */
+.qr-src{position:absolute;left:0;bottom:0;width:300px;aspect-ratio:1;
+        opacity:0;pointer-events:none}
+.qr-src canvas{width:100%;height:100%;display:block}

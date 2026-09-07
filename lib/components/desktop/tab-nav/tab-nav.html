@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-tab-nav 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="tab-nav.css?v=db50cbfa">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- 基础用法 -->
+<div class="section">
+  <div class="section-title">基础用法</div>
+  <div class="section-subtitle">下划线式标签导航，第一个标签激活</div>
+
+  <div class="row">
+    <cs-tab-nav>
+      <span class="tab-item" data-active>全部消息</span>
+      <span class="tab-item">未读</span>
+      <span class="tab-item">已读</span>
+      <span class="tab-item">系统通知</span>
+    </cs-tab-nav>
+  </div>
+</div>
+
+<!-- 带徽标计数 -->
+<div class="section">
+  <div class="section-title">带徽标计数</div>
+  <div class="section-subtitle">标签后附带数量角标</div>
+
+  <div class="row">
+    <cs-tab-nav>
+      <span class="tab-item" data-active>全部 <span class="tab-badge">128</span></span>
+      <span class="tab-item">未读 <span class="tab-badge">2</span></span>
+      <span class="tab-item">@我的 <span class="tab-badge">5</span></span>
+      <span class="tab-item">已读</span>
+    </cs-tab-nav>
+  </div>
+</div>
+
+<!-- 文档库场景 -->
+<div class="section">
+  <div class="section-title">文档库场景</div>
+  <div class="section-subtitle">中间标签激活</div>
+
+  <div class="row">
+    <cs-tab-nav>
+      <span class="tab-item">最近文档</span>
+      <span class="tab-item" data-active>我的文档</span>
+      <span class="tab-item">共享文档</span>
+      <span class="tab-item">回收站</span>
+    </cs-tab-nav>
+  </div>
+</div>
+
+<!-- 两个标签 -->
+<div class="section">
+  <div class="section-title">最少标签</div>
+  <div class="section-subtitle">仅两个标签</div>
+
+  <div class="row">
+    <cs-tab-nav>
+      <span class="tab-item" data-active>聊天</span>
+      <span class="tab-item">通讯录</span>
+    </cs-tab-nav>
+  </div>
+</div>
+
+</body>
+</html>

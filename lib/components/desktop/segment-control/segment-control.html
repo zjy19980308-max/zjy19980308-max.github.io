@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-segment-control 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="segment-control.css?v=efa5dcdc">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- 任务管理视图切换（Figma 参考） -->
+<div class="section">
+  <div class="section-title">任务管理视图切换</div>
+  <div class="section-subtitle">Figma 场景：≡列表 看板 甘特图 工时（激活项带图标 + 主色）</div>
+
+  <div class="row">
+    <span class="row-label">列表激活</span>
+    <cs-segment-control>
+      <span class="segment-item" data-active><i class="cses-liebiao"></i>列表</span>
+      <span class="segment-item">看板</span>
+      <span class="segment-item">甘特图</span>
+      <span class="segment-item">工时</span>
+    </cs-segment-control>
+  </div>
+
+  <div class="row">
+    <span class="row-label">看板激活</span>
+    <cs-segment-control>
+      <span class="segment-item"><i class="cses-liebiao"></i>列表</span>
+      <span class="segment-item" data-active>看板</span>
+      <span class="segment-item">甘特图</span>
+      <span class="segment-item">工时</span>
+    </cs-segment-control>
+  </div>
+
+  <div class="row">
+    <span class="row-label">甘特图激活</span>
+    <cs-segment-control>
+      <span class="segment-item"><i class="cses-liebiao"></i>列表</span>
+      <span class="segment-item">看板</span>
+      <span class="segment-item" data-active>甘特图</span>
+      <span class="segment-item">工时</span>
+    </cs-segment-control>
+  </div>
+</div>
+
+<!-- 2 段 -->
+<div class="section">
+  <div class="section-title">2 段切换</div>
+  <div class="section-subtitle">消息页：聊天 / 通知</div>
+
+  <div class="row">
+    <span class="row-label">第一项激活</span>
+    <cs-segment-control>
+      <span class="segment-item" data-active>聊天</span>
+      <span class="segment-item">通知</span>
+    </cs-segment-control>
+  </div>
+
+  <div class="row">
+    <span class="row-label">第二项激活</span>
+    <cs-segment-control>
+      <span class="segment-item">聊天</span>
+      <span class="segment-item" data-active>通知</span>
+    </cs-segment-control>
+  </div>
+</div>
+
+<!-- 3 段 -->
+<div class="section">
+  <div class="section-title">3 段切换</div>
+  <div class="section-subtitle">视图切换：列表 / 看板 / 日历</div>
+
+  <div class="row">
+    <span class="row-label">第一项激活</span>
+    <cs-segment-control>
+      <span class="segment-item" data-active>列表</span>
+      <span class="segment-item">看板</span>
+      <span class="segment-item">日历</span>
+    </cs-segment-control>
+  </div>
+
+  <div class="row">
+    <span class="row-label">第二项激活</span>
+    <cs-segment-control>
+      <span class="segment-item">列表</span>
+      <span class="segment-item" data-active>看板</span>
+      <span class="segment-item">日历</span>
+    </cs-segment-control>
+  </div>
+</div>
+
+<!-- 4 段（纯文本） -->
+<div class="section">
+  <div class="section-title">4 段切换（纯文本）</div>
+  <div class="section-subtitle">状态筛选：全部 / 进行中 / 已完成 / 已关闭</div>
+
+  <div class="row">
+    <span class="row-label">第一项激活</span>
+    <cs-segment-control>
+      <span class="segment-item" data-active>全部</span>
+      <span class="segment-item">进行中</span>
+      <span class="segment-item">已完成</span>
+      <span class="segment-item">已关闭</span>
+    </cs-segment-control>
+  </div>
+
+  <div class="row">
+    <span class="row-label">第三项激活</span>
+    <cs-segment-control>
+      <span class="segment-item">全部</span>
+      <span class="segment-item">进行中</span>
+      <span class="segment-item" data-active>已完成</span>
+      <span class="segment-item">已关闭</span>
+    </cs-segment-control>
+  </div>
+</div>
+
+</body>
+</html>

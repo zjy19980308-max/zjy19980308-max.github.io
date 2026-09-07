@@ -1,0 +1,43 @@
+/*
+ * content-header fragment · 自包含 css
+ * 标签：<cs-content-header>
+ * 内容区头部容器（标题/面包屑 + 搜索/按钮 · W:FILL H:64）
+ *
+ * 自包含：已合并外层嵌套样式
+ * 全部 var() · 0 颜色硬编码
+ */
+
+/* ============================================================
+ *  主容器 cs-content-header · W:FILL · H:64 · bg-white · border-bottom
+ *（border-bottom + flex-shrink 合并进来）
+ * ============================================================ */
+cs-content-header {
+  width: 100%;
+  height: 64px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-md);
+  background: var(--cs-color-white);
+  border-bottom: 1px solid var(--cs-color-border);
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* 左侧槽位（标题/面包屑） */
+cs-content-header .slot-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-10);
+  flex: 1;
+  min-width: 0;
+}
+
+/* 右侧槽位（搜索/按钮） */
+cs-content-header .slot-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}

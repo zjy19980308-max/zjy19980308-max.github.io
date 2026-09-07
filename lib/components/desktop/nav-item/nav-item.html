@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-nav-item 组件预览</title>
+  <link rel="stylesheet" href="../../../css/token.css?v=9b10a933">
+  <link rel="stylesheet" href="../../../css/variable.css?v=215874ef">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=9c0a1f3c">
+  <link rel="stylesheet" href="nav-item.css?v=555c82bc">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; padding-top: 6px; }
+    /* gap 4px = var(--space-2xs)，模拟 cs-navbar .slot-nav 的布局容器间距 */
+    .nav-list { display: flex; flex-direction: column; gap: var(--space-2xs); width: 220px; }
+  </style>
+</head>
+<body>
+
+<!-- 带图标 + 计数 -->
+<div class="section">
+  <div class="section-title">导航项 Nav Item</div>
+  <div class="section-subtitle">用于二级侧边栏中的导航条目，支持图标、计数、激活态</div>
+
+  <div class="row">
+    <span class="row-label">带图标+计数</span>
+    <div class="nav-list">
+      <cs-nav-item data-active>
+        <div class="nav-left">
+          <i class="nav-icon cses-renwu"></i>
+          <span class="nav-label">待办</span>
+        </div>
+        <span class="nav-count">3</span>
+      </cs-nav-item>
+      <cs-nav-item>
+        <div class="nav-left">
+          <i class="nav-icon cses-check-circle"></i>
+          <span class="nav-label">已办</span>
+        </div>
+        <span class="nav-count">3</span>
+      </cs-nav-item>
+      <cs-nav-item>
+        <div class="nav-left">
+          <i class="nav-icon cses-wendang"></i>
+          <span class="nav-label">我的创建</span>
+        </div>
+      </cs-nav-item>
+      <cs-nav-item>
+        <div class="nav-left">
+          <i class="nav-icon cses-shijian"></i>
+          <span class="nav-label">我的检视</span>
+        </div>
+      </cs-nav-item>
+    </div>
+  </div>
+
+  <div class="row">
+    <span class="row-label">无图标</span>
+    <div class="nav-list">
+      <cs-nav-item>
+        <div class="nav-left">
+          <span class="nav-label">我的工时</span>
+        </div>
+      </cs-nav-item>
+      <cs-nav-item data-active>
+        <div class="nav-left">
+          <span class="nav-label">我的关注</span>
+        </div>
+      </cs-nav-item>
+      <cs-nav-item>
+        <div class="nav-left">
+          <span class="nav-label">全部文档</span>
+        </div>
+      </cs-nav-item>
+    </div>
+  </div>
+
+  <div class="row">
+    <span class="row-label">无图标+计数</span>
+    <div class="nav-list">
+      <cs-nav-item>
+        <div class="nav-left">
+          <span class="nav-label">待办</span>
+        </div>
+        <span class="nav-count">3</span>
+      </cs-nav-item>
+      <cs-nav-item data-active>
+        <div class="nav-left">
+          <span class="nav-label">已办</span>
+        </div>
+        <span class="nav-count">3</span>
+      </cs-nav-item>
+      <cs-nav-item>
+        <div class="nav-left">
+          <span class="nav-label">我的创建</span>
+        </div>
+      </cs-nav-item>
+    </div>
+  </div>
+</div>
+
+<!-- 业务场景：模拟 Figma 二级导航栏 -->
+<div class="section">
+  <div class="section-title">业务场景：二级导航栏</div>
+  <div class="section-subtitle">模拟 Figma 截图中的导航结构</div>
+
+  <div class="nav-list" style="width: 220px;">
+    <cs-nav-item data-active>
+      <div class="nav-left">
+        <span class="nav-label">待办</span>
+      </div>
+      <span class="nav-count">3</span>
+    </cs-nav-item>
+    <cs-nav-item>
+      <div class="nav-left">
+        <span class="nav-label">已办</span>
+      </div>
+      <span class="nav-count">3</span>
+    </cs-nav-item>
+    <cs-nav-item>
+      <div class="nav-left">
+        <span class="nav-label">我的创建</span>
+      </div>
+    </cs-nav-item>
+    <cs-nav-item>
+      <div class="nav-left">
+        <span class="nav-label">我的检视</span>
+      </div>
+    </cs-nav-item>
+    <cs-nav-item>
+      <div class="nav-left">
+        <span class="nav-label">我的工时</span>
+      </div>
+    </cs-nav-item>
+    <cs-nav-item>
+      <div class="nav-left">
+        <span class="nav-label">我的关注</span>
+      </div>
+    </cs-nav-item>
+  </div>
+</div>
+
+</body>
+</html>

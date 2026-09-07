@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-spin 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="spin.css?v=e31cf5fe">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+    .demo-card { padding: 24px; background: #fafafa; border-radius: 4px; min-width: 200px; }
+    .demo-card-text { font: var(--typo-cn-14-regular); color: var(--cs-color-text); line-height: 1.8; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 三种尺寸 ========== -->
+<div class="section">
+  <div class="section-title">三种尺寸 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg" — 16/24/40 px</div>
+  <div class="row">
+    <cs-spin data-size="sm"><span class="spin-dot"></span></cs-spin>
+    <cs-spin><span class="spin-dot"></span></cs-spin>
+    <cs-spin data-size="lg"><span class="spin-dot"></span></cs-spin>
+  </div>
+</div>
+
+<!-- ========== 2. 带文字 ========== -->
+<div class="section">
+  <div class="section-title">带文字 With Tip</div>
+  <div class="section-subtitle">.spin-text 子元素</div>
+  <div class="row">
+    <cs-spin>
+      <span class="spin-dot"></span>
+      <span class="spin-text">加载中...</span>
+    </cs-spin>
+    <cs-spin data-size="lg">
+      <span class="spin-dot"></span>
+      <span class="spin-text">正在生成报表，请稍候</span>
+    </cs-spin>
+  </div>
+</div>
+
+<!-- ========== 3. 包裹模式 - 局部遮罩 ========== -->
+<div class="section">
+  <div class="section-title">包裹模式 Wrapper</div>
+  <div class="section-subtitle">data-spinning 启用遮罩；.spin-content 包裹内容；.spin-mask 提供居中 spinner</div>
+  <div class="row">
+    <cs-spin data-spinning style="width: 320px;">
+      <div class="spin-content">
+        <div class="demo-card">
+          <div class="demo-card-text">这是一段被 spin 遮罩的内容。<br>遮罩层会半透明覆盖在上方，居中展示 spinner。</div>
+        </div>
+      </div>
+      <div class="spin-mask">
+        <span class="spin-dot"></span>
+        <span class="spin-text">加载中...</span>
+      </div>
+    </cs-spin>
+
+    <cs-spin data-spinning style="width: 320px;">
+      <div class="spin-content">
+        <div class="demo-card">
+          <div class="demo-card-text">用户列表<br>张三 · 工程师<br>李四 · 设计师<br>王五 · 产品经理</div>
+        </div>
+      </div>
+      <div class="spin-mask">
+        <span class="spin-dot"></span>
+      </div>
+    </cs-spin>
+  </div>
+</div>
+
+<!-- ========== 4. 不同颜色背景 ========== -->
+<div class="section">
+  <div class="section-title">独立 Spinner</div>
+  <div class="section-subtitle">用于 message/button 内的 inline loading</div>
+  <div class="row">
+    <cs-spin data-size="sm"><span class="spin-dot"></span></cs-spin>
+    <span style="font: var(--typo-cn-14-regular); color: var(--cs-color-text);">数据同步中</span>
+  </div>
+</div>
+
+</body>
+</html>

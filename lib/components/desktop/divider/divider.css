@@ -1,0 +1,121 @@
+/*
+ * 分割线组件 (Divider)
+ * 标签：<cs-divider>
+ *
+ * 作用：用于段落、菜单项、卡片之间的视觉分隔。
+ * 对标 ng-zorro Divider。
+ *
+ * data 属性：
+ *   data-orientation="horizontal" — 横向（默认）
+ *   data-orientation="vertical"   — 纵向
+ *   data-text-align="left"        — 文字位置（仅横向带文字）
+ *   data-text-align="center"      — 居中（默认）
+ *   data-text-align="right"       — 右对齐
+ *   data-dashed                   — 虚线
+ *   data-color="primary|success|warning|danger|info" — 语义颜色
+ *
+ * 子元素：
+ *   .divider-text — 居中文字（横向带文字模式）
+ */
+
+/* ========== 横向（默认） ========== */
+cs-divider {
+  display: block;
+  width: 100%;
+  margin: var(--space-md) 0;
+  border-top: var(--line-width) solid var(--cs-color-border);
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* ========== 虚线 ========== */
+cs-divider[data-dashed] {
+  border-top-style: dashed;
+}
+
+/* ========== 横向带文字 ========== */
+cs-divider:has(.divider-text) {
+  display: flex;
+  align-items: center;
+  border-top: 0;
+  margin: var(--spacing-24) 0;
+}
+
+cs-divider:has(.divider-text)::before,
+cs-divider:has(.divider-text)::after {
+  content: '';
+  flex: 1;
+  height: var(--line-width);
+  background: var(--cs-color-border);
+}
+
+cs-divider[data-dashed]:has(.divider-text)::before,
+cs-divider[data-dashed]:has(.divider-text)::after {
+  background: transparent;
+  border-top: var(--line-width) dashed var(--cs-color-border);
+  height: 0;
+}
+
+cs-divider .divider-text {
+  padding: 0 var(--space-md);
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* 文字左对齐 */
+cs-divider[data-text-align="left"]:has(.divider-text)::before {
+  flex: 0 0 var(--space-md);
+}
+
+cs-divider[data-text-align="left"] .divider-text {
+  padding-left: 0;
+}
+
+/* 文字右对齐 */
+cs-divider[data-text-align="right"]:has(.divider-text)::after {
+  flex: 0 0 var(--space-md);
+}
+
+cs-divider[data-text-align="right"] .divider-text {
+  padding-right: 0;
+}
+
+/* ========== 纵向 ========== */
+cs-divider[data-orientation="vertical"] {
+  display: inline-block;
+  width: var(--line-width);
+  height: var(--font-size-md);
+  margin: 0 var(--space-xs);
+  border-top: 0;
+  border-left: var(--line-width) solid var(--cs-color-border);
+  vertical-align: middle;
+}
+
+cs-divider[data-orientation="vertical"][data-dashed] {
+  border-left-style: dashed;
+}
+
+/* ========== 语义颜色 ========== */
+cs-divider[data-color="primary"] {
+  border-color: var(--cs-color-primary);
+}
+cs-divider[data-color="success"] {
+  border-color: var(--color-green-500);
+}
+cs-divider[data-color="warning"] {
+  border-color: var(--color-orange-500);
+}
+cs-divider[data-color="danger"] {
+  border-color: var(--cs-sem-text-error);
+}
+cs-divider[data-color="info"] {
+  border-color: var(--color-blue-200);
+}
+
+cs-divider[data-color]:has(.divider-text)::before,
+cs-divider[data-color]:has(.divider-text)::after {
+  background: currentColor;
+  opacity: 0.3;
+}

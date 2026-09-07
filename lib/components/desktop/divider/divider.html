@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-divider 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="divider.css?v=d5635f1e">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo-text { font: var(--typo-cn-14-regular); color: var(--cs-color-text-light); line-height: 1.6; }
+    .vertical-row { display: flex; align-items: center; gap: 8px; font: var(--typo-cn-14-regular); color: var(--cs-color-text); }
+    .vertical-row a { color: var(--cs-color-primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 横向无文字 ========== -->
+<div class="section">
+  <div class="section-title">横向 Horizontal</div>
+  <div class="section-subtitle">默认横向实线</div>
+  <div class="demo-text">第一段内容，介绍组件的用途与特性。</div>
+  <cs-divider></cs-divider>
+  <div class="demo-text">第二段内容，与第一段通过分割线视觉隔离。</div>
+  <cs-divider data-dashed></cs-divider>
+  <div class="demo-text">第三段，使用虚线分割。</div>
+</div>
+
+<!-- ========== 2. 横向带文字 ========== -->
+<div class="section">
+  <div class="section-title">横向带文字 With Text</div>
+  <div class="section-subtitle">data-text-align="left | center | right"</div>
+
+  <div class="demo-text">前一段内容…</div>
+  <cs-divider><span class="divider-text">居中文字</span></cs-divider>
+  <div class="demo-text">后一段内容…</div>
+
+  <cs-divider data-text-align="left"><span class="divider-text">左对齐</span></cs-divider>
+  <div class="demo-text">— 内容 —</div>
+
+  <cs-divider data-text-align="right"><span class="divider-text">右对齐</span></cs-divider>
+  <div class="demo-text">— 内容 —</div>
+
+  <cs-divider data-dashed><span class="divider-text">虚线 + 文字</span></cs-divider>
+</div>
+
+<!-- ========== 3. 纵向 ========== -->
+<div class="section">
+  <div class="section-title">纵向 Vertical</div>
+  <div class="section-subtitle">data-orientation="vertical" — 行内分隔多个文字/链接</div>
+  <div class="vertical-row">
+    <a href="#">编辑</a>
+    <cs-divider data-orientation="vertical"></cs-divider>
+    <a href="#">复制</a>
+    <cs-divider data-orientation="vertical"></cs-divider>
+    <a href="#">归档</a>
+    <cs-divider data-orientation="vertical"></cs-divider>
+    <a href="#">删除</a>
+  </div>
+  <div class="vertical-row" style="margin-top: 16px;">
+    <span>共 128 条</span>
+    <cs-divider data-orientation="vertical" data-dashed></cs-divider>
+    <span>已选中 3 条</span>
+    <cs-divider data-orientation="vertical" data-dashed></cs-divider>
+    <span>未读 12 条</span>
+  </div>
+</div>
+
+<!-- ========== 4. 语义颜色 ========== -->
+<div class="section">
+  <div class="section-title">语义颜色 Semantic</div>
+  <div class="section-subtitle">data-color="primary | success | warning | danger | info"</div>
+  <cs-divider data-color="primary"><span class="divider-text">主色</span></cs-divider>
+  <cs-divider data-color="success"><span class="divider-text">成功</span></cs-divider>
+  <cs-divider data-color="warning"><span class="divider-text">警告</span></cs-divider>
+  <cs-divider data-color="danger"><span class="divider-text">错误</span></cs-divider>
+</div>
+
+</body>
+</html>

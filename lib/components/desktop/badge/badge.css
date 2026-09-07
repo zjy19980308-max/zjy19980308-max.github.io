@@ -1,0 +1,128 @@
+/*
+ * 徽标数组件 (Badge)
+ * 标签：<cs-badge>
+ *
+ * 作用：在元素角标位置展示数字、状态点或文字徽章。
+ * 对标 ng-zorro Badge / antd Badge。
+ *
+ * data 属性：
+ *   data-variant="dot"        — 小红点（无数字）
+ *   data-variant="count"      — 数字徽章（默认）
+ *   data-variant="standalone" — 独立 pill 徽章（不挂角标，自身展示）
+ *   data-color="default|primary|success|warning|danger|info"
+ *   data-size="sm|md|lg"
+ *
+ * 子元素：
+ *   .badge-anchor   — 被锚定的元素（图标、按钮、头像）
+ *   .badge-indicator— 徽章本体（点 / 数字）
+ */
+
+/* ========== 容器 ========== */
+cs-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+cs-badge .badge-anchor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cs-color-text);
+  font-size: var(--font-size-md);
+}
+
+/* ========== 徽章本体 ========== */
+cs-badge .badge-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--space-md);
+  height: var(--space-md);
+  padding: 0 var(--space-2xs);
+  border-radius: var(--radius-pill, 999px);
+  background: var(--cs-sem-text-error);
+  color: var(--cs-color-white);
+  font: var(--typo-cn-12-regular);
+  white-space: nowrap;
+  box-sizing: border-box;
+  transform: translate(50%, -50%);
+  border: var(--line-width) solid var(--cs-color-white);
+}
+
+/* ========== 变体：小红点 ========== */
+cs-badge[data-variant="dot"] .badge-indicator {
+  min-width: var(--space-xs);
+  width: var(--space-xs);
+  height: var(--space-xs);
+  padding: 0;
+  border: 0;
+}
+
+/* ========== 变体：独立 pill 徽章 ========== */
+cs-badge[data-variant="standalone"] {
+  display: inline-flex;
+}
+
+cs-badge[data-variant="standalone"] .badge-indicator {
+  position: static;
+  transform: none;
+  border: 0;
+}
+
+/* ========== 尺寸 ========== */
+cs-badge[data-size="sm"] .badge-indicator {
+  min-width: var(--space-sm);
+  height: var(--space-sm);
+  font-size: var(--font-size-xs);
+}
+
+cs-badge[data-size="sm"][data-variant="dot"] .badge-indicator {
+  min-width: var(--space-2xs);
+  width: var(--space-2xs);
+  height: var(--space-2xs);
+}
+
+cs-badge[data-size="lg"] .badge-indicator {
+  min-width: var(--spacing-20);
+  height: var(--spacing-20);
+  padding: 0 var(--space-xs);
+  font: var(--typo-cn-13-regular);
+}
+
+cs-badge[data-size="lg"][data-variant="dot"] .badge-indicator {
+  min-width: var(--space-sm);
+  width: var(--space-sm);
+  height: var(--space-sm);
+}
+
+/* ========== 语义颜色 ========== */
+cs-badge[data-color="primary"] .badge-indicator {
+  background: var(--cs-color-primary);
+}
+
+cs-badge[data-color="success"] .badge-indicator {
+  background: var(--color-green-500);
+}
+
+cs-badge[data-color="warning"] .badge-indicator {
+  background: var(--color-orange-500);
+}
+
+cs-badge[data-color="danger"] .badge-indicator {
+  background: var(--cs-sem-text-error);
+}
+
+cs-badge[data-color="info"] .badge-indicator {
+  background: var(--color-blue-300);
+}
+
+cs-badge[data-color="default"] .badge-indicator {
+  background: var(--cs-color-text-light2);
+}

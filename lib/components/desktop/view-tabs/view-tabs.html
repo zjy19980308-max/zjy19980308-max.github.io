@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-view-tabs 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="view-tabs.css?v=6f17d674">
+  <style>
+    body { padding: 32px; background: #eef0f2; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 6px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    /* 折页栏下方要有一块白（模拟连着的内容区），才看得出白页签「浮出连下方」的折页效果 */
+    .tabs-stage { background: var(--cs-color-bg-tab-trough); }
+    .tabs-stage .content-below { background: #fff; height: 56px; }
+    /* 两态图标对照 */
+    .icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .icon-cell { display: flex; align-items: center; gap: 20px; padding: 10px 14px; border: 1px solid var(--cs-color-border); border-radius: 8px; }
+    .icon-cell .lbl { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 44px; }
+  </style>
+</head>
+<body>
+
+<!-- 真实用法：表格视图选中 -->
+<div class="section">
+  <div class="section-title">基础用法 · 多维表格视图切换</div>
+  <div class="section-subtitle">灰底槽 + 白页签浮出（首个选中左上角贴边不圆）· ⋮ 只选中显示 · 未选中相邻竖分隔线</div>
+  <div class="tabs-stage">
+    <cs-view-tabs>
+      <span class="vt-tab vt-grid is-active"><i class="vt-icon"></i>表格<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-kanban"><i class="vt-icon"></i>看板<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-gantt"><i class="vt-icon"></i>甘特图<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-calendar"><i class="vt-icon"></i>日历<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-map"><i class="vt-icon"></i>地图<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-form"><i class="vt-icon"></i>表单<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-gallery"><i class="vt-icon"></i>画册<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-add"><i class="cses-add"></i>新建视图</span>
+    </cs-view-tabs>
+    <div class="content-below"></div>
+  </div>
+</div>
+
+<!-- 中间页签选中：看板绿 → 甘特图（品红）选中，验证非首项圆角两侧都圆 -->
+<div class="section">
+  <div class="section-title">中间页签选中</div>
+  <div class="section-subtitle">非首项选中时左右上角都圆 · 图标转对应品牌彩色</div>
+  <div class="tabs-stage">
+    <cs-view-tabs>
+      <span class="vt-tab vt-grid"><i class="vt-icon"></i>表格<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-kanban"><i class="vt-icon"></i>看板<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-gantt is-active"><i class="vt-icon"></i>甘特图<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-calendar"><i class="vt-icon"></i>日历<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-map"><i class="vt-icon"></i>地图<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-form"><i class="vt-icon"></i>表单<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-gallery"><i class="vt-icon"></i>画册<i class="cses-more vt-more"></i></span>
+      <span class="vt-tab vt-add"><i class="cses-add"></i>新建视图</span>
+    </cs-view-tabs>
+    <div class="content-below"></div>
+  </div>
+</div>
+
+<!-- 全部视图图标 · 两态对照（未选 #333 单色 / 选中 彩色）供验收 -->
+<div class="section">
+  <div class="section-title">全部视图图标 · 两态对照</div>
+  <div class="section-subtitle">左=未选(#333 单色) · 右=选中(品牌彩色) · 均吃 assets/view-icons 文件</div>
+  <cs-view-tabs class="icon-grid" style="height:auto;background:transparent;">
+    <div class="icon-cell vt-grid"><span class="lbl">表格</span><i class="vt-icon"></i><i class="vt-icon" style="background-image:var(--vt-color)"></i></div>
+    <div class="icon-cell vt-kanban"><span class="lbl">看板</span><i class="vt-icon"></i><i class="vt-icon" style="background-image:var(--vt-color)"></i></div>
+    <div class="icon-cell vt-gantt"><span class="lbl">甘特图</span><i class="vt-icon"></i><i class="vt-icon" style="background-image:var(--vt-color)"></i></div>
+    <div class="icon-cell vt-calendar"><span class="lbl">日历</span><i class="vt-icon"></i><i class="vt-icon" style="background-image:var(--vt-color)"></i></div>
+    <div class="icon-cell vt-map"><span class="lbl">地图</span><i class="vt-icon"></i><i class="vt-icon" style="background-image:var(--vt-color)"></i></div>
+    <div class="icon-cell vt-form"><span class="lbl">表单</span><i class="vt-icon"></i><i class="vt-icon" style="background-image:var(--vt-color)"></i></div>
+    <div class="icon-cell vt-gallery"><span class="lbl">画册</span><i class="vt-icon"></i><i class="vt-icon" style="background-image:var(--vt-color)"></i></div>
+    <div class="icon-cell vt-query"><span class="lbl">查询</span><i class="vt-icon"></i><i class="vt-icon" style="background-image:var(--vt-color)"></i></div>
+    <div class="icon-cell vt-print"><span class="lbl">打印</span><i class="vt-icon"></i><i class="vt-icon" style="background-image:var(--vt-color)"></i></div>
+  </cs-view-tabs>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>任务详情</title>
+<style>
+:root{--cs-primary:#4857e2;--cs-primary-disabled:#ced3ff;--cs-border:#e6e6e6;--cs-error:#f53f3f;--ink:#333;--ink3:#999;--font:"PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:#fff;color:var(--ink);font:14px/1.5 var(--font);-webkit-font-smoothing:antialiased}body{display:inline-block;vertical-align:top;min-width:0}
+.dlg{width:1297px;height:800px;background:#fff;border-radius:12px 0 0 12px;box-shadow:0 0 3px rgba(0,0,0,.15),-3px 0 30px rgba(0,0,0,.15);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.top{height:68px;border-bottom:1px solid var(--cs-border);display:flex;align-items:center;padding:0 40px 0 59px;gap:11px;flex:none}
+.top .xt{position:relative;width:28px;height:24px;margin-right:6px}.top .xt img{position:absolute;left:0;top:7px;width:20px;height:20px}.top .xt b{position:absolute;left:13px;top:0;min-width:15px;height:14px;border-radius:10px;background:var(--cs-primary-disabled);color:var(--cs-primary);font-size:10px;font-weight:400;display:flex;align-items:center;justify-content:center;padding:0 3px}
+.top .nav{display:flex;gap:11px;align-items:center}.top .nav img{width:20px;height:17px;display:block;cursor:pointer;opacity:.7}.top .nav img.dn{transform:scaleY(-1)}
+.top .bc{display:flex;align-items:center;gap:4px;font-size:14px;color:var(--ink)}.top .bc img{width:14px;height:14px;display:block}.top .bc .wi{width:16px;height:16px}
+.top .fi{display:flex;gap:9px;align-items:center;margin-left:2px}.top .fi img{width:14px;height:14px;display:block;opacity:.6}
+.top .r{margin-left:auto;display:flex;gap:16px;align-items:center}.top .r img{width:20px;height:20px;display:block;cursor:pointer;opacity:.75}.top .r img:hover{opacity:1}
+.main{flex:1;display:flex;min-height:0}
+.left{width:733px;position:relative;display:flex;flex-direction:column;border-right:1px solid #f5f5f5}
+.scroll{flex:1;overflow:auto;padding:22px 58px 0}
+h1{margin:0 0 30px;font-size:24px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;outline:none}
+.sec-t{font-size:18px;font-weight:600;margin:0 0 8px;display:flex;align-items:center;justify-content:space-between;position:relative}.sec-t .req{position:absolute;left:-8px;top:0;width:8px;height:8px}
+.f{display:flex;align-items:center;min-height:44px;gap:52px}.f .k{display:flex;align-items:center;gap:8px;color:var(--ink3);font-size:14px;font-weight:600;min-width:64px;white-space:nowrap;flex:none}.f .k img{width:16px;height:16px;display:block}.f .k.rg{font-weight:400}
+.f .v{flex:1;min-width:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:4px 0}
+.pill{height:24px;width:58px;border-radius:12px;background:var(--cs-primary-disabled);color:var(--cs-primary);font-size:14px;font-weight:500;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.who{display:flex;align-items:center;gap:8px;padding:4px 8px 4px 4px;border-radius:17px;position:relative;cursor:default}.who img{width:20px;height:20px;border-radius:50%;object-fit:cover;display:block}.who.sel{background:#f5f5f5;border-radius:14px}.who .x{position:absolute;left:67px;top:-5px;width:12px;height:12px;border-radius:50%;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;cursor:pointer}.who .x img{width:5px;height:5px;border-radius:0}
+.f .ops{margin-left:auto;display:flex;gap:8px;font-size:12px}.f .ops b{font-weight:400;color:var(--cs-primary);cursor:pointer}.f .ops span{color:var(--ink3);cursor:pointer}
+.f .line{flex:1;border-bottom:1px solid var(--cs-border);display:flex;align-items:center;justify-content:space-between;padding:6px 0}.f .line .t{display:flex;gap:10px;flex:1}.f .line .t span{flex:1}.f .line .t i{font-style:normal;font-weight:600}.f .line img{width:12.5px;height:13.5px;display:block}
+.two{display:flex;gap:9px}.two .f{flex:1;gap:40px}.two .f:last-child{gap:30px}.two .k{width:auto}.two .line{padding:12px 0}.two .acts{display:flex;gap:24px}.two .acts span{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--cs-primary);cursor:pointer}.two .acts img{width:14px;height:14px;display:block}
+.pri{color:var(--cs-error);font-size:14px}
+.tag{padding:2px 4px;border-radius:4px;font-size:12px;font-weight:500;letter-spacing:-.02em}.tag.java{background:#f9ead6;color:#ec9e29}.tag.plan{background:#e5f8fb;color:#0cc8e1}
+.desc{margin-top:52px}.desc .body{display:flex;flex-direction:column;gap:16px;font-size:14px;color:var(--ink);text-align:justify}.desc .body p{margin:0;outline:none}.desc .body .path{color:var(--ink3)}
+.ck{display:flex;align-items:center;gap:12px}.ck img{width:14px;height:14px;display:block;cursor:pointer}.ck.done span{color:var(--ink3);text-decoration:line-through}.ol{display:flex;flex-direction:column;gap:16px}.ol div{display:flex;gap:8px}.ol b{width:18px;text-align:center;font-weight:400}
+.tb{margin:24px 0 0 8px;border-top:1px solid var(--cs-border);border-bottom:1px solid var(--cs-border);padding:4px 0;display:flex;align-items:center;justify-content:space-between}.tb .g{display:flex;align-items:center;gap:8px}.tb .grp{display:flex;gap:4px;align-items:center}.tb button{width:20px;height:20px;border:0;background:none;padding:0;display:flex;align-items:center;justify-content:center;border-radius:4px;cursor:pointer}.tb button:hover{background:#f2f3f5}.tb button img{width:14.3px;height:14.3px;display:block}.tb button.l img{width:20px;height:20px}.tb .sep{width:1px;height:12px;background:var(--cs-border);margin:0 4px}
+.foot{height:105px;flex:none;border-top:1px solid var(--cs-border);display:flex;align-items:center;justify-content:flex-end;padding-right:32px;gap:16px;background:#fff}.foot button{width:112px;height:40px;border-radius:4px;font:12px var(--font);cursor:pointer}.foot .c{border:1px solid var(--cs-border);background:#fff;color:var(--ink3);box-shadow:0 0 2px rgba(0,0,0,.1)}.foot .s{border:0;background:var(--cs-primary);color:#fff}
+.right{flex:1;display:flex;flex-direction:column;min-width:0;background:#fff}
+.tabs{height:54px;display:flex;align-items:center;gap:32px;padding:0 24px;border-bottom:1px solid #f5f5f5;flex:none}.tabs span{display:flex;align-items:center;gap:4px;color:var(--ink3);font-size:14px;cursor:pointer;position:relative;height:54px}.tabs span img{width:16px;height:16px;display:block}.tabs span.on{color:#4958de}.tabs span.on img{width:18px;height:18px}.tabs span.on::after{content:"";position:absolute;left:50%;bottom:8px;width:26px;height:2px;border-radius:18px;background:var(--cs-primary);transform:translateX(-50%)}
+.chat{flex:1;display:flex;flex-direction:column;min-height:0;background:#f1f1f1;border:1px solid rgba(210,211,211,.5);border-right:0;margin:0 0 0 0}
+.chat .hd{padding:16px;border-bottom:1px solid #e1e2e2;display:flex;align-items:center;gap:8px;background:#f1f1f1}.chat .hd .q{width:26px;height:26px;border-radius:6px;background:#e4e4e4;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}.chat .hd .q img{width:13px;height:13px;object-fit:cover;display:block}.chat .hd b{font-size:18px;font-weight:600}
+.msgs{flex:1;overflow:auto;padding:16px 20px;display:flex;flex-direction:column;gap:16px}.m{display:flex;gap:8px;align-items:flex-start}.m .av{width:24px;height:24px;border-radius:6px;object-fit:cover;flex:none;display:block}.m .av.ai{border-radius:4px;transform:rotate(180deg) scaleY(-1)}.m .bd{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}.m .nm{display:flex;align-items:center;gap:2px;font-size:12px;font-weight:600}.m .nm small{font-size:8px;color:var(--ink3);font-weight:400}.m .bub{background:#fff;padding:8px 12px;border-radius:8px;font-size:14px;color:var(--ink);align-self:flex-start;max-width:100%}.m .bub.me{background:#cddffd}
+.qk{display:flex;gap:5px}.qk button{flex:1;height:24px;border:0;border-radius:2.6px;background:#fff;font:9.2px var(--font);color:var(--ink);display:flex;align-items:center;justify-content:center;gap:5px;cursor:pointer}.qk button img{width:13px;height:13px}
+.card{background:#fff;border-radius:4px;padding:7px;display:flex;align-items:center;gap:3px;cursor:pointer}.card .ic{width:26px;height:26px;border-radius:4px;display:flex;align-items:center;justify-content:center;background:var(--cs-primary-disabled)}.card .ic.g{background:#cfedd8}.card .ic img{width:16.7px;height:16.7px}.card b{font-size:9.8px;display:block}.card small{font-size:7px;color:var(--ink3)}
+.inp{margin:0 17px 16px;background:#fff;border-radius:8px;box-shadow:0 0 5px rgba(0,0,0,.08);padding:4px 8px;height:44px;display:flex;align-items:center;justify-content:space-between;flex:none}.inp input{border:0;outline:0;flex:1;font:14px var(--font);color:var(--ink);padding:6px 0 6px 8px;border-left:1px solid var(--cs-border);margin-left:8px}.inp .ic{display:flex;gap:8px;align-items:center}.inp .ic img{width:20px;height:20px;display:block;cursor:pointer;padding:2px}.inp .ic img.tall{width:18px;height:24px;padding:0}
+/* 嵌入态（会议主屏 / 任何 iframe）：按给到的框适配——宽高撑满视口，去掉弹窗圆角阴影；左列描述区随高度拉开，字不够就留白，页脚钉底 */
+html.embed,html.embed body{height:100%;width:100%}html.embed body{display:block}
+html.embed .dlg{width:100%;height:100%;min-height:100vh;border-radius:0;box-shadow:none}
+html.embed .scroll{padding-bottom:40px}html.embed .desc{margin-top:40px}html.embed .desc .body{min-height:160px}
+html.embed .top .r img[title="关闭"]{display:none}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0b0b10;color:#fff;font-size:13px;padding:8px 14px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none}.toast.on{opacity:1}
+</style></head><body>
+<div class="dlg">
+  <div class="top">
+    <span class="xt"><img src="assets/d_xietong.svg" alt=""><b>2</b></span>
+    <span class="nav"><img src="assets/d_upx.svg" alt="" title="上一个"><img class="dn" src="assets/d_upx.svg" alt="" title="下一个"></span>
+    <span class="bc"><img src="assets/d_space.svg" alt="">XPA的空间<span>/</span><img class="wi" src="assets/d_gongzuoxiang.svg" alt="">开发工作</span>
+    <span class="fi"><img src="assets/d_filemulti.svg" alt=""><img src="assets/d_fileup.svg" alt="" style="width:13px"></span>
+    <span class="r"><img src="assets/d_gengduo.svg" alt="" title="更多"><img src="assets/d_star.svg" alt="" title="收藏"><img src="assets/d_share.svg" alt="" title="分享"><img src="assets/d_fangda.svg" alt="" title="放大"><img src="assets/d_close.svg" alt="" title="关闭" id="btnClose"></span>
+  </div>
+  <div class="main">
+    <div class="left">
+      <div class="scroll">
+        <h1 contenteditable="true" id="title">这是一个任务名称</h1>
+        <p class="sec-t">详情</p>
+        <div class="f" style="gap:72px"><span class="k"><img src="assets/d_lightning.svg" alt="">状态</span><span class="v"><span class="pill" id="pill">进行中</span></span></div>
+        <div class="f"><span class="k"><img src="assets/d_to.svg" alt="">负责人</span><span class="v"><span class="who"><img src="assets/d_av1.png" alt="">周静</span><span class="who"><img src="assets/d_av2.png" alt="">赵萸艳</span></span></div>
+        <div class="f"><span class="k"><img src="assets/d_cc.svg" alt="">参与人</span><span class="v" id="cc"><span class="who"><img src="assets/d_av3.png" alt="">冯云</span><span class="who sel"><img src="assets/d_av4.png" alt="">周小艺<span class="x"><img src="assets/d_x02.svg" alt=""></span></span><span class="who"><img src="assets/d_av5.png" alt="">李书萍</span><span class="who"><img src="assets/d_av6.png" alt="">李梓发</span><span class="who"><img src="assets/d_av6.png" alt="">李梓发</span><span class="ops"><b id="addCc">添加</b><span>展开</span></span></span></div>
+        <div style="height:44px"></div>
+        <div class="f" style="gap:67px"><span class="k rg"><img src="assets/d_calendar.svg" alt="">时间</span><span class="line"><span class="t"><span>2025/10/01  03:00</span><i>~</i><span>2025/10/04  03:00</span></span><img src="assets/d_calnum.svg" alt=""></span></div>
+        <div class="two">
+          <div class="f"><span class="k rg"><img src="assets/d_gongshi.svg" alt="">预估工时</span><span class="line"><span>12</span></span></div>
+          <div class="f"><span class="k rg"><img src="assets/d_gongshi.svg" alt="">实际工时</span><span class="line"><span id="hours">18</span><span class="acts"><span id="addH"><img src="assets/d_tianjia.svg" alt="">添加工时</span><span><img src="assets/d_mingxi.svg" alt="">明细</span></span></span></div>
+        </div>
+        <div class="f"><span class="k"><img src="assets/d_lightning.svg" alt="">优先级</span><span class="v"><span class="pri">紧急</span></span></div>
+        <div class="f" style="gap:66px"><span class="k"><img src="assets/d_favourite.svg" alt="">标签</span><span class="v"><span class="tag java">Java</span><span class="tag plan">方案计划</span></span></div>
+        <div class="desc">
+          <p class="sec-t"><span style="position:relative"><img class="req" src="assets/d_req.svg" alt="">描述</span><img src="assets/d_expand.svg" alt="" style="width:16px;height:16px;cursor:pointer"></p>
+          <div class="body">
+            <p contenteditable="true"><span class="path">[XPA/订单/订单审核/撤单] </span>近日，水利部、交通运输部、国家发展改革委联合印发《大运河河道水系治理管护规划》（以下简称《规划》）。《规划》提出，大运河沿线8省（市）是推进大运河文化保护传承利用的主体，要切实履职尽责，扎实推进大运河河道水系治理管护各项任务落到实处。</p>
+            <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>无序</span></div>
+            <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>UI设计师及时跟进，完成任务看板的设计，尽快提交</span></div>
+            <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>完成请各位UI设计师及时跟进，完成任务看板的设计，尽快提交</span></div>
+            <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>任务看板的设计，尽快提交</span></div>
+            <div class="ol"><div><b>1</b><span>有序</span></div><div><b>2</b><span>大运河沿线8省（市）是推进大运河文化保护传承利用的主体，要切实履职尽责</span></div><div><b>3</b><span>有序</span></div><div><b>4</b><span>有序</span></div></div>
+            <p contenteditable="true">近日，水利部、交通运输部、国家发展改革委联合印发《大运河河道水系治理管护规划》（以下简称《规划》）。《规划》提出，大运河沿线8省（市）是推进大运河文化保护传承利用的主体，要切实履职尽责，扎实推进大运河河道水系治理管护各项任务落到实处。</p>
+          </div>
+          <div class="tb"><div class="g"><span class="grp"><button><img src="assets/d_bold.svg" alt=""></button><button><img src="assets/d_italic.svg" alt=""></button><button><img src="assets/d_underline.svg" alt=""></button><button><img src="assets/d_strike.svg" alt=""></button></span><span class="sep"></span><span class="grp"><button class="l"><img src="assets/d_listic.svg" alt="" style="width:10.5px;height:10px"></button><button><img src="assets/d_bullet.svg" alt=""></button><button><img src="assets/d_numbered.svg" alt=""></button><button><img src="assets/d_quote.svg" alt=""></button><button><img src="assets/d_link.svg" alt=""></button></span><span class="sep"></span><span class="grp"><button class="l"><img src="assets/d_indent.svg" alt=""></button><button class="l"><img src="assets/d_lineheight.svg" alt=""></button></span></div><div class="g" style="gap:12px"><button class="l"><img src="assets/d_g47.svg" alt="" style="width:13px;height:13px"></button><button class="l"><img src="assets/d_f1125.svg" alt=""></button><button><img src="assets/d_image.svg" alt=""></button></div></div>
+          <div style="height:40px"></div>
+        </div>
+      </div>
+      <div class="foot"><button class="c" id="btnCancel">关闭</button><button class="s" id="btnSave">提交</button></div>
+    </div>
+    <div class="right">
+      <div class="tabs"><span class="on"><img src="assets/d_chat.svg" alt="">聊天</span><span><img src="assets/d_clip.svg" alt="">文件</span><span><img src="assets/d_gitbranch.svg" alt="">子任务</span><span><img src="assets/d_target.svg" alt="">检视点</span><span><img src="assets/d_target.svg" alt="">动态</span></div>
+      <div class="chat">
+        <div class="hd"><span class="q"><img src="assets/d_q1.png" alt=""><img src="assets/d_q2.png" alt=""><img src="assets/d_q3.png" alt=""><img src="assets/d_q4.png" alt=""></span><b id="chatTitle">任务名称</b></div>
+        <div class="msgs" id="msgs">
+          <div class="m"><img class="av ai" src="assets/d_img14.png" alt=""><div class="bd"><div class="nm">Ai助手<small>UI设计/设计部</small></div><div class="bub" style="width:100%">在#XPA开发项目中聊天，跨任务和对话无缝协作。开始与您的团队聊天或连接任务，以保持工作的掌控。</div>
+            <div class="qk"><button><b style="font-size:10.5px">+</b>添加人员</button><button><img src="assets/d_moveto.svg" alt="">从系统中导入</button></div>
+            <div class="card"><span class="ic"><img src="assets/d_journals.svg" alt=""></span><span><b>添加文档</b><small>做笔记或创建详细的文档</small></span></div>
+            <div class="card"><span class="ic g"><img src="assets/d_easel.svg" alt=""></span><span><b>开启会议</b><small>可立刻开启同步会议</small></span></div></div></div>
+          <div class="m"><img class="av" src="assets/d_r485.png" alt=""><div class="bd"><div class="nm">李梓发<small>UI设计/设计部</small></div><div class="bub">下午三点开会</div></div></div>
+          <div class="m"><img class="av" src="assets/d_r486.png" alt="" style="border-radius:4px"><div class="bd"><div class="nm">姜乐乐（我）<small>UI设计/设计部</small></div><div class="bub me">知道了</div></div></div>
+        </div>
+        <div class="inp"><input id="msg" placeholder="请输入消息"><span class="ic"><img src="assets/d_add15.svg" alt=""><img src="assets/d_send.svg" alt="" id="send"><img class="tall" src="assets/d_f9978.svg" alt=""></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+  var q=location.hash.match(/title=([^&]+)/); if(q){ var t=decodeURIComponent(q[1]); document.getElementById('title').textContent=t; document.getElementById('chatTitle').textContent=t; }
+  var P=['待开始','进行中','已完成']; var pill=document.getElementById('pill'); pill.addEventListener('click',function(){ var i=(P.indexOf(pill.textContent)+1)%P.length; pill.textContent=P[i]; pill.style.background=i===2?'#c4edca':(i===1?'#ced3ff':'#e6e6e6'); pill.style.color=i===1?'#4857e2':'#333'; say('状态：'+P[i]); });
+  document.querySelectorAll('.ck').forEach(function(c){ c.querySelector('img').addEventListener('click',function(){ c.classList.toggle('done'); }); });
+  document.getElementById('addH').addEventListener('click',function(){ var h=document.getElementById('hours'); h.textContent=+h.textContent+2; say('已添加 2 小时工时'); });
+  document.getElementById('addCc').addEventListener('click',function(){ say('选择参与人（演示）'); });
+  document.querySelectorAll('.tabs span').forEach(function(s){ s.addEventListener('click',function(){ document.querySelectorAll('.tabs span').forEach(function(x){x.classList.toggle('on',x===s)}); say(s.textContent.trim()+'（演示）'); }); });
+  function send(){ var i=document.getElementById('msg'); if(!i.value.trim()) return; var m=document.createElement('div'); m.className='m'; m.innerHTML='<img class="av" src="assets/d_r486.png" alt="" style="border-radius:4px"><div class="bd"><div class="nm">姜乐乐（我）<small>UI设计/设计部</small></div><div class="bub me"></div></div>'; m.querySelector('.bub').textContent=i.value; document.getElementById('msgs').appendChild(m); i.value=''; m.scrollIntoView({block:'end'}); }
+  document.getElementById('send').addEventListener('click',send); document.getElementById('msg').addEventListener('keydown',function(e){ if(e.key==='Enter') send(); });
+  if (window.parent !== window || /(^#|&)embed/.test(location.hash)) document.documentElement.classList.add('embed');
+  function close(){ try{ parent.postMessage({t:'close-task'},'*'); }catch(e){} say('已关闭'); }
+  document.getElementById('btnClose').addEventListener('click',close); document.getElementById('btnCancel').addEventListener('click',close);
+  document.getElementById('btnSave').addEventListener('click',function(){ say('已提交'); try{ parent.postMessage({t:'close-task',saved:true},'*'); }catch(e){} });
+  var tt; function say(m){ var t=document.getElementById('toast'); t.textContent=m; t.classList.add('on'); clearTimeout(tt); tt=setTimeout(function(){ t.classList.remove('on'); },1400); }
+})();
+</script>
+<script src="../guide.js?v=815acc0b"></script>
+</body></html>

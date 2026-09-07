@@ -1,0 +1,97 @@
+/*
+ * 加载中组件 (Spin)
+ * 标签：<cs-spin>
+ *
+ * 作用：纯 CSS 转圈加载动画。可独立展示，也可作为「区域 loading 遮罩」
+ * 包裹其他内容。对标 ng-zorro Spin。
+ *
+ * data 属性：
+ *   data-size="sm" — 小（16px）
+ *   data-size="md" — 中（24px，默认）
+ *   data-size="lg" — 大（40px）
+ *   data-spinning  — 启用遮罩 + 居中 spinner（包裹模式）
+ *   data-tip       — 显示文字提示
+ *
+ * 子元素（独立模式）：
+ *   .spin-dot   — 转圈圆环
+ *   .spin-text  — 文字（可选）
+ *
+ * 子元素（包裹模式）：
+ *   .spin-content — 被包裹内容
+ *   .spin-mask    — 遮罩层（含居中 spin-dot）
+ */
+
+/* ========== 容器 ========== */
+cs-spin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  color: var(--cs-color-primary);
+  position: relative;
+  flex-direction: column;
+}
+
+/* ========== 转圈圆环（核心） ========== */
+cs-spin .spin-dot {
+  display: inline-block;
+  width: var(--cs-sem-size-icon-xl);
+  height: var(--cs-sem-size-icon-xl);
+  border: 2px solid var(--color-blue-100);
+  border-top-color: var(--cs-color-primary);
+  border-radius: 50%;
+  animation: cs-spin-rotate 0.8s linear infinite;
+  box-sizing: border-box;
+}
+
+@keyframes cs-spin-rotate {
+  to { transform: rotate(360deg); }
+}
+
+/* ========== 尺寸 ========== */
+cs-spin[data-size="sm"] .spin-dot {
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  border-width: 2px;
+}
+
+cs-spin[data-size="lg"] .spin-dot {
+  width: var(--cs-sem-size-icon-3xl);
+  height: var(--cs-sem-size-icon-3xl);
+  border-width: 3px;
+}
+
+/* ========== 文字提示 ========== */
+cs-spin .spin-text {
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+}
+
+/* ========== 包裹模式 ========== */
+cs-spin[data-spinning] {
+  display: block;
+  position: relative;
+}
+
+cs-spin[data-spinning] .spin-content {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+cs-spin[data-spinning] .spin-mask {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  background: rgba(255, 255, 255, 0.4);
+  z-index: 10;
+  border-radius: inherit;
+}
+
+cs-spin .spin-mask {
+  display: none;
+}

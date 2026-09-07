@@ -1,0 +1,53 @@
+/*
+ * 导航操作按钮组件 (Nav Action Button)
+ * 标签：<cs-nav-action-btn>
+ * 数据来源：Figma navbar 新建任务/文档按钮
+ *
+ * data 属性：
+ *   data-disabled             — 禁用态
+ *
+ * 子元素：
+ *   .nav-action-icon          — 按钮图标（cses-plus）
+ *   .nav-action-label         — 按钮文本
+ */
+
+/* ========== 基础样式 ========== */
+cs-nav-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  width: 100%;
+  height: var(--cs-sem-size-interactive-sm);
+  background: var(--cs-color-primary);
+  border-radius: var(--radius);
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+  transition: background 0.2s ease;
+}
+
+/* ========== 图标 ========== */
+cs-nav-action-btn .nav-action-icon {
+  font-size: var(--cs-sem-size-icon-sm);
+  color: var(--cs-color-text-inverse);
+  line-height: 1;
+}
+
+/* ========== 文本 ========== */
+cs-nav-action-btn .nav-action-label {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-inverse);
+}
+
+/* ========== 悬停态 ========== */
+cs-nav-action-btn:hover {
+  background: var(--cs-color-primary-hover);
+}
+
+/* ========== 禁用态 ========== */
+cs-nav-action-btn[data-disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: var(--cs-opacity-disabled, 0.5);
+}

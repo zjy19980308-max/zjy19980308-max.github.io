@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>任务 · 列表视图</title>
+<style>
+:root{--cs-primary:#4857e2;--cs-primary-disabled:#ced3ff;--cs-border:#e6e6e6;--cs-error:#f53f3f;--cs-warning:#ff7d00;--ink:#333;--ink2:#666;--ink3:#999;--font:"PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:#fff;color:var(--ink);font:14px/1.45 var(--font);-webkit-font-smoothing:antialiased}body{display:inline-block;vertical-align:top;min-width:0}
+.page{width:1043px;padding:16px 0;display:flex;flex-direction:column;gap:16px}
+.fb{display:flex;align-items:center;padding:0 16px;gap:16px}.fb .chip{border:1px solid var(--cs-border);border-radius:4px;padding:4px 10px;display:flex;align-items:center;gap:8px;color:var(--ink2);font-size:14px;cursor:pointer;background:#fff;font-family:inherit}.fb .chip img{width:20px;height:20px;display:block}.fb .chip.on{border-color:var(--cs-primary);color:var(--cs-primary)}.fb .sep{width:1px;height:12px;background:var(--cs-border)}
+.fb .save{margin-left:auto;display:flex;align-items:center;gap:4px;color:var(--ink2);font-size:14px;cursor:pointer;background:none;border:0;font-family:inherit}.fb .save img{width:14px;height:14px;display:block}
+.tbl{padding:0 0 0 16px;display:flex;flex-direction:column}
+.grp{display:flex;flex-direction:column}
+.gh{display:flex;align-items:center;height:52px;border-bottom:1px solid var(--cs-border)}.gh .L{width:428px;padding:0 16px;display:flex;align-items:center;justify-content:space-between}.gh .L .l{display:flex;align-items:center;gap:8px}
+.tri{width:14px;height:14px;border:0;background:none;padding:0;cursor:pointer;display:block;transition:transform .2s}.tri img{width:14px;height:14px;display:block}.grp.closed .tri{transform:rotate(-90deg)}
+.pill{height:24px;min-width:58px;padding:2px 8px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;background:var(--cs-border);color:var(--ink)}.pill.doing{background:var(--cs-primary-disabled);color:var(--cs-primary)}.pill.done{background:#c4edca;font-weight:400}
+.gh .n{color:var(--ink3)}.gh .cols{flex:1;display:flex}.gh .cols span{flex:1;padding:16px 8px;color:var(--ink3);font-size:14px}
+.sqb{width:25px;height:25px;border:1px solid var(--cs-border);border-radius:4px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:4px}.sqb img{width:17px;height:17px;display:block}
+.row{display:flex;align-items:center;height:52px;position:relative}.row .L{width:428px;height:52px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;position:relative}.row .L .l{display:flex;align-items:center;gap:4px}
+.cb{width:16px;height:16px;position:relative;cursor:pointer;flex:none;display:block}.cb i{position:absolute;left:1.78px;top:1.78px;width:12.44px;height:12.44px;border:1px solid var(--ink3);border-radius:3px}.cb img{position:absolute;inset:0;width:16px;height:16px;opacity:0}.row.done .cb img{opacity:1}.row.done .cb i{background:var(--cs-primary);border-color:var(--cs-primary)}.row.done .title{color:var(--ink3);text-decoration:line-through}
+.row .chev{width:14px;height:14px;border:0;background:none;padding:0;cursor:pointer;display:block;margin-left:4px;transition:transform .2s}.row .chev img{width:14px;height:14px;display:block}.row.fold .chev{transform:rotate(-90deg)}
+.title{color:var(--ink);font-size:14px;white-space:nowrap}.eye{display:flex;align-items:center;gap:4px;color:var(--ink3);font-size:14px;margin-left:8px}.eye img{width:14px;height:14px;display:block}
+.acts{display:none;gap:8px;align-items:center}.row:hover .acts{display:flex}.acts .b{background:#fff;border:1px solid var(--cs-border);border-radius:4px;padding:4px;display:flex;align-items:center;gap:4px;cursor:pointer;font-family:inherit;font-size:12px;color:var(--ink3)}.acts .b.txt{padding:4px 8px}.acts .b img{width:17px;height:17px;display:block}.acts .b.txt img{width:12px;height:12px}
+.row .R{flex:1;display:flex;height:52px;border-bottom:1px solid var(--cs-border)}.row .R span{flex:1;padding:16px 8px;font-size:14px;color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:4px}.row .R span img{width:20px;height:20px;border-radius:50%;display:block;object-fit:cover}
+.row .R .h{color:var(--cs-error)}.row .R .m{color:var(--cs-warning)}.row .R .lo{color:var(--ink3)}
+.row.sub .L .l{gap:0}.row.sub .title{padding-left:40px}
+.row .L::after{content:"";position:absolute;left:16px;right:0;bottom:0;border-bottom:1px solid var(--cs-border)}.row.sub .L::after{left:88px}
+.tree{position:absolute;left:62px;top:-18px;width:25px;height:44px;pointer-events:none;border-left:1px solid var(--cs-border);border-bottom:1px solid var(--cs-border);border-bottom-left-radius:4px}.tree img{display:none}
+.subs.hide{display:none}
+.create{height:52px;display:flex;align-items:center;gap:24px;padding:16px 16px 16px 26px;color:var(--ink3);font-size:14px;cursor:pointer}.create img{width:14px;height:14px;display:block}.create:hover{color:var(--cs-primary)}
+.create input{border:0;outline:0;font:inherit;color:var(--ink);width:320px;border-bottom:1px solid var(--cs-primary);padding:2px 0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0b0b10;color:#fff;font-size:13px;padding:8px 14px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}.toast.on{opacity:1}
+</style></head><body>
+<div class="page">
+  <div class="fb" id="fb">
+    <button class="chip">按状态<img src="assets/imgChevronDown.svg" alt=""></button><span class="sep"></span>
+    <button class="chip">负责人<img src="assets/imgChevronDown.svg" alt=""></button>
+    <button class="chip">时间范围<img src="assets/imgChevronDown.svg" alt=""></button>
+    <button class="chip">优先级<img src="assets/imgChevronDown.svg" alt=""></button>
+    <button class="chip">模块<img src="assets/imgChevronDown.svg" alt=""></button>
+    <button class="chip">项目<img src="assets/imgChevronDown.svg" alt=""></button>
+    <button class="save" id="save"><img src="assets/imgSave02.svg" alt="">另存为新视图</button>
+  </div>
+  <div class="tbl" id="tbl"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+var A='assets/';var AV=['imgEllipse294.png','imgEllipse295.png','imgEllipse296.png','imgEllipse297.png','imgEllipse298.png'];
+var G=[{k:'',n:'待开始',c:13,rows:[['任务管理_我创建的改版','h','09月22日 17:56','09月22日 17:56',0,'李梓发',[['任务管理_我创建的改版子任务','h','09月22日 17:56','09月22日 17:56',1,'周海']]],['任务管理_我创建的改版','m','09月22日 17:56','09月10日 04:42',2,'王凡玄'],['任务管理_我创建的改版','m','09月22日 17:56','09月10日 04:42',3,'赵吾光'],['任务管理_我创建的改版','l','09月22日 17:56','09月10日 04:42',4,'冯思钗',null,3],['任务管理_我创建的改版','l','09月22日 17:56','09月10日 04:42',4,'冯思钗',null,3]]},
+       {k:'doing',n:'进行中',c:13,add:true,rows:[['任务管理_我创建的改版','h','09月22日 17:56','09月10日 04:42',2,'王凡玄',[['任务管理_我创建的改版子任务','h','09月22日 17:56','09月10日 04:42',2,'王凡玄']]],['任务管理_我创建的改版','m','09月22日 17:56','09月10日 04:42',2,'王凡玄'],['任务管理_我创建的改版','m','09月22日 17:56','09月10日 04:42',4,'冯思钗'],['任务管理_我创建的改版','l','09月22日 17:56','09月10日 04:42',4,'冯思钗']]},
+       {k:'done',n:'已完成',c:8,rows:[['任务管理_我创建的改版','m','09月22日 17:56','09月10日 04:42',1,'周海'],['任务管理_我创建的改版','l','09月22日 17:56','09月10日 04:42',3,'赵吾光',null,3]]}];
+var PN={h:'紧急',m:'普通',l:'较低'},PC={h:'h',m:'m',l:'lo'};
+function row(r,sub){var d=document.createElement('div');d.className='row'+(sub?' sub':'');
+  d.innerHTML='<div class="L">'+(sub?'<div class="tree"><img src="'+A+'imgLine473.svg" alt=""></div>':'')+'<div class="l"><span class="cb"><i></i><img src="'+A+'imgCheck1.svg" alt=""></span>'+(r[6]?'<button class="chev" title="折叠子任务"><img src="'+A+'imgChevronDown2.svg" alt=""></button>':'')+'<span class="title">'+r[0]+'</span>'+(r[7]?'<span class="eye"><img src="'+A+'imgTarget01.svg" alt="">'+r[7]+'</span>':'')+'</div>'
+   +'<div class="acts"><button class="b txt"><img src="'+A+'imgArrowExpand04.svg" alt="">详情</button><button class="b" title="收藏"><img src="'+A+'imgFavourite.svg" alt=""></button><button class="b" title="更多"><img src="'+A+'imgGengduo1.svg" alt=""></button><button class="b" title="新建子任务"><img src="'+A+'imgAddSquare02.svg" alt=""></button></div></div>'
+   +'<div class="R"><span class="'+PC[r[1]]+'">'+PN[r[1]]+'</span><span>'+r[2]+'</span><span>'+r[3]+'</span><span><img src="'+A+AV[r[4]]+'" alt="">'+r[5]+'</span></div>';
+  d.querySelector('.cb').addEventListener('click',function(){d.classList.toggle('done');say(d.classList.contains('done')?'已完成':'已恢复');});
+  d.querySelector('.title').style.cursor='pointer'; d.querySelector('.title').addEventListener('click',function(){ try{ parent.postMessage({t:'open-task',title:r[0],from:'list'},'*'); }catch(e){} say('打开任务：'+r[0]); });
+  d.querySelectorAll('.acts .b').forEach(function(b){b.addEventListener('click',function(e){e.stopPropagation();say((b.title||'详情')+'：演示');});});
+  return d;}
+var tbl=document.getElementById('tbl');
+G.forEach(function(g){var grp=document.createElement('div');grp.className='grp';
+  grp.innerHTML='<div class="gh"><div class="L"><div class="l"><button class="tri"><img src="'+A+'imgChevronDown1.svg" alt=""></button><span class="pill '+g.k+'">'+g.n+'</span><span class="n">'+g.c+'</span></div>'+(g.add?'<button class="sqb" title="新建任务"><img src="'+A+'imgAddSquare02.svg" alt=""></button>':'')+'</div><div class="cols"><span>优先级</span><span>开始时间</span><span>截止时间</span><span>负责人</span></div></div><div class="body"></div>';
+  var body=grp.querySelector('.body');
+  g.rows.forEach(function(r){var pr=row(r,false);body.appendChild(pr);if(r[6]){var subs=document.createElement('div');subs.className='subs';r[6].forEach(function(s){subs.appendChild(row(s,true));});body.appendChild(subs);pr.querySelector('.chev').addEventListener('click',function(){pr.classList.toggle('fold');subs.classList.toggle('hide');});}});
+  var cr=document.createElement('div');cr.className='create';cr.innerHTML='<img src="'+A+'img1.svg" alt=""><span>点击创建任务</span>';
+  cr.addEventListener('click',function(){if(cr.querySelector('input'))return;var inp=document.createElement('input');inp.placeholder='输入任务标题，回车创建';cr.querySelector('span').replaceWith(inp);inp.focus();
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter'&&inp.value.trim()){var nr=row([inp.value.trim(),'m','今天 10:00','—',0,'我']);body.insertBefore(nr,cr);g.c++;grp.querySelector('.n').textContent=g.c;say('已创建');inp.replaceWith(Object.assign(document.createElement('span'),{textContent:'点击创建任务'}));}if(e.key==='Escape'){inp.replaceWith(Object.assign(document.createElement('span'),{textContent:'点击创建任务'}));}});});
+  body.appendChild(cr);
+  grp.querySelector('.tri').addEventListener('click',function(){grp.classList.toggle('closed');body.style.display=grp.classList.contains('closed')?'none':'';});
+  if(g.add)grp.querySelector('.sqb').addEventListener('click',function(){cr.click();});
+  tbl.appendChild(grp);});
+document.querySelectorAll('.fb .chip').forEach(function(c){c.addEventListener('click',function(){c.classList.toggle('on');say(c.textContent.trim()+'：筛选面板（演示）');});});
+document.getElementById('save').addEventListener('click',function(){say('已另存为新视图');});
+var tt;function say(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},1400);}
+</script>
+<script src="../guide.js?v=815acc0b"></script>
+</body></html>

@@ -1,0 +1,102 @@
+/*
+ * 弹窗 (Modal)
+ * 标签：<cs-modal>
+ *
+ * 作用：居中覆盖的对话框，承载提示/确认/小表单等。对标 antd Modal。
+ * 含 60% 蒙层 + 居中卡片（标题栏 + 正文 + 底部动作）。轻量提示/确认首选。
+ *
+ * data 属性：
+ *   data-open  — 打开（无此属性=关闭）
+ *   自定义宽度：元素上设 style="--modal-w:600px"（默认 min(520px,92vw)）
+ *
+ * 结构：
+ *   <cs-modal id="x">
+ *     <div class="modal-card">
+ *       <div class="modal-head"><span class="modal-title">提示</span>
+ *         <span class="modal-close" data-modal-close><i class="cses-guanbi"></i></span></div>
+ *       <div class="modal-body">…正文…</div>
+ *       <div class="modal-foot"> …cs-button… </div>
+ *     </div>
+ *   </cs-modal>
+ *
+ * 行为在 modal.js：点蒙层 / [data-modal-close] / ESC 关闭；window.CSModal.open(el)/close(el)。
+ * 触发：按钮上写 data-modal-open="弹窗id"。
+ */
+
+cs-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-24);
+  background: var(--cs-color-bg-mask-60);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+cs-modal[data-open] {
+  display: flex;
+  opacity: 1;
+}
+
+cs-modal .modal-card {
+  width: var(--modal-w, min(520px, 92vw));
+  box-sizing: border-box;
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--cs-shadow-xl);
+  padding: var(--spacing-24);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+  transform: translateY(8px) scale(0.98);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+cs-modal[data-open] .modal-card {
+  transform: translateY(0) scale(1);
+}
+
+cs-modal .modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+cs-modal .modal-title {
+  font: var(--typo-cn-16-medium);
+  font-weight: 600;
+  color: var(--cs-color-text);
+}
+cs-modal .modal-close {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cs-color-text-light2);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+cs-modal .modal-close:hover {
+  color: var(--cs-color-text);
+}
+
+cs-modal .modal-body {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+cs-modal .modal-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  cs-modal, cs-modal .modal-card { transition: none; }
+}

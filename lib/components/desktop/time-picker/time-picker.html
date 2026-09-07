@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-time-picker 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="time-picker.css?v=2093dfe1">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; min-height: 40px; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 96px; flex-shrink: 0; margin-top: 8px; }
+    .tip { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-top: 8px; padding: 8px 12px; background: #f9f9f9; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 基础交互 ========== -->
+<div class="section">
+  <div class="section-title">点击触发 Click to Open</div>
+  <div class="section-subtitle">点击触发器开/关；点击时/分/秒项回填；点击外部或 ESC 关闭</div>
+  <div class="row" style="min-height: 320px;">
+    <span class="row-label">选择时间 →</span>
+    <cs-time-picker>
+      <button class="time-picker-trigger" type="button">
+        <span class="time-picker-input" data-placeholder>请选择时间</span>
+        <i class="time-picker-icon cses-time"></i>
+      </button>
+      <div class="time-picker-panel">
+        <div class="time-picker-columns">
+          <div class="time-picker-column">
+            <button class="time-picker-cell" type="button">00</button>
+            <button class="time-picker-cell" type="button">01</button>
+            <button class="time-picker-cell" type="button">02</button>
+            <button class="time-picker-cell" type="button">03</button>
+            <button class="time-picker-cell" type="button">04</button>
+            <button class="time-picker-cell" type="button">05</button>
+            <button class="time-picker-cell" type="button">06</button>
+            <button class="time-picker-cell" type="button">07</button>
+            <button class="time-picker-cell" type="button">08</button>
+            <button class="time-picker-cell" data-selected type="button">09</button>
+            <button class="time-picker-cell" type="button">10</button>
+            <button class="time-picker-cell" type="button">11</button>
+            <button class="time-picker-cell" type="button">12</button>
+            <button class="time-picker-cell" type="button">13</button>
+            <button class="time-picker-cell" type="button">14</button>
+            <button class="time-picker-cell" type="button">15</button>
+            <button class="time-picker-cell" type="button">16</button>
+            <button class="time-picker-cell" type="button">17</button>
+            <button class="time-picker-cell" type="button">18</button>
+            <button class="time-picker-cell" type="button">19</button>
+            <button class="time-picker-cell" type="button">20</button>
+            <button class="time-picker-cell" type="button">21</button>
+            <button class="time-picker-cell" type="button">22</button>
+            <button class="time-picker-cell" type="button">23</button>
+          </div>
+          <div class="time-picker-column">
+            <button class="time-picker-cell" type="button">00</button>
+            <button class="time-picker-cell" type="button">05</button>
+            <button class="time-picker-cell" type="button">10</button>
+            <button class="time-picker-cell" type="button">15</button>
+            <button class="time-picker-cell" type="button">20</button>
+            <button class="time-picker-cell" type="button">25</button>
+            <button class="time-picker-cell" data-selected type="button">30</button>
+            <button class="time-picker-cell" type="button">35</button>
+            <button class="time-picker-cell" type="button">40</button>
+            <button class="time-picker-cell" type="button">45</button>
+            <button class="time-picker-cell" type="button">50</button>
+            <button class="time-picker-cell" type="button">55</button>
+          </div>
+          <div class="time-picker-column">
+            <button class="time-picker-cell" data-selected type="button">00</button>
+            <button class="time-picker-cell" type="button">10</button>
+            <button class="time-picker-cell" type="button">20</button>
+            <button class="time-picker-cell" type="button">30</button>
+            <button class="time-picker-cell" type="button">40</button>
+            <button class="time-picker-cell" type="button">50</button>
+          </div>
+        </div>
+        <div class="time-picker-footer">
+          <button type="button">现在</button>
+          <button type="button">确定</button>
+        </div>
+      </div>
+    </cs-time-picker>
+  </div>
+  <div class="tip">交互验证：① 点触发器弹出 ② 点各列选值 ③ 触发器文本自动更新 ④ 外部/ESC 关闭</div>
+</div>
+
+<!-- ========== 2. 尺寸 ========== -->
+<div class="section">
+  <div class="section-title">尺寸 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg"</div>
+  <div class="row">
+    <span class="row-label">sm</span>
+    <cs-time-picker data-size="sm">
+      <button class="time-picker-trigger" type="button">
+        <span class="time-picker-input" data-placeholder>请选择</span>
+        <i class="time-picker-icon cses-time"></i>
+      </button>
+    </cs-time-picker>
+    <span class="row-label">md</span>
+    <cs-time-picker>
+      <button class="time-picker-trigger" type="button">
+        <span class="time-picker-input">09:30:00</span>
+        <i class="time-picker-icon cses-time"></i>
+      </button>
+    </cs-time-picker>
+    <span class="row-label">lg</span>
+    <cs-time-picker data-size="lg">
+      <button class="time-picker-trigger" type="button">
+        <span class="time-picker-input">09:30:00</span>
+        <i class="time-picker-icon cses-time"></i>
+      </button>
+    </cs-time-picker>
+  </div>
+</div>
+
+<!-- ========== 3. 状态 ========== -->
+<div class="section">
+  <div class="section-title">状态 States</div>
+  <div class="section-subtitle">data-error / data-disabled</div>
+  <div class="row">
+    <span class="row-label">错误</span>
+    <cs-time-picker data-error>
+      <button class="time-picker-trigger" type="button">
+        <span class="time-picker-input" data-placeholder>请选择时间</span>
+        <i class="time-picker-icon cses-time"></i>
+      </button>
+    </cs-time-picker>
+    <span class="row-label">禁用</span>
+    <cs-time-picker data-disabled>
+      <button class="time-picker-trigger" type="button">
+        <span class="time-picker-input" data-placeholder>不可选</span>
+        <i class="time-picker-icon cses-time"></i>
+      </button>
+    </cs-time-picker>
+  </div>
+</div>
+
+<!-- ========== 时间范围 Range ========== -->
+<div class="section">
+  <div class="section-title">时间范围 Range</div>
+  <div class="section-subtitle">data-type="range" — 开始时间 ~ 结束时间，双面板联动</div>
+
+  <div class="row" style="align-items:flex-start; min-height: 320px;">
+    <span class="row-label">默认</span>
+    <cs-time-picker data-type="range">
+      <button class="time-picker-trigger" type="button">
+        <span class="time-picker-input">09:00:00</span>
+        <span class="time-picker-range-separator">~</span>
+        <span class="time-picker-input">18:00:00</span>
+        <i class="time-picker-icon cses-time"></i>
+      </button>
+      <div class="time-picker-panel">
+        <div class="time-picker-range-wrap">
+          <!-- 开始时间 -->
+          <div class="time-picker-range-side">
+            <div class="time-picker-range-side-label">开始时间</div>
+            <div class="time-picker-columns">
+              <div class="time-picker-column">
+                <button class="time-picker-cell" type="button">08</button>
+                <button class="time-picker-cell" data-selected type="button">09</button>
+                <button class="time-picker-cell" type="button">10</button>
+                <button class="time-picker-cell" type="button">11</button>
+                <button class="time-picker-cell" type="button">12</button>
+              </div>
+              <div class="time-picker-column">
+                <button class="time-picker-cell" data-selected type="button">00</button>
+                <button class="time-picker-cell" type="button">15</button>
+                <button class="time-picker-cell" type="button">30</button>
+                <button class="time-picker-cell" type="button">45</button>
+              </div>
+              <div class="time-picker-column">
+                <button class="time-picker-cell" data-selected type="button">00</button>
+                <button class="time-picker-cell" type="button">15</button>
+                <button class="time-picker-cell" type="button">30</button>
+                <button class="time-picker-cell" type="button">45</button>
+              </div>
+            </div>
+          </div>
+          <!-- 结束时间 -->
+          <div class="time-picker-range-side">
+            <div class="time-picker-range-side-label">结束时间</div>
+            <div class="time-picker-columns">
+              <div class="time-picker-column">
+                <button class="time-picker-cell" type="button">17</button>
+                <button class="time-picker-cell" data-selected type="button">18</button>
+                <button class="time-picker-cell" type="button">19</button>
+                <button class="time-picker-cell" type="button">20</button>
+                <button class="time-picker-cell" type="button">21</button>
+              </div>
+              <div class="time-picker-column">
+                <button class="time-picker-cell" data-selected type="button">00</button>
+                <button class="time-picker-cell" type="button">15</button>
+                <button class="time-picker-cell" type="button">30</button>
+                <button class="time-picker-cell" type="button">45</button>
+              </div>
+              <div class="time-picker-column">
+                <button class="time-picker-cell" data-selected type="button">00</button>
+                <button class="time-picker-cell" type="button">15</button>
+                <button class="time-picker-cell" type="button">30</button>
+                <button class="time-picker-cell" type="button">45</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="time-picker-footer">
+          <button type="button">此刻</button>
+          <button type="button">确定</button>
+        </div>
+      </div>
+    </cs-time-picker>
+  </div>
+
+  <div class="row">
+    <span class="row-label">占位符</span>
+    <cs-time-picker data-type="range">
+      <button class="time-picker-trigger" type="button">
+        <span class="time-picker-input" data-placeholder>开始时间</span>
+        <span class="time-picker-range-separator">~</span>
+        <span class="time-picker-input" data-placeholder>结束时间</span>
+        <i class="time-picker-icon cses-time"></i>
+      </button>
+    </cs-time-picker>
+  </div>
+
+  <div class="row">
+    <span class="row-label">错误态</span>
+    <cs-time-picker data-type="range" data-error>
+      <button class="time-picker-trigger" type="button">
+        <span class="time-picker-input">14:00:00</span>
+        <span class="time-picker-range-separator">~</span>
+        <span class="time-picker-input">12:00:00</span>
+        <i class="time-picker-icon cses-time"></i>
+      </button>
+    </cs-time-picker>
+  </div>
+</div>
+
+<script src="time-picker.js?v=0ac24471"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+/*
+ * 视图切换标签栏组件 · 折页式 (View Tabs / folder-tab)
+ * 标签：<cs-view-tabs>
+ * 数据来源：多维表格设计稿 Figma（bUY4yon1Jwens0ihGunVXS · 2017:948）
+ * 场景：多维表格/多维表格顶部的「表格/看板/甘特/日历/地图/表单/画册」视图切换。
+ *
+ * 设计固化（多维表格页已定死·1:1）：
+ *   - 灰底槽 --cs-color-bg-tab-trough，选中页签白底浮出、顶部圆角、连下方内容白
+ *   - 首个页签选中时左上角不圆（贴边）
+ *   - 未选中相邻页签之间竖分隔线
+ *   - 视图图标两态：未选 #333 单色、选中 彩色（吃 assets/view-icons 两文件·色锁在图片里）
+ *   - ⋮ 更多菜单只在选中页签显示（未选占位不显）
+ *
+ * 图标资产（吃 workspace/assets/view-icons/·相对本 css 3 层回 workspace）：
+ *   变体类放在 .vt-tab 上，设 --vt-mono(未选#333) / --vt-color(选中彩色) 两个文件 url；
+ *   .vt-icon 读取继承来的变量，选中态换图。CSS 内零颜色硬编码。
+ *   （用双 background-image 文件而非 mask：mask 在 Quick Look/qlmanage 不渲染，双图稳。）
+ *
+ * data / class：
+ *   .vt-tab.is-active — 选中态
+ *   .vt-tab.vt-add    — 「新建视图」尾项
+ */
+
+/* ========== 容器（灰底槽）========== */
+cs-view-tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0;
+  height: 44px;
+  padding: 0;
+  background: var(--cs-color-bg-tab-trough);
+  box-sizing: border-box;
+}
+
+/* ========== 页签 ========== */
+cs-view-tabs .vt-tab {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 var(--space-md);
+  font-size: var(--font-size-md);
+  color: var(--cs-color-text);
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+/* 未选中相邻页签之间的竖分隔线 */
+cs-view-tabs .vt-tab:not(.is-active) + .vt-tab:not(.is-active)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: var(--line-width);
+  background: var(--cs-color-border);
+}
+
+/* ========== 选中态（白页签浮出）========== */
+cs-view-tabs .vt-tab.is-active {
+  background: var(--cs-color-white);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  color: var(--cs-color-text);
+  font-weight: var(--font-weight-semibold);
+}
+/* 首个页签选中：左上角贴边不圆 */
+cs-view-tabs .vt-tab.is-active:first-child {
+  border-radius: 0 var(--radius-lg) 0 0;
+}
+
+/* ========== 视图图标（两态·吃 assets/view-icons）========== */
+cs-view-tabs .vt-icon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: var(--space-2xs);
+  flex-shrink: 0;
+  vertical-align: -2px;
+  background: var(--vt-mono) center / contain no-repeat;   /* 未选：#333 单色文件 */
+}
+cs-view-tabs .vt-tab.is-active .vt-icon {
+  background-image: var(--vt-color);                       /* 选中：彩色文件 */
+}
+
+/* 各视图两态文件（色锁在 SVG 文件·CSS 零硬编码色）*/
+cs-view-tabs .vt-grid     { --vt-mono: url(../../../assets/view-icons/view-grid-mono.svg);     --vt-color: url(../../../assets/view-icons/view-grid.svg); }
+cs-view-tabs .vt-kanban   { --vt-mono: url(../../../assets/view-icons/view-kanban-mono.svg);   --vt-color: url(../../../assets/view-icons/view-kanban.svg); }
+cs-view-tabs .vt-gantt    { --vt-mono: url(../../../assets/view-icons/view-gantt-mono.svg);    --vt-color: url(../../../assets/view-icons/view-gantt.svg); }
+cs-view-tabs .vt-calendar { --vt-mono: url(../../../assets/view-icons/view-calendar-mono.svg); --vt-color: url(../../../assets/view-icons/view-calendar.svg); }
+cs-view-tabs .vt-map      { --vt-mono: url(../../../assets/view-icons/view-map-mono.svg);      --vt-color: url(../../../assets/view-icons/view-map.svg); }
+cs-view-tabs .vt-form     { --vt-mono: url(../../../assets/view-icons/view-form-mono.svg);     --vt-color: url(../../../assets/view-icons/view-form.svg); }
+cs-view-tabs .vt-gallery  { --vt-mono: url(../../../assets/view-icons/view-gallery-mono.svg);  --vt-color: url(../../../assets/view-icons/view-gallery.svg); }
+cs-view-tabs .vt-query    { --vt-mono: url(../../../assets/view-icons/view-query-mono.svg);    --vt-color: url(../../../assets/view-icons/view-query.svg); }
+cs-view-tabs .vt-print    { --vt-mono: url(../../../assets/view-icons/view-print-mono.svg);    --vt-color: url(../../../assets/view-icons/view-print.svg); }
+
+/* ========== ⋮ 更多（只选中显示）========== */
+cs-view-tabs .vt-more {
+  margin-left: var(--space-sm);
+  font-size: 13px;
+  color: var(--cs-color-text-light2);
+}
+cs-view-tabs .vt-tab:not(.is-active) .vt-more {
+  visibility: hidden;   /* 未选中占位不显，避免宽度跳动 */
+}
+
+/* ========== 新建视图尾项 ========== */
+cs-view-tabs .vt-add {
+  color: var(--cs-color-text-light2);
+}
+cs-view-tabs .vt-add .cses-add {
+  margin-right: var(--space-2xs);
+  font-size: 15px;
+}

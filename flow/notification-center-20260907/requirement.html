@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>通知中心 · 明确需求</title>
+<style>
+:root{
+  --bg:#fbfbfa; --panel:#fff; --ink:#1c1c1a; --ink2:#5a5a55; --ink3:#96968e;
+  --line:#e6e6e1; --line2:#f0f0ec;
+  --pick:#3d5afe; --pick-bg:#eef1ff; --pick-line:#c3ccff;
+  --ok:#0f7a3d; --ok-bg:#eefaf2; --ok-line:#bfe6cd;
+  --no:#b91c1c; --no-bg:#fef2f2; --no-line:#f2c9c9;
+  --warn:#c2410c; --warn-bg:#fff4ec;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 28px 96px}
+
+header{padding:64px 0 34px;border-bottom:2px solid var(--ink)}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);text-transform:uppercase}
+h1{margin:14px 0 0;font-size:34px;line-height:1.2;letter-spacing:-.02em;font-weight:800}
+.sub{margin:12px 0 0;color:var(--ink2);max-width:68ch}
+.meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font:600 11px/1 var(--mono);letter-spacing:.05em;padding:6px 10px;border:1px solid var(--line);
+  border-radius:4px;background:var(--panel);color:var(--ink2)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);margin:34px 0 0}
+.stat{background:var(--panel);padding:18px 16px;display:block;text-decoration:none;color:inherit}
+.stat b{display:block;font:700 30px/1 var(--mono);letter-spacing:-.03em}
+.stat span{display:block;margin-top:7px;font-size:11px;color:var(--ink3);letter-spacing:.04em}
+.stat.hl b{color:var(--pick)} .stat.g b{color:var(--ok)} .stat.r b{color:var(--no)}
+a.stat:hover{background:var(--pick-bg)} a.stat span{color:var(--pick)}
+
+section{margin-top:54px;scroll-margin-top:16px}
+.sec-h{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--ink);flex-wrap:wrap}
+.sec-n{font:700 12px/1 var(--mono);color:var(--pick);letter-spacing:.1em;white-space:nowrap}
+.sec-h h2{margin:0;font-size:21px;font-weight:800}
+.sec-why{margin:10px 0 0;font-size:13px;color:var(--ink3)}
+h3{margin:32px 0 0;font-size:16px}
+
+/* 活页嵌入 */
+.live{margin-top:22px;border:1px solid var(--line);border-radius:8px;background:var(--panel);overflow:hidden}
+.live-bar{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--line);
+  background:#f7f7f4;flex-wrap:wrap}
+.live-dot{width:9px;height:9px;border-radius:50%;background:var(--ok);flex-shrink:0}
+.live-bar .t{font:700 12px/1 var(--mono);letter-spacing:.05em;color:var(--ink2)}
+.live-bar .hint{font-size:12px;color:var(--ink3);flex:1;min-width:120px}
+.live-bar a{font:700 11px/1 var(--mono);padding:7px 11px;border:1px solid var(--line);border-radius:4px;
+  background:var(--panel);color:var(--pick);text-decoration:none;white-space:nowrap}
+.live-bar a:hover{border-color:var(--pick);background:var(--pick-bg)}
+.livehint{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 16px;
+  border-bottom:1px solid var(--line);background:var(--ok-bg);font-size:12.5px;color:#0b5c2e}
+.livehint .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none;box-shadow:0 0 0 3px rgba(15,122,61,.15)}
+.livehint b{color:#08421f}
+.livehint .k{font:700 11px/1 var(--mono);background:#fff;border:1px solid var(--ok-line);
+  padding:4px 7px;border-radius:4px;color:#0b5c2e;white-space:nowrap}
+.live-stage{position:relative;background:#f2f2ee;overflow:hidden}
+.live-stage iframe{border:0;display:block;transform-origin:0 0;background:#fff}
+
+/* 前后对比 */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.bacard{border:1px solid var(--line);border-radius:8px;background:var(--panel);overflow:hidden}
+.bacard h4{margin:0;padding:12px 16px;font:700 11px/1 var(--mono);letter-spacing:.08em;
+  border-bottom:1px solid var(--line2);background:#f7f7f4;color:var(--ink2)}
+.bacard.bad h4{background:var(--no-bg);color:var(--no)}
+.bacard.good h4{background:var(--ok-bg);color:#0b5c2e}
+.bacard .b{padding:14px 16px;font-size:13.5px;color:var(--ink2)}
+.bacard .b b{color:var(--ink)}
+@media(max-width:700px){.ba{grid-template-columns:1fr}}
+
+.tw{overflow-x:auto;margin-top:18px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:580px;font-size:13.5px}
+th{text-align:left;padding:11px 14px;background:#f7f7f4;border-bottom:1px solid var(--line);
+  font:700 11px/1 var(--mono);color:var(--ink2);letter-spacing:.06em;white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+code{font:12px var(--mono);background:#f4f4f0;border:1px solid var(--line);padding:1px 5px;border-radius:3px}
+td code{color:var(--pick)}
+.y{color:var(--ok);font-weight:800;white-space:nowrap}
+.n{color:var(--no);font-weight:800;white-space:nowrap}
+.id{font:700 11px/1 var(--mono);color:#fff;background:var(--ink);padding:4px 7px;border-radius:3px;white-space:nowrap}
+
+pre{margin:14px 0 0;padding:16px 18px;background:var(--ink);color:#e8e8e3;border-radius:6px;
+  font:12px/1.7 var(--mono);overflow-x:auto}
+pre .c{color:#7ea6ff} pre .g{color:#8a8a82} pre .y{color:#f0c674} pre .r{color:#ff9b9b}
+
+.note{margin-top:20px;padding:16px 18px;border-left:3px solid var(--warn);background:var(--warn-bg);
+  border-radius:0 5px 5px 0;font-size:14px}
+.note.ok{border-left-color:var(--ok);background:var(--ok-bg)}
+.note.bad{border-left-color:var(--no);background:var(--no-bg)}
+.note h4{margin:0 0 7px;font-size:14px;font-weight:700}
+.note p{margin:0 0 8px}.note p:last-child{margin:0}
+
+footer{margin-top:54px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--ink3)}
+@media(max-width:620px){.wrap{padding:0 18px 64px}h1{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Step 1 · 明确需求</div>
+  <h1>一轮问完，不拆多轮</h1>
+  <p class="sub">短任务的需求不该分几次问。分多轮的代价不是时间，是<b>每一轮之间我都得替他假设</b>——
+  假设错了，后面的骨架、高保真全建在错的地基上。<br>
+  所以这一步只做一件事：<b>把所有会改变设计方向的问题一次性摆出来，当场拍完板。</b></p>
+  <div class="meta">
+    <span class="tag">2026-09-07</span>
+    <span class="tag">通知中心 · 单页</span>
+    <span class="tag">短任务通道</span>
+    <span class="tag">一轮 · 4 问 · 4 答</span>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat hl"><b>4</b><span>问题 · 一次问完</span></div>
+  <div class="stat g"><b>1</b><span>轮次（不拆多轮）</span></div>
+  <div class="stat"><b>7</b><span>由回答推出的硬约束</span></div>
+  <div class="stat"><b>7</b><span>用例 UC-01~07</span></div>
+  <div class="stat r"><b>3</b><span>没问到的，如实登记</span></div>
+  <div class="stat"><b>6</b><span>明确不做的东西</span></div>
+</div>
+
+<section>
+  <div class="sec-h"><span class="sec-n">RULE</span><h2>什么问题值得占用这一轮</h2></div>
+  <p class="sec-why">判据只有一条：<b>不同的答案会让设计长成不同的样子</b>。答案不影响画面的，不问。</p>
+
+  <div class="ba">
+    <div class="bacard good">
+      <h4>问了</h4>
+      <div class="b">「已读怎么算」<br>
+      <b>点开才算</b> → 未读是一个待办信号，页面要为它留位置<br>
+      <b>进页全清</b> → 未读这个状态直接不存在，整块设计都不一样</div>
+    </div>
+    <div class="bacard bad">
+      <h4>没问</h4>
+      <div class="b">「一页加载多少条」<br>
+      20 条还是 50 条，<b>页面长得一模一样</b>。<br>
+      这是实现问题，不该占用需求这一轮。</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-h"><span class="sec-n">Q&amp;A</span><h2>四个问题，和它们各自的代价</h2></div>
+  <p class="sec-why">每条都记了<b>为什么不是另一种</b>——因为半年后回来看，「当时为什么没选那个」比「当时选了什么」更难想起来。</p>
+
+  <h3>Q1 · 通知点开之后去哪</h3>
+  <div class="note ok">
+    <h4>拍板：两种都要 —— 常见动作在列表里直接做完，复杂的才跳走</h4>
+    <p><b>为什么不是「一律跳走」</b>：通知的价值在批量清理。每条都跳走，处理 8 条要跳 8 次、回来 8 次，
+    中间还会丢上下文。</p>
+    <p><b>为什么不是「一律开抽屉」</b>：能一步做完的事，不该先让人打开一个东西再点一次。</p>
+    <p><b>代价（明确接受）</b>：行内动作和跳转动作<b>必须在视觉上分得清</b>，
+    否则用户不知道点下去会不会离开这一页。<b>这条直接变成骨架阶段的硬要求 A1。</b></p>
+  </div>
+
+  <h3>Q2 · 已读怎么算</h3>
+  <div class="note ok">
+    <h4>拍板：点开才算已读 + 手动「全部已读」</h4>
+    <p><b>为什么不是「进页全部自动已读」</b>：那等于把「未读」这个状态取消了。用户没看完就被清空，
+    下次进来一条线索都没有。</p>
+    <p><b>为什么不是「滑到就算已读」</b>：社交产品可以，<b>这里不行</b>——
+    这里的未读代表「有件事你还没处理」，<b>滑过去不等于处理了</b>。</p>
+  </div>
+
+  <h3>Q3 · 通知要不要分类</h3>
+  <div class="note ok">
+    <h4>拍板：分两类 —— 待我处理 / 其他</h4>
+    <p>按<b>「要不要我动手」</b>分，不按业务模块分。</p>
+    <p><b>为什么不按模块分页签</b>（审批 / 文档 / 系统 / @我）：那是按<b>系统的组织方式</b>分，
+    不是按<b>用户的关心方式</b>分。用户不会想「我去看看文档类通知」，他想的是「有什么事等着我」。
+    而且分成 4 个页签，他为了不漏，每个都得点一遍。</p>
+  </div>
+
+  <h3>Q4 · 这页最不能出的问题是什么</h3>
+  <div class="note">
+    <h4>拍板：该我处理的被淹在一堆系统通知里</h4>
+    <p><b>这一问是专门为下一步设计的。</b>它不问「你想要什么」，问「你最怕什么」——
+    因为怕的东西是<b>唯一的</b>，想要的东西往往是一串。</p>
+    <p>它直接决定了骨架的三个方案<b>全部往「把要行动的捞出来」拉</b>，只是手法不同：</p>
+    <pre style="margin-top:10px">A  <span class="y">置顶分区</span>   要行动的单独成区，物理隔离
+B  <span class="y">强弱对比</span>   一条时间线到底，靠视觉权重把它顶出来
+C  <span class="y">收纳折叠</span>   要行动的全展开，不用管的默认收起来</pre>
+    <p style="margin-top:10px"><b>三个方案不是三种排版风格，是对同一个恐惧的三种回应。</b>
+    选哪个，就是选更认可哪种回应。</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-h"><span class="sec-n">OUTPUT</span><h2>四个回答，变成七条能验收的硬约束</h2></div>
+  <p class="sec-why">需求文档如果只是复述对话，下一步没法用。<b>要把回答翻译成「能拿去对着骨架逐条核」的约束。</b></p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:8%">#</th><th style="width:52%">约束</th><th>从哪条回答推出来的</th></tr></thead>
+    <tbody>
+      <tr><td><span class="id">A1</span></td><td>行内动作与跳转动作<b>必须视觉可分</b></td><td>Q1 的代价</td></tr>
+      <tr><td><span class="id">A2</span></td><td>「未读」是<b>用户自己控制</b>的状态，系统不得擅自清除</td><td>Q2</td></tr>
+      <tr><td><span class="id">A3</span></td><td>分类轴只有一条：<b>要不要我动手</b>。不许再加业务模块页签</td><td>Q3</td></tr>
+      <tr><td><span class="id">A4</span></td><td>「待我处理」为空时<b>整块不出现</b>，不留空盒子</td><td>与 A3 配套</td></tr>
+      <tr><td><span class="id">A5</span></td><td>已读条目<b>不消失</b>，只弱化——用户要能回头找</td><td>Q2 推论</td></tr>
+      <tr><td><span class="id">A6</span></td><td>时间用<b>相对时间</b>（今天 / 昨天 / 更早），不用绝对日期</td><td>通知的时效性语义</td></tr>
+      <tr><td><span class="id">A7</span></td><td><b>不做筛选栏、不做数据表格</b>——用条目流</td><td>见下方「防重复」</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note bad">
+    <h4>A7 是一条防止自我重复的约束</h4>
+    <p>这个作品集里已经有一个列表页（报销）。<b>再做一个列表页，很容易做成同一张表换个字段。</b></p>
+    <p>所以在需求阶段就把它写死：<b>这一页不用表格、不用筛选栏</b>。
+    信息轴也完全不同——报销那页是「状态 + 金额 + 审批进度」，这页是「要不要我动手 + 读没读过 + 什么时候的」。</p>
+    <p><b>约束写在需求里，比做完之后再看着像不像强。</b></p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-h"><span class="sec-n">HONEST</span><h2>没问到的，写下来</h2></div>
+  <p class="sec-why">一轮问完的代价是<b>一定有遗漏</b>。遗漏本身不是问题，<b>假装没有遗漏才是</b>。</p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:8%">#</th><th style="width:26%">没问的</th><th style="width:26%">我先按什么做</th><th>风险</th></tr></thead>
+    <tbody>
+      <tr><td><span class="id">B1</span></td><td>一次加载多少条 / 要不要翻页</td><td>20 条 + 「加载更多」</td><td>量真大时可能要虚拟滚动，属实现问题</td></tr>
+      <tr><td><span class="id">B2</span></td><td>通知能不能删除</td><td><b>先不做删除</b>，只做已读</td><td>若强烈要求删除，需补一轮</td></tr>
+      <tr><td><span class="id">B3</span></td><td>「其他」区要不要默认折叠</td><td>先展开</td><td><b>这正是骨架方案 C 要试的方向</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note ok">
+    <h4>B3 的处理方式值得单独说</h4>
+    <p>这条没问，但我没有拍脑袋定。<b>我把它变成了骨架的一个方案</b>——
+    方案 C 就是「默认折叠」那一版。</p>
+    <p><b>拿不准的事，不要在需求阶段猜，把它做成一个可以被看见、被比较的选项。</b>
+    需求阶段猜错，要到高保真才发现；做成方案，选的时候就能定。</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-h"><span class="sec-n">SCOPE</span><h2>明确不做的六件事</h2></div>
+  <p class="sec-why">写「不做什么」跟写「做什么」一样重要——<b>没写下来的，都会在做的过程中被顺手加进来。</b></p>
+  <pre>导出　·　通知设置 / 免打扰　·　按人筛选　·　通知详情独立页　·　移动端　·　站内信回复</pre>
+  <div class="note">
+    <h4>其中「通知设置」最容易被顺手加进来</h4>
+    <p>它<b>是另一个页面，不是这一页的一部分</b>。<br>
+    这一页解决「<b>怎么看完</b>」，设置解决「<b>怎么少收到</b>」——两件事。</p>
+  </div>
+</section>
+
+<footer>
+  需求原件：<code>0-requirement/requirement.md</code>、<code>usecase-plan.md</code>（UC-01~07）、
+  <code>placement.md</code>（三层枚举 · 骨架密度的来源）　·　2026-09-07<br>
+  本页四个问答均为真实提问与真实回答，未经改写。
+</footer>
+
+</div>
+</body>
+</html>

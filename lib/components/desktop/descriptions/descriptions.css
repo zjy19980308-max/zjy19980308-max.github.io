@@ -1,0 +1,327 @@
+/*
+ * 描述列表 (Descriptions)
+ * 标签：<cs-descriptions>
+ *
+ * 作用：成组展示「字段名 : 字段值」的详情信息（人员详情 / 企业信息 / 订单详情…）。
+ * 对标 antd Descriptions。默认两列，字段可跨整行；支持分组标题、多条目虚线分隔、空态。
+ *
+ * 结构：
+ *   <cs-descriptions>
+ *     <div class="desc-group">
+ *       <div class="desc-title">工作信息</div>
+ *       <div class="desc-grid">
+ *         <div class="desc-item"><span class="desc-label">工号</span><span class="desc-value">354615561</span></div>
+ *         <div class="desc-item is-full">…跨整行…</div>
+ *       </div>
+ *     </div>
+ *     <div class="desc-group"> … <div class="desc-empty">暂无数据</div> </div>
+ *   </cs-descriptions>
+ *
+ * 多条目（工作履历/紧急联系人等重复块）：group 内用多个 .desc-sub 包每条，之间虚线分隔。
+ */
+
+cs-descriptions {
+  display: block;
+  color: var(--cs-color-text);
+}
+
+/* 分组：标题 + 底部分隔线 */
+cs-descriptions .desc-group {
+  padding-bottom: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  border-bottom: var(--line-width) solid var(--cs-color-border-light);
+}
+cs-descriptions .desc-group:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+cs-descriptions .desc-title {
+  font: var(--typo-cn-16-medium);
+  font-weight: 600;
+  color: var(--cs-color-text);
+  margin-bottom: var(--space-md);
+}
+
+/* 两列栅格 */
+cs-descriptions .desc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md) var(--spacing-32);
+}
+cs-descriptions[data-cols="1"] .desc-grid {
+  grid-template-columns: 1fr;
+}
+
+/* 单条字段 */
+cs-descriptions .desc-item {
+  display: flex;
+  gap: var(--space-md);
+  min-width: 0;
+  font: var(--typo-cn-14-regular);
+}
+cs-descriptions .desc-item.is-full {
+  grid-column: 1 / -1;
+}
+cs-descriptions .desc-label {
+  width: 96px;
+  flex-shrink: 0;
+  color: var(--cs-color-text-light2);
+}
+cs-descriptions .desc-value {
+  flex: 1;
+  min-width: 0;
+  color: var(--cs-color-text);
+  word-break: break-all;
+}
+
+/* 多条目：每条一个 .desc-sub，虚线分隔 */
+cs-descriptions .desc-sub {
+  padding: var(--space-md) 0;
+  border-bottom: var(--line-width) dashed var(--cs-color-border-light);
+}
+cs-descriptions .desc-sub:first-child {
+  padding-top: 0;
+}
+cs-descriptions .desc-sub:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+/* 空态 */
+cs-descriptions .desc-empty {
+  text-align: center;
+  color: var(--cs-color-text-light2);
+  font: var(--typo-cn-14-regular);
+  padding: var(--space-sm) 0;
+}
+
+/* 文件行（资料附件·Figma 1026:10732/10768）：文件图标+名·hover 灰底 + 右侧动作图标 */
+cs-descriptions .desc-file {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-2xs) var(--space-xs);
+  margin: calc(-1 * var(--space-2xs)) calc(-1 * var(--space-xs));
+  border-radius: var(--radius-lg);
+  transition: background-color 0.15s ease;
+}
+cs-descriptions .desc-file:hover {
+  background: var(--cs-color-bg-light);
+}
+cs-descriptions .desc-file .df-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+cs-descriptions .desc-file .df-name {
+  flex: 1;
+  min-width: 0;
+  color: var(--cs-color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+cs-descriptions .desc-file .df-acts {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-shrink: 0;
+  visibility: hidden;
+}
+cs-descriptions .desc-file:hover .df-acts {
+  visibility: visible;
+}
+cs-descriptions .desc-file .df-act {
+  font-size: 14px;
+  color: var(--cs-color-text-light);
+  cursor: pointer;
+}
+cs-descriptions .desc-file .df-act:hover {
+  color: var(--cs-color-primary);
+}
+cs-descriptions .desc-file img.df-act {
+  width: 14px;
+  height: 14px;
+}
+
+/* ============================================================
+   分栏编辑（org-backend 人员详情 · Figma 1026:12546/12554/13069/13880）
+   ============================================================ */
+
+/* 分组头：标题 + 编辑链接（右） */
+cs-descriptions .desc-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+cs-descriptions .desc-group-head .desc-title {
+  margin-bottom: 0;
+}
+cs-descriptions .desc-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  color: var(--cs-color-primary);
+  font: var(--typo-cn-14-regular);
+  cursor: pointer;
+}
+cs-descriptions .desc-edit i { font-size: 14px; }
+/* 编辑态：该栏的「编辑」入口隐藏（只留取消/确认） */
+cs-descriptions .desc-group.is-editing .desc-edit { display: none; }
+
+/* 编辑态输入框（值 → 输入） */
+cs-descriptions .desc-input {
+  width: 100%;
+  height: 32px;
+  box-sizing: border-box;
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-sm);
+  padding: 0 var(--space-sm);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  background: var(--cs-color-white);
+  outline: none;
+}
+cs-descriptions .desc-input:focus { border-color: var(--cs-color-primary); }
+
+/* 取消/确认栏：sticky bottom → 首屏看不到时钉抽屉底(白底·上下24px)，滚到栏底归位 */
+cs-descriptions .desc-actions {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-md);
+  padding: var(--spacing-24) 0;   /* 上下 24px 白底 */
+  margin-top: var(--space-md);
+  background: var(--cs-color-white);
+}
+
+/* ===== 部门卡（主部门/子部门 · 设置为主部门 + 成果导向 + 核心工作要点）===== */
+cs-descriptions .desc-card {
+  background: var(--cs-color-bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  margin-top: var(--space-md);
+}
+cs-descriptions .desc-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+cs-descriptions .desc-card-title {
+  font: var(--typo-cn-16-medium);
+  font-weight: 600;
+  color: var(--cs-color-text);
+}
+cs-descriptions .desc-card-set {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  color: var(--cs-color-text-light2);
+  font: var(--typo-cn-13-regular);
+  cursor: pointer;
+}
+cs-descriptions .desc-card-set .rdo {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--cs-color-border);
+  box-sizing: border-box;
+}
+/* 非编辑·已选(主部门)：灰实心点表示"当前主"·不高亮（Figma 1026:13496 · 文字灰 radio灰）*/
+cs-descriptions .desc-card-set.is-on .rdo {
+  border-color: var(--cs-color-text-light2);
+  background:
+    radial-gradient(circle, var(--cs-color-text-light2) 0 3px, transparent 4px);
+}
+/* 编辑态·已选：才主色高亮（owner 2026-07-01：编辑状态下才高亮）*/
+cs-descriptions .desc-group.is-editing .desc-card-set.is-on {
+  color: var(--cs-color-primary);
+}
+cs-descriptions .desc-group.is-editing .desc-card-set.is-on .rdo {
+  border-color: var(--cs-color-primary);
+  background:
+    radial-gradient(circle, var(--cs-color-primary) 0 3px, transparent 4px);
+}
+
+/* 负责人 chip：灰底 pill 包 [头像 + 名 + 角色标签]（Figma 1026:13514） */
+cs-descriptions .desc-owner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--cs-color-bg-light);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2xs);
+}
+cs-descriptions .desc-owner .own-ava {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+cs-descriptions .desc-owner .own-name {
+  color: var(--cs-color-text);
+  font: var(--typo-cn-14-regular);
+}
+cs-descriptions .desc-owner .own-tag {
+  padding: 1px var(--space-2xs);
+  border-radius: var(--radius-lg);
+  background: var(--cs-color-primary-bg);
+  color: var(--cs-color-primary);
+  font-size: 10px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+/* 卡内子标题（部门成果导向 / 部门核心工作要点） */
+cs-descriptions .desc-subtitle {
+  font: var(--typo-cn-14-regular);
+  font-weight: 600;
+  color: var(--cs-color-text);
+  margin: var(--space-md) 0 var(--space-sm);
+}
+
+/* 成果导向 / 核心工作要点：三列 序号(图标) · 名称 · 内容 */
+cs-descriptions .desc-line {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+  font: var(--typo-cn-14-regular);
+}
+cs-descriptions .desc-line .ln-idx {
+  width: 20px;
+  flex-shrink: 0;
+  color: var(--cs-color-text-light2);
+  text-align: center;
+}
+/* 序号数字：DIN Black Italic 观感（粗斜数字·DIN 商用无字库·近似复刻） */
+cs-descriptions .desc-line .ln-idx.ln-num {
+  font-style: italic;
+  font-weight: 800;
+}
+/* 核心工作要点图标（target-02·cses 无此图标·导出 png 引） */
+cs-descriptions .desc-line .ln-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: -3px;
+}
+cs-descriptions .desc-line .ln-name {
+  width: 96px;
+  flex-shrink: 0;
+  color: var(--cs-color-text-light2);
+}
+cs-descriptions .desc-line .ln-text {
+  flex: 1;
+  min-width: 0;
+  color: var(--cs-color-text);
+  word-break: break-all;
+}

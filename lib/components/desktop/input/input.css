@@ -1,0 +1,123 @@
+/*
+ * 输入框组件 (Input)
+ * 标签：<cs-input>
+ * 数据来源：CSES新组件库 Figma 输入框设计规范
+ *
+ * 默认样式：底部下划线
+ * 在 cs-form-field 内使用时，会被 form-field.css 覆盖
+ *
+ * data 属性：
+ *   data-size="sm"       — 小尺寸 28px
+ *   data-size="md"       — 中尺寸 32px（默认）
+ *   data-size="lg"       — 大尺寸 36px
+ *   data-focus           — 聚焦态
+ *   data-error           — 错误态
+ *   data-disabled        — 禁用态
+ */
+
+/* ========== 强制重置 base.css 的 input 边框 ========== */
+cs-input input,
+cs-input .input-field {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* ========== 基础样式 ========== */
+cs-input {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 12px 8px;
+  border: none;
+  border-bottom: 1px solid var(--cs-color-border);
+  border-radius: 0;
+  background: transparent;
+  box-sizing: border-box;
+  cursor: text;
+  transition: border-color 0.2s ease;
+}
+
+/* ========== 输入框本体 ========== */
+cs-input .input-field {
+  flex: 1;
+  min-width: 0;
+  border: none !important;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  font: 14px/1 "PingFang SC", sans-serif;
+  color: #1f1f1f;
+  line-height: 1;
+  box-shadow: none !important;
+}
+
+cs-input .input-field:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+cs-input .input-field::placeholder {
+  color: #999;
+}
+
+/* ========== 悬浮态 ========== */
+cs-input:hover {
+  border-bottom-color: #999;
+}
+
+/* ========== 聚焦态 ========== */
+cs-input[data-focus],
+cs-input:focus-within {
+  border-bottom-color: #4757e2;
+}
+
+cs-input:focus-within:hover {
+  border-bottom-color: #4757e2;
+}
+
+/* ========== 错误态 ========== */
+cs-input[data-error] {
+  border-bottom-color: #f53f3f;
+}
+
+cs-input[data-error]:hover {
+  border-bottom-color: #f53f3f;
+}
+
+/* ========== 禁用态 ========== */
+cs-input[data-disabled] {
+  background: transparent;
+  border-bottom-color: var(--cs-color-border);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+cs-input[data-disabled] .input-field {
+  color: var(--cs-color-border);
+  cursor: not-allowed;
+}
+
+cs-input[data-disabled] .input-field::placeholder {
+  color: var(--cs-color-border);
+}
+
+/* ========== 尺寸 ========== */
+cs-input[data-size="sm"] {
+  height: 28px;
+  padding: 12px 4px;
+}
+
+cs-input[data-size="sm"] .input-field {
+  font: 12px/1 "PingFang SC", sans-serif;
+}
+
+cs-input[data-size="lg"] {
+  height: 44px;
+  padding: 12px 12px;
+}
+
+cs-input[data-size="lg"] .input-field {
+  font: 14px/1 "PingFang SC", sans-serif;
+}

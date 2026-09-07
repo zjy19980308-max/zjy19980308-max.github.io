@@ -1,0 +1,140 @@
+/*
+ * 列表组件 (List)
+ * 标签：<cs-list>
+ *
+ * 作用：通用列表容器，承载结构化的多行数据，自动行分隔。
+ * 对标 ng-zorro List / antd List。
+ *
+ * data 属性：
+ *   data-variant="default"  — 默认（行间分割线）
+ *   data-variant="bordered" — 整体带外框
+ *   data-variant="split"    — 无分割线
+ *   data-size="sm|md|lg"
+ *   data-hoverable          — 行 hover 高亮
+ *
+ * 子元素：
+ *   .list-header   — 列表头部（可选）
+ *   .list-footer   — 列表底部（可选）
+ *   .list-item     — 列表项
+ *   .list-item-meta— 项的元信息容器（avatar + content）
+ *   .list-item-avatar — 头像/图标
+ *   .list-item-content — 中间内容容器
+ *   .list-item-title  — 项标题
+ *   .list-item-desc   — 项描述
+ *   .list-item-extra  — 项右侧操作 / 附加信息
+ */
+
+cs-list {
+  display: block;
+  background: var(--cs-color-white);
+  box-sizing: border-box;
+}
+
+cs-list[data-variant="bordered"] {
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+cs-list .list-header,
+cs-list .list-footer {
+  padding: var(--space-sm) var(--space-md);
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+  background: var(--cs-color-bg-disabled);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+}
+
+cs-list .list-footer {
+  border-top: var(--line-width) solid var(--cs-color-border);
+  border-bottom: 0;
+}
+
+cs-list .list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  box-sizing: border-box;
+  transition: background-color 0.15s ease;
+}
+
+cs-list .list-item:last-child {
+  border-bottom: 0;
+}
+
+cs-list[data-hoverable] .list-item:hover {
+  background: var(--cs-color-bg-light);
+  cursor: pointer;
+}
+
+cs-list[data-variant="split"] .list-item {
+  border-bottom: 0;
+}
+
+/* ========== item meta ========== */
+cs-list .list-item-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex: 1;
+  min-width: 0;
+}
+
+cs-list .list-item-avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-interactive-md);
+  height: var(--cs-sem-size-interactive-md);
+  border-radius: var(--radius);
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-text-light);
+  font-size: var(--cs-sem-size-icon-md);
+}
+
+cs-list .list-item-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+cs-list .list-item-title {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+cs-list .list-item-desc {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+cs-list .list-item-extra {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--cs-color-text-light);
+  font: var(--typo-cn-13-regular);
+}
+
+/* ========== 尺寸 ========== */
+cs-list[data-size="sm"] .list-item {
+  padding: var(--space-2xs) var(--space-sm);
+}
+
+cs-list[data-size="lg"] .list-item {
+  padding: var(--space-md) var(--spacing-20);
+}

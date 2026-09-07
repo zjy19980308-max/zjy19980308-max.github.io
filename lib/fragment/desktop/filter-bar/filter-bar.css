@@ -1,0 +1,59 @@
+/*
+ * filter-bar fragment · 自包含 css
+ * 标签：<cs-filter-bar>
+ * 筛选区容器（纯壳，内容由原子组件拼装）
+ *
+ * 自包含：外层没有嵌套样式（owner 拍板"没有的话不变"），
+ *         本 fragment 保持旧版样式，仅路径独立
+ * 全部 var() · 0 颜色硬编码
+ *
+ * data 属性：
+ *   data-variant="single" — 单行（默认）
+ *   data-variant="double" — 双行
+ */
+
+/* ============================================================
+ *  默认：单行左右布局
+ * ============================================================ */
+cs-filter-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+cs-filter-bar .filter-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex: 1;
+  min-width: 0;
+}
+
+cs-filter-bar .filter-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}
+
+/* 双行变体：上下堆叠 */
+cs-filter-bar[data-variant="double"] {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-xs);
+}
+
+cs-filter-bar[data-variant="double"] .filter-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+cs-filter-bar[data-variant="double"] .filter-row-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

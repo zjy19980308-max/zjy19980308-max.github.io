@@ -1,0 +1,71 @@
+/*
+ * 窗口控制组件 (Window Control)
+ * 标签：<cs-window-control>
+ * 数据来源：所有业务页面顶栏左上角
+ *   Figma: 客户端_关闭 GROUP 16x16 → ELLIPSE bg:#ff6e5c
+ *   Figma: 客户端_放大 GROUP 16x16 → ELLIPSE bg:#61c654
+ *
+ * 两个控制点：关闭（珊瑚红）、最大化（绿）
+ */
+
+/* ========== 基础样式 ========== */
+cs-window-control {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-6);
+  user-select: none;
+  box-sizing: border-box;
+}
+
+/* ========== 控制点公共样式 ========== */
+cs-window-control .ctrl-close,
+cs-window-control .ctrl-minimize,
+cs-window-control .ctrl-maximize {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+/* ========== 关闭（珊瑚红） ========== */
+cs-window-control .ctrl-close {
+  background: var(--cs-color-window-close, #ff6e5c);
+}
+
+/* ========== 最小化（黄） ========== */
+cs-window-control .ctrl-minimize {
+  background: var(--cs-color-window-minimize, #f4be4f);
+}
+
+/* ========== 最大化（绿） ========== */
+cs-window-control .ctrl-maximize {
+  background: var(--cs-color-window-maximize, #61c654);
+}
+
+/* ========== 悬浮态 ========== */
+cs-window-control .ctrl-close:hover,
+cs-window-control .ctrl-minimize:hover,
+cs-window-control .ctrl-maximize:hover {
+  filter: brightness(0.9);
+}
+
+/* ========== 内部图标（鼠标悬浮时显示） ========== */
+cs-window-control .ctrl-icon {
+  display: none;
+  font-size: var(--font-size-xs);
+  color: var(--cs-color-white);
+  line-height: 1;
+}
+
+cs-window-control .ctrl-close:hover .ctrl-icon,
+cs-window-control .ctrl-minimize:hover .ctrl-icon,
+cs-window-control .ctrl-maximize:hover .ctrl-icon {
+  display: flex;
+}

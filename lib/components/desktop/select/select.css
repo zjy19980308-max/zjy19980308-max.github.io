@@ -1,0 +1,150 @@
+/*
+ * 选择器组件 (Select)
+ * 标签：<cs-select>
+ *
+ * data 属性：
+ *   data-size="sm"       — 小尺寸 24px
+ *   data-size="md"       — 中尺寸 32px（默认）
+ *   data-size="lg"       — 大尺寸 40px
+ *   data-disabled        — 禁用
+ *   data-error           — 错误状态
+ *   data-open            — 展开状态
+ */
+
+/* ========== 基础样式（对齐 org-backend selbox：36 高 / 8 圆角 / 12 padding / 8 gap）========== */
+cs-select {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  position: relative;
+  height: var(--spacing-36);
+  padding: 0 var(--space-sm);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  background: var(--cs-color-white);
+  cursor: pointer;
+  box-sizing: border-box;
+  user-select: none;
+  transition: border-color 0.2s ease;
+}
+
+/* ========== 尺寸变体 ========== */
+cs-select[data-size="sm"] {
+  height: var(--cs-sem-size-interactive-xs);
+  padding: 0 var(--spacing-6);
+  font: var(--typo-cn-12-regular);
+}
+
+cs-select[data-size="lg"] {
+  height: var(--cs-sem-size-interactive-md);
+  padding: 0 var(--space-sm);
+}
+
+/* ========== 悬浮状态（对齐 selbox：主色边）========== */
+cs-select:hover {
+  border-color: var(--cs-color-primary);
+}
+/* 字段名前缀（如「人员状态：」）灰 · 值深 */
+cs-select .select-label { color: var(--cs-color-text-light2); }
+
+/* ========== 聚焦/展开状态 ========== */
+cs-select[data-open] {
+  border-color: var(--cs-color-primary);
+}
+
+/* ========== 错误状态 ========== */
+cs-select[data-error] {
+  border-color: var(--cs-sem-border-error);
+}
+
+cs-select[data-error]:hover {
+  border-color: var(--cs-sem-border-error);
+}
+
+/* ========== 禁用状态 ========== */
+cs-select[data-disabled] {
+  background: var(--cs-color-bg-disabled);
+  border-color: var(--cs-color-border);
+  color: var(--cs-color-text-light2);
+  cursor: not-allowed;
+  opacity: var(--cs-sem-opacity-disabled);
+}
+
+cs-select[data-disabled]:hover {
+  border-color: var(--cs-color-border);
+}
+
+/* ========== 值显示区域（内容宽·盒子随内容撑开，对齐 selbox）========== */
+cs-select .select-value {
+  white-space: nowrap;
+}
+/* 箭头靠右：内容型=紧跟值(auto 归 0)·定宽型=推到最右 */
+cs-select .select-arrow {
+  margin-left: auto;
+}
+
+/* ========== 占位符 ========== */
+cs-select .select-placeholder {
+  white-space: nowrap;
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 箭头（CSS 下三角·对齐 org-backend selbox .ar）========== */
+cs-select .select-arrow {
+  width: 0;
+  height: 0;
+  flex-shrink: 0;
+  border-top: 4px solid currentColor;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  color: var(--cs-color-text-light2);
+  opacity: 0.5;
+}
+
+/* ========== 下拉选项面板（沉淀自 org-backend 人员状态筛选样式）========== */
+cs-select .select-menu {
+  position: absolute;
+  top: calc(100% + var(--space-2xs));
+  left: 0;
+  min-width: 100%;
+  display: none;
+  z-index: 50;
+  box-sizing: border-box;
+  padding: var(--space-2xs);
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--cs-shadow-lg);
+}
+cs-select[data-open] .select-menu {
+  display: block;
+}
+cs-select .select-option {
+  display: flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+cs-select .select-option:hover {
+  background: var(--cs-color-bg-light);
+}
+/* 选中项：主色 + 右侧勾 */
+cs-select .select-option[data-active] {
+  color: var(--cs-color-primary);
+}
+cs-select .select-option[data-active]::after {
+  content: "";
+  margin-left: auto;
+  width: 5px;
+  height: 9px;
+  flex-shrink: 0;
+  border: solid var(--cs-color-primary);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+}

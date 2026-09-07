@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-avatar 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="avatar.css?v=5eb0eb5d">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+    .dark-bg { background: var(--cs-color-bg-app-dark); padding: 16px; border-radius: 8px; display: flex; align-items: center; gap: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- 图片头像 -->
+<div class="section">
+  <div class="section-title">图片头像</div>
+  <div class="section-subtitle">内部放 &lt;img&gt; 标签</div>
+
+  <div class="row">
+    <span class="row-label">尺寸</span>
+    <cs-avatar data-size="xs"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxOTEsMTc2LDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="sm"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxNTMsMTkxLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTkxLDE0OCkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTgyLDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="xl"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTMwLDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+  </div>
+
+  <div class="row">
+    <span class="row-label">方形</span>
+    <cs-avatar data-size="xs" data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxNzEsMTI1LDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="sm" data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxOTEsMTI1LDE1OSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxOTEsMTQyLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="lg" data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxODcsMTkxLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="xl" data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMzYsMTkxLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+  </div>
+</div>
+
+<!-- 文字头像 -->
+<div class="section">
+  <div class="section-title">文字头像（首字母）</div>
+  <div class="section-subtitle">data-color 控制背景色</div>
+
+  <div class="row">
+    <span class="row-label">颜色</span>
+    <cs-avatar data-color="blue"><span class="avatar-text">张</span></cs-avatar>
+    <cs-avatar data-color="red"><span class="avatar-text">李</span></cs-avatar>
+    <cs-avatar data-color="green"><span class="avatar-text">王</span></cs-avatar>
+    <cs-avatar data-color="orange"><span class="avatar-text">赵</span></cs-avatar>
+    <cs-avatar data-color="purple"><span class="avatar-text">刘</span></cs-avatar>
+    <cs-avatar data-color="pink"><span class="avatar-text">陈</span></cs-avatar>
+    <cs-avatar data-color="sky"><span class="avatar-text">杨</span></cs-avatar>
+  </div>
+
+  <div class="row">
+    <span class="row-label">尺寸</span>
+    <cs-avatar data-size="xs" data-color="blue"><span class="avatar-text">张</span></cs-avatar>
+    <cs-avatar data-size="sm" data-color="red"><span class="avatar-text">李</span></cs-avatar>
+    <cs-avatar data-color="green"><span class="avatar-text">王</span></cs-avatar>
+    <cs-avatar data-size="lg" data-color="orange"><span class="avatar-text">赵</span></cs-avatar>
+    <cs-avatar data-size="xl" data-color="purple"><span class="avatar-text">刘</span></cs-avatar>
+  </div>
+</div>
+
+<!-- 图标头像 -->
+<div class="section">
+  <div class="section-title">图标头像（默认占位）</div>
+  <div class="section-subtitle">无图片时显示默认人物图标</div>
+
+  <div class="row">
+    <span class="row-label">尺寸</span>
+    <cs-avatar data-size="xs"><i class="avatar-icon cses-aite"></i></cs-avatar>
+    <cs-avatar data-size="sm"><i class="avatar-icon cses-aite"></i></cs-avatar>
+    <cs-avatar><i class="avatar-icon cses-aite"></i></cs-avatar>
+    <cs-avatar data-size="lg"><i class="avatar-icon cses-aite"></i></cs-avatar>
+    <cs-avatar data-size="xl"><i class="avatar-icon cses-aite"></i></cs-avatar>
+  </div>
+</div>
+
+<!-- 在线状态 -->
+<div class="section">
+  <div class="section-title">在线状态</div>
+  <div class="section-subtitle">.avatar-status + data-online/busy/away/offline</div>
+
+  <div class="row">
+    <span class="row-label">状态</span>
+    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTkxLDE2NSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-online></span></cs-avatar>
+    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTY0LDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-busy></span></cs-avatar>
+    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMzcsMTI1LDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-away></span></cs-avatar>
+    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxODgsMTI1LDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-offline></span></cs-avatar>
+  </div>
+
+  <div class="row">
+    <span class="row-label">小尺寸</span>
+    <cs-avatar data-size="sm"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxOTEsMTI1LDE0MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-online></span></cs-avatar>
+    <cs-avatar><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxOTEsMTYwLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-online></span></cs-avatar>
+  </div>
+</div>
+
+<!-- 深色背景 -->
+<div class="section">
+  <div class="section-title">深色背景</div>
+  <div class="dark-bg">
+    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxNzAsMTkxLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="lg" data-color="blue"><span class="avatar-text">张</span></cs-avatar>
+    <cs-avatar data-size="lg"><i class="avatar-icon cses-aite"></i></cs-avatar>
+    <cs-avatar data-size="lg" data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTkxLDEzMSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+  </div>
+</div>
+
+</body>
+</html>

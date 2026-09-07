@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>报销申请 · 4-题 Q-Bank 问答记录</title>
+<style>
+:root{
+  --bg:#fbfbfa; --panel:#fff; --ink:#1c1c1a; --ink2:#5a5a55; --ink3:#96968e;
+  --line:#e6e6e1; --line2:#f0f0ec;
+  --pick:#3d5afe; --pick-bg:#eef1ff; --pick-line:#c3ccff;
+  --warn:#c2410c; --warn-bg:#fff4ec;
+  --ok:#0f7a3d; --ok-bg:#eefaf2;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:0 28px 96px}
+
+/* ── 页头 ── */
+header{padding:64px 0 34px;border-bottom:2px solid var(--ink)}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);text-transform:uppercase}
+h1{margin:14px 0 0;font-size:34px;line-height:1.2;letter-spacing:-.02em;font-weight:700}
+.sub{margin:12px 0 0;color:var(--ink2);max-width:66ch}
+.meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font:600 11px/1 var(--mono);letter-spacing:.05em;padding:6px 10px;border:1px solid var(--line);
+  border-radius:4px;background:var(--panel);color:var(--ink2)}
+
+/* ── 数字条 ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);margin:34px 0 0}
+.stat{background:var(--panel);padding:18px 16px}
+.stat b{display:block;font:700 30px/1 var(--mono);letter-spacing:-.03em}
+.stat span{display:block;margin-top:7px;font-size:11px;color:var(--ink3);letter-spacing:.04em}
+.stat.hl b{color:var(--pick)}
+a.stat{text-decoration:none;color:inherit;display:block;transition:background .15s}
+a.stat:hover{background:var(--pick-bg)}
+a.stat span{color:var(--pick)}
+
+/* ── 章节 ── */
+section{margin-top:56px}
+#gate{scroll-margin-top:20px}
+.sec-h{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--ink)}
+.sec-n{font:700 12px/1 var(--mono);color:var(--pick);letter-spacing:.1em}
+.sec-h h2{margin:0;font-size:21px;font-weight:700;letter-spacing:-.01em}
+.sec-why{margin:10px 0 0;font-size:13px;color:var(--ink3)}
+
+/* ── 子题 ── */
+.q{margin-top:26px;border:1px solid var(--line);background:var(--panel);border-radius:6px;overflow:hidden}
+.q-h{padding:16px 20px;border-bottom:1px solid var(--line2);display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.q-id{font:700 11px/1 var(--mono);color:#fff;background:var(--ink);padding:5px 8px;border-radius:3px;letter-spacing:.04em}
+.q-t{font-weight:600;flex:1;min-width:220px}
+.q-kind{font:600 10px/1 var(--mono);color:var(--ink3);border:1px solid var(--line);padding:4px 7px;border-radius:3px;letter-spacing:.08em}
+.opts{padding:6px 0}
+.opt{display:grid;grid-template-columns:30px 1fr;gap:12px;padding:12px 20px;align-items:start;border-bottom:1px solid var(--line2)}
+.opt:last-child{border-bottom:0}
+.opt-k{font:700 12px/1.5 var(--mono);color:var(--ink3);padding-top:2px}
+.opt-b{font-weight:600;margin-bottom:3px}
+.opt-d{font-size:13px;color:var(--ink2)}
+.opt.pick{background:var(--pick-bg)}
+.opt.pick .opt-k{color:var(--pick)}
+.opt.pick .opt-b::after{content:"owner 选";margin-left:9px;font:700 10px/1 var(--mono);color:#fff;
+  background:var(--pick);padding:4px 7px;border-radius:3px;vertical-align:2px;letter-spacing:.04em}
+.derive{margin:0;padding:14px 20px;background:#fafaf8;border-top:1px solid var(--line2);font-size:13.5px}
+.derive::before{content:"推导";display:inline-block;font:700 10px/1 var(--mono);color:var(--ink3);
+  border:1px solid var(--line);padding:4px 7px;border-radius:3px;margin-right:10px;letter-spacing:.08em}
+.derive b{color:var(--pick)}
+
+/* ── 提示块 ── */
+.note{margin-top:22px;padding:16px 18px;border-left:3px solid var(--warn);background:var(--warn-bg);
+  border-radius:0 5px 5px 0;font-size:14px}
+.note.ok{border-left-color:var(--ok);background:var(--ok-bg)}
+.note h4{margin:0 0 7px;font-size:14px;font-weight:700}
+.note p{margin:0 0 8px}.note p:last-child{margin:0}
+.note code{font:12px var(--mono);background:#fff;border:1px solid var(--line);padding:1px 5px;border-radius:3px}
+
+/* ── 表 ── */
+.tw{overflow-x:auto;margin-top:20px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px}
+th{text-align:left;padding:12px 14px;background:#f7f7f4;border-bottom:1px solid var(--line);
+  font:700 11px/1 var(--mono);color:var(--ink2);letter-spacing:.06em;white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td code{font:12px var(--mono);color:var(--pick)}
+.badge{display:inline-block;font:700 10px/1 var(--mono);padding:4px 7px;border-radius:3px;letter-spacing:.04em}
+.badge.d{background:var(--pick);color:#fff}
+.badge.r{background:#eee;color:var(--ink2)}
+
+/* ── ASCII ── */
+pre.ascii{margin:18px 0 0;padding:18px 20px;background:var(--ink);color:#e8e8e3;border-radius:6px;
+  font:12.5px/1.75 var(--mono);overflow-x:auto}
+pre.ascii .c{color:#7ea6ff}
+pre.ascii .g{color:#8a8a82}
+
+/* ── 结语 ── */
+.kicker{margin-top:56px;padding:26px 28px;border:2px solid var(--ink);border-radius:8px;background:var(--panel)}
+.kicker h3{margin:0 0 12px;font-size:17px}
+.kicker blockquote{margin:0;padding-left:16px;border-left:3px solid var(--pick);color:var(--ink2);font-size:14.5px}
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--ink3)}
+
+@media (max-width:620px){
+  .wrap{padding:0 18px 64px}h1{font-size:26px}
+  .opt{grid-template-columns:22px 1fr;gap:9px;padding:11px 14px}
+  .q-h{padding:13px 14px}.derive{padding:12px 14px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Step 1 / 4 · 需求问答</div>
+  <h1>报销申请 · 4-题 Q-Bank 问答记录</h1>
+  <p class="sub">动手画之前，主会话按 4-题 Q-Bank 跟 owner 逐题对话，产出 PAGES 清单和导航骨架。
+  <b>本文是问答原件，不是整理稿</b> —— 选项、owner 实选、以及由此得出的推导，逐条原样存档。</p>
+  <div class="meta">
+    <span class="tag">2026-09-03</span>
+    <span class="tag">EXPENSE-CLAIM</span>
+    <span class="tag">目标角色 · 普通员工</span>
+    <span class="tag">提问方式 · AskUserQuestion（真问真答）</span>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat hl"><b>12</b><span>子题 · 全 OWNER 拍板</span></div>
+  <div class="stat"><b>0</b><span>AI 代决</span></div>
+  <a class="stat jump" href="#gate"><b>3</b><span>门卫拦截 · 点看原文 ↓</span></a>
+  <div class="stat hl"><b>4</b><span>最终页数</span></div>
+  <div class="stat"><b>2 + 2</b><span>一级 + 二级</span></div>
+  <div class="stat"><b>3 + 1</b><span>ROUTED + DRAWER</span></div>
+</div>
+
+<!-- ══ 选题 ══ -->
+<section>
+  <div class="sec-h"><span class="sec-n">STEP 0</span><h2>选题过程也算记录</h2></div>
+  <p class="sec-why">在问第一个问题之前，先花了一轮把「演示单元做哪个」定下来 —— 这轮的取舍本身就是内容。</p>
+
+  <div class="note">
+    <h4>owner 最初想用「会议中 · 空态」，我提了两条保留意见</h4>
+    <p><b>① 一个空态，四道框架题空掉三道。</b>页数=1 没有减法可做、导航不变、承载不变。
+    参照案例 11 个子题，我们大概只能问出 3~4 题 —— 而 Q-Bank 恰恰是最显功力的那页。</p>
+    <p><b>② 「对着成品反推」展示出来会露怯。</b>参照案例是真从一份 PDF 需求出发的；
+    我们倒推的话，「推导」栏容易像马后炮。</p>
+    <p>owner 采纳，换成从 0 走的新单元。</p>
+  </div>
+
+  <div class="note ok">
+    <h4>我主动排除了候选里的「工位预定」</h4>
+    <p>它跟参照案例的「会议室预订」几乎同构 —— 都是<b>资源 + 时间段 + 预订</b>，
+    页数决策和导航决策会长得一模一样，<b>放一起看像照抄</b>。</p>
+    <p><b>报销是「单据 + 流程」，完全不同构。</b>owner 最终选：报销申请。</p>
+  </div>
+</section>
+
+<!-- ══ Q1 ══ -->
+<section>
+  <div class="sec-h"><span class="sec-n">BANK Q1</span><h2>角色 + 高频场景</h2></div>
+  <p class="sec-why">决定 · 默认落地页 / 首屏重心 / 要不要角色变体区块</p>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">Q1.1</span>
+      <span class="q-t">员工端要覆盖哪些角色</span><span class="q-kind">SINGLE</span></div>
+    <div class="opts">
+      <div class="opt"><div class="opt-k">A</div><div>
+        <div class="opt-b">仅申请人</div>
+        <div class="opt-d">只做「我交单、我看进度」，审批归管理端。最干净、页数最少，但少一道真决策</div></div></div>
+      <div class="opt pick"><div class="opt-k">B</div><div>
+        <div class="opt-b">申请人 + 审批人</div>
+        <div class="opt-d">同一套页面，有审批权时多一个「待我审批」入口</div></div></div>
+      <div class="opt"><div class="opt-k">C</div><div>
+        <div class="opt-b">申请人 + 审批人 + 财务复核</div>
+        <div class="opt-d">决策最多，但财务看的东西（批量核票 / 打款）跟员工差太远，会撑得太大</div></div></div>
+    </div>
+    <p class="derive">真实世界就是这样 —— <b>主管自己也要报销</b>。
+    由此产生一道真决策留给 Q2：两个入口是并列成两页，还是同页 view 切换（= 页数减法）。</p>
+  </div>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">Q1.2</span>
+      <span class="q-t">最高频的 2~3 个场景</span><span class="q-kind">MULTI</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">✓</div><div>
+        <div class="opt-b">查进度 / 催办</div>
+        <div class="opt-d">交上去之后反复回来看「审到哪了、钱什么时候到」</div></div></div>
+      <div class="opt pick"><div class="opt-k">✓</div><div>
+        <div class="opt-b">日常零星报销</div>
+        <div class="opt-d">打车、餐费，几张票就交一单</div></div></div>
+      <div class="opt pick"><div class="opt-k">✓</div><div>
+        <div class="opt-b">出差整批报销</div>
+        <div class="opt-d">一趟差 20+ 张票，要归集成一单</div></div></div>
+      <div class="opt pick"><div class="opt-k">✓</div><div>
+        <div class="opt-b">被打回来补材料</div>
+        <div class="opt-d">审批人退回，要改单 / 补票重交</div></div></div>
+    </div>
+    <p class="derive">默认落地 = <b>我的报销</b>（读为主·频次最高）· 首屏顶部必须有 <b>「需我处理」区</b>
+    · 新建入口<b>极轻</b>，一个按钮直接开 · <b>一单多票的批量能力是硬需求</b>
+    · 有审批权时多一个「待我审批」</p>
+  </div>
+
+  <div class="note">
+    <h4>一个不粉饰的偏差：题目问「最高频 2~3 个」，owner 四个全选</h4>
+    <p>我没有替他删。而是把它变成一条设计约束：<b>首屏必须同时扛「读进度」和「写新单」两件事</b>，
+    不能只优化一头。这条约束直接生出了后面 Q3.2 的「置顶区 + 没事时自动消失」。</p>
+  </div>
+</section>
+
+<!-- ══ Q2 ══ -->
+<section>
+  <div class="sec-h"><span class="sec-n">BANK Q2</span><h2>合页 / 主+衍生</h2></div>
+  <p class="sec-why">决定 · 页数减法</p>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">Q2.1</span>
+      <span class="q-t">「我的报销」和「待我审批」怎么组织</span><span class="q-kind">SINGLE</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">A</div><div>
+        <div class="opt-b">同一页 · 顶部 view 切换</div>
+        <div class="opt-d">两个页签「我提的 / 待我审批」</div></div></div>
+      <div class="opt"><div class="opt-k">B</div><div>
+        <div class="opt-b">两个独立页 · 导航并列</div>
+        <div class="opt-d">职责最清楚、审批页能做批量操作，但页数 +1，无审批权的人 sidebar 会缺一块</div></div></div>
+      <div class="opt"><div class="opt-k">C</div><div>
+        <div class="opt-b">待我审批归到首屏「需我处理」区</div>
+        <div class="opt-d">页数最少，但审批量大时首屏装不下</div></div></div>
+    </div>
+    <p class="derive">两者数据结构几乎一样（都是报销单列表，差别只在操作列），合页成立。<b>页数 −1</b>。
+    无审批权时把那个页签隐掉，<b>不留孤禁标签</b>。</p>
+  </div>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">Q2.2</span>
+      <span class="q-t">一单多票（出差 20+ 张）怎么组织</span><span class="q-kind">本单最硬的题</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">A</div><div>
+        <div class="opt-b">先传票再成单</div>
+        <div class="opt-d">票批量丢进「我的票夹」，OCR 跑完再勾几张组成一单</div></div></div>
+      <div class="opt"><div class="opt-k">B</div><div>
+        <div class="opt-b">单内传票</div>
+        <div class="opt-d">先建单，在单里上传发票行。页数最少最直白，但出差回来要一口气传 20 张，且票没传完前单是半成品</div></div></div>
+      <div class="opt"><div class="opt-k">C</div><div>
+        <div class="opt-b">两条都留</div>
+        <div class="opt-d">最灵活，但两套入口要想清楚怎么不重叠</div></div></div>
+    </div>
+    <p class="derive">A 贴真实行为 —— <b>票是零散攻入的，单是月底才拼的</b>。
+    代价诚实说：<b>页数 +1</b>（多一个票夹），且票夹与单的关系必须在 Q3/Q4 讲清楚。</p>
+  </div>
+
+  <div class="note ok">
+    <h4>页数小结（Q2 之后）</h4>
+    <p><code>−1</code>（审批合页）<code>+1</code>（票夹）= <b>净持平，但结构完全变了</b>：
+    从「单据为中心」变成「<b>票 → 单</b> 两段式」。</p>
+  </div>
+</section>
+
+<!-- ══ Q3 ══ -->
+<section>
+  <div class="sec-h"><span class="sec-n">BANK Q3</span><h2>导航 + 落地</h2></div>
+  <p class="sec-why">决定 · 页面骨架</p>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">Q3.1</span>
+      <span class="q-t">票夹放哪 · sidebar 几个入口</span><span class="q-kind">SINGLE</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">A</div><div>
+        <div class="opt-b">两个入口，默认落地 = 我的报销</div>
+        <div class="opt-d">票夹是一级公民，平时随手丢票不必先建单</div></div></div>
+      <div class="opt"><div class="opt-k">B</div><div>
+        <div class="opt-b">一个入口，票夹藏在新建流程里</div>
+        <div class="opt-d">导航最干净，但「随手先传一张票」这个高频动作没了入口 —— 跟 Q2.2 选 A 的初衷自相矛盾</div></div></div>
+      <div class="opt"><div class="opt-k">C</div><div>
+        <div class="opt-b">两个入口，默认落地 = 票夹</div>
+        <div class="opt-d">因为「先传票」是流程起点。但跟 Q1.2 矛盾：查进度才是频次最高的</div></div></div>
+    </div>
+    <p class="derive">两条推导在这里第一次<b>互相制衡</b>：Q2.2 说流程从票开始，Q1.2 说频次从查开始。
+    结果是 —— <b>票夹给入口，但不给默认落地</b>。</p>
+  </div>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">Q3.2</span>
+      <span class="q-t">「需我处理」怎么让人第一眼看到</span><span class="q-kind">SINGLE</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">A</div><div>
+        <div class="opt-b">首屏置顶区</div>
+        <div class="opt-d">列表上方一条，没事时自动消失不占地</div></div></div>
+      <div class="opt"><div class="opt-k">B</div><div>
+        <div class="opt-b">状态筛选 + 计数徽标</div>
+        <div class="opt-d">更克制、结构更简单，但得主动点才看得到</div></div></div>
+      <div class="opt"><div class="opt-k">C</div><div>
+        <div class="opt-b">顶栏铃铛通知</div>
+        <div class="opt-d">最轻，但通知容易被忽略，跟「四个场景全选」的信号不匹配</div></div></div>
+    </div>
+    <p class="derive">这个区<b>同时装两种东西</b> —— 我被打回的单 + 待我审的单，
+    正好把 Q1.1（双角色）和 Q1.2（被打回补材料）两条推导收在一处。
+    <b>没事时整块消失</b>是关键：否则日常零星报销的人天天看见一个空盒子。</p>
+  </div>
+</section>
+
+<!-- ══ Q4 ══ -->
+<section>
+  <div class="sec-h"><span class="sec-n">BANK Q4</span><h2>表单 / 详情 / 轻量功能 承载</h2></div>
+  <p class="sec-why">决定 · 哪些是独立页面，页数最终定下来</p>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">Q4.1</span>
+      <span class="q-t">新建 / 编辑报销单用什么承载</span><span class="q-kind">SINGLE</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">A</div><div>
+        <div class="opt-b">右侧抽屉</div>
+        <div class="opt-d">叠在列表 / 票夹之上，从票夹勾了票点「组成一单」时，能看见后面勾了哪几张</div></div></div>
+      <div class="opt"><div class="opt-k">B</div><div>
+        <div class="opt-b">独立页面</div>
+        <div class="opt-d">20+ 张票横向铺表格更舒服、能批量编辑，但页数 +1 且从票夹跳过去丢上下文</div></div></div>
+      <div class="opt"><div class="opt-k">C</div><div>
+        <div class="opt-b">居中弹窗</div>
+        <div class="opt-d">字段太多装不下，会变成弹窗内滚动</div></div></div>
+    </div>
+    <p class="derive">跟 Q2.2 的两段式天然契合 —— <b>抽屉的价值恰恰是「背景还在」</b>。</p>
+  </div>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">Q4.2</span>
+      <span class="q-t">报销单详情用什么承载</span><span class="q-kind">SINGLE</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">A</div><div>
+        <div class="opt-b">独立页</div>
+        <div class="opt-d">内容多（发票明细 + 审批时间线 + 附件）、动作多（撤回 / 编辑 / 重交 / 催办）、要能发链接给审批人</div></div></div>
+      <div class="opt"><div class="opt-k">B</div><div>
+        <div class="opt-b">右侧抽屉（跟表单一致）</div>
+        <div class="opt-d">形式统一、页数最少，但时间线 + 20 行发票在抽屉里很挤，且没法发链接</div></div></div>
+    </div>
+    <p class="derive">跟参照案例同一判断 —— <b>动作多 + 内容多 + 要分享链接 = 独立页</b>。</p>
+  </div>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">Q4.3</span>
+      <span class="q-t">OCR 识别完的票，怎么让人确认对不对</span><span class="q-kind">很少人想的题</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">A</div><div>
+        <div class="opt-b">只标可疑项，不拦人</div>
+        <div class="opt-d">跑完直接入票夹，置信度低的字段标黄底；只在「组成单」那一刻才强制把黄底项清干净</div></div></div>
+      <div class="opt"><div class="opt-k">B</div><div>
+        <div class="opt-b">传完逐张确认</div>
+        <div class="opt-d">数据最准，但出差回来传 20 张要确认 20 次，直接向后需求</div></div></div>
+      <div class="opt"><div class="opt-k">C</div><div>
+        <div class="opt-b">完全不确认，错了再改</div>
+        <div class="opt-d">最省事，但金额识别错 → 报销金额错 → 被打回，正好撞上 Q1.2 那个高焦虑场景</div></div></div>
+    </div>
+    <p class="derive">本单<b>最见设计判断</b>的一条，展开在文末。</p>
+  </div>
+</section>
+
+<!-- ══ 门卫 ══ -->
+<section>
+  <div class="sec-h" id="gate"><span class="sec-n">GATE</span><h2>补问 · 这三道题是门卫逼出来的</h2></div>
+  <p class="sec-why">四道 Bank 题答完后，我开始写需求文档 —— 写到一半被流程门卫<b>当场拦下</b>。
+  这一段不是事后补的故事，是真实发生的过程，原文照录。</p>
+
+  <div class="note">
+    <h4>拦截原文（<code>.claude/hooks/enforce-skeleton.py</code> · PreToolUse 阻断）</h4>
+    <p style="font:12.5px/1.7 var(--mono);background:#fff;border:1px solid var(--line);
+       border-radius:5px;padding:14px 16px;white-space:pre-wrap;color:var(--ink)">🔴 需求还没跟 owner 对过，不许落 requirement.md
+
+  实况：本次会话最近 30 分钟内 <b>一次 AskUserQuestion 都没有</b>。
+
+「需求澄清」是跟 owner 一问一答，不是你把他一句话的需求脑补成一份文档。
+脑补出来的需求，后面形态/角色/栏数/信息价值全建在假设上，
+做到高保真才发现方向错了。</p>
+  </div>
+
+  <div class="note ok">
+    <h4>而它拦得有价值 —— 我自己刚在文档里列了 6 条「没问到、我拍的默认值」</h4>
+    <p>门卫等于逼我把该问的问了。下面三道就是补问出来的，
+    <b>其中 B2 状态机直接决定了列表状态列和详情时间线长什么样</b> —— 这条要是我自己拍，
+    做到高保真才发现方向不对就晚了。</p>
+  </div>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">B2</span>
+      <span class="q-t">报销单的状态机</span><span class="q-kind">补问 · 影响最大</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">A</div><div>
+        <div class="opt-b">草稿 → 待审 → 通过 / 退回 → 已打款</div>
+        <div class="opt-d">5 个状态。覆盖完整链路且包含「钱到没到」—— 这是 Q1.2「查进度」真正关心的终点</div></div></div>
+      <div class="opt"><div class="opt-k">B</div><div>
+        <div class="opt-b">再加一级「财务审核」</div>
+        <div class="opt-d">更真实（大公司都这样），但时间线变长，且员工看得到这个节点却插不上手</div></div></div>
+      <div class="opt"><div class="opt-k">C</div><div>
+        <div class="opt-b">只做待审 / 通过 / 退回 三态</div>
+        <div class="opt-d">最精简。但没了「草稿」不能先存后交，没了「已打款」答不了「钱什么时候到」</div></div></div>
+    </div>
+    <p class="derive"><b>5 个状态是最小完整集</b>。owner 排除财务审核那一级 ——
+    <b>员工看得到却插不上手的节点，放进来只会拉长时间线</b>。</p>
+  </div>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">B5</span>
+      <span class="q-t">一张发票能不能进多个报销单</span><span class="q-kind">补问</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">A</div><div>
+        <div class="opt-b">不能，一票一单</div>
+        <div class="opt-d">已进单的票在票夹里变灰不可勾，hover 提示「已用于 XX 单」</div></div></div>
+      <div class="opt"><div class="opt-k">B</div><div>
+        <div class="opt-b">能，但给醒目警告</div>
+        <div class="opt-d">适合拆分报销（一张大额票分摊到两个项目），但会把骨架搞复杂</div></div></div>
+    </div>
+    <p class="derive">防重报，且财务合规上本来就不允许重复报销。<b>分摊场景明确划进「后续规划」，不是遗漏。</b></p>
+  </div>
+
+  <div class="q">
+    <div class="q-h"><span class="q-id">B4</span>
+      <span class="q-t">票夹里已经用掉的票，默认看得见吗</span><span class="q-kind">补问</span></div>
+    <div class="opts">
+      <div class="opt pick"><div class="opt-k">A</div><div>
+        <div class="opt-b">默认隐藏，可切「显示已用」</div>
+        <div class="opt-d">票夹只看得见「还没报的」，保持干净 —— 这才是票夹的主职责</div></div></div>
+      <div class="opt"><div class="opt-k">B</div><div>
+        <div class="opt-b">默认都显示，已用的置灰</div>
+        <div class="opt-d">一眼看到全部历史。但用一年之后票夹里六成是灰的，真正要用的新票被淡化了</div></div></div>
+    </div>
+    <p class="derive">票夹的职责是<b>「待处理的池子」</b>，不是档案柜。</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>#</th><th>门卫拦了什么</th><th>理由</th><th>结果</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>用 Bash 建业务 INDEX</td>
+          <td>Bash 走的是另一条路，四道关一道都查不到</td>
+          <td>改用 Write 工具重来</td></tr>
+        <tr><td>2</td><td>写 <code>requirement.md</code></td>
+          <td>新产物没登记进业务 INDEX</td>
+          <td>先补登记再写</td></tr>
+        <tr><td>3</td><td>写 <code>requirement.md</code>（第二次）</td>
+          <td>30 分钟内没有 AskUserQuestion 记录</td>
+          <td><b>补问 3 道题 → B2/B4/B5 从假设升级成 owner 拍板</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin:34px 0 0;font-size:16px">留痕原文 · <code>docs/元文档/监控/hook-blocks.tsv</code></h3>
+  <p class="sec-why" style="margin-top:8px">拦截不是弹个提示就完了，会落一行到监控日志。下面是原始行，未加工：</p>
+
+  <pre class="ascii">2026-09-03T19:42:56.870645  <span class="c">IDX</span>  …/expense-claim/20260903-1828/0-requirement/requirement.md
+                            <span class="g">未登记 20260903-1828/0-requirement/requirement.md</span>
+
+2026-09-03T19:43:59.515007  <span class="c">REQ</span>  …/expense-claim/20260903-1828/0-requirement/requirement.md
+                            <span class="g">最近 30 分钟内零次 AskUserQuestion</span></pre>
+
+  <div class="note">
+    <h4>🔴 但这里有个我必须说的问题：第 1 次的留痕不见了</h4>
+    <p>第 1 次拦截（Bash 建 INDEX，18:29:05）<b>当时确实写进了这个文件</b> ——
+    我看过、也贴出来过。<b>但现在文件里没有了。</b></p>
+    <p>查证过程：</p>
+    <p style="font:12.5px/1.7 var(--mono);background:#fff;border:1px solid var(--line);
+       border-radius:5px;padding:12px 14px;white-space:pre-wrap;color:var(--ink)">工作区 43 行 · HEAD 27 行 · git diff 只有 +16 没有任何删除
+今天 18:2x 整段是空的
+写这个文件的只有 hook 一处，<b>没有任何去重 / 裁剪逻辑</b>
+BASH 分支确实调了 log_block（enforce-skeleton.py:381）</p>
+    <p><b>最可能是并发覆盖</b>：多个会话同时跑这个 hook 各自追加，
+    其中一个拿旧内容把整个文件写回去了。今天 11:16 的记录活着、18:29 的没了，
+    正好卡在这个时间差上。项目里有 <code>enforce-lock.py</code> 治共享文件并发，
+    <b>但这个日志文件没被纳入保护</b>。</p>
+  </div>
+
+  <div class="note ok">
+    <h4>为什么连这个也写进来</h4>
+    <p>本来可以只写「3 次拦截都有留痕」，没人会去查。
+    <b>但那样这一页就从「证据」变成了「说法」</b> —— 而这页的全部价值就在于它是证据。</p>
+    <p>一套没人能绕过的流程，跟一份写在文档里的流程，是两件事。
+    能证明前者的唯一方式，就是把<b>自己被挡住的记录</b>拿出来 ——
+    连同<b>这套记录本身的漏洞</b>一起。</p>
+  </div>
+</section>
+
+<!-- ══ PAGES ══ -->
+<section>
+  <div class="sec-h"><span class="sec-n">OUTPUT</span><h2>PAGES · 最终页面清单</h2></div>
+  <p class="sec-why"><b>3 routed + 1 drawer = 4</b>　参照案例是 5+1=6；我们更瘦，如实标注，不硬凑页数。</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>#</th><th>SLUG</th><th>中文名</th><th>形态</th><th>承载了哪些决策</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><code>my-claims</code></td><td>我的报销</td>
+          <td><span class="badge r">独立页</span> <span class="badge d">默认落地</span></td>
+          <td>Q1.2 查进度最高频 · Q2.1 view 切换 · Q3.2 首屏置顶区</td></tr>
+        <tr><td>2</td><td><code>my-receipts</code></td><td>我的票夹</td>
+          <td><span class="badge r">独立页</span></td>
+          <td>Q2.2 先传票再成单 · Q3.1 一级入口 · Q4.3 可疑项黄底</td></tr>
+        <tr><td>3</td><td><code>claim-detail</code></td><td>报销单详情</td>
+          <td><span class="badge r">独立页</span></td>
+          <td>Q4.2 内容多 / 动作多 / 要发链接</td></tr>
+        <tr><td>4</td><td><code>claim-form</code></td><td>新建 / 编辑报销单</td>
+          <td><span class="badge d">右侧抽屉</span></td>
+          <td>Q4.1 背景上下文不丢 · 创建与编辑共用</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note ok">
+    <h4>一次真实的页数减法：没有「发票识别确认页」</h4>
+    <p>这是 Q4.3 选 A 的直接结果 —— <b>不拦人，所以不需要那一页</b>。
+    如果选了 B（逐张确认），这里就得多一页、多一套状态、多一处返回逻辑。</p>
+  </div>
+
+  <div class="note ok">
+    <h4>页面顺序 · 为什么是这个先后</h4>
+    <p>不是按重要性排，是<b>按依赖关系排</b> —— 后面的页要从前面的页点进去，
+    前面没做完，后面的入口就无处可挂。</p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>顺序</th><th>层级</th><th>页</th><th>从哪进来</th><th>为什么排这个位置</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr><td><b>1</b></td><td><span class="badge d">一级</span></td>
+          <td><code>my-claims</code> 我的报销</td>
+          <td>navbar 直达 · <b>默认落地</b></td>
+          <td>其余三个页全从它进 —— 它不定，别的页的入口无处可挂</td>
+          <td><span class="badge d">进行中</span></td></tr>
+        <tr><td><b>2</b></td><td><span class="badge d">一级</span></td>
+          <td><code>my-receipts</code> 我的票夹</td>
+          <td>navbar 直达</td>
+          <td>流程起点（Q2.2 先传票再成单）。与页 1 并列，互不依赖</td>
+          <td><span class="badge r">待做</span></td></tr>
+        <tr><td><b>3</b></td><td><span class="badge r">二级</span></td>
+          <td><code>claim-form</code> 新建 / 编辑</td>
+          <td>抽屉 · <b>两个入口</b>：sidebar [+新建] / 票夹「组成一单」</td>
+          <td><b>依赖 1 + 2</b> —— 两个背景都得先在，否则抽屉叠在空页上</td>
+          <td><span class="badge r">待做</span></td></tr>
+        <tr><td><b>4</b></td><td><span class="badge r">二级</span></td>
+          <td><code>claim-detail</code> 报销单详情</td>
+          <td>独立页 · <b>三个入口</b>：列表行 / 首屏「需我处理」/ 分享链接</td>
+          <td><b>依赖 1</b> —— 入口全在页 1 上</td>
+          <td><span class="badge r">待做</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <h4>🔴 「一页一问」不是客套话，是红线</h4>
+    <p>CLAUDE.md 红线八：<b>多页任务，每个页面的需求都要单独问 owner，不许一次替他拍全平台。</b></p>
+    <p>上面这张表定的是<b>框架</b>（几个页、什么顺序、谁依赖谁）。
+    <b>每一页具体放什么内容，还要一页一页单独过</b> —— 那是下一步「逐页需求分析」的事，
+    做完一页给他确认一页，不攒着一次交。</p>
+  </div>
+
+  <pre class="ascii"><span class="g">sidebar</span>
+  <span class="c">[+ 新建报销单]</span>   → 抽屉 claim-form
+  📄 我的报销      <span class="c">●默认落地</span>
+       ├ view: 我提的
+       └ view: 待我审批   <span class="g">（无审批权时整个页签隐掉，不留孤禁标签）</span>
+  🧾 我的票夹</pre>
+
+  <pre class="ascii"><span class="g">跳转链路</span>
+📄 my-claims ─→ claim-detail ─→ <span class="c">[编辑]</span> claim-form 抽屉 ─→ 提交后回详情
+             │                └─→ <span class="c">[撤回/催办]</span> 确认弹窗 ─→ 回 my-claims
+             └─ 首屏「需我处理」区 ─→ 直接跳对应 claim-detail
+
+🧾 my-receipts ─→ 勾若干张 ─→ <span class="c">[组成一单]</span> ─→ claim-form 抽屉
+                          <span class="g">（背景仍是票夹，看得见勾了谁）</span>
+                          └─→ <span class="c">黄底可疑项此刻强制清干净</span>  ← Q4.3 的校验时机</pre>
+</section>
+
+<!-- ══ SUMMARY ══ -->
+<section>
+  <div class="sec-h"><span class="sec-n">SUMMARY</span><h2>12 子题 ↔ 4 Bank Q + 门卫补问</h2></div>
+  <p class="sec-why">4-题 Q-Bank 覆盖了「页数 / 导航 / 承载」三类框架决策；
+  <b>门卫补的 3 题覆盖了「状态机 / 数据归属」</b> —— 这两类不进主流程，但画之前必须定。</p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>BANK</th><th>本次子题</th><th>owner 答</th><th>产出</th></tr></thead>
+      <tbody>
+        <tr><td><b>Q1</b></td><td>Q1.1 角色 + Q1.2 场景</td>
+          <td>申请人 + 审批人 · <b>四个场景全选</b></td>
+          <td>默认落地 = 我的报销；首屏要同时扛读与写</td></tr>
+        <tr><td><b>Q2</b></td><td>Q2.1 审批合页 + Q2.2 票单两段式</td>
+          <td>同页 view 切换 · 先传票再成单</td>
+          <td><b>−1 +1</b>，净持平但结构从「单据为中心」变成「票→单两段」</td></tr>
+        <tr><td><b>Q3</b></td><td>Q3.1 导航 + Q3.2 首屏重心</td>
+          <td>两入口 · 默认我的报销 · 置顶区</td>
+          <td>sidebar 2 入口；「需我处理」置顶且无事自动消失</td></tr>
+        <tr><td><b>Q4</b></td><td>Q4.1 表单 + Q4.2 详情 + Q4.3 OCR</td>
+          <td>抽屉 · 独立页 · 只标不拦</td>
+          <td><b>3 routed + 1 drawer</b>；省掉一整个确认页</td></tr>
+        <tr><td><b>GATE</b></td><td>B2 状态机 + B5 票归属 + B4 票夹密度</td>
+          <td>5 态 · 一票一单 · 默认隐藏已用</td>
+          <td>列表状态列 / 详情时间线 / 勾选禁用逻辑 全部落地</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <h4>owner 没采纳我推荐的地方：这一轮 0 处</h4>
+    <p>12 题全部采纳了推荐。<b>这个数字如实记录，不美化。</b>参照案例是「10 拍板 / 1 AI 代决」。</p>
+    <p>全中可能说明两件事之一：<b>推荐确实对</b>，或者<b>我把选项设计得太偏向推荐了</b>。
+    真实感恰恰来自这种如实标注 —— 同一个 owner 在上一单（任务管理）否掉过 3 处推荐
+    （给谁用 / 空态 / 栏数），那份记录也在。</p>
+  </div>
+</section>
+
+<div class="kicker">
+  <h3>这单最值得单独说的一条设计判断 · Q4.3</h3>
+  <blockquote>把校验挪到「<b>代价真正发生</b>」的那一刻，而不是「数据产生」的那一刻。</blockquote>
+  <p style="margin:14px 0 0;font-size:14.5px;color:var(--ink2)">
+  传票时人在「清库存」心态 —— 批量、快、不想被打断；<br>
+  组单时人在「要交出去了」心态 —— 愿意逐项核对。<br>
+  <b style="color:var(--ink)">同样一件事，放对时机就不烦人。</b></p>
+</div>
+
+<footer>
+  问答原件：<code>0-requirement/q-bank.md</code>（236 行）<br>
+  本页由该文件生成 · 所有选项与选择均为真实 AskUserQuestion 记录，未事后修饰
+</footer>
+
+</div>
+</body>
+</html>

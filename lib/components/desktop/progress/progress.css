@@ -1,0 +1,167 @@
+/*
+ * 进度条组件 (Progress)
+ * 标签：<cs-progress>
+ *
+ * 作用：展示某项任务的进度百分比，支持线形和环形两种形态。
+ * 对标 ng-zorro Progress / antd Progress。
+ *
+ * data 属性：
+ *   data-type="line"   — 线形（默认）
+ *   data-type="circle" — 环形
+ *   data-size="sm|md|lg"
+ *   data-color="primary|success|warning|danger|info"
+ *   data-status="normal|active|success|exception"
+ *   data-show-info     — 显示百分比文字
+ *
+ * 进度数值通过 CSS 变量 --progress 传入：
+ *   <cs-progress style="--progress: 65"> ... </cs-progress>
+ *   值的范围 0-100，无需百分号
+ *
+ * 子元素（线形）：
+ *   .progress-track  — 进度条轨道
+ *   .progress-bar    — 进度条填充
+ *   .progress-text   — 百分比文字
+ *
+ * 子元素（环形）：
+ *   .progress-circle — 环形容器
+ *   .progress-text   — 中央百分比文字
+ */
+
+cs-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  vertical-align: middle;
+  --cs-progress-color: var(--cs-color-primary);
+  --cs-progress-size: 8px;
+  --cs-progress-circle-size: 80px;
+  --cs-progress-circle-stroke: 8px;
+}
+
+/* ========== 线形 ========== */
+cs-progress[data-type="line"],
+cs-progress:not([data-type]) {
+  display: flex;
+  width: 100%;
+}
+
+cs-progress .progress-track {
+  position: relative;
+  flex: 1;
+  height: var(--cs-progress-size);
+  background: var(--cs-color-bg-light);
+  border-radius: var(--radius-pill, 999px);
+  overflow: hidden;
+}
+
+cs-progress .progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: calc(var(--progress, 0) * 1%);
+  background: var(--cs-progress-color);
+  border-radius: var(--radius-pill, 999px);
+  transition: width 0.3s ease, background-color 0.2s ease;
+}
+
+cs-progress .progress-text {
+  flex-shrink: 0;
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ========== 线形尺寸 ========== */
+cs-progress[data-size="sm"] {
+  --cs-progress-size: 4px;
+}
+
+cs-progress[data-size="lg"] {
+  --cs-progress-size: 12px;
+}
+
+/* ========== 环形 ========== */
+cs-progress[data-type="circle"] {
+  display: inline-flex;
+  width: auto;
+}
+
+cs-progress[data-type="circle"] .progress-circle {
+  position: relative;
+  width: var(--cs-progress-circle-size);
+  height: var(--cs-progress-circle-size);
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      var(--cs-progress-color) calc(var(--progress, 0) * 1%),
+      var(--cs-color-bg-light) 0
+    );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+cs-progress[data-type="circle"] .progress-circle::before {
+  content: "";
+  position: absolute;
+  top: var(--cs-progress-circle-stroke);
+  left: var(--cs-progress-circle-stroke);
+  right: var(--cs-progress-circle-stroke);
+  bottom: var(--cs-progress-circle-stroke);
+  background: var(--cs-color-white);
+  border-radius: 50%;
+}
+
+cs-progress[data-type="circle"] .progress-text {
+  position: relative;
+  z-index: 1;
+  min-width: auto;
+  font: var(--typo-cn-16-medium);
+  color: var(--cs-color-text);
+  text-align: center;
+}
+
+cs-progress[data-type="circle"][data-size="sm"] {
+  --cs-progress-circle-size: 48px;
+  --cs-progress-circle-stroke: 5px;
+}
+
+cs-progress[data-type="circle"][data-size="sm"] .progress-text {
+  font: var(--typo-cn-12-regular);
+}
+
+cs-progress[data-type="circle"][data-size="lg"] {
+  --cs-progress-circle-size: 120px;
+  --cs-progress-circle-stroke: 10px;
+}
+
+cs-progress[data-type="circle"][data-size="lg"] .progress-text {
+  font: var(--typo-cn-20-medium);
+}
+
+/* ========== 状态颜色 ========== */
+cs-progress[data-color="primary"],
+cs-progress[data-status="normal"],
+cs-progress[data-status="active"] {
+  --cs-progress-color: var(--cs-color-primary);
+}
+
+cs-progress[data-color="success"],
+cs-progress[data-status="success"] {
+  --cs-progress-color: var(--color-green-500);
+}
+
+cs-progress[data-color="warning"] {
+  --cs-progress-color: var(--color-orange-500);
+}
+
+cs-progress[data-color="danger"],
+cs-progress[data-status="exception"] {
+  --cs-progress-color: var(--cs-sem-text-error);
+}
+
+cs-progress[data-color="info"] {
+  --cs-progress-color: var(--color-blue-300);
+}

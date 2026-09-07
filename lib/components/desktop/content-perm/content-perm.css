@@ -1,0 +1,148 @@
+/* =============================================================================
+   内容权限弹窗组件（cs-content-perm）· Figma 电子表格 2017:9239
+   左角色栏 + 右 4 tab 权限 · 多维表格各页共享（头部「内容权限」按钮触发）
+   依赖：cs-radio / cs-checkbox / cs-switch 的 CSS + cses 图标字体（引用页负责 link）
+   零硬编码颜色：全走 var(--cs-color-*) token
+   ============================================================================= */
+.perm-overlay { display:none; position:fixed; inset:0; z-index:4000; background:var(--cs-color-bg-mask-60); align-items:center; justify-content:center; }
+.perm-overlay.on { display:flex; }
+.perm-modal { width:1000px; max-width:94vw; height:720px; max-height:92vh; background:var(--cs-color-white); border-radius:var(--radius-lg); box-shadow:var(--cs-shadow-xl); display:flex; flex-direction:column; overflow:hidden; }
+/* 顶栏 */
+.perm-head { flex-shrink:0; height:56px; display:flex; align-items:center; gap:var(--space-sm); padding:0 var(--space-md); border-bottom:1px solid var(--cs-color-border); }
+.perm-head-ico { width:24px; height:24px; border-radius:6px; background:var(--cs-color-primary); color:var(--cs-color-white); display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+.perm-head-title { font-size:var(--font-size-lg); font-weight:var(--font-weight-semibold); color:var(--cs-color-text); }
+.perm-head-div { width:1px; height:16px; background:var(--cs-color-border); margin:0 var(--space-2xs); }
+.perm-head-grant { display:flex; align-items:center; gap:var(--space-xs); color:var(--cs-color-text-light); font-size:var(--font-size-sm); cursor:pointer; }
+.perm-head-grant .cses-xiala { font-size:12px; color:var(--cs-color-text-light2); transition:transform .15s; }
+.perm-head-grant.open .cses-xiala { transform:rotate(180deg); }
+/* 授权方式下拉菜单 */
+.perm-grant-wrap { position:relative; }
+.perm-grant-menu { display:none; position:absolute; top:calc(100% + var(--space-2xs)); left:0; min-width:180px; background:var(--cs-color-white); border:1px solid var(--cs-color-border); border-radius:var(--radius); box-shadow:var(--cs-shadow-lg); padding:var(--space-2xs); z-index:10; }
+.perm-grant-menu.on { display:block; }
+.perm-grant-opt { display:flex; align-items:center; gap:var(--space-xs); height:34px; padding:0 var(--space-sm); border-radius:var(--radius); font-size:var(--font-size-sm); color:var(--cs-color-text); white-space:nowrap; cursor:pointer; }
+.perm-grant-opt:hover { background:var(--cs-color-bg-hover); }
+.perm-grant-opt.on { color:var(--cs-color-primary); }
+.perm-grant-tick { margin-left:auto; font-size:13px; color:var(--cs-color-primary); visibility:hidden; }
+.perm-grant-opt.on .perm-grant-tick { visibility:visible; }
+.perm-x { margin-left:auto; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:var(--radius); color:var(--cs-color-text-light2); cursor:pointer; }
+.perm-x:hover { background:var(--cs-color-bg-hover); }
+/* 主体两栏 */
+.perm-body { flex:1; min-height:0; display:flex; }
+/* 左角色栏 */
+.perm-roles { width:256px; flex-shrink:0; border-right:1px solid var(--cs-color-border); display:flex; flex-direction:column; padding:var(--space-md) var(--space-sm) var(--space-sm); overflow:auto; }
+.perm-rgroup-t { font-size:var(--font-size-sm); color:var(--cs-color-text-light2); padding:0 var(--space-sm) var(--space-2xs); margin-top:var(--space-sm); }
+.perm-rgroup-t:first-child { margin-top:0; }
+.perm-role { display:flex; align-items:center; gap:var(--space-xs); height:38px; padding:0 var(--space-sm); border-radius:var(--radius); color:var(--cs-color-text); font-size:var(--font-size-md); cursor:pointer; }
+.perm-role i { font-size:15px; color:var(--cs-color-text-light); }
+.perm-role:hover { background:var(--cs-color-bg-hover); }
+.perm-role.on { background:var(--cs-color-bg-light); font-weight:var(--font-weight-medium); }
+.perm-role.on i { color:var(--cs-color-primary); }
+.perm-role.perm-role-add { color:var(--cs-color-text-light2); }
+.perm-role.perm-role-add i { color:var(--cs-color-text-light2); }
+.perm-help { margin-top:auto; display:flex; align-items:center; gap:var(--space-xs); height:38px; padding:0 var(--space-sm); color:var(--cs-color-text-light); font-size:var(--font-size-md); cursor:pointer; }
+.perm-help i { font-size:15px; }
+/* 右主区 */
+.perm-main { flex:1; min-width:0; display:flex; flex-direction:column; padding:var(--space-lg) var(--space-lg) 0; }
+.perm-main-head { display:flex; align-items:center; margin-bottom:var(--space-md); }
+.perm-main-title { font-size:var(--font-size-xl); font-weight:var(--font-weight-semibold); color:var(--cs-color-text); }
+.perm-addmember { margin-left:auto; display:flex; align-items:center; gap:var(--space-2xs); height:32px; padding:0 var(--space-sm); border:1px solid var(--cs-color-primary); border-radius:var(--radius); color:var(--cs-color-primary); font-size:var(--font-size-sm); cursor:pointer; }
+.perm-owner-av { margin-left:auto; width:28px; height:28px; border-radius:var(--radius-full); background:var(--cs-color-primary); color:var(--cs-color-white); display:none; align-items:center; justify-content:center; font-size:11px; }
+/* 添加角色 输入态 */
+.perm-role.perm-role-add.editing { cursor:default; }
+.perm-role-in { flex:1; min-width:0; border:0; outline:none; background:transparent; font-size:var(--font-size-md); color:var(--cs-color-text); padding:0; }
+.perm-role-in::placeholder { color:var(--cs-color-text-light2); }
+.perm-role-ok { display:flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:var(--radius); color:var(--cs-color-primary); cursor:pointer; }
+.perm-role-ok:hover { background:var(--cs-color-primary-bg); }
+/* 添加成员 弹出面板 + 头像簇 */
+.perm-addmember-wrap { margin-left:auto; position:relative; }
+.perm-addmember-wrap .perm-addmember { margin-left:0; }
+.perm-member-cluster { margin-left:var(--space-md); display:inline-flex; align-items:center; }
+.perm-av { width:26px; height:26px; border-radius:var(--radius-full); display:inline-flex; align-items:center; justify-content:center; font-size:11px; color:var(--cs-color-white); flex-shrink:0; box-sizing:border-box; }
+.perm-member-cluster .perm-av { border:2px solid var(--cs-color-white); margin-left:-8px; }
+.perm-member-cluster .perm-av:first-child { margin-left:0; }
+.perm-av-0 { background:var(--cs-color-chart-blue); }
+.perm-av-1 { background:var(--cs-color-chart-teal); }
+.perm-av-2 { background:var(--cs-color-chart-purple); }
+.perm-av-3 { background:var(--cs-color-chart-red); }
+.perm-av-4 { background:var(--cs-color-primary); }
+.perm-av-5 { background:var(--cs-color-success); }
+.perm-av-more { background:var(--cs-color-bg-light); color:var(--cs-color-text-light); }
+.perm-mem-pop { display:none; position:absolute; top:calc(100% + var(--space-2xs)); right:0; width:280px; background:var(--cs-color-white); border:1px solid var(--cs-color-border); border-radius:var(--radius-lg); box-shadow:var(--cs-shadow-lg); z-index:20; overflow:hidden; }
+.perm-mem-pop.on { display:block; }
+.perm-mem-search { display:flex; align-items:center; gap:var(--space-xs); height:36px; margin:var(--space-sm); padding:0 var(--space-sm); border:1px solid var(--cs-color-border); border-radius:var(--radius); color:var(--cs-color-text-light2); }
+.perm-mem-search .cses-search { font-size:14px; }
+.perm-mem-search-in { flex:1; min-width:0; border:0; outline:none; background:transparent; font-size:var(--font-size-sm); color:var(--cs-color-text); }
+.perm-mem-search-in::placeholder { color:var(--cs-color-text-light2); }
+.perm-mem-list { max-height:240px; overflow:auto; padding:0 var(--space-2xs) var(--space-2xs); }
+.perm-mem-item { display:flex; align-items:center; gap:var(--space-xs); height:40px; padding:0 var(--space-sm); border-radius:var(--radius); cursor:pointer; }
+.perm-mem-item:hover { background:var(--cs-color-bg-hover); }
+.perm-mem-item cs-checkbox { flex-shrink:0; }
+.perm-mem-nm { font-size:var(--font-size-md); color:var(--cs-color-text); }
+.perm-mem-foot { display:flex; justify-content:flex-end; padding:var(--space-sm); border-top:1px solid var(--cs-color-border); }
+.perm-mem-ok { height:32px; padding:0 var(--space-lg); border-radius:var(--radius); background:var(--cs-color-primary); color:var(--cs-color-white); font-size:var(--font-size-sm); cursor:pointer; display:flex; align-items:center; }
+.perm-mem-ok:hover { background:var(--cs-color-primary-hover); }
+/* tab */
+.perm-tabs { display:flex; gap:var(--space-lg); border-bottom:1px solid var(--cs-color-border); flex-shrink:0; }
+.perm-tab { position:relative; padding:0 0 var(--space-sm); font-size:var(--font-size-md); color:var(--cs-color-text-light); cursor:pointer; }
+.perm-tab:hover { color:var(--cs-color-text); }
+.perm-tab.on { color:var(--cs-color-primary); font-weight:var(--font-weight-medium); }
+.perm-tab.on::after { content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background:var(--cs-color-primary); border-radius:1px; }
+/* pane 通用 */
+.perm-pane { flex:1; min-height:0; overflow:auto; padding:var(--space-md) 0; display:none; }
+.perm-pane.on { display:block; }
+/* 数据权限 pane：左数据源列表 + 右权限详情 */
+.perm-data { display:flex; gap:var(--space-lg); height:100%; }
+.perm-src { width:250px; flex-shrink:0; display:flex; flex-direction:column; gap:var(--space-2xs); }
+.perm-search { display:flex; align-items:center; gap:var(--space-xs); height:34px; padding:0 var(--space-sm); border:1px solid var(--cs-color-border); border-radius:var(--radius); color:var(--cs-color-text-light2); font-size:var(--font-size-sm); margin-bottom:var(--space-2xs); }
+.perm-search:focus-within { border-color:var(--cs-color-primary); }
+.perm-search-in { flex:1; min-width:0; border:0; outline:none; background:transparent; font-size:var(--font-size-sm); color:var(--cs-color-text); }
+.perm-search-in::placeholder { color:var(--cs-color-text-light2); }
+.perm-srcitem { display:flex; align-items:center; gap:var(--space-xs); height:40px; padding:0 var(--space-sm); border-radius:var(--radius); cursor:pointer; }
+.perm-srcitem img { width:16px; height:16px; flex-shrink:0; }
+.perm-srcitem .nm { font-size:var(--font-size-md); color:var(--cs-color-text); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.perm-srcitem .lv { font-size:var(--font-size-sm); color:var(--cs-color-text-light2); flex-shrink:0; }
+.perm-srcitem:hover { background:var(--cs-color-bg-hover); }
+.perm-srcitem.on { background:var(--cs-color-primary-bg); }
+.perm-srcitem.on .nm { color:var(--cs-color-primary); }
+/* 右权限详情 */
+.perm-detail { flex:1; min-width:0; }
+.perm-detail-head { display:flex; align-items:center; gap:var(--space-xs); padding-bottom:var(--space-md); border-bottom:1px solid var(--cs-color-border); }
+.perm-detail-head i.hi { font-size:16px; color:var(--cs-color-text-light); }
+.perm-detail-head .t { font-size:var(--font-size-md); font-weight:var(--font-weight-medium); color:var(--cs-color-text); }
+.perm-lvl { margin-left:auto; display:flex; align-items:center; gap:var(--space-2xs); font-size:var(--font-size-sm); color:var(--cs-color-text-light); cursor:pointer; }
+.perm-lvl .cses-xiala, .perm-lvl .cses-shang { font-size:12px; color:var(--cs-color-text-light2); }
+.perm-radios { display:flex; flex-direction:column; gap:var(--space-md); padding:var(--space-md) 0; }
+.perm-sub-t { font-size:var(--font-size-md); font-weight:var(--font-weight-medium); color:var(--cs-color-text); margin:var(--space-sm) 0 var(--space-sm); }
+/* 详细权限 折叠卡 */
+.perm-detailperm { border:1px solid var(--cs-color-border); border-radius:var(--radius-lg); overflow:hidden; }
+.perm-drow { display:flex; align-items:center; gap:var(--space-xs); height:52px; padding:0 var(--space-md); cursor:pointer; }
+.perm-drow + .perm-drow { border-top:1px solid var(--cs-color-border); }
+.perm-drow > i.di { font-size:16px; color:var(--cs-color-text-light); }
+.perm-drow .dn { font-size:var(--font-size-md); color:var(--cs-color-text); }
+.perm-drow .dv { margin-left:auto; display:flex; align-items:center; gap:var(--space-2xs); font-size:var(--font-size-sm); color:var(--cs-color-text-light2); }
+.perm-drow .dv .cses-xiala { font-size:12px; }
+.perm-drow:hover { background:var(--cs-color-bg-hover); }
+/* checkbox 类 pane（仪表盘/自动化/其他） */
+.perm-fgroup { display:flex; padding:var(--space-md) 0; border-bottom:1px solid var(--cs-color-border); }
+.perm-fgroup:last-child { border-bottom:0; }
+.perm-fgroup-t { width:120px; flex-shrink:0; font-size:var(--font-size-md); font-weight:var(--font-weight-medium); color:var(--cs-color-text); }
+.perm-fgroup-body { flex:1; display:flex; flex-direction:column; align-items:flex-start; gap:var(--space-sm); }
+.perm-cb { display:flex; align-items:center; gap:var(--space-xs); font-size:var(--font-size-md); color:var(--cs-color-text); cursor:pointer; }
+.perm-cb cs-checkbox { flex-shrink:0; }
+.perm-cb.dis { color:var(--cs-color-text-light2); cursor:default; }
+.perm-fsub { font-size:var(--font-size-sm); color:var(--cs-color-text-light2); margin-top:var(--space-2xs); }
+/* 底部 */
+.perm-foot { flex-shrink:0; display:flex; justify-content:flex-end; gap:var(--space-sm); padding:var(--space-sm) var(--space-md); border-top:1px solid var(--cs-color-border); }
+.perm-btn { height:34px; padding:0 var(--space-lg); border-radius:var(--radius); font-size:var(--font-size-md); cursor:pointer; display:flex; align-items:center; }
+.perm-btn-cancel { border:1px solid var(--cs-color-border); color:var(--cs-color-text); background:var(--cs-color-white); }
+.perm-btn-cancel:hover { background:var(--cs-color-bg-hover); }
+.perm-btn-save { background:var(--cs-color-primary); color:var(--cs-color-white); border:0; }
+/* 详细权限 展开区（记录/字段/视图 点开选权限级别）*/
+.perm-dexpand { display:none; padding:var(--space-2xs) var(--space-md) var(--space-sm) 40px; flex-direction:column; gap:var(--space-2xs); background:var(--cs-color-bg-light); }
+.perm-ditem.open .perm-dexpand { display:flex; }
+.perm-ditem.open .perm-drow .dv .cses-xiala { transform:rotate(180deg); }
+.perm-dopt { display:flex; align-items:center; gap:var(--space-xs); font-size:var(--font-size-sm); color:var(--cs-color-text); cursor:pointer; padding:var(--space-2xs) 0; }
+.perm-dopt cs-radio { pointer-events:none; }
+/* 权限保存 toast */
+.perm-toast { position:fixed; left:50%; top:72px; transform:translateX(-50%) translateY(-8px); background:var(--cs-color-text); color:var(--cs-color-white); font-size:var(--font-size-sm); padding:8px var(--space-md); border-radius:var(--radius); z-index:4100; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; }
+.perm-toast.on { opacity:1; transform:translateX(-50%) translateY(0); }

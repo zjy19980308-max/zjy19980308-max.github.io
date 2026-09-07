@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-skeleton 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="skeleton.css?v=0f68b228">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo-card { padding: 20px; background: #fafafa; border-radius: 4px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 头像 + 段落（典型用户卡片） ========== -->
+<div class="section">
+  <div class="section-title">头像 + 段落 Avatar + Paragraph</div>
+  <div class="section-subtitle">最常见的用户卡片骨架</div>
+  <div class="demo-card">
+    <cs-skeleton data-active>
+      <div class="skeleton-avatar"></div>
+      <div class="skeleton-content">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-paragraph">
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line"></div>
+        </div>
+      </div>
+    </cs-skeleton>
+  </div>
+</div>
+
+<!-- ========== 2. 头像形状/尺寸 ========== -->
+<div class="section">
+  <div class="section-title">头像变体 Avatar Variants</div>
+  <div class="section-subtitle">data-shape="square" data-size="sm | md | lg"</div>
+  <div class="demo-card" style="display: flex; gap: 24px; align-items: center;">
+    <cs-skeleton data-active style="width: auto;"><div class="skeleton-avatar" data-size="sm"></div></cs-skeleton>
+    <cs-skeleton data-active style="width: auto;"><div class="skeleton-avatar"></div></cs-skeleton>
+    <cs-skeleton data-active style="width: auto;"><div class="skeleton-avatar" data-size="lg"></div></cs-skeleton>
+    <cs-skeleton data-active style="width: auto;"><div class="skeleton-avatar" data-shape="square" data-size="lg"></div></cs-skeleton>
+  </div>
+</div>
+
+<!-- ========== 3. 图片 + 标题 + 段落（卡片骨架） ========== -->
+<div class="section">
+  <div class="section-title">图片卡片 Image Card</div>
+  <div class="section-subtitle">封面图 + 标题 + 描述</div>
+  <div class="grid-2">
+    <div class="demo-card">
+      <cs-skeleton data-active style="flex-direction: column;">
+        <div class="skeleton-content">
+          <div class="skeleton-image"></div>
+          <div class="skeleton-title" style="margin-top: 16px;"></div>
+          <div class="skeleton-paragraph">
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+          </div>
+        </div>
+      </cs-skeleton>
+    </div>
+    <div class="demo-card">
+      <cs-skeleton data-active style="flex-direction: column;">
+        <div class="skeleton-content">
+          <div class="skeleton-image"></div>
+          <div class="skeleton-title" style="margin-top: 16px;"></div>
+          <div class="skeleton-paragraph">
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+          </div>
+        </div>
+      </cs-skeleton>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 4. 静态 vs 动效 ========== -->
+<div class="section">
+  <div class="section-title">静态 vs 扫光 Static vs Active</div>
+  <div class="section-subtitle">data-active 启用扫光动画</div>
+  <div class="grid-2">
+    <div class="demo-card">
+      <div style="font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 12px;">静态（无 data-active）</div>
+      <cs-skeleton>
+        <div class="skeleton-avatar"></div>
+        <div class="skeleton-content">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-paragraph">
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+          </div>
+        </div>
+      </cs-skeleton>
+    </div>
+    <div class="demo-card">
+      <div style="font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 12px;">扫光动画（data-active）</div>
+      <cs-skeleton data-active>
+        <div class="skeleton-avatar"></div>
+        <div class="skeleton-content">
+          <div class="skeleton-title"></div>
+          <div class="skeleton-paragraph">
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+          </div>
+        </div>
+      </cs-skeleton>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

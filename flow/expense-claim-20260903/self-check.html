@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>报销申请 · QA 检查与验收</title>
+<style>
+:root{
+  --bg:#fbfbfa; --panel:#fff; --ink:#1c1c1a; --ink2:#5a5a55; --ink3:#96968e;
+  --line:#e6e6e1; --line2:#f0f0ec;
+  --pick:#3d5afe; --pick-bg:#eef1ff; --pick-line:#c3ccff;
+  --ok:#0f7a3d; --ok-bg:#eefaf2; --ok-line:#bfe6cd;
+  --no:#b91c1c; --no-bg:#fef2f2; --no-line:#f2c9c9;
+  --warn:#c2410c; --warn-bg:#fff4ec;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:0 28px 96px}
+
+header{padding:64px 0 34px;border-bottom:2px solid var(--ink)}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);text-transform:uppercase}
+h1{margin:14px 0 0;font-size:34px;line-height:1.2;letter-spacing:-.02em;font-weight:800}
+.sub{margin:12px 0 0;color:var(--ink2);max-width:66ch}
+.meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font:600 11px/1 var(--mono);letter-spacing:.05em;padding:6px 10px;border:1px solid var(--line);
+  border-radius:4px;background:var(--panel);color:var(--ink2)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);margin:34px 0 0}
+.stat{background:var(--panel);padding:18px 16px;display:block;text-decoration:none;color:inherit}
+.stat b{display:block;font:700 30px/1 var(--mono);letter-spacing:-.03em}
+.stat span{display:block;margin-top:7px;font-size:11px;color:var(--ink3);letter-spacing:.04em}
+.stat.hl b{color:var(--pick)} .stat.g b{color:var(--ok)} .stat.r b{color:var(--no)}
+a.stat:hover{background:var(--pick-bg)} a.stat span{color:var(--pick)}
+
+/* 阶段导航 */
+.phases{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.ph{padding:14px 16px;border:2px solid var(--line);border-radius:8px;background:var(--panel);
+  text-decoration:none;color:inherit;display:block}
+.ph:hover{border-color:var(--pick-line);background:var(--pick-bg)}
+.ph .n{font:700 10px/1 var(--mono);color:var(--ink3);letter-spacing:.1em}
+.ph .t{margin-top:7px;font-weight:700;font-size:15px}
+.ph .s{margin-top:5px;font-size:12px;color:var(--ink3)}
+.ph.done{border-color:var(--ok-line);background:var(--ok-bg)}
+.ph.done .t{color:#08421f} .ph.done .s{color:#0b5c2e}
+.ph.wait{opacity:.5;pointer-events:none}
+@media(max-width:700px){.phases{grid-template-columns:1fr}}
+
+section{margin-top:52px;scroll-margin-top:16px}
+.sec-h{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--ink);flex-wrap:wrap}
+.sec-n{font:700 12px/1 var(--mono);color:var(--pick);letter-spacing:.1em;white-space:nowrap}
+.sec-h h2{margin:0;font-size:21px;font-weight:800}
+.sec-why{margin:10px 0 0;font-size:13px;color:var(--ink3)}
+h3{margin:32px 0 0;font-size:16px}
+
+.tw{overflow-x:auto;margin-top:18px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:13.5px}
+th{text-align:left;padding:11px 14px;background:#f7f7f4;border-bottom:1px solid var(--line);
+  font:700 11px/1 var(--mono);color:var(--ink2);letter-spacing:.06em;white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+code{font:12px var(--mono);background:#f4f4f0;border:1px solid var(--line);padding:1px 5px;border-radius:3px}
+td code{color:var(--pick)}
+.pass{color:var(--ok);font-weight:800;white-space:nowrap}
+.fail{color:var(--no);font-weight:800;white-space:nowrap}
+.man{color:var(--warn);font-weight:800;white-space:nowrap}
+.id{font:700 11px/1 var(--mono);color:#fff;background:var(--ink);padding:4px 7px;border-radius:3px;white-space:nowrap}
+
+pre{margin:14px 0 0;padding:16px 18px;background:var(--ink);color:#e8e8e3;border-radius:6px;
+  font:12px/1.7 var(--mono);overflow-x:auto}
+pre .c{color:#7ea6ff} pre .g{color:#8a8a82} pre .y{color:#f0c674} pre .r{color:#ff9b9b}
+
+.note{margin-top:20px;padding:16px 18px;border-left:3px solid var(--warn);background:var(--warn-bg);
+  border-radius:0 5px 5px 0;font-size:14px}
+.note.ok{border-left-color:var(--ok);background:var(--ok-bg)}
+.note.bad{border-left-color:var(--no);background:var(--no-bg)}
+.note h4{margin:0 0 7px;font-size:14px;font-weight:700}
+.note p{margin:0 0 8px}.note p:last-child{margin:0}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.box{border:1px solid var(--line);border-radius:7px;background:var(--panel);padding:16px 18px}
+.box h4{margin:0 0 8px;font:700 11px/1 var(--mono);color:var(--ink3);letter-spacing:.08em}
+.box p{margin:0 0 7px;font-size:13.5px}.box p:last-child{margin:0}
+@media(max-width:680px){.two{grid-template-columns:1fr}}
+
+footer{margin-top:54px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--ink3)}
+@media(max-width:620px){.wrap{padding:0 18px 64px}h1{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">QA · 三个阶段的检查与验收</div>
+  <h1>每一步都要过两道签</h1>
+  <p class="sub">机器项<b>必须跑命令拿真实输出</b>，写「通过」而不贴证据的一律算没验；
+  人工项<b>只准备证据、标出可疑处，不下结论</b>。<br>
+  两道签缺一不可：<b>QA 的机器签</b> + <b>owner 的人工签</b> —— 少任何一道，流程门卫直接拦住下一阶段。</p>
+  <div class="meta">
+    <span class="tag">单元 · 报销申请 页 1</span>
+    <span class="tag">骨架 / 高保真 / 交互 三阶段</span>
+    <span class="tag">骨架 + 高保真 已完成</span>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat hl"><b>25</b><span>检查项（骨架 12 + 高保真 13）</span></div>
+  <div class="stat r"><b>1</b><span>机器项 FAIL（高保真补③）</span></div>
+  <div class="stat"><b>2</b><span>独立验收方</span></div>
+  <div class="stat r"><b>6</b><span>机器查不出、人工发现</span></div>
+  <div class="stat"><b>3</b><span>由此转正的新标准 R13~R15</span></div>
+  <div class="stat"><b>3</b><span>被三方查伪的说法</span></div>
+</div>
+
+<div class="phases">
+  <a class="ph done" href="#s1">
+    <div class="n">PHASE 1</div><div class="t">骨架阶段 ✓</div>
+    <div class="s">S1~S11 + 3 补充项 · 双签已齐</div>
+  </a>
+  <a class="ph done" href="#s2">
+    <div class="n">PHASE 2</div><div class="t">高保真阶段 ✓</div>
+    <div class="s">R1~R7 + 4 补充项 · 三轮验收 · 双签已齐</div>
+  </a>
+  <a class="ph wait" href="#s3">
+    <div class="n">PHASE 3</div><div class="t">交互阶段</div>
+    <div class="s">无死按钮 · 待跑</div>
+  </a>
+</div>
+
+<!-- ══════ 骨架阶段 ══════ -->
+<section id="s1">
+  <div class="sec-h"><span class="sec-n">PHASE 1</span><h2>骨架阶段 · S1~S11 + 3 项补充</h2></div>
+  <p class="sec-why">标准不是临时定的，来自 <code>docs/流程规则/分阶段验收规范.md</code>。
+  <b>QA 只能照着查，不许自创。</b></p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:8%">项</th><th style="width:26%">查什么</th><th style="width:9%">判定</th><th>真实输出（摘）</th></tr></thead>
+    <tbody>
+      <tr><td><span class="id">S1</span></td><td>零业务色</td><td class="pass">PASS</td>
+        <td>剥注释后命中 <code>#111</code> ×1 + rgba ×7，<b>全在两个已登记工具壳内</b>（L120-122 / L138-140）</td></tr>
+      <tr><td><span class="id">S2</span></td><td>占位用 ph-*</td><td class="pass">PASS</td>
+        <td><code>grep -c 'class="ph-'</code> → <b>625</b> 行；CDP 实测方案 A <b>249</b>，全文件 <b>789</b></td></tr>
+      <tr><td><span class="id">S3</span></td><td>真文字标签（三查）</td><td class="pass">PASS</td>
+        <td>① navbar 有中文真标签 ② <b>17 个标签位背景全 <code>rgba(0,0,0,0)</code></b>，0 个套灰药丸
+          ③ <code>grep -c '&lt;div class="ph-'</code> → <b>0</b>，标签分布 <code>{SPAN:778, I:11}</code></td></tr>
+      <tr><td><span class="id">S4</span></td><td>零内联 svg</td><td class="pass">PASS</td>
+        <td><code>grep -c '&lt;svg'</code> → <b>0</b>；<code>.ph-icon</code> 29 个</td></tr>
+      <tr><td><span class="id">S5</span></td><td>多方案 + 卖点</td><td class="pass">PASS</td>
+        <td>3 个方案按钮，各带卖点；§5.5 锁死模板逐行照抄</td></tr>
+      <tr><td><span class="id">S6</span></td><td>结构交互能点</td><td class="pass">PASS</td>
+        <td>CDP 真点 4 类：方案切换 a→b→c→a ✓ / view 切换 ✓ / 折叠 <code>225px↔0px</code> 可逆 / 五态全切</td></tr>
+      <tr><td><span class="id">S7</span></td><td>路径深度对</td><td class="pass">PASS</td>
+        <td>实际 6 层；16 处 <code>../</code> 全 6 层；10 张 CSS <code>cssRules&gt;0</code>、<b>0 断链</b></td></tr>
+      <tr><td><span class="id">S10</span></td><td>区块间距不贴死</td><td class="pass">PASS</td>
+        <td>CDP 量：<code>V→B 16px · B→A 16px · A→C 16px</code>，全 ≠ 0</td></tr>
+      <tr><td><span class="id">S11</span></td><td>不许硬写间距</td><td class="pass">PASS</td>
+        <td>硬编码 px 命中 6 处，<b>全在两个已登记工具壳</b>；<code>var(--space-*)</code> <b>59 处</b></td></tr>
+      <tr><td><span class="id">补①</span></td><td>密度 ≥200 · 分块达标</td><td class="pass">PASS</td>
+        <td>方案 A <b>249</b> ≥200；A 区 9≥3 · B 区 24≥5 · C 区 198≥6；区域树 <b>6/6 块</b></td></tr>
+      <tr><td><span class="id">补②</span></td><td>五态齐 · 空态两种</td><td class="pass">PASS</td>
+        <td>5 态全切；两种空态 <b>DOM / class / 文案 / 按钮都不同</b>；加载态 <b>B 区不占位</b></td></tr>
+      <tr><td><span class="id">补③</span></td><td>错误态 A 照常 / C 垮</td><td class="pass">PASS</td>
+        <td><code>V=SHOWN, A=SHOWN（实读到金额文字）, C=hidden, error=SHOWN</code></td></tr>
+      <tr><td><span class="id">S8</span></td><td>外壳完整</td><td class="man">人工</td>
+        <td>客观部分机器已查实（5 块 sub-layout 全在、二栏结构对）。<b>标出可疑：7 个 cses 图标位是空的</b></td></tr>
+      <tr><td><span class="id">S9</span></td><td>粒度对不对</td><td class="man">人工</td>
+        <td>标出 4 处可疑，<b>不下结论</b>（详见下方「人工项的数字不能当证据」）</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note ok">
+    <h4>结论：机器项 12/12 PASS，0 FAIL</h4>
+    <p>报告结论行是<b>纯文本一行</b> <code>结论: 通过</code> —— 不加粗、不加星号。
+    因为流程门卫是 <code>grep</code> 这一行的，<b>加了装饰它认不出，双签就卡死</b>。</p>
+  </div>
+</section>
+
+<!-- ══════ 两份独立验收 ══════ -->
+<section>
+  <div class="sec-h"><span class="sec-n">CROSS</span><h2>同一份骨架，两方独立验</h2></div>
+  <p class="sec-why">本来只该有一份。<b>因为主会话路由错了</b>，反而得到一次交叉验证。</p>
+
+  <div class="note bad">
+    <h4>🔴 起因是主会话的一个错误</h4>
+    <p>这一单的意义是跑通多会话流水线，验收<b>本该派给常驻的「测试会话」</b>。
+    主会话图省事用了<b>进程内子代理</b> —— 等于把流水线最后一道工序绕过去了。</p>
+    <p><b>owner 发现的</b>：他去测试会话看，什么都没有。</p>
+  </div>
+
+  <div class="two">
+    <div class="box">
+      <h4>验收方 A · 进程内子代理</h4>
+      <p>与主会话同一进程，用完即弃。</p>
+      <p>方案 A 密度：<b>249</b></p>
+      <p>结论：<b>通过</b></p>
+    </div>
+    <div class="box">
+      <h4>验收方 B · 常驻测试会话</h4>
+      <p>独立会话、独立上下文，长期只做验收。</p>
+      <p>方案 A 密度：<b>248</b></p>
+      <p>结论：<b>通过</b>（跑完，落报告时撞到流程冲突）</p>
+    </div>
+  </div>
+
+  <div class="note">
+    <h4>三处对不上，每一处都有价值</h4>
+    <p><b>① 密度 248 / 249 / 252</b>（测试岗 / 子代理 / 主会话）。都 ≥200 不影响结论，
+    但<b>三个人切块口径不一样</b> —— 说明「密度」这个指标的定义还不够严。</p>
+    <p><b>② 行号。</b>主会话派单里写死了方案容器行号 <code>224/401/554</code>，
+    <b>测试会话实测是 237/555/834</b>。骨架返工后文件从 860 行涨到 1280 行，行号全变，
+    主会话照抄了过期数据。<b>幸好它独立查了。</b></p>
+    <p><b>③ cses 图标</b> —— 见下一节，三方全错过一次。</p>
+  </div>
+</section>
+
+<!-- ══════ 三方查伪 ══════ -->
+<section>
+  <div class="sec-h"><span class="sec-n">CASE</span><h2>一行注释，骗过了三个人</h2></div>
+  <p class="sec-why">这是全程最值得看的一段：三方都用 <code>grep</code> 查同一件事，<b>三方都被同一行注释骗了</b>。</p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:16%">谁</th><th style="width:38%">说了什么</th><th>对不对</th></tr></thead>
+    <tbody>
+      <tr><td><b>骨架会话</b></td><td>注释里写「骨架阶段不引图标字体，<b>范本同款</b>」</td><td>—</td></tr>
+      <tr><td><b>QA</b></td><td>「文件没引 <code>cses-icons.css</code>。<b>我查了范本，范本其实引了</b>（grep = 1）」
+        → 据此判骨架岗的说法不成立</td><td><b>前半对，后半错</b></td></tr>
+      <tr><td><b>主会话</b></td><td>「QA 错了，我 grep 也是 1，明明引了」</td><td class="fail">也错</td></tr>
+      <tr><td><b>打开原文</b></td><td><code>&lt;!-- ⑤ cses-icons.css：骨架阶段不引（范本同款）… --&gt;</code>
+        —— 那 1 处<b>是注释</b>。范本那个 1 也是注释。</td><td class="pass">✅ 真相</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note ok">
+    <h4>最终事实</h4>
+    <p><b>「没引」是事实</b>（7 个 cses 图标位确实是空的，留到高保真阶段解决）；
+    <b>但「范本同款」这句成立，骨架会话没说错。</b></p>
+    <p>主会话在同一个坑上栽了<b>第 7 次</b> —— <code>grep -c</code> 命中的是注释里的文件名。</p>
+    <p><b>三个人都 grep 了，三个都被同一行骗了。只有打开看原文才水落石出。</b></p>
+  </div>
+</section>
+
+<!-- ══════ 人工项 ══════ -->
+<section>
+  <div class="sec-h"><span class="sec-n">MANUAL</span><h2>人工项的数字，不能当证据用</h2></div>
+  <p class="sec-why">规范写明：人工项「<b>只准备证据、标出可疑处，不下结论</b>」。这次暴露出一个隐患。</p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:34%">QA 人工项报的</th><th style="width:30%">主会话实测（CDP 1440×1024）</th><th>差异</th></tr></thead>
+    <tbody>
+      <tr><td>C 区一屏只露 <b>4 行</b></td><td>完整露出 <b>7 行</b>（共 15 行）</td><td class="fail">低报</td></tr>
+      <tr><td>B 区条目中间空 <b>550px</b></td><td>最大横向空白 <b>335px</b></td><td class="fail">高报</td></tr>
+      <tr><td>B 区占 <b>273px</b></td><td><b>273px</b></td><td class="pass">准</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <h4>为什么这件事要写进来</h4>
+    <p>owner 是<b>基于「一屏只露 4 行」做的签字判断</b>。那个数是 QA 看截图估的，不是量的。</p>
+    <p>偏差方向对结论有利（7 行比 4 行宽裕，取舍代价更轻），所以<b>不用重签</b> ——
+    但如果偏差反过来，就会是<b>基于错数做的决策</b>。</p>
+    <p><b>沉淀：人工项里出现的数字，引用前必须机器复核一次。</b>
+    否则一个估出来的数会被当成实测值，写进后续所有文档。</p>
+  </div>
+</section>
+
+<!-- ══════ 流程冲突 ══════ -->
+<section>
+  <div class="sec-h"><span class="sec-n">GATE</span><h2>撞出一个流程冲突 · 而它没有绕行</h2></div>
+
+  <div class="note bad">
+    <h4>常驻测试岗写不了验收报告</h4>
+    <p>测试会话跑完全部检查，落报告时被门卫拦住：</p>
+    <pre><span class="r">enforce-skeleton</span> 查 transcript 要求「<span class="y">本会话真派过 qa-agent</span>」
+→ 常驻测试岗本体写报告，在门卫眼里 = <span class="y">自己出题自己判卷</span></pre>
+    <p><b>根因</b>：门卫是为「单主对话派 agent」那套跑法写的 —— 主对话不能自己写验收报告，必须派人。
+    但多会话架构里，<b>测试岗本身就是那个独立第三方</b>，它跟被验对象是两个会话、两份上下文，
+    根本不存在「自己判自己」。<b>门卫的判据跟它想防的东西脱钩了。</b></p>
+  </div>
+
+  <div class="note ok">
+    <h4>它的处理：不绕行，走门卫指定的正路</h4>
+    <p>测试会话<b>没有申请豁免、没有绕过</b>，而是<b>自己派了一个 qa-agent</b> 按契约跑一遍，
+    再拿这份跟它自己已跑完的结果<b>对账</b>，差异写进回执。</p>
+    <p><b>这比直接豁免有价值 —— 对账本身就是一次交叉验证。</b></p>
+    <p>要不要改门卫政策，是 owner 和流程岗的事。<b>执行的人不动规则。</b></p>
+  </div>
+</section>
+
+<!-- ══════ 待跑 ══════ -->
+<section id="s2">
+  <div class="sec-h"><span class="sec-n">PHASE 2</span><h2>高保真阶段 · R1~R7 ✓</h2></div>
+  <p class="sec-why">灰块换真组件之后跑，<b>比骨架阶段严</b> —— 颜色、字号、字重、圆角、间距全部走 token，图标要真渲染。
+  这一阶段跑了 <b>三轮</b>：首验不通过 → 一行修 → 换名后再验。<b>下面是三轮的真实结果，不是最后一轮的漂亮版。</b></p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:7%">项</th><th style="width:22%">查什么</th><th style="width:9%">结果</th><th>实测证据</th></tr></thead>
+    <tbody>
+      <tr><td><span class="id">R1</span></td><td>零内联 svg</td><td class="pass">PASS</td><td><code>grep '&lt;svg'</code> 剥注释后 = <b>0</b></td></tr>
+      <tr><td><span class="id">R2</span></td><td>颜色走变量</td><td class="pass">PASS</td><td>业务样式 <b>0</b>；工具壳 <code>.state-switcher</code> 内 4 处，exceptions 已登记</td></tr>
+      <tr><td><span class="id">R3</span></td><td>字号走 token</td><td class="pass">PASS</td><td><code>font-size: 数字px</code> = <b>0</b></td></tr>
+      <tr><td><span class="id">R4</span></td><td>字重走 token</td><td class="pass">PASS</td><td><code>font-weight: 数字</code> = <b>0</b></td></tr>
+      <tr><td><span class="id">R5</span></td><td>圆角走 token</td><td class="pass">PASS</td><td><code>border-radius: 数字px</code> = <b>0</b></td></tr>
+      <tr><td><span class="id">R6</span></td><td>间距走 token</td><td class="pass">PASS</td><td>剥注释后 = <b>0</b>，连工具壳都改用了 var</td></tr>
+      <tr><td><span class="id">R7</span></td><td>图标真渲染</td><td class="pass">PASS</td><td>18 个实例读 <code>::before</code> 的<b>字符码点</b>，全部 ≥ U+E000，<b>0 个坏图标</b></td></tr>
+      <tr><td><span class="id">M6</span></td><td>路径深度</td><td class="pass">PASS</td><td>31 处引用全部 <code>../ ×6</code>；外链 / figma URL = <b>0</b></td></tr>
+      <tr><td><span class="id">M7</span></td><td>结构导航 + console</td><td class="pass">PASS</td><td>console error = <b>0</b>；view 切换真切、五态 5/5</td></tr>
+    </tbody>
+  </table></div>
+
+  <p class="sec-why" style="margin-top:28px">上面九项是通用标准。<b>下面四项是这一单专门加的</b> ——
+  因为前四轮人工审出来的问题，通用标准里<b>一条都没覆盖</b>。<b>一条都没覆盖</b>。</p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:7%">项</th><th style="width:22%">查什么</th><th style="width:9%">结果</th><th>实测证据</th></tr></thead>
+    <tbody>
+      <tr><td><span class="id">补①</span></td><td>组件真用了</td><td class="pass">PASS</td><td>数 <code>&lt;cs-*&gt;</code> <b>自定义标签</b>（不是 class）：<b>142 个 / 22 种</b></td></tr>
+      <tr><td><span class="id">补②</span></td><td>组件默认没被覆盖</td><td class="pass">PASS</td><td>解析全部 <code>&lt;style&gt;</code> 规则：对组件库件<b>零 background / height / border 覆盖</b></td></tr>
+      <tr><td><span class="id">补③</span></td><td>尺寸变体不滥用</td><td class="fail">FAIL</td><td><b>82 个 <code>sm</code> 里有 4 个在表格外</b>（提醒区按钮 24px vs 默认 32px）</td></tr>
+      <tr><td><span class="id">补④</span></td><td>对齐与间距</td><td class="pass">PASS</td><td>内容区 6 块左边距<b>去重后 = {345} 单值</b>；相邻间距 <b>16×5 全等</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <h4>唯一那个 FAIL，判据是前一轮返工时定下的</h4>
+    <p>提醒区 4 个按钮还是小号。判据不是 QA 发明的 —— 它在第 1 轮人工返工时就定下了：<b>表格行内可以用小号，表格外必须默认尺寸。</b></p>
+    <p>全页 82 个 <code>sm</code>，其余 <b>78 个全在表格行内，全部合规</b>。
+    漏网的是提醒区那 4 个 —— <b>规则是对的，执行时漏了</b>。修法是删掉 4 个属性，一分钟。</p>
+  </div>
+
+  <h3 style="margin-top:44px">这一版真正的成本：4 轮返工，6 个机器查不出来的问题</h3>
+  <p class="sec-why">机器项全过，不代表一次做对。<b>下面每一条都是人工审出来的，九项通用标准一条都没抓到。</b></p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:5%">轮</th><th>问题</th></tr></thead>
+    <tbody>
+      <tr><td><b>1</b></td><td>① 页面样式<b>覆盖掉了组件自带的白底</b>　② 100 个组件里 <b>97 个</b>用了 <code>sm</code>/<code>xs</code> 小号变体</td></tr>
+      <tr><td><b>2</b></td><td>③ <b>第一轮改错了</b> —— 量到行背景是 <code>rgba(0,0,0,0)</code> 就断言「是白的」。
+        <b>透明不是白，透明是显示背后那层。</b>穿透到第一个非透明祖先才发现真正的灰底在容器上</td></tr>
+      <tr><td><b>3</b></td><td>④ 上边距 40px 该是 16px　⑤ 左边距 <b>345 vs 369</b>，差 24px —— 两层 padding 叠加</td></tr>
+      <tr><td><b>4</b></td><td>⑥ navbar 的 <code>slot-header</code> 本来支持两行（标题 + 描述），<b>从骨架阶段起就只用了一行</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <h4>这 6 个问题指向同一个结论：验收标准有洞</h4>
+    <p>产物<b>「合规通过」</b>了 —— 九项通用标准一项没违。但人工一眼就看出不对。</p>
+    <p>两方从<b>相反方向</b>撞到同一个结论：<b>测试会话</b>从「今天抓到的问题，标准里都没有对应判据」，
+    <b>主会话</b>从「四轮返工的根子全在骨架阶段就埋下了」。</p>
+    <p>结果是三条新标准转正：<b>R13 尺寸变体位置</b> / <b>R14 组件默认不覆盖</b> / <b>R15 对齐间距机器量</b>，
+    外加两条「怎么量才不骗自己」的注记 —— <b>量背景色要穿透到第一个非透明祖先</b>、
+    <b>图标判空用码点不用 content 串</b>。<b>下一单起生效，不回填存量。</b></p>
+  </div>
+
+  <h3 style="margin-top:44px">骨架阶段那条预判，兑现了</h3>
+  <div class="note">
+    <p>骨架阶段提前记了一条：<code>var(--radius-md, 6px)</code> 里的 <code>--radius-md</code>
+    <b>在整个 设计系统的 CSS 里 0 处定义</b>，一直吃的是 fallback。当时 R5 还不判，但先记下来了。</p>
+    <p><b>现在核对：</b>高保真页里 <code>--radius-md</code> 出现 <b>0 处</b>，改用了梯度里真实存在的
+    <code>--radius-sm</code>（同为 6px）。<b>没有新建 token</b> —— 设计系统扩展的第一条硬约束就是「token 层零破例」。</p>
+    <p>提前一个阶段记下来的东西，到了那个阶段真的被用上了。<b>这是「预判」和「事后补救」的差别。</b></p>
+  </div>
+
+  <h3 style="margin-top:44px">一次「下游推翻上游」，而且下游是对的</h3>
+  <div class="note">
+    <p>最后一轮要把 5 个假数据人名换掉。派单里我写死了一句：<b>「diff 里只应该出现名字。」</b></p>
+    <p>执行的会话没照字面做 —— 它同时改了 <b>10 处头像首字</b>，然后报备：
+    「只换全名的话，<b>『岑亦舒』的头像上还写着『李』</b> —— 姓与首字不一致本身就是穿帮点，
+    PII 检查也许不抓，<b>人眼会抓</b>。如果你坚持字面只换名字，回滚也是一条命令的事，但我的判断是不回滚。」</p>
+    <p><b>它是对的，我的指令有洞。</b>我给的是一条<b>字面规则</b>，它执行的是规则背后的<b>目的</b>。</p>
+    <p>它的防误伤处理更值得看：<code>周/孙/李</code> 三姓在本页只属于要换的三人 → 全局换安全；
+    <b><code>王/张</code> 两姓有要保留的同姓者</b>（王磊、张伟）→ <b>只在同一行里出现目标全名时才换首字</b>。
+    一刀切的话，王磊的头像会变成「邱」。</p>
+  </div>
+
+  <h3 style="margin-top:44px">验收方自己做的一件没人要求的事</h3>
+  <div class="note">
+    <p>换名这一轮要验「diff 里只有名字」。但<b>这个目录不在 git 里 —— 没有基线，就没法 diff</b>。</p>
+    <p>测试会话在改动<b>落盘之前</b>，自己抢存了一份旧版快照。派单里没有这一条。</p>
+    <p>后来它报的「新名分布与换名前基数严格一致（<b>我落盘前数好的，不是拿新文件自证</b>）」，
+    是同一个自觉的延伸 —— <b>拿改完的文件去证明自己改对了，等于没证。</b></p>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-h"><span class="sec-n">PHASE 3</span><h2>交互阶段 · 无死按钮</h2></div>
+  <p class="sec-why">真组件页上做高保真交互。核心一条：<b>每个按钮都要有反应，一个都不许留死。</b></p>
+
+  <div class="tw"><table>
+    <thead><tr><th style="width:26%">查什么</th><th>判据</th></tr></thead>
+    <tbody>
+      <tr><td><b>无死按钮</b></td><td>枚举全页控件逐个点，每个都要有真行为：页内交互 / 跳转 / 明确 disabled / 桩 + 说明去向</td></tr>
+      <tr><td><b>展开折叠必动画</b></td><td>禁 <code>display</code> 硬切，用 <code>grid-rows 0fr→1fr</code> 自适应 + 淡入</td></tr>
+      <tr><td><b>级联扇出</b></td><td>点开的二级页若还没建，接 coming-soon 桩并登记，<b>报回主对话另起单元</b>，不闷头造</td></tr>
+      <tr><td><b>行为自证</b></td><td>真点 + 截图 + <code>console</code> 0 error，<b>贴真实输出而不是「都通过了」</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <h4>这一阶段有个已知的验收陷阱，先记着</h4>
+    <p>无头浏览器会把 CSS 过渡<b>冻在第 0 帧</b> —— 点完立刻量，会把「有动画」读成「没反应」，
+    <b>等多久都不变</b>。骨架阶段验 toast 时已经踩过一次。</p>
+    <p><b>正解：量之前先注入 <code>transition:none</code></b>，或者验 class 变化而不是验最终样式值。</p>
+  </div>
+</section>
+
+<footer>
+  验收标准：<code>docs/流程规则/分阶段验收规范.md</code>　·
+  报告原件：<code>1-skeleton/qa-report-骨架.md</code>（496 行）、
+  <code>owner-审核-骨架.md</code>、<code>2-real/qa-report-2-real.md</code>（三轮）、<code>owner-审核-2-real.md</code>　·　2026-09-04<br>
+  本页所有命令输出均摘自报告原件，未改写。<b>交互阶段跑完后本页继续追加。</b>
+</footer>
+
+</div>
+</body>
+</html>

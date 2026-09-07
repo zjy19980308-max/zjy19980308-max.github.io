@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-slider 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="slider.css?v=b3217005">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 24px; margin-bottom: 24px; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 96px; flex-shrink: 0; }
+    .slider-wrap { flex: 1; max-width: 480px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 基础 ========== -->
+<div class="section">
+  <div class="section-title">基础用法 Basic</div>
+  <div class="section-subtitle">CSS 变量 --cs-slider-value 控制滑块位置（0~100%）</div>
+  <div class="row">
+    <span class="row-label">value 30%</span>
+    <div class="slider-wrap">
+      <cs-slider style="--cs-slider-value: 30%;">
+        <div class="slider-rail"></div>
+        <div class="slider-track"></div>
+        <div class="slider-handle"></div>
+      </cs-slider>
+    </div>
+  </div>
+  <div class="row">
+    <span class="row-label">value 65%</span>
+    <div class="slider-wrap">
+      <cs-slider style="--cs-slider-value: 65%;">
+        <div class="slider-rail"></div>
+        <div class="slider-track"></div>
+        <div class="slider-handle"></div>
+      </cs-slider>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 2. 范围 ========== -->
+<div class="section">
+  <div class="section-title">范围滑块 Range</div>
+  <div class="section-subtitle">data-range + --cs-slider-from / --cs-slider-to</div>
+  <div class="row">
+    <span class="row-label">20% ~ 70%</span>
+    <div class="slider-wrap">
+      <cs-slider data-range style="--cs-slider-from: 20%; --cs-slider-to: 70%;">
+        <div class="slider-rail"></div>
+        <div class="slider-track"></div>
+        <div class="slider-handle"></div>
+        <div class="slider-handle"></div>
+      </cs-slider>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 3. 带刻度 ========== -->
+<div class="section">
+  <div class="section-title">带刻度 Marks</div>
+  <div class="section-subtitle">.slider-marks 容器 + .slider-mark / .slider-mark-label</div>
+  <div class="row" style="margin-bottom: 48px;">
+    <span class="row-label">刻度</span>
+    <div class="slider-wrap">
+      <cs-slider style="--cs-slider-value: 50%; height: 56px;">
+        <div class="slider-rail"></div>
+        <div class="slider-track"></div>
+        <div class="slider-handle"></div>
+        <div class="slider-marks">
+          <div class="slider-mark" style="left: 0%;"></div>
+          <div class="slider-mark" data-active style="left: 25%;"></div>
+          <div class="slider-mark" data-active style="left: 50%;"></div>
+          <div class="slider-mark" style="left: 75%;"></div>
+          <div class="slider-mark" style="left: 100%;"></div>
+          <span class="slider-mark-label" style="left: 0%;">0°C</span>
+          <span class="slider-mark-label" style="left: 25%;">25°C</span>
+          <span class="slider-mark-label" style="left: 50%;">50°C</span>
+          <span class="slider-mark-label" style="left: 75%;">75°C</span>
+          <span class="slider-mark-label" style="left: 100%;">100°C</span>
+        </div>
+      </cs-slider>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 4. 禁用 ========== -->
+<div class="section">
+  <div class="section-title">禁用 Disabled</div>
+  <div class="row">
+    <span class="row-label">禁用</span>
+    <div class="slider-wrap">
+      <cs-slider data-disabled style="--cs-slider-value: 40%;">
+        <div class="slider-rail"></div>
+        <div class="slider-track"></div>
+        <div class="slider-handle"></div>
+      </cs-slider>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 5. 垂直 ========== -->
+<div class="section">
+  <div class="section-title">垂直方向 Vertical</div>
+  <div class="section-subtitle">data-orientation="vertical"</div>
+  <div class="row" style="gap: 48px;">
+    <cs-slider data-orientation="vertical" style="--cs-slider-value: 30%;">
+      <div class="slider-rail"></div>
+      <div class="slider-track"></div>
+      <div class="slider-handle"></div>
+    </cs-slider>
+    <cs-slider data-orientation="vertical" style="--cs-slider-value: 60%;">
+      <div class="slider-rail"></div>
+      <div class="slider-track"></div>
+      <div class="slider-handle"></div>
+    </cs-slider>
+    <cs-slider data-orientation="vertical" style="--cs-slider-value: 90%;">
+      <div class="slider-rail"></div>
+      <div class="slider-track"></div>
+      <div class="slider-handle"></div>
+    </cs-slider>
+  </div>
+</div>
+
+<script src="slider.js?v=9a1053aa"></script>
+</body>
+</html>

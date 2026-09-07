@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-progress 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="progress.css?v=9e209051">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { margin-bottom: 16px; max-width: 480px; }
+    .row-label { display: block; font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 4px; }
+    .circle-row { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-title">线形进度条 Line</div>
+  <div class="section-subtitle">通过 style="--progress: N" 传入百分比（0-100）</div>
+  <div class="row"><span class="row-label">25%</span>
+    <cs-progress style="--progress: 25"><div class="progress-track"><div class="progress-bar"></div></div><span class="progress-text">25%</span></cs-progress>
+  </div>
+  <div class="row"><span class="row-label">50%</span>
+    <cs-progress style="--progress: 50"><div class="progress-track"><div class="progress-bar"></div></div><span class="progress-text">50%</span></cs-progress>
+  </div>
+  <div class="row"><span class="row-label">75%</span>
+    <cs-progress style="--progress: 75"><div class="progress-track"><div class="progress-bar"></div></div><span class="progress-text">75%</span></cs-progress>
+  </div>
+  <div class="row"><span class="row-label">100%</span>
+    <cs-progress style="--progress: 100" data-color="success"><div class="progress-track"><div class="progress-bar"></div></div><span class="progress-text">100%</span></cs-progress>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">线形尺寸 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg" — 4 / 8 / 12 px 高度</div>
+  <div class="row"><span class="row-label">sm 4px</span>
+    <cs-progress data-size="sm" style="--progress: 60"><div class="progress-track"><div class="progress-bar"></div></div></cs-progress>
+  </div>
+  <div class="row"><span class="row-label">md 8px（默认）</span>
+    <cs-progress style="--progress: 60"><div class="progress-track"><div class="progress-bar"></div></div></cs-progress>
+  </div>
+  <div class="row"><span class="row-label">lg 12px</span>
+    <cs-progress data-size="lg" style="--progress: 60"><div class="progress-track"><div class="progress-bar"></div></div></cs-progress>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">语义状态 Status</div>
+  <div class="section-subtitle">data-status / data-color</div>
+  <div class="row"><span class="row-label">primary 进行中</span>
+    <cs-progress data-color="primary" style="--progress: 65"><div class="progress-track"><div class="progress-bar"></div></div><span class="progress-text">65%</span></cs-progress>
+  </div>
+  <div class="row"><span class="row-label">success 已完成</span>
+    <cs-progress data-color="success" style="--progress: 100"><div class="progress-track"><div class="progress-bar"></div></div><span class="progress-text">100%</span></cs-progress>
+  </div>
+  <div class="row"><span class="row-label">warning 警告</span>
+    <cs-progress data-color="warning" style="--progress: 80"><div class="progress-track"><div class="progress-bar"></div></div><span class="progress-text">80%</span></cs-progress>
+  </div>
+  <div class="row"><span class="row-label">danger 异常</span>
+    <cs-progress data-color="danger" style="--progress: 30"><div class="progress-track"><div class="progress-bar"></div></div><span class="progress-text">30%</span></cs-progress>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">环形进度 Circle</div>
+  <div class="section-subtitle">data-type="circle" — 用 conic-gradient 纯 CSS 实现</div>
+  <div class="circle-row">
+    <cs-progress data-type="circle" data-size="sm" style="--progress: 30"><div class="progress-circle"><span class="progress-text">30%</span></div></cs-progress>
+    <cs-progress data-type="circle" style="--progress: 65"><div class="progress-circle"><span class="progress-text">65%</span></div></cs-progress>
+    <cs-progress data-type="circle" data-size="lg" data-color="success" style="--progress: 100"><div class="progress-circle"><span class="progress-text">100%</span></div></cs-progress>
+    <cs-progress data-type="circle" data-color="warning" style="--progress: 80"><div class="progress-circle"><span class="progress-text">80%</span></div></cs-progress>
+    <cs-progress data-type="circle" data-color="danger" style="--progress: 25"><div class="progress-circle"><span class="progress-text">25%</span></div></cs-progress>
+  </div>
+</div>
+
+</body>
+</html>

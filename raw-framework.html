@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<title>框架 · 张竞元</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/fonts.css?v=d0647496">
+<link rel="stylesheet" href="assets/system.css?v=39eba33c">
+<link rel="stylesheet" href="assets/raw-light.css?v=1102f794">
+<style>
+  /* 和组件库同一套外壳：整屏 flex，不滚动，舞台吃满剩余高度。
+     上一版是「1280 版心 + min(78vh,860px) 的 iframe」——
+     文档自带 260px 左栏，1280 里塞进去右侧预览只剩 1142，
+     实测就是被挤扁的那个状态。 */
+  html,body{height:100%}
+  body{margin:0;overflow:hidden;display:flex;flex-direction:column}
+
+  .top{flex:none;background:rgba(255,255,255,.92);border-bottom:1px solid var(--line);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .top-in{padding:14px clamp(14px,2.5vw,28px);display:flex;align-items:center;
+    justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .back{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:11.5px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);border:1px solid var(--line-2);
+    padding:8px 15px;border-radius:6px;transition:background .3s,color .3s,border-color .3s}
+  .back:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .ttl{font-family:var(--font-display);font-weight:600;font-size:16px}
+  .ttl span{color:var(--fg-3);font-weight:400;margin-left:10px;font-family:var(--font-mono);
+    font-size:11px;letter-spacing:.14em}
+  .cnt{font-family:var(--font-mono);font-size:11px;color:var(--fg-4);letter-spacing:.1em}
+
+  .sub{flex:none;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+    padding:11px clamp(14px,2.5vw,28px);border-bottom:1px solid var(--line);background:var(--bg)}
+  .sub p{margin:0;flex:1;min-width:280px;font-size:12.5px;line-height:1.7;color:var(--fg-2)}
+  .zoom{display:flex;align-items:center;gap:8px;flex:none}
+  .zbtn{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--fg-3);border:1px solid var(--line-2);background:none;cursor:pointer;
+    padding:6px 12px;border-radius:5px;transition:background .25s,color .25s,border-color .25s}
+  .zbtn:hover{color:var(--fg);border-color:var(--fg-3)}
+  .zbtn.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .zpct{font-family:var(--font-mono);font-size:10.5px;color:var(--fg-4);min-width:42px;text-align:right}
+  .open{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;color:var(--fg-3);
+    text-decoration:none;white-space:nowrap;transition:color .25s;border-left:1px solid var(--line);
+    padding-left:14px}
+  .open:hover{color:var(--fg)}
+
+  /* 舞台：画布按 1752×1024 固定尺寸渲染再整体缩放。
+     1752 = 文档左栏 260 + 左右各 16 边距 + 右侧预览 1440。
+     实测预览高度恒等于 iframe 视口高度，所以高度直接给 1024。 */
+  .stage{flex:1;min-height:0;overflow:auto;background:#E9E9ED;
+    display:flex;align-items:flex-start;justify-content:center;padding:18px}
+  .sizer{flex:none}
+  .canvas{width:1752px;height:1024px;transform-origin:top left;
+    background:#fff;border-radius:8px;overflow:hidden;
+    box-shadow:0 10px 46px rgba(20,20,32,.13),0 1px 3px rgba(20,20,32,.08)}
+  .canvas iframe{width:1752px;height:1024px;border:0;display:block}
+
+  @media(max-width:820px){
+    body{overflow:auto}
+    .stage{padding:10px}
+  }
+</style>
+</head>
+<body>
+
+<div class="top"><div class="top-in">
+  <a class="back" href="index.html">← 返回作品集</a>
+  <div class="ttl">框架<span>RAW MATERIAL · 04</span></div>
+  <div class="cnt">15 个容器 · 画布 1440 × 1024</div>
+</div></div>
+
+<div class="sub">
+  <p>8 个锁死的布局块。页面外层结构不允许自行拼装——骨架阶段一旦检测到手搓的外框，门卫直接拦下，不允许进入高保真。锁死的是骨架，不是视觉：同一套框架块之下，各业务线的视觉表达仍然独立。左侧点选容器，右侧整页实时预览并浮出规则。</p>
+  <div class="zoom">
+    <button class="zbtn on" id="zfit">适应窗口</button>
+    <button class="zbtn" id="z100">100%</button>
+    <span class="zpct" id="zp">—</span>
+  </div>
+  <a class="open" href="lib/fragment/index.html" target="_blank" rel="noopener">新窗口打开 →</a>
+</div>
+
+<div class="stage" id="stage">
+  <div class="sizer" id="sz">
+    <div class="canvas" id="cv">
+      <iframe id="fr" src="lib/fragment/index.html" title="CSES 布局容器文档"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── 缩放：画布本体永远是 1752×1024，只做 transform。
+      transform 不改变布局尺寸，所以外面套一层 sizer 把
+      缩放后的实际占位写回去，否则小比例下会留出一大片空白 + 假滚动条。 */
+(function () {
+  var stage = document.getElementById('stage'),
+      sz = document.getElementById('sz'), cv = document.getElementById('cv'),
+      zp = document.getElementById('zp'),
+      bFit = document.getElementById('zfit'), b100 = document.getElementById('z100');
+  var W = 1752, H = 1024, mode = 'fit';
+
+  function apply() {
+    var availW = stage.clientWidth - 36, availH = stage.clientHeight - 36;
+    var k = mode === '100' ? 1 : Math.min(availW / W, availH / H, 1);
+    if (!isFinite(k) || k <= 0) k = 1;
+    cv.style.transform = 'scale(' + k + ')';
+    sz.style.width  = (W * k) + 'px';
+    sz.style.height = (H * k) + 'px';
+    zp.textContent = Math.round(k * 100) + '%';
+    bFit.classList.toggle('on', mode === 'fit');
+    b100.classList.toggle('on', mode === '100');
+  }
+  bFit.onclick = function () { mode = 'fit'; apply(); };
+  b100.onclick = function () { mode = '100'; apply(); };
+
+  if (window.ResizeObserver) new ResizeObserver(apply).observe(stage);
+  addEventListener('resize', apply);
+  apply();
+})();
+
+/* 返回按来路走。原先写死 #p-flow，从哪进来都跳流水线。
+   记录由本稿在离开前写入 sessionStorage，这里只读不删 ——
+   本稿加载时还要用它还原滚动位置。 */
+(function(){
+  var a = document.querySelector('a[href^="index.html"]');
+  if (!a) return;
+  try {
+    var r = JSON.parse(sessionStorage.getItem('zjy:return') || 'null');
+    if (r && r.tab) {
+      a.setAttribute('href', 'index.html#' + r.tab);
+      var LABEL = {about:'个人介绍','p-flow':'AI 设计流水线','p-nota':'NOTA · AI 原生会议','p-cses':'CSES 企业协作平台'};
+      if (LABEL[r.tab]) a.textContent = '← 返回 ' + LABEL[r.tab];
+    }
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>

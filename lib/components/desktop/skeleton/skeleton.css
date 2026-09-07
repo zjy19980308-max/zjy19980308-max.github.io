@@ -1,0 +1,129 @@
+/*
+ * 骨架屏组件 (Skeleton)
+ * 标签：<cs-skeleton>
+ *
+ * 作用：用占位形状代替真实内容，在数据加载前提供视觉锚定。
+ * 对标 ng-zorro Skeleton。纯 CSS @keyframes 渐变动画。
+ *
+ * data 属性：
+ *   data-active   — 启用扫光动画（默认无动画为静态灰块）
+ *
+ * 子元素：
+ *   .skeleton-avatar   — 圆形头像占位
+ *   .skeleton-image    — 矩形图片占位
+ *   .skeleton-title    — 标题占位（粗一点的文字条）
+ *   .skeleton-paragraph — 段落容器
+ *   .skeleton-line     — 文字条
+ *   .skeleton-button   — 按钮占位
+ *
+ * 子元素 data 属性：
+ *   .skeleton-avatar[data-shape="square"] — 方形头像
+ *   .skeleton-avatar[data-size="sm|md|lg"] — 头像尺寸
+ *   .skeleton-line[data-width="30%|60%|80%"] — 通过 inline style 灵活控制
+ */
+
+/* ========== 容器 ========== */
+cs-skeleton {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+/* ========== 通用占位形状基础（灰底） ========== */
+cs-skeleton .skeleton-avatar,
+cs-skeleton .skeleton-image,
+cs-skeleton .skeleton-title,
+cs-skeleton .skeleton-line,
+cs-skeleton .skeleton-button {
+  background: var(--cs-color-bg-light);
+  border-radius: var(--radius);
+}
+
+/* ========== 头像 ========== */
+cs-skeleton .skeleton-avatar {
+  width: var(--cs-sem-size-interactive-md);
+  height: var(--cs-sem-size-interactive-md);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+cs-skeleton .skeleton-avatar[data-size="sm"] {
+  width: var(--cs-sem-size-interactive-xs);
+  height: var(--cs-sem-size-interactive-xs);
+}
+
+cs-skeleton .skeleton-avatar[data-size="lg"] {
+  width: var(--cs-sem-size-icon-4xl);
+  height: var(--cs-sem-size-icon-4xl);
+}
+
+cs-skeleton .skeleton-avatar[data-shape="square"] {
+  border-radius: var(--radius);
+}
+
+/* ========== 图片 ========== */
+cs-skeleton .skeleton-image {
+  width: 100%;
+  height: var(--spacing-160);
+  border-radius: var(--radius-sm);
+}
+
+/* ========== 标题 ========== */
+cs-skeleton .skeleton-title {
+  width: 40%;
+  height: var(--spacing-20);
+  margin-bottom: var(--space-sm);
+}
+
+/* ========== 段落 ========== */
+cs-skeleton .skeleton-paragraph {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+cs-skeleton .skeleton-line {
+  width: 100%;
+  height: var(--space-md);
+}
+
+cs-skeleton .skeleton-line:last-child {
+  width: 60%;
+}
+
+/* ========== 按钮 ========== */
+cs-skeleton .skeleton-button {
+  width: 80px;
+  height: var(--cs-sem-size-interactive-sm);
+}
+
+/* ========== 主要内容区（标题 + 段落） ========== */
+cs-skeleton .skeleton-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ========== 扫光动画 ========== */
+cs-skeleton[data-active] .skeleton-avatar,
+cs-skeleton[data-active] .skeleton-image,
+cs-skeleton[data-active] .skeleton-title,
+cs-skeleton[data-active] .skeleton-line,
+cs-skeleton[data-active] .skeleton-button {
+  background: linear-gradient(
+    90deg,
+    var(--cs-color-bg-light) 25%,
+    var(--cs-color-bg-hover) 50%,
+    var(--cs-color-bg-light) 75%
+  );
+  background-size: 200% 100%;
+  animation: cs-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes cs-skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

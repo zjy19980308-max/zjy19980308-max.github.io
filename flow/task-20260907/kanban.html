@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>任务 · 看板视图</title>
+<style>
+:root{--cs-primary:#4857e2;--cs-primary-disabled:#ced3ff;--cs-border:#e6e6e6;--cs-error:#f53f3f;--cs-warning:#ff7d00;--cs-success:#00b42a;--ink:#333;--ink3:#999;--font:"PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:#fff;color:var(--ink);font:14px/1.45 var(--font);-webkit-font-smoothing:antialiased}body{display:inline-block;vertical-align:top;min-width:0}
+.board{display:flex;gap:24px;padding:16px;min-width:1265px;align-items:flex-start}
+.col{width:290px;flex:none;display:flex;flex-direction:column;gap:12px;padding-bottom:16px}
+.col-h{display:flex;align-items:center;justify-content:space-between;height:24px}
+.col-h .l{display:flex;align-items:center;gap:8px}.pill{height:24px;width:58px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:var(--ink);background:var(--cs-border)}
+.pill.doing{background:var(--cs-primary-disabled);color:var(--cs-primary)}.pill.done{background:#c4edca}.pill.closed{background:var(--cs-border)}
+.col-h .n{color:var(--ink3);font-size:14px}.col-h .r{display:flex;align-items:center;justify-content:space-between;width:34px}
+.ib{width:14px;height:14px;border:0;background:none;padding:0;cursor:pointer;display:block}.ib img{width:14px;height:14px;display:block}
+.dots{width:22px;height:18px;border:0;background:none;padding:2px 4px;border-radius:4px;cursor:pointer;display:flex;gap:1.5px;align-items:center;justify-content:center}.dots i{width:1.5px;height:1.5px;border-radius:50%;background:var(--ink3);display:block}.dots:hover{background:#f2f3f5}
+.cards{display:flex;flex-direction:column;gap:12px;min-height:60px;border-radius:12px}.cards.over{outline:2px dashed var(--cs-primary-disabled);outline-offset:4px}
+.card{background:#fff;border:1px solid var(--cs-border);border-radius:12px;padding:16px 0;display:flex;flex-direction:column;gap:12px;cursor:grab;transition:box-shadow .15s,transform .15s}.card:hover{box-shadow:0 4px 14px rgba(0,0,0,.06)}.card.drag{opacity:.45;transform:scale(.98)}
+.card .t{padding:0 16px;display:flex;flex-direction:column;gap:4px}.card .t h4{margin:0;font-size:16px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px;min-width:0}.card .t h4 .tt{flex:1 1 0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag{flex:none;background:#bdbdbd;color:#434343;font-size:10px;font-weight:400;padding:2px 4px;border-radius:4px}
+.bc{display:flex;align-items:center;gap:4px;color:var(--ink3);font-size:14px}.bc .p{display:flex;align-items:center;gap:4px;padding:0 4px;border-radius:4px}.bc img{width:12px;height:12px;display:block}
+.pri{padding:0 16px;font-size:14px}.pri.h{color:var(--cs-error)}.pri.m{color:var(--cs-warning)}.pri.l{color:var(--ink3)}
+.av{padding:0 16px;display:flex;align-items:center;gap:2px}.av img{width:16px;height:16px;border-radius:50%;display:block;object-fit:cover}
+.card hr{margin:0;border:0;border-top:1px solid var(--cs-border);width:100%}
+.ft{padding:0 16px;height:20px;display:flex;align-items:center;gap:13px}.ft span{display:flex;align-items:center;gap:4px;padding:2px;border-radius:4px;color:var(--ink3);font-size:14px;line-height:16px}.ft img{width:14px;height:14px;display:block}
+.add{background:#fff;border:1px solid var(--cs-border);border-radius:8px;padding:8px;display:flex;align-items:center;gap:4px;color:var(--ink3);font-size:12px;cursor:pointer;width:100%;font-family:inherit}.add:hover{border-color:var(--cs-primary-disabled);color:var(--cs-primary)}.add img{width:14px;height:14px;display:block}
+.col.closed .cards{position:relative}.col.closed .cards::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 -18px 13.5px -15px rgba(0,0,0,.08)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0b0b10;color:#fff;font-size:13px;padding:8px 14px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}.toast.on{opacity:1}
+.card .t h4[contenteditable]{outline:1px solid var(--cs-primary-disabled);border-radius:4px;padding:0 4px}
+</style></head><body>
+<div class="board" id="board"></div>
+<div class="toast" id="toast"></div>
+<script>
+var A='assets/';
+var COLS=[{k:'todo',n:'待开始',cls:''},{k:'doing',n:'进行中',cls:'doing'},{k:'done',n:'已完成',cls:'done'},{k:'closed',n:'已关闭',cls:'closed'}];
+var AV=['imgRectangle1018.png','imgRectangle1019.png','imgRectangle1020.png','imgRectangle1021.png','av1022.png','av1023.png','av1024.png','av1025.png','av1026.png','av1027.png'];
+var T='CSES_SJ_月度导向板块改版任务';
+var DATA={todo:[['h',0,1],['m',2,3],['l',4,5],['l',6,7]],doing:[['h',8,9],['m',0,1]],done:[['m',2,3],['m',4,5],['m',6,7],['l',8,9]],closed:[['h',0,1,'已放弃'],['m',2,3,'已放弃'],['m',4,5,'已放弃'],['m',6,7,'已放弃'],['m',1,8,'已放弃'],['m',2,9,'已放弃']]};
+var PN={h:'紧急',m:'普通',l:'较低'};
+function card(c){var d=document.createElement('div');d.className='card';d.draggable=true;
+  d.innerHTML='<div class="t"><h4><span class="tt">'+T+'</span>'+(c[3]?'<span class="tag">'+c[3]+'</span>':'')+'</h4><div class="bc"><span class="p"><img src="'+A+'imgFolderOpen03.svg" alt="">CSES项目</span><span>/</span><span>设计模块</span></div></div>'
+   +'<div class="pri '+c[0]+'">'+PN[c[0]]+'</div><div class="av"><img src="'+A+AV[c[1]]+'" alt=""><img src="'+A+AV[c[2]]+'" alt=""></div>'
+   +(c[3]?'':'<hr><div class="ft"><span><img src="'+A+'imgGitBranch01.svg" alt="">4</span><span><img src="'+A+'imgTarget01.svg" alt="">5</span></div>');
+  d.addEventListener('dragstart',function(e){d.classList.add('drag');drag=d;e.dataTransfer.effectAllowed='move';});d.addEventListener('dragend',function(){d.classList.remove('drag');drag=null;recount();});
+  d.addEventListener('click',function(e){ if(e.target.closest('.tt[contenteditable="true"]')) return; var t=d.querySelector('.tt').textContent; try{ parent.postMessage({t:'open-task',title:t,from:'kanban'},'*'); }catch(x){} say('打开任务：'+t); });
+  d.addEventListener('dblclick',function(){var h=d.querySelector('.tt');h.contentEditable=true;h.focus();h.addEventListener('blur',function(){h.contentEditable=false;},{once:true});});
+  return d;}
+var drag=null;
+COLS.forEach(function(c){var col=document.createElement('div');col.className='col '+c.k;col.dataset.k=c.k;
+  col.innerHTML='<div class="col-h"><div class="l"><span class="pill '+c.cls+'">'+c.n+'</span><span class="n">12</span></div>'+(c.k==='closed'?'':'<div class="r"><button class="ib" title="新建任务"><img src="'+A+'imgAddSquare02.svg" alt=""></button><button class="dots" title="更多"><i></i><i></i><i></i></button></div>')+'</div><div class="cards"></div>';
+  var cards=col.querySelector('.cards');DATA[c.k].forEach(function(x){cards.appendChild(card(x));});
+  if(c.k!=='closed'){var add=document.createElement('button');add.className='add';add.innerHTML='<img src="'+A+'imgPlus03.svg" alt="">添加任务';add.addEventListener('click',function(){var n=card(['m',Math.floor(Math.random()*10),Math.floor(Math.random()*10)]);cards.appendChild(n);var h=n.querySelector('.tt');h.textContent='新任务';h.contentEditable=true;h.focus();document.execCommand&&document.execCommand('selectAll',false,null);h.addEventListener('blur',function(){h.contentEditable=false;if(!h.textContent.trim())h.textContent='新任务';},{once:true});recount();});col.appendChild(add);}
+  cards.addEventListener('dragover',function(e){e.preventDefault();cards.classList.add('over');});cards.addEventListener('dragleave',function(){cards.classList.remove('over');});
+  cards.addEventListener('drop',function(e){e.preventDefault();cards.classList.remove('over');if(drag){cards.appendChild(drag);say('已移到「'+c.n+'」');}});
+  var ib=col.querySelector('.ib'); if(ib) ib.addEventListener('click',function(){col.querySelector('.add').click();});
+  var dt=col.querySelector('.dots'); if(dt) dt.addEventListener('click',function(){say('列操作：重命名 · 折叠 · 设为默认');});
+  document.getElementById('board').appendChild(col);});
+function recount(){document.querySelectorAll('.col').forEach(function(col){col.querySelector('.n').textContent=col.querySelectorAll('.card').length;});}
+recount();
+var tt;function say(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},1400);}
+</script>
+<script src="../guide.js?v=815acc0b"></script>
+</body></html>

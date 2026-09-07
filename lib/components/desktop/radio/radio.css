@@ -1,0 +1,97 @@
+/*
+ * 单选框组件 (Radio)
+ * 标签：<cs-radio>
+ * 数据来源：CSES 会议设计 + 旧设计规范
+ *
+ * data 属性：
+ *   data-checked    — 选中态
+ *   data-disabled   — 禁用态
+ *   data-size="sm"  — 小尺寸 12px（会议投票）
+ *   data-size="md"  — 默认尺寸 14px
+ */
+
+/* ========== 基础样式 ========== */
+cs-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-6);
+  cursor: pointer;
+  user-select: none;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+}
+
+/* ========== 圆圈外框 ========== */
+cs-radio .radio-inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-icon-sm);
+  height: var(--cs-sem-size-icon-sm);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-full);
+  background: var(--cs-color-white);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+/* ========== 内部圆点（默认隐藏） ========== */
+cs-radio .radio-dot {
+  display: none;
+  width: var(--spacing-6);
+  height: var(--spacing-6);
+  border-radius: var(--radius-full);
+  background: var(--cs-color-primary);
+}
+
+/* ========== 悬浮态 ========== */
+cs-radio:hover .radio-inner {
+  border-color: var(--cs-color-text-light2);
+}
+
+/* ========== 选中态 ========== */
+cs-radio[data-checked] .radio-inner {
+  border-color: var(--cs-color-primary);
+}
+
+cs-radio[data-checked] .radio-dot {
+  display: block;
+}
+
+cs-radio[data-checked]:hover .radio-inner {
+  border-color: var(--cs-color-primary);
+}
+
+/* ========== 禁用态 — 未选中 ========== */
+cs-radio[data-disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+cs-radio[data-disabled] .radio-inner {
+  border-color: var(--cs-color-border);
+  background: var(--cs-color-bg-disabled);
+}
+
+/* ========== 禁用态 — 选中 ========== */
+cs-radio[data-checked][data-disabled] .radio-inner {
+  border-color: var(--cs-color-primary-disabled);
+  background: var(--cs-color-white);
+}
+
+cs-radio[data-checked][data-disabled] .radio-dot {
+  background: var(--cs-color-primary-disabled);
+}
+
+/* ========== 尺寸：sm 12px（会议投票） ========== */
+cs-radio[data-size="sm"] .radio-inner {
+  width: var(--cs-sem-size-icon-xs);
+  height: var(--cs-sem-size-icon-xs);
+}
+
+cs-radio[data-size="sm"] .radio-dot {
+  width: var(--space-2xs);
+  height: var(--space-2xs);
+}

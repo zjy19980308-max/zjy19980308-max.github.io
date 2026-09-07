@@ -1,0 +1,113 @@
+/*
+ * 树形导航容器组件 (Nav Tree)
+ * 标签：<cs-nav-tree>
+ * 用于文档库侧边栏的空间/知识库树形结构容器
+ *
+ * data 属性：
+ *   data-collapsible           — 允许整棵树展开/折叠
+ */
+
+/* ========== 基础样式 ========== */
+cs-nav-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ========== 树头部（可选） ========== */
+cs-nav-tree .tree-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xs);
+  cursor: default;
+  user-select: none;
+}
+
+cs-nav-tree .tree-header-title {
+  font: var(--typo-cn-12-medium);
+  color: var(--cs-color-text-light2);
+  text-transform: uppercase;
+}
+
+cs-nav-tree .tree-header-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--cs-sem-size-icon-sm);
+  line-height: 1;
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+/* ========== 树内容区 ========== */
+cs-nav-tree .tree-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ========== 可折叠模式 ========== */
+cs-nav-tree[data-collapsible] .tree-header {
+  cursor: pointer;
+}
+
+cs-nav-tree[data-collapsible][data-collapsed] .tree-header-arrow {
+  transform: rotate(-90deg);
+}
+
+cs-nav-tree[data-collapsible][data-collapsed] .tree-body {
+  display: none;
+}
+
+/* ========== cs-tree-item（由 nav-tree 直接使用，样式内聚于此） ========== */
+cs-tree-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);         /* 4px */
+  padding: var(--space-2xs) var(--space-xs); /* 4px 8px */
+  border-radius: var(--radius);
+  cursor: pointer;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  transition: background 0.15s ease;
+}
+
+cs-tree-item:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+cs-tree-item[data-selected] {
+  background: var(--cs-color-primary-a1, rgba(72,87,226,0.06));
+  color: var(--cs-color-primary);
+}
+
+cs-tree-item[data-level="1"] { padding-left: var(--spacing-20); }
+cs-tree-item[data-level="2"] { padding-left: var(--spacing-36); }
+
+cs-tree-item .tree-arrow {
+  font-size: 12px;
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+cs-tree-item[data-expanded] .tree-arrow {
+  transform: rotate(90deg);
+}
+
+cs-tree-item .tree-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  color: var(--cs-color-text-light);
+}
+
+cs-tree-item .tree-label {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

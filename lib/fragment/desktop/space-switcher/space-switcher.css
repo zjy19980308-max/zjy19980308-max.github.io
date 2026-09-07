@@ -1,0 +1,223 @@
+/*
+ * space-switcher fragment · 自包含 css
+ * 标签：<cs-space-switcher>（或 <cs-right-sidebar> / <div class="right-sidebar">）
+ * 真理标准：Figma 6G4kofC17HJTi91bvbX4bZ 节点 12:2475
+ *
+ * 自包含：已合并外层嵌套样式
+ * 全部 var() · 0 颜色硬编码
+ *
+ * 组件库标准：W:FIXED(65) H:FILL
+ * 内层：p(16,16,8,16) g:32 r:12 VERTICAL W:FILL H:FILL grow:1
+ */
+
+/* ============================================================
+ *  外层容器 · W:65 · H:FILL
+ * + 保留 fragment align-self
+ * ============================================================ */
+cs-space-switcher,
+cs-right-sidebar,
+.right-sidebar {
+  width: 65px;
+  flex-shrink: 0;
+  display: flex;
+  align-self: stretch;
+}
+
+/* 内层 · padding 16/16/8/16 · gap 32 · radius 12 · flex column
+ * + 保留 fragment 自有 align-items/justify-content */
+cs-space-switcher .inner,
+cs-right-sidebar .inner,
+.right-sidebar .inner {
+  width: 100%;
+  flex: 1;
+  padding: var(--space-md) var(--space-md) var(--space-xs) var(--space-md);
+  gap: var(--spacing-32);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+ *  上部工具区
+ * ============================================================ */
+cs-space-switcher .slot-tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-24);
+  flex: 1;
+  min-height: 0;
+}
+
+cs-space-switcher .tool-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-24);
+}
+
+cs-space-switcher .spaces-group {
+  gap: var(--spacing-24);
+}
+
+/* 分割线 20×1 */
+cs-space-switcher .divider {
+  width: 20px;
+  height: 1px;
+  background: var(--cs-color-divider-dark);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+ *  顶部工具项（embed PNG · 保留多色 · opacity:1 全亮）
+ * ============================================================ */
+cs-space-switcher .tool-item {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--cs-color-icon-muted);
+  text-decoration: none;
+  transition: color var(--cs-transition-fast);
+  flex-shrink: 0;
+}
+
+cs-space-switcher .tool-item:hover {
+  color: var(--cs-color-text-dark-primary);
+}
+
+cs-space-switcher .tool-item > i {
+  font-size: var(--spacing-20);
+  line-height: 1;
+}
+
+cs-space-switcher .tool-item > .tool-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* ============================================================
+ *  空间块（通用）
+ * ============================================================ */
+cs-space-switcher .space-card {
+  width: 34px;
+  border-radius: 20px;
+  background: var(--cs-color-bg-glass-soft);
+  padding: var(--space-xs) 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+  cursor: pointer;
+  transition: background var(--cs-transition-fast);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+cs-space-switcher .space-card:hover {
+  background: var(--cs-color-bg-glass-hover);
+}
+
+cs-space-switcher .space-card[data-active] {
+  background: var(--cs-color-bg-glass-active);
+}
+
+cs-space-switcher .space-card > i {
+  font-size: 14px;
+  line-height: 1;
+  color: var(--cs-color-text-dark-primary);
+  flex-shrink: 0;
+}
+
+/* 纵向文字 */
+cs-space-switcher .space-label {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-size: var(--font-size-md);
+  font-family: var(--font-family-cn);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0;
+  line-height: 1;
+  color: var(--cs-color-text-dark-primary);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ============================================================
+ *  加号按钮
+ * ============================================================ */
+cs-space-switcher .add-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--radius-sm);
+  background: var(--cs-color-bg-glass-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--cs-transition-fast);
+  flex-shrink: 0;
+}
+
+cs-space-switcher .add-btn:hover {
+  background: var(--cs-color-bg-glass-strong);
+}
+
+cs-space-switcher .add-btn > i {
+  font-size: 14px;
+  line-height: 1;
+  color: var(--cs-color-text-dark-secondary);
+}
+
+/* ============================================================
+ *  底部区
+ * ============================================================ */
+cs-space-switcher .slot-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 客服图标 + 红点 */
+cs-space-switcher .customer-service {
+  width: 26px;
+  height: 26px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+cs-space-switcher .customer-service > i {
+  font-size: 26px;
+  line-height: 1;
+  color: var(--cs-color-icon-light);
+}
+
+cs-space-switcher .customer-service > .customer-service-icon {
+  width: 26px;
+  height: 26px;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+cs-space-switcher .notify-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--cs-color-notification-dot);
+}

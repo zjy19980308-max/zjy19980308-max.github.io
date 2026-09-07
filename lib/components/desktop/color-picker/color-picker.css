@@ -1,0 +1,211 @@
+/*
+ * 颜色选择 (ColorPicker)
+ * 标签：<cs-color-picker>
+ *
+ * 作用：点击触发器（色块）后弹出颜色面板，从预设色板/历史色中选择颜色。
+ * 对标 ng-zorro ColorPicker。由 color-picker.js 接管 toggle。
+ *
+ * data 属性：
+ *   data-size="sm" / "md"(默认) / "lg"
+ *   data-shape="square"(默认) / "circle"
+ *   data-placement="bottom-left"(默认) / "bottom-right" / "top-left" / "top-right"
+ *   data-open      — 展开态
+ *   data-disabled
+ *
+ * 子元素：
+ *   .cp-trigger          — 触发器（色块按钮）
+ *   .cp-trigger-swatch   — 当前色块
+ *   .cp-trigger-label    — 当前色 hex 文字
+ *   .cp-panel            — 弹出面板
+ *   .cp-panel-section    — 面板分区
+ *   .cp-panel-title      — 分区标题
+ *   .cp-swatch-grid      — 色块网格
+ *   .cp-swatch           — 单个色块
+ */
+
+cs-color-picker {
+  position: relative;
+  display: inline-block;
+}
+
+/* ========== 触发器 ========== */
+cs-color-picker .cp-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  height: var(--cs-sem-size-interactive-sm);
+  padding: var(--space-2xs) var(--space-xs);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-bg);
+  color: var(--cs-color-text);
+  font: var(--typo-cn-12-regular);
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+cs-color-picker[data-size="sm"] .cp-trigger {
+  height: var(--cs-sem-size-interactive-xs);
+  padding: var(--space-2xs);
+}
+
+cs-color-picker[data-size="lg"] .cp-trigger {
+  height: var(--cs-sem-size-interactive-md);
+  padding: var(--space-2xs) var(--space-sm);
+}
+
+cs-color-picker .cp-trigger:hover,
+cs-color-picker[data-open] .cp-trigger {
+  border-color: var(--cs-color-primary);
+}
+
+cs-color-picker[data-disabled] .cp-trigger {
+  background: var(--cs-color-bg-disabled);
+  cursor: not-allowed;
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* 触发器内的色块 */
+cs-color-picker .cp-trigger-swatch {
+  display: inline-block;
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  border-radius: var(--radius);
+  border: var(--line-width) solid var(--cs-color-border);
+  flex-shrink: 0;
+}
+
+cs-color-picker[data-shape="circle"] .cp-trigger-swatch {
+  border-radius: 999px;
+}
+
+cs-color-picker .cp-trigger-label {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text);
+  text-transform: uppercase;
+}
+
+/* ========== 面板 ========== */
+cs-color-picker .cp-panel {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  width: calc(var(--spacing-160) * 1.4);
+  padding: var(--space-sm);
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--cs-shadow-card);
+  box-sizing: border-box;
+}
+
+cs-color-picker[data-open] .cp-panel {
+  display: block;
+}
+
+cs-color-picker .cp-panel,
+cs-color-picker[data-placement="bottom-left"] .cp-panel {
+  top: calc(100% + var(--space-2xs));
+  left: 0;
+}
+
+cs-color-picker[data-placement="bottom-right"] .cp-panel {
+  top: calc(100% + var(--space-2xs));
+  right: 0;
+  left: auto;
+}
+
+cs-color-picker[data-placement="top-left"] .cp-panel {
+  bottom: calc(100% + var(--space-2xs));
+  left: 0;
+  top: auto;
+}
+
+cs-color-picker[data-placement="top-right"] .cp-panel {
+  bottom: calc(100% + var(--space-2xs));
+  right: 0;
+  left: auto;
+  top: auto;
+}
+
+/* ========== 面板分区 ========== */
+cs-color-picker .cp-panel-section + .cp-panel-section {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: var(--line-width) solid var(--cs-color-border);
+}
+
+cs-color-picker .cp-panel-title {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 色块网格 ========== */
+cs-color-picker .cp-swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: var(--space-2xs);
+}
+
+cs-color-picker .cp-swatch {
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  border-radius: var(--radius);
+  border: var(--line-width) solid var(--cs-color-border);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  transition: transform 0.15s ease;
+}
+
+cs-color-picker[data-shape="circle"] .cp-swatch {
+  border-radius: 999px;
+}
+
+cs-color-picker .cp-swatch:hover {
+  transform: scale(1.15);
+}
+
+cs-color-picker .cp-swatch[data-active]::after {
+  content: "\e784";
+  font-family: "cses-icons";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cs-color-white);
+  font-size: var(--font-size-xs);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ========== Hex 输入区 ========== */
+cs-color-picker .cp-hex-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+cs-color-picker .cp-hex-input {
+  flex: 1;
+  height: var(--cs-sem-size-interactive-xs);
+  padding: 0 var(--space-xs);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-bg);
+  color: var(--cs-color-text);
+  font: var(--typo-cn-12-regular);
+  outline: none;
+  text-transform: uppercase;
+  box-sizing: border-box;
+}
+
+cs-color-picker .cp-hex-input:focus {
+  border-color: var(--cs-color-primary);
+}

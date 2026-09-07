@@ -1,0 +1,38 @@
+/* ═══════════════════════════════════════════════════════════════
+   metaballs.css —— 「未完待续」块
+   一块有边的区域，画布铺满它；光标只有进了这块才会被融球跟着走。
+   ═══════════════════════════════════════════════════════════════ */
+.mb-wrap{
+  position:relative;
+  height:clamp(300px,36vw,460px);
+  margin-top:var(--sp-sub);
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  background:
+    radial-gradient(90% 70% at 50% 60%,rgba(255,255,255,.035),transparent 70%);
+  touch-action:pan-y;
+}
+.metaballs-canvas{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  display:block; z-index:0;
+  pointer-events:none;
+}
+.mb-cap{
+  position:absolute; left:26px; bottom:22px; z-index:1;
+  display:flex; align-items:baseline; gap:14px;
+  pointer-events:none;
+}
+.mb-cap b{
+  font-family:var(--font-display);
+  font-weight:400;
+  font-size:clamp(18px,2.2vw,26px);
+  letter-spacing:.01em;
+  color:var(--fg);
+}
+.mb-cap span{
+  font-family:var(--font-mono,ui-monospace,SFMono-Regular,Menlo,monospace);
+  font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--fg-4);
+}

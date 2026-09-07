@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-input-number 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="input-number.css?v=c0191ed1">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 96px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 基础 ========== -->
+<div class="section">
+  <div class="section-title">基础用法 Basic</div>
+  <div class="section-subtitle">输入框可键盘输入；上/下按钮为视觉，业务 JS 自行挂 stepUp/stepDown</div>
+  <div class="row">
+    <span class="row-label">常态</span>
+    <cs-input-number>
+      <input class="input-number-field" type="number" value="10" min="0" max="100">
+      <div class="input-number-controls">
+        <button class="input-number-up" type="button"><i class="cses-paixushang"></i></button>
+        <button class="input-number-down" type="button"><i class="cses-paixuxia"></i></button>
+      </div>
+    </cs-input-number>
+    <span class="row-label">空值</span>
+    <cs-input-number>
+      <input class="input-number-field" type="number" placeholder="请输入">
+      <div class="input-number-controls">
+        <button class="input-number-up" type="button"><i class="cses-paixushang"></i></button>
+        <button class="input-number-down" type="button"><i class="cses-paixuxia"></i></button>
+      </div>
+    </cs-input-number>
+  </div>
+</div>
+
+<!-- ========== 2. 尺寸 ========== -->
+<div class="section">
+  <div class="section-title">尺寸 Sizes</div>
+  <div class="row">
+    <span class="row-label">sm 24</span>
+    <cs-input-number data-size="sm">
+      <input class="input-number-field" type="number" value="1">
+      <div class="input-number-controls">
+        <button class="input-number-up" type="button"><i class="cses-paixushang"></i></button>
+        <button class="input-number-down" type="button"><i class="cses-paixuxia"></i></button>
+      </div>
+    </cs-input-number>
+    <span class="row-label">md 32</span>
+    <cs-input-number>
+      <input class="input-number-field" type="number" value="1">
+      <div class="input-number-controls">
+        <button class="input-number-up" type="button"><i class="cses-paixushang"></i></button>
+        <button class="input-number-down" type="button"><i class="cses-paixuxia"></i></button>
+      </div>
+    </cs-input-number>
+    <span class="row-label">lg 40</span>
+    <cs-input-number data-size="lg">
+      <input class="input-number-field" type="number" value="1">
+      <div class="input-number-controls">
+        <button class="input-number-up" type="button"><i class="cses-paixushang"></i></button>
+        <button class="input-number-down" type="button"><i class="cses-paixuxia"></i></button>
+      </div>
+    </cs-input-number>
+  </div>
+</div>
+
+<!-- ========== 3. 状态 ========== -->
+<div class="section">
+  <div class="section-title">状态 States</div>
+  <div class="section-subtitle">data-focus / data-error / data-disabled</div>
+  <div class="row">
+    <span class="row-label">聚焦</span>
+    <cs-input-number data-focus>
+      <input class="input-number-field" type="number" value="42">
+      <div class="input-number-controls">
+        <button class="input-number-up" type="button"><i class="cses-paixushang"></i></button>
+        <button class="input-number-down" type="button"><i class="cses-paixuxia"></i></button>
+      </div>
+    </cs-input-number>
+  </div>
+  <div class="row">
+    <span class="row-label">错误</span>
+    <cs-input-number data-error>
+      <input class="input-number-field" type="number" value="-1">
+      <div class="input-number-controls">
+        <button class="input-number-up" type="button"><i class="cses-paixushang"></i></button>
+        <button class="input-number-down" type="button"><i class="cses-paixuxia"></i></button>
+      </div>
+    </cs-input-number>
+  </div>
+  <div class="row">
+    <span class="row-label">禁用</span>
+    <cs-input-number data-disabled>
+      <input class="input-number-field" type="number" value="0" disabled>
+      <div class="input-number-controls">
+        <button class="input-number-up" type="button" disabled><i class="cses-paixushang"></i></button>
+        <button class="input-number-down" type="button" disabled><i class="cses-paixuxia"></i></button>
+      </div>
+    </cs-input-number>
+  </div>
+</div>
+
+</body>
+</html>

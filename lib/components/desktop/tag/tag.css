@@ -1,0 +1,165 @@
+/*
+ * 标签组件 (Tag)
+ * 标签：<cs-tag>
+ *
+ * data 属性：
+ *   data-variant="text"       — 纯文字变体（无背景/边框/内边距），用于优先级标签
+ *   （默认 filled）           — 填充变体（有背景/内边距/圆角），用于状态标签
+ *   data-color="default"      — 默认灰色（默认）
+ *   data-color="primary"      — 主色蓝
+ *   data-color="success"      — 成功绿
+ *   data-color="warning"      — 警告橙
+ *   data-color="danger"       — 危险红
+ *   data-color="info"         — 信息蓝
+ *   data-size="sm"            — 小尺寸 18px
+ *   data-size="md"            — 中尺寸 22px（默认）
+ *   data-closable             — 显示关闭按钮
+ */
+
+/* ========== 基础样式（filled 默认） ========== */
+cs-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  height: var(--line-height-md);
+  padding: 0 var(--space-xs);
+  border-radius: var(--radius);
+  font: var(--typo-cn-12-regular);
+  white-space: nowrap;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+/* ========== text 变体：纯文字，无背景/边框/内边距 ========== */
+cs-tag[data-variant="text"] {
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+
+/* ========== 尺寸变体 ========== */
+cs-tag[data-size="sm"] {
+  height: var(--spacing-18);
+  padding: 0 var(--spacing-6);
+  font-size: var(--font-size-xs);
+}
+
+cs-tag[data-variant="text"][data-size="sm"] {
+  height: auto;
+  padding: 0;
+}
+
+/* ========== 颜色变体：default（filled） ========== */
+cs-tag,
+cs-tag[data-color="default"] {
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 颜色变体：primary（filled） ========== */
+cs-tag[data-color="primary"] {
+  background: var(--cs-color-primary-a2);
+  color: var(--cs-color-primary);
+}
+
+/* ========== 颜色变体：success（filled） ========== */
+cs-tag[data-color="success"] {
+  background: var(--cs-sem-bg-success);
+  color: var(--cs-sem-text-success);
+}
+
+/* ========== 颜色变体：warning（filled） ========== */
+cs-tag[data-color="warning"] {
+  background: var(--cs-sem-bg-warning);
+  color: var(--cs-sem-text-warning);
+}
+
+/* ========== 颜色变体：danger（filled） ========== */
+cs-tag[data-color="danger"] {
+  background: var(--cs-sem-bg-error);
+  color: var(--cs-color-error);
+}
+
+/* ========== 颜色变体：info（filled） ========== */
+cs-tag[data-color="info"] {
+  background: var(--cs-sem-status-info-light);
+  color: var(--cs-sem-status-info);
+}
+
+/* ========== text 变体颜色覆盖：去掉背景 ========== */
+cs-tag[data-variant="text"],
+cs-tag[data-variant="text"][data-color="default"] {
+  background: none;
+  color: var(--cs-color-text-light2);
+}
+
+cs-tag[data-variant="text"][data-color="primary"] {
+  background: none;
+  color: var(--cs-color-primary);
+}
+
+cs-tag[data-variant="text"][data-color="success"] {
+  background: none;
+  color: var(--cs-sem-text-success);
+}
+
+cs-tag[data-variant="text"][data-color="warning"] {
+  background: none;
+  color: var(--cs-sem-text-warning);
+}
+
+cs-tag[data-variant="text"][data-color="danger"] {
+  background: none;
+  color: var(--cs-color-error);
+}
+
+cs-tag[data-variant="text"][data-color="info"] {
+  background: none;
+  color: var(--cs-sem-status-info);
+}
+
+/* ========== 关闭按钮 ========== */
+cs-tag .tag-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-icon-sm);
+  height: var(--cs-sem-size-icon-sm);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  opacity: var(--cs-sem-opacity-hover);
+  border-radius: var(--radius-2);
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+cs-tag .tag-close:hover {
+  opacity: var(--opacity-100);
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* 各颜色变体关闭按钮悬浮背景 */
+cs-tag[data-color="primary"] .tag-close:hover {
+  background: var(--cs-color-primary-a2);
+}
+
+cs-tag[data-color="success"] .tag-close:hover {
+  background: var(--cs-sem-bg-success);
+}
+
+cs-tag[data-color="warning"] .tag-close:hover {
+  background: var(--cs-sem-bg-warning);
+}
+
+cs-tag[data-color="danger"] .tag-close:hover {
+  background: var(--cs-sem-bg-error);
+}
+
+cs-tag[data-color="info"] .tag-close:hover {
+  background: var(--cs-sem-status-info-light);
+}
+
+/* ========== pill 圆角变体（可选） ========== */
+cs-tag[data-shape="round"] {
+  border-radius: var(--radius-pill);
+}

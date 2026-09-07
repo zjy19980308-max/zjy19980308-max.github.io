@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-card 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="card.css?v=b7e94d88">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-title">默认卡片 Default</div>
+  <div class="section-subtitle">带边框，无阴影</div>
+  <div class="grid">
+    <cs-card>
+      <div class="card-header">
+        <span class="card-title">项目概览</span>
+        <span class="card-extra"><i class="cses-xiala"></i></span>
+      </div>
+      <div class="card-body">这里是卡片的主体内容，可以承载任意元素：文字、图片、列表、表格等。</div>
+    </cs-card>
+    <cs-card>
+      <div class="card-header">
+        <span class="card-title">本周数据</span>
+        <a class="card-extra">查看全部</a>
+      </div>
+      <div class="card-body">完成任务 18 项，新增成员 3 人，文档更新 24 次。</div>
+    </cs-card>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">阴影 / 悬浮 Variants</div>
+  <div class="section-subtitle">data-variant="elevated" / data-hoverable</div>
+  <div class="grid">
+    <cs-card data-variant="elevated">
+      <div class="card-header"><span class="card-title">阴影卡片</span></div>
+      <div class="card-body">data-variant="elevated"，使用 cs-shadow-card 阴影。</div>
+    </cs-card>
+    <cs-card data-hoverable>
+      <div class="card-header"><span class="card-title">可悬浮</span></div>
+      <div class="card-body">data-hoverable，鼠标 hover 时边框变主色 + 加阴影。</div>
+    </cs-card>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">完整结构 Header + Body + Actions</div>
+  <div class="section-subtitle">含头部 + 操作区</div>
+  <cs-card style="max-width: 480px;">
+    <div class="card-header">
+      <span class="card-title">设计周会纪要</span>
+      <span class="card-extra"><i class="cses-xiala"></i></span>
+    </div>
+    <div class="card-body">本周完成组件库 v2 的 30 个原子组件迁移；下周计划完成数据展示类组件的预览页统一。</div>
+    <div class="card-actions">
+      <button class="card-action" type="button"><i class="cses-edit"></i>编辑</button>
+      <button class="card-action" type="button"><i class="cses-fuzhi"></i>复制</button>
+      <button class="card-action" type="button"><i class="cses-shanchu"></i>删除</button>
+    </div>
+  </cs-card>
+</div>
+
+<div class="section">
+  <div class="section-title">尺寸 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg"</div>
+  <div class="grid">
+    <cs-card data-size="sm">
+      <div class="card-header"><span class="card-title">sm 紧凑</span></div>
+      <div class="card-body">12px padding</div>
+    </cs-card>
+    <cs-card data-size="lg">
+      <div class="card-header"><span class="card-title">lg 宽松</span></div>
+      <div class="card-body">24px padding</div>
+    </cs-card>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">无边框幽灵 Ghost</div>
+  <div class="section-subtitle">data-variant="ghost" — 透明背景，无边框</div>
+  <cs-card data-variant="ghost" style="max-width: 320px;">
+    <div class="card-body">用作无装饰的内容容器</div>
+  </cs-card>
+</div>
+
+</body>
+</html>

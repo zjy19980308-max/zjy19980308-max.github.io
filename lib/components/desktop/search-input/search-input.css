@@ -1,0 +1,124 @@
+/*
+ * 搜索输入框组件 (Search Input)
+ * 标签：<cs-search-input>
+ * 数据来源：CSES新组件库 Figma 搜索框设计规范
+ *
+ * data 属性：
+ *   data-variant="white"   — 白色背景（默认）
+ *   data-variant="gray"    — 灰色背景，边框透明
+ *   data-size="sm"         — 小尺寸 28px
+ *   data-size="md"         — 中尺寸 32px（默认）
+ *   data-size="lg"         — 大尺寸 36px
+ *   data-error              — 错误态
+ *   data-has-value           — 有值时显示清除按钮
+ */
+
+/* ========== 基础样式（默认白色变体） ========== */
+cs-search-input {
+  display: inline-flex;
+  align-items: center;
+  height: var(--cs-sem-size-interactive-sm);
+  padding: var(--spacing-6) var(--space-sm);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-white);
+  box-sizing: border-box;
+  cursor: text;
+  transition: border-color 0.2s ease;
+}
+
+/* ========== 变体：灰色背景 ========== */
+cs-search-input[data-variant="gray"] {
+  background: var(--cs-color-bg-light);
+  border-color: transparent;
+}
+
+/* ========== 搜索图标 ========== */
+cs-search-input .search-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: var(--cs-sem-size-icon-sm);
+  color: var(--cs-color-text-light2);
+  line-height: 1;
+  margin-right: var(--space-xs);
+}
+
+/* ========== 输入框本体 ========== */
+cs-search-input .search-field {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  line-height: 1;
+}
+
+cs-search-input .search-field::placeholder {
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 清除按钮 ========== */
+cs-search-input .search-clear {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 10px;
+  color: var(--cs-color-text-light2);
+  line-height: 1;
+  margin-left: var(--space-xs);
+  cursor: pointer;
+}
+
+cs-search-input .search-clear:hover {
+  color: var(--cs-color-text);
+}
+
+/* 有值时显示清除按钮 */
+cs-search-input[data-has-value] .search-clear {
+  display: inline-flex;
+}
+
+/* ========== 聚焦态 ========== */
+cs-search-input:focus-within {
+  border-color: var(--cs-color-primary);
+}
+
+/* ========== 灰色变体聚焦态 ========== */
+cs-search-input[data-variant="gray"]:focus-within {
+  border-color: var(--cs-color-primary);
+}
+
+/* ========== 错误态 ========== */
+cs-search-input[data-error] {
+  border-color: var(--cs-color-error);
+}
+
+cs-search-input[data-error]:focus-within {
+  border-color: var(--cs-color-error);
+}
+
+/* ========== 尺寸 ========== */
+cs-search-input[data-size="sm"] {
+  height: var(--cs-sem-size-interactive-xs);
+  padding: var(--spacing-6) var(--space-xs);
+}
+
+cs-search-input[data-size="sm"] .search-field {
+  font: var(--typo-cn-12-regular);
+}
+
+cs-search-input[data-size="lg"] {
+  height: var(--cs-sem-size-interactive-md);
+  padding: var(--space-xs) var(--space-md);
+}
+
+cs-search-input[data-size="lg"] .search-field {
+  font: var(--typo-cn-14-regular);
+}

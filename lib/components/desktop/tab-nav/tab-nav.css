@@ -1,0 +1,67 @@
+/*
+ * 标签页导航组件 (Tab Nav)
+ * 标签：<cs-tab-nav>
+ * 数据来源：消息设计稿、文档库设计稿（下划线式标签导航）
+ *
+ * data 属性：
+ *   .tab-item 上：
+ *     data-active — 激活态
+ */
+
+/* ========== 容器 ========== */
+cs-tab-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  box-sizing: border-box;
+}
+
+/* ========== 标签项 ========== */
+cs-tab-nav .tab-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3xs);
+  padding: var(--space-xs) var(--space-md);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light2);
+  cursor: pointer;
+  border-bottom: var(--spacing-2) solid transparent;
+  margin-bottom: calc(-1 * var(--line-width));
+  box-sizing: border-box;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ========== 悬停态 ========== */
+cs-tab-nav .tab-item:hover {
+  color: var(--cs-color-text);
+}
+
+/* ========== 激活态 ========== */
+cs-tab-nav .tab-item[data-active] {
+  color: var(--cs-color-primary);
+  font-weight: var(--font-weight-medium);
+  border-bottom-color: var(--cs-color-primary);
+}
+
+/* ========== 徽标计数 ========== */
+cs-tab-nav .tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--space-md);
+  height: var(--space-md);
+  padding: 0 var(--space-3xs);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  background: var(--cs-color-fill-light);
+  border-radius: var(--radius-full);
+  box-sizing: border-box;
+}
+
+cs-tab-nav .tab-item[data-active] .tab-badge {
+  color: var(--cs-color-primary);
+  background: var(--cs-color-primary-a2);
+}

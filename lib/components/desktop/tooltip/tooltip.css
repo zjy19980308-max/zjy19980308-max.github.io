@@ -1,0 +1,157 @@
+/*
+ * 文字提示 (Tooltip)
+ * 标签：<cs-tooltip>
+ *
+ * 作用：鼠标悬浮在触发元素上时显示轻量的文字提示，不承载交互。
+ * 对标 ng-zorro Tooltip；纯 CSS 实现，使用 :hover + opacity 过渡。
+ *
+ * data 属性：
+ *   data-placement="top"(默认) / "bottom" / "left" / "right"
+ *   data-color="default"(默认) / "primary" / "success" / "warning" / "danger"
+ *
+ * 子元素：
+ *   .tooltip-trigger   — 触发元素（任意可聚焦元素或普通元素）
+ *   .tooltip-content   — 弹出气泡内容
+ */
+
+/* ========== 容器（定位锚点） ========== */
+cs-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ========== 触发元素 ========== */
+cs-tooltip .tooltip-trigger {
+  display: inline-flex;
+  align-items: center;
+  cursor: default;
+}
+
+/* ========== 气泡 ========== */
+cs-tooltip .tooltip-content {
+  position: absolute;
+  z-index: 1050;
+  max-width: calc(var(--spacing-160) * 2);
+  padding: var(--space-2xs) var(--space-xs);
+  background: var(--cs-color-text);
+  color: var(--cs-color-white);
+  font: var(--typo-cn-12-regular);
+  border-radius: var(--radius);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: var(--cs-shadow-card);
+}
+
+cs-tooltip:hover .tooltip-content,
+cs-tooltip:focus-within .tooltip-content {
+  opacity: 1;
+}
+
+/* ========== 箭头 ========== */
+cs-tooltip .tooltip-content::after {
+  content: "";
+  position: absolute;
+  width: var(--space-xs);
+  height: var(--space-xs);
+  background: var(--cs-color-text);
+  transform: rotate(45deg);
+}
+
+/* ========== 弹出位置 ========== */
+/* top（默认） */
+cs-tooltip .tooltip-content,
+cs-tooltip[data-placement="top"] .tooltip-content {
+  bottom: calc(100% + var(--space-xs));
+  left: 50%;
+  transform: translateX(-50%) translateY(var(--space-2xs));
+}
+
+cs-tooltip:hover .tooltip-content,
+cs-tooltip[data-placement="top"]:hover .tooltip-content {
+  transform: translateX(-50%) translateY(0);
+}
+
+cs-tooltip .tooltip-content::after,
+cs-tooltip[data-placement="top"] .tooltip-content::after {
+  bottom: calc(var(--space-2xs) * -1);
+  left: 50%;
+  margin-left: calc(var(--space-2xs) * -1);
+}
+
+/* bottom */
+cs-tooltip[data-placement="bottom"] .tooltip-content {
+  top: calc(100% + var(--space-xs));
+  left: 50%;
+  bottom: auto;
+  transform: translateX(-50%) translateY(calc(var(--space-2xs) * -1));
+}
+cs-tooltip[data-placement="bottom"]:hover .tooltip-content {
+  transform: translateX(-50%) translateY(0);
+}
+cs-tooltip[data-placement="bottom"] .tooltip-content::after {
+  top: calc(var(--space-2xs) * -1);
+  bottom: auto;
+  left: 50%;
+  margin-left: calc(var(--space-2xs) * -1);
+}
+
+/* left */
+cs-tooltip[data-placement="left"] .tooltip-content {
+  right: calc(100% + var(--space-xs));
+  top: 50%;
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%) translateX(var(--space-2xs));
+}
+cs-tooltip[data-placement="left"]:hover .tooltip-content {
+  transform: translateY(-50%) translateX(0);
+}
+cs-tooltip[data-placement="left"] .tooltip-content::after {
+  right: calc(var(--space-2xs) * -1);
+  top: 50%;
+  left: auto;
+  bottom: auto;
+  margin-top: calc(var(--space-2xs) * -1);
+}
+
+/* right */
+cs-tooltip[data-placement="right"] .tooltip-content {
+  left: calc(100% + var(--space-xs));
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%) translateX(calc(var(--space-2xs) * -1));
+}
+cs-tooltip[data-placement="right"]:hover .tooltip-content {
+  transform: translateY(-50%) translateX(0);
+}
+cs-tooltip[data-placement="right"] .tooltip-content::after {
+  left: calc(var(--space-2xs) * -1);
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  margin-top: calc(var(--space-2xs) * -1);
+}
+
+/* ========== 语义色变体 ========== */
+cs-tooltip[data-color="primary"] .tooltip-content,
+cs-tooltip[data-color="primary"] .tooltip-content::after {
+  background: var(--cs-color-primary);
+}
+
+cs-tooltip[data-color="success"] .tooltip-content,
+cs-tooltip[data-color="success"] .tooltip-content::after {
+  background: var(--color-green-500);
+}
+
+cs-tooltip[data-color="warning"] .tooltip-content,
+cs-tooltip[data-color="warning"] .tooltip-content::after {
+  background: var(--color-orange-500);
+}
+
+cs-tooltip[data-color="danger"] .tooltip-content,
+cs-tooltip[data-color="danger"] .tooltip-content::after {
+  background: var(--cs-sem-text-error);
+}

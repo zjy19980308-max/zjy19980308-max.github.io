@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<title>组件库 · 张竞元</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/fonts.css?v=d0647496">
+<link rel="stylesheet" href="assets/system.css?v=39eba33c">
+<link rel="stylesheet" href="assets/raw-light.css?v=1102f794">
+<style>
+  html,body{height:100%}
+  body{margin:0;overflow:hidden;display:flex;flex-direction:column}
+  .top{flex:none;background:rgba(255,255,255,.92);border-bottom:1px solid var(--line);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  .top-in{padding:14px clamp(14px,2.5vw,28px);display:flex;align-items:center;
+    justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .back{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:11.5px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--fg-2);border:1px solid var(--line-2);
+    padding:8px 15px;border-radius:6px;transition:background .3s,color .3s,border-color .3s}
+  .back:hover{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+  .ttl{font-family:var(--font-display);font-weight:600;font-size:16px}
+  .ttl span{color:var(--fg-3);font-weight:400;margin-left:10px;font-family:var(--font-mono);
+    font-size:11px;letter-spacing:.14em}
+  .cnt{font-family:var(--font-mono);font-size:11px;color:var(--fg-4);letter-spacing:.1em}
+
+  .body{flex:1;display:grid;grid-template-columns:236px minmax(0,1fr);min-height:0}
+  .rail{border-right:1px solid var(--line);overflow-y:auto;background:var(--bg);padding-bottom:30px}
+  .rail::-webkit-scrollbar{width:7px}
+  .rail::-webkit-scrollbar-thumb{background:var(--chrome);border-radius:4px}
+  .srch{position:sticky;top:0;z-index:2;background:var(--bg);padding:12px 14px 10px;
+    border-bottom:1px solid var(--line)}
+  .srch input{width:100%;background:var(--surface);border:1px solid var(--line-2);border-radius:6px;
+    padding:8px 11px;color:var(--fg);font-family:var(--font-mono);font-size:12px;outline:none}
+  .srch input:focus{border-color:var(--violet)}
+  .rg{padding:12px 0 4px}
+  .rg-h{padding:0 15px 8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--fg-4);display:flex;justify-content:space-between}
+  .ci{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;
+    padding:8px 15px;background:none;border:0;text-align:left;cursor:pointer;
+    font-family:var(--font-mono);font-size:12.5px;color:var(--fg-2);
+    border-left:2px solid transparent;transition:background .2s,color .2s,border-color .2s}
+  .ci:hover{background:var(--surface);color:var(--fg)}
+  .ci.on{background:var(--surface-2);color:var(--fg);border-left-color:var(--violet)}
+  .ci i{font-style:normal;font-size:9.5px;color:var(--fg-4);letter-spacing:.06em}
+#mn .zh{margin-right:12px}
+#mn .en{font-family:var(--fm,ui-monospace,monospace);font-size:.62em;font-weight:400;
+        color:var(--fg-4);letter-spacing:.02em;vertical-align:middle}
+.ci b{font-weight:500;font-size:13px;letter-spacing:.01em}
+.ci em{font-style:normal;font-family:var(--fm,ui-monospace,monospace);font-size:10.5px;
+       color:var(--fg-4);letter-spacing:.02em;margin-left:auto;padding-left:10px;
+       white-space:nowrap;transition:color .25s}
+.ci:hover em,.ci.on em{color:var(--fg-3)}
+
+  .stage{display:flex;flex-direction:column;min-width:0;min-height:0}
+  .meta{flex:none;padding:16px clamp(16px,2.4vw,30px);border-bottom:1px solid var(--line);background:var(--bg)}
+  .meta h2{font-family:var(--font-mono);font-size:16px;font-weight:500;margin:0;color:var(--fg)}
+  .meta p{color:var(--fg-2);font-size:13px;line-height:1.75;margin:8px 0 0;max-width:80ch}
+  .meta .files{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+  .meta .files span{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--fg-3);border:1px solid var(--line);
+    padding:3px 8px;border-radius:4px}
+  .frame{flex:1;min-height:0;background:#f5f5f5;position:relative}
+  .frame iframe{width:100%;height:100%;border:0;display:block}
+  .frame .none{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg);
+    color:var(--fg-4);font-family:var(--font-mono);font-size:12px;letter-spacing:.1em}
+  /* display:grid 会压过 [hidden] 的浏览器默认 display:none，必须显式写回 */
+  .frame .none[hidden]{display:none}
+  @media(max-width:820px){
+    body{overflow:auto}
+    .body{grid-template-columns:1fr}
+    .rail{border-right:0;border-bottom:1px solid var(--line);max-height:240px}
+    .frame{height:70vh}
+  }
+</style>
+</head>
+<body>
+
+<div class="top"><div class="top-in">
+  <a class="back" href="index.html">← 返回作品集</a>
+  <div class="ttl">组件库<span>RAW MATERIAL · 02</span></div>
+  <div class="cnt">49 个组件 · 46 个可预览</div>
+</div></div>
+
+<div class="body">
+  <nav class="rail">
+    <div class="srch"><input id="q" type="search" placeholder="搜索组件 · 中文或类名…" autocomplete="off"></div>
+    <div class="rg"><div class="rg-h">基础<span>5</span></div><button class="ci" data-c="button" data-zh="按钮" data-has="1"><b>按钮</b><em>button</em></button><button class="ci" data-c="link" data-zh="链接" data-has="1"><b>链接</b><em>link</em></button><button class="ci" data-c="typography" data-zh="排版" data-has="1"><b>排版</b><em>typography</em></button><button class="ci" data-c="divider" data-zh="分割线" data-has="1"><b>分割线</b><em>divider</em></button><button class="ci" data-c="card" data-zh="卡片" data-has="1"><b>卡片</b><em>card</em></button></div><div class="rg"><div class="rg-h">表单<span>13</span></div><button class="ci" data-c="input" data-zh="输入框" data-has="1"><b>输入框</b><em>input</em></button><button class="ci" data-c="input-number" data-zh="数字输入" data-has="1"><b>数字输入</b><em>input-number</em></button><button class="ci" data-c="textarea" data-zh="多行输入" data-has="1"><b>多行输入</b><em>textarea</em></button><button class="ci" data-c="select" data-zh="下拉选择" data-has="1"><b>下拉选择</b><em>select</em></button><button class="ci" data-c="checkbox" data-zh="复选框" data-has="1"><b>复选框</b><em>checkbox</em></button><button class="ci" data-c="radio" data-zh="单选框" data-has="1"><b>单选框</b><em>radio</em></button><button class="ci" data-c="switch" data-zh="开关" data-has="1"><b>开关</b><em>switch</em></button><button class="ci" data-c="slider" data-zh="滑动输入" data-has="1"><b>滑动输入</b><em>slider</em></button><button class="ci" data-c="date-picker" data-zh="日期选择" data-has="1"><b>日期选择</b><em>date-picker</em></button><button class="ci" data-c="time-picker" data-zh="时间选择" data-has="1"><b>时间选择</b><em>time-picker</em></button><button class="ci" data-c="color-picker" data-zh="颜色选择" data-has="1"><b>颜色选择</b><em>color-picker</em></button><button class="ci" data-c="form-field" data-zh="表单字段" data-has="1"><b>表单字段</b><em>form-field</em></button><button class="ci" data-c="segment-control" data-zh="segment-control" data-has="1"><b>segment-control</b><em>segment-control</em></button></div><div class="rg"><div class="rg-h">数据展示<span>13</span></div><button class="ci" data-c="table" data-zh="表格" data-has="1"><b>表格</b><em>table</em></button><button class="ci" data-c="list" data-zh="列表" data-has="1"><b>列表</b><em>list</em></button><button class="ci" data-c="descriptions" data-zh="描述列表" data-has="1"><b>描述列表</b><em>descriptions</em></button><button class="ci" data-c="statistic" data-zh="统计数值" data-has="1"><b>统计数值</b><em>statistic</em></button><button class="ci" data-c="tag" data-zh="标签" data-has="1"><b>标签</b><em>tag</em></button><button class="ci" data-c="badge" data-zh="徽标数" data-has="1"><b>徽标数</b><em>badge</em></button><button class="ci" data-c="avatar" data-zh="头像" data-has="1"><b>头像</b><em>avatar</em></button><button class="ci" data-c="progress" data-zh="进度条" data-has="1"><b>进度条</b><em>progress</em></button><button class="ci" data-c="chart" data-zh="chart" data-has="0"><b>chart</b><em>chart</em><i>无预览</i></button><button class="ci" data-c="empty" data-zh="空状态" data-has="1"><b>空状态</b><em>empty</em></button><button class="ci" data-c="skeleton" data-zh="骨架屏" data-has="1"><b>骨架屏</b><em>skeleton</em></button><button class="ci" data-c="doc-block" data-zh="doc-block" data-has="1"><b>doc-block</b><em>doc-block</em></button><button class="ci" data-c="content-perm" data-zh="content-perm" data-has="0"><b>content-perm</b><em>content-perm</em><i>无预览</i></button></div><div class="rg"><div class="rg-h">导航<span>11</span></div><button class="ci" data-c="breadcrumb" data-zh="面包屑" data-has="1"><b>面包屑</b><em>breadcrumb</em></button><button class="ci" data-c="nav-item" data-zh="nav-item" data-has="1"><b>nav-item</b><em>nav-item</em></button><button class="ci" data-c="nav-group" data-zh="nav-group" data-has="1"><b>nav-group</b><em>nav-group</em></button><button class="ci" data-c="nav-tree" data-zh="nav-tree" data-has="1"><b>nav-tree</b><em>nav-tree</em></button><button class="ci" data-c="nav-space" data-zh="nav-space" data-has="1"><b>nav-space</b><em>nav-space</em></button><button class="ci" data-c="nav-action-btn" data-zh="nav-action-btn" data-has="1"><b>nav-action-btn</b><em>nav-action-btn</em></button><button class="ci" data-c="side-nav" data-zh="side-nav" data-has="1"><b>side-nav</b><em>side-nav</em></button><button class="ci" data-c="tab" data-zh="tab" data-has="1"><b>tab</b><em>tab</em></button><button class="ci" data-c="tab-nav" data-zh="标签导航" data-has="1"><b>标签导航</b><em>tab-nav</em></button><button class="ci" data-c="view-tabs" data-zh="view-tabs" data-has="1"><b>view-tabs</b><em>view-tabs</em></button><button class="ci" data-c="pagination" data-zh="pagination" data-has="1"><b>pagination</b><em>pagination</em></button></div><div class="rg"><div class="rg-h">反馈<span>6</span></div><button class="ci" data-c="alert" data-zh="警告提示" data-has="1"><b>警告提示</b><em>alert</em></button><button class="ci" data-c="modal" data-zh="modal" data-has="0"><b>modal</b><em>modal</em><i>无预览</i></button><button class="ci" data-c="drawer" data-zh="drawer" data-has="1"><b>drawer</b><em>drawer</em></button><button class="ci" data-c="popover" data-zh="气泡卡片" data-has="1"><b>气泡卡片</b><em>popover</em></button><button class="ci" data-c="tooltip" data-zh="文字提示" data-has="1"><b>文字提示</b><em>tooltip</em></button><button class="ci" data-c="spin" data-zh="加载中" data-has="1"><b>加载中</b><em>spin</em></button></div><div class="rg"><div class="rg-h">其他<span>1</span></div><button class="ci" data-c="dropdown" data-zh="下拉菜单" data-has="1"><b>下拉菜单</b><em>dropdown</em></button></div>
+  </nav>
+  <div class="stage">
+    <div class="meta"><h2 id="mn">—</h2><p id="md"></p><div class="files" id="mf"></div></div>
+    <div class="frame"><iframe id="fr" title="组件预览"></iframe><div class="none" id="nn" hidden>该组件暂无独立预览页</div></div>
+  </div>
+</div>
+
+<script>
+const META = {"alert": {"d": "页面内嵌的持久警告/提示条，承载需要持续展示的状态信息。与 message/notification 不同，alert 是页面布局的一部分，不会浮层、不会自动消失。对标 ng-zorro nz-alert。", "f": ["RULES.md", "alert.css", "alert.html"]}, "avatar": {"d": "头像组件，用于用户、群组的图像展示。", "f": ["RULES.md", "avatar.css", "avatar.html"]}, "badge": {"d": "通用徽标数组件，用于展示数字、状态点或独立的状态文字标签。对标 ng-zorro Badge / antd Badge。", "f": ["RULES.md", "badge.css", "badge.html"]}, "breadcrumb": {"d": "顶栏空间内导航面包屑，展示当前页面在层级中的位置。", "f": ["RULES.md", "breadcrumb.css", "breadcrumb.html"]}, "button": {"d": "通用按钮组件，支持三种变体、三种尺寸、图标和下拉。", "f": ["RULES.md", "button.css", "button.html"]}, "card": {"d": "通用卡片容器，承载任意结构化内容。对标 ng-zorro Card / antd Card。", "f": ["RULES.md", "card.css", "card.html"]}, "chart": {"d": "仪表盘等页面的图表工厂组件。把\"某类型 + 配置 → echarts option / HTML\"这段可复用逻辑收进组件，页面引用它，不在页里各写一份。", "f": ["RULES.md", "chart.css", "chart.js"]}, "checkbox": {"d": "复选框组件，用于多选场景，支持选中、半选、禁用状态及多种尺寸。", "f": ["RULES.md", "checkbox.css", "checkbox.html"]}, "color-picker": {"d": "颜色选择器组件。点击触发器（色块按钮）后弹出颜色面板，支持预设色板、中性色、Hex 输入。对标 ng-zorro ColorPicker。必须引入 color-picker.js。", "f": ["RULES.md", "color-picker.css", "color-picker.html", "color-picker.js"]}, "content-perm": {"d": "多维表格各页共享的「内容权限」弹窗（Figma 电子表格 2017:9239）。左角色栏 + 右 4 tab 权限（数据/仪表盘/自动化/其他功能），角色切换、数据源切换、tab、详细权限折叠展开全做实。", "f": ["RULES.md", "content-perm.css", "content-perm.js"]}, "date-picker": {"d": "日期选择器，点击触发器弹出日历面板选择单个日期。对标 ng-zorro DatePicker。由 date-picker.js 提供 toggle + 选中回填交互。", "f": ["RULES.md", "date-picker.css", "date-picker.html", "date-picker.js"]}, "descriptions": {"d": "成组展示「字段名 : 字段值」的详情信息（人员详情 / 企业信息 / 订单详情…）。对标 antd Descriptions。", "f": ["RULES.md", "descriptions.css", "descriptions.html"]}, "divider": {"d": "分割线组件，用于段落、菜单项、卡片之间的视觉分隔。支持横向/纵向、实线/虚线、带文字、语义颜色。对标 ng-zorro nz-divider。", "f": ["RULES.md", "divider.css", "divider.html"]}, "doc-block": {"d": "文档内容块组件 —— 卡片缩略与编辑器共用的一套 block 样式。每个 .dk- = 一类文档 block（标题/正文/列表/表格/代码/callout/标签/统计…）的真实呈现，缩略字号统一 8px 基线（文档内容缩小比例），放大即编辑", "f": ["RULES.md", "doc-block.css", "doc-block.html"]}, "drawer": {"d": "从屏幕边缘滑出的覆盖面板，承载详情/表单等次级内容。对标 antd Drawer。默认右滑，含", "f": ["RULES.md", "drawer.css", "drawer.html", "drawer.js"]}, "dropdown": {"d": "下拉菜单组件，承载操作命令、上下文菜单、更多操作入口。对标 ng-zorro Dropdown，真实可 toggle 交互（点击触发器开/关切换、点击外部关闭、ESC 关闭），由 dropdown.js（~60 行 vanilla JS，零", "f": ["RULES.md", "dropdown.css", "dropdown.html", "dropdown.js"]}, "empty": {"d": "空状态组件，用于内容为空时的占位提示。承载图标、描述、可选操作按钮。对标 ng-zorro nz-empty。", "f": ["RULES.md", "empty.css", "empty.html"]}, "form-field": {"d": "表单字段组件——标签 + 控件横向排列，底部下划线分隔。适用于表单详情页、任务编辑面板等场景。", "f": ["RULES.md", "form-field.css", "form-field.html"]}, "input-number": {"d": "带加减步进按钮的数字输入框。对标 ng-zorro InputNumber。纯 CSS 组件，步进按钮的 +/- 行为需业务代码接管。", "f": ["RULES.md", "input-number.css", "input-number.html"]}, "input": {"d": "通用输入框组件（纯输入框），支持三种尺寸、多种交互状态。搜索功能由分子组件 cs-search-input 负责。", "f": ["RULES.md", "input.css", "input.html"]}, "link": {"d": "文本链接组件，用于页面中的可点击文字链接。", "f": ["RULES.md", "link.css", "link.html"]}, "list": {"d": "通用列表容器，承载多行结构化数据。每行有行分隔，支持 hover 高亮。对标 ng-zorro List / antd List。", "f": ["RULES.md", "list.css", "list.html"]}, "modal": {"d": "", "f": ["modal.css", "modal.js"]}, "nav-action-btn": {"d": "导航栏内全宽操作按钮，用于新建任务/文档等主要操作入口。", "f": ["RULES.md", "nav-action-btn.css", "nav-action-btn.html"]}, "nav-group": {"d": "侧边栏可折叠导航分组组件，用于组织\"我的任务\"、\"空间\"等导航区块。", "f": ["RULES.md", "nav-group.css", "nav-group.html"]}, "nav-item": {"d": "二级侧边栏/导航栏中的导航条目，支持图标、文字和右侧计数。", "f": ["RULES.md", "nav-item.css", "nav-item.html"]}, "nav-space": {"d": "侧边栏工作空间导航项组件，带彩色圆形图标和空间名称。", "f": ["RULES.md", "nav-space.css", "nav-space.html"]}, "nav-tree": {"d": "树形导航容器组件，用于文档库侧边栏的空间/知识库树形结构。包裹 cs-tree-item 子项。", "f": ["RULES.md", "nav-tree.css", "nav-tree.html"]}, "pagination": {"d": "分页组件，用于列表数据的分页导航。", "f": ["RULES.md", "pagination.css", "pagination.html"]}, "popover": {"d": "气泡卡片组件，点击触发元素后弹出富内容气泡，承载说明、快捷操作、信息卡等。对标 ng-zorro Popover。必须引入 popover.js（单文件 vanilla JS，复用 dropdown 的 toggle 交互模型）。", "f": ["RULES.md", "popover.css", "popover.html", "popover.js"]}, "progress": {"d": "通用进度条组件，支持线形和环形两种形态。对标 ng-zorro Progress / antd Progress。纯 CSS 实现，无 JS。", "f": ["RULES.md", "progress.css", "progress.html"]}, "radio": {"d": "单选框组件，用于在一组选项中选择单个值。", "f": ["RULES.md", "radio.css", "radio.html"]}, "segment-control": {"d": "视图切换标签组件（文本标签式，非 iOS pill switcher），用于在 2-5 个互斥视图之间切换。", "f": ["RULES.md", "segment-control.css", "segment-control.html"]}, "select": {"d": "选择器组件，模拟原生 select 外观，支持尺寸、状态变体。", "f": ["RULES.md", "select.css", "select.html", "select.js"]}, "side-nav": {"d": "多维表格 / 多维表格的左侧二级导航栏（数据表 / 仪表盘 / 工作流 / 查询页 / 文件夹）。", "f": ["RULES.md", "side-nav.css", "side-nav.html"]}, "skeleton": {"d": "骨架屏组件，用占位形状代替真实内容，在数据加载前提供视觉锚定，减轻空白等待感。纯 CSS @keyframes 实现扫光动画。对标 ng-zorro nz-skeleton。", "f": ["RULES.md", "skeleton.css", "skeleton.html"]}, "slider": {"d": "滑动输入条，用于在连续区间中选一个值或一个范围。对标 ng-zorro Slider。纯 CSS 静态演示，拖拽逻辑不在组件库内实现。", "f": ["RULES.md", "slider.css", "slider.html", "slider.js"]}, "spin": {"d": "加载中转圈动画。纯 CSS 实现，无任何 JS。可独立展示，也可作为「区域 loading 遮罩」包裹其他内容。对标 ng-zorro nz-spin。", "f": ["RULES.md", "spin.css", "spin.html"]}, "statistic": {"d": "数值统计组件，用于在仪表盘、概览面板中突出展示单个统计数值。对标 ng-zorro Statistic / antd Statistic。", "f": ["RULES.md", "statistic.css", "statistic.html"]}, "switch": {"d": "开关切换组件，用于在两种状态间切换（开/关）。", "f": ["RULES.md", "switch.css", "switch.html"]}, "tab-nav": {"d": "下划线式标签页导航组件，用于消息、文档库等页面的内容切换。", "f": ["RULES.md", "tab-nav.css", "tab-nav.html"]}, "tab": {"d": "顶部 tabbar 中的标签页项，用于深色背景的客户端顶栏。", "f": ["RULES.md", "tab.css", "tab.html"]}, "table": {"d": "通用表格组件，承载网格化数据。原生 <table> 语义，纯 CSS 样式增强。对标 ng-zorro Table / antd Table。", "f": ["RULES.md", "table.css", "table.html", "table.js"]}, "tag": {"d": "小型标签/徽标组件，支持语义颜色、尺寸和可关闭功能。", "f": ["RULES.md", "tag.css", "tag.html"]}, "textarea": {"d": "多行文本输入组件，支持垂直调整高度、字数统计、错误态和禁用态。", "f": ["RULES.md", "textarea.css", "textarea.html"]}, "time-picker": {"d": "时间选择器，点击触发器弹出时/分/秒三列面板。对标 ng-zorro TimePicker。由 time-picker.js 提供 toggle + 三列独立选值。", "f": ["RULES.md", "time-picker.css", "time-picker.html", "time-picker.js"]}, "tooltip": {"d": "文字提示组件，鼠标悬浮触发器上时显示轻量气泡。对标 ng-zorro Tooltip。纯 CSS 实现（基于 :hover + opacity 过渡），无需 JS。", "f": ["RULES.md", "tooltip.css", "tooltip.html"]}, "typography": {"d": "排版组件，富文本/文档内容的统一样式容器。约束 h1-h6、段落、引用、行内代码、代码块、列表、链接、分割线的间距与字号，符合 design-principles.md 的标题层级 (14 → 16 → 18 → 20 → 24 → 32)", "f": ["RULES.md", "typography.css", "typography.html"]}, "view-tabs": {"d": "折页式视图切换标签栏。用于多维表格/多维表格顶部切换「表格 / 看板 / 甘特 / 日历 / 地图 / 表单 / 画册」等视图。", "f": ["RULES.md", "view-tabs.css", "view-tabs.html"]}};
+const btns = [...document.querySelectorAll('.ci')];
+const fr = document.getElementById('fr'), nn = document.getElementById('nn');
+
+function show(name){
+  const m = META[name]; if(!m) return;
+  btns.forEach(b => b.classList.toggle('on', b.dataset.c === name));
+  const zh = (btns.find(x => x.dataset.c === name) || {}).dataset;
+  document.getElementById('mn').innerHTML =
+    '<span class="zh">' + ((zh && zh.zh) || name) + '</span><span class="en">&lt;cs-' + name + '&gt;</span>';
+  document.getElementById('md').textContent = m.d || '—';
+  document.getElementById('mf').innerHTML = m.f.map(f => '<span>' + f + '</span>').join('');
+  const b = btns.find(x => x.dataset.c === name);
+  const has = b && b.dataset.has === '1';
+  nn.hidden = has;
+  fr.style.visibility = has ? 'visible' : 'hidden';
+  if (has) fr.src = 'lib/components/desktop/' + name + '/' + name + '.html';
+  history.replaceState(null, '', '#' + name);
+  if (b) b.scrollIntoView({block:'nearest'});
+}
+
+btns.forEach(b => b.addEventListener('click', () => show(b.dataset.c)));
+document.getElementById('q').addEventListener('input', e => {
+  const v = e.target.value.trim().toLowerCase();
+  btns.forEach(b => b.style.display =
+    (!v || b.dataset.c.includes(v) || (b.dataset.zh || '').includes(e.target.value.trim())) ? '' : 'none');
+  document.querySelectorAll('.rg').forEach(g => {
+    g.style.display = [...g.querySelectorAll('.ci')].some(b => b.style.display !== 'none') ? '' : 'none';
+  });
+});
+show(location.hash.slice(1) in META ? location.hash.slice(1) : 'button');
+</script>
+
+<script>
+/* 返回按来路走。原先写死 #p-flow，从哪进来都跳流水线。
+   记录由本稿在离开前写入 sessionStorage，这里只读不删 ——
+   本稿加载时还要用它还原滚动位置。 */
+(function(){
+  var a = document.querySelector('a[href^="\u4f5c\u54c1\u96c6\u672c\u7a3f"]');
+  if (!a) return;
+  try {
+    var r = JSON.parse(sessionStorage.getItem('zjy:return') || 'null');
+    if (r && r.tab) {
+      a.setAttribute('href', '\u4f5c\u54c1\u96c6\u672c\u7a3f.html#' + r.tab);
+      /* 返回文案也要跟着来路走 —— href 动了文字还写死，等于骗人 */
+      var LABEL = {about:'个人介绍','p-flow':'AI 设计流水线','p-nota':'NOTA · AI 原生会议','p-cses':'CSES 企业协作平台'};
+      if (LABEL[r.tab]) a.textContent = '\u2190 \u8fd4\u56de ' + LABEL[r.tab];
+    }
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>

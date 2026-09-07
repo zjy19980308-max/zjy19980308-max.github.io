@@ -1,0 +1,135 @@
+/* =============================================================================
+   CsChart 图表组件 · 非 echarts 类（词云/透视表/指标）的结构样式
+   颜色全走 var(--cs-color-*) token；配合 chart.js 使用。
+   宿主页把该组件的画布容器命名为 .chart-box（echarts 类）或加 .html-card（HTML 类）。
+   ============================================================================= */
+
+/* HTML 类容器（词云/透视表）：可滚，不裁切 */
+.html-card { width: 100%; height: 100%; overflow: auto; }
+
+/* 词云 */
+.wc-cloud { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 16px; height: 100%; padding: var(--space-sm) var(--space-xs); }
+.wc-cloud span { font-weight: 600; line-height: 1.1; white-space: nowrap; }
+
+/* 透视表 */
+.pv-wrap { width: 100%; }
+.pv-table { width: 100%; border-collapse: collapse; font-size: var(--font-size-13, 13px); font-family: var(--font-family-cn); }
+.pv-table th, .pv-table td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--cs-color-border-light, var(--cs-color-border)); }
+.pv-table th { color: var(--cs-color-text-light2); font-weight: var(--font-weight-medium, 500); background: var(--cs-color-fill-neutral, var(--cs-color-bg-hover)); }
+.pv-table td.num, .pv-table th.num { text-align: right; font-feature-settings: "tnum"; }
+.pv-table td { color: var(--cs-color-text); }
+.pv-table tr.tot td { font-weight: var(--font-weight-semibold, 600); color: var(--cs-color-text); border-top: 1px solid var(--cs-color-border); border-bottom: none; }
+
+/* 透视表 灰占位缩略图（预览用·无真实数字·展现十字交叉全貌） */
+.pv-thumb { width: 100%; height: 100%; display: flex; flex-direction: column; gap: 4px; padding: 8px 10px; box-sizing: border-box; }
+.pv-thumb .pt-row { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 5px; align-items: center; flex: 1; }
+.pv-thumb .pt-c, .pv-thumb .pt-rh { height: 7px; border-radius: 3px; background: var(--cs-color-bg-hover); display: block; }
+.pv-thumb .pt-rh { background: color-mix(in srgb, var(--cs-color-primary) 22%, var(--cs-color-white)); }          /* 行维度列·浅蓝 */
+.pv-thumb .pt-head .pt-c { background: color-mix(in srgb, var(--cs-color-primary) 34%, var(--cs-color-white)); } /* 列头行·蓝 */
+.pv-thumb .pt-head .pt-rh { background: color-mix(in srgb, var(--cs-color-primary) 44%, var(--cs-color-white)); }/* 左上角·深蓝 */
+.pv-thumb .pt-tot .pt-c, .pv-thumb .pt-tot .pt-rh { background: color-mix(in srgb, var(--cs-color-primary) 15%, var(--cs-color-white)); } /* 合计行·极浅 */
+
+/* =============================================================================
+   组件图标（.ci）· 单色 currentColor · div 拼非 svg · 对齐标杆下拉的干净观感
+   宿主把 .d-tile-ico 的 color 设成主色蓝，图标即蓝。
+   ============================================================================= */
+.ci { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; color: inherit; }
+.ci b, .ci i { display: block; background: currentColor; }
+
+/* 文字字形：指标卡 123 / 文本 Tt / 按钮 + */
+.ci-glyph { font-size: 13px; font-weight: 700; letter-spacing: .5px; font-family: var(--font-family-cn); }
+.ci-tt { font-style: italic; font-size: 15px; letter-spacing: 0; }
+.ci-plus { font-size: 21px; font-weight: 400; line-height: 1; }
+
+/* 柱状 / 组合 */
+.ci-bars, .ci-combo, .ci-podium { align-items: flex-end; gap: 3px; height: 20px; position: relative; }
+.ci-bars b, .ci-combo b, .ci-podium b { width: 5px; border-radius: 1.5px 1.5px 0 0; }
+.ci-combo .cln { position: absolute; left: 1px; right: 1px; top: 4px; height: 0; background: none; border-top: 1.6px solid currentColor; transform: rotate(-9deg); }
+
+/* 条形 */
+.ci-hbar { flex-direction: column; align-items: flex-start; gap: 4px; width: 22px; }
+.ci-hbar b { height: 5px; border-radius: 2.5px; }
+
+/* 折线（锯齿带·近似描边） */
+.ci-line i { width: 24px; height: 16px; clip-path: polygon(0 66%, 24% 32%, 46% 60%, 72% 14%, 100% 44%, 100% 60%, 72% 32%, 46% 78%, 24% 52%, 0 84%); }
+
+/* 面积 */
+.ci-area i { width: 24px; height: 16px; opacity: .85; clip-path: polygon(0 100%, 24% 50%, 48% 66%, 74% 24%, 100% 48%, 100% 100%); }
+
+/* 饼 */
+.ci-pie i { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(currentColor 0 70%, color-mix(in srgb, currentColor 28%, transparent) 70% 100%); }
+
+/* 环形（甜甜圈·中空） */
+.ci-ring i { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(currentColor 0 72%, color-mix(in srgb, currentColor 26%, transparent) 72% 100%); -webkit-mask: radial-gradient(circle, transparent 43%, #000 44%); mask: radial-gradient(circle, transparent 43%, #000 44%); }
+
+/* 仪表 gauge（半圆 + 指针） */
+.ci-gauge i { position: relative; width: 24px; height: 12px; border-radius: 24px 24px 0 0; background: conic-gradient(from -90deg at 50% 100%, currentColor 0 50%, color-mix(in srgb, currentColor 24%, transparent) 50% 100%); }
+.ci-gauge i::after { content: ""; position: absolute; left: calc(50% - 1px); bottom: 0; width: 2px; height: 9px; background: var(--cs-color-white); transform-origin: bottom center; transform: rotate(30deg); }
+
+/* 雷达（五边形环） */
+.ci-radar i { position: relative; width: 22px; height: 22px; background: currentColor; opacity: .9; clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%); }
+.ci-radar i::after { content: ""; position: absolute; inset: 26%; background: var(--cs-color-white); clip-path: polygon(50% 0, 100% 38%, 82% 100%, 18% 100%, 0 38%); }
+
+/* 散点 / 热力 */
+.ci-dots, .ci-grid { flex-wrap: wrap; gap: 3px; width: 20px; }
+.ci-dots b { width: 5px; height: 5px; border-radius: 50%; }
+.ci-dots b:nth-child(2), .ci-dots b:nth-child(4) { opacity: .5; }
+.ci-grid b { width: 7px; height: 7px; border-radius: 2px; }
+.ci-grid b:nth-child(odd) { opacity: .5; }
+
+/* 漏斗 */
+.ci-funnel { flex-direction: column; align-items: center; gap: 2px; }
+.ci-funnel b { height: 4px; border-radius: 1px; }
+
+/* 词云（云朵 + 词条） */
+.ci-cloud { position: relative; width: 26px; height: 22px; }
+.ci-cloud .cl { position: absolute; left: 1px; top: 3px; width: 24px; height: 16px; opacity: .16; border-radius: 10px 10px 9px 9px; }
+.ci-cloud .w1, .ci-cloud .w2 { position: absolute; height: 3px; border-radius: 2px; }
+.ci-cloud .w1 { width: 12px; top: 8px; left: 5px; }
+.ci-cloud .w2 { width: 7px; top: 13px; left: 10px; opacity: .6; }
+
+/* 表格 / 透视（网格框） */
+.ci-table i { position: relative; box-sizing: border-box; width: 22px; height: 19px; border: 1.6px solid currentColor; border-radius: 3px; background: none; }
+.ci-table i::before { content: ""; position: absolute; left: 0; right: 0; top: 33%; height: 1.4px; background: currentColor; }
+.ci-table i::after { content: ""; position: absolute; top: 0; bottom: 0; left: 40%; width: 1.4px; background: currentColor; }
+
+/* 透视表（十字交叉：填充列头 + 行维度列·区别于表格的细线网格） */
+.ci-pivot i { position: relative; box-sizing: border-box; width: 22px; height: 19px; border: 1.6px solid currentColor; border-radius: 3px; background: none; overflow: hidden; }
+.ci-pivot i::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 33%; background: currentColor; opacity: .9; }
+.ci-pivot i::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 34%; background: currentColor; opacity: .32; }
+
+/* 日历（框 + 顶栏） */
+.ci-calendar i { position: relative; box-sizing: border-box; width: 22px; height: 20px; border: 1.6px solid currentColor; border-radius: 3px; background: none; }
+.ci-calendar i::before { content: ""; position: absolute; left: -1px; right: -1px; top: 0; height: 6px; background: currentColor; border-radius: 3px 3px 0 0; }
+
+/* 看板（竖列） */
+.ci-kanban { gap: 3px; height: 18px; align-items: stretch; }
+.ci-kanban b { width: 5px; border-radius: 2px; }
+.ci-kanban b:nth-child(2) { opacity: .6; }
+
+/* 甘特（错位横条） */
+.ci-gantt { flex-direction: column; align-items: flex-start; gap: 4px; width: 22px; }
+.ci-gantt b { height: 4px; border-radius: 2px; }
+
+/* 画册 / 组合布局（2×2） */
+.ci-layout { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; place-items: stretch; gap: 3px; width: 18px; height: 18px; }
+.ci-layout b { border-radius: 2px; }
+.ci-layout b:nth-child(2), .ci-layout b:nth-child(3) { opacity: .5; }
+
+/* 桑基（两节点 + 连线） */
+.ci-sankey { position: relative; width: 22px; height: 18px; }
+.ci-sankey .n1 { position: absolute; left: 0; top: 2px; width: 4px; height: 14px; border-radius: 1.5px; }
+.ci-sankey .n2 { position: absolute; right: 0; top: 5px; width: 4px; height: 9px; border-radius: 1.5px; }
+.ci-sankey .lk { position: absolute; left: 4px; right: 4px; top: 4px; height: 8px; opacity: .3; clip-path: polygon(0 0, 100% 30%, 100% 70%, 0 100%); }
+
+/* 切片器（漏斗/筛选） */
+.ci-filter i { width: 18px; height: 16px; clip-path: polygon(0 0, 100% 0, 60% 46%, 60% 100%, 40% 84%, 40% 46%); }
+
+/* 进度图（75% + 条） */
+.ci-prog { flex-direction: column; gap: 3px; }
+.ci-prog .pv { font-size: 9px; font-weight: 700; background: none; color: currentColor; font-family: var(--font-family-cn); line-height: 1; }
+.ci-prog .pb { width: 22px; height: 5px; border-radius: 3px; }
+
+/* 倒计时（两块数字牌·无文字） */
+.ci-cd { gap: 3px; }
+.ci-cd i { width: 9px; height: 13px; border-radius: 2px; background: currentColor; }

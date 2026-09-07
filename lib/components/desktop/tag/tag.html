@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-tag 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="tag.css?v=39808be4">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- filled 变体（默认） -->
+<div class="section">
+  <div class="section-title">填充变体 Filled（默认）</div>
+  <div class="section-subtitle">用于状态标签，如"即将过期""已过期"等</div>
+
+  <div class="row">
+    <span class="row-label">md（默认）</span>
+    <cs-tag><span class="tag-label">默认</span></cs-tag>
+    <cs-tag data-color="primary"><span class="tag-label">主色</span></cs-tag>
+    <cs-tag data-color="success"><span class="tag-label">成功</span></cs-tag>
+    <cs-tag data-color="warning"><span class="tag-label">即将过期</span></cs-tag>
+    <cs-tag data-color="danger"><span class="tag-label">已过期</span></cs-tag>
+    <cs-tag data-color="info"><span class="tag-label">信息</span></cs-tag>
+  </div>
+
+  <div class="row">
+    <span class="row-label">sm</span>
+    <cs-tag data-size="sm"><span class="tag-label">默认</span></cs-tag>
+    <cs-tag data-size="sm" data-color="primary"><span class="tag-label">主色</span></cs-tag>
+    <cs-tag data-size="sm" data-color="success"><span class="tag-label">成功</span></cs-tag>
+    <cs-tag data-size="sm" data-color="warning"><span class="tag-label">警告</span></cs-tag>
+    <cs-tag data-size="sm" data-color="danger"><span class="tag-label">危险</span></cs-tag>
+    <cs-tag data-size="sm" data-color="info"><span class="tag-label">信息</span></cs-tag>
+  </div>
+</div>
+
+<!-- text 变体 -->
+<div class="section">
+  <div class="section-title">纯文字变体 Text</div>
+  <div class="section-subtitle">data-variant="text" — 用于优先级标签，如"紧急""普通""较低"，无背景无边框</div>
+
+  <div class="row">
+    <span class="row-label">优先级示例</span>
+    <cs-tag data-variant="text" data-color="danger"><span class="tag-label">紧急</span></cs-tag>
+    <cs-tag data-variant="text" data-color="warning"><span class="tag-label">普通</span></cs-tag>
+    <cs-tag data-variant="text" data-color="default"><span class="tag-label">较低</span></cs-tag>
+  </div>
+
+  <div class="row">
+    <span class="row-label">全部颜色</span>
+    <cs-tag data-variant="text"><span class="tag-label">默认</span></cs-tag>
+    <cs-tag data-variant="text" data-color="primary"><span class="tag-label">主色</span></cs-tag>
+    <cs-tag data-variant="text" data-color="success"><span class="tag-label">成功</span></cs-tag>
+    <cs-tag data-variant="text" data-color="warning"><span class="tag-label">警告</span></cs-tag>
+    <cs-tag data-variant="text" data-color="danger"><span class="tag-label">危险</span></cs-tag>
+    <cs-tag data-variant="text" data-color="info"><span class="tag-label">信息</span></cs-tag>
+  </div>
+</div>
+
+<!-- 可关闭标签 -->
+<div class="section">
+  <div class="section-title">可关闭标签 Closable</div>
+  <div class="section-subtitle">data-closable</div>
+
+  <div class="row">
+    <span class="row-label">md + 关闭</span>
+    <cs-tag data-closable><span class="tag-label">默认</span><i class="tag-close cses-guanbi"></i></cs-tag>
+    <cs-tag data-color="primary" data-closable><span class="tag-label">主色</span><i class="tag-close cses-guanbi"></i></cs-tag>
+    <cs-tag data-color="success" data-closable><span class="tag-label">成功</span><i class="tag-close cses-guanbi"></i></cs-tag>
+    <cs-tag data-color="warning" data-closable><span class="tag-label">警告</span><i class="tag-close cses-guanbi"></i></cs-tag>
+    <cs-tag data-color="danger" data-closable><span class="tag-label">危险</span><i class="tag-close cses-guanbi"></i></cs-tag>
+    <cs-tag data-color="info" data-closable><span class="tag-label">信息</span><i class="tag-close cses-guanbi"></i></cs-tag>
+  </div>
+
+  <div class="row">
+    <span class="row-label">sm + 关闭</span>
+    <cs-tag data-size="sm" data-closable><span class="tag-label">默认</span><i class="tag-close cses-guanbi"></i></cs-tag>
+    <cs-tag data-size="sm" data-color="primary" data-closable><span class="tag-label">主色</span><i class="tag-close cses-guanbi"></i></cs-tag>
+    <cs-tag data-size="sm" data-color="danger" data-closable><span class="tag-label">危险</span><i class="tag-close cses-guanbi"></i></cs-tag>
+  </div>
+</div>
+
+<!-- 圆角变体 -->
+<div class="section">
+  <div class="section-title">圆角变体 Round</div>
+  <div class="section-subtitle">data-shape="round"</div>
+
+  <div class="row">
+    <span class="row-label">pill 圆角</span>
+    <cs-tag data-shape="round"><span class="tag-label">默认</span></cs-tag>
+    <cs-tag data-shape="round" data-color="primary"><span class="tag-label">主色</span></cs-tag>
+    <cs-tag data-shape="round" data-color="success"><span class="tag-label">成功</span></cs-tag>
+    <cs-tag data-shape="round" data-color="warning" data-closable><span class="tag-label">警告</span><i class="tag-close cses-guanbi"></i></cs-tag>
+    <cs-tag data-shape="round" data-color="danger" data-closable><span class="tag-label">危险</span><i class="tag-close cses-guanbi"></i></cs-tag>
+  </div>
+</div>
+
+</body>
+</html>

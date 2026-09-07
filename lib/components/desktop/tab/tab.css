@@ -1,0 +1,84 @@
+/*
+ * 标签页组件 (Tab)
+ * 标签：<cs-tab>
+ * 数据来源：tabbar 中的 tab 项
+ *
+ * data 属性：
+ *   data-active              — 激活态
+ *
+ * 布局：inline-flex, align center, gap 4px
+ * 内边距：6px 12px
+ * 字体：13px/400
+ * 深色背景场景
+ */
+
+/* ========== 基础样式 ========== */
+cs-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2xs);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-sm);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-dark-secondary);
+  background: transparent;
+  height: 44px;
+  min-width: 160px;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* ========== 悬浮态 ========== */
+cs-tab:hover {
+  background: var(--cs-color-bg-hover-dark);
+  color: var(--cs-color-text-dark-primary);
+}
+
+/* ========== 激活态 ========== */
+cs-tab[data-active] {
+  background: var(--cs-color-bg-input-dark);
+  color: var(--cs-color-text-dark-primary);
+}
+
+/* ========== 图标 ========== */
+cs-tab .tab-icon {
+  font-size: var(--cs-sem-size-icon-sm);
+  line-height: 1;
+  color: inherit;
+}
+
+/* ========== 文字 ========== */
+cs-tab .tab-label {
+  color: inherit;
+}
+
+/* ========== 关闭按钮 ========== */
+cs-tab .tab-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+/* 激活态关闭按钮始终可见 */
+cs-tab[data-active] .tab-close {
+  opacity: 1;
+}
+
+/* 悬浮态关闭按钮可见 */
+cs-tab:hover .tab-close {
+  opacity: 1;
+}
+
+cs-tab .tab-close:hover {
+  color: rgba(255, 255, 255, 0.6);
+}

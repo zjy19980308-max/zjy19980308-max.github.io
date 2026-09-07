@@ -1,0 +1,121 @@
+/* ═══════════════════════════════════════════════════════════════
+   card-glow.css —— 卡片炫彩微光
+   移植自 React Bits 的 MagicBento。
+   原版是 rgba(132,0,255) 单一紫、透明度给到 0.8，很跳；
+   这里换成作品集自己的紫罗兰／靛蓝／薰衣草三色轮转，
+   峰值压到 0.18，只在光标附近才看得出来。
+   --cg-glow（0~0.18）由 JS 每帧写入，下面所有效果都读它。
+   ═══════════════════════════════════════════════════════════════ */
+
+.cg-section { position: relative; }
+
+.cg-card {
+  --cg-hue: 122, 87, 208;
+  --cg-x: 50%;
+  --cg-y: 50%;
+  --cg-glow: 0;
+  --cg-radius: 220px;
+
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* 边缘辉光：用 mask 挖空中间，只留一圈边。
+   光标在哪，哪一段边就亮 —— 这是整个效果的主体。 */
+.cg-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    var(--cg-radius) circle at var(--cg-x) var(--cg-y),
+    rgba(var(--cg-hue), calc(var(--cg-glow) * 4.2)) 0%,
+    rgba(var(--cg-hue), calc(var(--cg-glow) * 2.0)) 32%,
+    transparent 62%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 卡面内侧一层极淡的漫射，让辉光不至于只是一条硬边 */
+.cg-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    calc(var(--cg-radius) * 1.4) circle at var(--cg-x) var(--cg-y),
+    rgba(var(--cg-hue), calc(var(--cg-glow) * 0.9)) 0%,
+    transparent 58%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 浮尘 */
+.cg-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(var(--cg-hue), .75);
+  box-shadow: 0 0 6px rgba(var(--cg-hue), .45);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  animation: cg-drift 3s cubic-bezier(.22,1,.36,1) infinite alternate,
+             cg-in .34s cubic-bezier(.22,1,.36,1) forwards;
+}
+.cg-dot--out { animation: cg-out .3s ease forwards; }
+
+@keyframes cg-in  { from { opacity: 0; transform: scale(0); }
+                    to   { opacity: .5; transform: scale(1); } }
+@keyframes cg-out { to   { opacity: 0; transform: scale(0); } }
+@keyframes cg-drift {
+  to { translate: var(--dx) var(--dy); }
+}
+
+/* 点击涟漪 */
+.cg-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 4;
+  background: radial-gradient(circle,
+    rgba(var(--cg-hue), .18) 0%,
+    rgba(var(--cg-hue), .09) 32%,
+    transparent 68%);
+  animation: cg-ripple .74s cubic-bezier(.22,1,.36,1) forwards;
+}
+@keyframes cg-ripple { from { transform: scale(0); opacity: 1; }
+                       to   { transform: scale(1); opacity: 0; } }
+
+/* 跟着光标的全局柔光。混合模式用 screen，压在深色底上只提亮不脏。 */
+.cg-spotlight {
+  position: fixed;
+  width: 640px;
+  height: 640px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  background: radial-gradient(circle,
+    rgba(150,140,235,.055) 0%,
+    rgba(120,120,220,.030) 18%,
+    rgba(90,90,180,.014)  34%,
+    transparent 66%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cg-card { transform: none !important; }
+  .cg-dot, .cg-ripple { display: none; }
+}

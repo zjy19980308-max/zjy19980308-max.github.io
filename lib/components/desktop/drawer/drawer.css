@@ -1,0 +1,192 @@
+/*
+ * 抽屉 (Drawer)
+ * 标签：<cs-drawer>
+ *
+ * 作用：从屏幕边缘滑出的覆盖面板，承载详情/表单等次级内容。对标 antd Drawer / ng-zorro Drawer。
+ * 默认右侧滑出，含 60% 蒙层、固定头部(不滚)、滚动内容区(适配高度)。
+ *
+ * data 属性：
+ *   data-open              — 打开（无此属性=关闭，滑出屏外）
+ *   data-placement="right" — 滑出方向（right 默认；left 预留）
+ *   自定义宽度：在元素上设 style="--drawer-w:720px"（默认 min(720px,92vw)）
+ *
+ * 结构：
+ *   <cs-drawer data-open>
+ *     <div class="drawer-panel">
+ *       <header class="drawer-head">              固定不滚
+ *         <span class="drawer-close" data-drawer-close><i class="cses-guanbi"></i></span>
+ *         …头部内容（可用 .drawer-profile 详情头 · 见下）…
+ *       </header>
+ *       <div class="drawer-body"> …滚动内容… </div>
+ *     </div>
+ *   </cs-drawer>
+ *
+ * 行为在 drawer.js：点蒙层 / .drawer-close / ESC 关闭；window.CSDrawer.open(el)/close(el)。
+ */
+
+/* 蒙层（scrim）*/
+cs-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--cs-color-bg-mask-60);
+  opacity: 0;
+  visibility: hidden;
+  /* 关闭：visibility 延迟 0.28s（面板滑完）再切 hidden，否则瞬切会吞掉滑出动画（对齐 .shell-mask 工作模式）*/
+  transition: opacity 0.25s ease, visibility 0s linear 0.28s;
+}
+cs-drawer[data-open] {
+  opacity: 1;
+  visibility: visible;
+  /* 打开：无 visibility 延迟 → 立即可见，再让 opacity/面板滑入 */
+  transition: opacity 0.25s ease;
+}
+
+/* 滑出面板 */
+cs-drawer .drawer-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--drawer-w, min(720px, 92vw));
+  display: flex;
+  flex-direction: column;
+  background: var(--cs-color-white);
+  box-shadow: var(--cs-shadow-xl);
+  /* 圆角：默认 0（详情类"通到顶"抽屉保持齐边）；浮层型抽屉在元素上设
+     style="--drawer-radius: var(--radius-lg) 0 0 var(--radius-lg)" 得左侧上下圆角 */
+  border-radius: var(--drawer-radius, 0);
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+cs-drawer[data-open] .drawer-panel {
+  transform: translateX(0);
+}
+
+/* 头部（固定不滚）*/
+cs-drawer .drawer-head {
+  flex-shrink: 0;
+  position: relative;
+  padding: var(--space-lg) var(--spacing-28) 0;
+  border-bottom: var(--line-width) solid var(--cs-color-border-light);
+}
+cs-drawer .drawer-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  color: var(--cs-color-text-light2);
+  font-size: 16px;
+  cursor: pointer;
+}
+cs-drawer .drawer-close:hover {
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-text);
+}
+
+/* 内容区（滚动·适配高度）*/
+cs-drawer .drawer-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  /* 底 padding 交给内容自己给（如 sticky 取消/确认栏），避免钉底时下方留缝漏内容 */
+  padding: var(--space-lg) var(--spacing-28) 0;
+}
+/* 读态末尾留白（编辑态的 sticky 栏自带 24px 白底，不叠这层）·页签面板另走下方规则 */
+cs-drawer .drawer-body > :last-child:not(.desc-actions):not([data-tab-panel]) {
+  padding-bottom: var(--spacing-24);
+}
+
+/* 页签面板切换动画：显示时淡入 + 轻微上滑（display 从 hidden→显示自动重播）*/
+@keyframes cs-drawer-panel-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+cs-drawer .drawer-body > [data-tab-panel] {
+  animation: cs-drawer-panel-in 0.24s ease;
+  padding-bottom: var(--spacing-40);   /* 每页各自留底部白（多面板并列·:last-child 只命中最后一页会漏当前页）*/
+}
+@media (prefers-reduced-motion: reduce) {
+  cs-drawer .drawer-body > [data-tab-panel] { animation: none; }
+}
+
+/* ========== 详情头（.drawer-profile · 头像+标题+标签+动作+页签）==========
+   通用「实体详情抽屉」头部骨架：头像用 cs-avatar，标签用 cs-tag，动作用 cs-button 填入。 */
+cs-drawer .drawer-profile {
+  display: flex;
+  gap: var(--spacing-20);
+}
+cs-drawer .drawer-profile-ava {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+}
+cs-drawer .drawer-profile-ava img {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-xl);
+  object-fit: cover;
+  background: var(--cs-color-bg-light);
+}
+cs-drawer .drawer-profile-main {
+  flex: 1;
+  min-width: 0;
+}
+cs-drawer .drawer-title {
+  font: var(--typo-cn-20-medium);
+  font-weight: 600;
+  color: var(--cs-color-text);
+  margin: 0 0 var(--space-sm);
+}
+cs-drawer .drawer-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--cs-color-text-light);
+  font: var(--typo-cn-13-regular);
+  margin-bottom: var(--space-md);
+}
+cs-drawer .drawer-meta .drawer-meta-sep {
+  width: var(--line-width);
+  height: 12px;
+  background: var(--cs-color-border);
+}
+cs-drawer .drawer-actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* 页签（text + 激活主色下划线）*/
+cs-drawer .drawer-tabs {
+  display: flex;
+  gap: var(--spacing-32);
+  margin-top: var(--space-md);
+}
+cs-drawer .drawer-tab {
+  position: relative;
+  padding-bottom: var(--space-md);
+  color: var(--cs-color-text-light);
+  font: var(--typo-cn-16-regular);
+  cursor: pointer;
+}
+cs-drawer .drawer-tab.is-active {
+  color: var(--cs-color-primary);
+  font-weight: 600;
+}
+cs-drawer .drawer-tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(-1 * var(--line-width));
+  transform: translateX(-50%);
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--cs-color-primary);
+}

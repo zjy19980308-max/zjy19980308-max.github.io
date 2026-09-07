@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-color-picker 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="color-picker.css?v=7809ed51">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: flex-start; gap: 24px; flex-wrap: wrap; min-height: 280px; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 96px; flex-shrink: 0; padding-top: 8px; }
+    .tip { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-top: 8px; padding: 8px 12px; background: #f9f9f9; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- 1. 基础 -->
+<div class="section">
+  <div class="section-title">基础用法 Basic</div>
+  <div class="section-subtitle">点击触发器 → 弹出色板，点击色块 → 写入触发器并关闭</div>
+  <div class="row">
+    <span class="row-label">主题色</span>
+    <cs-color-picker>
+      <button class="cp-trigger" type="button">
+        <span class="cp-trigger-swatch" style="background: #4857e2;"></span>
+        <span class="cp-trigger-label">#4857E2</span>
+      </button>
+      <div class="cp-panel">
+        <div class="cp-panel-section">
+          <span class="cp-panel-title">预设色</span>
+          <div class="cp-swatch-grid">
+            <button class="cp-swatch" data-color="#F5222D" style="background: #F5222D;" type="button"></button>
+            <button class="cp-swatch" data-color="#FA8C16" style="background: #FA8C16;" type="button"></button>
+            <button class="cp-swatch" data-color="#FADB14" style="background: #FADB14;" type="button"></button>
+            <button class="cp-swatch" data-color="#52C41A" style="background: #52C41A;" type="button"></button>
+            <button class="cp-swatch" data-color="#13C2C2" style="background: #13C2C2;" type="button"></button>
+            <button class="cp-swatch" data-color="#1890FF" style="background: #1890FF;" type="button"></button>
+            <button class="cp-swatch" data-color="#4857E2" data-active style="background: #4857E2;" type="button"></button>
+            <button class="cp-swatch" data-color="#722ED1" style="background: #722ED1;" type="button"></button>
+          </div>
+        </div>
+        <div class="cp-panel-section">
+          <span class="cp-panel-title">中性色</span>
+          <div class="cp-swatch-grid">
+            <button class="cp-swatch" data-color="#FFFFFF" style="background: #FFFFFF;" type="button"></button>
+            <button class="cp-swatch" data-color="#F5F5F5" style="background: #F5F5F5;" type="button"></button>
+            <button class="cp-swatch" data-color="#D9D9D9" style="background: #D9D9D9;" type="button"></button>
+            <button class="cp-swatch" data-color="#999999" style="background: #999999;" type="button"></button>
+            <button class="cp-swatch" data-color="#666666" style="background: #666666;" type="button"></button>
+            <button class="cp-swatch" data-color="#333333" style="background: #333333;" type="button"></button>
+            <button class="cp-swatch" data-color="#000000" style="background: #000000;" type="button"></button>
+          </div>
+        </div>
+        <div class="cp-panel-section">
+          <span class="cp-panel-title">Hex</span>
+          <div class="cp-hex-row">
+            <input class="cp-hex-input" type="text" value="#4857E2" placeholder="#000000">
+          </div>
+        </div>
+      </div>
+    </cs-color-picker>
+  </div>
+  <div class="tip">交互验证：① 点击 → 弹出 ② 点击色块 → 写入触发器 ③ Hex 输入 + Enter → 应用 ④ ESC / 外部 → 关闭</div>
+</div>
+
+<!-- 2. 形状变体 -->
+<div class="section">
+  <div class="section-title">形状变体 Shape</div>
+  <div class="section-subtitle">data-shape="square"(默认) / "circle"</div>
+  <div class="row">
+    <cs-color-picker>
+      <button class="cp-trigger" type="button">
+        <span class="cp-trigger-swatch" style="background: #52C41A;"></span>
+        <span class="cp-trigger-label">#52C41A</span>
+      </button>
+      <div class="cp-panel">
+        <div class="cp-swatch-grid">
+          <button class="cp-swatch" data-color="#F5222D" style="background: #F5222D;" type="button"></button>
+          <button class="cp-swatch" data-color="#52C41A" data-active style="background: #52C41A;" type="button"></button>
+          <button class="cp-swatch" data-color="#1890FF" style="background: #1890FF;" type="button"></button>
+        </div>
+      </div>
+    </cs-color-picker>
+    <cs-color-picker data-shape="circle">
+      <button class="cp-trigger" type="button">
+        <span class="cp-trigger-swatch" style="background: #722ED1;"></span>
+        <span class="cp-trigger-label">#722ED1</span>
+      </button>
+      <div class="cp-panel">
+        <div class="cp-swatch-grid">
+          <button class="cp-swatch" data-color="#F5222D" style="background: #F5222D;" type="button"></button>
+          <button class="cp-swatch" data-color="#52C41A" style="background: #52C41A;" type="button"></button>
+          <button class="cp-swatch" data-color="#722ED1" data-active style="background: #722ED1;" type="button"></button>
+        </div>
+      </div>
+    </cs-color-picker>
+  </div>
+</div>
+
+<!-- 3. 尺寸 -->
+<div class="section">
+  <div class="section-title">尺寸变体 Sizes</div>
+  <div class="row" style="min-height: 80px;">
+    <cs-color-picker data-size="sm">
+      <button class="cp-trigger" type="button">
+        <span class="cp-trigger-swatch" style="background: #FA8C16;"></span>
+      </button>
+      <div class="cp-panel"><div class="cp-swatch-grid"><button class="cp-swatch" data-color="#FA8C16" style="background: #FA8C16;" type="button"></button></div></div>
+    </cs-color-picker>
+    <cs-color-picker>
+      <button class="cp-trigger" type="button">
+        <span class="cp-trigger-swatch" style="background: #FA8C16;"></span>
+        <span class="cp-trigger-label">#FA8C16</span>
+      </button>
+      <div class="cp-panel"><div class="cp-swatch-grid"><button class="cp-swatch" data-color="#FA8C16" style="background: #FA8C16;" type="button"></button></div></div>
+    </cs-color-picker>
+    <cs-color-picker data-size="lg">
+      <button class="cp-trigger" type="button">
+        <span class="cp-trigger-swatch" style="background: #FA8C16;"></span>
+        <span class="cp-trigger-label">#FA8C16</span>
+      </button>
+      <div class="cp-panel"><div class="cp-swatch-grid"><button class="cp-swatch" data-color="#FA8C16" style="background: #FA8C16;" type="button"></button></div></div>
+    </cs-color-picker>
+  </div>
+</div>
+
+<!-- 4. 禁用 -->
+<div class="section">
+  <div class="section-title">禁用态 Disabled</div>
+  <div class="row" style="min-height: 80px;">
+    <cs-color-picker data-disabled>
+      <button class="cp-trigger" type="button">
+        <span class="cp-trigger-swatch" style="background: #999;"></span>
+        <span class="cp-trigger-label">#999999</span>
+      </button>
+      <div class="cp-panel"></div>
+    </cs-color-picker>
+  </div>
+</div>
+
+<script src="color-picker.js?v=98ef50c3"></script>
+</body>
+</html>

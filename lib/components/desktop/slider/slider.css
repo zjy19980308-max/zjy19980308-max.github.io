@@ -1,0 +1,192 @@
+/*
+ * 滑动输入条 (Slider)
+ * 标签：<cs-slider>
+ *
+ * 作用：在连续区间内选择一个数值（单值）或范围（双值）。
+ * 对标 ng-zorro Slider。纯 CSS 静态演示，不含拖拽逻辑。
+ *
+ * data 属性：
+ *   data-orientation="horizontal"(默认) / "vertical"
+ *   data-range                       — 开启双滑块范围
+ *   data-disabled                    — 禁用
+ *   data-value                       — 百分比（0~100），CSS var 覆盖亦可
+ *
+ * CSS 变量（可在行内 style 覆盖）：
+ *   --cs-slider-value: 30%;          — 单滑块位置
+ *   --cs-slider-from:  20%;          — 范围起点
+ *   --cs-slider-to:    80%;          — 范围终点
+ *
+ * 子元素：
+ *   .slider-rail      — 灰色底轨
+ *   .slider-track     — 蓝色已选部分
+ *   .slider-handle    — 滑块
+ *   .slider-marks     — 刻度容器
+ *   .slider-mark      — 单个刻度点
+ *   .slider-mark-label — 刻度文字
+ */
+
+cs-slider {
+  --cs-slider-value: 30%;
+  --cs-slider-from: 20%;
+  --cs-slider-to: 70%;
+
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: var(--cs-sem-size-interactive-sm);
+  padding: var(--space-sm) 0;
+  box-sizing: border-box;
+}
+
+/* ========== 底轨 ========== */
+cs-slider .slider-rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: var(--space-2xs);
+  transform: translateY(-50%);
+  background: var(--cs-color-bg-light);
+  border-radius: var(--radius-pill);
+}
+
+/* ========== 已选择区（track） ========== */
+cs-slider .slider-track {
+  position: absolute;
+  top: 50%;
+  height: var(--space-2xs);
+  transform: translateY(-50%);
+  background: var(--cs-color-primary);
+  border-radius: var(--radius-pill);
+}
+
+/* 单值：从 0 到 value */
+cs-slider:not([data-range]) .slider-track {
+  left: 0;
+  width: var(--cs-slider-value);
+}
+
+/* 范围：从 from 到 to */
+cs-slider[data-range] .slider-track {
+  left: var(--cs-slider-from);
+  right: auto;
+  width: calc(var(--cs-slider-to) - var(--cs-slider-from));
+}
+
+/* ========== 滑块 ========== */
+cs-slider .slider-handle {
+  position: absolute;
+  top: 50%;
+  width: var(--space-md);
+  height: var(--space-md);
+  transform: translate(-50%, -50%);
+  background: var(--cs-color-white);
+  border: calc(var(--line-width) * 2) solid var(--cs-color-primary);
+  border-radius: var(--radius-circle);
+  cursor: grab;
+  transition: box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+cs-slider .slider-handle:hover {
+  box-shadow: 0 0 0 var(--space-2xs) var(--cs-color-primary-a2);
+}
+
+/* 单值滑块 */
+cs-slider:not([data-range]) .slider-handle {
+  left: var(--cs-slider-value);
+}
+
+/* 范围滑块：第 1 个在 from，第 2 个在 to
+   注意：:nth-of-type 按 tag 计数而非 class，因此依赖固定 DOM 顺序
+   rail(第1div) / track(第2div) / handle[from](第3div) / handle[to](第4div) */
+cs-slider[data-range] .slider-handle:nth-of-type(3) {
+  left: var(--cs-slider-from);
+}
+
+cs-slider[data-range] .slider-handle:nth-of-type(4) {
+  left: var(--cs-slider-to);
+}
+
+/* ========== 刻度 ========== */
+cs-slider .slider-marks {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(50% + var(--space-sm));
+  height: var(--spacing-20);
+}
+
+cs-slider .slider-mark {
+  position: absolute;
+  top: 0;
+  width: var(--space-2xs);
+  height: var(--space-2xs);
+  transform: translate(-50%, calc(-50% - var(--space-sm)));
+  background: var(--cs-color-white);
+  border: calc(var(--line-width) * 2) solid var(--cs-color-border);
+  border-radius: var(--radius-circle);
+  box-sizing: border-box;
+}
+
+cs-slider .slider-mark[data-active] {
+  border-color: var(--cs-color-primary);
+}
+
+cs-slider .slider-mark-label {
+  position: absolute;
+  transform: translateX(-50%);
+  top: var(--space-sm);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light);
+  white-space: nowrap;
+}
+
+/* ========== 禁用 ========== */
+cs-slider[data-disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: var(--cs-sem-opacity-disabled);
+}
+
+cs-slider[data-disabled] .slider-track {
+  background: var(--cs-color-text-light2);
+}
+
+cs-slider[data-disabled] .slider-handle {
+  border-color: var(--cs-color-text-light2);
+}
+
+/* ========== 垂直方向 ========== */
+cs-slider[data-orientation="vertical"] {
+  display: inline-block;
+  width: var(--cs-sem-size-interactive-sm);
+  height: var(--spacing-200);
+  padding: 0 var(--space-sm);
+}
+
+cs-slider[data-orientation="vertical"] .slider-rail {
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: auto;
+  width: var(--space-2xs);
+  height: auto;
+  transform: translateX(-50%);
+}
+
+cs-slider[data-orientation="vertical"] .slider-track {
+  left: 50%;
+  width: var(--space-2xs);
+  height: var(--cs-slider-value);
+  top: auto;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+
+cs-slider[data-orientation="vertical"]:not([data-range]) .slider-handle {
+  left: 50%;
+  top: auto;
+  bottom: var(--cs-slider-value);
+  transform: translate(-50%, 50%);
+}

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-breadcrumb 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="breadcrumb.css?v=88768bc9">
+</head>
+<body class="breadcrumb-preview-body">
+
+<!-- ========== 1. 无 Icon 面包屑 ========== -->
+<div class="breadcrumb-preview-section">
+  <div class="breadcrumb-preview-title">1. 无 Icon 面包屑</div>
+  <div class="breadcrumb-preview-subtitle">纯文字导航，最后一项为当前页（data-current），其余可点击，悬停变蓝</div>
+
+  <div class="breadcrumb-preview-row">
+    <span class="breadcrumb-preview-row-label">两级导航</span>
+    <cs-breadcrumb>
+      <span class="breadcrumb-item">首页</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item" data-current>任务管理</span>
+    </cs-breadcrumb>
+  </div>
+
+  <div class="breadcrumb-preview-row">
+    <span class="breadcrumb-preview-row-label">三级导航</span>
+    <cs-breadcrumb>
+      <span class="breadcrumb-item">工作台</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">项目空间</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item" data-current>前端组件库</span>
+    </cs-breadcrumb>
+  </div>
+
+  <div class="breadcrumb-preview-row">
+    <span class="breadcrumb-preview-row-label">四级导航</span>
+    <cs-breadcrumb>
+      <span class="breadcrumb-item">工作台</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">项目空间</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">前端组件库</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item" data-current>按钮组件</span>
+    </cs-breadcrumb>
+  </div>
+</div>
+
+<!-- ========== 2. 有 Icon 面包屑 ========== -->
+<div class="breadcrumb-preview-section">
+  <div class="breadcrumb-preview-title">2. 有 Icon 面包屑</div>
+  <div class="breadcrumb-preview-subtitle">每项前带图标前缀（.breadcrumb-icon），图标继承文字颜色</div>
+
+  <div class="breadcrumb-preview-row">
+    <span class="breadcrumb-preview-row-label">两级导航</span>
+    <cs-breadcrumb>
+      <span class="breadcrumb-item"><i class="breadcrumb-icon cses-shouye"></i>首页</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item" data-current><i class="breadcrumb-icon cses-xiangmujimokuai"></i>任务管理</span>
+    </cs-breadcrumb>
+  </div>
+
+  <div class="breadcrumb-preview-row">
+    <span class="breadcrumb-preview-row-label">三级导航</span>
+    <cs-breadcrumb>
+      <span class="breadcrumb-item"><i class="breadcrumb-icon cses-gongzuotai1"></i>工作台</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item"><i class="breadcrumb-icon cses-xiangmujimokuai"></i>项目空间</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item" data-current><i class="breadcrumb-icon cses-zibiaodan"></i>前端组件库</span>
+    </cs-breadcrumb>
+  </div>
+
+  <div class="breadcrumb-preview-row">
+    <span class="breadcrumb-preview-row-label">四级导航</span>
+    <cs-breadcrumb>
+      <span class="breadcrumb-item"><i class="breadcrumb-icon cses-gongzuotai1"></i>工作台</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item"><i class="breadcrumb-icon cses-xiangmujimokuai"></i>项目空间</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item"><i class="breadcrumb-icon cses-zibiaodan"></i>前端组件库</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item" data-current><i class="breadcrumb-icon cses-zibiaodan"></i>按钮组件</span>
+    </cs-breadcrumb>
+  </div>
+</div>
+
+<!-- ========== 3. 交互说明 ========== -->
+<div class="breadcrumb-preview-section">
+  <div class="breadcrumb-preview-title">3. 交互说明</div>
+  <div class="breadcrumb-preview-subtitle">悬停非当前项时文字变为主色蓝（var(--cs-color-primary)），当前项不响应悬停；分隔符为 chevron-right 12px</div>
+
+  <div class="breadcrumb-preview-row">
+    <span class="breadcrumb-preview-row-label">无 Icon 试试</span>
+    <cs-breadcrumb>
+      <span class="breadcrumb-item">空间设置</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">成员管理</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item" data-current>权限配置</span>
+    </cs-breadcrumb>
+  </div>
+
+  <div class="breadcrumb-preview-row">
+    <span class="breadcrumb-preview-row-label">有 Icon 试试</span>
+    <cs-breadcrumb>
+      <span class="breadcrumb-item"><i class="breadcrumb-icon cses-xiangmujimokuai"></i>空间设置</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item"><i class="breadcrumb-icon cses-zibiaodan"></i>成员管理</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item" data-current><i class="breadcrumb-icon cses-zibiaodan"></i>权限配置</span>
+    </cs-breadcrumb>
+  </div>
+</div>
+
+</body>
+</html>

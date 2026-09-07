@@ -1,0 +1,252 @@
+/*
+ * 按钮组件 (Button)
+ * 标签：<cs-button>
+ * 数据来源：CSES新组件库 Figma 6G4kofC17HJTi91bvbX4bZ 节点 8:2359「按钮」
+ *
+ * data 属性：
+ *   data-variant="primary"      — 一级（默认）
+ *   data-variant="secondary"    — 二级（描边）
+ *   data-variant="text"         — 三级（无背景）
+ *   data-variant="danger"       — 危险（红描边，删除/操作离职）· org-backend 反哺
+ *   data-variant="primary-line" — 主色描边（蓝边蓝字，邀请人员）· org-backend 反哺
+ *   data-icon                  — 纯图标按钮
+ *   data-dropdown              — 带下拉箭头
+ *   data-disabled              — 禁用
+ *   data-loading               — 加载中
+ *   data-size="sm"             — 小尺寸 28px
+ *   data-size="md"             — 中尺寸 32px（默认）
+ *   data-size="lg"             — 大尺寸 36px
+ */
+
+/* ========== 基础样式 ========== */
+cs-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  height: var(--cs-sem-size-interactive-sm);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-lg);
+  font: var(--typo-cn-12-regular);
+  cursor: pointer;
+  border: var(--line-width) solid transparent;
+  box-sizing: border-box;
+  white-space: nowrap;
+  user-select: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* ========== 一级 Primary（默认） ========== */
+cs-button,
+cs-button[data-variant="primary"] {
+  background: var(--cs-color-primary);
+  color: var(--cs-color-text-inverse);
+}
+
+cs-button:hover,
+cs-button[data-variant="primary"]:hover {
+  background: var(--cs-color-primary-hover);
+}
+
+cs-button:active,
+cs-button[data-variant="primary"]:active {
+  background: var(--cs-color-primary-active);
+}
+
+/* ========== 无色/未激活填充 Neutral（如"无改动时的确认"·灰填充·org-backend 反哺）========== */
+cs-button[data-variant="neutral"] {
+  background: var(--cs-color-fill-neutral);
+  color: var(--cs-color-text-inverse);
+  border-color: transparent;
+}
+cs-button[data-variant="neutral"]:hover,
+cs-button[data-variant="neutral"]:active {
+  background: var(--cs-color-fill-neutral);
+}
+
+/* ========== 二级 Secondary（描边） ========== */
+cs-button[data-variant="secondary"] {
+  background: transparent;
+  color: var(--cs-color-text);
+  border-color: var(--cs-color-border);
+}
+
+cs-button[data-variant="secondary"]:hover {
+  color: var(--cs-color-text-light);
+  background: transparent;
+}
+
+cs-button[data-variant="secondary"]:active {
+  color: var(--cs-color-text);
+  background: transparent;
+}
+
+/* ========== 三级 Text（无背景） ========== */
+cs-button[data-variant="text"] {
+  background: transparent;
+  color: var(--cs-color-text);
+  padding: var(--space-xs) var(--space-md);
+}
+
+cs-button[data-variant="text"]:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+cs-button[data-variant="text"]:active {
+  background: var(--cs-color-bg-light);
+}
+
+/* ========== 危险 Danger（红描边 · 删除/操作离职等） ========== */
+/* 来源：org-backend 成员与部门批量条「操作离职」(Figma 95:22206) · 2026-06-29 反哺 */
+cs-button[data-variant="danger"] {
+  background: transparent;
+  color: var(--cs-color-error);
+  border-color: var(--cs-color-error);
+}
+
+cs-button[data-variant="danger"]:hover,
+cs-button[data-variant="danger"][data-hover] {
+  background: var(--cs-color-error-hover);
+}
+
+/* ========== 主色描边 Primary-line（蓝描边 · 邀请人员等） ========== */
+/* 来源：org-backend 成员与部门批量条「邀请人员」(Figma 95:22206) · 2026-06-29 反哺 */
+cs-button[data-variant="primary-line"] {
+  background: transparent;
+  color: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+}
+
+cs-button[data-variant="primary-line"]:hover,
+cs-button[data-variant="primary-line"][data-hover] {
+  background: var(--cs-color-primary-bg);
+}
+
+/* ========== 悬浮态模拟（预览用） ========== */
+cs-button[data-hover],
+cs-button[data-variant="primary"][data-hover] {
+  background: var(--cs-color-primary-hover);
+}
+
+cs-button[data-variant="secondary"][data-hover] {
+  color: var(--cs-color-text-light);
+  background: transparent;
+}
+
+cs-button[data-variant="text"][data-hover] {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 选中/按下态模拟（预览用） ========== */
+cs-button[data-pressed],
+cs-button[data-variant="primary"][data-pressed] {
+  background: var(--cs-color-primary-active);
+}
+
+cs-button[data-variant="secondary"][data-pressed] {
+  color: var(--cs-color-text);
+  background: transparent;
+}
+
+cs-button[data-variant="text"][data-pressed] {
+  background: var(--cs-color-bg-light);
+}
+
+/* ========== 纯图标按钮 ========== */
+cs-button[data-icon] {
+  width: var(--cs-sem-size-interactive-sm);
+  height: var(--cs-sem-size-interactive-sm);
+  padding: var(--space-xs);
+  gap: 0;
+}
+
+cs-button[data-icon] .btn-label {
+  display: none;
+}
+
+/* ========== 图标元素 ========== */
+cs-button .btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--cs-sem-size-icon-sm);
+  line-height: 1;
+}
+
+/* ========== 下拉箭头 ========== */
+cs-button .btn-dropdown {
+  display: none;
+  font-size: var(--cs-sem-size-icon-sm);
+  line-height: 1;
+  margin-left: var(--space-2xs);
+}
+
+cs-button[data-dropdown] .btn-dropdown {
+  display: inline-flex;
+}
+
+/* ========== 尺寸 ========== */
+cs-button[data-size="sm"] {
+  height: var(--cs-sem-size-interactive-xs);
+  padding: var(--spacing-6) var(--space-sm);
+}
+
+cs-button[data-size="sm"][data-icon] {
+  width: var(--cs-sem-size-interactive-xs);
+  height: var(--cs-sem-size-interactive-xs);
+  padding: var(--spacing-6);
+}
+
+cs-button[data-size="lg"] {
+  height: var(--cs-sem-size-interactive-md);
+  padding: var(--spacing-10) var(--spacing-20);
+  font: var(--typo-cn-14-regular);
+}
+
+cs-button[data-size="lg"][data-icon] {
+  width: var(--cs-sem-size-interactive-md);
+  height: var(--cs-sem-size-interactive-md);
+  padding: var(--spacing-10);
+}
+
+/* ========== 禁用态 ========== */
+cs-button[data-disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 一级禁用 */
+cs-button[data-disabled],
+cs-button[data-variant="primary"][data-disabled] {
+  background: var(--cs-sem-bg-disabled);
+  color: var(--cs-color-text-light2);
+  border-color: transparent;
+}
+
+/* 二级禁用 */
+cs-button[data-variant="secondary"][data-disabled] {
+  background: transparent;
+  color: var(--cs-sem-text-disabled);
+  border-color: var(--cs-color-border);
+}
+
+/* 三级禁用 */
+cs-button[data-variant="text"][data-disabled] {
+  background: transparent;
+  color: var(--cs-sem-text-disabled);
+}
+
+/* ========== 加载态 ========== */
+cs-button[data-loading] {
+  pointer-events: none;
+  opacity: var(--cs-sem-opacity-loading);
+}
+
+cs-button[data-loading] .btn-icon {
+  animation: btn-spin 1s linear infinite;
+}
+
+@keyframes btn-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

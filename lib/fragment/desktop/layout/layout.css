@@ -1,0 +1,382 @@
+/*
+ * 主框架布局 (cs-layout) · Figma 12:2344 1:1 还原
+ * 真理标准：docs/figma-specs/2026-05-09-layout-space-switcher/SPEC.md
+ * 决策矩阵：docs/figma-specs/2026-05-09-layout-space-switcher/DESIGN-DECISIONS.md
+ * 改造契约：workspace/fragment/desktop/layout/RULES.md
+ *
+ * 全部使用 css/variable.css 变量 · 0 颜色硬编码（红线 1）
+ * Token 引用清单见 RULES.md § 3 (12 个)
+ */
+
+/* ============================================================
+ *  根容器 cs-layout · 100% × 100vh · radius 0 · overflow hidden
+ * ============================================================ */
+cs-layout {
+  width: 100%;
+  height: 100vh;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ============================================================
+ *  Tab Bar · W:FILL H:56 · bg-app-dark · px-16 py-6
+ * ============================================================ */
+cs-layout cs-tab-bar,
+cs-layout cs-tabbar,
+cs-layout .tabbar {
+  width: 100%;
+  height: 56px;
+  background: var(--cs-color-bg-app-dark);
+  padding: var(--spacing-6) var(--space-md);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* tabbar 槽位通用 · flex items-center gap-8 */
+cs-layout .tabbar .slot-left,
+cs-layout .tabbar .slot-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* tabbar slot-left flex 撑开（让 tabs 占据中间） */
+cs-layout .tabbar .slot-left {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- mac 3 圆点（cs-window-control） ---- */
+cs-layout .tabbar .slot-buttons cs-window-control {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-xs);
+}
+cs-layout .tabbar .ctrl-close,
+cs-layout .tabbar .ctrl-minimize,
+cs-layout .tabbar .ctrl-maximize {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  flex-shrink: 0;
+}
+cs-layout .tabbar .ctrl-close    { background: var(--cs-color-window-close); }
+cs-layout .tabbar .ctrl-minimize { background: var(--cs-color-window-minimize); }
+cs-layout .tabbar .ctrl-maximize { background: var(--cs-color-window-maximize); }
+
+/* ---- 搜索框（深底之上） · h:30 w:232 radius:72 ---- */
+cs-layout .tabbar .slot-search {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+cs-layout .tabbar .slot-search cs-search-input {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  width: 232px;
+  height: 30px;
+  padding: var(--space-2xs) var(--space-md);
+  border: 1px solid var(--cs-color-border-on-dark);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  box-sizing: border-box;
+  gap: var(--space-xs);
+}
+cs-layout .tabbar .slot-search input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-size: var(--font-size-md);
+  color: var(--cs-color-text-dark-primary);
+  font-family: var(--font-family-cn);
+}
+cs-layout .tabbar .slot-search input::placeholder {
+  color: var(--cs-color-text-light2);
+}
+cs-layout .tabbar .slot-search .cses-sousuo {
+  font-size: 14px;
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+}
+
+/* ---- Tab 列表 · h:44 w:160 radius:12 ---- */
+cs-layout .tabbar .slot-tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2xs);
+  flex-shrink: 0;
+}
+cs-layout .tabbar cs-tab {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 160px;
+  height: 44px;
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-xl);
+  gap: var(--space-xs);
+  box-sizing: border-box;
+  cursor: pointer;
+}
+cs-layout .tabbar cs-tab[data-active] {
+  background: var(--cs-color-bg-tab-active-on-dark);
+}
+cs-layout .tabbar cs-tab .tab-label {
+  font-size: var(--font-size-md);
+  color: var(--cs-color-text-dark-primary);
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+cs-layout .tabbar cs-tab[data-active] .tab-label {
+  color: var(--cs-color-text-dark-strong);
+}
+cs-layout .tabbar cs-tab .tab-close {
+  font-size: 14px;
+  color: var(--cs-color-text-dark-secondary);
+  flex-shrink: 0;
+}
+
+/* ---- 中间竖分割线 1×44 ---- */
+cs-layout .tabbar .slot-divider {
+  width: 1px;
+  height: 44px;
+  background: var(--cs-color-divider-dark);
+  flex-shrink: 0;
+}
+
+/* ---- 右槽：通知 + 头像组 ---- */
+cs-layout .tabbar .tabbar-notify-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+cs-layout .tabbar .tabbar-notify-icon {
+  font-size: 24px;
+  color: var(--cs-color-icon-light);
+}
+/* .tabbar-notify-badge 样式归 tab-bar fragment 单一来源管（见 tab-bar.css L81-99）
+ * 之前这里有重复定义 → CSS 优先级覆盖导致 tab-bar.css 修复不生效 → 已删除（2026-05-11） */
+
+/* ---- 头像 + 呼吸装饰圈（Figma 真意：1 头像 + 2 层呼吸光环 · 不是 3 个头像）
+ *   外圈：3.5px border · status-online @ 15% (figma 原值 rgba(18,208,59,0.15)) · LESSONS § 1.4 例外族
+ *   中圈：2.25px border · status-online @ 30% (figma 原值 rgba(18,208,59,0.30)) · LESSONS § 1.4 例外族
+ *   核心：1px border · status-online · 头像 img
+ */
+cs-layout .tabbar .avatar-pulse {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+cs-layout .tabbar .avatar-pulse-ring {
+  position: absolute;
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  box-sizing: border-box;
+}
+/* 外圈光环向外扩 5px → 视觉 30×30 */
+cs-layout .tabbar .avatar-pulse-ring--outer {
+  inset: -5px;
+  border: 3.5px solid var(--cs-color-status-online-ring-outer);
+}
+/* 中圈光环向外扩 2px → 视觉 24×24 */
+cs-layout .tabbar .avatar-pulse-ring--mid {
+  inset: -2px;
+  border: 2.25px solid var(--cs-color-status-online-ring-mid);
+}
+/* 核心头像 20×20 满容器 + 1px 边 */
+cs-layout .tabbar .avatar-pulse-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--cs-color-status-online);
+  object-fit: cover;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+ *  Body · flex flex-1 · bg-app-dark · pb-8
+ * ============================================================ */
+cs-layout .body {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  background: var(--cs-color-bg-app-dark);
+  padding: 0 0 var(--space-xs) 0;
+  display: flex;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+ *  Sidebar · W:97 · pt-12 px-16 pb-16 · gap-24
+ * ============================================================ */
+cs-layout cs-sidebar,
+cs-layout .sidebar {
+  width: 97px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm) var(--space-md) var(--space-md) var(--space-md);
+  gap: var(--spacing-24);
+  align-items: center;
+  background: var(--cs-color-bg-app-dark);
+}
+
+/* ---- logo 容器 · 42×42 · radius 8 ---- */
+cs-layout .sidebar .logo {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+cs-layout .sidebar .logo .cses-folder-logo {
+  font-size: 36px;
+  color: var(--cs-color-status-online);
+  line-height: 1;
+}
+
+/* ---- nav 列表 ---- */
+cs-layout .sidebar .nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20);
+  align-items: center;
+  width: 100%;
+}
+
+/* ---- nav-item · w:65 · 居中纵列 ---- */
+cs-layout .sidebar .nav-item {
+  width: 65px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  text-decoration: none;
+  color: var(--cs-color-icon-navprimary-default);
+  cursor: pointer;
+  transition: color var(--cs-transition-fast);
+}
+cs-layout .sidebar .nav-item:hover {
+  color: var(--cs-color-icon-navprimary-active);
+}
+cs-layout .sidebar .nav-item[data-active] {
+  color: var(--cs-color-icon-navprimary-active);
+}
+cs-layout .sidebar .nav-item .nav-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+cs-layout .sidebar .nav-item .nav-label {
+  font-size: var(--font-size-md);
+  text-align: center;
+  font-family: var(--font-family-cn);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* ============================================================
+ *  Content Wrapper · flex-1 · radius 8 · overflow hidden
+ * ============================================================ */
+cs-layout .content-wrapper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ---- 二级 navbar · W:232 · bg-secondary · border-right ---- */
+cs-layout cs-secondary-sidebar,
+cs-layout cs-navbar,
+cs-layout .navbar-container {
+  width: 232px;
+  flex-shrink: 0;
+  background: var(--cs-color-bg-secondary);
+  border-right: 1px solid var(--cs-color-border);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* ---- 主内容区 ---- */
+cs-layout .main-content {
+  flex: 1;
+  min-height: 0;
+  background: var(--cs-color-white);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* content-header 下边框 */
+cs-layout .main-content cs-content-header {
+  border-bottom: 1px solid var(--cs-color-border);
+  flex-shrink: 0;
+}
+
+/* content-body 撑满剩余 */
+cs-layout .main-content .content-body {
+  flex: 1;
+  min-height: 0;
+}
+
+/* content-bottom · h:18 可选 */
+cs-layout .main-content .content-bottom {
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+ *  Right Sidebar (cs-space-switcher) · W:65 · H:FILL
+ * ============================================================ */
+cs-layout cs-right-sidebar,
+cs-layout cs-space-switcher,
+cs-layout .right-sidebar {
+  width: 65px;
+  flex-shrink: 0;
+  display: flex;
+}
+
+/* right-sidebar 内层（由 space-switcher.css 真正控制内部结构 · 这里只兜底） */
+cs-layout cs-right-sidebar .inner,
+cs-layout cs-space-switcher .inner,
+cs-layout .right-sidebar .inner {
+  width: 100%;
+  flex: 1;
+  padding: var(--space-md) var(--space-md) var(--space-xs) var(--space-md);
+  gap: var(--spacing-32);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+}

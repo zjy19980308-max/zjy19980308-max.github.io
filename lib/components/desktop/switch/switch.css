@@ -1,0 +1,95 @@
+/*
+ * 开关组件 (Switch)
+ * 标签：<cs-switch>
+ * 数据来源：CSES Figma 设计规范「单选&多选&开关」
+ *
+ * data 属性：
+ *   data-checked              — 开启状态
+ *   data-disabled             — 禁用状态
+ *   data-size="sm"            — 小尺寸 28×16
+ *   （默认）                  — 大尺寸 40×24
+ *
+ * 子元素：
+ *   .switch-track             — 滑轨（pill 形背景）
+ *   .switch-knob              — 旋钮（白色圆形）
+ */
+
+/* ========== 基础样式 ========== */
+cs-switch {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ========== 滑轨 Track ========== */
+cs-switch .switch-track {
+  position: relative;
+  width: var(--spacing-40);                    /* 40px */
+  height: var(--cs-sem-size-interactive-xs);       /* 24px */
+  border-radius: var(--radius-pill);            /* 999px — pill 形 */
+  background: var(--cs-color-text-light2);         /* var(--cs-color-text-tertiary) — 关闭态 */
+  transition: background 0.2s ease;
+}
+
+/* ========== 旋钮 Knob ========== */
+cs-switch .switch-knob {
+  position: absolute;
+  top: var(--spacing-2);                        /* 2px 内边距 */
+  left: var(--spacing-2);                       /* 2px 起始位置 */
+  width: var(--spacing-20);                     /* 20px — (24 - 2*2) */
+  height: var(--spacing-20);                    /* 20px */
+  border-radius: var(--radius-full);            /* 9999px — 正圆 */
+  background: var(--cs-color-white);               /* 白色旋钮 */
+  transition: left 0.2s ease;
+}
+
+/* ========== 开启态 Checked ========== */
+cs-switch[data-checked] .switch-track {
+  background: var(--cs-color-primary);             /* #4757e2 — 主色 */
+}
+
+cs-switch[data-checked] .switch-knob {
+  left: var(--spacing-18);                      /* 18px — (40 - 20 - 2) */
+}
+
+/* ========== 禁用态 Disabled ========== */
+cs-switch[data-disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 关闭 + 禁用 */
+cs-switch[data-disabled] .switch-track {
+  background: var(--color-neutral-300);         /* #c4d4d4 — 关闭禁用背景 */
+}
+
+/* 开启 + 禁用 */
+cs-switch[data-checked][data-disabled] .switch-track {
+  background: var(--cs-color-primary-disabled);    /* #ced3ff — 主色禁用态 */
+}
+
+/* ========== 小尺寸 Small (28×16) ========== */
+cs-switch[data-size="sm"] .switch-track {
+  width: var(--spacing-28, 28px);               /* 28px — 备注：token 无精确值 */
+  height: var(--cs-sem-size-icon-md);              /* 16px */
+}
+
+cs-switch[data-size="sm"] .switch-knob {
+  width: var(--spacing-12, 12px);               /* 12px — (16 - 2*2) */
+  height: var(--spacing-12, 12px);              /* 12px */
+}
+
+cs-switch[data-size="sm"][data-checked] .switch-knob {
+  left: var(--spacing-14);                      /* 14px — (28 - 12 - 2) */
+}
+
+/* 小尺寸 关闭 + 禁用 */
+cs-switch[data-size="sm"][data-disabled] .switch-track {
+  background: var(--cs-color-bg-light);            /* #f2f3f5 — Figma 小尺寸关闭禁用 */
+}
+
+/* 小尺寸 开启 + 禁用（继承默认 --cs-color-primary-disabled） */
+cs-switch[data-size="sm"][data-checked][data-disabled] .switch-track {
+  background: var(--cs-color-primary-disabled);
+}

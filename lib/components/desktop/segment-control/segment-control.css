@@ -1,0 +1,56 @@
+/*
+ * 视图切换标签 (Segment Control / View Tabs)
+ * 标签：<cs-segment-control>
+ * 数据来源：任务管理视图切换（列表/看板/甘特图/工时）
+ *
+ * data 属性：
+ *   data-active（在 .segment-item 上）— 激活项
+ *
+ * 支持 2–5 个标签项
+ *
+ * 与 iOS 式 pill switcher 不同：
+ *   无外框、无背景、无圆角容器
+ *   项之间无分隔线
+ *   激活态用主色 + 中等字重，无背景色
+ */
+
+/* ========== 容器 ========== */
+cs-segment-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  box-sizing: border-box;
+}
+
+/* ========== 标签项 ========== */
+cs-segment-control .segment-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-xs) var(--space-sm);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light2);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: color 0.15s;
+}
+
+/* ========== 图标 ========== */
+cs-segment-control .segment-item i {
+  font-size: var(--space-md);
+  line-height: 1;
+}
+
+/* ========== Hover（非激活项） ========== */
+cs-segment-control .segment-item:not([data-active]):hover {
+  color: var(--cs-color-text);
+}
+
+/* ========== 激活态 ========== */
+cs-segment-control .segment-item[data-active] {
+  color: var(--cs-color-primary);
+  font: var(--typo-cn-14-medium);
+  cursor: default;
+}

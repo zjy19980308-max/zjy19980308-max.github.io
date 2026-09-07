@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-nav-tree 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="nav-tree.css?v=2b3afe5b">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .tree-container { width: 260px; }
+  </style>
+</head>
+<body>
+
+<!-- 基础用法 -->
+<div class="section">
+  <div class="section-title">基础树容器</div>
+  <div class="section-subtitle">包裹 cs-tree-item 的容器组件</div>
+
+  <div class="tree-container">
+    <cs-nav-tree>
+      <div class="tree-body">
+        <cs-tree-item data-level="0" data-expanded>
+          <i class="tree-arrow cses-qianjin"></i>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">产品设计空间</span>
+        </cs-tree-item>
+
+        <cs-tree-item data-level="1" data-expanded>
+          <i class="tree-arrow cses-qianjin"></i>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">设计规范库</span>
+        </cs-tree-item>
+
+        <cs-tree-item data-level="2">
+          <span class="tree-arrow"></span>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">颜色规范</span>
+        </cs-tree-item>
+
+        <cs-tree-item data-level="2" data-selected>
+          <span class="tree-arrow"></span>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">字体规范</span>
+        </cs-tree-item>
+
+        <cs-tree-item data-level="1">
+          <i class="tree-arrow cses-qianjin"></i>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">组件库</span>
+        </cs-tree-item>
+      </div>
+    </cs-nav-tree>
+  </div>
+</div>
+
+<!-- 带头部标题 -->
+<div class="section">
+  <div class="section-title">带头部标题</div>
+  <div class="section-subtitle">tree-header 显示分类标题</div>
+
+  <div class="tree-container">
+    <cs-nav-tree>
+      <div class="tree-header">
+        <span class="tree-header-title">知识库</span>
+      </div>
+      <div class="tree-body">
+        <cs-tree-item data-level="0" data-expanded>
+          <i class="tree-arrow cses-qianjin"></i>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">技术文档</span>
+        </cs-tree-item>
+
+        <cs-tree-item data-level="1">
+          <span class="tree-arrow"></span>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">API 参考</span>
+        </cs-tree-item>
+
+        <cs-tree-item data-level="1">
+          <span class="tree-arrow"></span>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">部署指南</span>
+        </cs-tree-item>
+
+        <cs-tree-item data-level="0">
+          <i class="tree-arrow cses-qianjin"></i>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">产品文档</span>
+        </cs-tree-item>
+      </div>
+    </cs-nav-tree>
+  </div>
+</div>
+
+<!-- 可折叠模式 -->
+<div class="section">
+  <div class="section-title">可折叠模式</div>
+  <div class="section-subtitle">data-collapsible 允许整棵树折叠；data-collapsed 为折叠状态</div>
+
+  <div class="tree-container">
+    <cs-nav-tree data-collapsible>
+      <div class="tree-header">
+        <span class="tree-header-title">展开的树</span>
+        <i class="tree-header-arrow cses-xiala"></i>
+      </div>
+      <div class="tree-body">
+        <cs-tree-item data-level="0">
+          <i class="tree-arrow cses-qianjin"></i>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">项目 A</span>
+        </cs-tree-item>
+
+        <cs-tree-item data-level="0">
+          <i class="tree-arrow cses-qianjin"></i>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">项目 B</span>
+        </cs-tree-item>
+      </div>
+    </cs-nav-tree>
+
+    <cs-nav-tree data-collapsible data-collapsed>
+      <div class="tree-header">
+        <span class="tree-header-title">折叠的树</span>
+        <i class="tree-header-arrow cses-xiala"></i>
+      </div>
+      <div class="tree-body">
+        <cs-tree-item data-level="0">
+          <i class="tree-arrow cses-qianjin"></i>
+          <i class="tree-icon cses-wenjian"></i>
+          <span class="tree-label">隐藏的项目</span>
+        </cs-tree-item>
+      </div>
+    </cs-nav-tree>
+  </div>
+</div>
+
+</body>
+</html>

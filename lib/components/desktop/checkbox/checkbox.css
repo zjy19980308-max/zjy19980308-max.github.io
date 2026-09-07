@@ -1,0 +1,99 @@
+/*
+ * Checkbox Component
+ * Tag: <cs-checkbox>
+ *
+ * The element itself IS the checkbox square. No inner elements needed.
+ * Checkmark is drawn with ::after pseudo-element.
+ *
+ * data attributes:
+ *   data-checked        — checked state
+ *   data-indeterminate  — indeterminate state (partial selection)
+ *   data-disabled       — disabled state
+ */
+
+/* ========== Base: unchecked square ========== */
+cs-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-icon-sm);
+  height: var(--cs-sem-size-icon-sm);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-2);
+  background: var(--cs-color-white);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* ========== Checkmark (hidden by default) ========== */
+cs-checkbox::after {
+  content: "";
+  display: none;
+  width: var(--space-2xs);
+  height: 7px;
+  border-bottom: 1.5px solid var(--cs-color-white);
+  border-right: 1.5px solid var(--cs-color-white);
+  transform: rotate(45deg) translateY(-0.5px);
+}
+
+/* ========== Hover ========== */
+cs-checkbox:hover {
+  border-color: var(--cs-color-text-light2);
+}
+
+/* ========== Checked ========== */
+cs-checkbox[data-checked] {
+  background: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+}
+
+cs-checkbox[data-checked]::after {
+  display: block;
+}
+
+cs-checkbox[data-checked]:hover {
+  border-color: var(--cs-color-primary);
+}
+
+/* ========== Indeterminate ========== */
+cs-checkbox[data-indeterminate] {
+  background: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+}
+
+cs-checkbox[data-indeterminate]::after {
+  display: block;
+  width: var(--spacing-6);
+  height: 0;
+  border-bottom: 1.5px solid var(--cs-color-white);
+  border-right: none;
+  transform: none;
+  border-radius: var(--radius-2);
+}
+
+cs-checkbox[data-indeterminate]:hover {
+  border-color: var(--cs-color-primary);
+}
+
+/* ========== Disabled ========== */
+cs-checkbox[data-disabled] {
+  opacity: var(--cs-sem-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ========== Disabled + Checked ========== */
+cs-checkbox[data-disabled][data-checked] {
+  background: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+}
+
+/* ========== Disabled + Indeterminate ========== */
+cs-checkbox[data-disabled][data-indeterminate] {
+  background: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+}

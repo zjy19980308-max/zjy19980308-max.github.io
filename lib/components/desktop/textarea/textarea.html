@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-textarea 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="textarea.css?v=a92fe127">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; padding-top: 8px; }
+    cs-textarea { width: 320px; }
+  </style>
+</head>
+<body>
+
+<!-- 默认文本域 -->
+<div class="section">
+  <div class="section-title">默认文本域</div>
+  <div class="section-subtitle">基础用法，可垂直拖拽调整高度</div>
+
+  <div class="row">
+    <span class="row-label">常态</span>
+    <cs-textarea>
+      <textarea class="textarea-field" placeholder="请输入内容"></textarea>
+    </cs-textarea>
+  </div>
+
+  <div class="row">
+    <span class="row-label">有内容</span>
+    <cs-textarea>
+      <textarea class="textarea-field">这是一段已输入的文本内容，文本域支持多行输入，可以垂直拖拽调整高度。</textarea>
+    </cs-textarea>
+  </div>
+</div>
+
+<!-- 带字数统计 -->
+<div class="section">
+  <div class="section-title">带字数统计</div>
+  <div class="section-subtitle">.textarea-count 显示当前字数 / 最大字数</div>
+
+  <div class="row">
+    <span class="row-label">空状态</span>
+    <cs-textarea>
+      <textarea class="textarea-field" placeholder="请输入内容" maxlength="200"></textarea>
+      <span class="textarea-count">0 / 200</span>
+    </cs-textarea>
+  </div>
+
+  <div class="row">
+    <span class="row-label">有内容</span>
+    <cs-textarea>
+      <textarea class="textarea-field" maxlength="200">这是一段示例文本</textarea>
+      <span class="textarea-count">8 / 200</span>
+    </cs-textarea>
+  </div>
+</div>
+
+<!-- 交互状态 -->
+<div class="section">
+  <div class="section-title">交互状态</div>
+  <div class="section-subtitle">data-error / data-disabled</div>
+
+  <div class="row">
+    <span class="row-label">默认</span>
+    <cs-textarea>
+      <textarea class="textarea-field" placeholder="默认状态"></textarea>
+    </cs-textarea>
+  </div>
+
+  <div class="row">
+    <span class="row-label">错误</span>
+    <cs-textarea data-error>
+      <textarea class="textarea-field">内容格式有误，请检查后重新输入</textarea>
+      <span class="textarea-count">15 / 200</span>
+    </cs-textarea>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用</span>
+    <cs-textarea data-disabled>
+      <textarea class="textarea-field" placeholder="禁用状态" disabled></textarea>
+    </cs-textarea>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用有值</span>
+    <cs-textarea data-disabled>
+      <textarea class="textarea-field" disabled>此内容不可编辑</textarea>
+      <span class="textarea-count">7 / 200</span>
+    </cs-textarea>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+/*
+ * 面包屑导航组件 (Breadcrumb)
+ * 标签：<cs-breadcrumb>
+ * 数据来源：任务管理 Figma 顶栏-空间内导航-有面包屑
+ *
+ * 结构：
+ *   cs-breadcrumb > (.breadcrumb-item + .breadcrumb-separator) ... + .breadcrumb-item[data-current]
+ *
+ * data 属性：
+ *   data-icon    — 带 icon 前缀模式（每个 item 前可放图标）
+ *   data-current — 标记当前页（最后一项），加粗且不响应悬停
+ *
+ * 规格：
+ *   文字：14px/400 → var(--typo-cn-14-regular)
+ *   普通项色：#999 → var(--cs-color-text-light2)
+ *   当前项色：#333 → var(--cs-color-text)
+ *   当前项字重：500 → var(--font-weight-medium)
+ *   悬停色：var(--cs-color-primary)
+ *   项与分隔符间距：16px
+ *   分隔符：斜杠 / 文字
+ */
+
+/* ========== 容器 ========== */
+cs-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ========== 普通项 ========== */
+cs-breadcrumb .breadcrumb-item {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light2);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3xs);
+}
+
+cs-breadcrumb .breadcrumb-item:hover {
+  color: var(--cs-color-primary);
+}
+
+/* ========== 当前项（最后一项） ========== */
+cs-breadcrumb .breadcrumb-item[data-current] {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  cursor: default;
+}
+
+cs-breadcrumb .breadcrumb-item[data-current]:hover {
+  color: var(--cs-color-text);
+}
+
+/* ========== 分隔符 ========== */
+cs-breadcrumb .breadcrumb-separator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ========== 图标前缀 ========== */
+cs-breadcrumb .breadcrumb-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--cs-sem-size-icon-sm);
+  color: inherit;
+  flex-shrink: 0;
+}
+
+/* ========== 预览页样式 ========== */
+.breadcrumb-preview-body {
+  padding: var(--space-md);
+  background: var(--cs-color-bg-light, var(--cs-color-bg-light));
+  font-family: "PingFang SC", sans-serif;
+}
+
+.breadcrumb-preview-section {
+  background: var(--cs-color-bg, var(--cs-color-white));
+  border-radius: var(--radius-lg, 8px);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  max-width: 720px;
+}
+
+.breadcrumb-preview-title {
+  font: var(--typo-cn-16-medium);
+  color: var(--cs-color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.breadcrumb-preview-subtitle {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  margin-bottom: var(--space-md);
+}
+
+.breadcrumb-preview-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+}
+
+.breadcrumb-preview-row-label {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  width: 80px;
+  flex-shrink: 0;
+}

@@ -1,0 +1,56 @@
+/*
+ * 链接组件 (Link)
+ * 标签：<cs-link>
+ * 数据来源：各页面文本链接设计
+ *
+ * Figma 实测：
+ *   颜色: #4757e2 → var(--cs-color-primary)（Figma 值 #4757e2，最接近 --cs-color-primary/#4857e2）
+ *   悬停: 下划线 + 深蓝
+ *   禁用: 灰色，不可点击
+ *
+ * data 属性：
+ *   data-disabled — 禁用状态
+ */
+
+/* ========== 基础样式 ========== */
+cs-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+
+  font: inherit;
+  color: var(--cs-sem-text-link);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--cs-transition-duration, 0.2s) ease;
+}
+
+/* ========== 交互状态 ========== */
+
+/* 悬停 */
+cs-link:hover {
+  color: var(--cs-sem-text-link-hover);
+  text-decoration: underline;
+}
+
+/* 激活/按下 */
+cs-link:active {
+  color: var(--cs-color-primary-active);
+}
+
+/* 禁用 */
+cs-link[data-disabled] {
+  color: var(--cs-sem-text-disabled);
+  cursor: not-allowed;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+/* ========== 图标 ========== */
+cs-link .link-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: inherit;
+  color: inherit;
+  flex-shrink: 0;
+}

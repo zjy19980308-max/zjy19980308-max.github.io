@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-button 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="button.css?v=2">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 60px; flex-shrink: 0; }
+    .dark-bg { background: var(--cs-color-bg-app-dark); padding: 16px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<!-- 一级按钮 Primary -->
+<div class="section">
+  <div class="section-title">一级按钮 Primary</div>
+  <div class="section-subtitle">data-variant="primary"（默认，可省略）</div>
+
+  <div class="row">
+    <span class="row-label">常态</span>
+    <cs-button><span class="btn-label">按钮</span></cs-button>
+    <cs-button><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-dropdown><span class="btn-label">按钮</span><i class="btn-dropdown cses-xiala"></i></cs-button>
+    <cs-button data-dropdown><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span><i class="btn-dropdown cses-xiala"></i></cs-button>
+    <cs-button data-icon><i class="btn-icon cses-plus"></i></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">悬浮</span>
+    <cs-button data-hover><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-hover><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-hover data-icon><i class="btn-icon cses-plus"></i></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">选中</span>
+    <cs-button data-pressed><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-pressed><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-pressed data-icon><i class="btn-icon cses-plus"></i></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用</span>
+    <cs-button data-disabled><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-disabled><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-disabled data-dropdown><span class="btn-label">按钮</span><i class="btn-dropdown cses-xiala"></i></cs-button>
+    <cs-button data-disabled data-icon><i class="btn-icon cses-plus"></i></cs-button>
+  </div>
+</div>
+
+<!-- 危险 / 主色描边（org-backend 反哺） -->
+<div class="section">
+  <div class="section-title">危险 / 主色描边（org-backend 反哺）</div>
+  <div class="section-subtitle">data-variant="danger"（红描边·删除/操作离职） · data-variant="primary-line"（蓝描边·邀请人员）</div>
+  <div class="row">
+    <cs-button data-variant="danger"><span class="btn-label">操作离职</span></cs-button>
+    <cs-button data-variant="danger" data-hover><span class="btn-label">操作离职</span></cs-button>
+    <cs-button data-variant="primary-line"><span class="btn-label">邀请人员</span></cs-button>
+    <cs-button data-variant="primary-line" data-hover><span class="btn-label">邀请人员</span></cs-button>
+  </div>
+</div>
+
+<!-- 二级按钮 Secondary -->
+<div class="section">
+  <div class="section-title">二级按钮 Secondary</div>
+  <div class="section-subtitle">data-variant="secondary"</div>
+
+  <div class="row">
+    <span class="row-label">常态</span>
+    <cs-button data-variant="secondary"><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="secondary"><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="secondary" data-dropdown><span class="btn-label">按钮</span><i class="btn-dropdown cses-xiala"></i></cs-button>
+    <cs-button data-variant="secondary" data-dropdown><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span><i class="btn-dropdown cses-xiala"></i></cs-button>
+    <cs-button data-variant="secondary" data-icon><i class="btn-icon cses-gengduo"></i></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">悬浮</span>
+    <cs-button data-variant="secondary" data-hover><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="secondary" data-hover><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="secondary" data-hover data-icon><i class="btn-icon cses-gengduo"></i></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">选中</span>
+    <cs-button data-variant="secondary" data-pressed><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="secondary" data-pressed><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="secondary" data-pressed data-icon><i class="btn-icon cses-gengduo"></i></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用</span>
+    <cs-button data-variant="secondary" data-disabled><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="secondary" data-disabled><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="secondary" data-disabled data-icon><i class="btn-icon cses-gengduo"></i></cs-button>
+  </div>
+</div>
+
+<!-- 三级按钮 Text -->
+<div class="section">
+  <div class="section-title">三级按钮 Text</div>
+  <div class="section-subtitle">data-variant="text"</div>
+
+  <div class="row">
+    <span class="row-label">常态</span>
+    <cs-button data-variant="text"><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="text"><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="text" data-dropdown><span class="btn-label">按钮</span><i class="btn-dropdown cses-xiala"></i></cs-button>
+    <cs-button data-variant="text" data-icon><i class="btn-icon cses-gengduo"></i></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">悬浮</span>
+    <cs-button data-variant="text" data-hover><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="text" data-hover><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="text" data-hover data-icon><i class="btn-icon cses-gengduo"></i></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">选中</span>
+    <cs-button data-variant="text" data-pressed><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="text" data-pressed><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="text" data-pressed data-icon><i class="btn-icon cses-gengduo"></i></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用</span>
+    <cs-button data-variant="text" data-disabled><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="text" data-disabled><i class="btn-icon cses-plus"></i><span class="btn-label">按钮</span></cs-button>
+    <cs-button data-variant="text" data-disabled data-icon><i class="btn-icon cses-gengduo"></i></cs-button>
+  </div>
+</div>
+
+<!-- 尺寸 -->
+<div class="section">
+  <div class="section-title">尺寸</div>
+  <div class="section-subtitle">data-size="sm" / 默认md / data-size="lg"</div>
+
+  <div class="row">
+    <span class="row-label">sm 28px</span>
+    <cs-button data-size="sm"><span class="btn-label">小按钮</span></cs-button>
+    <cs-button data-size="sm"><i class="btn-icon cses-plus"></i><span class="btn-label">小按钮</span></cs-button>
+    <cs-button data-size="sm" data-icon><i class="btn-icon cses-plus"></i></cs-button>
+    <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">小按钮</span></cs-button>
+    <cs-button data-variant="text" data-size="sm"><span class="btn-label">小按钮</span></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">md 32px</span>
+    <cs-button><span class="btn-label">中按钮</span></cs-button>
+    <cs-button><i class="btn-icon cses-plus"></i><span class="btn-label">中按钮</span></cs-button>
+    <cs-button data-icon><i class="btn-icon cses-plus"></i></cs-button>
+    <cs-button data-variant="secondary"><span class="btn-label">中按钮</span></cs-button>
+    <cs-button data-variant="text"><span class="btn-label">中按钮</span></cs-button>
+  </div>
+
+  <div class="row">
+    <span class="row-label">lg 36px</span>
+    <cs-button data-size="lg"><span class="btn-label">大按钮</span></cs-button>
+    <cs-button data-size="lg"><i class="btn-icon cses-plus"></i><span class="btn-label">大按钮</span></cs-button>
+    <cs-button data-size="lg" data-icon><i class="btn-icon cses-plus"></i></cs-button>
+    <cs-button data-variant="secondary" data-size="lg"><span class="btn-label">大按钮</span></cs-button>
+    <cs-button data-variant="text" data-size="lg"><span class="btn-label">大按钮</span></cs-button>
+  </div>
+</div>
+
+<!-- 业务场景示例 -->
+<div class="section">
+  <div class="section-title">业务场景示例</div>
+
+  <div class="row">
+    <cs-button><i class="btn-icon cses-plus"></i><span class="btn-label">新建任务</span></cs-button>
+    <cs-button data-variant="secondary"><i class="btn-icon cses-filter_light"></i><span class="btn-label">筛选</span></cs-button>
+    <cs-button data-variant="text"><span class="btn-label">取消</span></cs-button>
+    <cs-button><span class="btn-label">确定</span></cs-button>
+  </div>
+
+  <div class="row">
+    <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">导出</span></cs-button>
+    <cs-button data-variant="text" data-size="sm"><i class="btn-icon cses-refresh"></i><span class="btn-label">刷新</span></cs-button>
+    <cs-button data-variant="secondary" data-size="sm" data-dropdown><span class="btn-label">分组</span><i class="btn-dropdown cses-xiala"></i></cs-button>
+  </div>
+</div>
+
+</body>
+</html>

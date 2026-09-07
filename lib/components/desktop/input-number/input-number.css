@@ -1,0 +1,135 @@
+/*
+ * 数字输入框 (InputNumber)
+ * 标签：<cs-input-number>
+ *
+ * 作用：带加减步进按钮的数字输入控件。对标 ng-zorro InputNumber。
+ * 使用原生 <input type="number">，步进按钮调用浏览器 stepUp/stepDown（纯 CSS 不含 JS，
+ * 但 <input type="number"> 原生支持 stepUp — 仍需 1 行 inline onclick 或业务 JS）。
+ * 本组件库约定：演示页里点击 + / - 无真实效果（纯 CSS），业务页面自行挂事件。
+ *
+ * data 属性：
+ *   data-size="sm|md|lg"          — 24/32/40
+ *   data-disabled                 — 禁用
+ *   data-error                    — 错误态
+ *   data-focus                    — 聚焦态（演示）
+ *
+ * 子元素：
+ *   .input-number-field            — <input type="number">
+ *   .input-number-controls         — 右侧步进按钮容器
+ *   .input-number-up               — 上按钮
+ *   .input-number-down             — 下按钮
+ */
+
+cs-input-number {
+  display: inline-flex;
+  align-items: stretch;
+  width: var(--spacing-120);
+  height: var(--cs-sem-size-interactive-sm);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-white);
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+cs-input-number[data-size="sm"] {
+  height: var(--cs-sem-size-interactive-xs);
+}
+
+cs-input-number[data-size="lg"] {
+  height: var(--cs-sem-size-interactive-md);
+}
+
+cs-input-number:hover {
+  border-color: var(--cs-color-text-light2);
+}
+
+cs-input-number:focus-within,
+cs-input-number[data-focus] {
+  border-color: var(--cs-color-primary);
+}
+
+cs-input-number[data-error] {
+  border-color: var(--cs-sem-border-error);
+}
+
+cs-input-number[data-disabled] {
+  background: var(--cs-color-bg-disabled);
+  pointer-events: none;
+  opacity: var(--cs-sem-opacity-disabled);
+}
+
+/* ========== 输入区 ========== */
+cs-input-number .input-number-field {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  padding: 0 var(--space-sm);
+  background: transparent;
+  color: var(--cs-color-text);
+  font: var(--typo-cn-14-regular);
+  line-height: 1;
+}
+
+cs-input-number[data-size="sm"] .input-number-field {
+  padding: 0 var(--space-xs);
+  font: var(--typo-cn-12-regular);
+}
+
+cs-input-number .input-number-field::placeholder {
+  color: var(--cs-color-text-light2);
+}
+
+/* 隐藏浏览器自带 spinner（因为我们自绘） */
+cs-input-number .input-number-field::-webkit-outer-spin-button,
+cs-input-number .input-number-field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+cs-input-number .input-number-field[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* ========== 步进按钮 ========== */
+cs-input-number .input-number-controls {
+  display: flex;
+  flex-direction: column;
+  width: var(--spacing-20);
+  border-left: var(--line-width) solid var(--cs-color-border);
+  flex-shrink: 0;
+}
+
+cs-input-number .input-number-up,
+cs-input-number .input-number-down {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: var(--cs-color-bg);
+  color: var(--cs-color-text-light);
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+cs-input-number .input-number-down {
+  border-top: var(--line-width) solid var(--cs-color-border);
+}
+
+cs-input-number .input-number-up:hover,
+cs-input-number .input-number-down:hover {
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-primary);
+}
+
+cs-input-number[data-disabled] .input-number-up,
+cs-input-number[data-disabled] .input-number-down {
+  color: var(--cs-color-text-light2);
+  cursor: not-allowed;
+}

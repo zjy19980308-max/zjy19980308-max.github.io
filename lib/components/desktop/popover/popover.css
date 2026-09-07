@@ -1,0 +1,158 @@
+/*
+ * 气泡卡片 (Popover)
+ * 标签：<cs-popover>
+ *
+ * 作用：点击触发元素后弹出富内容气泡卡片，承载说明、快捷操作、信息卡。
+ * 对标 ng-zorro Popover。由 popover.js 接管 toggle（点击 / 外部 / ESC 三种关闭方式）。
+ *
+ * data 属性：
+ *   data-placement="bottom"(默认) / "top" / "left" / "right"
+ *                  "bottom-left" / "bottom-right"
+ *                  "top-left" / "top-right"
+ *   data-size="sm" / "md"(默认) / "lg"  — 卡片宽度
+ *   data-open   — 展开态（popover.js 切换）
+ *   data-disabled
+ *
+ * 子元素：
+ *   .popover-trigger   — 触发元素（<button>）
+ *   .popover-panel     — 弹出卡片
+ *   .popover-title     — 卡片标题
+ *   .popover-body      — 卡片正文
+ *   .popover-footer    — 卡片底部（按钮区）
+ */
+
+/* ========== 容器 ========== */
+cs-popover {
+  position: relative;
+  display: inline-block;
+}
+
+/* ========== 触发器 ========== */
+cs-popover .popover-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+}
+
+cs-popover[data-disabled] .popover-trigger {
+  cursor: not-allowed;
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* ========== 卡片容器 ========== */
+cs-popover .popover-panel {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  min-width: var(--spacing-160);
+  max-width: calc(var(--spacing-160) * 3);
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--cs-shadow-card);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+cs-popover[data-open] .popover-panel {
+  display: block;
+}
+
+/* ========== 尺寸变体 ========== */
+cs-popover[data-size="sm"] .popover-panel {
+  min-width: var(--spacing-160);
+  max-width: calc(var(--spacing-160) * 1.5);
+}
+
+cs-popover[data-size="lg"] .popover-panel {
+  min-width: calc(var(--spacing-160) * 2);
+  max-width: calc(var(--spacing-160) * 4);
+}
+
+/* ========== 弹出位置 ========== */
+/* bottom（默认，居中） */
+cs-popover .popover-panel,
+cs-popover[data-placement="bottom"] .popover-panel {
+  top: calc(100% + var(--space-xs));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+cs-popover[data-placement="bottom-left"] .popover-panel {
+  top: calc(100% + var(--space-xs));
+  left: 0;
+}
+
+cs-popover[data-placement="bottom-right"] .popover-panel {
+  top: calc(100% + var(--space-xs));
+  right: 0;
+  left: auto;
+}
+
+cs-popover[data-placement="top"] .popover-panel {
+  bottom: calc(100% + var(--space-xs));
+  left: 50%;
+  top: auto;
+  transform: translateX(-50%);
+}
+
+cs-popover[data-placement="top-left"] .popover-panel {
+  bottom: calc(100% + var(--space-xs));
+  left: 0;
+  top: auto;
+}
+
+cs-popover[data-placement="top-right"] .popover-panel {
+  bottom: calc(100% + var(--space-xs));
+  right: 0;
+  left: auto;
+  top: auto;
+}
+
+cs-popover[data-placement="left"] .popover-panel {
+  right: calc(100% + var(--space-xs));
+  top: 50%;
+  left: auto;
+  transform: translateY(-50%);
+}
+
+cs-popover[data-placement="right"] .popover-panel {
+  left: calc(100% + var(--space-xs));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ========== 标题 ========== */
+cs-popover .popover-title {
+  display: block;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  font: var(--typo-cn-14-regular);
+  font-weight: 500;
+  color: var(--cs-color-text);
+}
+
+/* ========== 正文 ========== */
+cs-popover .popover-body {
+  padding: var(--space-sm) var(--space-md);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light);
+  line-height: 1.6;
+}
+
+/* ========== 底部操作区 ========== */
+cs-popover .popover-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md) var(--space-sm);
+  border-top: var(--line-width) solid var(--cs-color-border);
+  background: var(--cs-color-bg-light);
+}

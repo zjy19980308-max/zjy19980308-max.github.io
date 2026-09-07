@@ -1,0 +1,122 @@
+/*
+ * 空间导航项组件 (Nav Space)
+ * 标签：<cs-nav-space>
+ * 用于侧边栏的工作空间项（带彩色圆形图标、可展开子树）
+ *
+ * 结构：
+ *   <cs-nav-space [data-active] [data-expanded]>
+ *     <div class="space-header">
+ *       <span class="space-icon bg-blue">X</span>
+ *       <span class="space-label">XPA空间</span>
+ *       <span class="space-count">5</span>           ← 可选，右侧计数
+ *       <span class="space-actions">                  ← 可选，hover 显示操作按钮
+ *         <i class="cses-more"></i>
+ *       </span>
+ *     </div>
+ *     <div class="space-children">                    ← 可选，展开时显示子项
+ *       <cs-nav-item>...</cs-nav-item>
+ *       ...
+ *     </div>
+ *   </cs-nav-space>
+ *
+ * data 属性：
+ *   data-active               — 激活/选中态（空间本身高亮）
+ *   data-expanded              — 展开子树
+ */
+
+/* ========== 基础样式 ========== */
+cs-nav-space {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* ========== 空间头部行 ========== */
+cs-nav-space .space-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-xs);
+  height: var(--cs-sem-size-interactive-sm);
+  padding: var(--spacing-6) var(--space-xs);
+  border-radius: var(--radius);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* ========== 悬浮态 ========== */
+cs-nav-space .space-header:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 激活/选中态 ========== */
+cs-nav-space[data-active] > .space-header {
+  background: var(--cs-color-selected);
+  color: var(--cs-color-primary);
+}
+
+/* ========== 空间图标（彩色圆形） ========== */
+cs-nav-space .space-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-20);
+  height: var(--spacing-20);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  line-height: 1;
+  color: var(--cs-color-white);
+  flex-shrink: 0;
+}
+
+/* ========== 空间名称 ========== */
+cs-nav-space .space-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========== 右侧计数 ========== */
+cs-nav-space .space-count {
+  flex-shrink: 0;
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 操作按钮（hover 显示） ========== */
+cs-nav-space .space-actions {
+  display: none;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--spacing-4);
+  color: var(--cs-color-text-light2);
+  font-size: var(--cs-sem-size-icon-sm);
+}
+
+cs-nav-space .space-header:hover .space-actions {
+  display: inline-flex;
+}
+
+/* hover 时隐藏计数，显示操作按钮 */
+cs-nav-space .space-header:hover .space-count {
+  display: none;
+}
+
+/* ========== 子项容器（展开的树形子项） ========== */
+cs-nav-space .space-children {
+  display: none;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  padding-left: var(--spacing-28);
+}
+
+/* 展开时显示子项 */
+cs-nav-space[data-expanded] .space-children {
+  display: flex;
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-radio 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="radio.css?v=9e5bb3f9">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- 默认尺寸 md 14px -->
+<div class="section">
+  <div class="section-title">单选框 Radio — 默认尺寸 (14px)</div>
+  <div class="section-subtitle">data-size="md"（默认，可省略）</div>
+
+  <div class="row">
+    <span class="row-label">未选中</span>
+    <cs-radio>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 A</span>
+    </cs-radio>
+    <cs-radio>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 B</span>
+    </cs-radio>
+  </div>
+
+  <div class="row">
+    <span class="row-label">选中</span>
+    <cs-radio data-checked>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 A</span>
+    </cs-radio>
+    <cs-radio>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 B</span>
+    </cs-radio>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用未选中</span>
+    <cs-radio data-disabled>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 A</span>
+    </cs-radio>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用选中</span>
+    <cs-radio data-checked data-disabled>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 A</span>
+    </cs-radio>
+  </div>
+
+  <div class="row">
+    <span class="row-label">纯圆圈</span>
+    <cs-radio>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+    </cs-radio>
+    <cs-radio data-checked>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+    </cs-radio>
+    <cs-radio data-disabled>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+    </cs-radio>
+    <cs-radio data-checked data-disabled>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+    </cs-radio>
+  </div>
+</div>
+
+<!-- 小尺寸 sm 12px -->
+<div class="section">
+  <div class="section-title">单选框 Radio — 小尺寸 (12px)</div>
+  <div class="section-subtitle">data-size="sm"（会议投票场景）</div>
+
+  <div class="row">
+    <span class="row-label">未选中</span>
+    <cs-radio data-size="sm">
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 A</span>
+    </cs-radio>
+    <cs-radio data-size="sm">
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 B</span>
+    </cs-radio>
+  </div>
+
+  <div class="row">
+    <span class="row-label">选中</span>
+    <cs-radio data-size="sm" data-checked>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 A</span>
+    </cs-radio>
+    <cs-radio data-size="sm">
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 B</span>
+    </cs-radio>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用未选中</span>
+    <cs-radio data-size="sm" data-disabled>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 A</span>
+    </cs-radio>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用选中</span>
+    <cs-radio data-size="sm" data-checked data-disabled>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">选项 A</span>
+    </cs-radio>
+  </div>
+</div>
+
+<!-- 业务场景 -->
+<div class="section">
+  <div class="section-title">业务场景示例</div>
+
+  <div class="row">
+    <cs-radio data-checked>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">公开</span>
+    </cs-radio>
+    <cs-radio>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">仅自己可见</span>
+    </cs-radio>
+    <cs-radio>
+      <span class="radio-inner"><span class="radio-dot"></span></span>
+      <span class="radio-label">指定成员</span>
+    </cs-radio>
+  </div>
+</div>
+
+</body>
+</html>

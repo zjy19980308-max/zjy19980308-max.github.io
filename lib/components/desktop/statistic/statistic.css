@@ -1,0 +1,105 @@
+/*
+ * 数值统计组件 (Statistic)
+ * 标签：<cs-statistic>
+ *
+ * 作用：突出展示一个统计数值（前缀、数值、单位、后缀、趋势）。
+ * 对标 ng-zorro Statistic / antd Statistic。
+ *
+ * data 属性：
+ *   data-size="sm|md|lg"   — 数值字号
+ *   data-color="default|primary|success|warning|danger|info"
+ *
+ * 子元素：
+ *   .statistic-title  — 标题
+ *   .statistic-value  — 值容器
+ *   .statistic-prefix — 数值前缀（图标或字符）
+ *   .statistic-number — 主数值
+ *   .statistic-suffix — 数值后缀（单位）
+ *   .statistic-trend  — 趋势图标（上涨/下跌）
+ *   .statistic-extra  — 底部说明文字
+ */
+
+cs-statistic {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+cs-statistic .statistic-title {
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+}
+
+cs-statistic .statistic-value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+  color: var(--cs-color-text);
+  line-height: 1;
+}
+
+cs-statistic .statistic-prefix,
+cs-statistic .statistic-suffix {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light);
+}
+
+cs-statistic .statistic-number {
+  font-weight: 500;
+  font-size: var(--font-size-xxl, 24px);
+  font-family: "Nunito Sans", "PingFang SC", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+cs-statistic .statistic-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: var(--space-xs);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-statistic .statistic-trend[data-direction="up"] {
+  color: var(--color-green-500);
+}
+
+cs-statistic .statistic-trend[data-direction="down"] {
+  color: var(--cs-sem-text-error);
+}
+
+cs-statistic .statistic-extra {
+  margin-top: var(--space-xs);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 尺寸 ========== */
+cs-statistic[data-size="sm"] .statistic-number {
+  font-size: var(--font-size-lg);
+}
+
+cs-statistic[data-size="lg"] .statistic-number {
+  font-size: var(--font-size-32);
+}
+
+/* ========== 语义颜色（仅作用于 number） ========== */
+cs-statistic[data-color="primary"] .statistic-number {
+  color: var(--cs-color-primary);
+}
+
+cs-statistic[data-color="success"] .statistic-number {
+  color: var(--color-green-500);
+}
+
+cs-statistic[data-color="warning"] .statistic-number {
+  color: var(--color-orange-500);
+}
+
+cs-statistic[data-color="danger"] .statistic-number {
+  color: var(--cs-sem-text-error);
+}
+
+cs-statistic[data-color="info"] .statistic-number {
+  color: var(--color-blue-500);
+}

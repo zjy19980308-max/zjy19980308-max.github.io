@@ -1,0 +1,89 @@
+/*
+ * 文本域组件 (Textarea)
+ * 标签：<cs-textarea>
+ * 数据来源：CSES新组件库 Figma 文本域设计规范
+ *
+ * data 属性：
+ *   data-error            — 错误态
+ *   data-disabled         — 禁用态
+ */
+
+/* ========== 基础样式（wrapper） ========== */
+cs-textarea {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* ========== 文本域本体 ========== */
+cs-textarea .textarea-field {
+  width: 100%;
+  min-height: var(--spacing-80);
+  padding: var(--space-xs) var(--space-sm);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-white);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  box-sizing: border-box;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+cs-textarea .textarea-field::placeholder {
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 字数统计 ========== */
+cs-textarea .textarea-count {
+  align-self: flex-end;
+  font-size: var(--font-size-sm);
+  color: var(--cs-color-text-light2);
+  margin-top: var(--space-xxs);
+  line-height: 1;
+}
+
+/* ========== 悬浮态 ========== */
+cs-textarea:hover .textarea-field {
+  border-color: var(--cs-color-text-light2);
+}
+
+/* ========== 聚焦态 ========== */
+cs-textarea .textarea-field:focus {
+  border-color: var(--cs-color-primary);
+}
+
+/* ========== 错误态 ========== */
+cs-textarea[data-error] .textarea-field {
+  border-color: var(--cs-color-error);
+}
+
+cs-textarea[data-error]:hover .textarea-field {
+  border-color: var(--cs-color-error);
+}
+
+cs-textarea[data-error] .textarea-count {
+  color: var(--cs-color-error);
+}
+
+/* ========== 禁用态 ========== */
+cs-textarea[data-disabled] .textarea-field {
+  background: var(--cs-color-bg-disabled);
+  border-color: var(--cs-color-border);
+  color: var(--cs-color-border);
+  cursor: not-allowed;
+  resize: none;
+}
+
+cs-textarea[data-disabled] .textarea-field::placeholder {
+  color: var(--cs-color-border);
+}
+
+cs-textarea[data-disabled] .textarea-count {
+  color: var(--cs-color-border);
+}
+
+cs-textarea[data-disabled] {
+  pointer-events: none;
+}

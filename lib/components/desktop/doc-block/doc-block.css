@@ -1,0 +1,94 @@
+/* =========================================================================
+   doc-block · 文档内容块（卡片缩略与编辑器共用）
+   每个 .dk-* = 一类文档 block 的缩小真实呈现（缩略字号统一 8px 基线）
+   全部走项目 css 变量 var(--cs-*)（含 Doc Block 色板）
+   ========================================================================= */
+
+.dk { display: flex; flex-direction: column; gap: var(--space-xs); }
+.dk-pad { padding: var(--space-md) var(--spacing-20) var(--spacing-20) var(--spacing-20); }
+
+/* H1/H2 标题缩略 */
+.dk-h1 {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);     /* 10px */
+  color: var(--cs-color-text);
+  line-height: 1.4; margin: 0;
+}
+.dk-h2 {
+  font-weight: var(--font-weight-semibold);
+  font-size: 9px;
+  color: var(--cs-color-text-light);
+  line-height: 1.4; margin: 0;
+}
+/* 正文段落 */
+.dk-text {
+  font-size: 8px; line-height: 1.5;
+  color: var(--cs-color-text-light); margin: 0;
+}
+.dk-text.is-strong { color: var(--cs-color-text); }
+
+/* 无序列表 */
+.dk-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-3xs); }
+.dk-list li { display: flex; align-items: flex-start; gap: var(--space-2xs); font-size: 8px; line-height: 1.5; color: var(--cs-color-text-light); }
+.dk-list li::before { content: ""; width: 3px; height: 3px; border-radius: var(--radius-full); background: var(--cs-color-text-light2); margin-top: 4px; flex-shrink: 0; }
+/* 有序列表 */
+.dk-list.is-ordered { counter-reset: dk; }
+.dk-list.is-ordered li::before { content: counter(dk) "."; counter-increment: dk; width: auto; height: auto; border-radius: 0; background: none; color: var(--cs-color-primary); font-size: 8px; margin-top: 0; font-weight: var(--font-weight-semibold); }
+
+/* 大纲/目录（缩进层级）*/
+.dk-outline { display: flex; flex-direction: column; gap: var(--space-2xs); }
+.dk-outline-row { font-size: 8px; line-height: 1.4; color: var(--cs-color-text-light); }
+.dk-outline-row.lv1 { color: var(--cs-color-text); font-weight: var(--font-weight-semibold); }
+.dk-outline-row.lv2 { padding-left: var(--space-sm); }
+.dk-outline-row.lv3 { padding-left: var(--spacing-24); color: var(--cs-color-text-light2); }
+
+/* 迷你数据表格 */
+.dk-table { width: 100%; border-collapse: collapse; border: 1px solid var(--cs-color-border); border-radius: var(--radius); overflow: hidden; }
+.dk-table td, .dk-table th { font-size: 7px; line-height: 1.4; padding: 3px var(--space-2xs); border: 1px solid var(--cs-color-border); text-align: left; color: var(--cs-color-text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dk-table th { background: var(--cs-color-bg-light); color: var(--cs-color-text); font-weight: var(--font-weight-semibold); }
+.dk-table td.is-num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* 代码块（深色缩略）*/
+.dk-code {
+  background: var(--cs-color-doc-code-bg);     /* 文档代码块深底 */
+  border-radius: var(--radius); padding: var(--space-2xs) var(--space-xs);
+  display: flex; flex-direction: column; gap: 3px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+.dk-code-line { height: 4px; border-radius: var(--radius-full); }
+.dk-code-line.c1 { width: 70%; background: var(--cs-color-primary-light); }   /* doc 强调浅蓝 */
+.dk-code-line.c2 { width: 50%; background: var(--cs-color-text-dark-secondary); } /* 半透明白 */
+.dk-code-line.c3 { width: 85%; background: var(--cs-color-text-dark-muted); }
+.dk-code-line.c4 { width: 40%; background: var(--cs-color-doc-code-green); }   /* 代码语法绿 */
+.dk-code-line.c5 { width: 62%; background: var(--cs-color-text-dark-secondary); }
+
+/* callout 高亮块（左图标 + 浅底）*/
+.dk-callout {
+  display: flex; gap: var(--space-2xs); align-items: flex-start;
+  background: var(--cs-color-primary-a2);       /* 主色淡底 */
+  border-radius: var(--radius); padding: var(--space-2xs) var(--space-xs);
+}
+.dk-callout i { font-size: 9px; color: var(--cs-color-primary); flex-shrink: 0; margin-top: 1px; }
+.dk-callout span { font-size: 8px; line-height: 1.5; color: var(--cs-color-text-light); }
+/* callout 警告变体 */
+.dk-callout.is-warn { background: var(--cs-color-warning-light); }      /* 警告淡底 */
+.dk-callout.is-warn i { color: var(--cs-color-warning); }
+
+/* 分隔线 block */
+.dk-divider { height: 1px; background: var(--cs-color-border); border: 0; margin: var(--space-3xs) 0; }
+
+/* 标签/tag 行 */
+.dk-tags { display: flex; flex-wrap: wrap; gap: var(--space-2xs); }
+.dk-tag { font-size: 7px; padding: 1px var(--space-2xs); border-radius: var(--radius-full); background: var(--cs-color-bg-light); color: var(--cs-color-text-light); white-space: nowrap; }
+.dk-tag.is-brand { background: var(--cs-color-primary-a2); color: var(--cs-color-primary); }
+
+/* 图文：内联小图（正方/横图占位）*/
+.dk-img-inline { width: 100%; background: var(--cs-color-bg-light); border-radius: var(--radius); }
+
+/* 进度/统计条（看板风）*/
+.dk-stat { display: flex; flex-direction: column; gap: var(--space-3xs); }
+.dk-stat-row { display: flex; align-items: center; justify-content: space-between; font-size: 8px; color: var(--cs-color-text-light); }
+.dk-stat-track { width: 100%; height: 4px; border-radius: var(--radius-full); background: var(--cs-color-bg-light); overflow: hidden; }
+.dk-stat-fill { height: 4px; border-radius: var(--radius-full); background: var(--cs-color-primary); }
+.dk-stat-fill.is-success { background: var(--cs-color-success); }
+.dk-stat-fill.is-warn { background: var(--cs-color-warning); }

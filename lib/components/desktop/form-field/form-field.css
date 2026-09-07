@@ -1,0 +1,356 @@
+/*
+ * 表单字段组件 (Form Field)
+ * 标签：<cs-form-field>
+ *
+ * 作用：标签 + 控件 一体化横向排列，底部下划线分隔。
+ * 适用于表单详情页、任务编辑面板等场景。
+ * 控件区可放置 cs-input、cs-select、cs-date-picker、cs-time-picker 等。
+ *
+ * 重要：form-field 内嵌套的控件会被自动覆盖为「底部下划线 + 44px」样式，
+ *        独立使用时控件保持原有四边框样式不变。
+ *
+ * data 属性：
+ *   data-required       — 必填（标签前显示红色 *）
+ *   data-error           — 错误态（下划线变红）
+ */
+
+/* ========== 基础样式 ========== */
+cs-form-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-height: var(--cs-sem-size-min-tap-target);
+  padding: var(--space-xs) 0;
+  box-sizing: border-box;
+}
+
+/* ========== 标签 ========== */
+cs-form-field .field-label {
+  flex-shrink: 0;
+  width: var(--spacing-64);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light);
+  line-height: var(--cs-sem-size-min-tap-target);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ========== 必填星号 ========== */
+cs-form-field[data-required] .field-label::before {
+  content: "*";
+  color: var(--cs-color-error);
+  margin-right: var(--space-3xs);
+}
+
+/* ========== 控件区 ========== */
+cs-form-field .field-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* 控件区内子组件撑满 */
+cs-form-field .field-content > cs-input,
+cs-form-field .field-content > cs-select,
+cs-form-field .field-content > cs-date-picker,
+cs-form-field .field-content > cs-time-picker {
+  width: 100%;
+}
+
+cs-form-field .field-content > cs-date-picker,
+cs-form-field .field-content > cs-time-picker {
+  display: flex;
+}
+
+/* 触发器撑满 */
+cs-form-field .field-content > cs-date-picker .date-picker-trigger,
+cs-form-field .field-content > cs-time-picker .time-picker-trigger {
+  width: 100%;
+}
+
+/* ============================================================
+ * 表单内控件覆盖：四边框 → 底部下划线 + 44px
+ * 仅在 cs-form-field .field-content 内部生效
+ * ============================================================ */
+
+/* --- cs-input 覆盖 --- */
+cs-form-field .field-content > cs-input {
+  height: var(--cs-sem-size-min-tap-target);
+  padding: var(--spacing-6) var(--space-sm);
+  border: none;
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  border-radius: 0;
+  background: transparent;
+}
+
+cs-form-field .field-content > cs-input:hover {
+  border-bottom-color: var(--cs-color-text-light2);
+  border-color: transparent;
+  border-bottom-color: var(--cs-color-text-light2);
+}
+
+cs-form-field .field-content > cs-input[data-focus],
+cs-form-field .field-content > cs-input:focus-within {
+  border-bottom-color: var(--cs-color-primary);
+  border-color: transparent;
+  border-bottom-color: var(--cs-color-primary);
+}
+
+cs-form-field .field-content > cs-input[data-error] {
+  border-bottom-color: var(--cs-color-error);
+  border-color: transparent;
+  border-bottom-color: var(--cs-color-error);
+}
+
+cs-form-field .field-content > cs-input[data-disabled] {
+  background: transparent;
+}
+
+/* --- cs-select 覆盖 --- */
+cs-form-field .field-content > cs-select {
+  height: var(--cs-sem-size-min-tap-target);
+  padding: 0 var(--space-xs);
+  border: none;
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  border-radius: 0;
+  background: transparent;
+  min-width: 0;
+}
+
+cs-form-field .field-content > cs-select:hover {
+  border-color: transparent;
+  border-bottom-color: var(--cs-color-text-light2);
+}
+
+cs-form-field .field-content > cs-select[data-open] {
+  border-color: transparent;
+  border-bottom-color: var(--cs-color-primary);
+}
+
+cs-form-field .field-content > cs-select[data-error] {
+  border-color: transparent;
+  border-bottom-color: var(--cs-sem-border-error);
+}
+
+cs-form-field .field-content > cs-select[data-disabled] {
+  background: transparent;
+}
+
+/* --- cs-date-picker 触发器覆盖 --- */
+cs-form-field .field-content > cs-date-picker .date-picker-trigger {
+  height: var(--cs-sem-size-min-tap-target);
+  padding: 0 var(--space-sm);
+  border: none;
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  border-radius: 0;
+  background: transparent;
+}
+
+cs-form-field .field-content > cs-date-picker .date-picker-trigger:hover {
+  border-color: transparent;
+  border-bottom-color: var(--cs-color-text-light2);
+}
+
+cs-form-field .field-content > cs-date-picker[data-open] .date-picker-trigger {
+  border-color: transparent;
+  border-bottom-color: var(--cs-color-primary);
+}
+
+cs-form-field .field-content > cs-date-picker[data-error] .date-picker-trigger {
+  border-color: transparent;
+  border-bottom-color: var(--cs-sem-border-error);
+}
+
+cs-form-field .field-content > cs-date-picker[data-disabled] .date-picker-trigger {
+  background: transparent;
+}
+
+/* --- cs-time-picker 触发器覆盖 --- */
+cs-form-field .field-content > cs-time-picker .time-picker-trigger {
+  height: var(--cs-sem-size-min-tap-target);
+  padding: 0 var(--space-sm);
+  border: none;
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  border-radius: 0;
+  background: transparent;
+}
+
+cs-form-field .field-content > cs-time-picker .time-picker-trigger:hover {
+  border-color: transparent;
+  border-bottom-color: var(--cs-color-text-light2);
+}
+
+cs-form-field .field-content > cs-time-picker[data-open] .time-picker-trigger {
+  border-color: transparent;
+  border-bottom-color: var(--cs-color-primary);
+}
+
+cs-form-field .field-content > cs-time-picker[data-error] .time-picker-trigger {
+  border-color: transparent;
+  border-bottom-color: var(--cs-sem-border-error);
+}
+
+cs-form-field .field-content > cs-time-picker[data-disabled] .time-picker-trigger {
+  background: transparent;
+}
+
+/* ========== 错误态（form-field 级别） ========== */
+cs-form-field[data-error] .field-content > cs-input {
+  border-bottom-color: var(--cs-color-error);
+}
+
+cs-form-field[data-error] .field-content > cs-select {
+  border-bottom-color: var(--cs-color-error);
+}
+
+cs-form-field[data-error] .field-content > cs-date-picker .date-picker-trigger {
+  border-bottom-color: var(--cs-color-error);
+}
+
+cs-form-field[data-error] .field-content > cs-time-picker .time-picker-trigger {
+  border-bottom-color: var(--cs-color-error);
+}
+
+/* ========== 辅助/错误文字 ========== */
+cs-form-field .field-helper {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  margin-top: var(--space-3xs);
+}
+
+cs-form-field .field-error {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-error);
+  margin-top: var(--space-3xs);
+  display: none;
+}
+
+cs-form-field[data-error] .field-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3xs);
+  flex-basis: 100%;
+  width: calc(100% - var(--spacing-64) - var(--space-md));
+  margin-left: calc(var(--spacing-64) + var(--space-md));
+}
+
+cs-form-field[data-error] .field-error::before {
+  content: '';
+  display: inline-block;
+  width: var(--cs-sem-size-icon-sm);
+  height: var(--cs-sem-size-icon-sm);
+  flex-shrink: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Ccircle cx='8' cy='8' r='7' stroke='%23f53f3f' stroke-width='1.5'/%3E%3Cline x1='8' y1='4.5' x2='8' y2='8.5' stroke='%23f53f3f' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='8' cy='11' r='0.75' fill='%23f53f3f'/%3E%3C/svg%3E") no-repeat center;
+  background-size: contain;
+}
+
+cs-form-field[data-error] .field-helper {
+  display: none;
+}
+
+cs-form-field[data-error] {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* ========== 左侧图标 ========== */
+cs-form-field .field-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-icon-lg);
+  height: var(--cs-sem-size-icon-lg);
+  flex-shrink: 0;
+  color: var(--cs-color-text-light);
+  font-size: var(--cs-sem-size-icon-lg);
+}
+
+/* ========== 预览页样式 ========== */
+.form-field-preview-body {
+  padding: var(--space-md);
+  background: var(--cs-color-bg-light, var(--cs-color-bg-light));
+  font-family: "PingFang SC", sans-serif;
+}
+
+.form-field-preview-section {
+  background: var(--cs-color-bg, var(--cs-color-white));
+  border-radius: var(--radius-lg, 8px);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  max-width: 720px;
+}
+
+.form-field-preview-title {
+  font: var(--typo-cn-16-medium);
+  color: var(--cs-color-text);
+  margin-bottom: var(--space-xs);
+}
+
+.form-field-preview-subtitle {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  margin-bottom: var(--space-md);
+}
+
+.form-field-preview-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.form-field-preview-row {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.form-field-preview-row > cs-form-field {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 对比区域 */
+.form-field-preview-compare {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.form-field-preview-compare-box {
+  flex: 1;
+  background: var(--cs-color-bg, var(--cs-color-white));
+  border-radius: var(--radius-lg, 8px);
+  padding: var(--space-md);
+}
+
+.form-field-preview-compare-label {
+  font: var(--typo-cn-13-medium);
+  color: var(--cs-color-text);
+  margin-bottom: var(--space-xs);
+  padding-bottom: var(--space-2xs);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+}
+
+.form-field-preview-compare-label .ff-tag {
+  display: inline-block;
+  font: var(--typo-cn-11-regular);
+  padding: 1px 6px;
+  border-radius: var(--radius);
+  margin-left: var(--space-xs);
+}
+
+.form-field-preview-compare-label .ff-tag-old {
+  background: var(--cs-color-bg-light, var(--cs-color-bg-light));
+  color: var(--cs-color-text-light2);
+}
+
+.form-field-preview-compare-label .ff-tag-new {
+  background: var(--cs-color-primary-a1, rgba(71,87,226,0.1));
+  color: var(--cs-color-primary, #4757e2);
+}
+
+.form-field-preview-compare-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}

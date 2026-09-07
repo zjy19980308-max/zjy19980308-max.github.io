@@ -1,0 +1,182 @@
+/*
+ * 表格组件 (Table)
+ * 标签：<cs-table>
+ *
+ * 作用：网格化数据展示，含表头、行、列、斑马线、可选中。
+ * 对标 ng-zorro Table / antd Table。
+ *
+ * data 属性：
+ *   data-variant="default"  — 带行边框
+ *   data-variant="striped"  — 斑马线
+ *   data-variant="borderless" — 仅行底分割线
+ *   data-size="sm|md|lg"
+ *   data-hoverable          — 行 hover 高亮（默认开启）
+ *
+ * 子元素：
+ *   .table-wrapper — 滚动容器
+ *   <table> / <thead> / <tbody> / <tr> / <th> / <td>
+ *
+ * tr / td 状态属性：
+ *   tr[data-selected]  — 选中行
+ *   tr[data-disabled]  — 禁用行
+ */
+
+cs-table {
+  display: block;
+  width: 100%;
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+cs-table .table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+cs-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+}
+
+/* ========== thead ========== */
+cs-table thead th {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--cs-color-bg-disabled);
+  color: var(--cs-color-text-light);
+  font: var(--typo-cn-13-regular);
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  box-sizing: border-box;
+}
+
+/* ========== tbody ========== */
+cs-table tbody td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+cs-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+cs-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+cs-table tbody tr:hover {
+  background: var(--cs-color-bg-light);
+}
+
+/* 选中行 */
+cs-table tbody tr[data-selected] {
+  background: var(--cs-color-selected, var(--cs-color-bg-light));
+}
+
+cs-table tbody tr[data-selected]:hover {
+  background: var(--cs-color-selected, var(--cs-color-bg-light));
+}
+
+/* 禁用行 */
+cs-table tbody tr[data-disabled] {
+  color: var(--cs-color-text-light2);
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* ========== 斑马线 ========== */
+cs-table[data-variant="striped"] tbody tr:nth-child(odd) {
+  background: var(--cs-color-bg-disabled);
+}
+
+cs-table[data-variant="striped"] tbody tr:nth-child(odd):hover {
+  background: var(--cs-color-bg-light);
+}
+
+/* ========== 无外框（仅行分割线） ========== */
+cs-table[data-variant="borderless"] {
+  border: 0;
+  border-radius: 0;
+}
+
+cs-table[data-variant="borderless"] thead th {
+  background: transparent;
+}
+
+/* ========== 尺寸 ========== */
+cs-table[data-size="sm"] thead th,
+cs-table[data-size="sm"] tbody td {
+  padding: var(--space-2xs) var(--space-sm);
+}
+
+cs-table[data-size="lg"] thead th,
+cs-table[data-size="lg"] tbody td {
+  padding: var(--space-md) var(--spacing-20);
+}
+
+/* ========== 单元格内常用布局 ========== */
+cs-table .table-cell-num {
+  font-family: "Nunito Sans", "PingFang SC", sans-serif;
+  text-align: right;
+}
+
+/* ==========================================================================
+   后台列表标准件（沉淀自 org-backend 部门表 95:7790 · 2026-06-30）
+   - 浅灰表头 + 列竖分隔
+   - 钉右列(操作)：data-sticky-right · 横向溢出遮内容才显左缘淡阴影(JS 切 data-ovf)
+   - 可拖换列：th data-reorder（拖拽逻辑在 table.js）
+   ========================================================================== */
+
+/* 表头浅灰 + 钉顶(竖滚) + 列竖分隔 */
+cs-table thead th { background: var(--cs-color-bg-light); position: sticky; top: 0; z-index: 1; }
+cs-table thead th + th { border-left: var(--line-width) solid var(--cs-color-border); }
+
+/* 钉右列（如操作列）：sticky right + 左缘条件淡阴影（横滚未到最右时显）*/
+cs-table th[data-sticky-right],
+cs-table td[data-sticky-right] { position: sticky; right: 0; z-index: 2; }
+cs-table thead th[data-sticky-right] { z-index: 3; background: var(--cs-color-bg-light); }
+cs-table tbody td[data-sticky-right] { background: var(--cs-color-white); transition: background-color 0.15s ease; }
+cs-table tbody tr:hover td[data-sticky-right] { background: var(--cs-color-bg-light); }
+cs-table th[data-sticky-right]::before,
+cs-table td[data-sticky-right]::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 18px;
+  transform: translateX(-100%); pointer-events: none;
+  opacity: var(--shadow-r, 0); transition: opacity 0.2s;
+  background: linear-gradient(to left, var(--cs-color-shadow-edge), transparent);
+}
+cs-table[data-ovf-r] { --shadow-r: 1; }
+
+/* 钉左列（如名称列）：sticky left + 右缘条件淡阴影（已横滚 scrollLeft>0 时显）*/
+cs-table th[data-sticky-left],
+cs-table td[data-sticky-left] { position: sticky; left: 0; z-index: 2; }
+cs-table thead th[data-sticky-left] { z-index: 3; background: var(--cs-color-bg-light); }
+cs-table tbody td[data-sticky-left] { background: var(--cs-color-white); transition: background-color 0.15s ease; }
+cs-table tbody tr:hover td[data-sticky-left] { background: var(--cs-color-bg-light); }
+cs-table th[data-sticky-left]::after,
+cs-table td[data-sticky-left]::after {
+  content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 18px;
+  transform: translateX(100%); pointer-events: none;
+  opacity: var(--shadow-l, 0); transition: opacity 0.2s;
+  background: linear-gradient(to right, var(--cs-color-shadow-edge), transparent);
+}
+cs-table[data-ovf-l] { --shadow-l: 1; }
+
+/* 可拖换列表头 + 拖动态 + ghost 浮层 */
+cs-table thead th[data-reorder] { cursor: grab; }
+cs-table thead th[data-reorder]:active { cursor: grabbing; }
+cs-table thead th.col-dragging { opacity: 0; }
+.cs-col-ghost {
+  position: fixed; z-index: 1000; pointer-events: none; box-sizing: border-box;
+  display: flex; align-items: center; padding: 0 var(--space-md);
+  background: var(--cs-color-bg-light); color: var(--cs-color-text);
+  font: var(--typo-cn-13-regular); font-weight: 500;
+  border-radius: var(--radius-lg); box-shadow: var(--cs-shadow-lg); opacity: 0.96;
+}

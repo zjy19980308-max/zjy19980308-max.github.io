@@ -1,0 +1,94 @@
+@import url("token.css");
+@import url("variable.css");
+
+/* ========== 重置样式 / Reset ========== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== 全局默认 / Global Defaults ========== */
+html {
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family-cn);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  color: var(--color-text);
+  background-color: var(--color-white);
+}
+
+/* ========== 标题 / Headings ========== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+/* ========== 链接 / Links ========== */
+a {
+  color: var(--color-text-anchor);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* ========== 图片 / Images ========== */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ========== 列表 / Lists ========== */
+ul, ol {
+  list-style: none;
+}
+
+/* ========== 表格 / Tables ========== */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ========== 表单元素 / Form Elements ========== */
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  border: var(--line-width) solid var(--color-border);
+  border-radius: var(--radius);
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ========== 滚动条 / Scrollbar ========== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-lighter);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}

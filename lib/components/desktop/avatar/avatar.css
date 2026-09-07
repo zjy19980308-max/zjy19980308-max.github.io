@@ -1,0 +1,150 @@
+/*
+ * 头像组件 (Avatar)
+ * 标签：<cs-avatar>
+ * 数据来源：
+ *   消息设计稿 lhlUfcxtPy6Vs5gJoyke64（聊天头像 40x40、群组头像）
+ *   任务管理 u20fmHv0ItyHTSVNC1JJss（负责人头像 20x20）
+ *   文档库 rlrdc7MpDwzRcpLIWkMZgs（编辑者头像 14x14）
+ *   旧设计规范 d9kycxUY4aY265OHlImwdr（抽屉内 20x20/28x28）
+ *
+ * Figma 实测：
+ *   图片头像: ELLIPSE/RECT 带 IMAGE fill，r:38(圆)
+ *   文字头像: 彩色背景圆 + 白色首字母
+ *   群组头像: 40x40 容器，内含 2~9 个小头像网格
+ *
+ * data 属性：
+ *   data-size="xs"        — 20px
+ *   data-size="sm"        — 24px
+ *   data-size="md"        — 32px（默认）
+ *   data-size="lg"        — 40px
+ *   data-size="xl"        — 48px
+ *   data-shape="circle"   — 圆形（默认）
+ *   data-shape="square"   — 圆角方形 r:8
+ */
+
+/* ========== 基础样式 ========== */
+cs-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+
+  /* 默认 md 32x32 */
+  width: var(--cs-sem-size-interactive-sm);
+  height: var(--cs-sem-size-interactive-sm);
+  border-radius: var(--radius-full);
+  background: var(--cs-color-bg-lighter);
+
+  font: var(--typo-cn-12-medium);
+  color: var(--cs-color-text-inverse);
+  user-select: none;
+}
+
+/* ========== 图片头像 ========== */
+cs-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: inherit;
+}
+
+/* ========== 图标头像（默认人物） ========== */
+cs-avatar .avatar-icon {
+  font-size: var(--cs-sem-size-icon-md);
+  color: var(--cs-color-text-light2);
+  line-height: 1;
+}
+
+/* ========== 文字头像（首字母） ========== */
+cs-avatar .avatar-text {
+  font: inherit;
+  line-height: 1;
+}
+
+/* ========== 尺寸 ========== */
+cs-avatar[data-size="xs"] {
+  width: var(--spacing-20);
+  height: var(--spacing-20);
+  font-size: var(--font-size-xs);
+}
+
+cs-avatar[data-size="xs"] .avatar-icon {
+  font-size: var(--cs-sem-size-icon-xs);
+}
+
+cs-avatar[data-size="sm"] {
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  font-size: var(--font-size-xs);
+}
+
+cs-avatar[data-size="sm"] .avatar-icon {
+  font-size: var(--cs-sem-size-icon-sm);
+}
+
+/* md 是默认，已在基础样式中定义 */
+
+cs-avatar[data-size="lg"] {
+  width: var(--spacing-40);
+  height: var(--spacing-40);
+  font-size: var(--font-size-md);
+}
+
+cs-avatar[data-size="lg"] .avatar-icon {
+  font-size: var(--cs-sem-size-icon-lg);
+}
+
+cs-avatar[data-size="xl"] {
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+  font-size: var(--font-size-lg);
+}
+
+cs-avatar[data-size="xl"] .avatar-icon {
+  font-size: var(--cs-sem-size-icon-xl);
+}
+
+/* ========== 形状 ========== */
+/* circle 是默认 */
+cs-avatar[data-shape="square"] {
+  border-radius: var(--radius-lg);
+}
+
+/* ========== 颜色变体（文字头像背景） ========== */
+cs-avatar[data-color="blue"] { background: var(--cs-color-primary); }
+cs-avatar[data-color="red"] { background: var(--cs-color-error); }
+cs-avatar[data-color="green"] { background: var(--cs-color-success); }
+cs-avatar[data-color="orange"] { background: var(--cs-color-warning); }
+cs-avatar[data-color="purple"] { background: var(--color-purple-500); }
+cs-avatar[data-color="pink"] { background: var(--color-pink-500); }
+cs-avatar[data-color="sky"] { background: var(--color-sky-500); }
+
+/* ========== 状态点槽位 ========== */
+cs-avatar .avatar-status {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: var(--space-xs);
+  height: var(--space-xs);
+  border-radius: var(--radius-full);
+  border: var(--spacing-2) solid var(--cs-color-white);
+  box-sizing: content-box;
+}
+
+cs-avatar[data-size="xs"] .avatar-status {
+  width: var(--spacing-6);
+  height: var(--spacing-6);
+}
+
+cs-avatar[data-size="lg"] .avatar-status,
+cs-avatar[data-size="xl"] .avatar-status {
+  width: var(--spacing-10);
+  height: var(--spacing-10);
+}
+
+cs-avatar .avatar-status[data-online] { background: var(--cs-color-success); }
+cs-avatar .avatar-status[data-busy] { background: var(--cs-color-error); }
+cs-avatar .avatar-status[data-away] { background: var(--cs-color-warning); }
+cs-avatar .avatar-status[data-offline] { background: var(--cs-color-text-light2); }

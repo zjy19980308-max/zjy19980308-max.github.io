@@ -1,0 +1,142 @@
+/*
+ * 卡片容器组件 (Card)
+ * 标签：<cs-card>
+ *
+ * 作用：通用卡片容器，承载任意内容（标题区 + 内容区 + 操作区）。
+ * 对标 ng-zorro Card / antd Card。
+ *
+ * data 属性：
+ *   data-variant="default"  — 默认卡片，带边框无阴影
+ *   data-variant="elevated" — 带阴影卡片
+ *   data-variant="ghost"    — 无边框无阴影
+ *   data-size="sm|md|lg"    — 内边距尺寸
+ *   data-hoverable          — 悬浮加深阴影
+ *
+ * 子元素：
+ *   .card-header   — 头部容器
+ *   .card-title    — 标题
+ *   .card-extra    — 头部右侧操作区
+ *   .card-cover    — 封面图区域
+ *   .card-body     — 主体内容
+ *   .card-actions  — 底部操作区
+ *   .card-action   — 单个操作项
+ */
+
+cs-card {
+  display: block;
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+/* ========== 变体 ========== */
+cs-card[data-variant="elevated"] {
+  border-color: transparent;
+  box-shadow: var(--cs-shadow-card);
+}
+
+cs-card[data-variant="ghost"] {
+  border-color: transparent;
+  background: transparent;
+}
+
+cs-card[data-hoverable]:hover {
+  border-color: var(--cs-color-primary);
+  box-shadow: var(--cs-shadow-card);
+}
+
+/* ========== Header ========== */
+cs-card .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  box-sizing: border-box;
+}
+
+cs-card .card-title {
+  font: var(--typo-cn-16-medium);
+  color: var(--cs-color-text);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+cs-card .card-extra {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+  flex-shrink: 0;
+}
+
+/* ========== Cover ========== */
+cs-card .card-cover {
+  display: block;
+  width: 100%;
+  background: var(--cs-color-bg-light);
+}
+
+cs-card .card-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ========== Body ========== */
+cs-card .card-body {
+  padding: var(--space-md);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+}
+
+/* ========== Actions ========== */
+cs-card .card-actions {
+  display: flex;
+  align-items: stretch;
+  border-top: var(--line-width) solid var(--cs-color-border);
+}
+
+cs-card .card-action {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: 0;
+  border-right: var(--line-width) solid var(--cs-color-border);
+  color: var(--cs-color-text-light);
+  font: var(--typo-cn-13-regular);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+cs-card .card-action:last-child {
+  border-right: 0;
+}
+
+cs-card .card-action:hover {
+  color: var(--cs-color-primary);
+  background: var(--cs-color-bg-light);
+}
+
+/* ========== 尺寸 ========== */
+cs-card[data-size="sm"] .card-header,
+cs-card[data-size="sm"] .card-body {
+  padding: var(--space-sm);
+}
+
+cs-card[data-size="lg"] .card-header,
+cs-card[data-size="lg"] .card-body {
+  padding: var(--spacing-24);
+}

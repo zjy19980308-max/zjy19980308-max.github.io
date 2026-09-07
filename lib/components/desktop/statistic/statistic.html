@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-statistic 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="statistic.css?v=4dea4a91">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .grid-card { padding: 16px; border: 1px solid var(--cs-color-border); border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-title">基础数值 Basic</div>
+  <div class="section-subtitle">标题 + 数值 + 后缀</div>
+  <div class="grid">
+    <cs-statistic class="grid-card">
+      <span class="statistic-title">活跃用户</span>
+      <span class="statistic-value">
+        <span class="statistic-number">1,128</span>
+        <span class="statistic-suffix">人</span>
+      </span>
+    </cs-statistic>
+    <cs-statistic class="grid-card">
+      <span class="statistic-title">本月营收</span>
+      <span class="statistic-value">
+        <span class="statistic-prefix">¥</span>
+        <span class="statistic-number">52,890</span>
+      </span>
+    </cs-statistic>
+    <cs-statistic class="grid-card">
+      <span class="statistic-title">完成率</span>
+      <span class="statistic-value">
+        <span class="statistic-number">87.5</span>
+        <span class="statistic-suffix">%</span>
+      </span>
+    </cs-statistic>
+    <cs-statistic class="grid-card">
+      <span class="statistic-title">待办任务</span>
+      <span class="statistic-value">
+        <span class="statistic-number">24</span>
+      </span>
+    </cs-statistic>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">语义颜色 Colors</div>
+  <div class="section-subtitle">data-color 应用于数值</div>
+  <div class="grid">
+    <cs-statistic data-color="primary" class="grid-card">
+      <span class="statistic-title">进行中</span>
+      <span class="statistic-value"><span class="statistic-number">12</span></span>
+    </cs-statistic>
+    <cs-statistic data-color="success" class="grid-card">
+      <span class="statistic-title">已完成</span>
+      <span class="statistic-value"><span class="statistic-number">89</span></span>
+    </cs-statistic>
+    <cs-statistic data-color="warning" class="grid-card">
+      <span class="statistic-title">待审核</span>
+      <span class="statistic-value"><span class="statistic-number">5</span></span>
+    </cs-statistic>
+    <cs-statistic data-color="danger" class="grid-card">
+      <span class="statistic-title">已逾期</span>
+      <span class="statistic-value"><span class="statistic-number">3</span></span>
+    </cs-statistic>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">含趋势 Trend</div>
+  <div class="section-subtitle">.statistic-trend[data-direction="up | down"]</div>
+  <div class="grid">
+    <cs-statistic class="grid-card">
+      <span class="statistic-title">本周访问</span>
+      <span class="statistic-value">
+        <span class="statistic-number">8,452</span>
+        <span class="statistic-trend" data-direction="up"><i class="cses-paixushang"></i>12.5%</span>
+      </span>
+      <span class="statistic-extra">较上周增长</span>
+    </cs-statistic>
+    <cs-statistic class="grid-card">
+      <span class="statistic-title">退订率</span>
+      <span class="statistic-value">
+        <span class="statistic-number">2.3</span>
+        <span class="statistic-suffix">%</span>
+        <span class="statistic-trend" data-direction="down"><i class="cses-paixuxia"></i>0.8%</span>
+      </span>
+      <span class="statistic-extra">较上周下降</span>
+    </cs-statistic>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">尺寸 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg"</div>
+  <div class="grid">
+    <cs-statistic data-size="sm" class="grid-card">
+      <span class="statistic-title">sm 16px</span>
+      <span class="statistic-value"><span class="statistic-number">128</span></span>
+    </cs-statistic>
+    <cs-statistic class="grid-card">
+      <span class="statistic-title">md 24px（默认）</span>
+      <span class="statistic-value"><span class="statistic-number">128</span></span>
+    </cs-statistic>
+    <cs-statistic data-size="lg" class="grid-card">
+      <span class="statistic-title">lg 32px</span>
+      <span class="statistic-value"><span class="statistic-number">128</span></span>
+    </cs-statistic>
+  </div>
+</div>
+
+</body>
+</html>

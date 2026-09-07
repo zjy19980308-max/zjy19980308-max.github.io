@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-nav-space 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="nav-space.css?v=a00b1026">
+  <link rel="stylesheet" href="../nav-item/nav-item.css?v=555c82bc">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .nav-container { width: 220px; display: flex; flex-direction: column; gap: 2px; }
+    /* 图标背景色 */
+    .bg-blue { background: var(--cs-color-primary); }
+    .bg-green { background: var(--cs-color-success); }
+    .bg-orange { background: var(--cs-color-warning); }
+    .bg-red { background: var(--cs-color-error); }
+    .bg-purple { background: var(--color-purple); }
+  </style>
+</head>
+<body>
+
+<!-- 基础状态 -->
+<div class="section">
+  <div class="section-title">基础状态</div>
+  <div class="section-subtitle">默认态、悬浮态（hover 查看）、激活态</div>
+
+  <div class="nav-container">
+    <cs-nav-space>
+      <div class="space-header">
+        <span class="space-icon bg-blue">X</span>
+        <span class="space-label">XPA空间</span>
+        <span class="space-count">5</span>
+        <span class="space-actions">
+          <i class="cses-more"></i>
+        </span>
+      </div>
+    </cs-nav-space>
+
+    <cs-nav-space data-active>
+      <div class="space-header">
+        <span class="space-icon bg-orange">S</span>
+        <span class="space-label">商学院空间</span>
+        <span class="space-count">3</span>
+        <span class="space-actions">
+          <i class="cses-more"></i>
+        </span>
+      </div>
+    </cs-nav-space>
+
+    <cs-nav-space>
+      <div class="space-header">
+        <span class="space-icon bg-green">R</span>
+        <span class="space-label">研发空间</span>
+        <span class="space-actions">
+          <i class="cses-more"></i>
+        </span>
+      </div>
+    </cs-nav-space>
+  </div>
+</div>
+
+<!-- 展开子树 -->
+<div class="section">
+  <div class="section-title">展开子树</div>
+  <div class="section-subtitle">data-expanded 展开子项，子项使用 cs-nav-item，缩进显示</div>
+
+  <div class="nav-container">
+    <cs-nav-space data-expanded>
+      <div class="space-header">
+        <span class="space-icon bg-blue">X</span>
+        <span class="space-label">XPA空间</span>
+        <span class="space-count">5</span>
+        <span class="space-actions">
+          <i class="cses-more"></i>
+        </span>
+      </div>
+      <div class="space-children">
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">缺陷管理</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item data-active>
+          <div class="nav-left">
+            <span class="nav-label">开发工作</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">设计项目</span>
+          </div>
+        </cs-nav-item>
+      </div>
+    </cs-nav-space>
+
+    <cs-nav-space>
+      <div class="space-header">
+        <span class="space-icon bg-orange">S</span>
+        <span class="space-label">商学院空间</span>
+        <span class="space-count">3</span>
+        <span class="space-actions">
+          <i class="cses-more"></i>
+        </span>
+      </div>
+    </cs-nav-space>
+  </div>
+</div>
+
+<!-- 业务场景：侧边栏空间列表 -->
+<div class="section">
+  <div class="section-title">业务场景：侧边栏空间列表</div>
+  <div class="section-subtitle">模拟 Figma 二级导航栏中的空间区域</div>
+
+  <div class="nav-container">
+    <cs-nav-space data-expanded>
+      <div class="space-header">
+        <span class="space-icon bg-blue">X</span>
+        <span class="space-label">XPA空间</span>
+        <span class="space-count">5</span>
+        <span class="space-actions">
+          <i class="cses-more"></i>
+        </span>
+      </div>
+      <div class="space-children">
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">任务管理开发项目</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item data-active>
+          <div class="nav-left">
+            <span class="nav-label">缺陷管理</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">开发工作</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">设计项目</span>
+          </div>
+        </cs-nav-item>
+      </div>
+    </cs-nav-space>
+
+    <cs-nav-space>
+      <div class="space-header">
+        <span class="space-icon bg-orange">S</span>
+        <span class="space-label">商学院空间</span>
+        <span class="space-count">3</span>
+        <span class="space-actions">
+          <i class="cses-more"></i>
+        </span>
+      </div>
+    </cs-nav-space>
+
+    <cs-nav-space>
+      <div class="space-header">
+        <span class="space-icon bg-red">H</span>
+        <span class="space-label">人力资源空间</span>
+        <span class="space-actions">
+          <i class="cses-more"></i>
+        </span>
+      </div>
+    </cs-nav-space>
+
+    <cs-nav-space>
+      <div class="space-header">
+        <span class="space-icon bg-purple">F</span>
+        <span class="space-label">财务空间</span>
+        <span class="space-count">2</span>
+        <span class="space-actions">
+          <i class="cses-more"></i>
+        </span>
+      </div>
+    </cs-nav-space>
+  </div>
+</div>
+
+<!-- 文字溢出 -->
+<div class="section">
+  <div class="section-title">文字溢出省略</div>
+  <div class="section-subtitle">超长名称自动截断为省略号</div>
+
+  <div class="nav-container">
+    <cs-nav-space>
+      <div class="space-header">
+        <span class="space-icon bg-purple">L</span>
+        <span class="space-label">这是一个非常非常长的工作空间名称用来测试文字溢出截断效果</span>
+        <span class="space-actions">
+          <i class="cses-more"></i>
+        </span>
+      </div>
+    </cs-nav-space>
+  </div>
+</div>
+
+</body>
+</html>

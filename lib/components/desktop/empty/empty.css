@@ -1,0 +1,104 @@
+/*
+ * 空状态组件 (Empty)
+ * 标签：<cs-empty>
+ *
+ * 作用：当没有数据时的占位提示。
+ * 对标 ng-zorro Empty。
+ *
+ * data 属性：
+ *   data-size="sm"  — 小尺寸（图标 40，紧凑场景）
+ *   data-size="md"  — 中尺寸（图标 56，默认）
+ *   data-size="lg"  — 大尺寸（图标 80，整页空状态）
+ *   data-variant="emoji" — 大 emoji 主图模式（标杆空态特征，64px emoji 字符）
+ *
+ * 子元素：
+ *   .empty-image       — 顶部插画/大图标
+ *   .empty-description — 文字描述
+ *   .empty-extra       — 操作区（如「立即创建」按钮）
+ */
+
+/* ========== 容器 ========== */
+cs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-32) var(--space-md);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* ========== 图标/插画 ========== */
+cs-empty .empty-image {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-icon-5xl);
+  height: var(--cs-sem-size-icon-5xl);
+  font-size: var(--cs-sem-size-icon-5xl);
+  color: var(--cs-color-text-light2);
+  margin-bottom: var(--space-md);
+  line-height: 1;
+}
+
+/* ========== 文字描述 ========== */
+cs-empty .empty-description {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light);
+  line-height: 1.6;
+  max-width: 320px;
+  margin-bottom: var(--space-md);
+}
+
+/* ========== 操作区 ========== */
+cs-empty .empty-extra {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+/* ========== 尺寸变体 ========== */
+cs-empty[data-size="sm"] {
+  padding: var(--space-md);
+}
+
+cs-empty[data-size="sm"] .empty-image {
+  width: var(--cs-sem-size-icon-3xl);
+  height: var(--cs-sem-size-icon-3xl);
+  font-size: var(--cs-sem-size-icon-3xl);
+  margin-bottom: var(--space-sm);
+}
+
+cs-empty[data-size="sm"] .empty-description {
+  font: var(--typo-cn-13-regular);
+}
+
+cs-empty[data-size="lg"] {
+  padding: var(--spacing-32) var(--space-md);
+}
+
+cs-empty[data-size="lg"] .empty-image {
+  width: var(--font-size-96, 96px);
+  height: var(--font-size-96, 96px);
+  font-size: var(--font-size-96, 96px);
+  margin-bottom: var(--spacing-20);
+}
+
+/* ========== variant: emoji · 大 emoji 主图模式（标杆空态特征） ==========
+ * 优先级强保：!important 覆盖 default + [data-size] 系列的 width/height/font-size
+ * 实证：visual round 5 实测 64px 没生效（被 default cs-empty .empty-image 的 5xl 覆盖）
+ */
+cs-empty[data-variant="emoji"] .empty-image {
+  font-size: 64px !important;
+  line-height: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  margin-bottom: var(--space-md) !important;
+  color: inherit !important;
+}
+cs-empty[data-variant="emoji"] .empty-description {
+  font-size: var(--font-size-md);
+  color: var(--cs-color-text-secondary);
+}

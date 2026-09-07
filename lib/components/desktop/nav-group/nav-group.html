@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-nav-group 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="nav-group.css?v=d06410d5">
+  <link rel="stylesheet" href="../nav-item/nav-item.css?v=555c82bc">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .nav-container { width: 220px; }
+  </style>
+</head>
+<body>
+
+<!-- 展开状态 -->
+<div class="section">
+  <div class="section-title">展开状态</div>
+  <div class="section-subtitle">默认展开，显示子导航项（使用 cs-nav-item）</div>
+
+  <div class="nav-container">
+    <cs-nav-group>
+      <div class="group-header">
+        <span class="group-title">我的任务</span>
+        <i class="group-arrow cses-xiala"></i>
+      </div>
+      <div class="group-body">
+        <cs-nav-item data-active>
+          <div class="nav-left">
+            <span class="nav-label">待办</span>
+          </div>
+          <span class="nav-count">3</span>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">已办</span>
+          </div>
+          <span class="nav-count">3</span>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">我的创建</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">我的检视</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">我的工时</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">我的关注</span>
+          </div>
+        </cs-nav-item>
+      </div>
+    </cs-nav-group>
+  </div>
+</div>
+
+<!-- 折叠状态 -->
+<div class="section">
+  <div class="section-title">折叠状态</div>
+  <div class="section-subtitle">data-collapsed 隐藏内容，箭头旋转 -90deg</div>
+
+  <div class="nav-container">
+    <cs-nav-group data-collapsed>
+      <div class="group-header">
+        <span class="group-title">空间</span>
+        <i class="group-arrow cses-xiala"></i>
+      </div>
+      <div class="group-body">
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">XPA空间</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">商学院空间</span>
+          </div>
+        </cs-nav-item>
+      </div>
+    </cs-nav-group>
+  </div>
+</div>
+
+<!-- 多个分组组合 -->
+<div class="section">
+  <div class="section-title">多分组组合</div>
+  <div class="section-subtitle">模拟 Figma 二级导航栏中的分组结构</div>
+
+  <div class="nav-container">
+    <cs-nav-group>
+      <div class="group-header">
+        <span class="group-title">我的任务</span>
+        <i class="group-arrow cses-xiala"></i>
+      </div>
+      <div class="group-body">
+        <cs-nav-item data-active>
+          <div class="nav-left">
+            <span class="nav-label">待办</span>
+          </div>
+          <span class="nav-count">3</span>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">已办</span>
+          </div>
+          <span class="nav-count">3</span>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">我的创建</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">我的检视</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">我的工时</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">我的关注</span>
+          </div>
+        </cs-nav-item>
+      </div>
+    </cs-nav-group>
+
+    <cs-nav-group data-collapsed>
+      <div class="group-header">
+        <span class="group-title">空间</span>
+        <i class="group-arrow cses-xiala"></i>
+      </div>
+      <div class="group-body">
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">XPA空间</span>
+          </div>
+        </cs-nav-item>
+      </div>
+    </cs-nav-group>
+
+    <cs-nav-group>
+      <div class="group-header">
+        <span class="group-title">收藏</span>
+        <i class="group-arrow cses-xiala"></i>
+      </div>
+      <div class="group-body">
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">产品需求文档</span>
+          </div>
+        </cs-nav-item>
+        <cs-nav-item>
+          <div class="nav-left">
+            <span class="nav-label">设计规范</span>
+          </div>
+        </cs-nav-item>
+      </div>
+    </cs-nav-group>
+  </div>
+</div>
+
+</body>
+</html>

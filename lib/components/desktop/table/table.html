@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-table 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="table.css?v=766a16ac">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-title">基础表格 Default</div>
+  <div class="section-subtitle">含表头 + 行 hover</div>
+  <cs-table>
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>姓名</th><th>部门</th><th>职位</th><th>入职时间</th><th class="table-cell-num">工号</th></tr></thead>
+        <tbody>
+          <tr><td>张三</td><td>设计部</td><td>设计师</td><td>2023-01-15</td><td class="table-cell-num">1001</td></tr>
+          <tr><td>李四</td><td>研发部</td><td>前端工程师</td><td>2022-08-20</td><td class="table-cell-num">1002</td></tr>
+          <tr><td>王五</td><td>产品部</td><td>产品经理</td><td>2023-05-10</td><td class="table-cell-num">1003</td></tr>
+          <tr><td>赵六</td><td>设计部</td><td>UX 设计师</td><td>2023-09-01</td><td class="table-cell-num">1004</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </cs-table>
+</div>
+
+<div class="section">
+  <div class="section-title">斑马线 Striped</div>
+  <div class="section-subtitle">data-variant="striped"</div>
+  <cs-table data-variant="striped">
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>项目名称</th><th>负责人</th><th>状态</th><th class="table-cell-num">预算</th></tr></thead>
+        <tbody>
+          <tr><td>组件库迁移</td><td>张三</td><td>进行中</td><td class="table-cell-num">¥120,000</td></tr>
+          <tr><td>设计系统升级</td><td>李四</td><td>已完成</td><td class="table-cell-num">¥80,000</td></tr>
+          <tr><td>用户调研</td><td>王五</td><td>待启动</td><td class="table-cell-num">¥30,000</td></tr>
+          <tr><td>前端框架升级</td><td>赵六</td><td>进行中</td><td class="table-cell-num">¥150,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </cs-table>
+</div>
+
+<div class="section">
+  <div class="section-title">行状态 Selected / Disabled</div>
+  <div class="section-subtitle">tr[data-selected] / tr[data-disabled]</div>
+  <cs-table>
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>文件</th><th>大小</th><th>状态</th></tr></thead>
+        <tbody>
+          <tr><td>file1.pdf</td><td>2.4 MB</td><td>正常</td></tr>
+          <tr data-selected><td>file2.docx (已选中)</td><td>128 KB</td><td>正常</td></tr>
+          <tr><td>file3.png</td><td>1.2 MB</td><td>正常</td></tr>
+          <tr data-disabled><td>file4.zip (禁用)</td><td>15 MB</td><td>已锁定</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </cs-table>
+</div>
+
+<div class="section">
+  <div class="section-title">无外框 Borderless</div>
+  <div class="section-subtitle">data-variant="borderless" — 仅行底分割线</div>
+  <cs-table data-variant="borderless">
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>键</th><th>值</th></tr></thead>
+        <tbody>
+          <tr><td>API 版本</td><td>v2.1.0</td></tr>
+          <tr><td>构建时间</td><td>2026-04-08 10:30</td></tr>
+          <tr><td>分支</td><td>master</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </cs-table>
+</div>
+
+<div class="section">
+  <div class="section-title">尺寸 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg"</div>
+  <cs-table data-size="sm" style="margin-bottom: 16px;">
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>sm 紧凑</th><th>列二</th></tr></thead>
+        <tbody><tr><td>行一</td><td>数据</td></tr><tr><td>行二</td><td>数据</td></tr></tbody>
+      </table>
+    </div>
+  </cs-table>
+  <cs-table data-size="lg">
+    <div class="table-wrapper">
+      <table>
+        <thead><tr><th>lg 宽松</th><th>列二</th></tr></thead>
+        <tbody><tr><td>行一</td><td>数据</td></tr><tr><td>行二</td><td>数据</td></tr></tbody>
+      </table>
+    </div>
+  </cs-table>
+</div>
+
+</body>
+</html>

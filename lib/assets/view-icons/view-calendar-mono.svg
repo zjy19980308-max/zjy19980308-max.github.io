@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><defs>
+<filter id="filter0_d_2017_739" x="-36" y="-161" width="224" height="554" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="10"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2017_739"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2017_739" result="shape"/>
+</filter>
+</defs><path id="Icon" d="M3.59376 1.31256V2.28768M10.2813 1.31256V2.28756M12.2501 4.28756L12.2501 10.6876C12.2501 11.7922 11.3546 12.6876 10.2501 12.6876H3.75C2.64543 12.6876 1.75 11.7922 1.75 10.6876V4.28756C1.75 3.18299 2.64543 2.28756 3.75 2.28756H10.2501C11.3546 2.28756 12.2501 3.18299 12.2501 4.28756Z" stroke="#333333" stroke-linecap="round" stroke-linejoin="round"/><circle id="Ellipse 980" cx="4.15625" cy="6.34388" r="0.5" fill="#333333" stroke="#333333" stroke-width="0.312508"/><circle id="Ellipse 981" cx="6.78125" cy="6.34381" r="0.5" fill="#333333" stroke="#333333" stroke-width="0.312508"/><circle id="Ellipse 982" cx="4.15625" cy="8.96875" r="0.5" fill="#333333" stroke="#333333" stroke-width="0.312508"/><circle id="Ellipse 984" cx="6.78125" cy="8.96875" r="0.5" fill="#333333" stroke="#333333" stroke-width="0.312508"/><circle id="Ellipse 983" cx="9.40625" cy="6.34381" r="0.5" fill="#333333" stroke="#333333" stroke-width="0.312508"/></svg>

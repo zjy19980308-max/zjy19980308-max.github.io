@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-side-nav 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="side-nav.css?v=36314d5f">
+  <style>
+    body { padding: 32px; background: #eef0f2; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 6px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    /* 组件是 flex-col、靠父高撑开 → 给个固定高白容器（模拟编辑器内容区）*/
+    .stage { display: flex; height: 560px; background: var(--cs-color-white); border-radius: 8px; overflow: hidden; box-shadow: var(--cs-shadow-card-soft); }
+  </style>
+</head>
+<body>
+
+  <div class="section-title">cs-side-nav · 多维表格二级导航（1:1 Figma 2017:885）</div>
+  <div class="section-subtitle">数据表=选中(灰底+主色+⋮) · 仪表盘/工作流/查询页=常态 · 文件夹=可展开+拖拽占位 · hover 显 ⋮</div>
+
+  <div class="stage">
+    <cs-side-nav>
+      <div class="sn-searchrow">
+        <div class="sn-search"><img src="../../../assets/icon/st-nav/search.svg" alt=""><input placeholder="搜索" spellcheck="false"></div>
+        <img class="sn-collapse" src="../../../assets/icon/st-nav/collapse.svg" alt="收起">
+      </div>
+      <div class="sn-list">
+        <a class="sn-item is-active" href="javascript:;">
+          <span class="sn-item-main"><img class="sn-ico sn-ico-d" src="../../../assets/icon/st-nav/shujubiao.svg" alt=""><img class="sn-ico sn-ico-a" src="../../../assets/icon/st-nav/shujubiao-active.svg" alt=""><span>数据表</span></span>
+          <img class="sn-more" src="../../../assets/icon/st-nav/more.svg" alt="更多">
+        </a>
+        <a class="sn-item" href="javascript:;"><span class="sn-item-main"><img class="sn-ico sn-ico-d" src="../../../assets/icon/st-nav/yibiaopan.svg" alt=""><img class="sn-ico sn-ico-a" src="../../../assets/icon/st-nav/yibiaopan-active.svg" alt=""><span>仪表盘</span></span><img class="sn-more" src="../../../assets/icon/st-nav/more.svg" alt="更多"></a>
+        <a class="sn-item" href="javascript:;"><span class="sn-item-main"><img class="sn-ico sn-ico-d" src="../../../assets/icon/st-nav/gongzuoliu1.svg" alt=""><img class="sn-ico sn-ico-a" src="../../../assets/icon/st-nav/gongzuoliu1-active.svg" alt=""><span>工作流</span></span><img class="sn-more" src="../../../assets/icon/st-nav/more.svg" alt="更多"></a>
+        <a class="sn-item" href="javascript:;"><span class="sn-item-main"><img class="sn-ico sn-ico-d" src="../../../assets/icon/st-nav/gongzuoliu2.svg" alt=""><img class="sn-ico sn-ico-a" src="../../../assets/icon/st-nav/gongzuoliu2-active.svg" alt=""><span>工作流</span></span><img class="sn-more" src="../../../assets/icon/st-nav/more.svg" alt="更多"></a>
+        <a class="sn-item" href="javascript:;"><span class="sn-item-main"><img class="sn-ico sn-ico-d" src="../../../assets/icon/st-nav/chaxunye.svg" alt=""><img class="sn-ico sn-ico-a" src="../../../assets/icon/st-nav/chaxunye-active.svg" alt=""><span>查询页</span></span><img class="sn-more" src="../../../assets/icon/st-nav/more.svg" alt="更多"></a>
+        <a class="sn-item" href="javascript:;"><span class="sn-item-main"><img class="sn-ico sn-ico-d" src="../../../assets/icon/st-nav/chevrondown.svg" alt=""><img class="sn-ico sn-ico-a" src="../../../assets/icon/st-nav/chevrondown-active.svg" alt=""><span>文件夹</span></span></a>
+        <div class="sn-drop">可拖拽内容到这里</div>
+      </div>
+      <script>
+        // 演示：点导航项切换点亮（图标+文字都变蓝）
+        document.querySelectorAll('cs-side-nav .sn-item').forEach(function(it){
+          it.addEventListener('click',function(){
+            document.querySelectorAll('cs-side-nav .sn-item').forEach(function(x){x.classList.remove('is-active');});
+            it.classList.add('is-active');
+          });
+        });
+      </script>
+    </cs-side-nav>
+  </div>
+
+</body>
+</html>

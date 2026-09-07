@@ -1,0 +1,73 @@
+/*
+ * 导航分组组件 (Nav Group)
+ * 标签：<cs-nav-group>
+ * 用于侧边栏的可折叠导航分组（如"我的任务"、"空间"）
+ *
+ * 结构：
+ *   <cs-nav-group [data-collapsed]>
+ *     <div class="group-header">
+ *       <span class="group-title">分组标题</span>
+ *       <i class="group-arrow cses-xiala"></i>
+ *     </div>
+ *     <div class="group-body">
+ *       <cs-nav-item>...</cs-nav-item>
+ *       ...
+ *     </div>
+ *   </cs-nav-group>
+ *
+ * data 属性：
+ *   data-collapsed             — 折叠状态（隐藏 body，箭头旋转 -90deg）
+ */
+
+/* ========== 基础样式 ========== */
+cs-nav-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== 分组头部 ========== */
+cs-nav-group .group-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-6) var(--space-xs);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ========== 分组标题 ========== */
+cs-nav-group .group-title {
+  font: var(--typo-cn-12-medium);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 展开/折叠箭头 ========== */
+cs-nav-group .group-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--cs-sem-size-icon-sm);
+  line-height: 1;
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+/* 折叠时箭头旋转 -90deg */
+cs-nav-group[data-collapsed] .group-arrow {
+  transform: rotate(-90deg);
+}
+
+/* ========== 分组内容 ========== */
+cs-nav-group .group-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  transition: opacity 0.2s ease;
+}
+
+/* 折叠时隐藏内容 */
+cs-nav-group[data-collapsed] .group-body {
+  display: none;
+}

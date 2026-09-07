@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-alert 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="alert.css?v=28f42da0">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; flex-direction: column; gap: 12px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 四种语义 ========== -->
+<div class="section">
+  <div class="section-title">四种语义 Types</div>
+  <div class="section-subtitle">data-type="success | info | warning | danger"</div>
+  <div class="row">
+    <cs-alert data-type="success">
+      <i class="alert-icon cses-check-circle"></i>
+      <div class="alert-body">
+        <div class="alert-title">提交成功，请等待审核结果。</div>
+      </div>
+    </cs-alert>
+
+    <cs-alert data-type="info">
+      <i class="alert-icon cses-info-circle"></i>
+      <div class="alert-body">
+        <div class="alert-title">系统将在今晚 23:00 进行例行维护，预计耗时 30 分钟。</div>
+      </div>
+    </cs-alert>
+
+    <cs-alert data-type="warning">
+      <i class="alert-icon cses-exclamation-circle"></i>
+      <div class="alert-body">
+        <div class="alert-title">您的密码即将在 7 天后过期，请尽快修改。</div>
+      </div>
+    </cs-alert>
+
+    <cs-alert data-type="danger">
+      <i class="alert-icon cses-close-circle"></i>
+      <div class="alert-body">
+        <div class="alert-title">无法连接服务器，请检查网络设置。</div>
+      </div>
+    </cs-alert>
+  </div>
+</div>
+
+<!-- ========== 2. 可关闭 ========== -->
+<div class="section">
+  <div class="section-title">可关闭 Closable</div>
+  <div class="section-subtitle">data-closable + .alert-close 子元素</div>
+  <div class="row">
+    <cs-alert data-type="info" data-closable>
+      <i class="alert-icon cses-info-circle"></i>
+      <div class="alert-body">
+        <div class="alert-title">这是一条可关闭的提示</div>
+      </div>
+      <button class="alert-close" type="button" aria-label="关闭"><i class="cses-guanbi"></i></button>
+    </cs-alert>
+
+    <cs-alert data-type="warning" data-closable>
+      <i class="alert-icon cses-exclamation-circle"></i>
+      <div class="alert-body">
+        <div class="alert-title">您还未完成实名认证，部分功能将受限。</div>
+      </div>
+      <button class="alert-close" type="button" aria-label="关闭"><i class="cses-guanbi"></i></button>
+    </cs-alert>
+  </div>
+</div>
+
+<!-- ========== 3. 含描述 ========== -->
+<div class="section">
+  <div class="section-title">含描述 With Description</div>
+  <div class="section-subtitle">data-with-desc 启用纵向标题 + 描述布局</div>
+  <div class="row">
+    <cs-alert data-type="success" data-with-desc data-closable>
+      <i class="alert-icon cses-check-circle"></i>
+      <div class="alert-body">
+        <div class="alert-title">导入成功</div>
+        <div class="alert-desc">已成功导入 2,341 条数据。其中 12 条因格式不规范被自动跳过，详见导入日志。</div>
+      </div>
+      <button class="alert-close" type="button" aria-label="关闭"><i class="cses-guanbi"></i></button>
+    </cs-alert>
+
+    <cs-alert data-type="warning" data-with-desc>
+      <i class="alert-icon cses-exclamation-circle"></i>
+      <div class="alert-body">
+        <div class="alert-title">需要您的关注</div>
+        <div class="alert-desc">您的存储空间使用率已达到 85%，建议清理无用文件或升级套餐，以避免影响正常使用。</div>
+      </div>
+    </cs-alert>
+
+    <cs-alert data-type="danger" data-with-desc>
+      <i class="alert-icon cses-close-circle"></i>
+      <div class="alert-body">
+        <div class="alert-title">操作失败</div>
+        <div class="alert-desc">由于您没有相应权限，本次发布操作已被拒绝。请联系管理员申请「内容发布」权限。</div>
+      </div>
+    </cs-alert>
+  </div>
+</div>
+
+</body>
+</html>

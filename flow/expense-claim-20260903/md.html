@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>报销申请 · 需求文档 + 用例 + 三层枚举</title>
+<style>
+:root{
+  --bg:#fbfbfa; --panel:#fff; --ink:#1c1c1a; --ink2:#5a5a55; --ink3:#96968e;
+  --line:#e6e6e1; --line2:#f0f0ec;
+  --pick:#3d5afe; --pick-bg:#eef1ff; --pick-line:#c3ccff;
+  --ok:#0f7a3d; --ok-bg:#eefaf2; --ok-line:#bfe6cd;
+  --no:#b91c1c; --no-bg:#fef2f2;
+  --warn:#c2410c; --warn-bg:#fff4ec;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:0 28px 96px}
+
+header{padding:64px 0 34px;border-bottom:2px solid var(--ink)}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.16em;color:var(--ink3);text-transform:uppercase}
+h1{margin:14px 0 0;font-size:34px;line-height:1.2;letter-spacing:-.02em;font-weight:700}
+.sub{margin:12px 0 0;color:var(--ink2);max-width:66ch}
+.meta{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{font:600 11px/1 var(--mono);letter-spacing:.05em;padding:6px 10px;border:1px solid var(--line);
+  border-radius:4px;background:var(--panel);color:var(--ink2)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);margin:34px 0 0}
+.stat{background:var(--panel);padding:18px 16px;text-decoration:none;color:inherit;display:block}
+.stat b{display:block;font:700 30px/1 var(--mono);letter-spacing:-.03em}
+.stat span{display:block;margin-top:7px;font-size:11px;color:var(--ink3);letter-spacing:.04em}
+.stat.hl b{color:var(--pick)}
+a.stat:hover{background:var(--pick-bg)} a.stat span{color:var(--pick)}
+
+/* 目录 */
+.toc{margin-top:22px;display:flex;flex-wrap:wrap;gap:7px}
+.toc a{font:600 12px/1 var(--mono);padding:8px 11px;border:1px solid var(--line);border-radius:4px;
+  background:var(--panel);color:var(--ink2);text-decoration:none}
+.toc a:hover{border-color:var(--pick);color:var(--pick)}
+
+section{margin-top:56px;scroll-margin-top:16px}
+.sec-h{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--ink);flex-wrap:wrap}
+.sec-n{font:700 12px/1 var(--mono);color:var(--pick);letter-spacing:.1em;white-space:nowrap}
+.sec-h h2{margin:0;font-size:21px;font-weight:700;letter-spacing:-.01em}
+.sec-why{margin:10px 0 0;font-size:13px;color:var(--ink3)}
+h3{margin:32px 0 0;font-size:16px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.box{border:1px solid var(--line);border-radius:6px;background:var(--panel);padding:16px 18px}
+.box h4{margin:0 0 9px;font:700 11px/1 var(--mono);color:var(--ink3);letter-spacing:.08em}
+.box p{margin:0 0 8px;font-size:14px}.box p:last-child{margin:0}
+.box.ok{border-color:var(--ok-line);background:var(--ok-bg)}
+.box.no{border-color:#f2c9c9;background:var(--no-bg)}
+
+.tw{overflow-x:auto;margin-top:18px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px}
+th{text-align:left;padding:12px 14px;background:#f7f7f4;border-bottom:1px solid var(--line);
+  font:700 11px/1 var(--mono);color:var(--ink2);letter-spacing:.06em;white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:0}
+code{font:12px var(--mono);background:#f4f4f0;border:1px solid var(--line);padding:1px 5px;border-radius:3px}
+td code{color:var(--pick)}
+.uc{font:700 11px/1 var(--mono);color:#fff;background:var(--ink);padding:4px 7px;border-radius:3px;white-space:nowrap}
+.badge{display:inline-block;font:700 10px/1 var(--mono);padding:4px 7px;border-radius:3px;letter-spacing:.04em;white-space:nowrap}
+.badge.p0{background:var(--pick);color:#fff}
+.badge.r{background:#eee;color:var(--ink2)}
+.badge.g{background:var(--ok);color:#fff}
+.badge.n{background:var(--no);color:#fff}
+
+pre.ascii{margin:18px 0 0;padding:18px 20px;background:var(--ink);color:#e8e8e3;border-radius:6px;
+  font:12.5px/1.75 var(--mono);overflow-x:auto}
+pre.ascii .c{color:#7ea6ff} pre.ascii .g{color:#8a8a82} pre.ascii .y{color:#f0c674}
+
+.note{margin-top:20px;padding:16px 18px;border-left:3px solid var(--warn);background:var(--warn-bg);
+  border-radius:0 5px 5px 0;font-size:14px}
+.note.ok{border-left-color:var(--ok);background:var(--ok-bg)}
+.note h4{margin:0 0 7px;font-size:14px;font-weight:700}
+.note p{margin:0 0 8px}.note p:last-child{margin:0}
+
+/* 块卡 —— 三层枚举的核心 */
+.blk{margin-top:20px;border:1px solid var(--line);border-radius:6px;background:var(--panel);overflow:hidden}
+.blk-h{padding:14px 18px;border-bottom:1px solid var(--line2);display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.blk-k{font:700 13px/1 var(--mono);color:#fff;background:var(--ink);width:26px;height:26px;
+  display:flex;align-items:center;justify-content:center;border-radius:4px;flex-shrink:0}
+.blk-h .nm{font-weight:600;flex:1;min-width:120px}
+.blk-r{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line2);font-size:14px}
+.blk-r:last-child{border-bottom:0}
+.blk-r .k{font:700 11px/1.6 var(--mono);color:var(--ink3);letter-spacing:.05em}
+.blk-r.hi{background:#fafaf8}
+.blk-r .fields{font:12px/1.9 var(--mono);color:var(--pick)}
+
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--ink3)}
+
+@media (max-width:680px){
+  .wrap{padding:0 18px 64px}h1{font-size:26px}
+  .two{grid-template-columns:1fr}
+  .blk-r{grid-template-columns:1fr;gap:5px;padding:12px 14px}
+  .blk-h{padding:12px 14px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Step 2 / 4 · 逐页需求分析</div>
+  <h1>报销申请 · 需求文档 + 用户用例 + 信息架构三层枚举</h1>
+  <p class="sub">框架定完（页数 / 导航 / 承载）之后，<b>每一页的需求单独跟 owner 确认</b>。
+  这一步产出三样：需求本体、19 条用户用例、以及<b>信息架构三层枚举</b> ——
+  分几个区块、每块放什么、每条信息对使用者的价值。</p>
+  <div class="meta">
+    <span class="tag">2026-09-03</span>
+    <span class="tag">EXPENSE-CLAIM</span>
+    <span class="tag">二栏 · navbar + 内容区</span>
+    <span class="tag">红线八 · 一页一确认</span>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat hl"><b>19</b><span>用户用例</span></div>
+  <div class="stat"><b>5</b><span>状态机节点</span></div>
+  <div class="stat"><b>8</b><span>硬约束</span></div>
+  <a class="stat hl" href="#pages"><b>3</b><span>P0 区块 · 点看枚举 ↓</span></a>
+  <div class="stat"><b>12</b><span>对象字段</span></div>
+  <div class="stat"><b>14/14</b><span>完备度自检</span></div>
+</div>
+
+<div class="toc">
+  <a href="#why">WHY</a>
+  <a href="#scope">覆盖 / 不覆盖</a>
+  <a href="#fsm">状态机</a>
+  <a href="#rules">硬约束</a>
+  <a href="#uc">19 条用例</a>
+  <a href="#pages">三层枚举 ★</a>
+  <a href="#tbd">仍是假设的</a>
+</div>
+
+<!-- ══ WHY ══ -->
+<section id="why">
+  <div class="sec-h"><span class="sec-n">WHY</span><h2>这组页面为什么存在</h2></div>
+
+  <div class="two">
+    <div class="box ok">
+      <h4>价值</h4>
+      <p>让员工把「攒发票 → 填单 → 交上去 → 盯进度」这条链在桌面端一次走完，
+      <b>尤其是出差回来那 20 多张票，别再靠 Excel 贴条 + 微信催</b>。</p>
+    </div>
+    <div class="box no">
+      <h4>不做会怎样</h4>
+      <p>· 票散在手机相册、邮箱、纸质夹子里，月底拼单靠回忆，<b>漏报 / 重报</b><br>
+      · 交上去之后是黑盒，只能微信问「我那单批了吗」，审批人也烦<br>
+      · 被打回时不知道退回哪条、为什么退，<b>改一轮再等一轮</b></p>
+    </div>
+  </div>
+
+  <div class="note ok">
+    <h4>这单最核心的一句</h4>
+    <p style="font-size:16px">把校验挪到「<b>代价真正发生</b>」的那一刻，而不是「数据产生」的那一刻。</p>
+    <p style="color:var(--ink2)">传票时人在「清库存」心态 —— 批量、快、不想被打断；
+    组单时人在「要交出去了」心态 —— 愿意逐项核对。<b>同样一件事，放对时机就不烦人。</b></p>
+  </div>
+</section>
+
+<!-- ══ 范围 ══ -->
+<section id="scope">
+  <div class="sec-h"><span class="sec-n">SCOPE</span><h2>覆盖 / 不覆盖 / 后续</h2></div>
+  <p class="sec-why">「不覆盖」那栏每条都写了为什么划出去 —— 是决定，不是遗漏。</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>覆盖什么</th><th>出处</th></tr></thead>
+    <tbody>
+      <tr><td>我的报销列表 · 状态 / 金额 / 进度</td><td>Q1.2 查进度频次最高</td></tr>
+      <tr><td>首屏「需我处理」置顶区（无事自动消失）</td><td>Q3.2</td></tr>
+      <tr><td>「我提的 / 待我审批」同页 view 切换</td><td>Q2.1</td></tr>
+      <tr><td>我的票夹 · 批量上传 · OCR · 可疑项黄底</td><td>Q2.2 + Q4.3</td></tr>
+      <tr><td>从票夹勾选若干张 → 组成一单</td><td>Q2.2</td></tr>
+      <tr><td>新建 / 编辑（右侧抽屉，创建编辑共用）</td><td>Q4.1</td></tr>
+      <tr><td>详情 · 发票明细 + 审批时间线 + 附件</td><td>Q4.2</td></tr>
+      <tr><td>撤回 / 催办 / 被退回后重交</td><td>Q1.2</td></tr>
+      <tr><td>审批：通过 / 退回（必填理由）</td><td>Q1.1</td></tr>
+      <tr><td>「已打款」终态 —— 回答「钱什么时候到」</td><td>B2 补问</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="tw"><table>
+    <thead><tr><th>不做什么</th><th>为什么划出去</th></tr></thead>
+    <tbody>
+      <tr><td>财务复核 / 批量核票 / 打款操作</td><td>Q1.1 排除了 C；B2 只把「已打款」当<b>状态</b>看，不做财务操作界面</td></tr>
+      <tr><td>报销标准 / 额度 / 科目配置</td><td>管理端能力</td></tr>
+      <tr><td>预算控制、超标预警</td><td>同上</td></tr>
+      <tr><td>移动端</td><td>本单只做 1440 桌面</td></tr>
+      <tr><td><b>独立的「发票识别确认页」</b></td><td><b>Q4.3 选 A 的直接结果</b> —— 不拦人，所以不需要那一页</td></tr>
+      <tr><td>一票分摊到多个单</td><td>B5 定了一票一单，分摊场景本轮不做</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <h4>后续规划里有一条是「已知代价」，不是遗漏</h4>
+    <p>Q2.1 选了「审批合页」之后，<b>审批人视角的批量通过能力被牺牲了</b>。
+    这是选合页时就知道的代价，写进后续规划，不假装没这回事。</p>
+  </div>
+</section>
+
+<!-- ══ 状态机 ══ -->
+<section id="fsm">
+  <div class="sec-h"><span class="sec-n">B2</span><h2>状态机 · 5 态</h2></div>
+  <p class="sec-why">这条是<b>门卫逼出来的补问</b> —— 它直接决定列表状态列和详情时间线长什么样。</p>
+
+  <pre class="ascii">草稿 ──提交──→ <span class="c">待审批</span> ──通过──→ 已通过 ──打款──→ <span class="y">已打款</span>
+                  │
+                  └──退回──→ <span class="y">已退回</span> ──改完重交──→ <span class="c">待审批</span></pre>
+
+  <div class="tw"><table>
+    <thead><tr><th>状态</th><th>能做什么</th><th>出现在哪</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge r">草稿</span></td><td>编辑 / 删除 / 提交</td><td>列表（我提的）· 不进「需我处理」</td></tr>
+      <tr><td><span class="badge p0">待审批</span></td><td>撤回 / 催办</td><td>列表 · 审批人的「待我审批」view</td></tr>
+      <tr><td><span class="badge n">已退回</span></td><td><b>改完重交</b></td><td>🔴 <b>首屏「需我处理」置顶区</b></td></tr>
+      <tr><td><span class="badge g">已通过</span></td><td>查看</td><td>列表</td></tr>
+      <tr><td><span class="badge g">已打款</span></td><td>查看</td><td>列表 · <b>回答「钱什么时候到」</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note ok">
+    <h4>为什么是 5 个，不是 3 个也不是 6 个</h4>
+    <p><b>少了「草稿」</b>就不能先存后交；<b>少了「已打款」</b>就答不了 Q1.2 里最关心的那件事。</p>
+    <p>owner 排除了「财务审核」这一级 —— <b>员工看得到却插不上手的节点，放进来只会拉长时间线</b>。</p>
+  </div>
+</section>
+
+<!-- ══ 硬约束 ══ -->
+<section id="rules">
+  <div class="sec-h"><span class="sec-n">RULES</span><h2>8 条硬约束</h2></div>
+  <p class="sec-why">每条都能追到某一道问答 —— 不是设计偏好，是问答的直接结果。</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>约束</th><th>出处</th></tr></thead>
+    <tbody>
+      <tr><td><b>A1</b></td><td>首屏要<b>同时扛「读进度」和「写新单」</b></td><td>Q1.2 四个场景全选</td></tr>
+      <tr><td><b>A2</b></td><td>「需我处理」区<b>没事时整块消失</b> —— 否则日常零星报销的人天天看见空盒子</td><td>Q3.2</td></tr>
+      <tr><td><b>A3</b></td><td>无审批权时「待我审批」页签<b>整个隐掉</b>，不留禁用态孤标签</td><td>Q2.1</td></tr>
+      <tr><td><b>A4</b></td><td>抽屉打开时<b>背景仍是票夹</b>，看得见刚才勾了哪几张</td><td>Q4.1</td></tr>
+      <tr><td><b>A5</b></td><td>OCR 可疑项<b>传票时不拦</b>，只在「组成一单」那一刻强制清干净</td><td>Q4.3</td></tr>
+      <tr><td><b>A6</b></td><td>新建入口<b>极轻</b> —— 一个按钮直接开抽屉，不经中间页</td><td>Q1.2 日常零星</td></tr>
+      <tr><td><b>A7</b></td><td>已用掉的票<b>默认不出现</b>在票夹，可切「显示已用」</td><td>B4</td></tr>
+      <tr><td><b>A8</b></td><td>已用票在勾选时<b>禁用</b>，hover 提示「已用于 XX 单」</td><td>B5 一票一单</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ══ UC ══ -->
+<section id="uc">
+  <div class="sec-h"><span class="sec-n">USE CASES</span><h2>19 条用户用例</h2></div>
+  <p class="sec-why">按页分组。每条都标了从哪道问答来 —— 用例不是拍脑袋列的功能清单。</p>
+
+  <h3><code>my-claims</code> 我的报销 · 默认落地</h3>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>用例</th><th>谁</th><th>从哪来</th></tr></thead>
+    <tbody>
+      <tr><td><span class="uc">UC-01</span></td><td>进来第一眼看到「<b>需我处理</b>」区：我被打回的 + 待我审的；<b>没有时整块不出现</b></td><td>双方</td><td>Q3.2 · A2</td></tr>
+      <tr><td><span class="uc">UC-02</span></td><td>看我提过的所有单：状态 / 金额 / 提交时间 / 审到哪了</td><td>申请人</td><td>Q1.2</td></tr>
+      <tr><td><span class="uc">UC-03</span></td><td>切到「待我审批」；<b>没审批权时这个页签整个不出现</b></td><td>审批人</td><td>Q2.1 · A3</td></tr>
+      <tr><td><span class="uc">UC-04</span></td><td>一个按钮直接开新建抽屉，<b>不经中间页</b></td><td>申请人</td><td>Q1.2 · A6</td></tr>
+      <tr><td><span class="uc">UC-05</span></td><td>列表为空时给引导（<b>首次使用 / 筛完没结果，两种空态不一样</b>）</td><td>申请人</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><code>my-receipts</code> 我的票夹</h3>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>用例</th><th>谁</th><th>从哪来</th></tr></thead>
+    <tbody>
+      <tr><td><span class="uc">UC-06</span></td><td><b>批量传发票</b>：调系统选择器，选完立刻以卡片进票夹，卡上显进度</td><td>申请人</td><td>Q2.2</td></tr>
+      <tr><td><span class="uc">UC-07</span></td><td>OCR 跑完，<b>置信度低的字段标黄底</b>，但<b>不拦人、不弹确认</b></td><td>申请人</td><td>Q4.3 · A5</td></tr>
+      <tr><td><span class="uc">UC-08</span></td><td>勾若干张 →「组成一单」→ 开抽屉；<b>此刻才强制把黄底项清干净</b></td><td>申请人</td><td>Q4.3 · A5</td></tr>
+      <tr><td><span class="uc">UC-09</span></td><td><b>已用票默认不出现</b>，可切「显示已用」；已用票勾选禁用 + hover 提示</td><td>申请人</td><td>B4 · B5 · A7 · A8</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><code>claim-detail</code> 报销单详情</h3>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>用例</th><th>谁</th><th>从哪来</th></tr></thead>
+    <tbody>
+      <tr><td><span class="uc">UC-10</span></td><td>看单的全貌：字段 + 发票明细 + 附件</td><td>双方</td><td>Q4.2</td></tr>
+      <tr><td><span class="uc">UC-11</span></td><td>看<b>审批时间线</b>：谁、什么时候、做了什么、退回理由</td><td>双方</td><td>Q4.2 · B2</td></tr>
+      <tr><td><span class="uc">UC-12</span></td><td>待审批时可<b>撤回 / 催办</b>（都要二次确认）</td><td>申请人</td><td>Q1.2</td></tr>
+      <tr><td><span class="uc">UC-13</span></td><td>被退回时<b>改完重交</b>，回到待审批</td><td>申请人</td><td>B2</td></tr>
+      <tr><td><span class="uc">UC-14</span></td><td>审批人<b>通过 / 退回</b>；退回必须填理由</td><td>审批人</td><td>Q1.1</td></tr>
+      <tr><td><span class="uc">UC-15</span></td><td>单的链接能<b>发给别人打开</b></td><td>双方</td><td>Q4.2（选独立页的理由之一）</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><code>claim-form</code> 新建 / 编辑 · 右侧抽屉</h3>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>用例</th><th>谁</th><th>从哪来</th></tr></thead>
+    <tbody>
+      <tr><td><span class="uc">UC-16</span></td><td>填单：类型 / 金额 / 事由 / 审批人 / 发票（≥1 张）</td><td>申请人</td><td>⚠️ B1 我拍的</td></tr>
+      <tr><td><span class="uc">UC-17</span></td><td>抽屉打开时<b>背景仍是票夹</b>，看得见刚才勾了哪几张</td><td>申请人</td><td>Q4.1 · A4</td></tr>
+      <tr><td><span class="uc">UC-18</span></td><td><b>创建与编辑共用同一个抽屉</b>，按有没有单号决定模式</td><td>申请人</td><td>Q4.1</td></tr>
+      <tr><td><span class="uc">UC-19</span></td><td>存草稿（不提交），下次接着改</td><td>申请人</td><td>B2 有「草稿」态</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ══════ 三层枚举 · 核心 ══════ -->
+<section id="pages">
+  <div class="sec-h"><span class="sec-n">★ 三层枚举</span><h2>页 1 · <code>my-claims</code> 我的报销</h2></div>
+  <p class="sec-why"><b>这一节是骨架密度的来源。</b>枚举 N 块 → 骨架能定位到 ≥ N×80%；
+  某块声明 M 个字段 → 该块占位符 ≥ M×60%。<b>不写这一节，骨架必然画成一堆空盒子。</b><br>
+  🔴 多页任务<b>一页一节、逐页出逐页确认</b>（红线八）—— 页 2/3/4 待 owner 过了页 1 再写。</p>
+
+  <h3>第一层 · 区域树（列到「块」这一级）</h3>
+  <pre class="ascii">内容区①
+├─ H  content-header：标题「我的报销」+ 搜索框壳 <span class="g">（P2·不展开）</span>
+├─ V  view 切换：我提的 / 待我审批        <span class="g">← 无审批权时整条不出现（A3）</span>
+├─ A  金额概览窄条        <span class="c">P0-①</span>
+├─ B  需我处理区          <span class="c">P0-②</span>   <span class="g">← 无内容时整块不出现（A2）</span>
+├─ C  报销单列表          <span class="c">P0-③</span>
+└─ E  空态 <span class="g">（C 无数据时替补）</span>
+
+<span class="y">P0 = A / B / C 三块（规范上限 3，卡满 ✓）</span></pre>
+
+  <h3>块间关联</h3>
+  <div class="tw"><table>
+    <thead><tr><th>从</th><th>到</th><th>怎么联动</th></tr></thead>
+    <tbody>
+      <tr><td>V 切 view</td><td>A / B / C <b>全换</b></td>
+        <td>「我提的」→ A 显示我的钱；「待我审批」→ A 换成「待我审 N 单 · ¥X」，B 只剩待我审的</td></tr>
+      <tr><td>B 点条目</td><td><code>claim-detail</code></td><td>直达那张单，且<b>滚到退回理由那一段</b></td></tr>
+      <tr><td>C 点行</td><td><code>claim-detail</code></td><td>常规进详情</td></tr>
+      <tr><td>navbar [+新建]</td><td><code>claim-form</code> 抽屉</td><td>抽屉叠在本页上，背景不动</td></tr>
+      <tr><td>详情里改完重交</td><td>回本页 · B 少一条</td><td>状态「已退回」→「待审批」，B 里那条消失</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>页面四态（正常 / 加载 / 空 / 错误，一个都不能少）</h3>
+  <div class="tw"><table>
+    <thead><tr><th>态</th><th>显示什么</th></tr></thead>
+    <tbody>
+      <tr><td><b>正常</b></td><td>A + B（有才显）+ C 列表</td></tr>
+      <tr><td><b>加载</b></td><td>A 三个数字位 skeleton；C 三行骨架条。<b>B 不占位</b> —— 不知道有没有内容前不画空盒子</td></tr>
+      <tr><td><b>空</b></td><td><b>分两种，不能共用一个</b>：<br>① <b>首次使用</b>（一单没有）→ 大空态：「还没有报销单」+ [新建报销单] + 「或者先去票夹传几张发票」<br>② <b>筛选后无结果</b> → 小空态：「没有符合条件的单」+ [清除筛选]</td></tr>
+      <tr><td><b>错误</b></td><td>C 位置显示「加载失败」+ [重试]；<b>A / V 照常显示</b> —— 数据分开取的，别一起垮</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>第二层 · 每块放什么 + 做什么用的　·　第三层 · 用哪些字段</h3>
+  <p class="sec-why">判据：把「做什么用的」那句遮住，<b>如果这块删掉对角色没影响 —— 那就该删，不是该做</b>。</p>
+
+  <div class="blk">
+    <div class="blk-h"><span class="blk-k">A</span><span class="nm">金额概览窄条</span>
+      <span class="badge p0">P0-①</span></div>
+    <div class="blk-r"><div class="k">放什么</div><div>
+      <b>一行</b>，不是卡片墙：「本月已提 <b>3</b> 单 · <b>¥4,280.00</b> ｜ 待审 <b>1</b> 单 · ¥1,200.00 ｜
+      <b>待到账 ¥2,150.00</b>」。「待到账」加重、其余常规。右端「本月 ▾」可切上月 / 本季</div></div>
+    <div class="blk-r hi"><div class="k">做什么用的</div><div>
+      直接回答 Q1.2 里那个最高频的问题 —— <b>「我的钱什么时候到」</b>。他不用点进任何一张单就知道总数。<br>
+      切到「待我审批」view 时这行换成「待我审 <b>2</b> 单 · ¥8,600.00 ｜ 最早的已等 <b>3 天</b>」，驱动他去审</div></div>
+    <div class="blk-r"><div class="k">用哪些字段 (4)</div>
+      <div class="fields">amount · status · submitted_at · paid_at　<span style="color:var(--ink3)">（聚合出：单数 / 金额 / 待到账 / 最久等待）</span></div></div>
+    <div class="blk-r"><div class="k">🔴 设计判断</div><div>
+      <b>刻意做成一行，不做统计卡。</b>三个大卡会把真正要看的列表挤到折叠线以下，
+      那是营销仪表盘审美（<code>design.md §八</code> 明确反对）。<b>一行窄条占 40px，信息一个不少。</b></div></div>
+  </div>
+
+  <div class="blk">
+    <div class="blk-h"><span class="blk-k">B</span><span class="nm">需我处理区</span>
+      <span class="badge p0">P0-②</span><span class="badge r">无内容时整块消失</span></div>
+    <div class="blk-r"><div class="k">放什么</div><div>
+      置顶条目卡，每条 = <b>事实 + 根因 + 直达按钮</b>。<br>
+      被退回组：「<b>『9月出差-上海客户拜访』被王磊退回</b> · ¥4,280 · 理由：<b>缺 2 张发票原件</b> · 9月2日 [去补材料]」<br>
+      待我审组（有审批权才有）：「<b>张伟提交的『8月团建餐费』待你审</b> · ¥1,860 · 已等 <b>3 天</b> [去审批]」</div></div>
+    <div class="blk-r hi"><div class="k">做什么用的</div><div>
+      把 Q1.2 里那个<b>高焦虑</b>场景（被打回补材料）从列表里捞出来。
+      <b>判据：删掉这块，他得自己在列表里逐行找哪个是红色的 —— 这就是它存在的理由。</b><br>
+      🔴 一条都没有时<b>整块不出现</b>（A2）—— 否则日常零星报销的人天天看见一个空盒子</div></div>
+    <div class="blk-r"><div class="k">用哪些字段 (7)</div>
+      <div class="fields">id · title · amount · status · reject_reason · approver/creator · submitted_at</div></div>
+    <div class="blk-r"><div class="k">备注</div><div>
+      两组之间加一条细分隔，<b>不加二级标题</b> —— 只有 1~3 条时，标题比内容还重</div></div>
+  </div>
+
+  <div class="blk">
+    <div class="blk-h"><span class="blk-k">C</span><span class="nm">报销单列表</span>
+      <span class="badge p0">P0-③</span></div>
+    <div class="blk-r"><div class="k">放什么</div><div>
+      表格，每行：<b>单号</b>（<code>EC-20260903-007</code>）· <b>事由</b> · <b>类型标签</b> ·
+      <b>金额</b>（右对齐）· <b>发票数</b>（12 张）· <b>状态药丸</b> ·
+      <b>审批进度</b>（2/3 · 当前在王磊）· <b>提交时间</b> · 行尾 hover 出 [撤回] [催办]。<br>
+      默认按提交时间倒序（⚠️ B3 我拍的）。顶部一行筛选：状态 / 类型 / 时间范围</div></div>
+    <div class="blk-r hi"><div class="k">做什么用的</div><div>
+      回答「我提过哪些单、各自到哪一步了」。<br>
+      <b>状态药丸 + 审批进度两列并排是关键</b> —— 光看「待审批」不知道卡在谁那儿，
+      加上「2/3 · 王磊」<b>他才知道该催谁</b>。<br>
+      切「待我审批」view 时，「审批进度」列换成「提交人」列，行尾按钮换成 [通过] [退回]</div></div>
+    <div class="blk-r"><div class="k">用哪些字段 (9)</div>
+      <div class="fields">id · title · type · amount · receipt_count · status · approve_stage · approver · submitted_at</div></div>
+    <div class="blk-r"><div class="k">🔴 设计判断</div><div>
+      <b>草稿单混在同一个列表里，不单开页签。</b>状态药丸用中性灰，行尾按钮换成 [继续编辑] [删除]。
+      草稿本来就少 —— <b>单开一页是给一两条数据配一个入口。</b></div></div>
+  </div>
+
+  <h3>第三层 · 业务对象 <code>Claim</code> 全字段（密度引擎）</h3>
+  <div class="tw"><table>
+    <thead><tr><th>字段</th><th>是什么</th><th>示例值</th></tr></thead>
+    <tbody>
+      <tr><td><code>id</code></td><td>单号，系统生成</td><td>EC-20260903-007</td></tr>
+      <tr><td><code>title</code></td><td>事由，用户填</td><td>9月出差-上海客户拜访</td></tr>
+      <tr><td><code>type</code></td><td>类型</td><td>差旅</td></tr>
+      <tr><td><code>amount</code></td><td>报销总额（= 所挂发票之和）</td><td>¥4,280.00</td></tr>
+      <tr><td><code>receipt_count</code></td><td>挂了几张发票</td><td>12</td></tr>
+      <tr><td><code>status</code></td><td>状态（5 态，见上）</td><td>已退回</td></tr>
+      <tr><td><code>submitted_at</code></td><td>提交时间</td><td>2026-09-01 14:30</td></tr>
+      <tr><td><code>approver</code></td><td>当前卡在谁那儿</td><td>王磊</td></tr>
+      <tr><td><code>approve_stage</code></td><td>审批进度</td><td>2/3</td></tr>
+      <tr><td><code>reject_reason</code></td><td>退回理由（仅已退回态）</td><td>缺 2 张发票原件</td></tr>
+      <tr><td><code>paid_at</code></td><td>打款时间（仅已打款态）</td><td>2026-09-08</td></tr>
+      <tr><td><code>creator</code></td><td>提交人（「待我审批」view 用）</td><td>张伟</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note ok">
+    <h4>这张表怎么变成骨架密度</h4>
+    <div class="tw" style="margin-top:10px"><table>
+      <thead><tr><th>块</th><th>用了几个字段</th><th>骨架里该有几个占位符</th></tr></thead>
+      <tbody>
+        <tr><td>A 金额概览</td><td>4（聚合）</td><td><b>≥ 3</b></td></tr>
+        <tr><td>B 需我处理</td><td>7</td><td><b>≥ 5</b></td></tr>
+        <tr><td>C 报销单列表</td><td>9</td><td><b>≥ 6</b></td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin-top:12px"><b>骨架验收时拿这个数去对</b> —— 这就是防「骨架画成空盒子」的机制。
+    对象有 12 个字段、这块用其中 9 个，骨架这块就该有 6 个以上占位符，不是 2 个。</p>
+  </div>
+
+  <h3>边界</h3>
+  <div class="two">
+    <div class="box no"><h4>这版不做</h4>
+      <p>导出 Excel · 批量撤回 · 自定义列 · 报销单打印 · 移动端</p></div>
+    <div class="box"><h4>已知的坑（留给骨架阶段）</h4>
+      <p>① 「待我审批」view 跟「我提的」<b>只差两列</b>，容易被做成两套表格 ——
+      骨架就要用<b>同一个表格骨架只换列</b><br>
+      ② A 区那行数字切 view 时要<b>换含义</b>，不是同一份数据换个筛选</p></div>
+  </div>
+</section>
+
+<!-- ══ 待定 ══ -->
+<section id="tbd">
+  <div class="sec-h"><span class="sec-n">TBD</span><h2>仍是我拍的假设 · owner 可推翻</h2></div>
+  <p class="sec-why">这三条 owner 没被问到。<b>标出来，不混进上面「已定」的部分。</b></p>
+
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>待定项</th><th>我拍的默认</th><th>影响</th></tr></thead>
+    <tbody>
+      <tr><td><b>B1</b></td><td>报销单必填字段</td><td>类型 / 金额 / 事由 / 审批人 / 发票（≥1 张）</td><td>抽屉表单长度</td></tr>
+      <tr><td><b>B3</b></td><td>列表默认排序</td><td>提交时间倒序</td><td>列表首屏</td></tr>
+      <tr><td><b>B6</b></td><td>金额币种</td><td>只做人民币</td><td>字段形态</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <h4>原本这里有 6 条</h4>
+    <p><b>B2 / B4 / B5 已由 owner 拍板</b>，升级进了上面的「状态机」和「硬约束 A7 / A8」。</p>
+    <p>促成那次补问的是<b>流程门卫</b> —— 它拦下需求文档，理由是「最近 30 分钟内一次 AskUserQuestion 都没有」。</p>
+  </div>
+</section>
+
+<footer>
+  数据源：<code>0-requirement/{requirement,usecase-plan,placement}.md</code>　·
+  完备度自检 <b>14/14</b>（区域树到块级 / P0≤3 / 块间关联 / 四态齐 / 每块两句 / 全字段表 / 枚举列全 / 密度换算 / 边界 / 假设标注）<br>
+  三层枚举标准见 <code>docs/流程规则/需求完备度清单.md</code>　·　2026-09-03
+</footer>
+
+</div>
+</body>
+</html>

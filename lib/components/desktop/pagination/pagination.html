@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-pagination 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="pagination.css?v=c29e1bc3">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- 标准分页 -->
+<div class="section">
+  <div class="section-title">标准分页</div>
+  <div class="section-subtitle">第 3 页激活，共 10 页</div>
+
+  <div class="row">
+    <cs-pagination>
+      <span class="page-prev"><i class="cses-houtui"></i></span>
+      <span class="page-item">1</span>
+      <span class="page-item">2</span>
+      <span class="page-item" data-active>3</span>
+      <span class="page-item">4</span>
+      <span class="page-item">5</span>
+      <span class="page-ellipsis">...</span>
+      <span class="page-item">10</span>
+      <span class="page-next"><i class="cses-qianjin"></i></span>
+    </cs-pagination>
+  </div>
+</div>
+
+<!-- 首页（prev 禁用） -->
+<div class="section">
+  <div class="section-title">首页状态</div>
+  <div class="section-subtitle">第 1 页，上一页禁用</div>
+
+  <div class="row">
+    <cs-pagination>
+      <span class="page-prev" data-disabled><i class="cses-houtui"></i></span>
+      <span class="page-item" data-active>1</span>
+      <span class="page-item">2</span>
+      <span class="page-item">3</span>
+      <span class="page-item">4</span>
+      <span class="page-item">5</span>
+      <span class="page-ellipsis">...</span>
+      <span class="page-item">20</span>
+      <span class="page-next"><i class="cses-qianjin"></i></span>
+    </cs-pagination>
+  </div>
+</div>
+
+<!-- 尾页（next 禁用） -->
+<div class="section">
+  <div class="section-title">尾页状态</div>
+  <div class="section-subtitle">最后一页，下一页禁用</div>
+
+  <div class="row">
+    <cs-pagination>
+      <span class="page-prev"><i class="cses-houtui"></i></span>
+      <span class="page-item">1</span>
+      <span class="page-ellipsis">...</span>
+      <span class="page-item">16</span>
+      <span class="page-item">17</span>
+      <span class="page-item">18</span>
+      <span class="page-item">19</span>
+      <span class="page-item" data-active>20</span>
+      <span class="page-next" data-disabled><i class="cses-qianjin"></i></span>
+    </cs-pagination>
+  </div>
+</div>
+
+<!-- 中间页（两侧省略） -->
+<div class="section">
+  <div class="section-title">中间页状态</div>
+  <div class="section-subtitle">第 10 页，两侧均有省略号</div>
+
+  <div class="row">
+    <cs-pagination>
+      <span class="page-prev"><i class="cses-houtui"></i></span>
+      <span class="page-item">1</span>
+      <span class="page-ellipsis">...</span>
+      <span class="page-item">9</span>
+      <span class="page-item" data-active>10</span>
+      <span class="page-item">11</span>
+      <span class="page-ellipsis">...</span>
+      <span class="page-item">20</span>
+      <span class="page-next"><i class="cses-qianjin"></i></span>
+    </cs-pagination>
+  </div>
+</div>
+
+<!-- 少量页码 -->
+<div class="section">
+  <div class="section-title">少量页码</div>
+  <div class="section-subtitle">共 3 页，无省略号</div>
+
+  <div class="row">
+    <cs-pagination>
+      <span class="page-prev" data-disabled><i class="cses-houtui"></i></span>
+      <span class="page-item" data-active>1</span>
+      <span class="page-item">2</span>
+      <span class="page-item">3</span>
+      <span class="page-next"><i class="cses-qianjin"></i></span>
+    </cs-pagination>
+  </div>
+</div>
+
+</body>
+</html>

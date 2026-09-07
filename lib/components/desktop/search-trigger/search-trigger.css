@@ -1,0 +1,42 @@
+/* ==========================================================
+   cs-search-trigger — 搜索触发按钮
+   用于 content-header 右侧，点击后展开搜索面板
+   ========================================================== */
+
+cs-search-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 150px;
+  height: 32px;
+  padding: 0 var(--space-sm);
+  background: var(--cs-color-bg-light);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--motion-duration-fast) var(--motion-easing-standard);
+  user-select: none;
+  box-sizing: border-box;
+}
+
+cs-search-trigger:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+cs-search-trigger[data-disabled] {
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* ---- 子元素：搜索文字 ---- */
+.trigger-text {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light2);
+  line-height: 1;
+}
+
+/* ---- 子元素：搜索图标 ---- */
+.trigger-icon {
+  font-size: var(--cs-sem-size-icon-md);
+  color: var(--cs-color-text-light2);
+  line-height: 1;
+}

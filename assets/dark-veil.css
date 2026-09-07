@@ -1,0 +1,22 @@
+/* ═══════════════════════════════════════════════════════════════
+   dark-veil.css —— 首屏氛围底
+   画布垫在 .home-hero 最底层，正文抬到它上面。
+   分辨率是降着渲染的，靠 CSS 拉满容器；模糊一点反而更像氛围。
+   ═══════════════════════════════════════════════════════════════ */
+.darkveil-canvas{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  display:block; z-index:0;
+  pointer-events:none;
+  /* 低分辨率放大后的锯齿用一点点模糊压掉 */
+  filter:blur(.4px) saturate(1.15);
+}
+/* 正文必须压在画布之上 */
+.home-hero > .home-top{position:relative; z-index:1}
+/* 上下各压一道渐隐，让它和纯黑底衔接，不出现硬边 */
+.home-hero::after{
+  content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.55) 0%,transparent 26%,transparent 62%,#000 100%),
+    radial-gradient(120% 80% at 50% 0%,transparent 40%,rgba(0,0,0,.75) 100%);
+}

@@ -1,0 +1,138 @@
+/*
+ * 导航项组件 (Nav Item)
+ * 标签：<cs-nav-item>
+ * 用于二级侧边栏/导航栏中的导航条目
+ *
+ * 结构：
+ *   <cs-nav-item [data-active]>
+ *     <i class="nav-icon cses-xxx"></i>   ← 可选，左侧图标 16px（cses-* 真名详见 digest/icons-index.md）
+ *     <span class="nav-label">标签文字</span>
+ *     <span class="nav-count">3</span>          ← 可选，右侧计数
+ *   </cs-nav-item>
+ *
+ * data 属性：
+ *   data-active              — 激活/选中态（蓝色高亮）
+ *   data-variant="vertical" — 垂直形态（图标在上文字在下，标杆 mini 栏 60px 专用）
+ */
+
+/* ========== 基础样式 ========== */
+cs-nav-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--cs-sem-size-interactive-sm-plus); /* Figma: 36px = 8+20+8 */
+  padding: var(--space-xs);                        /* Figma: padding 8px 全边 */
+  border-radius: var(--radius-lg);                 /* Figma: border-radius 8px */
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  box-sizing: border-box;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* ========== 悬浮态 ========== */
+cs-nav-item:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 激活/选中态 ========== */
+cs-nav-item[data-active] {
+  background: var(--cs-color-selected);
+  color: var(--cs-color-primary);
+}
+
+/* ========== 左侧区域（图标 + 文字） ========== */
+cs-nav-item .nav-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2xs); /* Figma: gap 4px（图标↔文字） */
+  min-width: 0;
+  flex: 1;
+}
+
+/* ========== 图标 ========== */
+cs-nav-item .nav-icon {
+  font-size: var(--cs-sem-size-icon-md);
+  line-height: 1;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+/* ========== 文字 ========== */
+cs-nav-item .nav-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: inherit;
+}
+
+/* ========== 右侧计数 ========== */
+cs-nav-item .nav-count {
+  flex-shrink: 0;
+  margin-left: auto;
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* 激活态计数保持淡色 */
+cs-nav-item[data-active] .nav-count {
+  color: var(--cs-color-primary);
+  opacity: 0.6;
+}
+
+/* ========== variant: vertical · 标杆 mini 栏 60px 图标上+文字下 ========== */
+cs-nav-item[data-variant="vertical"] {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: auto;
+  padding: 6px 4px;
+  width: 100%;
+  position: relative;
+}
+cs-nav-item[data-variant="vertical"] .nav-icon {
+  font-size: var(--cs-sem-size-icon-xl);
+  margin: 0;
+}
+cs-nav-item[data-variant="vertical"] .nav-label {
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+  flex: 0 0 auto;
+}
+cs-nav-item[data-variant="vertical"] .nav-count {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  margin: 0;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: var(--cs-color-error);
+  color: var(--cs-color-white);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+/* vertical 选中态：左侧 3px 蓝竖条 */
+cs-nav-item[data-variant="vertical"][data-active]::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--cs-color-primary);
+  border-radius: 0 var(--radius-2) var(--radius-2) 0;
+}

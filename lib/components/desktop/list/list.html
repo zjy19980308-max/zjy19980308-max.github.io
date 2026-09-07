@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-list 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="list.css?v=64446b8e">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo { max-width: 560px; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-title">基础列表 Default</div>
+  <div class="section-subtitle">行间分割线</div>
+  <cs-list class="demo">
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">第一行项目</span></span></span></div>
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">第二行项目</span></span></span></div>
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">第三行项目</span></span></span></div>
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">第四行项目</span></span></span></div>
+  </cs-list>
+</div>
+
+<div class="section">
+  <div class="section-title">带外框 Bordered + Header/Footer</div>
+  <div class="section-subtitle">data-variant="bordered"</div>
+  <cs-list data-variant="bordered" data-hoverable class="demo">
+    <div class="list-header">最近文档</div>
+    <div class="list-item">
+      <span class="list-item-meta">
+        <span class="list-item-avatar"><i class="cses-wenjian"></i></span>
+        <span class="list-item-content">
+          <span class="list-item-title">2024 设计规范.docx</span>
+          <span class="list-item-desc">最近编辑：张三 · 2 小时前</span>
+        </span>
+      </span>
+      <span class="list-item-extra">128 KB</span>
+    </div>
+    <div class="list-item">
+      <span class="list-item-meta">
+        <span class="list-item-avatar"><i class="cses-wenjian"></i></span>
+        <span class="list-item-content">
+          <span class="list-item-title">组件库迁移计划.md</span>
+          <span class="list-item-desc">最近编辑：李四 · 5 小时前</span>
+        </span>
+      </span>
+      <span class="list-item-extra">14 KB</span>
+    </div>
+    <div class="list-item">
+      <span class="list-item-meta">
+        <span class="list-item-avatar"><i class="cses-wenjian"></i></span>
+        <span class="list-item-content">
+          <span class="list-item-title">Q1 工作总结.pdf</span>
+          <span class="list-item-desc">最近编辑：王五 · 昨天</span>
+        </span>
+      </span>
+      <span class="list-item-extra">2.4 MB</span>
+    </div>
+    <div class="list-footer">共 3 项</div>
+  </cs-list>
+</div>
+
+<div class="section">
+  <div class="section-title">无分割线 Split</div>
+  <div class="section-subtitle">data-variant="split"</div>
+  <cs-list data-variant="split" class="demo">
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">导航项一</span></span></span></div>
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">导航项二</span></span></span></div>
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">导航项三</span></span></span></div>
+  </cs-list>
+</div>
+
+<div class="section">
+  <div class="section-title">尺寸 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg"</div>
+  <cs-list data-variant="bordered" data-size="sm" class="demo" style="margin-bottom: 16px;">
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">sm 紧凑行</span></span></span></div>
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">sm 紧凑行</span></span></span></div>
+  </cs-list>
+  <cs-list data-variant="bordered" data-size="lg" class="demo">
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">lg 宽松行</span></span></span></div>
+    <div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">lg 宽松行</span></span></span></div>
+  </cs-list>
+</div>
+
+</body>
+</html>

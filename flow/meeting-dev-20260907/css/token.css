@@ -1,0 +1,367 @@
+/* =====================================================
+   基础设计令牌 / Base Design Tokens
+   原始值定义，不直接用于业务样式，供 variable.css 引用
+   ===================================================== */
+
+:root {
+
+  /* ==========================================================
+     颜色色板 / Color Palette
+     来源: Figma「基础变量-new」> color
+     ========================================================== */
+
+  /* ---- Blue 蓝色 ---- */
+  --color-blue-50: #f1f3fd;
+  --color-blue-100: #dfe3fa;
+  --color-blue-200: #c5cef8;
+  --color-blue-300: #9eaef2;
+  --color-blue-400: #7085ea;
+  --color-blue-500: #4857e2;
+  --color-blue-600: #393ed7;
+  --color-blue-700: #3330c5;
+  --color-blue-800: #322da0;
+  --color-blue-900: #2b297f;
+  --color-blue-950: #201d4e;
+
+  /* ---- Red 红色 ---- */
+  --color-red-50: #fef2f2;
+  --color-red-100: #ffe2e2;
+  --color-red-200: #ffc9c9;
+  --color-red-300: #ffa2a2;
+  --color-red-400: #ff6467;
+  --color-red-500: #fb2c36;
+  --color-red-600: #e7000b;
+  --color-red-700: #c10007;
+  --color-red-800: #9f0712;
+  --color-red-900: #82181a;
+  --color-red-950: #460809;
+
+  /* ---- Green 绿色 ---- */
+  --color-green-50: #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-200: #b9f8cf;
+  --color-green-300: #7bf1a8;
+  --color-green-400: #05df72;
+  --color-green-500: #00c950;
+  --color-green-600: #00a63e;
+  --color-green-700: #008236;
+  --color-green-800: #016630;
+  --color-green-900: #0d542b;
+  --color-green-950: #032e15;
+
+  /* ---- Orange 橙色 ---- */
+  --color-orange-50: #fff7ed;
+  --color-orange-100: #ffedd4;
+  --color-orange-200: #ffd6a8;
+  --color-orange-300: #ffb86a;
+  --color-orange-400: #ff8904;
+  --color-orange-500: #ff6900;
+  --color-orange-600: #f54900;
+  --color-orange-700: #ca3500;
+  --color-orange-800: #9f2d00;
+  --color-orange-900: #7e2a0c;
+  --color-orange-950: #441306;
+
+  /* ---- Yellow 黄色 ---- */
+  --color-yellow-50: #fefce8;
+  --color-yellow-100: #fef9c2;
+  --color-yellow-200: #fff085;
+  --color-yellow-300: #ffdf20;
+  --color-yellow-400: #fdc700;
+  --color-yellow-500: #f0b100;
+  --color-yellow-600: #d08700;
+  --color-yellow-700: #a65f00;
+  --color-yellow-800: #894b00;
+  --color-yellow-900: #733e0a;
+  --color-yellow-950: #432004;
+
+  /* ---- Purple 紫色 ---- */
+  --color-purple-50: #faf5ff;
+  --color-purple-100: #f3e8ff;
+  --color-purple-200: #e9d4ff;
+  --color-purple-300: #dab2ff;
+  --color-purple-400: #c27aff;
+  --color-purple-500: #ad46ff;
+  --color-purple-600: #9810fa;
+  --color-purple-700: #8200db;
+  --color-purple-800: #6e11b0;
+  --color-purple-900: #591688;
+  --color-purple-950: #3c0368;
+
+  /* ---- Violet 紫罗兰 ---- */
+  --color-violet-50: #f5f3ff;
+  --color-violet-100: #ede9fe;
+  --color-violet-200: #ddd6ff;
+  --color-violet-300: #c4b4ff;
+  --color-violet-400: #a684ff;
+  --color-violet-500: #8e51ff;
+  --color-violet-600: #7f22fe;
+  --color-violet-700: #7008e7;
+  --color-violet-800: #5d0ec0;
+  --color-violet-900: #4d179a;
+  --color-violet-950: #2f0d68;
+
+  /* ---- Pink 粉色 ---- */
+  --color-pink-50: #fdf2f8;
+  --color-pink-100: #fce7f3;
+  --color-pink-200: #fccee8;
+  --color-pink-300: #fda5d5;
+  --color-pink-400: #fb64b6;
+  --color-pink-500: #f6339a;
+  --color-pink-600: #e60076;
+  --color-pink-700: #c6005c;
+  --color-pink-800: #a3004c;
+  --color-pink-900: #861043;
+  --color-pink-950: #510424;
+
+  /* ---- Sky 天蓝 ---- */
+  --color-sky-50: #f0f9ff;
+  --color-sky-100: #dff2fe;
+  --color-sky-200: #b8e6fe;
+  --color-sky-300: #74d4ff;
+  --color-sky-400: #00bcff;
+  --color-sky-500: #00a6f4;
+  --color-sky-600: #0084d1;
+  --color-sky-700: #0069a8;
+  --color-sky-800: #00598a;
+  --color-sky-900: #024a70;
+  --color-sky-950: #052f4a;
+
+  /* ---- Gray 灰色(冷) ---- */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5dc;
+  --color-gray-400: #99a1af;
+  --color-gray-500: #6a7282;
+  --color-gray-600: #4a5565;
+  --color-gray-700: #364153;
+  --color-gray-800: #1e2939;
+  --color-gray-900: #101828;
+  --color-gray-950: #030712;
+
+  /* ---- Neutral 中性色 ---- */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #c4d4d4;
+  --color-neutral-400: #a1a1a1;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #282626;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
+  --color-neutral-1000: #000000;
+
+  /* ---- Zinc 锌色 ---- */
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #9f9fa9;
+  --color-zinc-500: #71717b;
+  --color-zinc-600: #52525c;
+  --color-zinc-700: #3f3f47;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+
+  /* ---- Brand 品牌色 ---- */
+  --color-brand-1: #e8f3ff;
+  --color-brand-3: #94bfff;
+  --color-brand-4: #6aa1ff;
+  --color-brand-5: #4080ff;
+  --color-brand-6: #165dff;
+  --color-brand-7: #0e42d2;
+
+  /* ---- 其他 ---- */
+  --color-cyan-6: #14c9c9;
+  --color-line-2: #e5e6eb;
+
+  /* ==========================================================
+     字体 / Font
+     ========================================================== */
+
+  /* ---- 字体族 / Font Family ---- */
+  --font-family-cn: "PingFang SC", sans-serif;
+  --font-family-en: "Nunito Sans", sans-serif;
+  --font-family-en-alt: "Helvetica Neue", sans-serif;
+  /* 中文衬线（书写感场景：感悟 / 成长记录 / 宣纸主题 · T度导向 2026-07-29 反哺）
+     系统自带字体，不引 Google Fonts 外链（项目禁外部资源）。 */
+  --font-family-serif-cn: "Songti SC", "STSong", "SimSun", serif;
+
+  /* ---- 字号 / Font Size ---- */
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-md-sm: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 24px;
+  --font-size-display: 48px;
+  /* Figma 补充字号 */
+  --font-size-18: 18px;
+  --font-size-28: 28px;
+  --font-size-32: 32px;
+  --font-size-36: 36px;
+  --font-size-64: 64px;
+  --font-size-96: 96px;
+  --font-size-128: 128px;
+
+  /* ---- 行高 / Line Height ---- */
+  --line-height-xs: 18px;
+  --line-height-sm: 20px;
+  --line-height-md: 22px;
+  --line-height-lg: 24px;
+  --line-height-xl: 28px;
+  --line-height-xxl: 32px;
+  --line-height-display: 56px;
+  /* Figma 补充行高 */
+  --line-height-26: 26px;
+  --line-height-36: 36px;
+  --line-height-40: 40px;
+  --line-height-44: 44px;
+  --line-height-72: 72px;
+
+  /* ---- 字重 / Font Weight ---- */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
+
+  /* ---- 中文字体组合 / CN Typography ---- */
+  --typo-cn-12-regular: 400 12px/20px "PingFang SC", sans-serif;
+  --typo-cn-12-medium: 500 12px/20px "PingFang SC", sans-serif;
+  --typo-cn-13-regular: 400 13px/22px "PingFang SC", sans-serif;
+  --typo-cn-13-medium: 500 13px/22px "PingFang SC", sans-serif;
+  --typo-cn-14-regular: 400 14px/22px "PingFang SC", sans-serif;
+  --typo-cn-14-medium: 500 14px/22px "PingFang SC", sans-serif;
+  --typo-cn-16-regular: 400 16px/24px "PingFang SC", sans-serif;
+  --typo-cn-16-medium: 500 16px/24px "PingFang SC", sans-serif;
+  --typo-cn-18-regular: 400 18px/26px "PingFang SC", sans-serif;
+  --typo-cn-18-medium: 500 18px/26px "PingFang SC", sans-serif;
+  --typo-cn-20-regular: 400 20px/28px "PingFang SC", sans-serif;
+  --typo-cn-20-medium: 500 20px/28px "PingFang SC", sans-serif;
+  --typo-cn-24-regular: 400 24px/32px "PingFang SC", sans-serif;
+  --typo-cn-24-medium: 500 24px/32px "PingFang SC", sans-serif;
+  --typo-cn-28-medium: 500 28px/36px "PingFang SC", sans-serif;
+  --typo-cn-32-medium: 500 32px/40px "PingFang SC", sans-serif;
+  --typo-cn-36-medium: 500 36px/44px "PingFang SC", sans-serif;
+
+  /* ---- 英文字体组合 / EN Typography ---- */
+  --typo-en-10-regular: 400 10px/18px "Nunito Sans", sans-serif;
+  --typo-en-10-medium: 600 10px/18px "Nunito Sans", sans-serif;
+  --typo-en-12-regular: 400 12px/20px "Helvetica Neue", sans-serif;
+  --typo-en-12-regular-alt: 400 12px/20px "Nunito Sans", sans-serif;
+  --typo-en-12-medium: 600 12px/20px "Nunito Sans", sans-serif;
+  --typo-en-13-regular: 400 13px/22px "Nunito Sans", sans-serif;
+  --typo-en-13-medium: 600 13px/22px "Nunito Sans", sans-serif;
+  --typo-en-14-regular: 400 14px/22px "Nunito Sans", sans-serif;
+  --typo-en-14-medium: 600 14px/22px "Nunito Sans", sans-serif;
+  --typo-en-16-regular: 400 16px/24px "Nunito Sans", sans-serif;
+  --typo-en-16-medium: 600 16px/24px "Nunito Sans", sans-serif;
+  --typo-en-20-regular: 400 20px/28px "Nunito Sans", sans-serif;
+  --typo-en-20-medium: 500 20px/28px "Helvetica Neue", sans-serif;
+  --typo-en-24-regular: 400 24px/32px "Nunito Sans", sans-serif;
+  --typo-en-24-medium: 600 24px/32px "Nunito Sans", sans-serif;
+
+  /* ==========================================================
+     尺寸 / Size & Spacing
+     ========================================================== */
+
+  /* ---- 基础尺寸 ---- */
+  --size-base: 16px;
+
+  /* ---- 间距 / Spacing ---- */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  /* v2 升级（2026-04-28 task-20260428-工作台改版）：模块/区块呼吸感 */
+  --space-lg: 20px;       /* 卡片内 / 紧凑网格 gap */
+  --space-2xl: 32px;      /* 模块基本纵向 gap（兜底） */
+  --space-3xl: 40px;      /* 模块纵向间距优先值（风格档案 v2 §14.1） */
+  --space-4xl: 56px;      /* 区块顶级分隔（hero ↔ 主内容，§14.2） */
+  /* Figma 补充间距 */
+  --spacing-0: 0;
+  --spacing-2: 2px;
+  --spacing-6: 6px;
+  --spacing-10: 10px;
+  --spacing-14: 14px;
+  --spacing-18: 18px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-128: 128px;
+  --spacing-140: 140px;
+
+  /* ---- 圆角 / Radius ---- */
+  --radius-none: 0;
+  --radius-2: 2px;
+  --radius-xs: 3px;
+  --radius: 4px;
+  --radius-sm: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-xxl: 16px;
+  --radius-3xl: 24px;
+  --radius-pill: 999px;
+  --radius-full: 9999px;
+
+  /* ---- 线宽 / Line Width ---- */
+  --line-width: 1px;
+
+  /* ---- 边框宽度 / Border Width ---- */
+  --border-width-0: 0;
+  --border-width-05: 0.5px;
+  --border-width-2: 2px;
+  --border-width-3: 3px;
+  --border-width-4: 4px;
+  --border-width-8: 8px;
+
+  /* ==========================================================
+     透明度 / Opacity
+     ========================================================== */
+  --opacity-0: 0;
+  --opacity-5: 0.05;
+  --opacity-10: 0.1;
+  --opacity-20: 0.2;
+  --opacity-25: 0.25;
+  --opacity-30: 0.3;
+  --opacity-40: 0.4;
+  --opacity-50: 0.5;
+  --opacity-60: 0.6;
+  --opacity-70: 0.7;
+  --opacity-80: 0.8;
+  --opacity-90: 0.9;
+  --opacity-95: 0.95;
+  --opacity-100: 1;
+
+  /* ==========================================================
+     动效 / Motion
+     ========================================================== */
+
+  /* ---- 持续时间 / Duration ---- */
+  --motion-duration-fast2: 100ms;
+  --motion-duration-fast: 150ms;
+  --motion-duration-normal: 225ms;
+  --motion-duration-slow: 300ms;
+  --motion-duration-slow2: 500ms;
+
+  /* ---- 缓动曲线 / Easing ---- */
+  --motion-easing-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --motion-easing-accelerate: cubic-bezier(0.4, 0.0, 1, 1);
+  --motion-easing-decelerate: cubic-bezier(0.0, 0, 0.2, 1);
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-select 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="select.css?v=c74dba0e">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- 尺寸变体 -->
+<div class="section">
+  <div class="section-title">尺寸变体 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg"</div>
+
+  <div class="row">
+    <span class="row-label">sm (24px)</span>
+    <cs-select data-size="sm">
+      <span class="select-value">选项一</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+
+  <div class="row">
+    <span class="row-label">md (32px)</span>
+    <cs-select>
+      <span class="select-value">选项一</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+
+  <div class="row">
+    <span class="row-label">lg (40px)</span>
+    <cs-select data-size="lg">
+      <span class="select-value">选项一</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+</div>
+
+<!-- 状态变体 -->
+<div class="section">
+  <div class="section-title">状态变体 States</div>
+
+  <div class="row">
+    <span class="row-label">默认</span>
+    <cs-select>
+      <span class="select-value">选项一</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+
+  <div class="row">
+    <span class="row-label">占位符</span>
+    <cs-select>
+      <span class="select-placeholder">请选择</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+
+  <div class="row">
+    <span class="row-label">展开</span>
+    <cs-select data-open>
+      <span class="select-value">选项一</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+
+  <div class="row">
+    <span class="row-label">错误</span>
+    <cs-select data-error>
+      <span class="select-value">选项一</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用</span>
+    <cs-select data-disabled>
+      <span class="select-value">选项一</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+</div>
+
+<!-- 组合示例 -->
+<div class="section">
+  <div class="section-title">组合示例</div>
+
+  <div class="row">
+    <span class="row-label">sm + 错误</span>
+    <cs-select data-size="sm" data-error>
+      <span class="select-value">选项一</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+
+  <div class="row">
+    <span class="row-label">lg + 展开</span>
+    <cs-select data-size="lg" data-open>
+      <span class="select-value">选项一</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+
+  <div class="row">
+    <span class="row-label">lg + 禁用</span>
+    <cs-select data-size="lg" data-disabled>
+      <span class="select-placeholder">请选择</span>
+      <span class="select-arrow"></span>
+    </cs-select>
+  </div>
+</div>
+
+</body>
+</html>

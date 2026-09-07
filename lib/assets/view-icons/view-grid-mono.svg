@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none"><defs>
+<filter id="filter0_d_2017_739" x="-36" y="-69" width="224" height="554" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="10"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2017_739"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2017_739" result="shape"/>
+</filter>
+</defs><path id="Vector" d="M10.5004 1.40039H3.50039C2.34059 1.40039 1.40039 2.34059 1.40039 3.50039V10.5004C1.40039 11.6602 2.34059 12.6004 3.50039 12.6004H10.5004C11.6602 12.6004 12.6004 11.6602 12.6004 10.5004V3.50039C12.6004 2.34059 11.6602 1.40039 10.5004 1.40039Z" stroke="#333333"/><path id="Vector_2" d="M1.75 5.25H12.25" stroke="#333333"/><path id="Vector_3" d="M1.75 9H12.25" stroke="#333333"/><path id="Vector_4" d="M5 2L5 12" stroke="#333333" stroke-linecap="round"/></svg>

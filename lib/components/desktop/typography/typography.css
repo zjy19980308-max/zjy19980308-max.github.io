@@ -1,0 +1,188 @@
+/*
+ * 排版组件 (Typography)
+ * 标签：<cs-typography>
+ *
+ * 作用：富文本/文档内容的统一排版容器，约束 h1-h6、段落、引用、代码、列表的间距和样式。
+ * 对标 ng-zorro nz-typography。仅做语义化样式，不引入业务逻辑。
+ *
+ * data 属性：
+ *   data-size="sm"   — 紧凑（正文 13）
+ *   data-size="md"   — 标准（正文 14，默认）
+ *   data-size="lg"   — 宽松（正文 16，文档详情用）
+ *
+ * 内部支持的元素：h1-h6, p, blockquote, code, pre, ul, ol, li, a, strong, em, hr
+ *
+ * 标题层级（按设计规范 14 → 16 → 18 → 20 → 24，不跳级）：
+ *   h6 = 14 medium
+ *   h5 = 16 medium
+ *   h4 = 18 medium
+ *   h3 = 20 medium
+ *   h2 = 24 medium
+ *   h1 = 32 medium
+ */
+
+cs-typography {
+  display: block;
+  color: var(--cs-color-text);
+  font: var(--typo-cn-14-regular);
+}
+
+/* ========== 标题层级 ========== */
+cs-typography h1,
+cs-typography h2,
+cs-typography h3,
+cs-typography h4,
+cs-typography h5,
+cs-typography h6 {
+  margin: 0;
+  color: var(--cs-color-text);
+  font-weight: 500;
+}
+
+cs-typography h1 {
+  font: var(--typo-cn-32-medium);
+  margin: var(--spacing-32) 0 var(--space-md) 0;
+}
+
+cs-typography h2 {
+  font: var(--typo-cn-24-medium);
+  margin: var(--spacing-32) 0 var(--space-md) 0;
+}
+
+cs-typography h3 {
+  font: var(--typo-cn-20-medium);
+  margin: var(--spacing-24) 0 var(--space-sm) 0;
+}
+
+cs-typography h4 {
+  font: var(--typo-cn-18-medium);
+  margin: var(--spacing-24) 0 var(--space-sm) 0;
+}
+
+cs-typography h5 {
+  font: var(--typo-cn-16-medium);
+  margin: var(--spacing-20) 0 var(--space-xs) 0;
+}
+
+cs-typography h6 {
+  font: var(--typo-cn-14-medium);
+  margin: var(--space-md) 0 var(--space-xs) 0;
+}
+
+/* 第一个标题不要顶部外边距 */
+cs-typography > :first-child {
+  margin-top: 0;
+}
+
+cs-typography > :last-child {
+  margin-bottom: 0;
+}
+
+/* ========== 段落 ========== */
+cs-typography p {
+  margin: 0 0 var(--space-sm) 0;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+}
+
+cs-typography[data-size="sm"] p {
+  font: var(--typo-cn-13-regular);
+}
+
+cs-typography[data-size="lg"] p {
+  font: var(--typo-cn-16-regular);
+}
+
+/* ========== 链接 ========== */
+cs-typography a {
+  color: var(--cs-color-primary);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+cs-typography a:hover {
+  opacity: var(--cs-sem-opacity-hover);
+  text-decoration: underline;
+}
+
+/* ========== 强调 ========== */
+cs-typography strong {
+  font-weight: 600;
+  color: var(--cs-color-text);
+}
+
+cs-typography em {
+  font-style: italic;
+  color: var(--cs-color-text);
+}
+
+/* ========== 引用 ========== */
+cs-typography blockquote {
+  margin: var(--space-md) 0;
+  padding: var(--space-sm) var(--space-md);
+  border-left: 3px solid var(--cs-color-primary);
+  background: var(--cs-color-bg-light);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--cs-color-text-light);
+  font: var(--typo-cn-14-regular);
+}
+
+cs-typography blockquote p {
+  margin: 0;
+}
+
+/* ========== 行内代码 ========== */
+cs-typography code {
+  padding: var(--space-3xs) var(--space-2xs);
+  background: var(--cs-color-bg-light);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.92em;
+  color: var(--cs-color-text);
+}
+
+/* ========== 代码块 ========== */
+cs-typography pre {
+  margin: var(--space-md) 0;
+  padding: var(--space-md);
+  background: var(--cs-color-bg-light);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--cs-color-text);
+  overflow-x: auto;
+}
+
+cs-typography pre code {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  font-size: inherit;
+}
+
+/* ========== 列表 ========== */
+cs-typography ul,
+cs-typography ol {
+  margin: 0 0 var(--space-sm) 0;
+  padding-left: var(--spacing-24);
+  color: var(--cs-color-text);
+}
+
+cs-typography li {
+  margin-bottom: var(--space-2xs);
+  font: var(--typo-cn-14-regular);
+}
+
+cs-typography li:last-child {
+  margin-bottom: 0;
+}
+
+/* ========== 分割线 ========== */
+cs-typography hr {
+  margin: var(--spacing-24) 0;
+  border: 0;
+  border-top: var(--line-width) solid var(--cs-color-border);
+}

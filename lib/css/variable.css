@@ -1,0 +1,413 @@
+/* =====================================================
+   语义设计变量 / Semantic Design Variables
+   所有值引用 token.css 中的基础令牌，业务样式统一使用本文件变量
+   所有语义变量统一加 --cs- 前缀
+   ===================================================== */
+
+:root {
+
+  /* ==========================================================
+     功能色 / Functional Colors
+     ========================================================== */
+
+  /* ---- 主色 / Primary ---- */
+  --cs-color-primary: var(--color-blue-500);
+  --cs-color-primary-hover: #4958de;
+  --cs-color-primary-active: #4351cd;
+  --cs-color-primary-disabled: #ced3ff;
+  --cs-color-primary-a2: #4857e214;
+  --cs-color-primary-light: #a4aeff; /* Figma: doc icon border */
+
+  /* ---- 错误色 / Error ---- */
+  --cs-color-error: #f53f3f;
+  --cs-color-error-hover: var(--color-red-300);
+
+  /* ---- 警告色 / Warning ---- */
+  --cs-color-warning: #ff7d00;
+  --cs-color-warning-hover: #ffc892;
+
+  /* ---- 成功色 / Success ---- */
+  --cs-color-success: #00b42a;
+
+  /* ==========================================================
+     文字色 / Text Colors
+     ========================================================== */
+  --cs-color-text: #333333;
+  --cs-color-text-light: #666666;
+  --cs-color-text-light2: #999999;
+  --cs-color-text-dark: #2e3043; /* Figma: filter btn text */
+  --cs-color-text-disabled: #efefef;
+  --cs-color-text-inverse: var(--color-neutral-0);
+  --cs-color-text-anchor: #0062ff;
+
+  /* ---- 中性色文字 / Neutral Text ---- */
+  --cs-color-text-primary: var(--color-neutral-800);
+  --cs-color-text-secondary: var(--color-neutral-600);
+  --cs-color-text-tertiary: var(--color-neutral-400);
+
+  /* ---- 图标色 / Icon Colors ---- */
+  --cs-color-icon-navprimary-default: #8c8c8d;
+  --cs-color-icon-navprimary-active: var(--color-neutral-0);
+  --cs-color-icon-muted: #c9c9c9; /* Figma: right-sidebar space icon/text */
+  --cs-color-icon-light: #e3e3e3; /* Figma: right-sidebar message icon */
+
+  /* ---- 深色模式文字 / Dark Mode Text ---- */
+  --cs-color-text-dark-primary: rgba(255, 255, 255, 0.7);
+  --cs-color-text-dark-secondary: rgba(255, 255, 255, 0.5);
+  --cs-color-text-dark-muted: rgba(255, 255, 255, 0.6);
+  --cs-color-text-dark-strong: var(--cs-color-white);          /* 深色容器内强调白文字（如徽标数字）*/
+
+  /* ---- 深色模式分割线 / Dark Mode Divider ---- */
+  --cs-color-divider-dark: rgba(255, 255, 255, 0.1);
+
+  /* ---- 深色模式边框 + Hover / Dark Mode Border + Hover ---- */
+  --cs-color-border-on-dark: rgba(255, 255, 255, 0.15);        /* 深色容器内细描边 */
+  --cs-color-bg-on-dark-hover: rgba(255, 255, 255, 0.08);      /* 深色容器内 hover 背景 */
+
+  /* ==========================================================
+     背景色 / Background Colors
+     ========================================================== */
+  --cs-color-bg: var(--color-neutral-0);
+  --cs-color-bg-light: var(--color-neutral-100);
+  --cs-color-bg-lighter: #eaeaea;
+  --cs-color-bg-disabled: #f9f9f9;
+  --cs-color-bg-hover: var(--color-neutral-50);
+  --cs-color-bg-mask: #00000066;
+  --cs-color-bg-container-disabled: #0000000a;
+  --cs-color-bg-app-dark: #2C2A3A;
+  --cs-color-bg-secondary: #F7F9FC;
+  --cs-color-bg-input-dark: rgba(255, 255, 255, 0.08);
+  --cs-color-bg-hover-dark: rgba(255, 255, 255, 0.06);
+  --cs-color-bg-active-dark: rgba(255, 255, 255, 0.1);          /* 深色容器内 active 背景（比 hover 0.06 更深）*/
+
+  /* ==========================================================
+     边框色 / Border Colors
+     ========================================================== */
+  --cs-color-border: #e6e6e6;
+
+  /* ==========================================================
+     交互色 / Interactive Colors
+     ========================================================== */
+  --cs-color-highlight: #ebedef;
+  --cs-color-selected: #eaecff;
+  --cs-color-white: var(--color-neutral-0);
+
+  /* ==========================================================
+     Text & Icon (带透明度，兼容旧设计)
+     ========================================================== */
+  --cs-color-font-gy1-90: var(--color-neutral-1000);
+  --cs-color-font-gy1-90-primary: var(--color-neutral-1000);
+  --cs-color-font-gy2-60-secondary: var(--color-neutral-1000);
+  --cs-color-font-gy3-40-placeholder: var(--color-neutral-1000);
+
+  /* ==========================================================
+     阴影 / Shadow
+     ========================================================== */
+  --cs-shadow:
+    0 2px 4px -1px #0000001f,
+    0 4px 5px 0 #00000014,
+    0 1px 10px 0 #0000000d;
+  --cs-shadow-lg:
+    0 5px 5px -3px #0000001a,
+    0 8px 10px 1px #0000000f,
+    0 3px 14px 2px #0000000d;
+  --cs-shadow-xl:
+    0 8px 10px -5px #00000014,
+    0 16px 24px 2px #0000000a,
+    0 6px 30px 5px #0000000d;
+  --cs-shadow-card: 0 0 20px 0 #0000001a;
+  --cs-shadow-up:
+    0 -2px 4px -1px rgba(0, 0, 0, 0.08),
+    0 -4px 5px 0 rgba(0, 0, 0, 0.05),
+    0 -1px 10px 0 rgba(0, 0, 0, 0.03);
+
+  /* ==========================================================
+     语义化字体组合 / Semantic Typography
+     ========================================================== */
+  --cs-typo-display-medium: 600 48px/56px "PingFang SC", sans-serif;
+  --cs-typo-title-extra-large: 600 20px/28px "PingFang SC", sans-serif;
+  --cs-typo-body-large: 400 16px/24px "PingFang SC", sans-serif;
+  --cs-typo-body-medium: 400 14px/22px "PingFang SC", sans-serif;
+
+  /* ==========================================================
+     Figma 语义令牌 / Figma Semantic Tokens (--cs-sem-*)
+     ========================================================== */
+
+  /* ---- 背景色语义 / Semantic Background ---- */
+  /* Figma: color/bg/primary → neutral/0 */
+  --cs-sem-bg-primary: var(--cs-color-bg);
+  /* Figma: color/bg/secondary → neutral/50 */
+  --cs-sem-bg-secondary: var(--cs-color-bg-hover);
+  /* Figma: color/bg/tertiary → neutral/100 */
+  --cs-sem-bg-tertiary: var(--cs-color-bg-light);
+  /* Figma: color/bg/disabled → neutral/200 */
+  --cs-sem-bg-disabled: var(--color-neutral-200);
+  /* Figma: color/bg/overlay → #000000 50% */
+  --cs-sem-bg-overlay: rgba(0, 0, 0, 0.5);
+  /* Figma: color/bg/brand → blue/500 */
+  --cs-sem-bg-brand: var(--cs-color-primary);
+  /* Figma: color/bg/success → green/100 */
+  --cs-sem-bg-success: var(--color-green-100);
+  /* Figma: color/bg/warning → orange/100 */
+  --cs-sem-bg-warning: var(--color-orange-100);
+  /* Figma: color/bg/error → red/100 */
+  --cs-sem-bg-error: var(--color-red-100);
+
+  /* ---- 文字色语义 / Semantic Text ---- */
+  /* Figma: color/text/primary → neutral/800 */
+  --cs-sem-text-primary: var(--cs-color-text-primary);
+  /* Figma: color/text/secondary → neutral/600 */
+  --cs-sem-text-secondary: var(--cs-color-text-secondary);
+  /* Figma: color/text/tertiary → neutral/400 */
+  --cs-sem-text-tertiary: var(--cs-color-text-tertiary);
+  /* Figma: color/text/inverse → neutral/0 */
+  --cs-sem-text-inverse: var(--cs-color-white);
+  /* Figma: color/text/link → blue/500 */
+  --cs-sem-text-link: var(--cs-color-primary);
+  /* Figma: color/text/link-hover → blue/600 */
+  --cs-sem-text-link-hover: var(--color-blue-600);
+  /* Figma: color/text/brand → blue/500 */
+  --cs-sem-text-brand: var(--cs-color-primary);
+  /* Figma: color/text/success → green/500 */
+  --cs-sem-text-success: var(--color-green-500);
+  /* Figma: color/text/warning → orange/500 */
+  --cs-sem-text-warning: var(--color-orange-500);
+  /* Figma: color/text/error → red/500 */
+  --cs-sem-text-error: var(--color-red-500);
+  /* Figma: color/text/disabled → neutral/200 */
+  --cs-sem-text-disabled: var(--color-neutral-200);
+  /* Figma: color/text/on-color → neutral/0 */
+  --cs-sem-text-on-color: var(--cs-color-white);
+
+  /* ---- 边框色语义 / Semantic Border ---- */
+  /* Figma: color/border/primary → neutral/300 */
+  --cs-sem-border-primary: var(--color-neutral-300);
+  /* Figma: color/border/secondary → neutral/200 */
+  --cs-sem-border-secondary: var(--color-neutral-200);
+  /* Figma: color/border/strong → blue/500 */
+  --cs-sem-border-strong: var(--cs-color-primary);
+  /* Figma: color/border/disabled → neutral/100 */
+  --cs-sem-border-disabled: var(--cs-color-bg-light);
+  /* Figma: color/border/interactive → blue/500 */
+  --cs-sem-border-interactive: var(--cs-color-primary);
+  /* Figma: color/border/focus → blue/500 */
+  --cs-sem-border-focus: var(--cs-color-primary);
+  /* Figma: color/border/error → red/500 */
+  --cs-sem-border-error: var(--color-red-500);
+  /* Figma: color/border/success → green/500 */
+  --cs-sem-border-success: var(--color-green-500);
+
+  /* ---- 交互色语义 / Semantic Interactive ---- */
+  /* Figma: color/interactive/primary → blue/500 */
+  --cs-sem-interactive-primary: var(--cs-color-primary);
+  /* Figma: color/interactive/primary-hover → blue/600 */
+  --cs-sem-interactive-primary-hover: var(--color-blue-600);
+  /* Figma: color/interactive/primary-active → blue/700 */
+  --cs-sem-interactive-primary-active: var(--color-blue-700);
+  /* Figma: color/interactive/primary-disabled → blue/300 */
+  --cs-sem-interactive-primary-disabled: var(--color-blue-300);
+  /* Figma: color/interactive/tertiary → blue/500 */
+  --cs-sem-interactive-tertiary: var(--cs-color-primary);
+  /* Figma: color/interactive/destructive → red/500 */
+  --cs-sem-interactive-destructive: var(--color-red-500);
+  /* Figma: color/interactive/link → blue/500 */
+  --cs-sem-interactive-link: var(--cs-color-primary);
+  /* Figma: color/interactive/link-hover → blue/600 */
+  --cs-sem-interactive-link-hover: var(--color-blue-600);
+
+  /* ---- 状态色语义 / Semantic Status ---- */
+  --cs-sem-status-success: var(--color-green-500);
+  --cs-sem-status-success-light: var(--color-green-100);
+  --cs-sem-status-error: var(--color-red-500);
+  --cs-sem-status-error-light: var(--color-red-100);
+  --cs-sem-status-warning: var(--color-orange-500);
+  --cs-sem-status-warning-light: var(--color-orange-100);
+  --cs-sem-status-info: var(--color-sky-500);
+  --cs-sem-status-info-light: var(--color-sky-100);
+
+  /* ---- 功能色语义 / Semantic Functional ---- */
+  --cs-sem-func-favorite: var(--color-pink-500);
+  --cs-sem-func-upvote: var(--color-purple-500);
+  --cs-sem-func-downvote: var(--color-red-500);
+  --cs-sem-func-bookmark: var(--color-violet-500);
+  --cs-sem-func-share: var(--color-sky-500);
+  --cs-sem-func-download: var(--cs-color-primary);
+
+  /* ---- 窗口控制色 / Window Control ---- */
+  /* Figma: 客户端_关闭 Ellipse bg */
+  --cs-color-window-close: #ff6e5c;
+  /* Figma: 客户端_最小化 Ellipse bg（补齐 mac 三圆点中段 · 黄色装饰圆点 · 不复用 warning #ff7d00 因色相不符） */
+  --cs-color-window-minimize: #f4be4f;
+  /* Figma: 客户端_放大 Ellipse bg */
+  --cs-color-window-maximize: #61c654;
+
+  /* ---- 客户端 Tab / 通知 / 状态色 / Client Tab & Notification & Status ---- */
+  /* Figma: tab 激活底（深底之上 · 实色不是透明叠加，不复用 --cs-color-bg-active-dark） */
+  --cs-color-bg-tab-active-on-dark: #413f50;
+  /* Figma: 通知红点（高饱和度纯红 · 与语义错误色 --cs-color-error 区分，专用未读徽标装饰） */
+  --cs-color-notification-dot: #ff0004;
+  /* Figma: 头像在线圈（视觉等价 #00ef34 · 复用色板 green-400 不引入新 hex） */
+  --cs-color-status-online: var(--color-green-400);
+  /* Figma: 头像呼吸装饰圈 · 双层 ring 透明度阶梯（LESSONS § 1.4 例外族 · figma 原值 rgba(18,208,59,0.15/0.30）
+     命名绑死视觉语义（呼吸圈强弱），不绑交互态 · 不复用 status-online 实色 */
+  --cs-color-status-online-ring-outer: rgba(18, 208, 59, 0.15);
+  --cs-color-status-online-ring-mid: rgba(18, 208, 59, 0.30);
+
+  /* ---- 深底玻璃覆盖层 / Glass Overlay on Dark Bg (LESSONS § 1.1 例外族) ---- */
+  /* 用途：cs-space-switcher / 任何深色容器内的"半透明白色装饰背景"
+     语义：图层 = 深底之上的高光玻璃层（glass）· 渐进透明度阶梯（0.06 → 0.14）
+     不复用 --cs-color-bg-hover-dark / --cs-color-bg-input-dark / --cs-color-bg-active-dark：
+       那 3 个名字绑死交互态（hover/input/active），本族绑死视觉语义（glass 强弱阶梯） */
+  --cs-color-bg-glass-soft:    rgba(255, 255, 255, 0.06);  /* 默认底（最弱 · 如 space-card 默认） */
+  --cs-color-bg-glass-default: rgba(255, 255, 255, 0.08);  /* 默认（如 add-btn 默认） */
+  --cs-color-bg-glass-hover:   rgba(255, 255, 255, 0.10);  /* hover（如 space-card hover） */
+  --cs-color-bg-glass-active:  rgba(255, 255, 255, 0.12);  /* active（如 space-card active） */
+  --cs-color-bg-glass-strong:  rgba(255, 255, 255, 0.14);  /* hover 强（如 add-btn hover） */
+
+  /* ---- 文件类型色 / File Type Colors ---- */
+  /* Figma: 旧设计规范 d9kycxUY4aY265OHlImwdr 节点 4:21211「文件」 */
+  --cs-color-filetype-pdf: #fa4e4e;
+  --cs-color-filetype-word: #4876f9;
+  --cs-color-filetype-excel: #32bd79;
+  --cs-color-filetype-ppt: #ff9333;
+  --cs-color-filetype-image: #f6ad00;
+  --cs-color-filetype-video: #7c8eee;
+  --cs-color-filetype-audio: #f16c00;
+  --cs-color-filetype-text: #8289ad;
+  --cs-color-filetype-zip: #576a95;
+  --cs-color-filetype-unknown: #cccccc;
+  --cs-color-filetype-mindmap: var(--color-purple-500);
+
+  /* ---- 语义间距 / Semantic Spacing ---- */
+  /* Figma: spacing/content */
+  --cs-sem-spacing-content-inline: var(--space-md);                /* 16px */
+  --cs-sem-spacing-content-stack: var(--spacing-24);               /* 24px */
+  --cs-sem-spacing-content-inset: var(--space-sm);                 /* 12px */
+  --cs-sem-spacing-content-inset-lg: var(--spacing-14);            /* 14px */
+
+  /* Figma: spacing/component */
+  --cs-sem-spacing-comp-padding-xs: var(--spacing-6);              /* 6px */
+  --cs-sem-spacing-comp-padding-sm: var(--space-xs);               /* 8px */
+  --cs-sem-spacing-comp-padding-md: var(--space-sm);               /* 12px */
+  --cs-sem-spacing-comp-padding-lg: var(--space-md);               /* 16px */
+  --cs-sem-spacing-comp-padding-xl: var(--spacing-20);             /* 20px */
+  --cs-sem-spacing-comp-margin-sm: var(--spacing-20);              /* 20px */
+  --cs-sem-spacing-comp-margin-md: var(--spacing-20);              /* 20px */
+  --cs-sem-spacing-comp-margin-lg: var(--spacing-20);              /* 20px */
+  --cs-sem-spacing-comp-gap-sm: var(--space-2xs);                  /* 4px */
+  --cs-sem-spacing-comp-gap-md: var(--space-xs);                   /* 8px */
+
+  /* Figma: spacing/layout */
+  --cs-sem-spacing-layout-gutter: var(--spacing-24);               /* 24px */
+  --cs-sem-spacing-layout-section: var(--spacing-96);              /* 96px */
+  --cs-sem-spacing-layout-container: var(--cs-sem-size-container); /* 1280px */
+
+  /* Figma: spacing/icon-text */
+  --cs-sem-spacing-icon-text-inline: var(--space-xs);              /* 8px */
+  --cs-sem-spacing-icon-text-stack: var(--space-sm);               /* 12px */
+
+  /* Figma: spacing/form */
+  --cs-sem-spacing-form-label-input: var(--space-xs);              /* 8px */
+  --cs-sem-spacing-form-input-input: var(--spacing-24);            /* 24px */
+
+  /* ---- 语义尺寸 - 图标 / Semantic Size - Icon ---- */
+  --cs-sem-size-icon-xs: 12px;
+  --cs-sem-size-icon-sm: 14px;
+  --cs-sem-size-icon-md: 16px;
+  --cs-sem-size-icon-lg: 20px;
+  --cs-sem-size-icon-xl: 24px;
+  --cs-sem-size-icon-2xl: 32px;
+  --cs-sem-size-icon-3xl: 40px;
+  --cs-sem-size-icon-4xl: 48px;
+  --cs-sem-size-icon-5xl: 56px;
+
+  /* ---- 语义尺寸 - 交互目标 / Semantic Size - Interactive ---- */
+  --cs-sem-size-interactive-xs: 24px;
+  --cs-sem-size-interactive-sm: 32px;
+  --cs-sem-size-interactive-sm-plus: 36px;
+  --cs-sem-size-interactive-md: 40px;
+  --cs-sem-size-interactive-lg: 48px;
+  --cs-sem-size-interactive-xl: 56px;
+
+  /* ---- 语义尺寸 - 容器 / Semantic Size - Container ---- */
+  --cs-sem-size-container-sm: 640px;
+  --cs-sem-size-container-md: 708px;
+  --cs-sem-size-container: 1280px;
+  --cs-sem-size-container-lg: 1024px;
+  --cs-sem-size-container-xl: 1536px;
+  --cs-sem-size-container-full: 100%;
+  --cs-sem-size-min-tap-target: 44px;
+  --cs-sem-size-max-content-width: 1200px;
+  --cs-sem-size-sidebar-width: 240px;
+  --cs-sem-size-header-height: 64px;
+
+  /* ---- 语义尺寸 - 内容宽度 / Semantic Size - Content ---- */
+  --cs-sem-size-content-xs: 480px;
+  --cs-sem-size-content-sm: 640px;
+  --cs-sem-size-content-md: 708px;
+  --cs-sem-size-content-lg: 896px;
+  --cs-sem-size-content-xl: 1024px;
+  --cs-sem-size-content-2xl: 1152px;
+  --cs-sem-size-content-3xl: 1280px;
+  --cs-sem-size-content-full: 100%;
+
+  /* ---- 语义透明度 / Semantic Opacity ---- */
+  --cs-sem-opacity-disabled: var(--opacity-50);   /* 0.5 */
+  --cs-sem-opacity-hover: var(--opacity-80);      /* 0.8 */
+  --cs-sem-opacity-overlay: var(--opacity-60);    /* 0.6 */
+  --cs-sem-opacity-ghost: var(--opacity-90);      /* 0.9 */
+  --cs-sem-opacity-loading: var(--opacity-70);    /* 0.7 */
+
+  /* ---- 语义文档排版 / Semantic Doc Typography ---- */
+  --cs-sem-doc-heading-1: var(--font-size-32);    /* 32px */
+  --cs-sem-doc-heading-2: var(--font-size-28);    /* 28px */
+  --cs-sem-doc-body: var(--font-size-18);         /* 18px */
+  --cs-sem-doc-caption: var(--font-size-md);      /* 14px */
+
+  /* ==========================================================
+     补充原始令牌扩展（raw token extensions，无 --cs- 前缀）
+     这些是 token.css 的补充原始值，后续应迁移至 token.css
+     ========================================================== */
+
+  /* ---- 补充间距 ---- */
+  --spacing-1: 1px;
+  --spacing-12: 12px;
+  --spacing-28: 28px;
+  --spacing-36: 36px;
+  --spacing-120: 120px;
+  --spacing-160: 160px;
+  --spacing-200: 200px;
+  --spacing-320: 320px;
+  --space-3xs: 2px;
+  --space-xxs: var(--space-2xs);               /* 4px — 别名 */
+  --space-xl: var(--spacing-24);               /* 24px */
+
+  /* ---- 补充边框 ---- */
+  --border-width: var(--line-width);           /* 1px — 别名 */
+
+  /* ==========================================================
+     补充语义变量（--cs- 前缀）
+     ========================================================== */
+
+  /* ---- 补充颜色别名 ---- */
+  --cs-color-fill-light: var(--cs-color-bg-light);   /* #f5f5f5 — 别名 */
+  --cs-opacity-disabled: var(--opacity-50);           /* 0.5 */
+
+  /* ---- AI 辅色 + 庆祝色 / AI Accent & Celebration (emp-learn-dash 2026-05-15) ---- */
+  --cs-color-ai-accent: var(--color-violet-600);     /* #7f22fe · AI 紫色辅色（第二视角 / AI 标签 / AI 建议高亮） */
+  --cs-color-celebration: var(--color-yellow-400);   /* #fdc700 · 庆祝金（学习徽章 / 完成里程碑 / 达成时刻） */
+
+  /* ---- 补充过渡 ---- */
+  --cs-transition-fast: 0.15s ease;
+  --cs-transition-duration: 0.2s;
+  --cs-transition-duration-fast: 0.15s;
+
+  /* ---- 补充层级 / Z-Index ---- */
+  --cs-z-dropdown: 1000;
+  --cs-z-popover: 1010;
+  --cs-z-tooltip: 1020;
+
+  /* ---- 补充组件变量 ---- */
+  --cs-popover-max-width: 320px;
+  --cs-progress: 0%;
+}

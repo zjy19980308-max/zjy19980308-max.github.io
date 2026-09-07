@@ -1,0 +1,79 @@
+/*
+ * modal fragment · 自包含 css
+ * 标签：<cs-modal>
+ * 覆盖 .main-content 的弹窗层
+ *
+ * 自包含：外层没有嵌套样式（owner 拍板"没有的话不变"），
+ *         本 fragment 保持旧版样式，仅路径独立
+ *
+ * 已知例外（待 owner 加变量后替换）:
+ *   - rgba(0, 0, 0, var(--opacity-50)) 遮罩黑 · 待 --cs-color-overlay-* 变量
+ *
+ * data 属性：
+ *   data-open       — 打开状态
+ *   data-size="sm"  — 480px
+ *   data-size="md"  — 640px
+ *   data-size="lg"  — 800px
+ */
+
+/* ============================================================
+ *  弹窗主体 · 绝对定位 · 覆盖整层
+ * ============================================================ */
+cs-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, var(--opacity-50));
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+cs-modal[data-open] {
+  display: flex;
+}
+
+/* ============================================================
+ *  对话框容器
+ * ============================================================ */
+cs-modal .dialog {
+  background: var(--cs-color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--cs-shadow-xl);
+  display: flex;
+  flex-direction: column;
+  max-height: 80%;
+  width: 640px;
+}
+
+/* 尺寸变体 */
+cs-modal[data-size="sm"] .dialog { width: 480px; }
+cs-modal[data-size="md"] .dialog { width: 640px; }
+cs-modal[data-size="lg"] .dialog { width: 800px; }
+
+/* ============================================================
+ *  槽位
+ * ============================================================ */
+cs-modal .slot-header {
+  flex-shrink: 0;
+  padding: var(--spacing-20) var(--spacing-24);
+  border-bottom: 1px solid var(--cs-color-border);
+}
+
+cs-modal .slot-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-20) var(--spacing-24);
+}
+
+cs-modal .slot-footer {
+  flex-shrink: 0;
+  padding: var(--space-sm) var(--spacing-24);
+  border-top: 1px solid var(--cs-color-border);
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+}

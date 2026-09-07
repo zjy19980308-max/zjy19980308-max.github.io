@@ -1,0 +1,103 @@
+/*
+ * 分页组件 (Pagination)
+ * 标签：<cs-pagination>
+ *
+ * Figma 实测（任务管理底部栏）：
+ *   布局: flex row, align center
+ *   间距: → var(--space-xs)
+ *   页码按钮: 28x28 → 接近 var(--cs-sem-size-interactive-xs) 24px，用 28px
+ *   默认态: 无背景, color var(--cs-color-text)
+ *   激活态: bg var(--cs-color-primary), color var(--cs-color-text-inverse), radius var(--radius)
+ *   悬停态: bg var(--cs-color-bg-hover)
+ *   禁用态: color var(--cs-sem-text-disabled), cursor not-allowed
+ *   字体: 14px/400 → var(--typo-cn-14-regular)
+ *
+ * data 属性：
+ *   .page-item[data-active]   — 当前页
+ *   .page-item[data-disabled] — 禁用态
+ *   .page-prev[data-disabled] — 上一页禁用
+ *   .page-next[data-disabled] — 下一页禁用
+ */
+
+/* ========== 容器 ========== */
+cs-pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  box-sizing: border-box;
+}
+
+/* ========== 通用页码按钮 ========== */
+cs-pagination .page-item,
+cs-pagination .page-prev,
+cs-pagination .page-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  width: var(--spacing-28, 28px);
+  height: var(--spacing-28, 28px);
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  cursor: pointer;
+
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+
+  transition: background 0.15s, color 0.15s;
+}
+
+/* ========== 悬停态 ========== */
+cs-pagination .page-item:hover,
+cs-pagination .page-prev:hover,
+cs-pagination .page-next:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 激活态 ========== */
+cs-pagination .page-item[data-active] {
+  background: var(--cs-color-primary);
+  color: var(--cs-color-text-inverse);
+  cursor: default;
+}
+
+cs-pagination .page-item[data-active]:hover {
+  background: var(--cs-color-primary);
+}
+
+/* ========== 禁用态 ========== */
+cs-pagination .page-prev[data-disabled],
+cs-pagination .page-next[data-disabled],
+cs-pagination .page-item[data-disabled] {
+  color: var(--cs-sem-text-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+cs-pagination .page-prev[data-disabled]:hover,
+cs-pagination .page-next[data-disabled]:hover,
+cs-pagination .page-item[data-disabled]:hover {
+  background: transparent;
+}
+
+/* ========== 省略号 ========== */
+cs-pagination .page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-28, 28px);
+  height: var(--spacing-28, 28px);
+
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light2);
+  cursor: default;
+  user-select: none;
+}
+
+/* ========== 前进/后退图标 ========== */
+cs-pagination .page-prev i,
+cs-pagination .page-next i {
+  font-size: var(--cs-sem-size-icon-md, 16px);
+}

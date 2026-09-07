@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-link 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="link.css?v=8101cdf5">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+    .text-context { font: var(--typo-cn-14-regular); color: var(--cs-color-text); }
+  </style>
+</head>
+<body>
+
+<!-- 基础链接 -->
+<div class="section">
+  <div class="section-title">基础链接 Default Link</div>
+  <div class="section-subtitle">默认蓝色，hover 下划线+深蓝</div>
+
+  <div class="row">
+    <span class="row-label">默认</span>
+    <cs-link>查看详情</cs-link>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用</span>
+    <cs-link data-disabled>查看详情</cs-link>
+  </div>
+</div>
+
+<!-- 带图标链接 -->
+<div class="section">
+  <div class="section-title">带图标链接 Link with Icon</div>
+  <div class="section-subtitle">图标使用 .link-icon 类名</div>
+
+  <div class="row">
+    <span class="row-label">左侧图标</span>
+    <cs-link>
+      <i class="cses-link link-icon"></i>
+      打开链接
+    </cs-link>
+  </div>
+
+  <div class="row">
+    <span class="row-label">附件图标</span>
+    <cs-link>
+      <i class="cses-fujian link-icon"></i>
+      下载附件
+    </cs-link>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用带图标</span>
+    <cs-link data-disabled>
+      <i class="cses-link link-icon"></i>
+      打开链接
+    </cs-link>
+  </div>
+</div>
+
+<!-- 在文本中使用 -->
+<div class="section">
+  <div class="section-title">行内使用 Inline Usage</div>
+  <div class="section-subtitle">链接继承父元素字体</div>
+
+  <div class="row">
+    <p class="text-context">
+      如需帮助，请 <cs-link>联系管理员</cs-link> 或查看 <cs-link>帮助文档</cs-link>。
+    </p>
+  </div>
+
+  <div class="row">
+    <p class="text-context">
+      已阅读并同意 <cs-link>用户协议</cs-link> 和 <cs-link>隐私政策</cs-link>。
+    </p>
+  </div>
+</div>
+
+</body>
+</html>

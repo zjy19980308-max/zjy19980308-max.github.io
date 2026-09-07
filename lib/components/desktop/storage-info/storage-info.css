@@ -1,0 +1,82 @@
+/*
+ * 云空间存储信息组件 (Storage Info)
+ * 标签：<cs-storage-info>
+ * 数据来源：文档库侧边栏底部 — 云空间存储信息
+ *
+ * data 属性：
+ *   data-warning              — 用量超过 90%，进度条变警告色
+ *
+ * 子元素：
+ *   .storage-header           — 图标 + 标签行
+ *   .storage-icon             — 云/文件夹图标
+ *   .storage-label            — "云空间" 文本
+ *   .storage-usage            — 用量文字 "480GB/500GB"
+ *   .storage-progress         — 进度条容器
+ *   .storage-progress-fill    — 进度条填充
+ *   .storage-upgrade          — 升级链接
+ */
+
+/* ========== 基础布局 ========== */
+cs-storage-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* ========== 图标 + 标签行 ========== */
+cs-storage-info .storage-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+cs-storage-info .storage-icon {
+  font-size: var(--cs-sem-size-icon-md);
+  color: var(--cs-color-text-light2);
+  line-height: 1;
+}
+
+cs-storage-info .storage-label {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 用量文字 ========== */
+cs-storage-info .storage-usage {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 进度条 ========== */
+cs-storage-info .storage-progress {
+  width: var(--cs-sem-size-content-full, 100%);
+  height: var(--space-2xs);
+  background: var(--cs-color-bg-light);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+cs-storage-info .storage-progress-fill {
+  height: var(--cs-sem-size-content-full, 100%);
+  background: var(--cs-color-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+/* ========== 警告态（用量 > 90%）========== */
+cs-storage-info[data-warning] .storage-progress-fill {
+  background: var(--cs-color-warning);
+}
+
+/* ========== 升级链接 ========== */
+cs-storage-info .storage-upgrade {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-primary);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+cs-storage-info .storage-upgrade:hover {
+  text-decoration: underline;
+}

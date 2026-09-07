@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>CSES 布局容器文档</title>
+  <link rel="stylesheet" href="../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="fragment.css?v=b146e8bb">
+  <!-- v5 块样式：fragment.css 是旧的聚合表，
+       同步进来的 v5 单块样式必须放在它之后才能覆盖（重叠 76 个选择器）。 -->
+  <link rel="stylesheet" href="desktop/content-header/content-header.css?v=402d05ee">
+  <link rel="stylesheet" href="desktop/drawer/drawer.css?v=dc1e2232">
+  <link rel="stylesheet" href="desktop/filter-bar/filter-bar.css?v=be3ce4b2">
+  <link rel="stylesheet" href="desktop/layout/layout.css?v=d623ed0c">
+  <link rel="stylesheet" href="desktop/modal/modal.css?v=9df42833">
+  <link rel="stylesheet" href="desktop/navbar/navbar.css?v=0e014684">
+  <link rel="stylesheet" href="desktop/sidebar/sidebar.css?v=0ad2bdc6">
+  <link rel="stylesheet" href="desktop/space-switcher/space-switcher.css?v=dc27e346">
+  <link rel="stylesheet" href="desktop/tab-bar/tab-bar.css?v=d5d0f4ef">
+
+  <link rel="stylesheet" href="../components/desktop/window-control/window-control.css?v=2">
+  <link rel="stylesheet" href="../components/desktop/search-input/search-input.css?v=935c638b">
+  <link rel="stylesheet" href="../components/desktop/tab/tab.css?v=2">
+  <link rel="stylesheet" href="../components/desktop/avatar/avatar.css?v=5eb0eb5d">
+  <link rel="stylesheet" href="../components/desktop/badge/badge.css?v=a197ce0f">
+  <link rel="stylesheet" href="../components/desktop/button/button.css?v=e453e8e3">
+  <link rel="stylesheet" href="../components/desktop/nav-item/nav-item.css?v=555c82bc">
+  <link rel="stylesheet" href="../components/desktop/nav-action-btn/nav-action-btn.css?v=11a9e7a9">
+  <link rel="stylesheet" href="../components/desktop/nav-group/nav-group.css?v=d06410d5">
+  <link rel="stylesheet" href="../components/desktop/storage-info/storage-info.css?v=832fb976">
+  <link rel="stylesheet" href="../components/desktop/search-trigger/search-trigger.css?v=711e16a4">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-family-cn); background: #f0f0f0; display: flex; height: 100vh; overflow: hidden; }
+
+    /* ========== 左侧面板 ========== */
+    .doc-sidebar {
+      width: 260px;
+      background: #fff;
+      border-right: 1px solid #e6e6e6;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+    }
+    .doc-sidebar .doc-title {
+      padding: 20px 16px 12px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+    .doc-sidebar .doc-subtitle {
+      padding: 0 16px 16px;
+      font-size: 12px;
+      color: #999;
+    }
+    .doc-group-title {
+      padding: 12px 16px 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .doc-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #333;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+    }
+    .doc-item:hover { background: #f5f5f5; }
+    .doc-item.active { background: rgba(72,87,226,0.06); color: #4857e2; border-left-color: #4857e2; font-weight: 500; }
+    .doc-item .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .dot-main { background: #4857e2; }
+    .dot-overlay { background: #ff7d00; }
+    .dot-special { background: #00b42a; }
+
+    /* ========== 右侧内容 ========== */
+    .doc-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .doc-topbar {
+      height: 48px;
+      background: #fff;
+      border-bottom: 1px solid #e6e6e6;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      flex-shrink: 0;
+    }
+    .doc-main {
+      flex: 1;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      padding: 16px;
+      overflow: auto;
+    }
+
+    /* ========== 布局预览容器 ========== */
+    .preview-wrapper {
+      position: relative;
+    }
+
+    /* 容器高亮闪烁 */
+    @keyframes highlight-flash {
+      0%, 100% { background-color: transparent; }
+      25%, 75% { background-color: rgba(245,63,63,0.12); }
+    }
+    .highlight {
+      animation: highlight-flash 1s ease 2;
+      position: relative;
+    }
+
+    /* 槽位标注 */
+    /* 浮动标签 — 固定在视口层，通过 JS 定位到容器上方 */
+    #floatLabel {
+      position: fixed;
+      background: rgba(72,87,226,0.92);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      white-space: pre-line;
+      text-align: left;
+      pointer-events: none;
+      z-index: 9999;
+      max-width: 300px;
+      line-height: 1.8;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    #floatLabel.show { display: block; }
+
+    /* 容器占位 */
+    .c-slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      transition: all 0.2s;
+      position: relative;
+    }
+    .c-slot-light {
+      color: rgba(0,0,0,0.15);
+    }
+
+    /* 蒙层 */
+    .overlay-mask {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 150;
+      display: none;
+      border-radius: inherit;
+      pointer-events: auto;
+    }
+    .overlay-mask.show { display: block; }
+
+    /* 信息面板 */
+    .info-panel {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      padding: 16px 20px;
+      font-size: 12px;
+      color: #333;
+      max-width: 320px;
+      z-index: 999;
+      display: none;
+      line-height: 1.8;
+    }
+    .info-panel.show { display: block; }
+    .info-panel .info-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #4857e2; }
+    .info-panel .info-rule { color: #666; }
+    .info-panel .info-tag { display: inline-block; background: #f0f0ff; color: #4857e2; padding: 1px 6px; border-radius: 3px; font-size: 11px; }
+  </style>
+</head>
+<body>
+
+<!-- 左侧面板 -->
+<div class="doc-sidebar">
+  <div class="doc-title">布局容器文档</div>
+  <div class="doc-subtitle">点击查看容器位置、规则和交互</div>
+
+  <div class="doc-group-title">主要布局</div>
+  <div class="doc-item active" data-target="layout" data-type="main"><span class="dot dot-main"></span>完整布局</div>
+  <div class="doc-item" data-target="tab-bar" data-type="main"><span class="dot dot-main"></span>标签栏 tab-bar</div>
+  <div class="doc-item" data-target="sidebar" data-type="main"><span class="dot dot-main"></span>一级导航 sidebar</div>
+  <div class="doc-item" data-target="navbar" data-type="main"><span class="dot dot-main"></span>二级导航 navbar</div>
+  <div class="doc-item" data-target="content-header" data-type="main"><span class="dot dot-main"></span>内容区头部</div>
+  <div class="doc-item" data-target="filter-bar" data-type="main"><span class="dot dot-main"></span>筛选区 filter-bar</div>
+  <div class="doc-item" data-target="content-area" data-type="main"><span class="dot dot-main"></span>内容区（自适应）</div>
+  <div class="doc-item" data-target="space-switcher" data-type="main"><span class="dot dot-main"></span>空间切换栏</div>
+
+  <div class="doc-group-title">覆盖层布局</div>
+  <div class="doc-item" data-target="drawer-task" data-type="overlay"><span class="dot dot-overlay"></span>抽屉（任务详情）</div>
+  <div class="doc-item" data-target="drawer-doc" data-type="overlay"><span class="dot dot-overlay"></span>抽屉（文档预览）</div>
+  <div class="doc-item" data-target="modal-sm" data-type="overlay"><span class="dot dot-overlay"></span>弹窗（小 480px）</div>
+  <div class="doc-item" data-target="modal-md" data-type="overlay"><span class="dot dot-overlay"></span>弹窗（中 640px）</div>
+  <div class="doc-item" data-target="modal-lg" data-type="overlay"><span class="dot dot-overlay"></span>弹窗（大 800px）</div>
+
+  <div class="doc-group-title">特殊布局</div>
+  <div class="doc-item" data-target="filter-double" data-type="special"><span class="dot dot-special"></span>筛选区（双行变体）</div>
+  <div class="doc-item" data-target="bottom-bar" data-type="special"><span class="dot dot-special"></span>底部栏</div>
+</div>
+
+<!-- 右侧内容 -->
+<div class="doc-content">
+  <div class="doc-topbar" id="docTopbar">完整布局 — 点击左侧查看各容器</div>
+  <div class="doc-main">
+    <div class="preview-wrapper" style="width:100%;display:flex;justify-content:center;" style="">
+
+      <!-- 完整布局 -->
+      <cs-layout id="preview-layout" style="width:100%;max-width:1440px;">
+
+        <!-- 标签栏 Figma: 15-61496 -->
+        <div class="tabbar" id="c-tab-bar" style="cursor:pointer;">
+          <div class="tabbar-left">
+            <cs-window-control class="tabbar-window-control">
+              <span class="ctrl-close"></span>
+              <span class="ctrl-minimize"></span>
+              <span class="ctrl-maximize"></span>
+            </cs-window-control>
+            <cs-search-input class="tabbar-search" data-variant="gray" data-size="sm">
+              <i class="search-icon cses-sousuo"></i>
+              <input class="search-field" type="text" placeholder="搜索">
+            </cs-search-input>
+            <cs-tab data-active>
+              <span class="tab-label">页面框架</span>
+              <i class="tab-close cses-cross"></i>
+            </cs-tab>
+            <cs-tab>
+              <span class="tab-label">视觉基础</span>
+              <i class="tab-close cses-cross"></i>
+            </cs-tab>
+          </div>
+          <div class="tabbar-right">
+            <span class="tabbar-notice">
+              <i class="cses-tongzhi notice-icon"></i>
+              <span class="notice-badge">2</span>
+            </span>
+            <cs-avatar data-size="xs" data-shape="circle" data-color="blue">张</cs-avatar>
+          </div>
+        </div>
+
+        <!-- 主体 -->
+        <div class="body">
+
+          <!-- 一级导航 -->
+          <cs-sidebar id="c-sidebar" style="cursor:pointer;">
+            <span class="logo">
+              <img src="../assets/logo.png" alt="CSES">
+            </span>
+            <nav class="nav">
+              <div class="nav-group">
+                <a class="nav-item">
+                  <span class="nav-icon"><i class="cses-gongzuotai1"></i></span>
+                  <span class="nav-label">工作台</span>
+                </a>
+                <a class="nav-item">
+                  <span class="nav-icon"><i class="cses-pinglun"></i></span>
+                  <span class="nav-label">消息</span>
+                </a>
+                <a class="nav-item">
+                  <span class="nav-icon"><i class="cses-xiangmujimokuai"></i></span>
+                  <span class="nav-label">项目管理</span>
+                </a>
+                <a class="nav-item">
+                  <span class="nav-icon"><i class="cses-putonghuiyi"></i></span>
+                  <span class="nav-label">会议</span>
+                </a>
+                <a class="nav-item">
+                  <span class="nav-icon"><i class="cses-yunwendang"></i></span>
+                  <span class="nav-label">文档库</span>
+                </a>
+                <a class="nav-item">
+                  <span class="nav-icon"><i class="cses-biaodan"></i></span>
+                  <span class="nav-label">表单</span>
+                </a>
+                <a class="nav-item">
+                  <span class="nav-icon"><i class="cses-rili"></i></span>
+                  <span class="nav-label">日程</span>
+                </a>
+                <a class="nav-item">
+                  <span class="nav-icon"><i class="cses-member"></i></span>
+                  <span class="nav-label">智能人事</span>
+                </a>
+              </div>
+            </nav>
+          </cs-sidebar>
+
+          <!-- 内容包裹 -->
+          <div class="content-wrapper" style="position:relative;">
+            <!-- 蒙层 -->
+            <div class="overlay-mask" id="overlayMask"></div>
+
+            <!-- 抽屉 -->
+            <cs-drawer id="demoDrawer" style="z-index:200;">
+              <div class="slot-header" style="padding:16px 20px;border-bottom:1px solid #eee;">
+                <div class="c-slot c-slot-light" style="height:32px;">头部（标题+关闭按钮）</div>
+              </div>
+              <div class="slot-body" style="flex:1;padding:20px;">
+                <div class="c-slot c-slot-light" style="flex:1;height:100%;">内容区（FILL 可滚动）</div>
+              </div>
+              <div class="slot-footer" style="padding:12px 20px;border-top:1px solid #eee;display:flex;justify-content:flex-end;gap:8px;">
+                <div class="c-slot c-slot-light" style="padding:6px 24px;border-radius:4px;border:1px solid #ddd;">取消</div>
+                <div class="c-slot" style="padding:6px 24px;border-radius:4px;background:#4857e2;color:rgba(255,255,255,0.6);">确定</div>
+              </div>
+            </cs-drawer>
+
+            <!-- 弹窗 -->
+            <cs-modal id="demoModal" style="z-index:200;">
+              <div class="dialog" id="modalDialog">
+                <div class="slot-header" style="padding:20px 24px;border-bottom:1px solid #eee;">
+                  <div class="c-slot c-slot-light" style="height:24px;">头部（标题+关闭按钮）</div>
+                </div>
+                <div class="slot-body" style="padding:20px 24px;min-height:120px;">
+                  <div class="c-slot c-slot-light" style="height:100%;">内容区</div>
+                </div>
+                <div class="slot-footer" style="padding:12px 24px;border-top:1px solid #eee;display:flex;justify-content:flex-end;gap:8px;">
+                  <div class="c-slot c-slot-light" style="padding:6px 24px;border-radius:4px;border:1px solid #ddd;">取消</div>
+                  <div class="c-slot" style="padding:6px 24px;border-radius:4px;background:#4857e2;color:rgba(255,255,255,0.6);">确定</div>
+                </div>
+              </div>
+            </cs-modal>
+
+            <!-- 二级导航 -->
+            <cs-navbar id="c-navbar" style="cursor:pointer;">
+              <div class="inner">
+                <!-- ① 标题区 -->
+                <div class="slot-header" style="display:flex;flex-direction:column;gap:4px;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-size:16px;font-weight:600;color:#333333;font-family:var(--font-family-cn);">文档库</span>
+                    <i class="cses-zhudaohangqu_shouqi" aria-label="收起" style="font-size:16px;line-height:1;cursor:pointer;flex:none;"></i>
+                  </div>
+                  <span style="font-size:12px;font-weight:400;color:#999999;font-family:var(--font-family-cn);">智能文档，让协同创作更高效</span>
+                </div>
+                <!-- ② 按钮区 -->
+                <div class="slot-action">
+                  <cs-button data-variant="primary" style="width:100%;">
+                    <i class="btn-icon cses-plus"></i>
+                    <span class="btn-label">新建文档</span>
+                  </cs-button>
+                </div>
+                <!-- ③ 主菜单区 -->
+                <div class="slot-nav" style="display:flex;flex-direction:column;gap:8px;padding-top:8px;border-top:1px solid #EBEDEF;flex:none;">
+                  <!-- 首页（选中） -->
+                  <div style="display:flex;align-items:center;gap:4px;padding:8px;border-radius:8px;cursor:pointer;background:rgba(72,87,226,0.08);">
+                    <i class="cses-shouye" aria-label="首页" style="font-size:14px;line-height:1;flex:none;"></i>
+                    <span style="font-size:14px;color:#4857E2;font-family:var(--font-family-cn);">首页</span>
+                  </div>
+                  <!-- 控制中心（展开组） -->
+                  <div style="display:flex;flex-direction:column;gap:4px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;border-radius:4px;cursor:pointer;">
+                      <div style="display:flex;align-items:center;gap:4px;">
+                        <i class="cses-guanlihoutai" aria-label="控制中心" style="font-size:14px;line-height:1;flex:none;"></i>
+                        <span style="font-size:14px;color:#333;font-family:var(--font-family-cn);">控制中心</span>
+                      </div>
+                      <i class="cses-chevron-down" aria-label="展开" style="font-size:16px;line-height:1;flex:none;"></i>
+                    </div>
+                    <div style="padding:8px 8px 8px 26px;border-radius:4px;font-size:14px;color:#333;font-family:var(--font-family-cn);cursor:pointer;">菜单</div>
+                    <div style="padding:8px 8px 8px 26px;border-radius:4px;font-size:14px;color:#333;font-family:var(--font-family-cn);cursor:pointer;">菜单分配</div>
+                  </div>
+                  <!-- 共享 -->
+                  <div style="display:flex;align-items:center;gap:4px;padding:8px;border-radius:8px;cursor:pointer;">
+                    <i class="cses-gongxiang" aria-label="共享" style="font-size:14px;line-height:1;flex:none;"></i>
+                    <span style="font-size:14px;color:#333;font-family:var(--font-family-cn);">共享</span>
+                  </div>
+                </div>
+                <!-- ④ 副菜单区 -->
+                <div class="slot-sub" style="display:flex;flex-direction:column;gap:8px;border-top:1px solid #EBEDEF;flex:1;min-height:0;overflow-y:auto;">
+                  <!-- 空间组 -->
+                  <div style="display:flex;flex-direction:column;gap:4px;">
+                    <!-- 组头 -->
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;border-radius:8px;cursor:pointer;">
+                      <div style="display:flex;align-items:center;gap:4px;">
+                        <i class="cses-chevron-down" aria-label="展开" style="font-size:10px;line-height:1;flex:none;"></i>
+                        <span style="font-size:14px;color:#999;font-family:var(--font-family-cn);">空间</span>
+                      </div>
+                      <i class="cses-add" aria-label="添加" style="font-size:14px;line-height:1;cursor:pointer;flex:none;"></i>
+                    </div>
+                    <!-- 空间项 -->
+                    <div style="display:flex;align-items:center;gap:4px;padding:8px 8px 8px 20px;cursor:pointer;">
+                      <i class="cses-wenjian" aria-label="空间" style="font-size:14px;line-height:1;flex:none;"></i>
+                      <span style="font-size:14px;color:#333;font-family:var(--font-family-cn);">个人空间</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:4px;padding:8px 8px 8px 20px;cursor:pointer;">
+                      <i class="cses-wenjian" aria-label="空间" style="font-size:14px;line-height:1;flex:none;"></i>
+                      <span style="font-size:14px;color:#333;font-family:var(--font-family-cn);">CSES 空间</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:4px;padding:8px 8px 8px 20px;cursor:pointer;">
+                      <i class="cses-wenjian" aria-label="空间" style="font-size:14px;line-height:1;flex:none;"></i>
+                      <span style="font-size:14px;color:#333;font-family:var(--font-family-cn);">其他定义空间</span>
+                      <span style="font-size:12px;color:#4857E2;background:rgba(72,87,226,0.08);padding:1px 6px;border-radius:4px;font-family:var(--font-family-cn);">外部</span>
+                    </div>
+                  </div>
+                  <!-- 知识库组 -->
+                  <div style="display:flex;flex-direction:column;gap:4px;">
+                    <!-- 组头 -->
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;border-radius:8px;cursor:pointer;">
+                      <div style="display:flex;align-items:center;gap:4px;">
+                        <i class="cses-chevron-down" aria-label="展开" style="font-size:10px;line-height:1;flex:none;"></i>
+                        <span style="font-size:14px;color:#999;font-family:var(--font-family-cn);">知识库</span>
+                      </div>
+                      <i class="cses-add" aria-label="添加" style="font-size:14px;line-height:1;cursor:pointer;flex:none;"></i>
+                    </div>
+                    <!-- 知识库项 -->
+                    <div style="display:flex;align-items:center;gap:4px;padding:8px 8px 8px 20px;cursor:pointer;">
+                      <i class="cses-erjidaohang_zhishiku" aria-label="知识库" style="font-size:14px;line-height:1;flex:none;"></i>
+                      <span style="font-size:14px;color:#333;font-family:var(--font-family-cn);">中企云链设计规范</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:4px;padding:8px 8px 8px 20px;cursor:pointer;">
+                      <i class="cses-erjidaohang_zhishiku" aria-label="知识库" style="font-size:14px;line-height:1;flex:none;"></i>
+                      <span style="font-size:14px;color:#333;font-family:var(--font-family-cn);">XPA前端代码规范</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:4px;padding:8px 8px 8px 20px;cursor:pointer;">
+                      <i class="cses-erjidaohang_zhishiku" aria-label="知识库" style="font-size:14px;line-height:1;flex:none;"></i>
+                      <span style="font-size:14px;color:#333;font-family:var(--font-family-cn);">知识库名称</span>
+                      <span style="font-size:12px;color:#4857E2;background:rgba(72,87,226,0.08);padding:1px 6px;border-radius:4px;font-family:var(--font-family-cn);">外部</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- ⑤⑥ 底部区域 -->
+                <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0;">
+                <!-- ⑤ 管理后台 -->
+                <div class="slot-admin" style="display:flex;align-items:center;gap:4px;padding:8px;cursor:pointer;">
+                  <i class="cses-gongzuotai1" style="font-size:14px;color:#333;"></i>
+                  <span style="font-size:14px;color:#333;font-family:var(--font-family-cn);">管理后台</span>
+                </div>
+                <!-- ⑥ 存储空间 -->
+                <div class="slot-bottom" style="display:flex;flex-direction:column;gap:4px;padding:8px;border-top:1px solid #EBEDEF;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-size:10px;color:#333;font-family:var(--font-family-cn);">云空间：480GB/500GB</span>
+                    <span style="font-size:10px;color:#4857E2;font-family:var(--font-family-cn);cursor:pointer;">升级</span>
+                  </div>
+                  <div style="width:100%;height:4px;background:#DCDEE0;border-radius:2px;overflow:hidden;">
+                    <div style="width:96%;height:100%;background:#D63D3D;border-radius:2px;"></div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <i class="cses-alert" style="font-size:10px;color:#C32020;"></i>
+                    <span style="font-size:10px;color:#C32020;font-family:var(--font-family-cn);">空间将满，影响云储存</span>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </cs-navbar>
+
+            <!-- 主内容区 -->
+            <main class="main-content" id="c-main" style="position:relative;">
+
+              
+
+              <!-- 内容区头部 Figma:72-1267 -->
+              <div id="c-content-header" style="display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 16px;flex-shrink:0;cursor:pointer;border-bottom:1px solid #E6E6E6;background:#fff;box-sizing:border-box;">
+                <span style="font-size:18px;font-weight:600;color:#333;font-family:var(--font-family-cn);">首页</span>
+                <cs-search-trigger>
+                  <span class="trigger-text">搜索</span>
+                  <i class="trigger-icon cses-sousuo"></i>
+                </cs-search-trigger>
+              </div>
+
+              <!-- 筛选区 -->
+              <div class="c-slot c-slot-light" id="c-filter-bar" style="height:40px;flex-shrink:0;cursor:pointer;padding:0 16px;">
+                筛选区 40px
+              </div>
+
+              <!-- 内容区 -->
+              <div class="c-slot c-slot-light" id="c-content-area" style="flex:1;cursor:pointer;margin:0 16px;border-radius:8px;">
+                内容区 FILL×FILL<br>（自适应）
+              </div>
+
+              <!-- 底部 -->
+              <div class="c-slot c-slot-light" id="c-bottom-bar" style="height:18px;flex-shrink:0;cursor:pointer;">
+                底部 18px
+              </div>
+
+
+
+
+
+            </main>
+          </div>
+
+          <!-- 空间切换栏 -->
+          <cs-space-switcher id="c-space-switcher" style="cursor:pointer;">
+            <div class="inner">
+              <div class="slot-tools">
+
+                <!-- 顶部工具组 -->
+                <div class="tool-group">
+                  <a class="tool-item" href="javascript:;"><i class="cses-ai-assistant" aria-label="AI 助手"></i></a>
+                  <a class="tool-item" href="javascript:;"><i class="cses-note_taker" aria-label="便签"></i></a>
+                  <a class="tool-item" href="javascript:;"><i class="cses-xunibeijing" aria-label="虚拟背景"></i></a>
+                  <a class="tool-item" href="javascript:;"><i class="cses-shezhi" aria-label="管理"></i></a>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- 空间块组：竖排文字的块用 .space-card，不是 .tool-item。
+                     .tool-item 没有宽度和内边距，之前靠内联 width:34px 硬凑，
+                     图标和竖排标题会叠在一起。 -->
+                <div class="tool-group spaces-group">
+                  <div class="space-card" data-active>
+                    <i class="cses-wenjian" aria-label="空间"></i>
+                    <span class="space-label">我的空间</span>
+                  </div>
+                  <div class="space-card">
+                    <i class="cses-wenjian" aria-label="空间"></i>
+                    <span class="space-label">自定义空间1</span>
+                  </div>
+                  <a class="add-btn" href="javascript:;"><i class="cses-add" aria-label="新建空间"></i></a>
+                  <div class="divider"></div>
+                  <div class="space-card is-trash">
+                    <i class="cses-huishouzhan" aria-label="回收站"></i>
+                    <span class="space-label">回收站</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- 底部客服 -->
+              <div class="slot-bottom">
+                <div class="customer-service">
+                  <i class="cses-pinglun" aria-label="客服"></i>
+                  <span class="notify-badge"></span>
+                </div>
+              </div>
+            </div>
+          </cs-space-switcher>
+
+        </div>
+      </cs-layout>
+
+    </div>
+  </div>
+</div>
+
+<!-- 信息面板 -->
+<div class="info-panel" id="infoPanel">
+  <div class="info-title" id="infoTitle"></div>
+  <div class="info-rule" id="infoRule"></div>
+</div>
+
+<div id="floatLabel"></div>
+
+<script>
+(function() {
+  var items = document.querySelectorAll('.doc-item');
+  var topbar = document.getElementById('docTopbar');
+  var infoPanel = document.getElementById('infoPanel');
+  var infoTitle = document.getElementById('infoTitle');
+  var infoRule = document.getElementById('infoRule');
+  var overlayMask = document.getElementById('overlayMask');
+  var drawer = document.getElementById('demoDrawer');
+  var modal = document.getElementById('demoModal');
+  var modalDialog = document.getElementById('modalDialog');
+
+  // 容器信息
+  var containerInfo = {
+    'layout': { el: 'preview-layout', title: '完整布局 cs-layout', rule: '100vw×100vh (min:1024×600) r:0\nVERTICAL 垂直排列\n自适应网页宽高\n所有前台业务共用同一套 layout' },
+    'tab-bar': { el: 'c-tab-bar', title: '标签栏 cs-tabbar', rule: 'W:FILL H:FIXED(56) SPACE_BETWEEN\nbg(#2C2A3A) p(6,16) g:8 align:CENTER\n左侧：窗口控制 | 搜索框(232) | 标签区\n右侧：通知(badge) + 头像' },
+    'sidebar': { el: 'c-sidebar', title: '一级导航 cs-sidebar', rule: 'W:FIXED(97)\np(12,16,16,16) g:24\n图标 24×24：线性(常态) / 面型(点亮)\n导航项 65×48 g:4 r:8' },
+    'navbar': { el: 'c-navbar', title: '二级导航 cs-navbar', rule: 'W:FIXED(232) H:FILL\n灰底 bg(247,249,252)\n白卡 p(8,8,0,8) g:16 r:12\n槽位：标题 | 新建按钮 | 导航项(FILL) | 底部\n不同业务拼装不同原子组件' },
+    'content-header': { el: 'c-content-header', title: '内容区头部 cs-content-header', rule: 'W:FILL H:HUG(~68)\np(20,16,20,16) g:10\n左：标题/面包屑 (flex:1)\n右：搜索框/操作按钮 (shrink:0)' },
+    'filter-bar': { el: 'c-filter-bar', title: '筛选区 cs-filter-bar', rule: '单行（默认）：左筛选 | 右工具\n双行 data-variant="double"：\n  上行=操作按钮 | 下行=筛选标签\n不同业务拼装不同筛选组件' },
+    'content-area': { el: 'c-content-area', title: '内容区', rule: 'W:FILL H:FILL grow:1\n★ 唯一完全自适应的区域\n撑满主内容区剩余空间\n放列表/卡片/聊天等业务内容\n内部可滚动' },
+    'space-switcher': { el: 'c-space-switcher', title: '空间切换栏 cs-space-switcher', rule: 'W:FIXED(65) H:FILL\n内层 p(16,16,8,16) g:32 r:12\n工具图标分组 + 分割线\n底部消息入口' },
+    'bottom-bar': { el: 'c-bottom-bar', title: '底部栏', rule: 'H:FIXED(18)\n放分页控件或滚动条指示器' },
+    'filter-double': { el: 'c-filter-bar', title: '筛选区（双行变体）', rule: 'data-variant="double"\n上行：操作按钮组 + 新建按钮\n下行：筛选标签 + 视图切换\n文档库使用此变体' },
+  };
+
+  // 抽屉信息
+  var drawerInfo = {
+    'drawer-task': { width: 'full', title: '抽屉 — 任务详情', rule: 'data-width="full"\n几乎撑满主内容区\n内部：左右分栏\n左(617px)=详情字段 | 右(flex)=协作区\n头部：标题+关闭 | 底部：取消+保存' },
+    'drawer-doc': { width: 'md', title: '抽屉 — 文档预览', rule: 'data-width="md" (560px)\n内部：文档渲染区\n头部：文档名+关闭 | 底部：操作按钮' },
+  };
+
+  // 弹窗信息
+  var modalInfo = {
+    'modal-sm': { size: 'sm', title: '弹窗（小 480px）', rule: 'data-size="sm"\n确认提示、简单表单\n头部：标题+关闭\n内容区\n底部：取消+确定（右对齐）' },
+    'modal-md': { size: 'md', title: '弹窗（中 640px）', rule: 'data-size="md"（默认）\n表单填写、配置面板\n头部+内容(可滚动)+底部' },
+    'modal-lg': { size: 'lg', title: '弹窗（大 800px）', rule: 'data-size="lg"\n复杂表单、新建任务、选择面板\n头部+内容(可滚动)+底部' },
+  };
+
+  function clearAll() {
+    document.querySelectorAll('.highlight').forEach(function(el) { el.classList.remove('highlight'); });
+    overlayMask.classList.remove('show');
+    drawer.removeAttribute('data-open');
+    modal.removeAttribute('data-open');
+    infoPanel.classList.remove('show');
+    floatLabel.classList.remove('show');
+  }
+
+  var floatLabel = document.getElementById('floatLabel');
+
+  function positionFloat(el, title, rule) {
+    var rect = el.getBoundingClientRect();
+    floatLabel.textContent = title + '\n' + rule;
+    floatLabel.classList.add('show');
+    // 放在容器上方居中
+    var labelW = 280;
+    var left = rect.left + rect.width / 2 - labelW / 2;
+    var top = rect.top - 10;
+    // 如果上方放不下就放下方
+    floatLabel.style.maxWidth = labelW + 'px';
+    floatLabel.style.left = Math.max(270, left) + 'px';
+    // 先渲染获取高度
+    floatLabel.style.top = '0px';
+    floatLabel.style.visibility = 'hidden';
+    floatLabel.classList.add('show');
+    var labelH = floatLabel.offsetHeight;
+    floatLabel.style.visibility = '';
+    if (top - labelH < 10) {
+      floatLabel.style.top = (rect.bottom + 10) + 'px';
+    } else {
+      floatLabel.style.top = (top - labelH) + 'px';
+    }
+  }
+
+  function showContainer(target) {
+    clearAll();
+    var info = containerInfo[target];
+    if (info) {
+      var el = document.getElementById(info.el);
+      if (el) {
+        el.classList.add('highlight');
+        topbar.textContent = info.title;
+        positionFloat(el, info.title, info.rule);
+      }
+    }
+  }
+
+  function showDrawer(target) {
+    clearAll();
+    var info = drawerInfo[target];
+    if (info) {
+      overlayMask.classList.add('show');
+      drawer.setAttribute('data-width', info.width);
+      drawer.setAttribute('data-open', '');
+      topbar.textContent = info.title;
+      setTimeout(function() { positionFloat(drawer, info.title, info.rule); }, 300);
+    }
+  }
+
+  function showModal(target) {
+    clearAll();
+    var info = modalInfo[target];
+    if (info) {
+      modalDialog.style.width = info.size === 'sm' ? '480px' : info.size === 'lg' ? '800px' : '640px';
+      modal.setAttribute('data-open', '');
+      topbar.textContent = info.title;
+      setTimeout(function() { positionFloat(modalDialog, info.title, info.rule); }, 100);
+      infoPanel.classList.add('show');
+    }
+  }
+
+  items.forEach(function(item) {
+    item.addEventListener('click', function() {
+      items.forEach(function(i) { i.classList.remove('active'); });
+      item.classList.add('active');
+      var target = item.getAttribute('data-target');
+      var type = item.getAttribute('data-type');
+      if (type === 'overlay' && target.startsWith('drawer')) showDrawer(target);
+      else if (type === 'overlay' && target.startsWith('modal')) showModal(target);
+      else showContainer(target);
+    });
+  });
+
+  // 点击布局内的容器也触发
+  Object.keys(containerInfo).forEach(function(key) {
+    var info = containerInfo[key];
+    var el = document.getElementById(info.el);
+    if (el) {
+      el.addEventListener('click', function(e) {
+        e.stopPropagation();
+        items.forEach(function(i) { i.classList.remove('active'); });
+        var menuItem = document.querySelector('.doc-item[data-target="' + key + '"]');
+        if (menuItem) menuItem.classList.add('active');
+        showContainer(key);
+      });
+    }
+  });
+
+  // 点击蒙层关闭
+  overlayMask.addEventListener('click', clearAll);
+  modal.addEventListener('click', function(e) { if (e.target === modal) clearAll(); });
+})();
+</script>
+
+</body>
+</html>

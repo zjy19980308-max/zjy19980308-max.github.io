@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+  <meta charset="UTF-8">
+  <title>cs-dropdown 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="dropdown.css?v=d610666c">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 96px; flex-shrink: 0; }
+    .tip { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-top: 8px; padding: 8px 12px; background: #f9f9f9; border-radius: 4px; }
+
+    /* placement 演示专用：6 个独立单元格，足够空间放展开后的菜单 */
+    .placement-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 200px 24px;
+      padding: 180px 32px 32px;
+    }
+    .placement-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .placement-cell-label {
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-text-light2);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 真实可点击交互 ========== -->
+<div class="section">
+  <div class="section-title">真实可点击交互 Click to Toggle</div>
+  <div class="section-subtitle">点击触发器开/关切换；点击外部、菜单项或按 ESC 自动关闭</div>
+
+  <div class="row" style="min-height: 200px; align-items: flex-start;">
+    <span class="row-label">点击我 →</span>
+    <cs-dropdown>
+      <button class="dropdown-trigger" type="button">
+        <span class="dropdown-trigger-label">操作菜单</span>
+        <i class="dropdown-trigger-arrow cses-xiala"></i>
+      </button>
+      <div class="dropdown-menu">
+        <button class="dropdown-item" type="button">
+          <i class="dropdown-item-icon cses-edit"></i>
+          <span class="dropdown-item-label">编辑</span>
+        </button>
+        <button class="dropdown-item" type="button">
+          <i class="dropdown-item-icon cses-fuzhi"></i>
+          <span class="dropdown-item-label">复制</span>
+          <span class="dropdown-item-shortcut">⌘ C</span>
+        </button>
+        <button class="dropdown-item" type="button">
+          <i class="dropdown-item-icon cses-fuzhilianjie"></i>
+          <span class="dropdown-item-label">复制链接</span>
+        </button>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item" data-color="danger" type="button">
+          <i class="dropdown-item-icon cses-shanchu"></i>
+          <span class="dropdown-item-label">删除</span>
+        </button>
+      </div>
+    </cs-dropdown>
+  </div>
+  <div class="tip">交互验证：① 点击触发器 → 弹出 ② 再点击触发器 → 收起 ③ 点击外部 → 收起 ④ 点击菜单项 → 收起 ⑤ ESC → 收起</div>
+</div>
+
+<!-- ========== 2. 弹出位置 Placement ========== -->
+<div class="section">
+  <div class="section-title">弹出位置 Placement (6 向)</div>
+  <div class="section-subtitle">data-placement="bottom-left | bottom | bottom-right | top-left | top | top-right" — 全部预先展开演示</div>
+
+  <div class="placement-grid">
+    <!-- 上排：top-* 系列，菜单向上弹 -->
+    <div class="placement-cell">
+      <cs-dropdown data-open data-placement="top-left">
+        <button class="dropdown-trigger" type="button">
+          <span class="dropdown-trigger-label">top-left</span>
+          <i class="dropdown-trigger-arrow cses-xiala"></i>
+        </button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项一</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项二</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项三</span></button>
+        </div>
+      </cs-dropdown>
+      <span class="placement-cell-label">top-left</span>
+    </div>
+
+    <div class="placement-cell">
+      <cs-dropdown data-open data-placement="top">
+        <button class="dropdown-trigger" type="button">
+          <span class="dropdown-trigger-label">top</span>
+          <i class="dropdown-trigger-arrow cses-xiala"></i>
+        </button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项一</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项二</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项三</span></button>
+        </div>
+      </cs-dropdown>
+      <span class="placement-cell-label">top</span>
+    </div>
+
+    <div class="placement-cell">
+      <cs-dropdown data-open data-placement="top-right">
+        <button class="dropdown-trigger" type="button">
+          <span class="dropdown-trigger-label">top-right</span>
+          <i class="dropdown-trigger-arrow cses-xiala"></i>
+        </button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项一</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项二</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项三</span></button>
+        </div>
+      </cs-dropdown>
+      <span class="placement-cell-label">top-right</span>
+    </div>
+
+    <!-- 下排：bottom-* 系列，菜单向下弹 -->
+    <div class="placement-cell">
+      <cs-dropdown data-open data-placement="bottom-left">
+        <button class="dropdown-trigger" type="button">
+          <span class="dropdown-trigger-label">bottom-left</span>
+          <i class="dropdown-trigger-arrow cses-xiala"></i>
+        </button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项一</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项二</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项三</span></button>
+        </div>
+      </cs-dropdown>
+      <span class="placement-cell-label">bottom-left</span>
+    </div>
+
+    <div class="placement-cell">
+      <cs-dropdown data-open data-placement="bottom">
+        <button class="dropdown-trigger" type="button">
+          <span class="dropdown-trigger-label">bottom</span>
+          <i class="dropdown-trigger-arrow cses-xiala"></i>
+        </button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项一</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项二</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项三</span></button>
+        </div>
+      </cs-dropdown>
+      <span class="placement-cell-label">bottom</span>
+    </div>
+
+    <div class="placement-cell">
+      <cs-dropdown data-open data-placement="bottom-right">
+        <button class="dropdown-trigger" type="button">
+          <span class="dropdown-trigger-label">bottom-right</span>
+          <i class="dropdown-trigger-arrow cses-xiala"></i>
+        </button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项一</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项二</span></button>
+          <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项三</span></button>
+        </div>
+      </cs-dropdown>
+      <span class="placement-cell-label">bottom-right</span>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 3. 尺寸变体 ========== -->
+<div class="section">
+  <div class="section-title">尺寸变体 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg" — 触发器高度 24/32/40，点击切换</div>
+
+  <div class="row" style="min-height: 200px; align-items: flex-start;">
+    <span class="row-label">sm (24px)</span>
+    <cs-dropdown data-size="sm">
+      <button class="dropdown-trigger" type="button">
+        <span class="dropdown-trigger-label">小尺寸</span>
+        <i class="dropdown-trigger-arrow cses-xiala"></i>
+      </button>
+      <div class="dropdown-menu">
+        <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项一</span></button>
+        <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项二</span></button>
+      </div>
+    </cs-dropdown>
+
+    <span class="row-label" style="margin-left: 32px;">md (32px)</span>
+    <cs-dropdown>
+      <button class="dropdown-trigger" type="button">
+        <span class="dropdown-trigger-label">中尺寸</span>
+        <i class="dropdown-trigger-arrow cses-xiala"></i>
+      </button>
+      <div class="dropdown-menu">
+        <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项一</span></button>
+        <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项二</span></button>
+      </div>
+    </cs-dropdown>
+
+    <span class="row-label" style="margin-left: 32px;">lg (40px)</span>
+    <cs-dropdown data-size="lg">
+      <button class="dropdown-trigger" type="button">
+        <span class="dropdown-trigger-label">大尺寸</span>
+        <i class="dropdown-trigger-arrow cses-xiala"></i>
+      </button>
+      <div class="dropdown-menu">
+        <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项一</span></button>
+        <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项二</span></button>
+      </div>
+    </cs-dropdown>
+  </div>
+</div>
+
+<!-- ========== 4. 菜单项变体 ========== -->
+<div class="section">
+  <div class="section-title">菜单项变体 Menu Items</div>
+  <div class="section-subtitle">支持图标、快捷键、分组、分割线、危险项、选中项、禁用项 — 点击切换</div>
+
+  <div class="row" style="min-height: 320px; align-items: flex-start;">
+    <span class="row-label">完整示例</span>
+    <cs-dropdown>
+      <button class="dropdown-trigger" type="button">
+        <span class="dropdown-trigger-label">更多操作</span>
+        <i class="dropdown-trigger-arrow cses-xiala"></i>
+      </button>
+      <div class="dropdown-menu">
+        <span class="dropdown-group-title">文件操作</span>
+        <button class="dropdown-item" type="button">
+          <i class="dropdown-item-icon cses-edit"></i>
+          <span class="dropdown-item-label">编辑</span>
+          <span class="dropdown-item-shortcut">⌘ E</span>
+        </button>
+        <button class="dropdown-item" data-active data-keep-open type="button">
+          <i class="dropdown-item-icon cses-fuzhi"></i>
+          <span class="dropdown-item-label">复制（已选中·点不关）</span>
+          <span class="dropdown-item-shortcut">⌘ C</span>
+        </button>
+        <button class="dropdown-item" data-disabled type="button">
+          <i class="dropdown-item-icon cses-fuzhilianjie"></i>
+          <span class="dropdown-item-label">复制链接（禁用）</span>
+        </button>
+        <div class="dropdown-divider"></div>
+        <span class="dropdown-group-title">危险操作</span>
+        <button class="dropdown-item" data-color="danger" type="button">
+          <i class="dropdown-item-icon cses-shanchu"></i>
+          <span class="dropdown-item-label">删除</span>
+          <span class="dropdown-item-shortcut">⌫</span>
+        </button>
+      </div>
+    </cs-dropdown>
+  </div>
+</div>
+
+<!-- ========== 5. 禁用态 ========== -->
+<div class="section">
+  <div class="section-title">禁用态 Disabled</div>
+  <div class="section-subtitle">data-disabled — 整体禁用，不响应点击</div>
+
+  <div class="row">
+    <span class="row-label">禁用</span>
+    <cs-dropdown data-disabled>
+      <button class="dropdown-trigger" type="button">
+        <span class="dropdown-trigger-label">禁用菜单</span>
+        <i class="dropdown-trigger-arrow cses-xiala"></i>
+      </button>
+      <div class="dropdown-menu">
+        <button class="dropdown-item" type="button"><span class="dropdown-item-label">菜单项</span></button>
+      </div>
+    </cs-dropdown>
+  </div>
+</div>
+
+<script src="dropdown.js?v=9b76aef6"></script>
+</body>
+</html>
