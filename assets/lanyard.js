@@ -221,6 +221,23 @@
     return t;
   }
 
+  /* 2D 静态工牌用的同一张正面：卡面 + 二维码全部模块一次画完（不做进场动画）。
+     手机上 three 不启动，badge2d.js 拿这张画布做 CSS 3D 工牌和长按导出图。 */
+  function paintFront(o) {
+    o = o || {};
+    var f = makeFace();
+    drawFront(f.ctx, o);
+    var QRM = o.qrMatrix || (root.__QR_MATRIX && root.__QR_MATRIX.m) || null;
+    if (QRM && QRM.length) {
+      var N = QRM.length, g = f.ctx, pad = QSZ * 0.04, cell = (QSZ - pad * 2) / N;
+      g.fillStyle = '#FFFFFF'; g.fillRect(QX, QY, QSZ, QSZ);
+      g.fillStyle = '#0B0B11';
+      for (var r = 0; r < N; r++) for (var c = 0; c < N; c++)
+        if (QRM[r][c]) g.fillRect(QX + pad + c * cell, QY + pad + r * cell, cell + 0.4, cell + 0.4);
+    }
+    return f.canvas;                                   /* FW×FH 的 2 倍：1240×1880 */
+  }
+
   function mount(hostSel, opt) {
     var host = typeof hostSel === 'string' ? document.querySelector(hostSel) : hostSel;
     if (!host || typeof THREE === 'undefined') return null;
@@ -719,5 +736,6 @@
     return api;
   }
 
-  root.Lanyard = { mount: mount, capable: capable, all: instances };
+  root.Lanyard = { mount: mount, capable: capable, all: instances, paintFront: paintFront,
+                   cornerRatio: 0.20 / (5.4 * FW / FH) };   /* 圆角 / 卡宽，导出图用 */
 })(window);

@@ -27,3 +27,39 @@
 .qr-src{position:absolute;left:0;bottom:0;width:300px;aspect-ratio:1;
         opacity:0;pointer-events:none}
 .qr-src canvas{width:100%;height:100%;display:block}
+
+/* ═══ 静态工牌（badge2d.js）：手机 / 不跑 three 的机器 ═══
+   一张和融球块同款的整卡：上面挂绳 + 夹子 + 卡，下面一行说明。
+   卡面就是 three 版那张画布，倾斜靠 CSS 3D。 */
+.badge2d{position:relative;margin-top:var(--sp-sub);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  background:radial-gradient(90% 60% at 50% 45%,rgba(255,255,255,.045),transparent 70%)}
+.badge2d[hidden]{display:none}
+.b2-stage{position:relative;height:calc(176px + min(62vw,250px) * 1.516);perspective:1100px;touch-action:pan-y;
+  display:flex;justify-content:center;align-items:flex-start;overflow:hidden}
+.b2-strap{position:absolute;top:-6px;left:50%;width:34px;height:150px;margin-left:-17px;
+  background:linear-gradient(90deg,#141419,#26262f 50%,#141419);border-radius:0 0 4px 4px;box-shadow:0 4px 12px rgba(0,0,0,.5);z-index:0}
+.b2-strap::after{content:'PORTFOLIO · 张竞元 · PORTFOLIO';position:absolute;inset:0;writing-mode:vertical-rl;
+  font-family:var(--font-mono);font-weight:500;font-size:9px;line-height:34px;letter-spacing:.24em;color:rgba(255,255,255,.34);text-align:center;overflow:hidden}
+.b2-clip{position:absolute;top:128px;left:50%;width:54px;height:20px;margin-left:-27px;border-radius:5px;
+  background:linear-gradient(180deg,#dcdce6,#a3a3b0);box-shadow:0 2px 6px rgba(0,0,0,.55),inset 0 1px 0 #fff;z-index:2}
+.b2-card{position:relative;margin-top:146px;width:min(62vw,250px);aspect-ratio:620/940;border-radius:5.6%/3.7%;overflow:hidden;
+  transform-style:preserve-3d;transform-origin:50% 0;background:#f4f4f7;
+  box-shadow:0 30px 60px rgba(0,0,0,.6);will-change:transform;transition:box-shadow .3s;cursor:pointer}
+.b2-face{width:100%;height:100%;display:block;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;pointer-events:none}
+.b2-gloss{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.85}
+.b2-press .b2-card{box-shadow:0 10px 30px rgba(0,0,0,.6),0 0 0 3px var(--violet)}
+.b2-hint{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 14px;padding:14px 22px 18px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-4)}
+.b2-hint b{font-family:var(--font-display);font-weight:400;font-size:clamp(16px,2.2vw,22px);letter-spacing:.01em;color:var(--fg);text-transform:none}
+.b2-ask{font-family:var(--font-display);font-size:11px;letter-spacing:.06em;line-height:1;padding:7px 11px;border:1px solid var(--line-2);border-radius:4px;
+  background:none;color:var(--fg-2);cursor:pointer;text-transform:none}
+.b2-ask[hidden]{display:none}
+/* 导出弹层：只有卡，长按图片走系统保存 */
+.b2-export{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.84);display:none;align-items:center;justify-content:center;padding:24px}
+.b2-export.on{display:flex}
+.b2-ex-box{position:relative;text-align:center}
+.b2-ex-box img{display:block;max-width:min(78vw,360px);max-height:66vh;margin:0 auto;border-radius:16px;
+  box-shadow:0 30px 80px rgba(0,0,0,.7);-webkit-touch-callout:default}
+.b2-ex-box p{margin:16px 0 0;font-size:13px;color:var(--fg-2);letter-spacing:.02em}
+.b2-ex-close{position:absolute;top:-16px;right:-16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--line-2);
+  background:rgba(20,20,26,.92);color:#fff;font-size:20px;line-height:1;cursor:pointer}

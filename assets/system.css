@@ -825,3 +825,89 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .jrn--ww .jrn-new::before{content:'WITH · 有它'}
 @media(max-width:1100px){.jrn--4{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){.jrn--4{grid-template-columns:1fr}}
+
+/* 08 里的折叠栏：文档内部插入样式（部分）—— 点开平铺，网格 rows 0fr→1fr 做开合动画 */
+.pg-fold{border:1px solid var(--line);border-radius:12px;margin:26px 0 8px;background:var(--surface);overflow:hidden}
+.pg-fold-head{width:100%;display:flex;align-items:center;gap:14px;padding:16px 20px;background:none;border:0;color:var(--fg);font:inherit;text-align:left;cursor:pointer}
+.pg-fold-head:hover{background:rgba(139,110,255,.06)}
+.pg-fold-title{font-family:var(--font-display);font-size:17px;font-weight:500;letter-spacing:.01em;white-space:nowrap}
+.pg-fold-sub{flex:1;font-size:12.5px;font-weight:300;color:var(--fg-4);line-height:1.5}
+.pg-fold-caret{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.14em;color:var(--violet);border:1px solid rgba(139,110,255,.4);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.pg-fold-caret::after{content:" ▾";display:inline-block;transition:transform .35s}
+.pg-fold.open .pg-fold-caret::after{transform:rotate(180deg)}
+.pg-fold-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.22,1,.36,1)}
+.pg-fold.open .pg-fold-body{grid-template-rows:1fr}
+.pg-fold-inner{overflow:hidden;min-height:0}
+.pg-fold-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 16px;padding:6px 20px 24px;border-top:1px solid var(--line)}
+.pg-fold-grid figure{margin:0;opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}
+.pg-fold.open .pg-fold-grid figure{opacity:1;transform:none}
+.pg-fold-grid .pg-shot{display:block;border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:zoom-in;background:#0b0b12}
+.pg-fold-grid .pg-shot img{display:block;width:100%}
+.pg-fold-grid figcaption{margin-top:8px;font-size:12.5px;font-weight:300;line-height:1.7;color:var(--fg-3)}
+.pg-fold-grid figcaption b{display:block;font-family:var(--font-display);font-size:13.5px;font-weight:500;color:var(--fg);margin-bottom:2px}
+@media(max-width:900px){.pg-fold-grid{grid-template-columns:repeat(2,1fr)}.pg-fold-head{flex-wrap:wrap}.pg-fold-sub{flex-basis:100%;order:3}}
+@media(max-width:560px){.pg-fold-grid{grid-template-columns:1fr}}
+
+/* 08 屏 8：插入样式九宫格 —— 左槽位里 3×3 缩略按钮，点一格在下面展开整页 */
+.ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ig-cell{position:relative;display:block;padding:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0b0b12;aspect-ratio:1440/1024;cursor:pointer;color:var(--fg);font:inherit;text-align:left;transition:border-color .2s,transform .2s,box-shadow .2s}
+.ig-cell img{display:block;width:100%;height:100%;object-fit:cover;opacity:.82;transition:opacity .2s}
+.ig-cell span{position:absolute;left:8px;bottom:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:#fff;background:rgba(6,6,10,.8);border:1px solid rgba(255,255,255,.18);padding:3px 8px;border-radius:999px;white-space:nowrap}
+.ig-cell:hover{border-color:var(--violet);transform:translateY(-2px)}
+.ig-cell:hover img,.ig-cell.on img{opacity:1}
+.ig-cell.on{border-color:var(--violet);box-shadow:0 0 0 2px rgba(139,110,255,.35)}
+.ig-cell.on span{background:var(--violet);border-color:var(--violet)}
+.ig-expand{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.22,1,.36,1),margin-top .3s}
+.ig-expand.open{grid-template-rows:1fr;margin-top:12px}
+.ig-expand-inner{overflow:hidden;min-height:0}
+.ig-item{display:none}
+.ig-item.on{display:block;animation:igIn .45s ease}
+@keyframes igIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.ig-item .pg-shot{display:block;border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:zoom-in;background:#0b0b12}
+.ig-item .pg-shot img{display:block;width:100%}
+.ig-item .pg-shot+.pg-shot{margin-top:12px}
+.ig-cap{margin:8px 0 0;font-size:12.5px;font-weight:300;line-height:1.7;color:var(--fg-3)}
+.ig-cap b{display:block;font-family:var(--font-display);font-size:13.5px;font-weight:500;color:var(--fg);margin-bottom:2px}
+
+/* ═══ 手机（≤760）：导航一行名字 + 一行横滑章节带；滚动后名字行收起 ═══
+   原来 520 以下是 flex-wrap，六个章节折成两行，整条导航占了 250px。 */
+@media (max-width:760px){
+  :root{--nav-top:0px}
+  .nav{padding:0}
+  .nav-inner{flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:0;height:auto;padding:0;border-radius:0 0 14px 14px}
+  .nav-left{height:44px;padding:0 var(--gutter);border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden;transition:height .25s ease,opacity .2s ease}
+  .nav-left .nav-tel{margin-left:auto}
+  .nav--scrolled .nav-left{height:0;opacity:0;border-bottom-color:transparent}
+  .tabs{order:0;width:100%;display:flex;flex-wrap:nowrap;gap:0;height:44px;align-items:stretch;overflow-x:auto;overflow-y:hidden;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:0 calc(var(--gutter) - 10px);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 28px),transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 14px,#000 calc(100% - 28px),transparent)}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab-btn{flex:none;padding:0 10px;font-size:11.5px;letter-spacing:.08em;height:100%;gap:6px}
+  .tab-btn::before{display:inline;font-size:9.5px}
+  .tab-btn.active::after{content:'';position:absolute;left:10px;right:10px;bottom:0;height:2px;background:var(--blue);border-radius:2px 2px 0 0}
+
+  /* 个人介绍标题：右侧英文小标题挪到标题下面，标题不再被挤成两行 */
+  .about-head{flex-direction:column;align-items:flex-start;gap:12px}
+  .about-h2{font-size:clamp(30px,9vw,44px);line-height:1.05}
+  .about-head>span{font-size:10px;letter-spacing:.14em;color:var(--fg-4)}
+}
+
+/* ═══ 手机：翻到底之后的「下一章」条 ═══
+   到底才出现；再往上推 150px 进度条走满就切章，点它也行。桌面不出现。 */
+.next-bar{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;justify-content:center;
+  padding:0 var(--gutter) max(12px,env(safe-area-inset-bottom));pointer-events:none;
+  transform:translateY(120%);opacity:0;transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .3s}
+@media (max-width:760px){.next-bar{display:flex}}
+.next-bar[hidden]{display:none}
+.next-bar.on{transform:none;opacity:1}
+.nb-btn{pointer-events:auto;position:relative;overflow:hidden;width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:12px 18px 13px;border-radius:14px;border:1px solid rgba(255,255,255,.16);
+  background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.05));
+  -webkit-backdrop-filter:blur(20px) saturate(1.4);backdrop-filter:blur(20px) saturate(1.4);
+  box-shadow:0 12px 40px rgba(0,0,0,.45);color:var(--fg);cursor:pointer;text-align:center}
+@supports not (backdrop-filter:blur(1px)){.nb-btn{background:rgba(20,20,26,.94)}}
+.nb-k{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-4)}
+.nb-t{font-family:var(--font-display);font-weight:400;font-size:15px;letter-spacing:.02em;color:var(--fg)}
+.nb-t::after{content:' →'}
+.nb-fill{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--blue);transform-origin:left;transform:scaleX(var(--p,0));transition:transform .08s linear}

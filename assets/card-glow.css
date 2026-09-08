@@ -15,6 +15,9 @@
   --cg-y: 50%;
   --cg-glow: 0;
   --cg-radius: 220px;
+  /* 强度倍率。小卡矮，同样的 --cg-glow 落在它身上偏淡，
+     用它单独提一档，不动 JS 每帧写入的 --cg-glow。默认 1 = 原样。 */
+  --cg-k: 1;
 
   position: relative;
   overflow: hidden;
@@ -32,8 +35,8 @@
   border-radius: inherit;
   background: radial-gradient(
     var(--cg-radius) circle at var(--cg-x) var(--cg-y),
-    rgba(var(--cg-hue), calc(var(--cg-glow) * 4.2)) 0%,
-    rgba(var(--cg-hue), calc(var(--cg-glow) * 2.0)) 32%,
+    rgba(var(--cg-hue), calc(var(--cg-glow) * 4.2 * var(--cg-k))) 0%,
+    rgba(var(--cg-hue), calc(var(--cg-glow) * 2.0 * var(--cg-k))) 32%,
     transparent 62%
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -52,7 +55,7 @@
   border-radius: inherit;
   background: radial-gradient(
     calc(var(--cg-radius) * 1.4) circle at var(--cg-x) var(--cg-y),
-    rgba(var(--cg-hue), calc(var(--cg-glow) * 0.9)) 0%,
+    rgba(var(--cg-hue), calc(var(--cg-glow) * 0.9 * var(--cg-k))) 0%,
     transparent 58%
   );
   pointer-events: none;

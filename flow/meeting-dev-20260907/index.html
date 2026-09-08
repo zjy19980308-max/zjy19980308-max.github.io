@@ -3320,8 +3320,8 @@ body .mt-solo.mt-deck__mini {
 .mt-stage-source-card.is-dragging { opacity: .42; }
 
 #grid.mt-local-stage--drag-document::after, #grid.mt-local-stage--drag-task::after { position: absolute; z-index: 60; inset: 8px; display: flex; align-items: center; justify-content: center; border: 2px dashed var(--cs-color-meeting-accent); border-radius: 24px; background: rgba(239, 242, 255, .92); color: var(--cs-color-meeting-accent); font-family: var(--font-family-cn); font-size: 15px; font-weight: var(--font-weight-semibold); pointer-events: none; }
-#grid.mt-local-stage--drag-document::after { content: '松开以在主屏打开文档'; }
-#grid.mt-local-stage--drag-task::after { content: '松开以在主屏展示任务视图'; border-color: var(--cs-color-meeting-kr-gold); background: rgba(255, 248, 226, .94); color: #a77415; }
+#grid.mt-local-stage--drag-document::after { content: '松开把文档放入会议画面'; }
+#grid.mt-local-stage--drag-task::after { content: '松开把任务放入会议画面'; border-color: var(--cs-color-meeting-kr-gold); background: rgba(255, 248, 226, .94); color: #a77415; }
 .mt-local-stage { position: absolute; z-index: 50; inset: 0; display: none; min-width: 0; min-height: 0; overflow: hidden; border-radius: 24px; background: var(--cs-color-meeting-sheet); box-shadow: inset 0 0 0 1px var(--cs-color-meeting-dashed); }
 #grid.mt-local-stage--open > .mt-main { position: relative; overflow: hidden; border-radius: 28px; isolation: isolate; }
 #grid.mt-local-stage--open .mt-local-stage { display: flex; }
@@ -3467,6 +3467,47 @@ body .mt-solo.mt-deck__mini {
 .mt-local-stage__doc-page > p { margin: 0 0 24px; }
 .mt-local-stage__doc-content { padding: 0; }
 .mt-local-stage__doc-callout { margin-top: 32px; font-size: 14px; }
+
+/* ================= 会中内容格：文档 / 任务拖进来先占一格 =================
+   owner 2026-09-08：「四宫格视图的时候先保持同样大小的卡片只不过是缩略图，
+   然后点开是一个独立弹窗进行编辑，任务也是。主讲视图拖进来，右上角有个设为主画面
+   （主持人操作）他才能到主讲位置，其他人点左侧小视图放大到主屏幕就能直接编辑。」
+   🔴 做法：内容格就是一张 .mt-tile，直接进 roster —— 宫格排布、主讲缩略带、
+   设为主画面全都走现成的 setView / layoutRows，不另造一套布局。 */
+.mt-tile--content { background: #fff; padding: 0; cursor: pointer; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .07); }
+.mt-ctile__thumb { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: #fff; }
+.mt-ctile__thumb > .mt-ctile__stage { display: flex !important; position: absolute; left: 0; top: 0; inset: auto;
+  transform-origin: 0 0; border-radius: 0; box-shadow: none; }
+.mt-ctile__veil { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(6, 6, 10, 0) 58%, rgba(6, 6, 10, .34) 74%, rgba(6, 6, 10, .82)); }
+.mt-ctile__bar { position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 2;
+  display: flex; align-items: center; gap: 8px; }
+.mt-ctile__kind { flex: none; font-size: 11px; line-height: 18px; padding: 0 8px; border-radius: 9px;
+  background: rgba(255, 255, 255, .92); color: var(--cs-color-meeting-accent, #4857e2); }
+.mt-ctile__name { flex: 1; min-width: 0; color: #fff; font-size: 13px; font-weight: 500;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px 3px rgba(0,0,0,.4); }
+.mt-ctile__top { position: absolute; right: 10px; top: 10px; z-index: 3; width: auto; }
+/* 缩略带里的那一小格：三个点跟着带子缩一号，位置和成员卡一致 */
+.mt-strip .mt-tile--content .mt-ctile__top { right: 6px; top: 6px; }
+.mt-strip .mt-tile--content .mt-ctile__bar { left: 6px; right: 6px; bottom: 6px; gap: 5px; }
+.mt-strip .mt-tile--content .mt-ctile__kind { font-size: 10px; line-height: 16px; padding: 0 6px; }
+.mt-strip .mt-tile--content .mt-ctile__name { font-size: 11px; }
+/* 进了主画面：缩略层收起，编辑器铺满，可以直接改 */
+#grid .mt-ctile__full { display: none !important; }
+#mainSlot .mt-tile--content { cursor: default; border-radius: 28px; }
+#mainSlot .mt-tile--content > .mt-ctile__full { display: flex !important; position: absolute; inset: 0; border-radius: 28px; }
+#mainSlot .mt-tile--content > .mt-ctile__thumb,
+#mainSlot .mt-tile--content > .mt-ctile__veil,
+#mainSlot .mt-tile--content > .mt-ctile__bar,
+#mainSlot .mt-tile--content > .mt-ctile__top { display: none; }
+/* 宫格态点开的独立弹窗 */
+.mt-ctile-modal { position: fixed; inset: 0; z-index: 900; display: none; align-items: center; justify-content: center;
+  background: rgba(11, 11, 16, .62); backdrop-filter: blur(3px); }
+.mt-ctile-modal.is-on { display: flex; }
+.mt-ctile-modal__box { width: min(1000px, 76vw); height: min(640px, 74vh); background: #fff; border-radius: 16px;
+  overflow: hidden; box-shadow: 0 24px 80px rgba(0, 0, 0, .45); display: flex; }
+.mt-ctile-modal .mt-local-stage { display: flex; position: relative; inset: auto; width: 100%; height: 100%;
+  border-radius: 0; box-shadow: none; }
 </style>
 </head>
 
@@ -4968,6 +5009,22 @@ body .mt-solo.mt-deck__mini {
       openMenu(items, b);
     });
   });
+  /* 🔴 owner 2026-09-08：「三个点中选择设为主讲」—— 文档/任务格上主画面的入口跟人一样，
+     在卡片右上的三个点里，不是我之前加的那颗独立按钮。
+     内容格是拖进来才建的，赶不上上面那次 querySelectorAll，所以这里留一个绑定口子。 */
+  window.__bindContentTileMenu = function (b, handlers) {
+    b.dataset.name = 'tile-' + (b.dataset.tilemenu || '');
+    trigger(b).addEventListener('click', function (e) {
+      e.stopPropagation();
+      var items = [{ type: 'title', label: b.dataset.tilemenu }];
+      items.push(isHost
+        ? { label: '设为主画面', run: function () { handlers.onMain(true); } }
+        : { label: '放大到主屏（仅我可见）', run: function () { handlers.onMain(false); } });
+      items.push({ label: '打开编辑', run: handlers.onOpen });
+      items.push({ label: '移出会议画面', run: handlers.onRemove });
+      openMenu(items, b);
+    });
+  };
 
   var grid = $('grid');
   /* ================= UC-09/10/11 视频三态 =================
@@ -5055,7 +5112,8 @@ body .mt-solo.mt-deck__mini {
     if (!peekBtn) return;
     /* 数「这一页上除主讲之外还有几个人」，不数带子里的 DOM ——
        带子在重排的中途可能是空的，数它会闪成 +0。 */
-    var n = Math.max(0, roster.length - (viewMode === 'content' ? 0 : 1));
+    var people = roster.filter(function (t) { return !t.classList.contains('mt-tile--content'); });
+    var n = Math.max(0, people.length - (viewMode === 'content' ? 0 : 1));
     peekBtn.querySelector('.mt-peek__n').textContent = n;
     peekBtn.setAttribute('aria-label', '还有 ' + n + ' 位参会人，悬浮展开');
     /* 🔴 这行原来两个分支都是 ''（写坏了 = 空转），一直靠 CSS 兜着。
@@ -5766,6 +5824,8 @@ body .mt-solo.mt-deck__mini {
   }
   function liveKeys() { return spaces[curSpace] || []; }
   window.__spaces = function () { return { list: spaces.map(function (a) { return a.slice(); }), cur: curSpace }; };
+  /* owner 2026-09-08：DIN 卡右上那颗图钉要能把卡片钉到右侧那一栏，而卡片是在另一个 IIFE 里建的 */
+  window.__pinCardRight = function (card, btn) { return pinToLeft(card, btn); };
 
   /* 唯一一处「把 spaces 落到 DOM」。别的地方只改数组，改完调它。 */
   function renderSpaces() {
@@ -7133,8 +7193,9 @@ body .mt-solo.mt-deck__mini {
     }
     var pin = document.createElement('button'); pin.type = 'button';
     pin.className = 'mt-dincard__pin';
-    pin.setAttribute('aria-label', '固定到左边协同区');
-    pin.title = '固定到左边协同区';
+    /* owner 2026-09-08：「这个按钮不是定在左侧的按钮而是定在右侧的按钮，点击就会定在右侧来」 */
+    pin.setAttribute('aria-label', '固定到右侧协同区');
+    pin.title = '固定到右侧协同区';
     pin.innerHTML = '<i class="mt-i mt-i--pin2"></i>';
     pin.addEventListener('click', function (e) { e.stopPropagation(); pinToLeft(card, pin); });
     hl.appendChild(pin);
@@ -8040,14 +8101,14 @@ body .mt-solo.mt-deck__mini {
         kind: 'document',
         label: '协作文档',
         title: '618 投放节奏与预算拆分',
-        meta: '拖到主屏打开并编辑',
+        meta: '拖进会议画面占一格，点开编辑',
         payload: { version: 1, type: 'DOCUMENT', entityId: 'local-doc-618', displayName: '618 投放节奏与预算拆分' }
       },
       {
         kind: 'task',
         label: '任务视图',
         title: '素材验收推进视图',
-        meta: '拖到主屏展示任务视图',
+        meta: '拖进会议画面占一格，点开编辑',
         payload: { version: 1, type: 'TASK_VIEW', spaceId: 'local-space-mi-tv', spaceName: '小米电视推广', projectId: 'local-project-618', projectName: '618 投放', workItemId: 'local-task-material', workItemName: '素材验收', viewId: 'board', viewName: '素材验收推进视图', viewType: 'BOARD', viewConfig: {} }
       }
     ];
@@ -8096,22 +8157,22 @@ body .mt-solo.mt-deck__mini {
     }
     function taskMarkup(title) { return '<div class="mt-local-stage__content">' + '<header class="mt-local-stage__head"><div class="mt-local-stage__identity"><span class="mt-local-stage__badge">任务视图</span><span class="mt-local-stage__path"><small>小米电视推广</small><i>/</i><small>618 投放</small><i>/</i><small>素材验收</small></span><strong class="mt-local-stage__title"></strong><span class="mt-local-stage__views" role="tablist"><button type="button" class="is-active" data-stage-view="list">列表</button><button type="button" data-stage-view="kanban">看板</button></span></div><button class="mt-local-stage__close" type="button" aria-label="关闭主屏任务视图">×</button></header>' + '<div class="mt-local-stage__frame-wrap"><iframe class="mt-local-stage__frame" title="任务列表" data-base="1043" data-h="822" src="../task-20260907/list.html#embed=1"></iframe></div>' + '</div>'; }
 function detailMarkup(title) { return '<div class="mt-local-stage__content">' + '<header class="mt-local-stage__head"><div class="mt-local-stage__identity"><button type="button" class="mt-local-stage__back" data-stage-back>← 返回列表</button><span class="mt-local-stage__badge">任务</span><strong class="mt-local-stage__title"></strong></div><button class="mt-local-stage__close" type="button" aria-label="关闭任务详情">×</button></header>' + '<div class="mt-local-stage__frame-wrap"><iframe class="mt-local-stage__frame" title="任务详情" data-base="1297" data-h="800" src="../task-20260907/detail.html#title=' + encodeURIComponent(title) + '"></iframe></div>' + '</div>'; }
-function fitStageFrames() { localStage.querySelectorAll('.mt-local-stage__frame').forEach(function (f) { var wrap = f.parentNode, W = wrap.clientWidth, H = wrap.clientHeight, base = +f.dataset.base || 1043, bh = +f.dataset.h || 800; if (!W || !H) return; var k = Math.min(W / base, 1); f.style.width = base + 'px'; f.style.height = Math.max(bh, Math.ceil(H / k)) + 'px'; f.style.transform = 'scale(' + k + ')'; }); }
+function fitStageFrames() { document.querySelectorAll('.mt-local-stage__frame').forEach(function (f) { var wrap = f.parentNode, W = wrap.clientWidth, H = wrap.clientHeight, base = +f.dataset.base || 1043, bh = +f.dataset.h || 800; if (!W || !H) return; var k = Math.min(W / base, 1); f.style.width = base + 'px'; f.style.height = Math.max(bh, Math.ceil(H / k)) + 'px'; f.style.transform = 'scale(' + k + ')'; }); }
 setInterval(fitStageFrames, 800); window.addEventListener('resize', fitStageFrames);
 var lastTaskSource = null;
 window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t) return;
   if (m.t === 'open-task') { present({ kind: 'detail', title: m.title || '任务', label: '任务' }, { skipConversation: true }); }
   if (m.t === 'close-task') { present(lastTaskSource || sourceCards[1], { skipConversation: true }); if (m.saved) say('任务已提交'); } });
 
-    function bindDocumentProposal(source) {
-      var toolbar = localStage.querySelector('.mt-local-proposal-toolbar');
-      var page = localStage.querySelector('.mt-local-stage__doc-page');
+    function bindDocumentProposal(host, source, again) {
+      var toolbar = host.querySelector('.mt-local-proposal-toolbar');
+      var page = host.querySelector('.mt-local-stage__doc-page');
       if (!toolbar || !page) return;
       var operation = 0;
       function selectOperation(next) {
         operation = (next + 2) % 2;
         toolbar.querySelector('[data-proposal-position]').textContent = (operation + 1) + '/2';
-        localStage.querySelectorAll('[data-proposal-operation]').forEach(function (item) {
+        host.querySelectorAll('[data-proposal-operation]').forEach(function (item) {
           item.classList.toggle('is-current', Number(item.dataset.proposalOperation) === operation);
         });
       }
@@ -8125,42 +8186,187 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
         });
       });
       toolbar.querySelector('[data-proposal-reject]').addEventListener('click', function () {
-        present(source, { skipConversation: true }); say('已拒绝 Nota 的修改建议，文档保持原样');
+        again({ documentProposalState: null }); say('已拒绝 Nota 的修改建议，文档保持原样');
       });
       toolbar.querySelector('[data-proposal-dismiss]').addEventListener('click', function () {
-        present(source, { skipConversation: true }); say('已关闭 Nota 的修改建议');
+        again({ documentProposalState: null }); say('已关闭 Nota 的修改建议');
       });
       toolbar.querySelector('[data-proposal-accept]').addEventListener('click', function (event) {
         var button = event.currentTarget;
         button.disabled = true; button.textContent = '校验中…';
         setTimeout(function () {
-          if (!localStage.contains(button)) return;
-          present(source, { documentProposalState: 'accepted' }); say('修改已应用到当前文档');
+          if (!host.contains(button)) return;
+          again({ documentProposalState: 'accepted' }); say('修改已应用到当前文档');
         }, 420);
       });
     }
+    /* 🔴 一处渲染，三个去处：会议主屏（localStage）、内容格的主画面态、宫格点开的独立弹窗。
+       原来这段是写死在 present() 里的，三个地方要同一套编辑器，所以抽出来按容器渲染。
+       baseClass 必须保留 —— 容器自己的类（.mt-ctile__full / .mt-ctile__stage）
+       是 CSS 判断「缩略还是铺满」的唯一依据，直接覆盖 className 会把它冲掉。 */
+    function renderStage(host, source, options) {
+      options = options || {};
+      host.className = (options.baseClass ? options.baseClass + ' ' : '') + 'mt-local-stage ' + typeClass(source.kind);
+      host.innerHTML = source.kind === 'detail' ? detailMarkup(source.title) : source.kind === 'task' ? taskMarkup(source.title) : documentMarkup(source.title, options.documentProposalState);
+      if (source.kind === 'task') lastTaskSource = source;
+      host.querySelectorAll('[data-stage-view]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var f = host.querySelector('.mt-local-stage__frame');
+          host.querySelectorAll('[data-stage-view]').forEach(function (x) { x.classList.toggle('is-active', x === b); });
+          if (b.dataset.stageView === 'kanban') { f.dataset.base = 1265; f.dataset.h = 784; f.src = '../task-20260907/kanban.html#embed=1'; }
+          else { f.dataset.base = 1043; f.dataset.h = 822; f.src = '../task-20260907/list.html#embed=1'; }
+          fitStageFrames();
+          if (!options.quiet) say(b.dataset.stageView === 'kanban' ? '已切换为看板' : '已切换为列表');
+        });
+      });
+      var backBtn = host.querySelector('[data-stage-back]');
+      if (backBtn) backBtn.addEventListener('click', function () { renderStage(host, lastTaskSource || sourceCards[1], options); });
+      setTimeout(fitStageFrames, 0);
+      host.querySelectorAll('.mt-local-stage__title, .mt-local-stage__doc-page h2').forEach(function (node) { node.textContent = source.title; });
+      var closeBtn = host.querySelector('.mt-local-stage__close');
+      if (closeBtn) closeBtn.addEventListener('click', function (event) {
+        event.stopPropagation();
+        if (options.onClose) options.onClose(); else { closeStage(); say('已返回会议主屏'); }
+      });
+      var openInNewTab = host.querySelector('.mt-local-stage__open');
+      if (openInNewTab) openInNewTab.addEventListener('click', function () { say('本地演示：将在主窗口的新标签页打开文档'); });
+      /* 重渲染要落回**同一个容器**：弹窗里采纳就在弹窗里变，主画面里采纳就在主画面里变 */
+      function again(extra) {
+        var o = {}; var k;
+        for (k in options) o[k] = options[k];
+        for (k in extra) o[k] = extra[k];
+        renderStage(host, source, o);
+      }
+      host.__again = again;
+      if (options.documentProposalState === 'pending') bindDocumentProposal(host, source, again);
+    }
+    /* 「在主屏展示」这一路不变：卡片上的按钮写的就是主屏，引导和缩略图循环都靠它。
+       变的是**拖进来**那一路 —— 见 dropIn()。 */
     function present(source, options) {
       options = options || {};
       clearDropState();
       if (!grid.classList.contains('mt-local-stage--open')) previousView = { mode: viewMode, tile: mainTile };
       setView('content');
       grid.classList.add('mt-local-stage--open');
-      localStage.className = 'mt-local-stage ' + typeClass(source.kind);
-      localStage.innerHTML = source.kind === 'detail' ? detailMarkup(source.title) : source.kind === 'task' ? taskMarkup(source.title) : documentMarkup(source.title, options.documentProposalState); if (source.kind === 'task') lastTaskSource = source;
-  localStage.querySelectorAll('[data-stage-view]').forEach(function (b) { b.addEventListener('click', function () { var f = localStage.querySelector('.mt-local-stage__frame'); localStage.querySelectorAll('[data-stage-view]').forEach(function (x) { x.classList.toggle('is-active', x === b); }); if (b.dataset.stageView === 'kanban') { f.dataset.base = 1265; f.dataset.h = 784; f.src = '../task-20260907/kanban.html#embed=1'; } else { f.dataset.base = 1043; f.dataset.h = 822; f.src = '../task-20260907/list.html#embed=1'; } fitStageFrames(); say(b.dataset.stageView === 'kanban' ? '已切换为看板' : '已切换为列表'); }); });
-  var backBtn = localStage.querySelector('[data-stage-back]'); if (backBtn) backBtn.addEventListener('click', function () { present(lastTaskSource || sourceCards[1], { skipConversation: true }); });
-  setTimeout(fitStageFrames, 0);
-      localStage.querySelectorAll('.mt-local-stage__title, .mt-local-stage__doc-page h2').forEach(function (node) { node.textContent = source.title; });
-      localStage.querySelector('.mt-local-stage__close').addEventListener('click', function (event) {
-        event.stopPropagation(); closeStage(); say('已返回会议主屏');
-      });
-      var openInNewTab = localStage.querySelector('.mt-local-stage__open');
-      if (openInNewTab) openInNewTab.addEventListener('click', function () { say('本地演示：将在主窗口的新标签页打开文档'); });
-      if (options.documentProposalState === 'pending') bindDocumentProposal(source);
+      activeSurface = localStage;
+      renderStage(localStage, source, options);
       say(source.kind === 'task' ? '任务视图已在主屏展示' : '文档已在主屏打开');
-      if (!options.skipConversation && !options.documentProposalState && window.__meetingNotaDemo) {
+    }
+
+    /* ---- 内容格：拖进来先占一格，不抢主屏（owner 2026-09-08）---- */
+    var contentTiles = [], activeSurface = null;
+    function fitThumbs() {
+      contentTiles.forEach(function (t) {
+        var wrap = t.querySelector('.mt-ctile__thumb'); if (!wrap) return;
+        var st = wrap.firstElementChild; if (!st) return;
+        var W = wrap.clientWidth, H = wrap.clientHeight; if (!W || !H) return;
+        /* 缩略图取「铺满裁切」不是「装得下」：格子是 4:3 一类的方块，
+           整页缩进去只有指甲盖大，看不出是文档还是任务。 */
+        var bw = 1200, bh = 780, k = Math.max(W / bw, H / bh);
+        st.style.width = bw + 'px'; st.style.height = bh + 'px'; st.style.transform = 'scale(' + k + ')';
+      });
+    }
+    setInterval(fitThumbs, 800); window.addEventListener('resize', fitThumbs);
+
+    var modal = document.createElement('div');
+    modal.className = 'mt-ctile-modal';
+    modal.innerHTML = '<div class="mt-ctile-modal__box"><section class="mt-local-stage"></section></div>';
+    document.body.appendChild(modal);
+    var modalTile = null;
+    function closeModal() {
+      if (!modal.classList.contains('is-on')) return;
+      modal.classList.remove('is-on');
+      modal.querySelector('.mt-local-stage').replaceChildren();
+      /* 在弹窗里改过的内容要回写到格子的缩略图上，不然缩略图停在旧样子 */
+      if (modalTile && modalTile.isConnected) { refreshThumb(modalTile); modalTile = null; }
+      activeSurface = null;
+      say('已关闭');
+    }
+    function openModal(source, tile) {
+      var host = modal.querySelector('.mt-local-stage');
+      modalTile = tile || null;
+      activeSurface = host;
+      renderStage(host, source, { quiet: true, onClose: closeModal });
+      modal.classList.add('is-on');
+      setTimeout(fitStageFrames, 0);
+      say(source.kind === 'detail' ? '任务详情已在独立窗口打开，可直接改负责人和截止时间'
+        : source.kind === 'task' ? '任务已在独立窗口打开，可直接编辑' : '文档已在独立窗口打开，可直接编辑');
+    }
+    function refreshThumb(tile) {
+      var stage = tile.querySelector('.mt-ctile__stage');
+      if (stage) { renderStage(stage, tile.__source, { baseClass: 'mt-ctile__stage', quiet: true, onClose: function () {} }); setTimeout(fitThumbs, 0); }
+    }
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+
+    function makeMain(tile, byHost) {
+      activeSurface = tile.querySelector('.mt-ctile__full');
+      renderStage(tile.querySelector('.mt-ctile__full'), tile.__source, {
+        baseClass: 'mt-ctile__full', quiet: true,
+        onClose: function () { setView('grid'); say('已放回会议画面'); }
+      });
+      setView('speaker', tile);
+      setTimeout(fitStageFrames, 0);
+      /* 主持人那一下是全场生效，其他人那一下只是自己放大 —— 本地演示只能靠提示把这层说清楚 */
+      say(byHost ? '已设为主画面，所有人可见' : '已在你的主屏放大，仅你可见');
+    }
+
+    function addContentTile(source, options) {
+      var tile = document.createElement('div');
+      tile.className = 'mt-tile mt-tile--content';
+      tile.dataset.name = source.title;
+      tile.tabIndex = 0;
+      tile.setAttribute('aria-label', (source.kind === 'task' ? '任务' : '文档') + '：' + source.title);
+      var kindLabel = source.kind === 'task' ? '任务' : source.kind === 'detail' ? '任务详情' : '文档';
+      tile.innerHTML = '<div class="mt-ctile__thumb"><section class="mt-ctile__stage"></section></div>' +
+        '<div class="mt-ctile__veil"></div>' +
+        '<div class="mt-tile__top mt-ctile__top"><button class="mt-glass" type="button" data-tilemenu="' + escapeText(source.title) + '" aria-label="更多"><i class="mt-i mt-i--dots-v"></i></button></div>' +
+        '<div class="mt-ctile__bar"><span class="mt-ctile__kind">' + kindLabel + '</span>' +
+        '<span class="mt-ctile__name">' + escapeText(source.title) + '</span></div>' +
+        '<div class="mt-ctile__full"></div>';
+      tile.__source = source;
+      renderStage(tile.querySelector('.mt-ctile__stage'), source, { baseClass: 'mt-ctile__stage', quiet: true, onClose: function () {} });
+      if (window.__bindContentTileMenu) window.__bindContentTileMenu(tile.querySelector('[data-tilemenu]'), {
+        onMain: function (byHost) { makeMain(tile, byHost); },
+        onOpen: function () { openModal(tile.__source, tile); },
+        onRemove: function () { removeContentTile(tile); }
+      });
+      tile.addEventListener('click', function (e) {
+        if (e.target.closest('.mt-ctile__full')) return;      /* 主画面态里面是编辑区，别再当「点格子」 */
+        if (viewMode === 'grid' || viewMode === 'cast') openModal(tile.__source, tile);
+        else makeMain(tile, false);
+      });
+      tile.addEventListener('keydown', function (e) {
+        if (e.target !== tile || (e.key !== 'Enter' && e.key !== ' ')) return;
+        e.preventDefault(); tile.click();
+      });
+      contentTiles.push(tile);
+      tile.__removed = false;
+      /* 🔴 不能 push 到队尾：宫格一屏就 4 格、缩略带也只露得出几个，
+         排在队尾等于「拖进来了但看不见」。插在主持人后面那一格（Nota 入会也是插这儿），
+         再把画面滚回第一屏 —— 松手就能看到它。 */
+      roster.splice(Math.min(1, roster.length), 0, tile);
+      if (viewMode === 'grid' || viewMode === 'cast') layoutRows(); else setView(viewMode, mainTile);
+      if (gridScroll) gridScroll.scrollTop = 0;
+      if (strip) strip.scrollTop = 0;
+      setTimeout(fitThumbs, 0);
+      /* 内容进会议的这一刻，转写接着 Nota 的对话往下走（原来挂在「上主屏」那一步） */
+      if (!(options && options.skipConversation) && window.__meetingNotaDemo && (source.kind === 'task' || source.kind === 'document')) {
         window.__meetingNotaDemo.start(source);
       }
+      return tile;
+    }
+    function removeContentTile(tile) {
+      var i = contentTiles.indexOf(tile); if (i >= 0) contentTiles.splice(i, 1);
+      var j = roster.indexOf(tile); if (j >= 0) roster.splice(j, 1);
+      if (tile.parentNode) tile.parentNode.removeChild(tile);
+      if (mainTile === tile) setView('grid'); else if (viewMode === 'grid' || viewMode === 'cast') layoutRows(); else setView(viewMode, mainTile);
+      say('已从会议画面移出');
+    }
+    function dropIn(source, options) {
+      var tile = addContentTile(source, options);
+      if (viewMode === 'grid' || viewMode === 'cast') say('已放入会议画面，点开卡片编辑');
+      else say(isHost ? '已放入左侧，点右上角「设为主画面」上主屏' : '已放入左侧，点它可放大到主屏编辑');
+      return tile;
     }
     function readPayload(event) {
       var transfer = event.dataTransfer;
@@ -8180,20 +8386,31 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
       card.className = 'mt-dincard mt-stage-source-card mt-stage-source-card--' + source.kind;
       card.draggable = true;
       card.tabIndex = 0;
-      card.setAttribute('aria-label', source.label + '：' + source.title + '，拖到主屏展示');
+      card.setAttribute('aria-label', source.label + '：' + source.title + '，拖进会议画面');
       card.title = source.meta;
-      card.innerHTML = '<div class="mt-dincard__head"><div class="mt-dincard__headL"><span class="mt-dincard__kind">' + source.label + '</span><button type="button" class="mt-dincard__pin" data-stage-open aria-label="置于会议主屏" title="置于会议主屏"><i class="mt-i mt-i--pin2"></i></button></div>' +
+      card.innerHTML = '<div class="mt-dincard__head"><div class="mt-dincard__headL"><span class="mt-dincard__kind">' + source.label + '</span><button type="button" class="mt-dincard__pin" data-stage-pin aria-label="固定到右侧协同区" title="固定到右侧协同区"><i class="mt-i mt-i--pin2"></i></button></div>' +
         (source.kind === 'task' ? '<img class="mt-dincard__ava" src="' + MEM + 'p4.png" alt="负责人">' : '') + '</div>' +
         '<p class="mt-dincard__body" data-stage-open>' + escapeText(source.title) + '</p>' +
         '<div class="mt-dincard__foot"><div class="mt-dincard__chips">' +
           (source.kind === 'document' ? '<button type="button" class="mt-chip28 mt-chip28--txt" data-stage-open aria-label="打开文档" title="打开文档">文</button>' : '') +
           '<button type="button" class="mt-chip28 mt-chip28--lock" data-stage-info="当前内容仅会议成员可访问" aria-label="查看访问权限" title="会议成员可访问"><i class="cses-file-lock-01"></i></button>' +
           '<button type="button" class="mt-chip28 mt-chip28--ava" data-stage-info="李书萍、何炜正在协作" aria-label="查看协作成员" title="协作成员"><img src="' + MEM + 'p6.png" alt=""></button>' +
-          '<button type="button" class="mt-chip28 mt-chip28--tv" data-stage-open aria-label="在主屏展示" title="在主屏展示"><i class="cses-tv"></i></button>' +
+          '<button type="button" class="mt-chip28 mt-chip28--tv" data-stage-open aria-label="放入会议画面" title="放入会议画面"><i class="cses-tv"></i></button>' +
           (source.kind === 'task' ? '<button type="button" class="mt-chip28 mt-chip28--all" data-stage-info="共享范围：全体参会成员" aria-label="全体参会成员" title="全体参会成员">全体</button>' : '') +
         '</div><button type="button" class="mt-dincard__share" data-stage-info="本地演示：已转发这条卡片" aria-label="转发" title="转发"><i class="cses-share"></i></button></div>';
+      /* 🔴 owner 2026-09-08：「任务视图仍占满主屏」—— 卡片上的按钮和拖拽必须是同一件事：
+         先进会议画面占一格。上主屏只剩两条路：三个点里「设为主画面」，或点小格放大。 */
       card.querySelectorAll('[data-stage-open]').forEach(function (button) {
-        button.addEventListener('click', function (event) { event.stopPropagation(); present(source); });
+        var justOpen = button.classList.contains('mt-chip28--txt');   /* 「文」= 只打开看看，不占格子 */
+        button.addEventListener('click', function (event) {
+          event.stopPropagation();
+          if (justOpen) openModal(source); else dropIn(source);
+        });
+      });
+      var pinBtn = card.querySelector('[data-stage-pin]');
+      if (pinBtn) pinBtn.addEventListener('click', function (event) {
+        event.stopPropagation();
+        if (window.__pinCardRight) { window.__pinCardRight(card, pinBtn); say('已固定到右侧协同区'); }
       });
       card.querySelectorAll('[data-stage-info]').forEach(function (button) {
         button.addEventListener('click', function (event) { event.stopPropagation(); say(button.dataset.stageInfo); });
@@ -8210,7 +8427,7 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
       card.addEventListener('keydown', function (event) {
         if (event.target !== card) return;
         if (event.key !== 'Enter' && event.key !== ' ') return;
-        event.preventDefault(); present(source);
+        event.preventDefault(); dropIn(source);
       });
       return card;
     }
@@ -8236,14 +8453,34 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
       var source = readPayload(event);
       dragged = null; clearDropState();
       if (!source) return;
-      event.preventDefault(); event.stopPropagation(); present(source);
+      event.preventDefault(); event.stopPropagation(); dropIn(source);
     });
-    document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && grid.classList.contains('mt-local-stage--open')) closeStage(); });
+    document.addEventListener('keydown', function (event) { if (event.key !== 'Escape') return; if (modal.classList.contains('is-on')) { closeModal(); return; } if (grid.classList.contains('mt-local-stage--open')) closeStage(); });
     window.__meetingLocalStage = {
       close: closeStage,
       state: function () { return grid.classList.contains('mt-local-stage--open'); },
-      presentDocumentProposal: function (source) { present(source || sourceCards[0], { documentProposalState: 'pending' }); },
-      presentDetail: function (title) { present({ kind: 'detail', title: title || '任务', label: '任务' }, { skipConversation: true }); }
+      /* 这份内容还在会议里吗：占着一格 / 弹窗开着 / 或还在主屏上 */
+      alive: function (source) {
+        if (!source) return false;
+        if (contentTiles.some(function (t) { return t.isConnected && t.__source && t.__source.title === source.title; })) return true;
+        if (modal.classList.contains('is-on')) return true;
+        return grid.classList.contains('mt-local-stage--open');
+      },
+      /* 建议落回**当前正在看这份文档的那个面**：弹窗开着就在弹窗里标，格子在主画面就在主画面里标 */
+      presentDocumentProposal: function (source) {
+        var s = source || sourceCards[0];
+        if (activeSurface && activeSurface.isConnected) { renderStage(activeSurface, s, { quiet: true, documentProposalState: 'pending', onClose: activeSurface === modal.querySelector('.mt-local-stage') ? closeModal : undefined }); return; }
+        /* 没人打开它：建议标在那一格的缩略图上并提示一句 —— 绝不许自己弹上主屏 */
+        var tile = contentTiles.filter(function (t) { return t.__source && t.__source.title === s.title; })[0];
+        if (tile) {
+          var stage = tile.querySelector('.mt-ctile__stage');
+          if (stage) { renderStage(stage, s, { baseClass: 'mt-ctile__stage', quiet: true, documentProposalState: 'pending', onClose: function () {} }); setTimeout(fitThumbs, 0); }
+          say('Nota 在文档上标了 2 处修改，点开这一格查看'); return;
+        }
+        present(s, { documentProposalState: 'pending' });
+      },
+      presentDetail: function (title) { openModal({ kind: 'detail', title: title || '任务', label: '任务' }); },
+      dropIn: dropIn, openModal: openModal, contentTiles: function () { return contentTiles.slice(); }
     };
   })();
 
@@ -8329,7 +8566,9 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
           ];
       turns.forEach(function (turn, index) {
         timers.push(setTimeout(function () {
-          if (activeSequence !== sequence || !window.__meetingLocalStage.state()) return;
+          /* 🔴 原来问的是「主屏还开着吗」。内容不再上主屏了，问法要跟着改：
+             只要这份内容还在会议画面里（一格、弹窗、或主讲位），剧本就该继续。 */
+          if (activeSequence !== sequence || !window.__meetingLocalStage.alive(source)) return;
           stopFeed();
           addDemoTurn(turn[0], turn[1], turn[2], turn[3]);
           if (index !== turns.length - 1) return;
@@ -8339,7 +8578,6 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
             addTaskProposal();
           } else {
             window.__meetingLocalStage.presentDocumentProposal(source);
-            say('Nota 文档修改建议已在主屏打开');
           }
         }, [800, 2400, 5000][index]));
       });
@@ -8350,6 +8588,6 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
 
 })();
 </script>
-<script src="../guide.js?v=815acc0b"></script>
+<script src="../guide.js?v=06c1ac79"></script>
 </body>
 </html>

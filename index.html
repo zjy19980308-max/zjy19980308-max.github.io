@@ -8,16 +8,16 @@
 <title>张竞元 / PORTFOLIO</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="stylesheet" href="assets/line-sidebar.css?v=69b4991e">
-<link rel="stylesheet" href="assets/card-glow.css?v=680df9ff">
+<link rel="stylesheet" href="assets/card-glow.css?v=fc49c41b">
 <link rel="stylesheet" href="assets/drift-wall.css?v=933478a3">
 <link rel="stylesheet" href="assets/gradual-blur.css?v=74580aae">
 <link rel="stylesheet" href="assets/metaballs.css?v=00eaafbc">
-<link rel="stylesheet" href="assets/cs-hub.css?v=9df3df12">
+<link rel="stylesheet" href="assets/cs-hub.css?v=46f841cb">
 <link rel="stylesheet" href="assets/dark-veil.css?v=27fb9132">
-<link rel="stylesheet" href="assets/bento.css?v=80aa75bb">
-<link rel="stylesheet" href="assets/lanyard.css?v=4c426aeb">
+<link rel="stylesheet" href="assets/bento.css?v=2b466175">
+<link rel="stylesheet" href="assets/lanyard.css?v=8457d0bc">
 <link rel="stylesheet" href="assets/fonts.css?v=d0647496">
-<link rel="stylesheet" href="assets/system.css?v=39eba33c">
+<link rel="stylesheet" href="assets/system.css?v=421a3058">
 <style>
   /* 待填标记 —— 全站统一，填完删掉这个 span 即可 */
   .todo{color:#FF65A3;border-bottom:1px dashed rgba(255,101,163,.5);white-space:nowrap}
@@ -123,6 +123,27 @@
     width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;line-height:1;flex-shrink:0;
     transition:color .2s,border-color .2s}
   .doc-x:hover{color:#fff;border-color:#fff}
+  /* 活页的引导条：画在蒙层顶栏（页面外的空白），收起态绝不压住画面。
+     展开的步骤清单是用户主动点出来的，才允许浮在画面上。 */
+  .doc-guide{margin-left:auto;margin-right:14px;position:relative;display:flex;align-items:center;gap:8px;
+    font-size:12.5px;color:rgba(255,255,255,.9);white-space:nowrap}
+  .doc-guide .gk{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;color:var(--violet);
+    border:1px solid rgba(139,110,255,.45);border-radius:4px;padding:1px 6px}
+  .doc-guide b{font-weight:500;color:#fff}
+  .doc-guide .gn{font-family:var(--font-mono);font-size:11px;color:var(--violet)}
+  .doc-guide button{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.06);color:#fff;
+    border-radius:7px;padding:4px 10px;font:inherit;font-size:12px;cursor:pointer;transition:background .2s,border-color .2s}
+  .doc-guide button:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.4)}
+  .doc-guide button.pri{background:#fff;color:#0b0b10;border-color:#fff}
+  .doc-guide button:disabled{opacity:.45;cursor:default}
+  .doc-guide ol{display:none;position:absolute;right:0;top:calc(100% + 10px);z-index:5;width:340px;margin:0;padding:12px 14px;
+    list-style:none;background:#101018;border:1px solid rgba(255,255,255,.16);border-radius:10px;
+    box-shadow:0 16px 44px rgba(0,0,0,.5);white-space:normal}
+  .doc-guide.open ol{display:block}
+  .doc-guide li{display:flex;gap:8px;padding:4px 0;line-height:1.7;color:rgba(255,255,255,.5)}
+  .doc-guide li i{font-style:normal;font-family:var(--font-mono);font-size:10px;width:14px;flex:none;color:rgba(255,255,255,.35)}
+  .doc-guide li.cur{color:#fff}.doc-guide li.cur i{color:var(--violet)}
+  .doc-guide li.done{color:rgba(255,255,255,.75)}.doc-guide li.done i{color:#3ecf8e}
   .doc-frame{flex:1;min-height:0;background:var(--surface-2);border:1px solid var(--line);
     border-radius:12px;overflow:hidden;position:relative}
   .doc-frame iframe{width:100%;height:100%;border:0;display:block}
@@ -169,6 +190,33 @@
     background:rgba(6,6,10,.86);border:1px solid rgba(255,255,255,.22);color:#fff;padding:6px 14px;border-radius:999px;
     font-family:var(--font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase}
   .live:hover .si-lbl{background:var(--violet);border-color:var(--violet)}
+  /* 02 图 01：三张「现在 · 会后」页面并排 + 下方 NOTA 的做法 */
+  .trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .trio-it{min-width:0;display:flex;flex-direction:column;gap:10px}
+  .trio-it .pg-shot{display:block;border:1px solid var(--line);border-radius:10px;overflow:hidden;cursor:zoom-in;background:#0b0b12}
+  .trio-it .pg-shot img{display:block;width:100%;border:0;border-radius:0}
+  .trio-it b{font-size:14px;font-weight:500;color:var(--fg-2);margin-top:2px}
+  .trio-it p{margin:0;font-size:12.5px;font-weight:300;line-height:1.8;color:var(--fg-3)}
+  .trio-after{margin-top:18px;padding:16px 18px;border:1px solid rgba(122,87,208,.35);border-radius:10px;background:rgba(122,87,208,.06);display:flex;flex-direction:column;gap:8px}
+  .trio-after p{margin:0;font-size:13.5px;font-weight:300;line-height:1.9;color:var(--fg-3);max-width:80ch}
+  .trio-after p strong{color:var(--fg-2);font-weight:500}
+  @media(max-width:900px){.trio{grid-template-columns:1fr}}
+  /* 图 04 思维导图：左边是 AI 的判定依据，右边是四种归属范围 */
+  .mindmap{width:100%;height:auto;display:block;font-family:var(--font-cn,inherit)}
+  .mindmap .mm-n{fill:rgba(255,255,255,.022);stroke:var(--line);stroke-width:1}
+  .mindmap .mm-n--v{fill:rgba(139,110,255,.05);stroke:rgba(139,110,255,.3)}
+  .mindmap .mm-c{fill:rgba(139,110,255,.11);stroke:var(--violet);stroke-width:1.5}
+  .mindmap .mm-l{fill:none;stroke:rgba(255,255,255,.2);stroke-width:1.2}
+  .mindmap .mm-l--v{stroke:rgba(139,110,255,.45)}
+  .mindmap .mm-t{font-size:14px;font-weight:500;fill:var(--fg-2)}
+  .mindmap .mm-t--v{fill:var(--violet)}
+  .mindmap .mm-d{font-size:12px;font-weight:300;fill:var(--fg-4)}
+  .mindmap .mm-sep{font-size:12px;fill:var(--fg-5,rgba(255,255,255,.28))}
+  .mindmap .mm-ct{font-size:15px;font-weight:500;fill:#fff}
+  .mindmap .mm-cd{font-size:12px;font-weight:300;fill:var(--fg-3)}
+  .mindmap .mm-h{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;fill:var(--fg-4)}
+  .mindmap .mm-h--v{fill:var(--violet)}
+  .mindmap .mm-foot{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
   .live-hint{margin:8px 0 0;font-size:12px;font-weight:300;line-height:1.7;color:var(--fg-4)}
   .live-hint b{color:var(--violet);font-weight:500}
   /* 没有对应页面的位置：红框占位，不装有 */
@@ -378,12 +426,12 @@
             <span class="bento-tag">B 端 · 内容协作</span>
           </div>
           <ul class="bento-list">
-            <li>同步块改一处，其他位置跟着变，所以每个块上挂着「被使用 12 次」</li>
-            <li>用户要确认的不是「我改得对不对」，是「我知不知道它会影响多少地方」</li>
+            <li>平台里唯一一个所有业务线都会经过的地方，像企业的中枢神经</li>
+            <li>会议、任务、知识库的产物都挂在文档上，模块之间通过它互相调用</li>
           </ul>
           <div class="bento-foot">
             <h3 class="bento-title">CSES 文档库</h3>
-            <p class="bento-desc">不是网盘，是平台内部协同的载体</p>
+            <p class="bento-desc">不是网盘，是各个模块的连接器</p>
           </div>
           <span class="bento-num">04</span>
         </a>
@@ -394,7 +442,7 @@
           </div>
           <ul class="bento-list">
             <li>一套设计系统跑通组织权限、文档库、薪酬、考勤、招聘、人事</li>
-            <li>用户抱怨「选不到人」，根因在权限模型：≥120 个岗位实例 vs 平铺 10 个</li>
+            <li>岗位定组织位置、角色定权限集合，两条线叠起来适配不同公司的组织习惯</li>
           </ul>
           <div class="bento-foot">
             <h3 class="bento-title">CSES 企业协作平台</h3>
@@ -500,6 +548,15 @@
     <div class="lanyard" id="lanyard" aria-hidden="true">
       <span class="lanyard-hint">拖动工牌 · Drag the badge</span>
 
+    </div>
+
+    <!-- 静态工牌：手机 / 不跑 three 的机器（badge2d.js 挂上时去掉 hidden） -->
+    <div class="badge2d" id="badge2d" hidden aria-label="工牌">
+      <div class="b2-stage">
+        <div class="b2-strap"></div><div class="b2-clip"></div>
+        <div class="b2-card"><div class="b2-gloss"></div></div>
+      </div>
+      <div class="b2-hint"><b>工牌</b><span>倾斜手机 · 长按保存 · 微信扫一扫</span><button type="button" class="b2-ask" hidden>开启感应</button></div>
     </div>
   </div>
 </section>
@@ -881,7 +938,7 @@
     <div class="intro-grid">
       <div>
         <p>一个从零设计的会议产品，是<strong>公司的第一个 AI 原生产品</strong>。会议不再只是通话：会中直接产出任务、文档与 KR，会后不需要二次录入。</p>
-        <p class="ig-h">现在开会的状况</p>
+        <p class="ig-h">之前开会的状况</p>
         <p>会议内容的整理集中在会后完成，整理结果的查看率低，会议记录最终成为列表中一条无人查看的条目。<br>
           会议进行时，多数参会人同时处理其他工作，参与度低。<br>
           会中需要共同修改文件时，流程为：上传附件、各自下载、各自修改、会后集中整合。</p>
@@ -927,7 +984,7 @@
           <strong>直接生成任务框架</strong>，责任人与事项均已填写，仅待本人会后确认。<span style="color:var(--fg-4)">→ 设计点 4</span></div></div>
       <div class="pain-item"><div class="pi-n">03 · 转写仅为一条字幕，无法回溯</div>
         <div class="pi-t">无法辨认发言人，内容不可复制，产物找不到出处</div>
-        <div class="pi-d">现在的会议工具，实时字幕位于底部窄栏，仅按账号显示，<strong>无法辨认发言人</strong>；内容不可复制；会中任务均挂在主持人名下。
+        <div class="pi-d">之前的会议工具，实时字幕位于底部窄栏，仅按账号显示，<strong>无法辨认发言人</strong>；内容不可复制；会中任务均挂在主持人名下。
           会后无法追溯「这句话是谁说的、这条任务依据什么产生」。<br>
           NOTA 将转写做成<strong>可回溯的现场记录</strong>：按声纹区分发言人，未识别者标为「说话人 1、说话人 2」；
           内容可直接复制；识别到日期可一键生成日程；会中生成的任务与会议以卡片呈现，
@@ -935,8 +992,23 @@
     </div>
 
 
-    <figure class="fig" style="--ar:2.4">
-      <div class="fig-slot"><span class="fig-no">图 01</span><b>产出物被推迟到会后</b><em>一条会前 / 会中 / 会后的时间轴：三条问题的产物全部集中在「会后」，会中为空</em></div>
+    <figure class="fig trio-wrap">
+      <div class="trio">
+        <div class="trio-it"><span class="ba-tag old">BEFORE · 之前 · 会后</span>
+          <a class="pg-shot" href="assets/meeting/now-after-detail.webp" data-title="之前 · 会后的会议详情：录像、片段、文件与本地录制"><img src="assets/meeting/now-after-detail.webp" alt="之前的会后会议详情：录像、片段、文件与本地录制" loading="lazy"></a>
+          <b>任务不是会议产物</b><p>会后能看到的只有录像、片段、文件与本地录制。会上讨论出来的任务不在这里，只能到「计划实施」里查看。</p></div>
+        <div class="trio-it"><span class="ba-tag old">BEFORE · 之前 · 会后</span>
+          <a class="pg-shot" href="assets/meeting/now-after-kr.webp" data-title="之前 · 会后的会议 KR：按轮次查看填写与投票结果"><img src="assets/meeting/now-after-kr.webp" alt="之前的会后会议 KR：按轮次查看填写与投票结果" loading="lazy"></a>
+          <b>内部文档不能协同处理</b><p>KR 的填写与投票结果只在会后按轮次查看。会上提到的内部文档不能一起编辑，只能到「文档库」查看，再发给相关人各自处理。</p></div>
+        <div class="trio-it"><span class="ba-tag old">BEFORE · 之前 · 会后</span>
+          <a class="pg-shot" href="assets/meeting/now-after-transcript.webp" data-title="之前 · 会后的转写：按发言人逐条整理"><img src="assets/meeting/now-after-transcript.webp" alt="之前的会后转写：按发言人逐条整理" loading="lazy"></a>
+          <b>知识库无法在会中讨论</b><p>转写在会后才按发言人整理成记录。会中只支持外部文件，内部文件要先导出再添加，知识库内容不能拿到会上讨论，也没有协同属性。</p></div>
+      </div>
+      <div class="trio-after"><span class="ba-tag new">WITH · NOTA</span>
+        <p><strong>把协同和工作放进会议里。</strong>任务、文档、KR 在会中直接创建、指派和编辑，产物在会中生成，会后直接可用，不需要再回看转写去找与自己有关的信息。</p>
+        <p><strong>缺席补看。</strong>缺席或中途离开的人设定一个补看时长，会议中间流的 agent 按这个时长向前回溯会议内容，抽出与本人相关的发言与决定，以及这段时间产生的任务、文档和 KR，一并推送给本人。信息由系统拉起，不靠人去翻。<span style="color:var(--fg-4)">→ 设计点 1、3、4</span></p>
+      </div>
+      <figcaption class="fig-cap"><span class="fig-no">图 01</span><b>之前的产物全部在会后</b>三张会后页面各对应上面一条问题；下方为 NOTA 的做法。</figcaption>
     </figure>
 
 <h3 class="sub-head"><span class="num">03</span>收集到的用户需求<span class="sub-en">NEEDS · 16</span><span class="line"></span></h3>
@@ -945,7 +1017,7 @@
         <div class="fs-label">TRIGGERED BY REAL USE</div>
         <div class="fs-head">需求由用户<br><em>实际使用场景触发</em></div>
       </div>
-      <div class="fs-desc"><p>需求由实际使用场景触发。<strong>本人日常使用现有会议工具，问题在使用过程中发现。</strong><br><br>
+      <div class="fs-desc"><p>需求由实际使用场景触发。<strong>本人日常使用之前的会议工具，问题在使用过程中发现。</strong><br><br>
         线上反馈中亦有同类诉求：「会议中可快速调出任务链接，边讨论边新增、修改任务，实时记录会议内容，杜绝会后遗漏。」
         本人的工作是将这些分散的诉求整理为可落地的界面与 AI 的边界。</p></div>
     </div>
@@ -998,8 +1070,49 @@
     </div>
 
 
-    <figure class="fig" style="--ar:2.0">
-      <div class="fig-slot"><span class="fig-no">图 04</span><b>事项归属范围</b><em>个人 / 部门 / 全体参会人 / 全公司，标注 AI 的判定依据：岗位、部门、近期任务、相关文档</em></div>
+    <figure class="fig">
+        <svg class="mindmap" viewBox="0 0 1166 462" role="img" aria-label="AI 判定事项归属范围的思维导图">
+        <text class="mm-h" x="24" y="34">判定依据 · 平台已有信息</text>
+        <text class="mm-h mm-h--v" x="690" y="24">归属范围 · 自动创建的对象</text>
+        <path class="mm-l" d="M274 107 C324 107 346 234 396 234"/>
+        <path class="mm-l" d="M274 191 C324 191 346 234 396 234"/>
+        <path class="mm-l" d="M274 275 C324 275 346 234 396 234"/>
+        <path class="mm-l" d="M274 359 C324 359 346 234 396 234"/>
+        <path class="mm-l mm-l--v" d="M666 234 C716 234 640 86 690 86"/>
+        <path class="mm-l mm-l--v" d="M666 234 C716 234 640 184 690 184"/>
+        <path class="mm-l mm-l--v" d="M666 234 C716 234 640 282 690 282"/>
+        <path class="mm-l mm-l--v" d="M666 234 C716 234 640 380 690 380"/>
+        <rect class="mm-n" x="24" y="76" width="250" height="62" rx="12"/>
+        <text class="mm-t" x="42" y="102">岗位</text>
+        <text class="mm-d" x="42" y="122">这件事属于谁的职责</text>
+        <rect class="mm-n" x="24" y="160" width="250" height="62" rx="12"/>
+        <text class="mm-t" x="42" y="186">部门</text>
+        <text class="mm-d" x="42" y="206">事项归哪条业务线</text>
+        <rect class="mm-n" x="24" y="244" width="250" height="62" rx="12"/>
+        <text class="mm-t" x="42" y="270">近期任务</text>
+        <text class="mm-d" x="42" y="290">他手上正在做什么</text>
+        <rect class="mm-n" x="24" y="328" width="250" height="62" rx="12"/>
+        <text class="mm-t" x="42" y="354">相关文档</text>
+        <text class="mm-d" x="42" y="374">谁写过、谁改过</text>
+        <rect class="mm-c" x="396" y="186" width="270" height="96" rx="14"/>
+        <text class="mm-ct" x="531" y="220" text-anchor="middle">AI 判定事项归属</text>
+        <text class="mm-cd" x="531" y="244" text-anchor="middle">按四项依据计算权重</text>
+        <text class="mm-cd" x="531" y="262" text-anchor="middle">生成带编号的任务框架</text>
+        <rect class="mm-n mm-n--v" x="690" y="46" width="452" height="80" rx="12"/>
+        <text class="mm-t mm-t--v" x="708" y="73">个人<tspan class="mm-sep" dx="10">·</tspan><tspan class="mm-d" dx="10">责任落到一个人</tspan></text>
+        <text class="mm-d" x="708" y="99">「压测由我负责」→ 指派给他一条任务</text>
+        <rect class="mm-n mm-n--v" x="690" y="144" width="452" height="80" rx="12"/>
+        <text class="mm-t mm-t--v" x="708" y="171">部门<tspan class="mm-sep" dx="10">·</tspan><tspan class="mm-d" dx="10">整条业务线承接</tspan></text>
+        <text class="mm-d" x="708" y="197">「投放侧统一口径」→ 落到部门任务池</text>
+        <rect class="mm-n mm-n--v" x="690" y="242" width="452" height="80" rx="12"/>
+        <text class="mm-t mm-t--v" x="708" y="269">全体参会人<tspan class="mm-sep" dx="10">·</tspan><tspan class="mm-d" dx="10">在场每人一份</tspan></text>
+        <text class="mm-d" x="708" y="295">「各自补本周数据」→ 每人各生成一条</text>
+        <rect class="mm-n mm-n--v" x="690" y="340" width="452" height="80" rx="12"/>
+        <text class="mm-t mm-t--v" x="708" y="367">全公司<tspan class="mm-sep" dx="10">·</tspan><tspan class="mm-d" dx="10">面向全员</tspan></text>
+        <text class="mm-d" x="708" y="393">「新流程下周执行」→ 进全员待办</text>
+        <text class="mm-foot" x="708" y="440">四种范围都先生成框架，责任人与事项已填好，本人会后确认才生效。</text>
+        </svg>
+      <figcaption class="fig-cap"><span class="fig-no">图 04</span><b>事项归属范围</b>转写识别出一条行动项后，AI 先判断它归谁，再决定生成什么。</figcaption>
     </figure>
 <h3 class="sub-head"><span class="num">05</span>用户旅程 · 没有它 vs 有它<span class="sub-en">JOURNEY · WITHOUT · WITH</span><span class="line"></span></h3>
     <p class="jrn-lead">一条主路径：<b>想开会 → 开会中 → 任务落到人</b>。上行为没有它时的实际路径，下行为有它的路径。
@@ -1092,15 +1205,15 @@
       AI 需要全程在场，因此不能持续发言；多人同步场景，提示不能遮挡他人；
       会议的主体是参会人，AI 应等待召唤。<br>
       <span class="cmp-note">说明：以上为定位判断，非功能评测；各产品持续更新，结论对应调研时的观察。</span></p>
-<h3 class="sub-head"><span class="num">07</span>现状 · 没有它的时候人怎么开会<span class="sub-en">AS-IS · 5</span><span class="line"></span></h3>
+<h3 class="sub-head"><span class="num">07</span>之前的会议怎么开<span class="sub-en">AS-IS · 5</span><span class="line"></span></h3>
     <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:16px 0 0">
-      现有会议工具<strong style="color:var(--fg-2)">用了一年</strong>。以下五条来自这一年的用户反馈与实际观察，
+      之前的会议工具<strong style="color:var(--fg-2)">用了一年</strong>。以下五条来自这一年的用户反馈与实际观察，
       <strong style="color:var(--fg-2)">每一条对应一块被低效使用的屏幕区域。</strong>
     </p>
     <div class="pain-list">
       <div class="pain-item"><div class="pi-n">01 · 空间</div>
         <div class="pi-t">按「客户端内开会」设计，不支持独立应用场景</div>
-        <div class="pi-d">现有会议工具只考虑在客户端中开会，没有考虑独立应用场景。<strong>没有为协同模块预留版面。</strong></div></div>
+        <div class="pi-d">之前的会议工具只考虑在客户端中开会，没有考虑独立应用场景。<strong>没有为协同模块预留版面。</strong></div></div>
       <div class="pain-item"><div class="pi-n">02 · 按钮</div>
         <div class="pi-t">按钮全部外露，多数并非主要操作</div>
         <div class="pi-d">按钮过多且全部外露，视觉拥挤。<strong>一年后回看反馈，多数按钮并非主要操作</strong>，却长期占据主要位置。</div></div>
@@ -1123,8 +1236,8 @@
     </div>
     <div class="ba">
       <div class="ba-col">
-        <span class="ba-tag old">WITHOUT · 现在 · 字幕</span>
-        <img src="assets/meeting/old-subtitle.png" alt="现在：字幕挤在底部一条窄栏里" loading="lazy">
+        <span class="ba-tag old">BEFORE · 之前 · 字幕</span>
+        <img src="assets/meeting/old-subtitle.png" alt="之前：字幕挤在底部一条窄栏里" loading="lazy">
         <p><b>字幕位于底部窄栏。</b>发言人靠账号名辨认，内容不可复制；右侧整列为基本信息与成员列表；底部按钮全部外露，另有「更多」展开七项。</p>
       </div>
       <div class="ba-col">
@@ -1153,13 +1266,13 @@
     
 
 <h3 class="sub-head"><span class="num">09</span>设计方案 · 逐页讲解<span class="sub-en">PAGES · 7</span><span class="line"></span></h3>
-    <p class="jrn-lead">七屏按会议顺序展开：进会 → 会中 → 会后。<b>每一屏对应 05 用户旅程的一步或 07 现状的一条，并标注所体现的设计点。</b>有可点原型的直接试用，有高保真的放图。</p>
+    <p class="jrn-lead">七屏按会议顺序展开：进会 → 会中 → 会后。<b>每一屏对应 05 用户旅程的一步或 07 之前问题的一条，并标注所体现的设计点。</b>有可点原型的直接试用，有高保真的放图。</p>
 <ol class="jt"><li><b>01</b><span>会议列表 → 进会</span></li><li><b>02</b><span>AI 召唤</span></li><li><b>03</b><span>三列 · 转写生成任务</span></li><li><b>04</b><span>转写列 · 三变体</span></li><li><b>05</b><span>参会人自主建任务</span></li><li><b>06</b><span>KR 填写</span></li><li><b>07</b><span>投票聚合 · 探索稿</span></li></ol><div class="jt-legend"><span><b>①</b>进会等待态 → 屏 1</span><span><b>②</b>会中协同 → 屏 2–5</span><span><b>③</b>会后确认 → 屏 6–7</span></div>
 <div class="pg-act">幕一 · 进会 · 屏 1</div>
 <div class="pg">
   <div class="pg-slot"><div class="fig-slot" style="--ar:16/10"><span class="fig-no">高保真 · 待脱敏</span><b>会议列表与进会等待态</b></div></div>
-  <div class="pg-body"><h4><span class="pg-n">1.</span>会议列表 → 进会<em>对应现状：未到时间进入即开始</em></h4>
-    <p>现在预定会议未到时间进入即开始。NOTA 从会议列表进会，先进入等待态，人员到齐或到达时间后开始。</p>
+  <div class="pg-body"><h4><span class="pg-n">1.</span>会议列表 → 进会<em>对应之前的问题：未到时间进入即开始</em></h4>
+    <p>之前预定会议未到时间进入即开始。NOTA 从会议列表进会，先进入等待态，人员到齐或到达时间后开始。</p>
   </div>
 </div>
 <div class="pg-act">幕二 · 会中 · 屏 2–5</div>
@@ -1177,20 +1290,20 @@
 </div>
 <div class="pg">
   <div class="pg-slot"><div class="pg-stack">
-      <button type="button" class="si si-open has-doc live" data-doc="flow/meeting-dev-20260907/index.html" data-title="任务工作项上主屏（跟着引导点 4 步）" data-loop="task" data-guide="task">
+      <button type="button" class="si si-open has-doc live" data-doc="flow/meeting-dev-20260907/index.html" data-title="任务工作项（跟着引导点 8 步）" data-loop="task" data-guide="task">
             <span class="si-prev"><iframe src="flow/meeting-dev-20260907/index.html#loop=task" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe></span>
             <span class="si-lbl">任务工作项　点开跟着引导 →</span>
           </button>
-        <p class="live-hint">缩略图循环播放：任务工作项上主屏（列表）→ 切看板 → 切回列表 → Nota 生成待确认任务 → 确认创建 → 点卡片打开任务详情。点开后按引导操作，这个活页是开发实现稿，数据为模拟。</p>
-      <button type="button" class="si si-open has-doc live" data-doc="flow/meeting-dev-20260907/index.html" data-title="协作文档上主屏（跟着引导点 2 步）" data-loop="doc" data-guide="doc">
+        <p class="live-hint">缩略图循环播放：任务工作项放入会议画面占一格 → 点开在独立弹窗里看列表、切看板 → 关掉后从卡片三个点里「设为主画面」上主讲位 → Nota 生成待确认任务 → 确认创建 → 点卡片看任务详情。点开后按引导操作 8 步，这个活页是开发实现稿，数据为模拟。</p>
+      <button type="button" class="si si-open has-doc live" data-doc="flow/meeting-dev-20260907/index.html" data-title="协作文档（跟着引导点 3 步）" data-loop="doc" data-guide="doc">
             <span class="si-prev"><iframe src="flow/meeting-dev-20260907/index.html#loop=doc" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe></span>
             <span class="si-lbl">协作文档　点开跟着引导 →</span>
           </button>
-        <p class="live-hint">缩略图循环播放：协作文档以编辑态上主屏 → Nota 在文档上标出修改建议 → 采纳全部，修改写入文档。点开后按引导操作。</p>
+        <p class="live-hint">缩略图循环播放：协作文档放入会议画面占一格 → 点开在独立弹窗里编辑 → Nota 在文档上标出修改建议 → 采纳全部，修改写入文档。点开后按引导操作 3 步。</p>
     </div></div>
   <div class="pg-body"><h4><span class="pg-n">3.</span>三列 · 转写生成任务<em>人 · 转写 · 任务各占一列，发言直接变任务 · 设计点 3、4</em></h4>
     <p>左侧为人与协同区，中间为实时转写，右侧为任务列。转写识别行动项并生成任务，固定于右侧列，任务不等会后再建；链路终点在计划实施，会议生成的任务直接进入项目任务列表。</p>
-    <p>从客户端拖进会议的工作项，在中间主屏按类型展开：一批任务显示为任务列表，可切换为看板；单个任务打开任务详情；协作文档以编辑态打开，Nota 的修改建议直接标在文档上，采纳后写入文档。</p>
+    <p>从客户端拖进会议的工作项，先在会议画面里占一格，大小与成员画面一致，格子里是内容缩略图，不顶掉正在说话的人。点这一格在独立弹窗里编辑：一批任务是任务列表，可切换为看板；单个任务是任务详情；协作文档以编辑态打开，Nota 的修改建议直接标在文档上，采纳后写入文档。需要让全场一起看时，主持人从卡片的三个点里选「设为主画面」，它才到主讲位置；其他人点这一格是自己放大，不影响别人。</p>
   </div>
 </div>
 <div class="pg">
@@ -1206,7 +1319,7 @@
 <div class="pg">
   <div class="pg-slot"><div class="fig-slot" style="--ar:16/10"><span class="fig-no">高保真 · 待脱敏</span><b>参会人右键建任务 · 协同人可见</b></div></div>
   <div class="pg-body"><h4><span class="pg-n">5.</span>参会人自主建任务<em>该解法由用户提出 · 设计点 1</em></h4>
-    <p>现在会中仅主持人可建任务。NOTA 参会人自主建任务，边讨论边修改。反馈标注「灵活度低，增加在会议中的等待时间」，影响程度 4 分。</p>
+    <p>之前会中仅主持人可建任务。NOTA 参会人自主建任务，边讨论边修改。反馈标注「灵活度低，增加在会议中的等待时间」，影响程度 4 分。</p>
   </div>
 </div>
 <div class="pg-act">幕三 · 会后 · 屏 6–7</div>
@@ -1253,7 +1366,7 @@
 
     <h3 class="sub-head"><span class="num">11</span>有它 · 没它<span class="sub-en">WITH · WITHOUT · 4</span><span class="line"></span></h3>
     <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:16px 0 0">
-      四处设计，逐条对应 07 的五个现状问题。<strong style="color:var(--fg-2)">每一条都是先收起不常用内容腾出空间</strong>，
+      四处设计，逐条对应 07 的五个问题。<strong style="color:var(--fg-2)">每一条都是先收起不常用内容腾出空间</strong>，
       再将空间分配给会中实际发生的事。
     </p>
     <div class="cap-grid">
@@ -1275,8 +1388,8 @@
     </div>
     <div class="ba">
       <div class="ba-col">
-        <span class="ba-tag old">WITHOUT · 现在的主视图</span>
-        <img src="assets/meeting/old-main.png" alt="现在：主讲大屏、右侧信息列、底部一排外露按钮" loading="lazy">
+        <span class="ba-tag old">BEFORE · 之前的主视图</span>
+        <img src="assets/meeting/old-main.png" alt="之前：主讲大屏、右侧信息列、底部一排外露按钮" loading="lazy">
         <p><b>一块主讲大屏、一列常驻信息、一排外露按钮。</b>成员压缩为顶部两个小头像；右侧「基本信息 / 聊天」占据整列但几乎不用；底部九个按钮外加「更多」中的七个。</p>
       </div>
       <div class="ba-col">
@@ -1373,71 +1486,92 @@
       <div class="fs-desc"><p>三条反馈表面上是三个 bug，归到一起是同一件事：<strong>用户做完一个动作，得不到确认。</strong><br><br>这是反馈可见性问题，不是界面美观问题——<strong>把按钮做好看解决不了它。</strong>所以要做的不是视觉，是每一次操作之后系统怎么回话。</p></div>
     </div>
 
-    <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:30px 0 0">
-      <strong style="color:var(--fg-2)">还有一条反馈，一条顶四条</strong>　它同时指向了四个模块，我把它拆成了四份设计输入：
-    </p>
-    <div class="intro-grid" style="margin-top:14px">
-      <div><p>用户原话：<br><strong>「降低新手学习成本，放开参会人员自主建任务权限，会议中可快速调出任务链接，边讨论边新增修改任务，实时记录会议内容，杜绝会后遗漏。」</strong></p></div>
-      <div class="intro-aside">
-        <div class="row">指向一<b>学习成本</b></div>
-        <div class="row">指向二<b>权限模型</b></div>
-        <div class="row">指向三<b>会议系统</b></div>
-        <div class="row">指向四<b>转写生成任务</b></div>
+    <h3 class="sub-head"><span class="num">02</span>收集到的用户需求<span class="sub-en">NEEDS · 6</span><span class="line"></span></h3>
+    <p class="jrn-lead">58 条真实反馈大多是 bug 和不会用，它们证明的是「用户在用、在疼」，不是需求本身。<b>需求从卖点反推：</b>每一条对应一个我们做了、别的工具没做全的东西。下面六条是推导出来的模拟需求，不是用户原话。</p>
+    <div class="pain-list">
+      <div class="pain-item"><div class="pi-n">需求 01 · 视图</div>
+        <div class="pi-t">同一批任务，我想按自己的方式看</div>
+        <div class="pi-d">管排期的看甘特图，管人的看工时，自己干活的看列表。<strong>→ 五种视图，筛完存成自己的视图。</strong></div></div>
+      <div class="pain-item"><div class="pi-n">需求 02 · 结构</div>
+        <div class="pi-t">建一个工作项，别让我从零配</div>
+        <div class="pi-d">字段、视图、状态每次重配一遍，配完还不一样。<strong>→ 八套行业模版，建的时候定默认视图。</strong></div></div>
+      <div class="pain-item"><div class="pi-n">需求 03 · 分组</div>
+        <div class="pi-t">任务多了要归块，我的归法和你的不一样</div>
+        <div class="pi-d">有人按状态，有人按人，有人先按人再按状态。<strong>→ 状态 / 优先级 / 人员多级分组，组内再分。</strong></div></div>
+      <div class="pain-item"><div class="pi-n">需求 04 · 协同</div>
+        <div class="pi-t">文档、会议、群聊，别让我在几个模块之间跳</div>
+        <div class="pi-d">做任务要去文档库找需求，讨论要去群，开会另开工具。<strong>→ 文档拖进工作项，工作项自带聊天和会议。</strong></div></div>
+      <div class="pain-item"><div class="pi-n">需求 05 · AI</div>
+        <div class="pi-t">运维发现的问题，别靠人转，直接落到该处理的人</div>
+        <div class="pi-d">群里喊一声、等人认领、再手建任务，一环掉了就没人管。<strong>→ AI 识别问题建任务，按 git 提交记录找到人。</strong></div></div>
+      <div class="pain-item"><div class="pi-n">需求 06 · 边界</div>
+        <div class="pi-t">AI 可以帮我干，但每一步我要看得见、拦得住</div>
+        <div class="pi-d">不敢把改动交给一个看不见过程的东西。<strong>→ 接收方设前提，每一次产物人工查验，AI 不得越过人工。</strong></div></div>
+    </div>
+
+<h3 class="sub-head"><span class="num">03</span>角色<span class="sub-en">ROLES · 3</span><span class="line"></span></h3>
+    <p class="rol-lead">同一个工作项，三类人要的不一样。<b>创建者要的是结构一次配好，执行者要的是按自己的方式看、做了能确认，运维和接 AI 任务的人要的是问题不靠人转、AI 不越过人。</b></p>
+
+    <div class="rol">
+      <div class="rol-card">
+        <div class="rol-h"><i>01</i><b>创建者</b><em>项目负责人 · 空间管理员</em></div>
+        <div class="rol-need">诉求：把结构一次配好，人进来就能干活</div>
+        <p class="rol-old"><s>没有它</s>每个项目从空白建：字段、视图、权限各配一遍；文档在文档库、讨论在群、开会另开工具，进一个项目要另建一个群。</p>
+        <p class="rol-new"><s class="ok">有它</s>建工作项时选一套行业模版、定默认视图、设权限 <em>3</em> <em>4</em>；文档拖进工作项，工作项自带聊天和会议 <em>6</em> <em>7</em>。<b>结构是创建者定的，之后不用再管。</b></p>
+      </div>
+
+      <div class="rol-card">
+        <div class="rol-h"><i>02</i><b>执行者</b><em>任务参与者 · 人数最多</em></div>
+        <div class="rol-need">诉求：知道该我做什么、先做哪个；做完能确认生效</div>
+        <p class="rol-old"><s>没有它</s>任务散在群消息和纪要里，看法只有别人定的那一种；勾了完成不知道生没生效。</p>
+        <p class="rol-new"><s class="ok">有它</s>五种视图看同一批任务，按状态 / 优先级 / 人员多级分组，筛完存成自己的视图 <em>1</em> <em>2</em>；操作后有回执。<b>看法是使用者自己的。</b></p>
+      </div>
+
+      <div class="rol-card is-key">
+        <div class="rol-h"><i>03</i><b>运维 + 接 AI 任务的人</b><em>AI 自动处理任务链路</em></div>
+        <div class="rol-need">诉求：问题从发现到落到人，中间不靠人转；AI 干活，但不越过我</div>
+        <p class="rol-old"><s>没有它</s>运维在群里喊一声，等人认领，再手建任务；一环掉了就没人管。</p>
+        <p class="rol-new"><s class="ok">有它</s>AI 识别问题、建任务，按模块给部门或按 git 提交记录找到具体人，落到他的 CSES 里 <em>8</em>；他设前提——自动修改，还是等人工开始；执行中每一次产物过人 <em>9</em> <em>10</em>。</p>
+        <p class="rol-so">这一角色定下的是 AI 的边界：<b>AI 不得越过人工。</b><span style="color:var(--fg-4)">→ 07 六步链 · 内部测试使用中</span></p>
       </div>
     </div>
-<h3 class="sub-head"><span class="num">02</span>收集到的用户需求<span class="sub-en">NEEDS · 58</span><span class="line"></span></h3>
-    <p class="jrn-lead">全平台 114 条反馈里 58 条落在任务、甘特、依赖、视图上。三条原话把问题说透了——<b>痛苦不在视觉层，在操作有没有真的生效。</b>这里只放这三条和条数，不放全部原文。</p>
-    <div class="pain-list">
-      <div class="pain-item"><div class="pi-n">用户原话</div>
-        <div class="pi-t">勾了完成，关掉再打开还是未完成</div>
-        <div class="pi-d">状态不同步。用户不确定自己刚才那一下有没有生效。</div></div>
-      <div class="pain-item"><div class="pi-n">用户原话</div>
-        <div class="pi-t">改了依赖方向，甘特图不跟着改</div>
-        <div class="pi-d">依赖失效。看到的图和实际的关系对不上。</div></div>
-      <div class="pain-item"><div class="pi-n">用户原话</div>
-        <div class="pi-t">保存了视图，不知道存哪去了</div>
-        <div class="pi-d">保存失效。做了动作，找不到结果。</div></div>
-    </div>
-
-<h3 class="sub-head"><span class="num">03</span>角色<span class="sub-en">ROLES · 暂无</span><span class="line"></span></h3>
-    <div class="fig-slot pg-empty" style="--ar:auto"><span class="fig-no">待填</span><b>角色还没拆</b><ul><li>目标用户见项目介绍：任务参与者 · 项目负责人</li><li>拆出角色后照 NOTA 的三栏写</li></ul></div>
 
 <h3 class="sub-head"><span class="num">04</span>用户旅程 · 没有它 vs 有它<span class="sub-en">JOURNEY</span><span class="line"></span></h3>
-    <p class="jrn-lead" style="margin-top:16px">一条主路径：<b>领到任务 → 推进任务 → 交付任务</b>。上行是没有它的时候人怎么干，下行是有它之后。每一步的「有它」都能对到 08 里的一屏。</p>
+    <p class="jrn-lead" style="margin-top:16px">一条主路径：<b>领到任务 → 推进任务 → 交付任务</b>。上行是没有它之前人怎么干——像用钉钉 / 飞书那样，任务模块是齐的，但文档、会议、群聊各在各的模块，也没有 AI 自动处理任务。下行是有它之后：<b>任务把更多模块协同起来。</b></p>
 
     <div class="jrn jrn-vs">
       <div class="jrn-stage">
         <div class="jrn-st"><i>01</i>领到任务</div>
         <div class="jrn-old">
-          <b>不知道该我做什么、先做哪个</b>
-          <span>任务不在一个地方，靠人问、靠翻记录</span>
+          <b>任务从群消息、纪要、别的工具里来</b>
+          <span>不知道该我做什么、先做哪个；运维发现的问题靠人转到你头上</span>
         </div>
         <div class="jrn-new">
           <b>任务落在空间 / 工作项里，五种视图看同一批</b>
-          <span>列表 / 看板 / 甘特图 / 日历 / 工时，检视点内联在任务行下面 · 屏 <em>1</em> · 建工作项选模版 <em>3</em> <em>4</em></span>
+          <span>列表 / 看板 / 甘特图 / 日历 / 工时，多级分组 · 屏 <em>1</em></span>
+          <b class="j2">运维的问题由 AI 建任务、按 git 提交记录找到你</b>
+          <span>落到你的 CSES 里 · 屏 <em>8</em></span>
         </div>
       </div>
 
       <div class="jrn-stage">
         <div class="jrn-st"><i>02</i>推进任务</div>
         <div class="jrn-old">
-          <b>改了状态不知道生没生效</b>
-          <span>58 条反馈里最大的一类：勾了完成，切个视图又变回未完成</span>
-          <b class="j2">依赖关系靠口头对</b>
-          <span>谁等谁、卡在哪，没有一张图能看</span>
+          <b>做任务要去文档库找需求，讨论要去群，开会另开工具</b>
+          <span>任务和它们对不上，改了状态也不知道生没生效</span>
         </div>
         <div class="jrn-new">
-          <b>操作后给明确回执</b>
-          <span>痛苦不在视觉层，在「我做的操作有没有真的生效」</span>
-          <b class="j2">依赖用连线加箭头，任务条仍用状态色</b>
-          <span>两套编码不打架 · 甘特图 <em>1</em>；月历里超出首屏的收成「还有 N 项」 · 日历 <em>1</em></span>
+          <b>文档拖进工作项，工作项自带聊天和会议</b>
+          <span>AI 助手在群里添加文档、开启会议；会议里生成的任务挂回来 · 屏 <em>6</em> <em>7</em></span>
+          <b class="j2">操作后给回执；AI 执行时每一步产物过人</b>
+          <span>依赖用连线加箭头，任务条仍用状态色 · 屏 <em>1</em> <em>9</em></span>
         </div>
       </div>
 
       <div class="jrn-stage">
         <div class="jrn-st"><i>03</i>交付任务</div>
         <div class="jrn-old">
-          <b>停掉的任务进度归零</b>
+          <b>停掉的任务进度归零，筛好的视图下次重配</b>
           <span>重启时从头对一遍</span>
         </div>
         <div class="jrn-new">
@@ -1449,6 +1583,7 @@
       </div>
     </div>
     <p class="jrn-foot"><strong style="color:var(--fg-2)">贯穿三步的一条：谁能看、谁能建。</strong>没有它，靠人问；有它，新建任务的按钮显不显示由空间权限决定，普通人首次进空间可以申请加入，管理员同意后收到通知。</p>
+
 <h3 class="sub-head"><span class="num">05</span>竞品调研<span class="sub-en">MARKET · 5 + 我们</span><span class="line"></span></h3>
     <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:16px 0 0">
       只答一个问题：<strong style="color:var(--fg-2)">AI 在任务系统里，被允许做到哪一步？</strong>
@@ -1456,14 +1591,14 @@
     </p>
     <div class="pain-list">
       <div class="pain-item"><div class="pi-n">飞书</div>
-        <div class="pi-t">AI 停在助手层：从纪要提待办、写摘要</div>
-        <div class="pi-d">任务由人建、人做、人更新进度。AI 负责从会议和文档里提出待办、写摘要，<strong>执行链路一步不进。</strong></div></div>
+        <div class="pi-t">任务模块齐，AI 停在助手层</div>
+        <div class="pi-d">多视图、模版、协同都有；AI 从纪要提待办、写摘要。<strong>没有 AI 自动化处理任务，问题到人还是靠人转。</strong></div></div>
       <div class="pain-item"><div class="pi-n">钉钉</div>
-        <div class="pi-t">AI 助理提待办、总结群聊</div>
-        <div class="pi-d">同样是助手：从群聊里提出待办、总结进展。<strong>建不建、做不做，仍然是人。</strong></div></div>
+        <div class="pi-t">任务在待办和群里，AI 助理只提待办</div>
+        <div class="pi-d">从群聊里提出待办、总结进展。<strong>建不建、做不做、落到谁，仍然是人。</strong></div></div>
       <div class="pain-item"><div class="pi-n">ClickUp</div>
-        <div class="pi-t">ClickUp Brain：摘要、拆子任务、问答</div>
-        <div class="pi-d">AI 能把一个任务拆成子任务、写进展摘要，<strong>但不会自己领任务去做。</strong></div></div>
+        <div class="pi-t">视图最多，ClickUp Brain 只做摘要和拆子任务</div>
+        <div class="pi-d">列表、看板、甘特、日历一应俱全；AI 拆子任务、写摘要，<strong>但没有从发现问题到自动建任务、找人这条链。</strong></div></div>
       <div class="pain-item"><div class="pi-n">Multica</div>
         <div class="pi-t">Agent 当队友，可以自主认领</div>
         <div class="pi-d">任务生命周期 enqueue → claim → start → complete/fail，agent 全程自主。<strong>服务的是编码场景。</strong></div></div>
@@ -1475,7 +1610,7 @@
         <div class="pi-d">从运维异常建任务、找到人、按接收方设的前提执行——<strong>AI 不自主认领，任何产物不得越过人工。</strong>因为企业协作的任务边界模糊、成败无法自动判定、失败不可撤回。</div></div>
     </div>
 
-    <p class="cmp-foot">三家主流协作工具把 AI 停在助手层：提待办、写摘要、拆子任务，执行链路一步没进——稳，但「问题从被发现到落到具体的人」这一段还是没人跑。</p>
+    <p class="cmp-foot">三家主流协作工具任务模块都齐，差别不在视图和模版；它们把 AI 停在助手层：提待办、写摘要、拆子任务，<b>没有 AI 自动化处理任务</b>——「问题从被发现到落到具体的人」这一段还是靠人跑。</p>
     <p class="cmp-foot" style="margin-top:14px">两家开源产品走到另一头：Agent 当队友、自主认领，任务生命周期四个状态一字不差，都有技能库。说明这是品类已经形成的范式，<b>照抄没有产品价值。</b>而且它们服务的都是编码 Agent——写代码这件事，机器自己知道跑没跑通；换成「跟进一下客户」「准备月度汇报」，机器判不了做没做好。</p>
     <p class="cmp-foot" style="margin-top:14px"><b>我们取中间：</b>从发现问题到找到人，让 AI 跑；执行中每一次产物，必须过人。这就是我不给 agent 自主认领权的全部理由。</p>
 
@@ -1524,10 +1659,10 @@
         <div class="row">状态<b>内部测试使用中</b></div>
       </div>
     </div>
-<h3 class="sub-head"><span class="num">08</span>设计方案 · 逐页讲解<span class="sub-en">PAGES · 8</span><span class="line"></span></h3>
+<h3 class="sub-head"><span class="num">08</span>设计方案 · 逐页讲解<span class="sub-en">PAGES · 10</span><span class="line"></span></h3>
     <p class="jrn-lead">两幕。先是<b>多视图与自定义视图</b>——创建者按自己的习惯配工作项和视图；再是 <b>AI 自动化处理任务</b>。有 Figma 页的放图，没有的先空着，你画好我再放进来。</p>
-<ol class="jt"><li><b>01</b><span>工作项首页 · 五种视图</span></li><li><b>02</b><span>自定义视图 · 另存为新视图</span></li><li><b>03</b><span>新建工作项 · 选模版与视图</span></li><li><b>04</b><span>选择模版 · 八套行业模版</span></li><li><b>05</b><span>工作项 · 卡片平铺</span></li><li><b>06</b><span>AI 协作中心</span></li><li><b>07</b><span>执行过程 · 事件流</span></li><li><b>08</b><span>AI 边界 · 反提案</span></li></ol><div class="jt-legend"><span><b>①</b>多视图 · 自定义视图 → 屏 1–5</span><span><b>②</b>AI 自动化处理任务 → 屏 6–8</span></div>
-<div class="pg-act">幕一 · 多视图 · 自定义视图 · 屏 1–5</div>
+<ol class="jt"><li><b>01</b><span>工作项首页 · 五种视图</span></li><li><b>02</b><span>自定义视图 · 另存为新视图</span></li><li><b>03</b><span>新建工作项 · 选模版与视图</span></li><li><b>04</b><span>选择模版 · 八套行业模版</span></li><li><b>05</b><span>工作项 · 卡片平铺</span></li><li><b>06</b><span>工作项 · 文档拖进来</span></li><li><b>07</b><span>工作项 · 聊天 · AI 助手</span></li><li><b>08</b><span>AI 协作中心</span></li><li><b>09</b><span>执行过程 · 事件流</span></li><li><b>10</b><span>AI 边界 · 反提案</span></li></ol><div class="jt-legend"><span><b>①</b>多视图 · 自定义视图 · 协同更多模块 → 屏 1–7</span><span><b>②</b>AI 自动化处理任务 → 屏 8–10</span></div>
+<div class="pg-act">幕一 · 多视图 · 自定义视图 · 协同更多模块 · 屏 1–7</div>
 <div class="pg">
   <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/task-v-list.webp" data-title="工作项首页 · 列表视图"><img src="assets/shots/thumb/task-v-list.webp" alt="工作项首页 · 列表视图"></a><a class="pg-shot" href="assets/shots/task-v-board.webp" data-title="看板视图 · 按状态分列"><img src="assets/shots/thumb/task-v-board.webp" alt="看板视图 · 按状态分列"></a><a class="pg-shot" href="assets/shots/task-v-gantt.webp" data-title="甘特图 · 时间条"><img src="assets/shots/thumb/task-v-gantt.webp" alt="甘特图 · 时间条"></a><a class="pg-shot" href="assets/shots/task-v-gantt2.webp" data-title="甘特图 · 展开左侧字段"><img src="assets/shots/thumb/task-v-gantt2.webp" alt="甘特图 · 展开左侧字段"></a><a class="pg-shot" href="assets/shots/task-v-cal.webp" data-title="日历视图 · 按月"><img src="assets/shots/thumb/task-v-cal.webp" alt="日历视图 · 按月"></a><a class="pg-shot" href="assets/shots/task-v-hours.webp" data-title="工时视图 · 按成员"><img src="assets/shots/thumb/task-v-hours.webp" alt="工时视图 · 按成员"></a></div></div>
   <div class="pg-body"><h4><span class="pg-n">1.</span>工作项首页 · 五种视图<em>列表 / 看板 / 甘特图 / 日历 / 工时，同一个工作项里切</em></h4>
@@ -1558,22 +1693,34 @@
     <p>封面 + 名称 + 更多菜单（收藏 / 分享 / 移动 / 重命名 / 设置 / 删除）。</p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
   </div>
 </div>
-<div class="pg-act">幕二 · AI 自动化处理任务 · 屏 6–8</div>
+<div class="pg">
+  <div class="pg-slot"><a class="pg-shot" href="assets/shots/task-v-docs.webp" data-title="工作项 · 文档 tab · 文档拖进当前空间 / 项目"><img src="assets/shots/thumb/task-v-docs.webp" alt="工作项 · 文档 tab · 文档拖进当前空间 / 项目"></a></div>
+  <div class="pg-body"><h4><span class="pg-n">6.</span>工作项 · 文档拖进来<em>当前空间 / 项目里的文档，和任务放在一处</em></h4>
+    <p>工作项顶部多一个「文档」tab：把文档库里的文档拖进当前空间或项目，按类型、归属、最近打开筛。做任务的人不用再去文档库找那份需求，<strong>任务和它依赖的文档在同一个地方。</strong></p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
+  </div>
+</div>
+<div class="pg">
+  <div class="pg-slot"><a class="pg-shot" href="assets/shots/task-v-chat.webp" data-title="工作项 · 聊天 tab · AI agent 助手在群里"><img src="assets/shots/thumb/task-v-chat.webp" alt="工作项 · 聊天 tab · AI agent 助手在群里"></a></div>
+  <div class="pg-body"><h4><span class="pg-n">7.</span>工作项 · 聊天 · AI agent 助手<em>工作项自带群聊，AI 助手能添加文档、开启会议、导入成员</em></h4>
+    <p>每个工作项自带一个群，AI agent 助手常驻：一句话添加文档、开启会议、从系统导入人员；群公告、临时会议都在这里发。<strong>讨论和任务不再分两个软件，会议里生成的任务直接挂回这个工作项。</strong></p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
+  </div>
+</div>
+<div class="pg-act">幕二 · AI 自动化处理任务 · 屏 8–10</div>
 <div class="pg">
   <div class="pg-slot"><div class="fig-slot" style="--ar:16/10"><span class="fig-no">待画</span><b>AI 协作中心 · 首页</b><em>缺这页，空给你画</em></div></div>
-  <div class="pg-body"><h4><span class="pg-n">6.</span>AI 协作中心<em>AI 员工 · AI 执行节点</em></h4>
+  <div class="pg-body"><h4><span class="pg-n">8.</span>AI 协作中心<em>AI 员工 · AI 执行节点</em></h4>
     <p>左侧导航是「AI 协作中心」——AI 员工、AI 执行节点。任务交给 AI 之后从这里看它在干什么。</p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><div class="fig-slot" style="--ar:16/10"><span class="fig-no">待画</span><b>AI 执行过程 · 事件流</b><em>缺这页，空给你画</em></div></div>
-  <div class="pg-body"><h4><span class="pg-n">7.</span>执行过程 · 事件流<em>进度条换成事件流</em></h4>
+  <div class="pg-body"><h4><span class="pg-n">9.</span>执行过程 · 事件流<em>进度条换成事件流</em></h4>
     <p>执行过程不给百分比进度条，给事件流：10:21:06 读取任务上下文 → 10:21:34 检查前置任务 · 发现 2 个前置，其中 1 个仍在进行 → 10:22:18 分析后置影响 → 10:23:42 生成处理建议。因为百分比是假的——AI 不知道自己做到了百分之几，但它知道自己刚做完哪一步。</p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><div class="fig-slot" style="--ar:16/10"><span class="fig-no">待画</span><b>任务详情 · 交给 AI 执行 / 反提案</b><em>缺这页，空给你画</em></div></div>
-  <div class="pg-body"><h4><span class="pg-n">8.</span>AI 边界 · 反提案<em>AI 做读、查、分析、出建议；不直接改任务，不投票</em></h4>
+  <div class="pg-body"><h4><span class="pg-n">10.</span>AI 边界 · 反提案<em>AI 做读、查、分析、出建议；不直接改任务，不投票</em></h4>
     <p>AI 做：读任务背景、查依赖、分析影响、出建议。AI 不做：直接改任务。同一条边界：AI 不投票，出反提案——等人确认。</p>
   </div>
 </div>
@@ -1634,18 +1781,18 @@
         <div class="pn">项目四 · CASE STUDY</div>
         <h1>CSES 文档库</h1>
       </div>
-      <div class="pmeta"><b><span class="todo">（年份 待填写）</span></b>新项目 · 平台内部协同</div>
+      <div class="pmeta"><b>2025 · 8 月</b>改版项目 · 平台内部协同</div>
     </div>
 
     <div class="sec-head"><h2>项目介绍</h2><span>[DOC · 它不是网盘，是平台内部协同的地方]</span></div>
     <div class="intro-grid">
-      <div><p><strong>这个模块最容易被当成网盘，其实它是平台内部协同的载体。</strong>协同分两层：<br><br><strong>人的协同</strong>——同一份文档多人一起写、一起看、一起评，谁改了哪一块有迹可循。<br><strong>业务的协同</strong>——别的模块可以直接在文档里落业务动作，比如在会议纪要里当场建任务，任务建完就挂在这份文档上，<strong>不用再去任务系统里重录一遍。</strong>两层叠在一起，就是 CSES 说的<strong>「空间叠加」</strong>：文档库、计划实施、会议互相调用，所有记录留痕。<br><br>空间 / 文件夹 / 文档三层是它的骨架。但「文档放哪」这件事，<strong>本质是「谁能看」的问题</strong>——所以这一章的主线不是目录结构，是权限。</p></div>
+      <div><p>这是 2025 年 8 月的改版。旧版停留在 2024 年，只能写文档，没有其他功能，也没有协同的概念，所以这一章不做新旧对比，只讲这一版。<br><br><strong>它最容易被当成网盘，其实它是平台里做协同的地方。</strong>协同分两层：<br><br><strong>人和人</strong>——同一份文档多人一起写、一起看、一起评论，谁改了哪一段都有记录。<br><strong>文档和业务</strong>——在会议纪要里当场就能建任务、发起会议，<strong>不必再打开另一个系统重录一遍。</strong><br><br>两层叠在一起，就是 CSES 说的<strong>「空间叠加」</strong>：文档库、计划实施、会议放在同一个空间里互相调用，每一步都留下记录。<br><br>空间、文件夹、文档是它的三层结构。<strong>但这一章的主线不是目录，是协同</strong>——文档库是各个模块的连接器，会议、任务、知识库的产物都挂在它上面。至于「这份文档放在哪」，本质上是「谁能看见它」，权限是让这条连接敢用的前提。</p></div>
       <div class="intro-aside">
         <div class="row">我的角色<b>全链路独立负责</b></div>
         <div class="row">目标用户<b>平台内部成员</b></div>
         <div class="row">协同两层<b>人的协同 · 业务的协同</b></div>
         <div class="row">底层逻辑<b>空间叠加 · 记录留痕</b></div>
-        <div class="row">交付<b>377 画板 / 229 页</b></div>
+        <div class="row">交付<b>高保真页面</b></div>
       </div>
     </div>
 
@@ -1665,19 +1812,42 @@
         <div class="pi-t">不知道这份文档谁能看、能不能发出去</div>
         <div class="pi-d">分享按钮点下去之前，用户没有把握。<strong>不确定就不敢用，不敢用就退回微信传文件。</strong></div></div>
     </div>
-<h3 class="sub-head"><span class="num">02</span>收集到的用户需求<span class="sub-en">NEEDS · 反推 12</span><span class="line"></span></h3>
+<h3 class="sub-head"><span class="num">02</span>收集到的用户需求<span class="sub-en">NEEDS · 12</span><span class="line"></span></h3>
     <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:16px 0 0">
-      全平台 114 条真实反馈里落在文档库的只有 12 条，而且基本是 bug 和误操作——新建失败、加载不出、两个文档库不同步。它们说明用户还没用到深处，说不出需求。所以下面这 12 条需求是<strong style="color:var(--fg-2)">从业务线的场景反推出来的</strong>：每条都对应一个用户会说出来的句子，和 08 里的一屏。
+      全平台收上来 <strong style="color:var(--fg-2)">114 条</strong>真实反馈，落在文档库的只有 <strong style="color:var(--fg-2)">12 条</strong>，而且大多是故障和误操作——新建失败、打不开、两处文档库不同步。这说明用户还没用到深处，提不出需求。所以这里的需求是<strong style="color:var(--fg-2)">从业务场景倒推的</strong>：每一条都是用户会说出口的一句话，也都能在后面的页面里找到对应的答案。
     </p>
     <div class="cap-grid" style="margin-top:14px">
-      <div class="cap-item"><span>存了找不到 · 3 条</span><b class="ci-title">「我记得大概什么时候、谁的，不记得放哪」</b><p>按类型、归属、时间找，不按文件夹层级找 → 屏 1。<br>「同一份东西三个人各存一份，改了哪份没人知道」→ 归属判定跟着空间走 → 屏 1。<br>「这份改了会牵动哪些？」→ 关系图谱 → 屏 2。</p></div>
-      <div class="cap-item"><span>协同断在系统边界 · 4 条</span><b class="ci-title">「纪要里的待办还得去任务系统重录一遍」</b><p>文档里选中即建任务，落到他的我的任务 → 屏 6。<br>「排期和说明分在两个系统里」→ 看板、甘特图嵌在文档里 → 屏 7–8。<br>「需要拍板的议题得另开日历约会」→ 一键发起会议，文档就是议程。<br>「头脑风暴的板子和纪要分两处」→ 协同画板、思维导图嵌在文档里 → 屏 12–14。</p></div>
-      <div class="cap-item"><span>权限说不清 · 3 条</span><b class="ci-title">「不知道这份能不能发出去」</b><p>安全设置六条开关，逐条可查 → 屏 21。<br>「建库的时候就想定好谁能看」→ 新建知识库必填可见范围 → 屏 18。<br>「删一个库太容易了」→ 输库名确认并通知其他管理员 → 屏 22。</p></div>
-      <div class="cap-item"><span>讲与追溯 · 2 条</span><b class="ci-title">「讲一遍要先做一版 PPT」</b><p>文档直接进演示模式 → 屏 15–16。<br>「谁导出过、谁删过，要查得到」→ 后台操作记录三类留痕 → 屏 25。</p></div>
+      <div class="cap-item"><span>存了找不到 · 3 条</span><b class="ci-title">「我记得大概什么时候、谁的，就是不记得放在哪」</b><p>按类型、归属人、时间来找，不必记住文件夹。<br>「同一份东西三个人各存一份，改了哪份没人知道」——文档放进哪个空间，谁能看、谁能改就跟着定下来。<br>「这份改了，会不会牵动别的文档」——关系图谱把引用关系画出来。</p></div>
+      <div class="cap-item"><span>协同断在系统边界 · 4 条</span><b class="ci-title">「纪要里写的待办，还得去任务系统再录一遍」</b><p>在文档里选中一句话就能建任务。<br>「排期和说明分在两个系统里」——看板和甘特图直接嵌进文档。<br>「要拍板的事得另开日历约会」——一键发起会议，这篇文档就是议程。<br>「头脑风暴的板子和纪要分在两处」——画板和思维导图也嵌进文档。</p></div>
+      <div class="cap-item"><span>权限说不清 · 3 条</span><b class="ci-title">「不知道这份能不能发出去」</b><p>六个开关逐条写明，一看就懂。<br>「建库的时候就想定好谁能看」——新建知识库必须先选可见范围。<br>「删一个库太容易了」——要照着把库名输一遍，还会通知其他管理员。</p></div>
+      <div class="cap-item"><span>讲与追溯 · 2 条</span><b class="ci-title">「讲一遍要先做一版 PPT」</b><p>文档直接进演示模式。<br>「谁导出过、谁删过，得查得到」——后台按导出、下载、删除三类留下记录。</p></div>
     </div>
 
-<h3 class="sub-head"><span class="num">03</span>角色<span class="sub-en">ROLES · 暂无</span><span class="line"></span></h3>
-    <div class="fig-slot pg-empty" style="--ar:auto"><span class="fig-no">待填</span><b>角色还没拆</b><ul><li>目标用户见项目介绍：平台内部成员</li><li>拆出角色后照 NOTA 的三栏写</li></ul></div>
+<h3 class="sub-head"><span class="num">03</span>三类人，三种诉求<span class="sub-en">ROLES · 3</span><span class="line"></span></h3>
+    <p class="rol-lead">同一个文档库，三类人关心的事完全不同。<b>先分清楚谁在用，权限该给到哪一层才有依据。</b></p>
+
+    <div class="rol">
+      <div class="rol-card">
+        <div class="rol-h"><i>01</i><b>普通成员</b><em>人数最多</em></div>
+        <div class="rol-need">诉求：写得顺、找得到、不越界</div>
+        <p class="rol-old"><s>以前</s>不知道文档该建在哪，建完才发现别人看不到，或者不该看的看到了；想找一份两周前的东西，只能翻聊天记录、问同事。</p>
+        <p class="rol-new"><s class="ok">现在</s>建文档时先选空间，权限跟着空间走，不用自己判断；找文档按类型、归属人、时间三个条件筛，记不住名字还能看卡片上的正文。</p>
+      </div>
+
+      <div class="rol-card">
+        <div class="rol-h"><i>02</i><b>空间与知识库管理员</b><em>团队负责人</em></div>
+        <div class="rol-need">诉求：把范围定好，出了事说得清</div>
+        <p class="rol-old"><s>以前</s>权限要一份份文档去设，漏一份就可能发到外面；谁能删、谁能导出，全靠口头约定。</p>
+        <p class="rol-new"><s class="ok">现在</s>在空间这一层设一次，下面的文件夹和文档全部继承；建知识库时必须先选可见范围；六个安全开关逐条写明白，删库要照着把库名输一遍。</p>
+      </div>
+
+      <div class="rol-card">
+        <div class="rol-h"><i>03</i><b>系统管理员</b><em>后台</em></div>
+        <div class="rol-need">诉求：全局看得见，人走了库还在</div>
+        <p class="rol-old"><s>以前</s>建库的人一离职，这个库就没人管了；内容被导出、被删除，事后查不到是谁做的。</p>
+        <p class="rol-new"><s class="ok">现在</s>后台用一张总表列出每个库的管理员，可以直接更换；导出、下载、删除三类动作分别留下记录，写清楚谁在什么时候动了哪个库。</p>
+      </div>
+    </div>
 
 <h3 class="sub-head"><span class="num">04</span>用户旅程 · 没有它 vs 有它<span class="sub-en">JOURNEY</span><span class="line"></span></h3>
     <p class="jrn-lead" style="margin-top:16px">一条主路径：<b>决定放哪 → 多人一起写 → 让事情落地 / 让别人看到</b>。上行是没有它的时候人怎么干，下行是有它之后。</p>
@@ -1704,9 +1874,10 @@
           <span>改了一处，别处还是旧的</span>
         </div>
         <div class="jrn-new">
-          <b>文档由块组成，同步块改一处、其他位置跟着变</b>
-          <span>每个块上挂着「被使用 12 次」</span>
-          <b class="j2">让人在改之前就知道会影响多少地方</b>
+          <b>正文由一个个「块」组成，任务、看板、甘特图、表格、画板都能插进来</b>
+          <span>顶部工具栏管文字，右侧一列管整块和整篇</span>
+          <b class="j2">改动逐条留痕，谁改了哪一段可以回看</b>
+          <span>修订模式里红色是删掉的、绿色是新增的，可以逐条接受或拒绝</span>
         </div>
       </div>
 
@@ -1721,8 +1892,8 @@
         <div class="jrn-new">
           <b>纪要里当场建任务，任务挂回这份文档</b>
           <span>别的模块能直接在文档里落业务动作，业务的协同就发生在这一步</span>
-          <b class="j2">一份文档四种形态</b>
-          <span>阅读、PDF 分页、PDF 不分页、幻灯片带标注。文档不该为了讲一遍就导出成另一个格式</span>
+          <b class="j2">点「演示」就能当面讲</b>
+          <span>文档模式顺着讲，幻灯片模式按标题翻页，还能开白板、看评论，不必为了讲一遍再做一版 PPT</span>
         </div>
       </div>
     </div>
@@ -1740,217 +1911,165 @@
         <div class="pi-d">文档里能 @ 人、建任务、发起审批。<strong>协同做得最完整</strong>，代价是整套生态得一起用。</div></div>
       <div class="pain-item"><div class="pi-n">我们</div>
         <div class="pi-t">中转站，但只连平台内部</div>
-        <div class="pi-d">不做开放生态，只把<strong>会议、任务、审批、招聘</strong>这几条自家业务线接进来。<strong>范围小，但每一条都通到底。</strong></div></div>
+        <div class="pi-d">不做开放生态，只把<strong>会议、任务、审批、招聘</strong>这几条自家业务线接进来。<strong>范围小，但每一条都接到底。</strong></div></div>
     </div>
     <div class="intro-grid" style="margin-top:26px">
-      <div><p><strong>这三家的差别不在编辑器好不好用，在文档之后还能不能接着做事。</strong>Notion 让你自己搭，飞书让你在它的生态里做，我们的判断是：<strong>不追生态，只保证平台内部这几条业务线在文档里能闭合。</strong><br><br>理由很实在——我们的用户不会为了写文档去换整套办公系统，但他们每天都要在会议、任务、审批之间来回跑。</p></div>
+      <div><p><strong>这三家的差别不在编辑器好不好用，而在于文档写完之后，还能不能接着把事办了。</strong>Notion 让你自己搭，飞书让你在它的生态里做，我们的判断是：<strong>不追求做成开放生态，只保证自家这几条业务线在文档里就能走完。</strong><br><br>理由很实在——我们的用户不会为了写文档去换整套办公系统，但他们每天都要在会议、任务、审批之间来回跑。</p></div>
     </div>
 <h3 class="sub-head"><span class="num">06</span>现状 · 没有它的时候人怎么干<span class="sub-en">AS-IS · 3</span><span class="line"></span></h3>
-    <div class="fig-slot pg-empty" style="--ar:auto"><span class="fig-no">待填</span><b>现状分析待填</b><ul><li>存了找不到：同一份东西三个人各存一份</li><li>协同断在系统边界：会上说好的事会后去别的系统重录</li><li>权限说不清：不确定就不敢用，退回微信传文件</li></ul></div>
+    <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:16px 0 0">
+      在没有这套东西之前，大家其实一直有办法把活干完，只是这些办法都得靠人自己兜着。<strong style="color:var(--fg-2)">下面三件事，是改版前每天都在发生的。</strong>
+    </p>
+    <div class="cap-grid cap-3" style="margin-top:14px">
+      <div class="cap-item"><span>01</span><b class="ci-title">文件在群里传</b><p>要哪份就去聊天记录里翻，翻不到就问人。发出去的是一个副本，对方改完再发回来，最后谁手里的是最新版，说不清楚。</p></div>
+      <div class="cap-item"><span>02</span><b class="ci-title">各人电脑上各存一份</b><p>同一份材料，三个人手里三个版本。有人改了不通知别人，换台电脑或者人一走，文件就散了。</p></div>
+      <div class="cap-item"><span>03</span><b class="ci-title">为了讲一遍再做一版 PPT</b><p>文档已经写完，当面讲还得另做幻灯片。之后文档改了，幻灯片不会跟着改，两份内容开始对不上。</p></div>
+    </div>
 
 
-    <div class="sec-head"><h2>设计方案</h2><span>[DESIGN · 主线是权限 · 377 画板 / 229 页]</span></div>
+    <div class="sec-head"><h2>设计方案</h2><span>[DESIGN · 主线是协同 · 高保真页面]</span></div>
 
-<h3 class="sub-head"><span class="num">07</span>设计方案 · 核心链路<span class="sub-en">CORE · 权限</span><span class="line"></span></h3>
+<h3 class="sub-head"><span class="num">07</span>设计方案 · 核心链路<span class="sub-en">CORE · 协同</span><span class="line"></span></h3>
 
     <div class="feedback-split">
       <div>
-        <div class="fs-label">INHERITANCE</div>
-        <div class="fs-head">权限可以下放，<br><em>风险不能下放</em></div>
+        <div class="fs-label">CONNECTOR · 连接器</div>
+        <div class="fs-head">文档不是终点，<br><em>是各个模块的接口</em></div>
       </div>
-      <div class="fs-desc"><p>子文件夹继承父文件夹的权限。但<strong>「能不能分享到组织外」和「删除」这两条永远跟父级，子级改不了</strong>；其他权限，只有父级大于子级时才允许子级修改。<br><br>这条规则的判据是：<strong>一个动作的后果如果超出这个文件夹，那它就不该由这个文件夹的人决定。</strong></p></div>
+      <div class="fs-desc"><p>会议、任务、知识库各做各的事，产物却都要落成文字——纪要、说明、方案、制度。文档库因此成了平台里唯一一个所有业务线都会经过的地方，<strong>像企业里的中枢神经：各个模块的产物都挂在它上面，模块之间也通过它互相调用。</strong><br><br>所以这一章的主线是这条连接。<strong>权限不是主角，是让这条连接敢用的前提。</strong></p></div>
     </div>
 
-    <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:34px 0 0">
-      <strong style="color:var(--fg-2)">同步块：让人知道自己在改多少东西</strong>
-    </p>
-    <div class="intro-grid" style="margin-top:14px">
-      <div><p>同步块改一处，其他位置自动更新。所以每个块上挂着<strong>「被使用：12 次」</strong>。<br><br>用户要确认的不是「我改的这段话对不对」，<strong>是「我知不知道它会影响多少地方」。</strong>前者他自己能判断，后者只有系统能告诉他。</p></div>
+<ol class="jt"><li><b>01</b><span>会上说到一件事 · 在纪要里选中这句话</span></li><li><b>02</b><span>当场建任务 · 指定负责人、设好截止</span></li><li><b>03</b><span>任务落到他的「我的任务」，同时挂回这篇文档</span></li><li><b>04</b><span>要拍板 · 一键发起会议，这篇文档就是议程</span></li><li><b>05</b><span>会后的纪要回写到同一篇文档</span></li><li><b>06</b><span>每一步都留痕 · 谁改了什么、谁导出过、谁删过，事后查得到</span></li></ol><div class="jt-legend"><span><b>①</b>在文档里把活派出去 → 步 1–3</span><span><b>②</b>在文档里把会开起来 → 步 4–5</span><span><b>③</b>全程留痕 → 步 6</span></div>
+    <div class="intro-grid" style="margin-top:22px">
+      <div><p>这条链路走下来，人始终没有离开文档：待办在文档里派出去，会议以文档为议程，会后的纪要又回到同一篇。<strong>模块之间不再靠人来回搬运，文档就是它们共用的那张桌子。</strong><br><br>这就是 CSES 说的<strong>「空间叠加」</strong>——文档库、计划实施、会议叠在同一个空间里互相调用，每一次调用都留下记录。知识沉淀下来之后不是躺着，而是一直在被追踪、被回溯、被执行。</p></div>
       <div class="intro-aside">
-        <div class="row">改一处<b>十二处跟着变</b></div>
-        <div class="row">所以要显示<b>被使用 N 次</b></div>
-        <div class="row">判据<b>影响面要可见</b></div>
-        <div class="row">两年后<b>同一条判断用在了薪酬</b></div>
+        <div class="row">连接<b>会议 · 任务 · 知识库</b></div>
+        <div class="row">方式<b>在文档里直接建、直接发起</b></div>
+        <div class="row">回路<b>产物挂回这篇文档</b></div>
+        <div class="row">底线<b>每一步留痕，事后查得到</b></div>
       </div>
     </div>
+
+    <div class="feedback-split" style="margin-top:26px">
+      <div>
+        <div class="fs-label">PERMISSION · 连接的前提</div>
+        <div class="fs-head">权限可以下放，<br><em>风险不能下放</em></div>
+      </div>
+      <div class="fs-desc"><p>敢把任务和会议接进文档，前提是先说清楚谁能看、谁能发出去。子文件夹继承父文件夹的权限，但<strong>「能不能分享到组织外」和「删除」这两条永远跟父级，子级改不了</strong>；其他权限，只有父级的范围大于子级时才允许子级修改。<br><br>判据是：<strong>一个动作的后果如果超出这个文件夹，那它就不该由这个文件夹里的人决定。</strong></p></div>
+    </div>
+
     <div class="feedback-split" style="margin-top:26px">
       <div>
         <div class="fs-label">TWO YEARS LATER</div>
         <div class="fs-head">同一条判断，<br>两个模块，<em>隔了两年</em></div>
       </div>
-      <div class="fs-desc"><p>两年后我做薪酬核算，锁定按钮上写的是<strong>「这一锁涉及多少人、多少钱」</strong>。<br><br>跟同步块的「被使用 12 次」是同一条判断：<strong>让人在按下不可逆的按钮之前，先看见后果的范围。</strong>我当时没意识到这是同一件事，是回头整理作品集才发现的。</p></div>
+      <div class="fs-desc"><p>连接越多，一个动作波及的范围就越难靠人记住。所以同步块上写着「已在 3 个位置同步」，删知识库要照着把库名输一遍——<strong>都是在按下之前，先把后果的范围摆出来。</strong><br><br>两年后我做薪酬核算，锁定按钮上写的是<strong>「这一锁涉及多少人、多少钱」</strong>，是同一条判断。我当时没意识到这是同一件事，是回头整理作品集才发现的。</p></div>
     </div>
 
-    <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:34px 0 0">
-      <strong style="color:var(--fg-2)">标签系统：删除成本按影响面分级</strong>
-    </p>
-    <div class="cap-grid cap-3" style="margin-top:14px">
-      <div class="cap-item"><span>根标签</span><b class="ci-title">不能删</b><p>整个平台的分类基准，删了所有引用它的地方一起失效。</p></div>
-      <div class="cap-item"><span>主分类</span><b class="ci-title">删要二次确认</b><p>影响一批文档，但范围可预期。</p></div>
-      <div class="cap-item"><span>子标签</span><b class="ci-title">直接删</b><p>影响面小，加一道确认反而是打扰。</p></div>
-    </div>
-    <div class="intro-grid" style="margin-top:20px">
-      <div><p><strong>三级不是按「层级深浅」分的，是按「删掉之后有多少东西会坏」分的。</strong>我在设计稿边上写过一句：「自然语言如何和块链接起来」——那时候还没想清楚，但方向是对的：<strong>结构要能被读懂，人和机器都是。</strong></p></div>
-    </div>
-<h3 class="sub-head"><span class="num">08</span>设计方案 · 逐页讲解<span class="sub-en">PAGES · 25</span><span class="line"></span></h3>
-    <p class="jrn-lead">五幕二十五屏，全部是你 Figma「文档」文件里的页面：<b>文档列表</b>两屏（列表 / 卡片两种视图，文档关系图谱）；<b>文档内</b>十一屏，全是编辑器——右侧操作列的四个状态、创建任务的两种样式、看板、甘特图、表格、代码块、画册、协同画板、思维导图；<b>演示</b>两屏；<b>知识库</b>单独一块八屏，从建库、库内首页、目录、打开文档到权限和删库；<b>后台</b>两屏。每屏下面的「卖点」是我从稿子上反推的，哪条不对你直接改。弹窗都合在整页上；文档内和演示先放图，交互版等你排时间。</p>
-<ol class="jt"><li><b>01</b><span>我的文档 · 两种视图</span></li><li><b>02</b><span>关系图谱</span></li><li><b>03</b><span>操作列 · 插入 / 格式</span></li><li><b>04</b><span>操作列 · 样式 / 修订</span></li><li><b>05</b><span>创建任务</span></li><li><b>06</b><span>任务看板</span></li><li><b>07</b><span>甘特图</span></li><li><b>08</b><span>表格</span></li><li><b>09</b><span>代码块</span></li><li><b>10</b><span>画册</span></li><li><b>11</b><span>协同画板</span></li><li><b>12</b><span>画板 · 卡片连线</span></li><li><b>13</b><span>思维导图</span></li><li><b>14</b><span>演示 · 文档模式</span></li><li><b>15</b><span>演示 · 放映工具栏</span></li><li><b>16</b><span>知识库首页</span></li><li><b>17</b><span>新建知识库</span></li><li><b>18</b><span>库内首页</span></li><li><b>19</b><span>知识库 · 目录</span></li><li><b>20</b><span>知识库 · 打开文档</span></li><li><b>21</b><span>成员权限</span></li><li><b>22</b><span>安全设置</span></li><li><b>23</b><span>删除知识库</span></li><li><b>24</b><span>后台 · 权限管理</span></li><li><b>25</b><span>后台 · 操作记录</span></li></ol><div class="jt-legend"><span><b>①</b>文档列表 → 屏 1–2</span><span><b>②</b>文档内 → 屏 3–13</span><span><b>③</b>演示 → 屏 14–15</span><span><b>④</b>知识库 → 屏 16–23</span><span><b>⑤</b>后台 → 屏 24–25</span></div>
-<div class="pg-act">幕一 · 文档列表 · 屏 1–2</div>
+<h3 class="sub-head"><span class="num">08</span>设计方案 · 逐页讲解<span class="sub-en">PAGES · 12</span><span class="line"></span></h3>
+    <p class="jrn-lead">十二屏，按用起来的顺序走：先在<b>列表</b>里找到文档，再进<b>文档内</b>写字、插入内容，然后把它<b>讲给别人听</b>，最后是团队共用的<b>知识库</b>和它的权限。每一屏下面写清楚这一页在解决什么问题。</p>
+<ol class="jt"><li><b>01</b><span>我的文档 · 两种视图</span></li><li><b>02</b><span>企业空间首页</span></li><li><b>03</b><span>空间权限</span></li><li><b>04</b><span>任务 · 文档维度</span></li><li><b>05</b><span>关系图谱</span></li><li><b>06</b><span>操作列 · 插入 / 格式</span></li><li><b>07</b><span>操作列 · 样式 / 修订</span></li><li><b>08</b><span>同步块</span></li><li><b>09</b><span>插入样式九宫格</span></li><li><b>10</b><span>演示 · 文档模式</span></li><li><b>11</b><span>知识库</span></li><li><b>12</b><span>安全设置</span></li></ol><div class="jt-legend"><span><b>①</b>文档列表 → 屏 1–5</span><span><b>②</b>文档内 → 屏 6–9</span><span><b>③</b>演示 → 屏 10</span><span><b>④</b>知识库 → 屏 11–12</span></div>
+<div class="pg-act">幕一 · 文档列表 · 屏 1–5</div>
 <div class="pg">
-  <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-l-list.webp" data-title="我的文档 · 列表视图 · 文件夹在上，文档在下"><img src="assets/shots/thumb/dl-l-list.webp" alt="我的文档 · 列表视图"></a><a class="pg-shot" href="assets/shots/dl-l-cards.webp" data-title="我的文档 · 卡片视图 · 直接露出内容"><img src="assets/shots/thumb/dl-l-cards.webp" alt="我的文档 · 卡片视图"></a></div></div>
+  <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-n-list.webp" data-title="我的文档 · 列表视图 · 文件夹在上，文档在下"><img src="assets/shots/thumb/dl-n-list.webp" alt="我的文档 · 列表视图"></a><a class="pg-shot" href="assets/shots/dl-n-cards.webp" data-title="我的文档 · 卡片视图 · 直接露出内容"><img src="assets/shots/thumb/dl-n-cards.webp" alt="我的文档 · 卡片视图"></a></div></div>
   <div class="pg-body"><h4><span class="pg-n">1.</span>我的文档 · 列表与卡片<em>记得名字的走列表，记得长相的走卡片</em></h4>
-    <p>上图列表视图：文件夹先成卡片排在上面，带项目数；下面是文档列表，按创建时间、归属、最近打开排。下图卡片视图：每张卡直接露出正文前几行、图片、清单，最近更新 / 最近使用 / 我的关注三个筛选，右上一键切视图。</p><p class="pg-note">找文件有两种习惯：记得名字的人看列表，记得「那份里有张图」的人看卡片；同一批数据两种视图，不用为哪种人妥协。</p>
+    <p>上图列表视图：文件夹先成卡片排在上面，带项目数；下面是文档列表，按创建时间、归属、最近打开排。下图卡片视图：每张卡直接露出正文前几行、图片、清单，最近更新 / 最近使用 / 我的关注三个筛选，右上一键切视图。</p><p class="pg-note">找文件有两种习惯：记得名字的人看列表，记得「那份里有张图」的人看卡片。同一批文档两种看法，不用逼着谁改习惯。</p>
   </div>
 </div>
 <div class="pg">
-  <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-w04.webp" data-title="关系图谱 · 全图"><img src="assets/shots/thumb/dl-w04.webp" alt="关系图谱 · 全图"></a><a class="pg-shot" href="assets/shots/dl-06.webp" data-title="关系图谱 · 筛选与外观设置"><img src="assets/shots/thumb/dl-06.webp" alt="关系图谱 · 筛选与外观设置"></a></div></div>
-  <div class="pg-body"><h4><span class="pg-n">2.</span>关系图谱 · 谁引了谁<em>文档之间的引用画成图</em></h4>
-    <p>上图：文档间的引用画成图，蓝线是「被引用」，黄线是「引用」，点一个节点出卡片，双击打开文档。下图右侧设置：只看我创建的、相关任务、相关会议、相关日程，独立文件可以隐藏；外观里调箭头、文本透明度、节点大小、连线粗细；力度里调图谱向心力和节点间的排斥力，还能播放动画看它散开。</p><p class="pg-note">文档多了以后真正的问题是「这份改了会牵动哪些」，图谱把关系直接画出来，而不是让人靠记；筛选按人和业务对象切，不是按文件夹。</p>
+  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-s-home.webp" data-title="企业空间首页 · 动态与最近使用"><img src="assets/shots/thumb/dl-s-home.webp" alt="企业空间首页 · 动态与最近使用"></a></div>
+  <div class="pg-body"><h4><span class="pg-n">2.</span>企业空间首页 · 动态与最近使用<em>先看人在做什么，再找文件</em></h4>
+    <p>企业空间的首页分两段：上面是动态流，「与我协同 / 所有协同」——谁在哪篇文档评论了、提及了、创建了会议，各带一句摘要；下面是最近使用 / 我发布的，按类型、归属团队、归属、最近打开筛。</p><p class="pg-note">空间首页回答的不是「这里有哪些文件」，而是「这个空间里正在发生什么」——先看到人的动作，再去找文件。</p>
   </div>
 </div>
-<div class="pg-act">幕二 · 文档内 · 屏 3–13</div>
+<div class="pg">
+  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-s-perm.webp" data-title="空间设置 · 权限"><img src="assets/shots/thumb/dl-s-perm.webp" alt="空间设置 · 权限"></a></div>
+  <div class="pg-body"><h4><span class="pg-n">3.</span>空间设置 · 权限<em>在空间这一层定一次，下面全继承</em></h4>
+    <p>空间设置里的权限一页：文档水印；对外分享——允许内容分享到组织外，或只给可管理权限的人；再往下六条高级设置：谁可以管理文件和文件夹的协作者、是否仅组织内的用户可见、谁可以复制打印下载、谁可以新建和上传、谁可以移动删除、谁可以重命名，每条一个下拉，默认给可管理的用户。</p><p class="pg-note">权限在空间这一层设一次，下面的文件夹和文档都继承。发到公司外面、删除这类收不回来的动作，默认只给管理员。</p>
+  </div>
+</div>
+<div class="pg">
+  <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-n-tasks.webp" data-title="任务 · 文档维度 · 列表"><img src="assets/shots/thumb/dl-n-tasks.webp" alt="任务 · 文档维度 · 列表"></a><a class="pg-shot" href="assets/shots/dl-n-tasks-2.webp" data-title="任务 · 文档维度 · 停在一条上出卡片"><img src="assets/shots/thumb/dl-n-tasks-2.webp" alt="任务 · 文档维度 · 停在一条上出卡片"></a></div></div>
+  <div class="pg-body"><h4><span class="pg-n">4.</span>任务 · 文档维度<em>任务按文档归组</em></h4>
+    <p>个人空间里的「任务」切成文档维度：每份文档下面挂着它派出去的任务，类型、截止时间、负责人一行看完；上图是列表，下图停在一条任务上出卡片，直接打开。</p><p class="pg-note">任务本来就是从文档里派出去的，所以看任务也能顺着文档看，不用再去项目管理里翻。</p>
+  </div>
+</div>
+<div class="pg">
+  <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-n-graph-2.webp" data-title="关系图谱 · 全图"><img src="assets/shots/thumb/dl-n-graph-2.webp" alt="关系图谱 · 全图"></a><a class="pg-shot" href="assets/shots/dl-n-graph.webp" data-title="关系图谱 · 筛选与外观设置"><img src="assets/shots/thumb/dl-n-graph.webp" alt="关系图谱 · 筛选与外观设置"></a></div></div>
+  <div class="pg-body"><h4><span class="pg-n">5.</span>关系图谱 · 谁引了谁<em>文档之间的引用画成图</em></h4>
+    <p>上图：文档间的引用画成图，蓝线是「被引用」，黄线是「引用」，点一个节点出卡片，双击打开文档。下图右侧设置：只看我创建的、相关任务、相关会议、相关日程，独立文件可以隐藏；外观里调箭头、文本透明度、节点大小、连线粗细；力度里调图谱向心力和节点间的排斥力，还能播放动画看它散开。</p><p class="pg-note">文档一多，真正的问题是「这份改了会牵动哪些」。图谱把关系直接画出来，不用靠人记；筛选按人和业务来切，不按文件夹。</p>
+  </div>
+</div>
+<div class="pg-act">幕二 · 文档内 · 屏 6–9</div>
 <div class="pg">
   <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-i-rail-1.webp" data-title="编辑器 · 右侧操作列 · 插入"><img src="assets/shots/thumb/dl-i-rail-1.webp" alt="编辑器 · 右侧操作列 · 插入"></a><a class="pg-shot" href="assets/shots/dl-i-rail-2.webp" data-title="编辑器 · 右侧操作列 · 格式"><img src="assets/shots/thumb/dl-i-rail-2.webp" alt="编辑器 · 右侧操作列 · 格式"></a></div></div>
-  <div class="pg-body"><h4><span class="pg-n">3.</span>编辑器 · 右侧操作列 · 插入 / 格式<em>工具栏管字，右侧列管块和文档</em></h4>
-    <p>编辑器右侧固定一列五个入口：插入、格式、样式、通知、详情。上图「插入」：搜索加按建议分组的块（分页符、画板、表格……），任何项目可以直接拖进文档；下图「格式」：标题 1–3，标题 4 / 正文 / 说明，展示样式页面 / 卡片，加粗斜体下划线删除线，装饰焦点 / 块，颜色。</p><p class="pg-note">顶部工具栏放字级操作，右侧列放块级和文档级操作，两层分工；面板从右侧展开，不遮正文。</p>
+  <div class="pg-body"><h4><span class="pg-n">6.</span>编辑器 · 右侧操作列 · 插入 / 格式<em>工具栏管字，右侧列管块和文档</em></h4>
+    <p>编辑器右侧固定一列五个入口：插入、格式、样式、通知、详情。上图「插入」：搜索加按建议分组的块（分页符、画板、表格……），任何项目可以直接拖进文档；下图「格式」：标题 1–3，标题 4 / 正文 / 说明，展示样式页面 / 卡片，加粗斜体下划线删除线，装饰焦点 / 块，颜色。</p><p class="pg-note">顶部工具栏管文字，右侧这一列管整块和整篇，分两层；面板从右边推开，不挡住正文。</p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-i-rail-3.webp" data-title="编辑器 · 右侧操作列 · 样式"><img src="assets/shots/thumb/dl-i-rail-3.webp" alt="编辑器 · 右侧操作列 · 样式"></a><a class="pg-shot" href="assets/shots/dl-i-rail-4.webp" data-title="编辑器 · 修订模式"><img src="assets/shots/thumb/dl-i-rail-4.webp" alt="编辑器 · 修订模式"></a></div></div>
-  <div class="pg-body"><h4><span class="pg-n">4.</span>编辑器 · 右侧操作列 · 样式 / 修订<em>风格一处改全篇；修订像审稿</em></h4>
-    <p>上图「样式」：标题风格、内容颜色（背景 / 文档 / 文本）、封面图片、分隔符样式，改一处全篇跟着变；下图「修订」模式：正文里红删绿增，右侧 16 条修订意见，可以接受 / 拒绝全部，也能在某一条下面回复讨论。</p><p class="pg-note">风格和修订都是文档级的事，所以都放在右侧列，而不是塞进工具栏。</p>
+  <div class="pg-body"><h4><span class="pg-n">7.</span>编辑器 · 右侧操作列 · 样式 / 修订<em>风格一处改全篇；修订像审稿</em></h4>
+    <p>上图「样式」：标题风格、内容颜色（背景 / 文档 / 文本）、封面图片、分隔符样式，改一处全篇跟着变；下图「修订」模式：正文里红删绿增，右侧 16 条修订意见，可以接受 / 拒绝全部，也能在某一条下面回复讨论。</p><p class="pg-note">风格和修订管的是整篇文档，所以放在右侧一列，不挤进顶部工具栏。</p>
   </div>
 </div>
 <div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-i-task2.webp" data-title="创建任务 · 两种样式"><img src="assets/shots/thumb/dl-i-task2.webp" alt="创建任务 · 两种样式"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">5.</span>创建任务 · 两种样式<em>随手勾的，和正式派的</em></h4>
-    <p>样式一是清单式：勾选框加任务名，下面一行开始 / 截止日期和负责人，右侧「同步至任务管理」；样式二是表格式：任务名、负责人、截止日期、提醒，一行一条。</p><p class="pg-note">写纪要时随手记的任务用样式一，正式分派用样式二，两种都能同步到任务管理，不用离开文档。</p>
+  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-i-sync.webp" data-title="同步块 · 已在 3 个位置同步"><img src="assets/shots/thumb/dl-i-sync.webp" alt="同步块 · 已在 3 个位置同步"></a></div>
+  <div class="pg-body"><h4><span class="pg-n">8.</span>同步块 · 一段话放在几处<em>块上写着「已在 3 个位置同步」</em></h4>
+    <p>同一段内容可以同时放在几篇文档里，改一处，其他位置自动跟着变。每个同步块上都写着「已在 3 个位置同步」，右边是「解除全部绑定」；点开能看到这 3 处分别在哪篇文档、哪张导图里。</p><p class="pg-note">用户要确认的不是「我这段话改得对不对」，而是<strong>「我知不知道它会影响到几个地方」</strong>。前者他自己能判断，后者只有系统能告诉他。</p>
   </div>
 </div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-i-kanban.webp" data-title="任务看板 · 嵌在文档里"><img src="assets/shots/thumb/dl-i-kanban.webp" alt="任务看板 · 嵌在文档里"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">6.</span>任务看板<em>按列分状态，卡片带人和日期</em></h4>
-    <p>文档里插一块看板：按列分状态，每张卡带负责人和日期，列可以加。</p><p class="pg-note">看板不用跳去项目管理，文档本身就是一块工作台。</p>
+<div class="pg" id="insGrid">
+  <div class="pg-slot">
+    <div class="ig-grid">
+      <button type="button" class="ig-cell" data-i="0" aria-expanded="false"><img src="assets/shots/thumb/dl-i-task2.webp" alt="创建任务" loading="lazy"><span>创建任务</span></button>
+      <button type="button" class="ig-cell" data-i="1" aria-expanded="false"><img src="assets/shots/thumb/dl-i-kanban.webp" alt="任务看板" loading="lazy"><span>任务看板</span></button>
+      <button type="button" class="ig-cell" data-i="2" aria-expanded="false"><img src="assets/shots/thumb/dl-i-gantt.webp" alt="甘特图" loading="lazy"><span>甘特图</span></button>
+      <button type="button" class="ig-cell" data-i="3" aria-expanded="false"><img src="assets/shots/thumb/dl-i-table.webp" alt="表格" loading="lazy"><span>表格</span></button>
+      <button type="button" class="ig-cell" data-i="4" aria-expanded="false"><img src="assets/shots/thumb/dl-i-code.webp" alt="代码块" loading="lazy"><span>代码块</span></button>
+      <button type="button" class="ig-cell" data-i="5" aria-expanded="false"><img src="assets/shots/thumb/dl-i-album.webp" alt="画册" loading="lazy"><span>画册</span></button>
+      <button type="button" class="ig-cell" data-i="6" aria-expanded="false"><img src="assets/shots/thumb/dl-i-board-embed.webp" alt="协同画板" loading="lazy"><span>协同画板</span></button>
+      <button type="button" class="ig-cell" data-i="7" aria-expanded="false"><img src="assets/shots/thumb/dl-i-board-cards.webp" alt="画板 · 卡片连线" loading="lazy"><span>画板 · 卡片连线</span></button>
+      <button type="button" class="ig-cell" data-i="8" aria-expanded="false"><img src="assets/shots/thumb/dl-i-mind-embed.webp" alt="思维导图" loading="lazy"><span>思维导图</span></button>
+    </div>
+    <div class="ig-expand"><div class="ig-expand-inner">
+      <div class="ig-item" data-i="0"><a class="pg-shot" href="assets/shots/dl-i-task2.webp" data-title="创建任务 · 两种样式"><img src="assets/shots/thumb/dl-i-task2.webp" alt="创建任务 · 两种样式" loading="lazy"></a><p class="ig-cap"><b>创建任务 · 两种样式</b>清单式随手记，表格式正式派，都同步到任务管理。</p></div>
+      <div class="ig-item" data-i="1"><a class="pg-shot" href="assets/shots/dl-i-kanban.webp" data-title="任务看板"><img src="assets/shots/thumb/dl-i-kanban.webp" alt="任务看板" loading="lazy"></a><p class="ig-cap"><b>任务看板</b>按列分状态，卡片带负责人和日期。</p></div>
+      <div class="ig-item" data-i="2"><a class="pg-shot" href="assets/shots/dl-i-gantt.webp" data-title="甘特图"><img src="assets/shots/thumb/dl-i-gantt.webp" alt="甘特图" loading="lazy"></a><p class="ig-cap"><b>甘特图</b>任务在左，时间轴在右，按起止日期画条。</p></div>
+      <div class="ig-item" data-i="3"><a class="pg-shot" href="assets/shots/dl-i-table.webp" data-title="表格"><img src="assets/shots/thumb/dl-i-table.webp" alt="表格" loading="lazy"></a><p class="ig-cap"><b>表格</b>行列可加，和别的块一样能拖能删。</p></div>
+      <div class="ig-item" data-i="4"><a class="pg-shot" href="assets/shots/dl-i-code.webp" data-title="代码块"><img src="assets/shots/thumb/dl-i-code.webp" alt="代码块" loading="lazy"></a><p class="ig-cap"><b>代码块</b>语言选择、行号、复制。</p></div>
+      <div class="ig-item" data-i="5"><a class="pg-shot" href="assets/shots/dl-i-album.webp" data-title="画册 · 嵌在文档里"><img src="assets/shots/thumb/dl-i-album.webp" alt="画册 · 嵌在文档里" loading="lazy"></a><a class="pg-shot" href="assets/shots/dl-i-album-detail.webp" data-title="画册 · 详情弹窗"><img src="assets/shots/thumb/dl-i-album-detail.webp" alt="画册 · 详情弹窗" loading="lazy"></a><p class="ig-cap"><b>画册</b>多张图一个块，正文里只占一行；点开是详情弹窗。</p></div>
+      <div class="ig-item" data-i="6"><a class="pg-shot" href="assets/shots/dl-i-board-embed.webp" data-title="协同画板 · 嵌在文档里"><img src="assets/shots/thumb/dl-i-board-embed.webp" alt="协同画板 · 嵌在文档里" loading="lazy"></a><a class="pg-shot" href="assets/shots/dl-i-board-editor.webp" data-title="协同画板 · 打开编辑器"><img src="assets/shots/thumb/dl-i-board-editor.webp" alt="协同画板 · 打开编辑器" loading="lazy"></a><p class="ig-cap"><b>协同画板</b>便签按区域摆；点开进完整编辑器，顶部能退回文档。</p></div>
+      <div class="ig-item" data-i="7"><a class="pg-shot" href="assets/shots/dl-i-board-cards.webp" data-title="协同画板 · 文档卡片连线"><img src="assets/shots/thumb/dl-i-board-cards.webp" alt="协同画板 · 文档卡片连线" loading="lazy"></a><p class="ig-cap"><b>协同画板 · 文档卡片连线</b>画板里放文档卡片，卡片之间拉线表示关系。</p></div>
+      <div class="ig-item" data-i="8"><a class="pg-shot" href="assets/shots/dl-i-mind-embed.webp" data-title="思维导图 · 嵌在文档里"><img src="assets/shots/thumb/dl-i-mind-embed.webp" alt="思维导图 · 嵌在文档里" loading="lazy"></a><a class="pg-shot" href="assets/shots/dl-i-mind-open.webp" data-title="思维导图 · 打开编辑器"><img src="assets/shots/thumb/dl-i-mind-open.webp" alt="思维导图 · 打开编辑器" loading="lazy"></a><p class="ig-cap"><b>思维导图</b>结构先画后写；点开加节点、改样式、连线。</p></div>
+    </div></div>
+  </div>
+  <div class="pg-body"><h4><span class="pg-n">9.</span>文档内部插入样式（部分）<em>九种块，点一格展开</em></h4>
+    <p>编辑器里能插的块（部分）：创建任务、任务看板、甘特图、表格、代码块、画册、协同画板、画板里的文档卡片连线、思维导图。点其中一格，下面展开这一类的整页，再点一次收起；展开的图还能点开看大图。</p><p class="pg-note">表格、代码、画板、导图和一段文字是同一种东西，都能拖动、删除、被别处引用。文档因此装得下工作本身，而不只是描述工作。</p>
   </div>
 </div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-i-gantt.webp" data-title="甘特图 · 嵌在文档里"><img src="assets/shots/thumb/dl-i-gantt.webp" alt="甘特图 · 嵌在文档里"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">7.</span>甘特图<em>任务在左，时间轴在右</em></h4>
-    <p>任务列在左边，时间轴在右边，任务条按开始和截止日期画出来。</p><p class="pg-note">排期和说明放在一起，看文档的人不用再去另一个系统对时间。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-i-table.webp" data-title="表格块"><img src="assets/shots/thumb/dl-i-table.webp" alt="表格块"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">8.</span>表格<em>表格是块，不是附件</em></h4>
-    <p>表格是一个块：行列可加，单元格可选，和别的块一样能拖能删。</p><p class="pg-note">表格是正文的一部分，不用另开一个文件再贴链接。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-i-code.webp" data-title="代码块"><img src="assets/shots/thumb/dl-i-code.webp" alt="代码块"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">9.</span>代码块<em>语言、行号、复制</em></h4>
-    <p>代码块带语言选择和行号，右上可以复制。</p><p class="pg-note">技术文档贴代码就地高亮，不再贴截图。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-i-album.webp" data-title="画册 · 嵌在文档里"><img src="assets/shots/thumb/dl-i-album.webp" alt="画册 · 嵌在文档里"></a><a class="pg-shot" href="assets/shots/dl-i-album-detail.webp" data-title="画册 · 详情弹窗"><img src="assets/shots/thumb/dl-i-album-detail.webp" alt="画册 · 详情弹窗"></a></div></div>
-  <div class="pg-body"><h4><span class="pg-n">10.</span>画册<em>一组图当一个块</em></h4>
-    <p>上图多张图作为一个画册块，正文里只占一行缩略；下图点开是弹窗：甲方公司、标签、备注、附件、图片一屏看完，顶部能切上一张 / 下一张、看历史。</p><p class="pg-note">一组图当一个块管理，不把正文拉长；要看再点开，弹窗盖在正文上，关掉回到原位。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-i-board-embed.webp" data-title="协同画板 · 嵌在文档里"><img src="assets/shots/thumb/dl-i-board-embed.webp" alt="协同画板 · 嵌在文档里"></a><a class="pg-shot" href="assets/shots/dl-i-board-editor.webp" data-title="协同画板 · 打开编辑器"><img src="assets/shots/thumb/dl-i-board-editor.webp" alt="协同画板 · 打开编辑器"></a></div></div>
-  <div class="pg-body"><h4><span class="pg-n">11.</span>协同画板 · 文档里与编辑器<em>画板既是块，也是页面</em></h4>
-    <p>上图画板嵌在文档里，便签按区域摆；下图点开进完整编辑器，左侧工具条，顶部能退回文档。</p><p class="pg-note">头脑风暴的板子和会议纪要在同一篇文档里，不用在两个产品之间切。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-i-board-cards.webp" data-title="协同画板 · 文档卡片连线"><img src="assets/shots/thumb/dl-i-board-cards.webp" alt="协同画板 · 文档卡片连线"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">12.</span>协同画板 · 文档卡片连线<em>关系可以手工画</em></h4>
-    <p>画板里可以放文档卡片，卡片之间拉线表示关系。</p><p class="pg-note">文档之间的关系除了关系图谱自动算出来，也能在画板里手工画给人看。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-i-mind-embed.webp" data-title="思维导图 · 嵌在文档里"><img src="assets/shots/thumb/dl-i-mind-embed.webp" alt="思维导图 · 嵌在文档里"></a><a class="pg-shot" href="assets/shots/dl-i-mind-open.webp" data-title="思维导图 · 打开编辑器"><img src="assets/shots/thumb/dl-i-mind-open.webp" alt="思维导图 · 打开编辑器"></a></div></div>
-  <div class="pg-body"><h4><span class="pg-n">13.</span>思维导图 · 文档里与打开<em>先画结构，再写正文</em></h4>
-    <p>上图导图嵌在文档里；下图点开进编辑器，加节点、改样式、连线。</p><p class="pg-note">导图和正文在一个文件里，想清楚结构的地方和写正文的地方不分家。</p>
-  </div>
-</div>
-<div class="pg-act">幕三 · 演示 · 屏 14–15</div>
+<div class="pg-act">幕三 · 演示 · 屏 10</div>
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-p07.webp" data-title="演示 · 文档模式 · 顶部三个切换"><img src="assets/shots/thumb/dl-p07.webp" alt="演示 · 文档模式 · 顶部三个切换"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">14.</span>演示 · 文档模式<em>顶部三个切换：幻灯片模式 / 白板 / 展示评论</em></h4>
-    <p>点「演示」先进文档模式：正文原样放大，顶部只留返回和三个切换——切到幻灯片模式、开白板、展示评论。</p><p class="pg-note">演示不另做一份 PPT，就是这篇文档换个放法；三个切换对应讲的三种场景：顺着讲、逐页讲、边讲边讨论。</p>
+  <div class="pg-body"><h4><span class="pg-n">10.</span>演示 · 文档模式<em>顶部三个切换：幻灯片模式 / 白板 / 展示评论</em></h4>
+    <p>点「演示」先进文档模式：正文原样放大，顶部只留返回和三个切换——切到幻灯片模式、开白板、展示评论。</p><p class="pg-note">演示不另做一份 PPT，就是这篇文档换个方式放出来。三个切换对应三种讲法：顺着讲、一页页讲、边讲边讨论。</p>
   </div>
 </div>
+<div class="pg-act">幕四 · 知识库 · 屏 11–12</div>
 <div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-p13.webp" data-title="演示 · 放映工具栏与语音条"><img src="assets/shots/thumb/dl-p13.webp" alt="演示 · 放映工具栏与语音条"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">15.</span>演示 · 放映工具栏<em>截屏 / 标注 / 音量 / 静音 / 发送当前页 / 协作邀请 / 语音邀请</em></h4>
-    <p>放映中底部一条工具栏：截屏、标注、音量、静音、发送当前页、协作邀请、语音邀请；右上是语音条——头像、声波、麦克风、设置、收起、离开。</p><p class="pg-note">演示不只是放给人看，还能把当前页发出去、把人拉进来——讨论在放映里就能发生。</p>
-  </div>
-</div>
-<div class="pg-act">幕四 · 知识库 · 屏 16–23</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-08.webp" data-title="知识库首页 · 卡片带公开范围"><img src="assets/shots/thumb/dl-08.webp" alt="知识库首页 · 卡片带公开范围"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">16.</span>知识库首页 · 卡片带公开范围<em>商学院公开 / 企业公开</em></h4>
-    <p>知识库是团队级的容器，首页一张卡一个库，封面上直接压着公开范围标签（商学院公开 / 企业公开）；全部 / 个人 / 团队协作三个分组，右上是分组管理、筛选、成员权限。</p><p class="pg-note">「谁能看」是知识库最重要的一个属性，所以做成封面上的标签，而不是藏在设置里。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-09.webp" data-title="新建知识库 · 建库先定可见范围"><img src="assets/shots/thumb/dl-09.webp" alt="新建知识库 · 建库先定可见范围"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">17.</span>新建知识库 · 建库先定可见范围<em>权限不是事后补的</em></h4>
-    <p>新建只填四项：名称、简介、分类、可见范围。可见范围是必填，仅当前知识库成员可见 / 企业可见二选一。</p><p class="pg-note">建库的那一刻就把可见范围定下来，后面每篇文档都继承，比事后一篇篇补权限省很多事。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-10.webp" data-title="库内首页 · 一个库一块仪表盘"><img src="assets/shots/thumb/dl-10.webp" alt="库内首页 · 一个库一块仪表盘"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">18.</span>库内首页 · 一个库一块仪表盘<em>数据、最近变动、动态</em></h4>
-    <p>进到库里先是一块仪表盘：几篇文档、多少字、几位成员；中间是最近变动，右侧动态栏有数据概览（新增文档 / 浏览 / 访客）、最近查看、近期评论。</p><p class="pg-note">库首页回答的是「这个库还活着吗」——有没有人在改、有没有人在看、有没有人在评论。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-11.webp" data-title="目录 · 左栏两级展开"><img src="assets/shots/thumb/dl-11.webp" alt="目录 · 左栏两级展开"></a><a class="pg-shot" href="assets/shots/dl-11b.webp" data-title="目录 · 收起后变悬浮菜单"><img src="assets/shots/thumb/dl-11b.webp" alt="目录 · 收起后变悬浮菜单"></a></div></div>
-  <div class="pg-body"><h4><span class="pg-n">19.</span>知识库 · 目录 · 展开与悬浮<em>左栏两级展开；收起后变悬浮菜单</em></h4>
-    <p>上图左栏目录两级展开，文档层级一次看全；下图左栏收起后，目录从面包屑旁的图标里悬浮出来，不占正文宽度。</p><p class="pg-note">写的时候要宽正文，找位置的时候要看目录，两种状态之间一键切。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-12.webp" data-title="打开文档 · 块手柄"><img src="assets/shots/thumb/dl-12.webp" alt="打开文档 · 块手柄"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">20.</span>知识库 · 打开文档 · 块手柄<em>只读 / 分享 / 演示 / 发布固定在右上</em></h4>
-    <p>打开文档：面包屑在顶，右上固定四个动作——只读、分享、演示、发布；封面上「换一张 / 调整位置」就地改；鼠标停在段落左侧出现块手柄，可以拖、可以换块类型。</p><p class="pg-note">高频的四个动作永远在同一个位置，剩下的都收进「…」；正文区不放任何常驻控件，手柄只在需要时出现。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-13.webp" data-title="成员权限 · 四档"><img src="assets/shots/thumb/dl-13.webp" alt="成员权限 · 四档"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">21.</span>成员权限 · 四档<em>所有者 / 可查看 / 可编辑 / 管理员</em></h4>
-    <p>成员权限一个弹窗：所有者不可改，其余每人一个下拉——可查看、可编辑、管理员；添加协作者在同一个弹窗底部。</p><p class="pg-note">四档够用，再多用户记不住；加人和改权限在一处，不用来回切页面。</p>
+  <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/dl-08.webp" data-title="知识库首页 · 卡片带公开范围"><img src="assets/shots/thumb/dl-08.webp" alt="知识库首页 · 卡片带公开范围"></a><a class="pg-shot" href="assets/shots/dl-11.webp" data-title="知识库 · 库内目录两级展开"><img src="assets/shots/thumb/dl-11.webp" alt="知识库 · 库内目录两级展开"></a></div></div>
+  <div class="pg-body"><h4><span class="pg-n">11.</span>知识库<em>团队级的容器：首页看范围，库内看目录</em></h4>
+    <p>上图知识库首页：一张卡一个库，封面上直接压着公开范围（商学院公开 / 企业公开），全部 / 个人 / 团队协作三个分组，右上是分组管理、筛选、成员权限。下图进到库里：左栏目录两级展开，文档层级一次看全；中间是最近变动，右侧动态栏有数据概览、最近查看、近期评论。</p><p class="pg-note">「谁能看」是知识库最要紧的一件事，所以直接印在封面上。进了库先看目录和最近动静，再去找具体文档。</p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-14.webp" data-title="安全设置 · 六条开关"><img src="assets/shots/thumb/dl-14.webp" alt="安全设置 · 六条开关"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">22.</span>安全设置 · 六条开关<em>分享、外发、新建、复制导出、评论、删除</em></h4>
-    <p>安全设置六条：是否允许分享、是否允许分享到组织外、谁可以新建文档、可阅读的人能不能复制 / 创建副本 / 打印 / 导出、能不能评论、谁可以移动或删除。</p><p class="pg-note">这六条是企业客户实际会问的六个问题，逐条给开关，比一个「高级 / 普通」模式好解释。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-15.webp" data-title="删除知识库 · 输库名确认"><img src="assets/shots/thumb/dl-15.webp" alt="删除知识库 · 输库名确认"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">23.</span>删除知识库 · 输库名确认<em>高危操作要付一点成本</em></h4>
-    <p>删除知识库放在设置的「更多」里，红色按钮上方先有一条警示；点了之后弹窗要求把库名照着输一遍，删除才亮起，同时通知其他管理员。</p><p class="pg-note">删一个库等于删掉里面所有页面，所以确认成本故意抬高，并且不让一个管理员悄悄删。</p>
-  </div>
-</div>
-<div class="pg-act">幕五 · 后台 · 屏 24–25</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-16.webp" data-title="后台 · 权限管理"><img src="assets/shots/thumb/dl-16.webp" alt="后台 · 权限管理"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">24.</span>后台 · 权限管理<em>每个库的管理员可更换</em></h4>
-    <p>后台的权限管理是一张总表：知识库名称、管理员、所属分组、创建时间，每一行可以更换管理员或删除。</p><p class="pg-note">人会离职、会换岗，库不能跟着没了主；更换管理员做成一行里的动作，而不是找研发改数据。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/dl-17.webp" data-title="后台 · 操作记录"><img src="assets/shots/thumb/dl-17.webp" alt="后台 · 操作记录"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">25.</span>后台 · 操作记录<em>导出、下载、删除三类留痕</em></h4>
-    <p>操作记录按导出的 / 下载的 / 删除的分三页，记录谁在什么时候对哪个库做了什么、涉及几篇文档、进度如何（已完成 / 正在下载 / 下载失败）。</p><p class="pg-note">这三类是会把内容带出系统、或让内容消失的动作，留痕是给企业管理员的安全感。</p>
+  <div class="pg-body"><h4><span class="pg-n">12.</span>安全设置 · 六条开关<em>分享、外发、新建、复制导出、评论、删除</em></h4>
+    <p>安全设置六条：是否允许分享、是否允许分享到组织外、谁可以新建文档、可阅读的人能不能复制 / 创建副本 / 打印 / 导出、能不能评论、谁可以移动或删除。</p><p class="pg-note">这六条正是企业客户会逐条问到的问题，所以逐条给开关，比笼统的「高级 / 普通」模式好解释。</p>
   </div>
 </div>
 
+<script>(function(){var g=document.getElementById("insGrid");if(!g)return;var ex=g.querySelector(".ig-expand"),cells=g.querySelectorAll(".ig-cell"),items=g.querySelectorAll(".ig-item"),cur=-1;cells.forEach(function(c){c.addEventListener("click",function(){var i=+c.dataset.i;if(i===cur){cur=-1;ex.classList.remove("open");cells.forEach(function(x){x.classList.remove("on");x.setAttribute("aria-expanded","false")});return}cur=i;cells.forEach(function(x){var on=+x.dataset.i===i;x.classList.toggle("on",on);x.setAttribute("aria-expanded",on?"true":"false")});items.forEach(function(p){p.classList.toggle("on",+p.dataset.i===i)});ex.classList.add("open");});});})();</script>
 <h3 class="sub-head"><span class="num">09</span>有它 · 没它<span class="sub-en">WITH · WITHOUT</span><span class="line"></span></h3>
     <p class="jrn-lead">过去的文档工具是「网盘 + 编辑器」：写完就躺在文件夹里，知识沉淀了，很难变成行动。它把文档做成<b>协同的起点</b>。同一篇文档，四个时刻，两种命运。</p>
     <div class="jrn jrn--4 jrn--ww">
@@ -1984,42 +2103,45 @@
     </div>
 
 
-                <h3 class="sub-head"><span class="num">10</span>剩余页面<span class="sub-en">MORE SCREENS · 38</span><span class="line"></span></h3>
-    <p class="dw-lead">编辑器 · 左侧目录、知识库 · 目录全部收起、文件夹内 · 文件夹卡片与文档、编辑器 · 输入「/」插入块、库内首页 · 变体、编辑器 · 文档设置、库内首页 · 第三版、文件夹内 · 简介与人员权限、编辑器 · 添加封面、知识库 · 全部文档、编辑器 · @人员 / 文档 / 会议、分享内容 · 浏览统计、热门文档、活跃用户、知识库 · 全部文档切换、编辑器 · 高亮块与表情、知识库 · 打开文档 · 封面与标题、任务 · 文档维度、编辑器 · 附件块 · PDF / 视频 / 音频、知识库 · 发布到商学院、知识库 · 发布到商学院 · 第二态、协同画板 · 形状库与设置、任务 · 文档维度 · 行内详情、知识库 · 公告编辑、编辑器 · 块设置、知识库 · 公告编辑 · 第二态、云空间 · 列表、画册 · 详情弹窗 · 空态、知识库 · 成员权限 · 长列表、演示 · 幻灯片封面、知识库设置 · 基础信息、搜索 · 最近打开、演示 · 展示评论、删除知识库 · 确认后、云空间 · 网格、演示 · 放映工具栏、后台 · 自定义分类、演示 · 文档模式 · 窗口、后台 · 操作记录 · 导出、后台 · 数据查看。</p>
+                <h3 class="sub-head"><span class="num">10</span>剩余页面<span class="sub-en">MORE SCREENS · 41</span><span class="line"></span></h3>
+    <p class="dw-lead">文档内部的各种操作、知识库剩下的页面、管理后台的操作记录与数据查看，都在这儿转。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 284, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/dl-e-toc.webp"><img src="assets/shots/thumb/dl-e-toc.webp" alt="编辑器 · 左侧目录" loading="lazy"></a>
+      <a href="assets/shots/dl-p13.webp"><img src="assets/shots/thumb/dl-p13.webp" alt="演示 · 放映工具栏与语音条" loading="lazy"></a>
       <a href="assets/shots/dl-k-toc-collapsed.webp"><img src="assets/shots/thumb/dl-k-toc-collapsed.webp" alt="知识库 · 目录全部收起" loading="lazy"></a>
-      <a href="assets/shots/dl-x-folder.webp"><img src="assets/shots/thumb/dl-x-folder.webp" alt="文件夹内 · 文件夹卡片与文档" loading="lazy"></a>
+      <a href="assets/shots/dl-n-tags.webp"><img src="assets/shots/thumb/dl-n-tags.webp" alt="企业空间 · 标签视图" loading="lazy"></a>
+      <a href="assets/shots/dl-09.webp"><img src="assets/shots/thumb/dl-09.webp" alt="新建知识库 · 建库先定可见范围" loading="lazy"></a>
       <a href="assets/shots/dl-e-slash.webp"><img src="assets/shots/thumb/dl-e-slash.webp" alt="编辑器 · 输入「/」插入块" loading="lazy"></a>
-      <a href="assets/shots/dl-w09.webp"><img src="assets/shots/thumb/dl-w09.webp" alt="库内首页 · 变体" loading="lazy"></a>
+      <a href="assets/shots/dl-n-doc-versions.webp"><img src="assets/shots/thumb/dl-n-doc-versions.webp" alt="文档内 · 目录、面包屑切换与版本列表" loading="lazy"></a>
       <a href="assets/shots/dl-e-docset.webp"><img src="assets/shots/thumb/dl-e-docset.webp" alt="编辑器 · 文档设置" loading="lazy"></a>
-      <a href="assets/shots/dl-k-lib-home-3.webp"><img src="assets/shots/thumb/dl-k-lib-home-3.webp" alt="库内首页 · 第三版" loading="lazy"></a>
-      <a href="assets/shots/dl-x-folder-info.webp"><img src="assets/shots/thumb/dl-x-folder-info.webp" alt="文件夹内 · 简介与人员权限" loading="lazy"></a>
+      <a href="assets/shots/dl-10.webp"><img src="assets/shots/thumb/dl-10.webp" alt="库内首页 · 一个库一块仪表盘" loading="lazy"></a>
+      <a href="assets/shots/dl-n-list-search.webp"><img src="assets/shots/thumb/dl-n-list-search.webp" alt="我的文档 · 全部文件 · 带搜索" loading="lazy"></a>
       <a href="assets/shots/dl-e-cover.webp"><img src="assets/shots/thumb/dl-e-cover.webp" alt="编辑器 · 添加封面" loading="lazy"></a>
+      <a href="assets/shots/dl-11b.webp"><img src="assets/shots/thumb/dl-11b.webp" alt="知识库 · 目录收起后变悬浮菜单" loading="lazy"></a>
       <a href="assets/shots/dl-w10.webp"><img src="assets/shots/thumb/dl-w10.webp" alt="知识库 · 全部文档" loading="lazy"></a>
       <a href="assets/shots/dl-e-mention.webp"><img src="assets/shots/thumb/dl-e-mention.webp" alt="编辑器 · @人员 / 文档 / 会议" loading="lazy"></a>
+      <a href="assets/shots/dl-12.webp"><img src="assets/shots/thumb/dl-12.webp" alt="知识库 · 打开文档 · 块手柄" loading="lazy"></a>
       <a href="assets/shots/dl-w03.webp"><img src="assets/shots/thumb/dl-w03.webp" alt="分享内容 · 浏览统计、热门文档、活跃用户" loading="lazy"></a>
+      <a href="assets/shots/dl-n-tags-2.webp"><img src="assets/shots/thumb/dl-n-tags-2.webp" alt="企业空间 · 标签视图 · 第二态" loading="lazy"></a>
+      <a href="assets/shots/dl-13.webp"><img src="assets/shots/thumb/dl-13.webp" alt="成员权限 · 四档" loading="lazy"></a>
       <a href="assets/shots/dl-k-alldocs-switch.webp"><img src="assets/shots/thumb/dl-k-alldocs-switch.webp" alt="知识库 · 全部文档切换" loading="lazy"></a>
       <a href="assets/shots/dl-e-callout.webp"><img src="assets/shots/thumb/dl-e-callout.webp" alt="编辑器 · 高亮块与表情" loading="lazy"></a>
+      <a href="assets/shots/dl-15.webp"><img src="assets/shots/thumb/dl-15.webp" alt="删除知识库 · 输库名确认" loading="lazy"></a>
       <a href="assets/shots/dl-w11.webp"><img src="assets/shots/thumb/dl-w11.webp" alt="知识库 · 打开文档 · 封面与标题" loading="lazy"></a>
-      <a href="assets/shots/dl-05.webp"><img src="assets/shots/thumb/dl-05.webp" alt="任务 · 文档维度" loading="lazy"></a>
       <a href="assets/shots/dl-e-attach.webp"><img src="assets/shots/thumb/dl-e-attach.webp" alt="编辑器 · 附件块 · PDF / 视频 / 音频" loading="lazy"></a>
+      <a href="assets/shots/dl-16.webp"><img src="assets/shots/thumb/dl-16.webp" alt="后台 · 权限管理" loading="lazy"></a>
+      <a href="assets/shots/dl-n-search-result.webp"><img src="assets/shots/thumb/dl-n-search-result.webp" alt="我的文档 · 搜索结果高亮" loading="lazy"></a>
       <a href="assets/shots/dl-w12.webp"><img src="assets/shots/thumb/dl-w12.webp" alt="知识库 · 发布到商学院" loading="lazy"></a>
-      <a href="assets/shots/dl-k-unpublished-2.webp"><img src="assets/shots/thumb/dl-k-unpublished-2.webp" alt="知识库 · 发布到商学院 · 第二态" loading="lazy"></a>
+      <a href="assets/shots/dl-17.webp"><img src="assets/shots/thumb/dl-17.webp" alt="后台 · 操作记录" loading="lazy"></a>
       <a href="assets/shots/dl-e-board-shapes.webp"><img src="assets/shots/thumb/dl-e-board-shapes.webp" alt="协同画板 · 形状库与设置" loading="lazy"></a>
-      <a href="assets/shots/dl-w05.webp"><img src="assets/shots/thumb/dl-w05.webp" alt="任务 · 文档维度 · 行内详情" loading="lazy"></a>
       <a href="assets/shots/dl-w07.webp"><img src="assets/shots/thumb/dl-w07.webp" alt="知识库 · 公告编辑" loading="lazy"></a>
+      <a href="assets/shots/dl-n-sticky.webp"><img src="assets/shots/thumb/dl-n-sticky.webp" alt="快速便签" loading="lazy"></a>
       <a href="assets/shots/dl-e-blockset.webp"><img src="assets/shots/thumb/dl-e-blockset.webp" alt="编辑器 · 块设置" loading="lazy"></a>
-      <a href="assets/shots/dl-k-notice-edit-2.webp"><img src="assets/shots/thumb/dl-k-notice-edit-2.webp" alt="知识库 · 公告编辑 · 第二态" loading="lazy"></a>
-      <a href="assets/shots/dl-x-space-list.webp"><img src="assets/shots/thumb/dl-x-space-list.webp" alt="云空间 · 列表" loading="lazy"></a>
       <a href="assets/shots/dl-i-album-detail2.webp"><img src="assets/shots/thumb/dl-i-album-detail2.webp" alt="画册 · 详情弹窗 · 空态" loading="lazy"></a>
       <a href="assets/shots/dl-w15.webp"><img src="assets/shots/thumb/dl-w15.webp" alt="知识库 · 成员权限 · 长列表" loading="lazy"></a>
       <a href="assets/shots/dl-p06.webp"><img src="assets/shots/thumb/dl-p06.webp" alt="演示 · 幻灯片封面" loading="lazy"></a>
       <a href="assets/shots/dl-w16.webp"><img src="assets/shots/thumb/dl-w16.webp" alt="知识库设置 · 基础信息" loading="lazy"></a>
-      <a href="assets/shots/dl-w06.webp"><img src="assets/shots/thumb/dl-w06.webp" alt="搜索 · 最近打开" loading="lazy"></a>
       <a href="assets/shots/dl-p03.webp"><img src="assets/shots/thumb/dl-p03.webp" alt="演示 · 展示评论" loading="lazy"></a>
-      <a href="assets/shots/dl-w18.webp"><img src="assets/shots/thumb/dl-w18.webp" alt="删除知识库 · 确认后" loading="lazy"></a>
-      <a href="assets/shots/dl-x-space-grid.webp"><img src="assets/shots/thumb/dl-x-space-grid.webp" alt="云空间 · 网格" loading="lazy"></a>
       <a href="assets/shots/dl-p08.webp"><img src="assets/shots/thumb/dl-p08.webp" alt="演示 · 放映工具栏" loading="lazy"></a>
       <a href="assets/shots/dl-w20.webp"><img src="assets/shots/thumb/dl-w20.webp" alt="后台 · 自定义分类" loading="lazy"></a>
       <a href="assets/shots/dl-p11.webp"><img src="assets/shots/thumb/dl-p11.webp" alt="演示 · 文档模式 · 窗口" loading="lazy"></a>
@@ -2067,7 +2189,7 @@
       </a>
       <a class="cs-card" href="#p-cses/att" data-cs-go="att">
         <div class="cs-thumb"><img src="assets/shots/thumb/cs-att-monthly.webp" alt="考勤管理" loading="lazy"></div>
-        <div class="cs-meta"><div class="cs-head"><b>考勤管理</b><span class="cs-tag cs-tag--old">旧框架</span></div><p>考勤概览、排班、考勤确认三步、存证和假期额度。</p><span class="cs-go">ATTENDANCE · 进入 →</span></div>
+        <div class="cs-meta"><div class="cs-head"><b>考勤管理</b><span class="cs-tag cs-tag--old">旧框架</span></div><p>考勤概览、排班、三步考勤确认、存证和假期额度。</p><span class="cs-go">ATTENDANCE · 进入 →</span></div>
       </a>
     </div>
 
@@ -2080,16 +2202,17 @@
 
     <!-- ═══ 二级：组织权限后台 ═══ -->
     <div class="cs-sub" id="cs-org" data-cs="org" hidden>
-    <a class="cs-back" href="#p-cses" data-cs-go=""><i>←</i>返回 · 其他模块</a>
+    <div class="cs-backslot" aria-hidden="true"></div>
     <div class="sec-head"><h2>组织权限后台</h2><span>[ORG · PERMISSIONS · 37 SCREENS]</span></div>
     <p class="dw-lead">企业级的组织、岗位、角色、权限与安全底座。平台方审核入驻企业，企业管理员管理自己的组织，两端共用一套权限模型。37 屏里带人员列表的都是模拟数据。</p>
 
-    <h3 class="sub-head"><span class="num">01</span>一个判断 · 组织树选不到人<span class="sub-en">PERMISSION · ≥120 vs 10</span><span class="line"></span></h3>
+    <h3 class="sub-head"><span class="num">01</span>为什么是岗位 + 角色双重绑定<span class="sub-en">MODEL · POSITION × ROLE</span><span class="line"></span></h3>
+    <p class="dw-lead">权限有两个入口：岗位管「他在组织的哪个位置」，角色管「他能干哪些事」。两条线各自独立、又能叠在同一个人身上——同一套模型装得下组织习惯完全不同的公司。</p>
     <div class="cs-chain">
-      <div><span>用户说</span><b>组织树里选不到人</b><p>表象是选择器不好用。</p></div>
-      <div><span>我查到</span><b>根因在权限模型</b><p>岗位和角色都在给权限，一个人同时被两套规则绑定，有两个真相源。</p></div>
-      <div><span>我算的账</span><b><span class="k">≥120</span> vs 10</b><p>12 个末级部门 × 10 个通用岗位 = 至少 120 个岗位实例；平铺方案只有 10 个，部门作为筛选维度。</p></div>
-      <div><span>结果</span><b>最终按原方案落地</b><p>方案没有被采纳，但账算清楚了：每加一个部门，这个数字就涨 10。钉钉、飞书、企微都不做岗位加角色的双重绑定。</p></div>
+      <div><span>两条线</span><b>岗位定位置，角色定权限</b><p>岗位跟着组织走，角色跟着职责走。一个人可以只挂岗位，也可以叠上若干角色，权限是这两者的并集。</p></div>
+      <div><span>同岗不同角</span><b>加角色，拉开权限大小</b><p>同样叫「主管」，有的公司要看全部门，有的只看本组。岗位不动，<span class="k">给他挂不同的角色</span>就把权限拉开了。</p></div>
+      <div><span>同角不同岗</span><b>用岗位，再分一层</b><p>同样是「审批人」，岗位不同能审的范围不同。<span class="k">岗位在角色之上再补一层</span>，不必为每种差别新建一个角色。</p></div>
+      <div><span>权限范围</span><b>默认跟着自己部门走</b><p>看得见的范围以本部门为界，谁在哪个部门就管哪一摊。需要越过这条线时，<span class="k">加一个角色</span>把范围补上，组织树不用动。</p></div>
     </div>
 
     <h3 class="sub-head"><span class="num">02</span>逐页讲解<span class="sub-en">PAGES · 5</span><span class="line"></span></h3>
@@ -2102,7 +2225,7 @@
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/org-08.webp" data-title="岗位管理 · 岗位平铺，左列是岗位，右表是人"><img src="assets/shots/thumb/org-08.webp" alt="岗位管理 · 岗位平铺，左列是岗位，右表是人" loading="lazy"></a></div>
   <div class="pg-body"><h4><span class="pg-n">2.</span>岗位管理<em>岗位平铺，左列是岗位，右表是人</em></h4>
-    <p>左侧是岗位列表和每个岗位的人数，右侧是这个岗位下的人：邮箱、所属部门、管理范围。新增岗位在左下角。</p><p class="pg-note">这一页就是「岗位要不要绑在组织树上」那场争论的现场：这里的岗位是平铺的，同一个岗位横跨多个部门，用「管理范围」这一列表达范围，而不是在每个部门下再建一遍岗位。</p>
+    <p>左侧是岗位列表和每个岗位的人数，右侧是这个岗位下的人：邮箱、所属部门、管理范围。新增岗位在左下角。</p><p class="pg-note">岗位是平铺的一层：同一个岗位可以横跨多个部门，「管理范围」那一列决定他管到哪。要给同岗位的人拉开权限，不改岗位，叠角色就行——这就是双重绑定在日常配置里的样子。</p>
   </div>
 </div>
 <div class="pg">
@@ -2165,7 +2288,7 @@
 
     <!-- ═══ 二级：审批 ═══ -->
     <div class="cs-sub" id="cs-appr" data-cs="appr" hidden>
-    <a class="cs-back" href="#p-cses" data-cs-go=""><i>←</i>返回 · 其他模块</a>
+    <div class="cs-backslot" aria-hidden="true"></div>
     <div class="sec-head"><h2>审批</h2><span>[APPROVAL · 14 SCREENS]</span></div>
     <p class="dw-lead">审批中心。左边是待处理 / 已处理 / 我发起 / 抄送我，中间是申请卡片，右边是详情和审批记录。每条申请上挂着 AI 的建议和理由，但同意与拒绝的按钮只有人能点。</p>
 
@@ -2219,7 +2342,7 @@
 
     <!-- ═══ 二级：招聘 ═══ -->
     <div class="cs-sub" id="cs-hire" data-cs="hire" hidden>
-    <a class="cs-back" href="#p-cses" data-cs-go=""><i>←</i>返回 · 其他模块</a>
+    <div class="cs-backslot" aria-hidden="true"></div>
     <div class="sec-head"><h2>招聘</h2><span>[RECRUITING · 旧框架 · 14 SCREENS]</span></div>
     <p class="dw-lead">招聘前台，旧框架。职位、候选人、面试管理、Offer、内推、统计报表一整条线。面试空间那一页三年前就做了实时转写和 AI 标签，是后来会议系统实时转写的同一条能力线。</p>
 
@@ -2273,11 +2396,11 @@
 
     <!-- ═══ 二级：薪酬管理 ═══ -->
     <div class="cs-sub" id="cs-pay" data-cs="pay" hidden>
-    <a class="cs-back" href="#p-cses" data-cs-go=""><i>←</i>返回 · 其他模块</a>
+    <div class="cs-backslot" aria-hidden="true"></div>
     <div class="sec-head"><h2>薪酬管理</h2><span>[PAYROLL · 旧框架 · 14 SCREENS]</span></div>
-    <p class="dw-lead">薪资社保模块，旧框架。薪酬看板、薪酬档案、四步核算薪资（核对算薪人员 → 定薪调薪 → 核算薪资 → 算薪完成）、工资条发送。核算第三步带三种异常态：停留过久、出现问题、没有问题。</p>
+    <p class="dw-lead">薪资社保模块，旧框架。薪酬看板、四步核算薪资、计薪规则、工资条发送。核算那一屏可以用下面的上一步 / 下一步走完整条流程。</p>
 
-    <h3 class="sub-head"><span class="num">01</span>逐页讲解<span class="sub-en">PAGES · 5</span><span class="line"></span></h3>
+    <h3 class="sub-head"><span class="num">01</span>逐页讲解<span class="sub-en">PAGES · 4</span><span class="line"></span></h3>
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/cs-pay-board.webp" data-title="薪酬看板 · 三个大数 + 两张图"><img src="assets/shots/thumb/cs-pay-board.webp" alt="薪酬看板 · 三个大数 + 两张图" loading="lazy"></a></div>
   <div class="pg-body"><h4><span class="pg-n">1.</span>薪酬看板<em>三个大数 + 两张图</em></h4>
@@ -2285,40 +2408,40 @@
   </div>
 </div>
 <div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/cs-pay-calc.webp" data-title="核算薪资 · 第一步 · 核对算薪人员"><img src="assets/shots/thumb/cs-pay-calc.webp" alt="核算薪资 · 第一步 · 核对算薪人员" loading="lazy"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">2.</span>核算薪资 · 第一步<em>核对算薪人员</em></h4>
-    <p>四步流程条在顶上：核对算薪人员、定薪调薪、核算薪资、算薪完成。这一步先确认本月算薪人员、本月基本薪总和、平均薪，下面是人员表：部门、职位、工号、员工类型、员工状态、入职时间、最后调薪。</p><p class="pg-note">算薪之前先对人，是因为最常见的错不在公式，在人：这个月谁入职、谁离职、谁试用期转正。</p>
+  <div class="pg-slot"><div class="pg-steps" data-steps='[{"f": "cs-pay-calc", "t": "① 核对算薪人员", "d": "先对人：本月算薪人数、基本薪总和、平均薪，表里是部门、职位、工号、员工类型、状态、入职时间"}, {"f": "cs-pay-step2", "t": "② 定薪调薪", "d": "同一批人加上转正日期、最后工作日、最后调薪日，行末直接「调薪 / 调薪历史」"}, {"f": "cs-pay-problem", "t": "③ 核算薪资 · 出现问题", "d": "表格上方先弹「薪资校验出现问题了，快来查看」，旁边才是「开始计算」"}, {"f": "cs-pay-locked", "t": "④ 算薪完成 · 锁定", "d": "算薪结果已锁定，下面两张动作卡：发起审批、发送工资单"}]'>
+      <a class="pg-shot" href="assets/shots/cs-pay-calc.webp" data-title="① 核对算薪人员 · 先对人：本月算薪人数、基本薪总和、平均薪，表里是部门、职位、工号、员工类型、状态、入职时间"><img src="assets/shots/thumb/cs-pay-calc.webp" alt="① 核对算薪人员 · 先对人：本月算薪人数、基本薪总和、平均薪，表里是部门、职位、工号、员工类型、状态、入职时间" loading="lazy"></a>
+      <div class="ps-bar">
+        <button class="ps-btn ps-prev" type="button" aria-label="上一步">←</button>
+        <div class="ps-mid"><b class="ps-t">① 核对算薪人员</b><span class="ps-d">先对人：本月算薪人数、基本薪总和、平均薪，表里是部门、职位、工号、员工类型、状态、入职时间</span></div>
+        <div class="ps-dots"></div>
+        <button class="ps-btn ps-next" type="button" aria-label="下一步">→</button>
+      </div>
+    </div></div>
+  <div class="pg-body"><h4><span class="pg-n">2.</span>核算薪资 · 四步<em>一条流程走到底，图下面可以翻</em></h4>
+    <p>核对算薪人员 → 定薪调薪 → 核算薪资 → 算薪完成，四步一条流程条贯穿始终。第三步的校验是这条流程的关键：先报「薪资校验出现问题了」再让人点「开始计算」；第四步锁定之后才能发起审批和发工资单。</p><p class="pg-note">这一屏没有拆成四屏，是因为它本来就是一条流程，拆开看不出「上一步做了什么才轮到这一步」。真正的设计判断在第三步和第四步：算薪不让 AI 算，AI 只在钱发出去前指出哪一行不对劲；锁定是一个明确的状态切换，锁之前是草稿，锁之后才进入审批和发放，防止一边发一边改。</p>
   </div>
 </div>
 <div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/cs-pay-problem.webp" data-title="核算薪资 · 第三步 · 出现问题 · 校验先于计算"><img src="assets/shots/thumb/cs-pay-problem.webp" alt="核算薪资 · 第三步 · 出现问题 · 校验先于计算" loading="lazy"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">3.</span>核算薪资 · 第三步 · 出现问题<em>校验先于计算</em></h4>
-    <p>第三步核算薪资，表格上方一个气泡：「薪资校验出现问题了，快来查看」，旁边是「开始计算」。表格列是基本工资、绩效工资、午餐补贴、住房补贴、岗位补贴、奖金。</p><p class="pg-note">这一步的设计原则是：AI 或规则只负责指出哪一行不对劲，人决定改不改、发不发。算薪不让 AI 算，AI 当审计员。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/cs-pay-locked.webp" data-title="算薪完成 · 锁定 · 锁定之后才能发起审批和发工资单"><img src="assets/shots/thumb/cs-pay-locked.webp" alt="算薪完成 · 锁定 · 锁定之后才能发起审批和发工资单" loading="lazy"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">4.</span>算薪完成 · 锁定<em>锁定之后才能发起审批和发工资单</em></h4>
-    <p>第四步算薪完成：顶部一条「算薪结果已锁定」和撤销锁定；下面两张动作卡，发起审批、发送工资单。</p><p class="pg-note">锁定是一个明确的状态切换：锁之前是草稿，可以反复改；锁之后才进入审批和发放。防止一边发一边改。</p>
+  <div class="pg-slot"><a class="pg-shot" href="assets/shots/cs-pay-rules.webp" data-title="计薪规则设置 · 每一项从哪来，右边当场试算"><img src="assets/shots/thumb/cs-pay-rules.webp" alt="计薪规则设置 · 每一项从哪来，右边当场试算" loading="lazy"></a></div>
+  <div class="pg-body"><h4><span class="pg-n">3.</span>计薪规则设置<em>每一项从哪来，右边当场试算</em></h4>
+    <p>薪资项、规则、试算示例三列：姓名 / 部门 / 职位 / 工号从「智能人事 · 花名册」自动取，基本工资从「薪资档案」自动取，个税每月手动导入，应发工资和病假扣除走公式，早退次数从「考勤管理 · 月度汇总」自动取。右侧试算列直接出数，取不到数据源的那行标红「试算失败」，鼠标停上去说清楚缺什么。</p><p class="pg-note">算薪最容易出事的地方不是公式写错，是数据源接错。所以每一行都写明「从哪来」，并且当场用一个真人试算一遍——把错误暴露在配置页，而不是暴露在工资条上。</p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/cs-pay-send.webp" data-title="发送工资单 · 已发送 · 待查看 · 待确认"><img src="assets/shots/thumb/cs-pay-send.webp" alt="发送工资单 · 已发送 · 待查看 · 待确认" loading="lazy"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">5.</span>发送工资单<em>已发送 · 待查看 · 待确认</em></h4>
+  <div class="pg-body"><h4><span class="pg-n">4.</span>发送工资单<em>已发送 · 待查看 · 待确认</em></h4>
     <p>发送工资单页：顶部三个计数，已发送、待查看、待确认；表格里每个人的发送状态、查看状态、确认状态，可以重新发送、编辑。</p><p class="pg-note">工资条发出去只是第一步，员工看没看、确认没确认才是闭环。三个状态分开数，HR 就知道该催谁。</p>
   </div>
 </div>
 
-    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 9</span><span class="line"></span></h3>
-    <p class="dw-lead">薪酬档案、计薪规则设置、查看更多公式场景、设置工资条 · 员工签字、核算薪资 · 第二步 · 定薪调薪、核算薪资 · 第三步 · 停留过久、核算薪资 · 第三步 · 明细、薪酬档案 · 批量调薪、工资条管理。</p>
+    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 7</span><span class="line"></span></h3>
+    <p class="dw-lead">薪酬档案、查看更多公式场景、设置工资条 · 员工签字、核算薪资 · 停留过久、核算薪资 · 明细、薪酬档案 · 批量调薪、工资条管理。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 284, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/cs-pay-archive.webp"><img src="assets/shots/thumb/cs-pay-archive.webp" alt="薪酬档案" loading="lazy"></a>
-      <a href="assets/shots/cs-pay-rules.webp"><img src="assets/shots/thumb/cs-pay-rules.webp" alt="计薪规则设置" loading="lazy"></a>
       <a href="assets/shots/cs-pay-formula.webp"><img src="assets/shots/thumb/cs-pay-formula.webp" alt="查看更多公式场景" loading="lazy"></a>
       <a href="assets/shots/cs-pay-sign.webp"><img src="assets/shots/thumb/cs-pay-sign.webp" alt="设置工资条 · 员工签字" loading="lazy"></a>
-      <a href="assets/shots/cs-pay-step2.webp"><img src="assets/shots/thumb/cs-pay-step2.webp" alt="核算薪资 · 第二步 · 定薪调薪" loading="lazy"></a>
-      <a href="assets/shots/cs-pay-stuck.webp"><img src="assets/shots/thumb/cs-pay-stuck.webp" alt="核算薪资 · 第三步 · 停留过久" loading="lazy"></a>
-      <a href="assets/shots/cs-pay-detail.webp"><img src="assets/shots/thumb/cs-pay-detail.webp" alt="核算薪资 · 第三步 · 明细" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-stuck.webp"><img src="assets/shots/thumb/cs-pay-stuck.webp" alt="核算薪资 · 停留过久" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-detail.webp"><img src="assets/shots/thumb/cs-pay-detail.webp" alt="核算薪资 · 明细" loading="lazy"></a>
       <a href="assets/shots/cs-pay-batch.webp"><img src="assets/shots/thumb/cs-pay-batch.webp" alt="薪酬档案 · 批量调薪" loading="lazy"></a>
       <a href="assets/shots/cs-pay-slips.webp"><img src="assets/shots/thumb/cs-pay-slips.webp" alt="工资条管理" loading="lazy"></a>
     </div>
@@ -2327,9 +2450,9 @@
 
     <!-- ═══ 二级：考勤管理 ═══ -->
     <div class="cs-sub" id="cs-att" data-cs="att" hidden>
-    <a class="cs-back" href="#p-cses" data-cs-go=""><i>←</i>返回 · 其他模块</a>
+    <div class="cs-backslot" aria-hidden="true"></div>
     <div class="sec-head"><h2>考勤管理</h2><span>[ATTENDANCE · 旧框架 · 14 SCREENS]</span></div>
-    <p class="dw-lead">考勤模块，旧框架。考勤概览（月度汇总 / 每日汇总 / 打卡时间 / 原始记录）、排班管理、三步考勤确认、考勤存证、假期规则和剩余额度。</p>
+    <p class="dw-lead">考勤模块，旧框架。考勤概览（月度汇总 / 每日汇总 / 打卡时间 / 原始记录）、排班管理、三步考勤确认、考勤存证、假期规则和剩余额度。考勤确认那一屏可以用下面的上一步 / 下一步走完三步。</p>
 
     <h3 class="sub-head"><span class="num">01</span>逐页讲解<span class="sub-en">PAGES · 5</span><span class="line"></span></h3>
 <div class="pg">
@@ -2345,9 +2468,17 @@
   </div>
 </div>
 <div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/cs-att-confirm1.webp" data-title="考勤确认 · 第一步 · 设置范围 → 预览表格 → 设置确认"><img src="assets/shots/thumb/cs-att-confirm1.webp" alt="考勤确认 · 第一步 · 设置范围 → 预览表格 → 设置确认" loading="lazy"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">3.</span>考勤确认 · 第一步<em>设置范围 → 预览表格 → 设置确认</em></h4>
-    <p>三步条：设置考勤范围、预览表格、设置考勤确认。第一步选考勤确认项（应出勤天数 / 实际出勤天数 / 迟到次数）、考勤周期、人员范围。</p><p class="pg-note">考勤确认是发给员工签字的，发错了要撤回。先选范围、再预览、最后才发，是为了让 HR 在发之前看到员工会看到什么。</p>
+  <div class="pg-slot"><div class="pg-steps" data-steps='[{"f": "cs-att-confirm1", "t": "① 设置考勤范围", "d": "选考勤确认项（应出勤天数 / 实际出勤天数 / 迟到次数）、考勤周期、人员范围"}, {"f": "cs-att-confirm2", "t": "② 预览表格", "d": "整张宽表摊开：应出勤、出勤、休息、打卡、迟到、严重迟到、旷工、早退、缺卡各列"}, {"f": "cs-att-confirm3", "t": "③ 设置考勤确认", "d": "标题与温馨提示、显示哪几项、空数据自动隐藏、员工签字、超时自动确认，右侧手机预览"}]'>
+      <a class="pg-shot" href="assets/shots/cs-att-confirm1.webp" data-title="① 设置考勤范围 · 选考勤确认项（应出勤天数 / 实际出勤天数 / 迟到次数）、考勤周期、人员范围"><img src="assets/shots/thumb/cs-att-confirm1.webp" alt="① 设置考勤范围 · 选考勤确认项（应出勤天数 / 实际出勤天数 / 迟到次数）、考勤周期、人员范围" loading="lazy"></a>
+      <div class="ps-bar">
+        <button class="ps-btn ps-prev" type="button" aria-label="上一步">←</button>
+        <div class="ps-mid"><b class="ps-t">① 设置考勤范围</b><span class="ps-d">选考勤确认项（应出勤天数 / 实际出勤天数 / 迟到次数）、考勤周期、人员范围</span></div>
+        <div class="ps-dots"></div>
+        <button class="ps-btn ps-next" type="button" aria-label="下一步">→</button>
+      </div>
+    </div></div>
+  <div class="pg-body"><h4><span class="pg-n">3.</span>考勤确认 · 三步<em>设置范围 → 预览表格 → 设置确认</em></h4>
+    <p>考勤确认是发给员工签字的那张表。第一步选考勤确认项、考勤周期和人员范围；第二步把生成的表整张摊开预览；第三步定标题、温馨提示、要显示哪几项、空数据要不要自动隐藏，以及员工签字和超时自动确认，右侧还有一个手机预览。</p><p class="pg-note">这三步的顺序就是设计本身：确认单一旦发出去，撤回的成本很高。所以先圈范围、再看全表、最后才配发送与签字，让 HR 在点发送之前已经看见员工会看到什么。第三步那个「超时自动确认」是给现实让的一步——不设它，总有一批人永远不点。</p>
   </div>
 </div>
 <div class="pg">
@@ -2363,14 +2494,12 @@
   </div>
 </div>
 
-    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 9</span><span class="line"></span></h3>
-    <p class="dw-lead">考勤概览 · 每日汇总、考勤概览 · 原始记录、考勤概览 · 打卡时间、考勤确认 · 第二步、考勤确认 · 第三步、考勤组、班次管理、加班规则、假勤分析。</p>
+    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 7</span><span class="line"></span></h3>
+    <p class="dw-lead">考勤概览 · 每日汇总、考勤概览 · 原始记录、考勤概览 · 打卡时间、考勤组、班次管理、加班规则、假勤分析。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 284, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/cs-att-daily.webp"><img src="assets/shots/thumb/cs-att-daily.webp" alt="考勤概览 · 每日汇总" loading="lazy"></a>
       <a href="assets/shots/cs-att-raw.webp"><img src="assets/shots/thumb/cs-att-raw.webp" alt="考勤概览 · 原始记录" loading="lazy"></a>
       <a href="assets/shots/cs-att-punch.webp"><img src="assets/shots/thumb/cs-att-punch.webp" alt="考勤概览 · 打卡时间" loading="lazy"></a>
-      <a href="assets/shots/cs-att-confirm2.webp"><img src="assets/shots/thumb/cs-att-confirm2.webp" alt="考勤确认 · 第二步" loading="lazy"></a>
-      <a href="assets/shots/cs-att-confirm3.webp"><img src="assets/shots/thumb/cs-att-confirm3.webp" alt="考勤确认 · 第三步" loading="lazy"></a>
       <a href="assets/shots/cs-att-group.webp"><img src="assets/shots/thumb/cs-att-group.webp" alt="考勤组" loading="lazy"></a>
       <a href="assets/shots/cs-att-shiftmgmt.webp"><img src="assets/shots/thumb/cs-att-shiftmgmt.webp" alt="班次管理" loading="lazy"></a>
       <a href="assets/shots/cs-att-overtime.webp"><img src="assets/shots/thumb/cs-att-overtime.webp" alt="加班规则" loading="lazy"></a>
@@ -2384,6 +2513,8 @@
 
 
 
+<a class="cs-backbar" id="cs-backbar" href="#p-cses" hidden><i>←</i>返回 · 其他模块</a>
+<a class="cs-backbar" id="cs-backbar" href="#p-cses" hidden><i>←</i>返回 · 其他模块</a>
 <div class="rail" id="rail" aria-label="章节导航"></div>
 
 <script>
@@ -2503,6 +2634,7 @@
 <div class="doc-mask" id="docMask" role="dialog" aria-modal="true">
   <div class="doc-bar">
     <div><span class="dk" id="docKey">PROCESS</span><h4 id="docTitle"></h4></div>
+    <div class="doc-guide" id="docGuide" hidden></div>
     <button class="doc-x" id="docX" aria-label="关闭">✕</button>
   </div>
   <div class="doc-frame" id="docFrame"></div>
@@ -2523,7 +2655,38 @@
       ti=document.getElementById('docTitle'), x=document.getElementById('docX');
   if(!m) return;
   m.setAttribute('tabindex','-1');
-  function close(){ m.classList.remove('on'); fr.innerHTML=''; fr.style.cssText=''; document.body.style.overflow=''; }
+  var gb = document.getElementById('docGuide');
+  function clearGuide(){ if(!gb) return; gb.hidden = true; gb.classList.remove('open'); gb.innerHTML=''; }
+  function sendGuide(cmd){ var f = fr.querySelector('iframe'); if(f && f.contentWindow) f.contentWindow.postMessage({t:'guide-cmd',cmd:cmd},'*'); }
+  addEventListener('message', function(e){
+    var g = e.data; if(!g || g.t !== 'guide-panel' || !gb) return;
+    var f = fr.querySelector('iframe'); if(!f || f.contentWindow !== e.source) return;
+    var open = gb.classList.contains('open');
+    gb.hidden = false;
+    gb.innerHTML = '<span class="gk">GUIDE</span><b></b><span class="gn"></span>' +
+      '<button type="button" data-g="steps">步骤</button>' +
+      '<button type="button" class="pri" data-g="auto">▶ 自动演示</button>' +
+      '<button type="button" data-g="reset">重来</button><ol></ol>';
+    gb.querySelector('b').textContent = String(g.title || '').replace(/ · \d+ 步$/, '');
+    gb.querySelector('.gn').textContent = Math.min((g.i|0) + 1, g.n) + '/' + g.n + (g.done ? ' ✓' : '');
+    gb.querySelector('[data-g="auto"]').disabled = !!g.auto;
+    var ol = gb.querySelector('ol');
+    (g.steps || []).forEach(function(txt, k){
+      var li = document.createElement('li');
+      li.className = k < g.i ? 'done' : (k === g.i ? 'cur' : '');
+      li.innerHTML = '<i>' + (k + 1) + '</i><span></span>';
+      li.querySelector('span').textContent = txt;
+      ol.appendChild(li);
+    });
+    if (open) gb.classList.add('open');
+    f.contentWindow.postMessage({t:'guide-host-ok'},'*');
+  });
+  if (gb) gb.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    if (b.dataset.g === 'steps') gb.classList.toggle('open');
+    else sendGuide(b.dataset.g);
+  });
+  function close(){ m.classList.remove('on'); fr.innerHTML=''; fr.style.cssText=''; clearGuide(); document.body.style.overflow=''; }
   function onKey(e){ if(e.key==='Escape') close(); }
 
   /* ═══ 手机上的过程页 ═══
@@ -2697,6 +2860,8 @@
   });
 })();
 </script>
+<script src="assets/cs-hub.js?v=efb196dc"></script>
+<script src="assets/cs-hub.js?v=efb196dc"></script>
 <script src="assets/letter-magnet.js?v=76ad3f71"></script>
 <script>LetterMagnet.mount('.hero-line1, .hero-line2');</script>
 
@@ -2712,6 +2877,10 @@
       b.setAttribute('aria-selected', on ? 'true' : 'false');
     });
     views.forEach(function(v){ v.classList.toggle('active', v.id === 'view-' + key); });
+    /* 手机上章节带是横滑的：把当前章滚到带子中间，让人知道左右还有 */
+    var ab = document.querySelector('.tab-btn.active'), tb = ab && ab.parentNode;
+    if (ab && tb && tb.scrollWidth > tb.clientWidth + 2)
+      tb.scrollTo({ left: ab.offsetLeft - (tb.clientWidth - ab.offsetWidth) / 2, behavior: 'smooth' });
     if (window.__buildRail) window.__buildRail();
     if (window.__fitWins) requestAnimationFrame(window.__fitWins);
     /* 还原来路时不能清滚动 —— 否则回来永远停在第一屏 */
@@ -2792,7 +2961,8 @@
 </script>
 <script src="assets/logo-path.js?v=d361035a"></script>
 <script src="assets/qr-matrix.js?v=4bfecbfa"></script>
-<script src="assets/lanyard.js?v=9850b7a1"></script>
+<script src="assets/lanyard.js?v=d4ef5b04"></script>
+<script src="assets/badge2d.js?v=32fba1ce"></script>
 <script src="assets/shape-blur.js?v=64e1ab0e"></script>
 <script>
 /* 挂绳工牌。标志路径直接从 assets/logo.svg 读，和导航、扉页、favicon 同一份。
@@ -2810,7 +2980,14 @@
      原来标志是 fetch('assets/logo.svg') 现取、二维码是从 qr.js 的画布上扒 ——
      file:// 下 fetch 必失败，qr.js 又要靠 scroll 事件才进场，
      所以双击打开时标志和二维码都是缺的。常量没有这些前置条件。 */
-  if (!window.Lanyard || !Lanyard.capable()) return;   /* 不画就一个字节都不下 */
+  if (!window.Lanyard || !Lanyard.capable()) {
+    /* 不跑 three 的机器（手机、低端机、关动效）：换静态工牌，同一张正面画布 */
+    if (window.Badge2D) Badge2D.mount('#badge2d', {
+      name: '张竞元', role: 'AI 产品设计师',
+      logoPath: window.__LOGO_PATH || '', qrMatrix: (window.__QR_MATRIX || {}).m, gain: 1.9
+    });
+    return;                                            /* 不画就一个字节都不下 */
+  }
   var s = document.createElement('script');
   s.src = 'assets/vendor/three.bundle.js';
   s.onload = function(){
@@ -2862,11 +3039,13 @@ MetaBalls.mount('#cses-tbc', {
 /* GradualBlur · 试挂四处，不行就把这一段删掉回滚 ——
    页顶：压在导航之下（.nav z-index 40，这里 30），导航自己的玻璃不受影响；
    页底：压在弹层之下，弹层里的图不被糊；两面截图墙：上下沿各一条。 */
-GradualBlur.mount(null, { preset: 'page-header', zIndex: -70, height: '9rem', strength: 2.5, curve: 'ease-out' });
-GradualBlur.mount(null, { preset: 'page-footer', zIndex: -70, height: '9rem', strength: 2.5, curve: 'ease-out' });
+/* 手机屏矮，9rem 的雾带占到近五分之一屏，owner 说太大：按断点收 */
+var MOB = matchMedia('(max-width:760px)').matches;
+GradualBlur.mount(null, { preset: 'page-header', zIndex: -70, height: MOB ? '5rem' : '9rem', strength: MOB ? 1.5 : 2.5, curve: 'ease-out' });
+GradualBlur.mount(null, { preset: 'page-footer', zIndex: -70, height: MOB ? '3.5rem' : '9rem', strength: MOB ? 1.2 : 2.5, curve: 'ease-out' });
 document.querySelectorAll('.dw').forEach(function (w) {
-  GradualBlur.mount(w, { position: 'top',    height: '4rem', strength: 1.5, divCount: 4, zIndex: 5 });
-  GradualBlur.mount(w, { position: 'bottom', height: '5rem', strength: 2,   divCount: 5, zIndex: 5 });
+  GradualBlur.mount(w, { position: 'top',    height: MOB ? '2.5rem' : '4rem', strength: 1.5, divCount: 4, zIndex: 5 });
+  GradualBlur.mount(w, { position: 'bottom', height: MOB ? '3rem' : '5rem', strength: MOB ? 1.5 : 2, divCount: 5, zIndex: 5 });
 });
 </script>
 <script>document.querySelectorAll('a.pg-shot').forEach(function(a){ a.addEventListener('click', function(e){ if (!window.__openDoc) return; e.preventDefault(); __openDoc(a.getAttribute('href'), a.dataset.title || '', 'image'); }); });</script>
@@ -2875,6 +3054,11 @@ document.querySelectorAll('.dw').forEach(function (w) {
 /* 项目卡的炫彩微光。挂在 .folder-body 上 —— 那是真正带边框的卡面。
    触屏、小屏、低端机、系统关了动效时模块自己不启动。 */
 CardGlow.mount('.bento', '.bento-card');
+/* 四张资产小卡（172px 高）单独收辉光半径 —— mount() 把 --cg-radius 写成行内样式，
+   所以只能在挂载之后覆盖。强度那一档在 bento.css 的 --cg-k 里。 */
+document.querySelectorAll('.bento-card--sm').forEach(function (c) {
+  c.style.setProperty('--cg-radius', '118px');
+});
 </script>
 
 <script src="assets/line-sidebar.js?v=9d873d53"></script>
@@ -2935,6 +3119,8 @@ CardGlow.mount('.bento', '.bento-card');
      这个高度不能写死 —— 窄屏 tabs 换行后条子会长到 111px。量出来回填。 */
   var navInner = navEl && navEl.querySelector('.nav-inner');
   function setNavH(){
+    /* 手机滚动后名字行收起、导航变矮，这个高度不能写进 --nav-h，否则内容会跟着上跳 44px */
+    if (navEl && navEl.classList.contains('nav--scrolled')) return;
     if (navInner) document.documentElement.style.setProperty('--nav-h', navInner.offsetHeight + 'px');
   }
   /* 三条路都走：脚本一跑就量一次（首屏就对）、load 后再量（字体到位高度会变）、
@@ -2997,6 +3183,68 @@ CardGlow.mount('.bento', '.bento-card');
       }else{ done(btn,fallback(text)); }
     });
   });
+})();
+</script>
+<div class="next-bar" id="nextBar" hidden><button type="button" class="nb-btn"><span class="nb-k">本章到底了 · 继续上滑或点这里</span><b class="nb-t"></b><i class="nb-fill"></i></button></div>
+<script>
+/* ═══ 手机：翻到底再继续上滑 → 自动切下一章 ═══
+   owner 怕面试官不知道章节带能横滑，所以到底之后给条带子：
+   继续往上推 150px（进度线走满）自动进下一章，点它也行。最后一章回到第一章。
+   桌面（>760）不启用。 */
+(function(){
+  var mq  = matchMedia('(max-width:760px)');
+  var bar = document.getElementById('nextBar');
+  if (!bar) return;
+  var btn = bar.querySelector('.nb-btn'), tEl = bar.querySelector('.nb-t');
+  var order = Array.prototype.map.call(document.querySelectorAll('.tab-btn'), function(b){
+    return { key: b.dataset.tab, num: b.dataset.num, name: b.textContent.trim() };
+  });
+  var TH = 150, acc = 0, decayT = 0, armed = false, lock = 0;
+  function cur(){ var a = document.querySelector('.tab-btn.active'); return a ? a.dataset.tab : null; }
+  function next(){
+    var k = cur(), i = -1;
+    for (var j = 0; j < order.length; j++) if (order[j].key === k) { i = j; break; }
+    return i < 0 ? null : order[(i + 1) % order.length];
+  }
+  function atBottom(){ return innerHeight + (window.scrollY || 0) >= document.documentElement.scrollHeight - 40; }
+  function setP(p){ btn.style.setProperty('--p', Math.max(0, Math.min(1, p))); }
+  function refresh(){
+    if (!mq.matches) { bar.classList.remove('on'); armed = false; return; }
+    var n = next();
+    var on = !!n && atBottom() && document.documentElement.scrollHeight > innerHeight + 200;
+    if (on) {
+      tEl.textContent = (order.length && n.key === order[0].key ? '回到 ' : '') + n.num + ' ' + n.name;
+      bar.hidden = false;
+      requestAnimationFrame(function(){ bar.classList.add('on'); });
+    } else { bar.classList.remove('on'); acc = 0; setP(0); }
+    armed = on;
+  }
+  function go(){
+    var n = next(); if (!n || !window.__showTab) return;
+    lock = Date.now(); acc = 0; setP(0); bar.classList.remove('on'); armed = false;
+    __showTab(n.key);
+  }
+  function push(d){
+    if (!armed || d <= 0 || Date.now() - lock < 800) return;
+    acc += d; setP(acc / TH);
+    clearTimeout(decayT); decayT = setTimeout(function(){ acc = 0; setP(0); }, 700);
+    if (acc >= TH) go();
+  }
+  var ly = null;
+  addEventListener('touchstart', function(e){ ly = e.touches[0].clientY; }, { passive: true });
+  addEventListener('touchmove',  function(e){
+    if (ly == null) return;
+    var y = e.touches[0].clientY, d = ly - y; ly = y;
+    if (atBottom()) push(d);
+  }, { passive: true });
+  addEventListener('touchend', function(){ ly = null; }, { passive: true });
+  addEventListener('wheel', function(e){ if (atBottom()) push(e.deltaY); }, { passive: true });
+  var rt = 0;
+  addEventListener('scroll', function(){ if (!rt) rt = requestAnimationFrame(function(){ rt = 0; refresh(); }); }, { passive: true });
+  addEventListener('resize', refresh);
+  btn.addEventListener('click', go);
+  refresh();
+  window.__nextBar = { refresh: refresh, go: go, push: push };   /* 测试钩子 */
 })();
 </script>
 </body>

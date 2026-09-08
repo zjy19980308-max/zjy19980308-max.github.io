@@ -46,3 +46,46 @@
 .cs-chain b{display:block;font-family:var(--font-display);font-size:16px;font-weight:500;color:var(--fg);margin-bottom:6px;line-height:1.35}
 .cs-chain p{margin:0;font-size:12.5px;line-height:1.7;color:var(--fg-3);font-weight:300}
 .cs-chain .k{color:#E7B86A}
+
+/* ── 二级：返回键 ── 
+   实体是 body 下的 #cs-backbar（fixed），这里只留一个占位块把首屏那个位置空出来。
+   放 body 是因为 .view 有 z-index:2，自成层叠上下文，
+   装在里面的元素再高也压不过 z-index 30 的页顶模糊带，会被糊住。 */
+.cs-backslot{height:36px;margin:0 0 var(--sp-block)}
+
+#cs-backbar{
+  position:fixed;z-index:35;                    /* 高于页顶模糊带 30，低于导航 40 */
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 16px;border-radius:999px;
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fg-2);text-decoration:none;white-space:nowrap;
+  /* 深色站上的毛玻璃：浅色 tint + 顶部半像素高光，深色 tint 在黑底上是隐形的 */
+  background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.045));
+  border:1px solid rgba(255,255,255,.14);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+  box-shadow:0 8px 24px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.16);
+  transition:color .3s,border-color .3s,background .3s,transform .3s cubic-bezier(.22,1,.36,1);
+}
+#cs-backbar[hidden]{display:none!important}
+#cs-backbar:hover{color:var(--fg);border-color:rgba(255,255,255,.26);transform:translateX(-2px);
+  background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.07))}
+#cs-backbar i{font-style:normal;font-size:14px;line-height:1}
+@media (prefers-reduced-motion:reduce){#cs-backbar{transition:none}}
+
+/* ── 逐页讲解：分步切换（图下方的 上一步 / 下一步） ── */
+.pg-steps{display:flex;flex-direction:column;gap:10px}
+.ps-bar{display:flex;align-items:center;gap:12px;
+  border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#08080D}
+.ps-btn{flex:none;width:30px;height:30px;border-radius:8px;cursor:pointer;
+  border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--fg-2);
+  font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;
+  transition:border-color .25s,color .25s,background .25s}
+.ps-btn:hover:not(:disabled){border-color:var(--line-2);color:var(--fg);background:rgba(255,255,255,.07)}
+.ps-btn:disabled{opacity:.32;cursor:default}
+.ps-mid{flex:1;min-width:0}
+.ps-mid b{display:block;font-family:var(--font-display);font-size:13.5px;font-weight:500;color:var(--fg);letter-spacing:.01em}
+.ps-mid span{display:block;margin-top:3px;font-size:12px;line-height:1.6;color:var(--fg-3);font-weight:300}
+.ps-dots{flex:none;display:flex;gap:5px}
+.ps-dots i{width:16px;height:3px;border-radius:2px;background:rgba(255,255,255,.16);transition:background .25s}
+.ps-dots i.on{background:var(--violet)}
+@media (max-width:600px){.ps-dots{display:none}}

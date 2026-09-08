@@ -13,7 +13,7 @@
       for(var i=0;i<list.length;i++){ var b=list[i], lab=(b.getAttribute('aria-label')||'')+' '+(b.title||'')+' '+b.textContent.replace(/\s+/g,' '); if(re.test(lab)){ if(rectOK(b)) return b; hid=hid||b; } } return hid; }
     list=[].slice.call(scope.querySelectorAll(q)); for(var j=0;j<list.length;j++){ if(rectOK(list[j])) return list[j]; } return list[0]||null;
   }
-  function fire(el){ var r=el.getBoundingClientRect(), x=r.left+Math.max(r.width,40)/2, y=r.top+r.height/2, w=el.ownerDocument.defaultView;
+  function fire(el){ var r=el.getBoundingClientRect(), x=r.left+(r.width||40)/2, y=r.top+(r.height||20)/2, w=el.ownerDocument.defaultView;
     ['pointerdown','mousedown','pointerup','mouseup','click'].forEach(function(t){ try{ el.dispatchEvent(new w.MouseEvent(t,{bubbles:true,cancelable:true,clientX:x,clientY:y,button:0})); }catch(e){} }); }
   function click(d,q){ var el=find(d,q); if(el) fire(el); return !!el; }
   function fill(d,q,val){ var el=d.querySelector(q); if(!el) return false; el.value=val; el.dispatchEvent(new d.defaultView.Event('input',{bubbles:true})); return true; }
@@ -28,8 +28,8 @@
     variants:[[function(d){ if(isSolo(d)) click(d,'.mt-tr__solo'); if(paused(d)) click(d,'.mt-tr__pill'); },2400],[function(d){ if(!isSolo(d)) click(d,'.mt-tr__solo'); },2600],[function(d){ if(!paused(d)) click(d,'.mt-tr__pill'); },2200]],
     main:   [['.mt-glass[aria-label="放大"]',2600],['text:退出全屏|恢复|缩小',600],['.mt-glass[aria-label="放大"]',0],[function(d){},1800]],
     kr:     [['.mt-ctrl[aria-label="更多"]',900],['text:KR 填写',1400],['#btnKrPick',1200],['.mt-menu.show button',1200],['#btnKrNewOk',3200],['reload',600]],
-    task:   [['.mt-stage-source-card--task .mt-chip28--tv, .mt-stage-source-card--task [data-stage-open]',4200],['[data-stage-view="kanban"]',2600],['[data-stage-view="list"]',1800],['.mt-nota-task-proposal__primary:not(:disabled)',2400],['.mt-nota-task-proposal.is-created',3200],['reload',800]],
-    doc:    [['.mt-stage-source-card--document .mt-chip28--tv, .mt-stage-source-card--document [data-stage-open]',7800],['[data-proposal-accept]',3000],['reload',800]],
+    task:   [['.mt-stage-source-card--task .mt-chip28--tv',3400],['.mt-tile--content',2600],['.mt-ctile-modal .mt-local-stage__close',2000],['.mt-tile--content [data-tilemenu]',1100],['in:.mt-menu.show|text:设为主画面|放大到主屏',3400],['.mt-nota-task-proposal__primary:not(:disabled)',2600],['reload',800]],
+    doc:    [['.mt-stage-source-card--document .mt-chip28--tv',3400],['.mt-tile--content',4000],['[data-proposal-accept]',2600],['.mt-ctile-modal .mt-local-stage__close',1800],['reload',800]],
     space:  [['.mt-tr__solo',1400],['.mt-ctrl[aria-label="更多"]',900],['.mt-menu.show .mt-menu__actlb',1800],['.mt-ctrl[aria-label="更多"]',900],['text:KR 填写',1200],['#btnKrPick',1000],['.mt-menu.show button',1000],['#btnKrNewOk',2200],['#btnSpaceSwitch',1800],['.mt-deck__dots > i:not(.is-on), .mt-deck__card:not(.is-focus)',2600],['reload',800]]
   };
   /* ── 引导剧本：tour = 分步光点；switch = 顶部状态按钮 ── */
@@ -49,14 +49,19 @@
       { q:'.mt-menu.show button', t:'第 4 步 · 在列表里选一条 KR 主题。' },
       { q:'#btnKrNewOk', t:'第 5 步 · 点确认，开启这一轮填写。KR 面板出现在右侧，底部动态按钮区同时出现。' },
       { q:'#btnKrSubmit', pre:function(d){ fill(d,'.mt-kr textarea, .mt-kr input[type="text"], textarea','把站外投放 ROI 目标从 1:2.8 提到 1:3.2'); }, t:'第 6 步 · 写一句想法，点「提交我的想法」。提交后按钮区消失，这就是「流程动作按阶段出现」。' } ] },
-    task:  { mode:'tour', title:'任务工作项 · 4 步', steps:[
-      { q:'.mt-stage-source-card--task .mt-chip28--tv, .mt-stage-source-card--task [data-stage-open]', t:'第 1 步 · 点「任务视图」卡片上的「在主屏展示」按钮。从客户端拖进来的任务工作项会以任务列表的形式放到中间主屏，转写接着 Nota 的对话，约 5 秒后生成一条待确认任务。' },
-      { q:'[data-stage-view="kanban"]', t:'第 2 步 · 点主屏右上角的「看板」，同一批任务切换为看板视图，再点「列表」可切回。' },
-      { q:'.mt-nota-task-proposal__primary:not(:disabled)', t:'第 3 步 · 点待确认任务卡上的「确认创建」。任务进入项目的任务列表，会后不需要再录一次。' },
-      { q:'.mt-nota-task-proposal.is-created', t:'第 4 步 · 点已创建的任务卡，单个任务在主屏打开任务详情，可以直接改负责人和截止时间。' } ] },
-    doc:   { mode:'tour', title:'协作文档 · 2 步', steps:[
-      { q:'.mt-stage-source-card--document .mt-chip28--tv, .mt-stage-source-card--document [data-stage-open]', t:'第 1 步 · 点「协作文档」卡片上的「在主屏展示」按钮，文档以编辑态放到中间主屏。转写接着 Nota 的对话，约 6 秒后在文档上标出修改建议。' },
-      { q:'[data-proposal-accept]', t:'第 2 步 · 点建议条上的「采纳全部」，修改直接写进文档，不用会后再对一遍。' } ] },
+    task:  { mode:'tour', title:'任务工作项 · 8 步', steps:[
+      { q:'.mt-stage-source-card--task .mt-chip28--tv', t:'第 1 步 · 点「任务视图」卡片上的「放入会议画面」。从客户端拖进来也是同一件事：它在会议画面里占一格，和成员卡片一样大，格子里是任务列表的缩略图，不抢主屏。' },
+      { q:'.mt-tile--content', t:'第 2 步 · 点这一格。任务列表在独立弹窗里打开，可以直接操作。' },
+      { q:'[data-stage-view="kanban"]', t:'第 3 步 · 弹窗右上角点「看板」，同一批任务换一种看法。' },
+      { q:'.mt-ctile-modal .mt-local-stage__close', t:'第 4 步 · 点 × 关掉弹窗。这段时间转写接着 Nota 的对话，已经生成一条待确认任务。' },
+      { q:'.mt-tile--content [data-tilemenu]', t:'第 5 步 · 要让它上主讲位，点这一格右上角的三个点，入口和成员卡片一致。' },
+      { q:'in:.mt-menu.show|text:设为主画面|放大到主屏', t:'第 6 步 · 主持人选「设为主画面」，所有人都会看到；其他人这里是「放大到主屏」，只有自己看到。选一个，它到主讲位置铺满，可以直接编辑。' },
+      { q:'.mt-nota-task-proposal__primary:not(:disabled)', t:'第 7 步 · 点待确认任务卡上的「确认创建」。任务进入项目的任务列表，会后不需要再录一次。' },
+      { q:'.mt-nota-task-proposal.is-created', t:'第 8 步 · 点已创建的任务卡，任务详情在独立弹窗里打开，可以直接改负责人和截止时间。' } ] },
+    doc:   { mode:'tour', title:'协作文档 · 3 步', steps:[
+      { q:'.mt-stage-source-card--document .mt-chip28--tv', t:'第 1 步 · 点「协作文档」卡片上的「放入会议画面」。文档在会议画面里占一格，缩略图就是文档本身。' },
+      { q:'.mt-tile--content', t:'第 2 步 · 点这一格。文档在独立弹窗里打开，可以直接编辑，别人也在同一份上改。' },
+      { q:'[data-proposal-accept]', t:'第 3 步 · 转写走到这里，Nota 在文档上标出 2 处修改建议。点「采纳全部」，修改直接写进文档，不用会后再对一遍。' } ] },
     main:  { mode:'tour', title:'主视图 · 4 步', steps:[
       { q:'.mt-glass[aria-label="放大"]', t:'第 1 步 · 点任一成员格上的「放大」，切成主讲视图；再点一次回到四格等大。' },
       { q:'text:会议信息|会议详情', t:'第 2 步 · 点标题旁的「会议信息」，详情悬浮查看，不常驻占位。' },
@@ -109,29 +114,42 @@
     panel.innerHTML='<h5><i>GUIDE</i><span>'+g.title.replace(/ · \d+ 步$/,'')+'</span><em id="tgCnt">1/'+g.steps.length+'</em><button type="button" class="tg-tg" id="tgTg">步骤</button><span class="row"><button type="button" class="pri" id="tgAuto">▶ 自动演示</button><button type="button" id="tgReset">重来</button></span></h5><ol>'+g.steps.map(function(x,i){return '<li><b>'+(i+1)+'</b><span>'+x.t.replace(/^第 \d 步 · /,'')+'</span></li>'}).join('')+'</ol>';
     d.body.appendChild(ring); d.body.appendChild(tip); d.body.appendChild(panel); d.body.appendChild(cur);
     var i=0, target=null, timer=null, auto=false, done=false;
+    /* 🔴 owner 2026-09-08：「这个不能移到空白区域吗？」—— 页面里没有空白，1440×910 是排满的。
+       真正的空白在**页面外**：作品集蒙层的顶栏。所以把这条引导交给父页去画，
+       父页应答 guide-host-ok 之后，页内这条就藏起来。独立打开（没有父页应答）时照旧留在页内。 */
+    var hosted=false;
+    function post(){ if(w.parent===w) return; try{ w.parent.postMessage({ t:'guide-panel', title:g.title,
+      steps:g.steps.map(function(x){ return x.t.replace(/^第 \d 步 · /,''); }), i:i, n:g.steps.length, done:done, auto:auto },'*'); }catch(e){} }
+    w.addEventListener('message',function(e){ var m=e.data; if(!m||!m.t) return;
+      if(m.t==='guide-host-ok'){ hosted=true; panel.style.display='none'; }
+      if(m.t==='guide-cmd'){ if(m.cmd==='auto') runAuto(); else if(m.cmd==='reset') w.location.reload(); } });
     function place(){ if(!target||!rectOK(target)){ ring.style.display='none'; tip.style.display='none'; return; }
       var r=target.getBoundingClientRect(); ring.style.display='block'; tip.style.display='block';
-      var rw=Math.max(r.width,120), rh=Math.max(r.height,40);
-      ring.style.left=(r.left-6)+'px'; ring.style.top=(r.top-6)+'px'; ring.style.width=(rw+12)+'px'; ring.style.height=(rh+12)+'px';
+      var pad=5;
+      ring.style.left=(r.left-pad)+'px'; ring.style.top=(r.top-pad)+'px';
+      ring.style.width=(r.width+pad*2)+'px'; ring.style.height=(r.height+pad*2)+'px';
+      var br=0; try{ br=parseFloat(w.getComputedStyle(target).borderRadius)||0; }catch(e){}
+      ring.style.borderRadius=(br>=Math.min(r.width,r.height)/2-1 ? '999px' : Math.max(6,br+pad)+'px');
       var tw=tip.offsetWidth, th=tip.offsetHeight, W=w.innerWidth, H=w.innerHeight;
       var left=Math.min(Math.max(8,r.left-10),W-tw-8); var below=r.bottom+14+th<H; tip.classList.toggle('up',!below);
       tip.style.left=left+'px'; tip.style.top=(below? r.bottom+14 : r.top-14-th)+'px'; }
-    function setStep(k){ i=k; var lis=panel.querySelectorAll('li'); for(var a=0;a<lis.length;a++){ lis[a].className=a<k?'done':(a===k?'cur':''); } var cnt=d.getElementById('tgCnt'); if(cnt) cnt.textContent=(Math.min(k+1,g.steps.length))+'/'+g.steps.length+(k>=g.steps.length?' ✓':'');
+    function setStep(k){ i=k; var lis=panel.querySelectorAll('li'); for(var a=0;a<lis.length;a++){ lis[a].className=a<k?'done':(a===k?'cur':''); } var cnt=d.getElementById('tgCnt'); if(cnt) cnt.textContent=(Math.min(k+1,g.steps.length))+'/'+g.steps.length+(k>=g.steps.length?' ✓':''); post();
       clearInterval(timer); refit();
       if(k>=g.steps.length){ done=true; target=null; place(); tip.style.display='block'; tip.textContent='走完了 · 现在可以随意试'; tip.style.left='16px'; tip.style.top='16px'; tip.className='tg-tip'; return; }
       tip.textContent=g.steps[k].t; target=null; var tries=0;
       timer=setInterval(function(){ if(!target){ var el=find(d,g.steps[k].q); if(el&&rectOK(el)) target=el; tries++; } place(); if(tries%7===0) refit(); },120); }
     d.addEventListener('click',function(e){ if(done||auto||!target) return; if(target===e.target||target.contains(e.target)){ setTimeout(function(){ setStep(i+1); },700); } },true);
-    function runAuto(){ if(auto) return; auto=true; d.getElementById('tgAuto').disabled=true; cur.classList.add('on');
+    function runAuto(){ if(auto) return; auto=true; d.getElementById('tgAuto').disabled=true; cur.classList.add('on'); post();
       cur.style.left=(w.innerWidth/2)+'px'; cur.style.top=(w.innerHeight/2)+'px';
-      (function step(){ if(i>=g.steps.length){ auto=false; cur.classList.remove('on'); d.getElementById('tgAuto').disabled=false; return; }
+      (function step(){ if(i>=g.steps.length){ auto=false; cur.classList.remove('on'); d.getElementById('tgAuto').disabled=false; post(); return; }
         var t0=Date.now(); (function wait(){ var el=find(d,g.steps[i].q); if(!el||!rectOK(el)){ if(Date.now()-t0<9000) return setTimeout(wait,200); auto=false; cur.classList.remove('on'); d.getElementById('tgAuto').disabled=false; return; }
           if(g.steps[i].pre){ try{ g.steps[i].pre(d); }catch(e){} }
-          var r=el.getBoundingClientRect(); cur.style.left=(r.left+Math.max(r.width,40)/2)+'px'; cur.style.top=(r.top+r.height/2)+'px';
+          var r=el.getBoundingClientRect(); cur.style.left=(r.left+(r.width||40)/2)+'px'; cur.style.top=(r.top+(r.height||20)/2)+'px';
           setTimeout(function(){ cur.classList.add('dn'); fire(el); setTimeout(function(){ cur.classList.remove('dn'); setStep(i+1); setTimeout(step,1000); },220); },700);
         })(); })(); }
     d.getElementById('tgAuto').addEventListener('click',runAuto);
     d.getElementById('tgTg').addEventListener('click',function(){ panel.classList.toggle('open'); });
+    setTimeout(post,60); setTimeout(post,600);
     d.getElementById('tgReset').addEventListener('click',function(){ clearInterval(timer); w.location.reload(); });
     setStep(0);
   }
