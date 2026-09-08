@@ -36,3 +36,14 @@
   font-size:11px; letter-spacing:.22em; text-transform:uppercase;
   color:var(--fg-4);
 }
+
+/* WebGL 起不来（老机型、WebView 关了硬件加速）时，块不能是全黑一片。
+   宿主自带一层极淡的呼吸光斑；canvas 画出来就盖在它上面，看不出来。 */
+.mb-wrap::before{
+  content:'';position:absolute;left:50%;top:46%;width:52%;aspect-ratio:1;
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.10),rgba(255,255,255,.03) 46%,transparent 70%);
+  animation:mbfall 7s ease-in-out infinite alternate;pointer-events:none;z-index:0;
+}
+@keyframes mbfall{from{transform:translate(-58%,-56%) scale(.9)}to{transform:translate(-42%,-44%) scale(1.08)}}
+@media (prefers-reduced-motion: reduce){ .mb-wrap::before{animation:none} }

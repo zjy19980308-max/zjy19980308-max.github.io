@@ -39,7 +39,16 @@ h1{margin:0 0 30px;font-size:24px;font-weight:500;color:var(--ink);white-space:n
 /* 嵌入态（会议主屏 / 任何 iframe）：按给到的框适配——宽高撑满视口，去掉弹窗圆角阴影；左列描述区随高度拉开，字不够就留白，页脚钉底 */
 html.embed,html.embed body{height:100%;width:100%}html.embed body{display:block}
 html.embed .dlg{width:100%;height:100%;min-height:100vh;border-radius:0;box-shadow:none}
-html.embed .scroll{padding-bottom:40px}html.embed .desc{margin-top:40px}html.embed .desc .body{min-height:160px}
+html.embed .scroll{padding:20px 32px 40px}html.embed .desc{margin-top:40px}html.embed .desc .body{min-height:160px}
+/* 左右两栏按容器宽度分，不再写死 733px —— 窄了就让左栏收，字号不动 */
+html.embed .left{width:auto;flex:1 1 60%;min-width:360px}
+html.embed .right{flex:1 1 40%;min-width:280px}
+html.embed .f{gap:24px}html.embed .two{flex-wrap:wrap}
+/* 右栏标签窄了横向滚，不换行 */
+html.embed .tabs{gap:20px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+html.embed .tabs::-webkit-scrollbar{display:none}
+html.embed .tabs span{flex:none;white-space:nowrap}
+@media (max-width:900px){html.embed .right{display:none}html.embed .left{flex:1 1 100%;border-right:0}}
 html.embed .top .r img[title="关闭"]{display:none}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0b0b10;color:#fff;font-size:13px;padding:8px 14px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none}.toast.on{opacity:1}
 </style></head><body>
@@ -70,13 +79,13 @@ html.embed .top .r img[title="关闭"]{display:none}
         <div class="desc">
           <p class="sec-t"><span style="position:relative"><img class="req" src="assets/d_req.svg" alt="">描述</span><img src="assets/d_expand.svg" alt="" style="width:16px;height:16px;cursor:pointer"></p>
           <div class="body">
-            <p contenteditable="true"><span class="path">[XPA/订单/订单审核/撤单] </span>近日，水利部、交通运输部、国家发展改革委联合印发《大运河河道水系治理管护规划》（以下简称《规划》）。《规划》提出，大运河沿线8省（市）是推进大运河文化保护传承利用的主体，要切实履职尽责，扎实推进大运河河道水系治理管护各项任务落到实处。</p>
-            <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>无序</span></div>
-            <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>UI设计师及时跟进，完成任务看板的设计，尽快提交</span></div>
-            <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>完成请各位UI设计师及时跟进，完成任务看板的设计，尽快提交</span></div>
+            <p contenteditable="true"><span class="path">[618 投放 / 素材验收 / 承接链路] </span>开门红当天企微承接链路要扛住峰值流量，本任务负责压测并给出结论。覆盖三条路径：直播间挂件进企微、预售页领券进企微、短信落地页进企微。每条各跑 3 轮，记录成功率、平均耗时与失败原因。</p>
+            <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>压测环境与线上一致，数据走影子库，不写真实订单</span></div>
+            <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>5 月 25 日 18:00 前把结论同步到「618 投放节奏与预算拆分」文档</span></div>
+            <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>三条路径的压测结论各写一段，附失败样例</span></div>
             <div class="ck"><img src="assets/d_checksq.svg" alt=""><span>任务看板的设计，尽快提交</span></div>
-            <div class="ol"><div><b>1</b><span>有序</span></div><div><b>2</b><span>大运河沿线8省（市）是推进大运河文化保护传承利用的主体，要切实履职尽责</span></div><div><b>3</b><span>有序</span></div><div><b>4</b><span>有序</span></div></div>
-            <p contenteditable="true">近日，水利部、交通运输部、国家发展改革委联合印发《大运河河道水系治理管护规划》（以下简称《规划》）。《规划》提出，大运河沿线8省（市）是推进大运河文化保护传承利用的主体，要切实履职尽责，扎实推进大运河河道水系治理管护各项任务落到实处。</p>
+            <div class="ol"><div><b>1</b><span>有序</span></div><div><b>2</b><span>三条路径分别记录成功率、平均耗时与失败原因</span></div><div><b>3</b><span>有序</span></div><div><b>4</b><span>有序</span></div></div>
+            <p contenteditable="true">压测在 5 月 22 日 20:00 至 24:00 的低峰窗口进行，峰值按开门红预估的 3 倍施压。任一路径成功率低于 99.5% 或平均耗时超过 800 毫秒，当轮判定不通过，定位后重跑。结论以三条路径分别给出，不合并成一个总结。</p>
           </div>
           <div class="tb"><div class="g"><span class="grp"><button><img src="assets/d_bold.svg" alt=""></button><button><img src="assets/d_italic.svg" alt=""></button><button><img src="assets/d_underline.svg" alt=""></button><button><img src="assets/d_strike.svg" alt=""></button></span><span class="sep"></span><span class="grp"><button class="l"><img src="assets/d_listic.svg" alt="" style="width:10.5px;height:10px"></button><button><img src="assets/d_bullet.svg" alt=""></button><button><img src="assets/d_numbered.svg" alt=""></button><button><img src="assets/d_quote.svg" alt=""></button><button><img src="assets/d_link.svg" alt=""></button></span><span class="sep"></span><span class="grp"><button class="l"><img src="assets/d_indent.svg" alt=""></button><button class="l"><img src="assets/d_lineheight.svg" alt=""></button></span></div><div class="g" style="gap:12px"><button class="l"><img src="assets/d_g47.svg" alt="" style="width:13px;height:13px"></button><button class="l"><img src="assets/d_f1125.svg" alt=""></button><button><img src="assets/d_image.svg" alt=""></button></div></div>
           <div style="height:40px"></div>
@@ -119,5 +128,5 @@ html.embed .top .r img[title="关闭"]{display:none}
   var tt; function say(m){ var t=document.getElementById('toast'); t.textContent=m; t.classList.add('on'); clearTimeout(tt); tt=setTimeout(function(){ t.classList.remove('on'); },1400); }
 })();
 </script>
-<script src="../guide.js?v=06c1ac79"></script>
+<script src="../guide.js?v=2e1a118e"></script>
 </body></html>

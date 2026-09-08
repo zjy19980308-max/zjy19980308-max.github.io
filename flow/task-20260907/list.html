@@ -27,6 +27,23 @@
 .create{height:52px;display:flex;align-items:center;gap:24px;padding:16px 16px 16px 26px;color:var(--ink3);font-size:14px;cursor:pointer}.create img{width:14px;height:14px;display:block}.create:hover{color:var(--cs-primary)}
 .create input{border:0;outline:0;font:inherit;color:var(--ink);width:320px;border-bottom:1px solid var(--cs-primary);padding:2px 0}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0b0b10;color:#fff;font-size:13px;padding:8px 14px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}.toast.on{opacity:1}
+
+/* ===== 嵌入态：按容器宽度排版，文字保持原大小 ===== */
+html.embed, html.embed body { width: 100%; height: 100%; }
+html.embed body { display: block; overflow: auto; }
+html.embed .page { width: 100%; min-width: 0; padding: 12px 0; }
+html.embed .row .L { width: auto; flex: 0 1 428px; min-width: 220px; }
+html.embed .row .R span, html.embed .gh .cols span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+html.embed .title { overflow: hidden; text-overflow: ellipsis; }
+/* 筛选条：容器窄了让它横向滚，别把「按状态」拆成两行 */
+html.embed .fb { overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+html.embed .fb::-webkit-scrollbar { display: none; }
+html.embed .fb .chip { flex: none; white-space: nowrap; }
+html.embed .fb .save { flex: none; white-space: nowrap; }
+html.embed .row .R span, html.embed .gh .cols span { white-space: nowrap; }
+@media (max-width: 860px) {
+  html.embed .row .R span:nth-child(2), html.embed .gh .cols span:nth-child(2) { display: none; }
+}
 </style></head><body>
 <div class="page">
   <div class="fb" id="fb">
@@ -42,10 +59,11 @@
 </div>
 <div class="toast" id="toast"></div>
 <script>
+  /* 嵌进会议画面时按容器实际尺寸排版，不做整页缩放 —— owner：「要做适配，不是等比例缩小」 */
+  if (window.parent !== window || /(^#|&)embed/.test(location.hash)) document.documentElement.classList.add('embed');
+
 var A='assets/';var AV=['imgEllipse294.png','imgEllipse295.png','imgEllipse296.png','imgEllipse297.png','imgEllipse298.png'];
-var G=[{k:'',n:'待开始',c:13,rows:[['任务管理_我创建的改版','h','09月22日 17:56','09月22日 17:56',0,'李梓发',[['任务管理_我创建的改版子任务','h','09月22日 17:56','09月22日 17:56',1,'周海']]],['任务管理_我创建的改版','m','09月22日 17:56','09月10日 04:42',2,'王凡玄'],['任务管理_我创建的改版','m','09月22日 17:56','09月10日 04:42',3,'赵吾光'],['任务管理_我创建的改版','l','09月22日 17:56','09月10日 04:42',4,'冯思钗',null,3],['任务管理_我创建的改版','l','09月22日 17:56','09月10日 04:42',4,'冯思钗',null,3]]},
-       {k:'doing',n:'进行中',c:13,add:true,rows:[['任务管理_我创建的改版','h','09月22日 17:56','09月10日 04:42',2,'王凡玄',[['任务管理_我创建的改版子任务','h','09月22日 17:56','09月10日 04:42',2,'王凡玄']]],['任务管理_我创建的改版','m','09月22日 17:56','09月10日 04:42',2,'王凡玄'],['任务管理_我创建的改版','m','09月22日 17:56','09月10日 04:42',4,'冯思钗'],['任务管理_我创建的改版','l','09月22日 17:56','09月10日 04:42',4,'冯思钗']]},
-       {k:'done',n:'已完成',c:8,rows:[['任务管理_我创建的改版','m','09月22日 17:56','09月10日 04:42',1,'周海'],['任务管理_我创建的改版','l','09月22日 17:56','09月10日 04:42',3,'赵吾光',null,3]]}];
+var G=[{k:'',n:'待开始',c:13,rows:[['主视觉 KV 三版初稿','h','05月18日 10:00','05月22日 18:00',0,'李梓发',[['竖版 9:16 适配','h','05月19日 10:00','05月22日 18:00',1,'周海']]],['直播间承接页首屏改版','m','05月18日 14:00','05月24日 18:00',2,'王凡玄'],['站外投放素材尺寸规范','m','05月19日 09:30','05月25日 18:00',3,'赵吾光'],['开门红倒计时组件','l','05月20日 09:30','05月28日 18:00',4,'冯思钗',null,3],['预售页利益点文案复核','l','05月20日 14:00','05月28日 18:00',4,'冯思钗',null,3]]},{k:'doing',n:'进行中',c:13,add:true,rows:[['企微承接链路压测','h','05月20日 10:00','05月25日 18:00',2,'王凡玄',[['压测报告输出','h','05月22日 10:00','05月25日 18:00',2,'王凡玄']]],['618 主会场楼层排期','m','05月19日 10:00','05月26日 18:00',2,'王凡玄'],['短视频口播脚本二审','m','05月20日 15:00','05月27日 18:00',4,'冯思钗'],['达人物料合规检查','l','05月21日 10:00','05月29日 18:00',4,'冯思钗']]},{k:'done',n:'已完成',c:8,rows:[['5/20 预售海报终稿','m','05月14日 10:00','05月20日 12:00',1,'周海'],['直播间贴片模板','l','05月15日 10:00','05月20日 18:00',3,'赵吾光',null,3]]}];
 var PN={h:'紧急',m:'普通',l:'较低'},PC={h:'h',m:'m',l:'lo'};
 function row(r,sub){var d=document.createElement('div');d.className='row'+(sub?' sub':'');
   d.innerHTML='<div class="L">'+(sub?'<div class="tree"><img src="'+A+'imgLine473.svg" alt=""></div>':'')+'<div class="l"><span class="cb"><i></i><img src="'+A+'imgCheck1.svg" alt=""></span>'+(r[6]?'<button class="chev" title="折叠子任务"><img src="'+A+'imgChevronDown2.svg" alt=""></button>':'')+'<span class="title">'+r[0]+'</span>'+(r[7]?'<span class="eye"><img src="'+A+'imgTarget01.svg" alt="">'+r[7]+'</span>':'')+'</div>'
@@ -71,5 +89,5 @@ document.querySelectorAll('.fb .chip').forEach(function(c){c.addEventListener('c
 document.getElementById('save').addEventListener('click',function(){say('已另存为新视图');});
 var tt;function say(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},1400);}
 </script>
-<script src="../guide.js?v=06c1ac79"></script>
+<script src="../guide.js?v=2e1a118e"></script>
 </body></html>

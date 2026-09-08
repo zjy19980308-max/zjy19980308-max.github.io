@@ -24,18 +24,27 @@
 .col.closed .cards{position:relative}.col.closed .cards::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 -18px 13.5px -15px rgba(0,0,0,.08)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0b0b10;color:#fff;font-size:13px;padding:8px 14px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:9}.toast.on{opacity:1}
 .card .t h4[contenteditable]{outline:1px solid var(--cs-primary-disabled);border-radius:4px;padding:0 4px}
+
+/* ===== 嵌入态：列宽不变，装不下就横向滚，不整页缩小 ===== */
+html.embed, html.embed body { width: 100%; height: 100%; }
+html.embed body { display: block; }
+html.embed .board { min-width: 0; height: 100%; box-sizing: border-box; overflow-x: auto; overflow-y: hidden; }
+html.embed .col { height: 100%; overflow-y: auto; }
 </style></head><body>
 <div class="board" id="board"></div>
 <div class="toast" id="toast"></div>
 <script>
+  /* 嵌进会议画面时按容器实际尺寸排版，不做整页缩放 —— owner：「要做适配，不是等比例缩小」 */
+  if (window.parent !== window || /(^#|&)embed/.test(location.hash)) document.documentElement.classList.add('embed');
+
 var A='assets/';
 var COLS=[{k:'todo',n:'待开始',cls:''},{k:'doing',n:'进行中',cls:'doing'},{k:'done',n:'已完成',cls:'done'},{k:'closed',n:'已关闭',cls:'closed'}];
 var AV=['imgRectangle1018.png','imgRectangle1019.png','imgRectangle1020.png','imgRectangle1021.png','av1022.png','av1023.png','av1024.png','av1025.png','av1026.png','av1027.png'];
-var T='CSES_SJ_月度导向板块改版任务';
+var TT=['主视觉 KV 三版初稿','直播间承接页首屏改版','站外投放素材尺寸规范','开门红倒计时组件','预售页利益点文案复核','企微承接链路压测','618 主会场楼层排期','短视频口播脚本二审','达人物料合规检查','5/20 预售海报终稿','直播间贴片模板','品牌色规范同步','旧版会场模板迁移','站内 banner 二次裁切','会场分会场入口图','预热期短信文案','投放素材命名规范','退款页提示语校对'];var TI=0;var T=TT[0];
 var DATA={todo:[['h',0,1],['m',2,3],['l',4,5],['l',6,7]],doing:[['h',8,9],['m',0,1]],done:[['m',2,3],['m',4,5],['m',6,7],['l',8,9]],closed:[['h',0,1,'已放弃'],['m',2,3,'已放弃'],['m',4,5,'已放弃'],['m',6,7,'已放弃'],['m',1,8,'已放弃'],['m',2,9,'已放弃']]};
 var PN={h:'紧急',m:'普通',l:'较低'};
 function card(c){var d=document.createElement('div');d.className='card';d.draggable=true;
-  d.innerHTML='<div class="t"><h4><span class="tt">'+T+'</span>'+(c[3]?'<span class="tag">'+c[3]+'</span>':'')+'</h4><div class="bc"><span class="p"><img src="'+A+'imgFolderOpen03.svg" alt="">CSES项目</span><span>/</span><span>设计模块</span></div></div>'
+  d.innerHTML='<div class="t"><h4><span class="tt">'+TT[(TI++)%TT.length]+'</span>'+(c[3]?'<span class="tag">'+c[3]+'</span>':'')+'</h4><div class="bc"><span class="p"><img src="'+A+'imgFolderOpen03.svg" alt="">CSES项目</span><span>/</span><span>设计模块</span></div></div>'
    +'<div class="pri '+c[0]+'">'+PN[c[0]]+'</div><div class="av"><img src="'+A+AV[c[1]]+'" alt=""><img src="'+A+AV[c[2]]+'" alt=""></div>'
    +(c[3]?'':'<hr><div class="ft"><span><img src="'+A+'imgGitBranch01.svg" alt="">4</span><span><img src="'+A+'imgTarget01.svg" alt="">5</span></div>');
   d.addEventListener('dragstart',function(e){d.classList.add('drag');drag=d;e.dataTransfer.effectAllowed='move';});d.addEventListener('dragend',function(){d.classList.remove('drag');drag=null;recount();});
@@ -56,5 +65,5 @@ function recount(){document.querySelectorAll('.col').forEach(function(col){col.q
 recount();
 var tt;function say(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},1400);}
 </script>
-<script src="../guide.js?v=06c1ac79"></script>
+<script src="../guide.js?v=2e1a118e"></script>
 </body></html>

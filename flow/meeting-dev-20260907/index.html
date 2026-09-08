@@ -1989,6 +1989,9 @@ body.is-trsolo .mt-tr__solo .mt-i--backcol { opacity: 1; transform: none; }
 .mt-chip28--txt  { background: var(--cs-color-meeting-din-text); font-size: 12px; }
 .mt-chip28--lock { background: var(--cs-color-meeting-din-lock); font-size: 20px; }
 .mt-chip28--tv   { background: var(--cs-color-meeting-accent); font-size: 20px; }
+/* 位置：不是可见范围，是工具性的一颗，用浅底深图标和前三颗区分开 */
+.mt-chip28--loc  { background: #eef0f4; color: #5a5a66; }
+.mt-chip28--loc:hover { background: #e3e6ee; color: var(--cs-color-meeting-accent); }
 .mt-chip28--all  { background: var(--cs-color-meeting-accent); font-size: 10px; }
 .mt-chip28--off  { background: none; color: var(--cs-color-meeting-din-off); font-size: 20px; }  /* 日程卡那个置灰的锁 */
 .mt-dincard__share { width: 36px; height: 36px; flex: none; border: 0; border-radius: 1000px; cursor: pointer;
@@ -3315,7 +3318,10 @@ body .mt-solo.mt-deck__mini {
 
 /* 本地演示：Ding！文档 / 任务视图拖入主屏。copy 语义，关闭后回到会议宫格。 */
 .mt-stage-source-card { cursor: grab; user-select: none; transition: opacity .2s ease; }
-.mt-stage-source-card:focus-visible { outline: 2px solid var(--cs-color-meeting-accent); outline-offset: 2px; }
+/* 🔴 焦点环原来画在卡外 4px，而 DIN 列表是 overflow:hidden 的滚动容器、左右余量都是 0，
+   键盘 Tab 过来的人看不到自己停在哪。改成向内画，不依赖容器留白。 */
+.mt-stage-source-card:focus-visible,
+.mt-stage-source-card:focus { outline: 2px solid var(--cs-color-meeting-accent); outline-offset: -2px; }
 .mt-stage-source-card:active { cursor: grabbing; }
 .mt-stage-source-card.is-dragging { opacity: .42; }
 
@@ -3506,6 +3512,8 @@ body .mt-solo.mt-deck__mini {
 .mt-ctile-modal.is-on { display: flex; }
 .mt-ctile-modal__box { width: min(1000px, 76vw); height: min(640px, 74vh); background: #fff; border-radius: 16px;
   overflow: hidden; box-shadow: 0 24px 80px rgba(0, 0, 0, .45); display: flex; }
+.mt-ctile-modal__box.is-sm { width: min(839px, 72vw); height: min(737px, 84vh); }
+.mt-ctile-modal__frame { width: 100%; height: 100%; border: 0; display: block; }
 .mt-ctile-modal .mt-local-stage { display: flex; position: relative; inset: auto; width: 100%; height: 100%;
   border-radius: 0; box-shadow: none; }
 </style>
@@ -4624,9 +4632,7 @@ body .mt-solo.mt-deck__mini {
     var rb = document.getElementById('roleBar');
     if (rb) Array.prototype.forEach.call(rb.querySelectorAll('button'), function (b) {
       b.addEventListener('click', function () {
-        Array.prototype.forEach.call(rb.querySelectorAll('button'), function (x) { x.classList.remove('is-on'); });
-        b.classList.add('is-on');
-        root.classList.toggle('is-host-view', b.dataset.role === 'host');
+        /* 回调只管调 setter，UI 同步在 setter 里做，两条路才对得上 */
         if (window.__setHost) window.__setHost(b.dataset.role === 'host');
       });
     });
@@ -6826,6 +6832,15 @@ body .mt-solo.mt-deck__mini {
   window.__setHost = function (on) {
     isHost = !!on;
     document.body.classList.toggle('is-host', isHost);
+    /* 🔴 UI 同步收进 setter 自己，当唯一真源。
+       原来切换条的 is-on 和 html.is-host-view（滑块靠它推）只写在 roleBar 的 click 回调里，
+       从别的入口调 __setHost（父页顶栏、引导脚本、控制台）就会「状态变了、条没动」。
+       在调用处补一行是给特例打补丁，下一个入口照样漏。 */
+    var rbEl = document.getElementById('roleBar');
+    if (rbEl) Array.prototype.forEach.call(rbEl.querySelectorAll('button[data-role]'), function (b) {
+      b.classList.toggle('is-on', (b.dataset.role === 'host') === isHost);
+    });
+    document.documentElement.classList.toggle('is-host-view', isHost);
     syncMid();
     say(isHost ? '已切到主持人视角' : '已切到普通成员视角');
   };
@@ -8099,6 +8114,7 @@ body .mt-solo.mt-deck__mini {
     var sourceCards = [
       {
         kind: 'document',
+        vis: 'meeting',
         label: '协作文档',
         title: '618 投放节奏与预算拆分',
         meta: '拖进会议画面占一格，点开编辑',
@@ -8106,6 +8122,7 @@ body .mt-solo.mt-deck__mini {
       },
       {
         kind: 'task',
+        vis: 'all',
         label: '任务视图',
         title: '素材验收推进视图',
         meta: '拖进会议画面占一格，点开编辑',
@@ -8113,6 +8130,21 @@ body .mt-solo.mt-deck__mini {
       }
     ];
 
+    /* 🔴 owner 2026-09-08：这几颗不是操作按钮，是**可见范围**的标志，三种只出现一颗：
+         meeting 显示器 = 这场会的参会人都能看（会中产生的内容默认这个）
+         all     全体   = 放开了，会后非参会人也能看到
+         person  头像   = 只指定给一个人，卡上显示那个人的头像
+       文档卡片额外多一颗「位置」，表示它存在哪儿，点开是「移动到…」那个弹窗。 */
+    var VIS = {
+      meeting: { cls: 'mt-chip28--tv',  inner: '<i class="cses-tv"></i>',                 t: '这场会的参会人都能看到' },
+      all:     { cls: 'mt-chip28--all', inner: '全体',                                     t: '会后非参会人也能看到' },
+      person:  { cls: 'mt-chip28--ava', inner: '<img src="' + MEM + 'p6.png" alt="">',     t: '只有何炜能看到' }
+    };
+    window.__visChip = visChip;   /* Nota 的待确认任务卡在另一个 IIFE 里建，够不着这个函数 */
+    function visChip(kind) {
+      var v = VIS[kind] || VIS.meeting;
+      return '<button type="button" class="mt-chip28 ' + v.cls + '" data-stage-info="' + v.t + '" aria-label="' + v.t + '" title="' + v.t + '">' + v.inner + '</button>';
+    }
     function typeClass(kind) { return (kind === 'task' || kind === 'detail') ? 'mt-local-stage--task' : 'mt-local-stage--document'; }
     function clearDropState() {
       grid.classList.remove('mt-local-stage--drag-document', 'mt-local-stage--drag-task');
@@ -8155,14 +8187,39 @@ body .mt-solo.mt-deck__mini {
         '<div class="mt-local-stage__doc-scroll"><article class="mt-local-stage__doc-page"' + (hasProposal ? ' data-proposal-view="diff"' : '') + '><h2></h2><div class="mt-doc-meta"><div class="l"><span class="who"><img src="../doc-20260907/assets/img74.png" alt="">孙婉茹 <small>UI设计 / 设计部</small></span><span class="sep"></span><span>今日 13：23 创建 · 会议中协作</span></div><div class="st"><span><img src="../doc-20260907/assets/img.svg" alt="">32</span><span><img src="../doc-20260907/assets/imgGroup1000006632.svg" alt="">32</span><span><img src="../doc-20260907/assets/img31.svg" alt="">32</span><span><img src="../doc-20260907/assets/imgMessageTyping.svg" alt="">203</span><span><img src="../doc-20260907/assets/imgEyeOpen.svg" alt="">152</span></div></div><h3 class="mt-doc-h">1. 投放节奏与预算拆分</h3><p>围绕 618 的投放节奏、预算拆分和素材验收窗口，先锁定三个需要在会中确认的动作。</p><div class="mt-local-stage__doc-content"' + (hasProposal ? ' contenteditable="false"' : ' contenteditable="true"') + ' role="textbox" aria-label="文档正文">' + budgetLine + '<p>• 6/16 加码：素材验收完成后，补充第二波定向包。</p><p>• 待确认：何炜同步素材验收时间，冯云确认直播间承接页。</p>' + ownerLine + '</div><div class="mt-local-stage__doc-callout"><b>会议结论</b><span>素材验收时间确认后，由 Nota 将待确认的任务推送给相关负责人。</span></div></article></div>' +
       '</div>';
     }
-    function taskMarkup(title) { return '<div class="mt-local-stage__content">' + '<header class="mt-local-stage__head"><div class="mt-local-stage__identity"><span class="mt-local-stage__badge">任务视图</span><span class="mt-local-stage__path"><small>小米电视推广</small><i>/</i><small>618 投放</small><i>/</i><small>素材验收</small></span><strong class="mt-local-stage__title"></strong><span class="mt-local-stage__views" role="tablist"><button type="button" class="is-active" data-stage-view="list">列表</button><button type="button" data-stage-view="kanban">看板</button></span></div><button class="mt-local-stage__close" type="button" aria-label="关闭主屏任务视图">×</button></header>' + '<div class="mt-local-stage__frame-wrap"><iframe class="mt-local-stage__frame" title="任务列表" data-base="1043" data-h="822" src="../task-20260907/list.html#embed=1"></iframe></div>' + '</div>'; }
+    function taskMarkup(title, view) { var kb = view === 'kanban'; return '<div class="mt-local-stage__content">' + '<header class="mt-local-stage__head"><div class="mt-local-stage__identity"><span class="mt-local-stage__badge">任务视图</span><span class="mt-local-stage__path"><small>小米电视推广</small><i>/</i><small>618 投放</small><i>/</i><small>素材验收</small></span><strong class="mt-local-stage__title"></strong><span class="mt-local-stage__views" role="tablist"><button type="button" class="' + (kb ? '' : 'is-active') + '" data-stage-view="list">列表</button><button type="button" class="' + (kb ? 'is-active' : '') + '" data-stage-view="kanban">看板</button></span></div><button class="mt-local-stage__close" type="button" aria-label="关闭主屏任务视图">×</button></header>' + '<div class="mt-local-stage__frame-wrap"><iframe class="mt-local-stage__frame" title="任务列表" data-base="' + (kb ? 1265 : 1043) + '" data-h="' + (kb ? 784 : 822) + '" src="../task-20260907/' + (kb ? 'kanban' : 'list') + '.html#embed=1"></iframe></div>' + '</div>'; }
 function detailMarkup(title) { return '<div class="mt-local-stage__content">' + '<header class="mt-local-stage__head"><div class="mt-local-stage__identity"><button type="button" class="mt-local-stage__back" data-stage-back>← 返回列表</button><span class="mt-local-stage__badge">任务</span><strong class="mt-local-stage__title"></strong></div><button class="mt-local-stage__close" type="button" aria-label="关闭任务详情">×</button></header>' + '<div class="mt-local-stage__frame-wrap"><iframe class="mt-local-stage__frame" title="任务详情" data-base="1297" data-h="800" src="../task-20260907/detail.html#title=' + encodeURIComponent(title) + '"></iframe></div>' + '</div>'; }
-function fitStageFrames() { document.querySelectorAll('.mt-local-stage__frame').forEach(function (f) { var wrap = f.parentNode, W = wrap.clientWidth, H = wrap.clientHeight, base = +f.dataset.base || 1043, bh = +f.dataset.h || 800; if (!W || !H) return; var k = Math.min(W / base, 1); f.style.width = base + 'px'; f.style.height = Math.max(bh, Math.ceil(H / k)) + 'px'; f.style.transform = 'scale(' + k + ')'; }); }
+function fitStageFrames() { document.querySelectorAll('.mt-local-stage__frame').forEach(function (f) {
+      /* 🔴 owner 2026-09-08：「你要做适配，而不是等比例缩小，文字这怎么看得清？」
+         原来是把 1043 / 1265 / 1297 的整页 transform 缩进容器，字跟着一起缩。
+         现在改成把容器的真实尺寸给它，排版由页面自己按嵌入态的 CSS 适配，字号 1:1。 */
+      f.style.width = '100%'; f.style.height = '100%'; f.style.transform = 'none'; f.style.left = ''; f.style.top = '';
+    }); }
 setInterval(fitStageFrames, 800); window.addEventListener('resize', fitStageFrames);
 var lastTaskSource = null;
+/* 🔴 owner 2026-09-08：「展开列表点击任务，弹窗里有个返回按钮，二级页面展示任务详情」。
+   所以列表 → 详情是**同一个容器里的二级页**，不是另开一处，更不是跳回主屏。
+   哪个容器发来的消息就在哪个容器里翻页：弹窗里翻弹窗，主画面里翻主画面。 */
+function hostOfFrame(win) {
+  var found = null;
+  document.querySelectorAll('.mt-local-stage').forEach(function (h) {
+    if (found) return;
+    h.querySelectorAll('iframe').forEach(function (f) { if (f.contentWindow === win) found = h; });
+  });
+  return found;
+}
 window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t) return;
-  if (m.t === 'open-task') { present({ kind: 'detail', title: m.title || '任务', label: '任务' }, { skipConversation: true }); }
-  if (m.t === 'close-task') { present(lastTaskSource || sourceCards[1], { skipConversation: true }); if (m.saved) say('任务已提交'); } });
+  var host = hostOfFrame(e.source);
+  if (m.t === 'open-task') {
+    var detail = { kind: 'detail', title: m.title || '任务', label: '任务' };
+    if (host) renderStage(host, detail, host.__opts || {}); else openModal(detail);
+  }
+  if (m.t === 'close-location') { closeModal(); if (m.saved) say('已移动到「' + (m.to || '个人空间') + '」'); return; }
+  if (m.t === 'close-task') {
+    var back = lastTaskSource || sourceCards[1];
+    if (host) renderStage(host, back, host.__opts || {}); else closeModal();
+    if (m.saved) say('任务已提交');
+  } });
 
     function bindDocumentProposal(host, source, again) {
       var toolbar = host.querySelector('.mt-local-proposal-toolbar');
@@ -8204,16 +8261,30 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
        原来这段是写死在 present() 里的，三个地方要同一套编辑器，所以抽出来按容器渲染。
        baseClass 必须保留 —— 容器自己的类（.mt-ctile__full / .mt-ctile__stage）
        是 CSS 判断「缩略还是铺满」的唯一依据，直接覆盖 className 会把它冲掉。 */
+    /* 🔴 内容的状态记在**逻辑标识**上（种类+标题），不挂那一格的 DOM。
+       同一份东西可以从格子点开、从卡上「文」点开、从任务列表点进去，挂 DOM 的话三条路各存一份，
+       改了 A 看 B 还是旧的。关掉再打开必须一模一样，这是 bug 不是设计选择。 */
+    var C_STATE = {};
+    function cState(source) {
+      var k = source.kind + '·' + source.title;
+      if (!C_STATE[k]) C_STATE[k] = { proposal: null, body: null, view: 'list' };
+      return C_STATE[k];
+    }
     function renderStage(host, source, options) {
       options = options || {};
+      var st = cState(source);
+      /* 没显式指定就沿用记着的那个状态 —— 否则重开一次建议就没了 */
+      if (!('documentProposalState' in options)) options.documentProposalState = st.proposal;
+      else st.proposal = options.documentProposalState || null;
       host.className = (options.baseClass ? options.baseClass + ' ' : '') + 'mt-local-stage ' + typeClass(source.kind);
-      host.innerHTML = source.kind === 'detail' ? detailMarkup(source.title) : source.kind === 'task' ? taskMarkup(source.title) : documentMarkup(source.title, options.documentProposalState);
+      host.innerHTML = source.kind === 'detail' ? detailMarkup(source.title) : source.kind === 'task' ? taskMarkup(source.title, st.view) : documentMarkup(source.title, options.documentProposalState);
       if (source.kind === 'task') lastTaskSource = source;
       host.querySelectorAll('[data-stage-view]').forEach(function (b) {
         b.addEventListener('click', function () {
           var f = host.querySelector('.mt-local-stage__frame');
           host.querySelectorAll('[data-stage-view]').forEach(function (x) { x.classList.toggle('is-active', x === b); });
-          if (b.dataset.stageView === 'kanban') { f.dataset.base = 1265; f.dataset.h = 784; f.src = '../task-20260907/kanban.html#embed=1'; }
+          st.view = b.dataset.stageView;
+          if (st.view === 'kanban') { f.dataset.base = 1265; f.dataset.h = 784; f.src = '../task-20260907/kanban.html#embed=1'; }
           else { f.dataset.base = 1043; f.dataset.h = 822; f.src = '../task-20260907/list.html#embed=1'; }
           fitStageFrames();
           if (!options.quiet) say(b.dataset.stageView === 'kanban' ? '已切换为看板' : '已切换为列表');
@@ -8238,6 +8309,15 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
         renderStage(host, source, o);
       }
       host.__again = again;
+      host.__opts = options;
+      var body = host.querySelector('.mt-local-stage__doc-content');
+      if (body) {
+        /* 🔴 只有「正在看建议」这一种态不还原（那时正文是 diff 版，还原会把划线改回去）。
+           已采纳 / 无建议都要还原，否则用户手打的内容一关就没。 */
+        var isDiff = options.documentProposalState === 'pending';
+        if (st.body != null && !isDiff) body.innerHTML = st.body;
+        body.addEventListener('input', function () { if (!isDiff) st.body = body.innerHTML; });
+      }
       if (options.documentProposalState === 'pending') bindDocumentProposal(host, source, again);
     }
     /* 「在主屏展示」这一路不变：卡片上的按钮写的就是主屏，引导和缩略图循环都靠它。
@@ -8273,16 +8353,28 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
     modal.innerHTML = '<div class="mt-ctile-modal__box"><section class="mt-local-stage"></section></div>';
     document.body.appendChild(modal);
     var modalTile = null;
+    var modalBox = modal.querySelector('.mt-ctile-modal__box');
+    var modalBoxHTML = modalBox.innerHTML;
+    function resetModalBox() { if (!modal.querySelector('.mt-local-stage')) { modalBox.className = 'mt-ctile-modal__box'; modalBox.innerHTML = modalBoxHTML; } }
+    /* 文档卡上的「位置」：稿 WgG3a0CTKlbZl34NmDNC81 / 1956:12424「移动到…」 */
+    function openLocation(source) {
+      modalBox.className = 'mt-ctile-modal__box is-sm';
+      modalBox.innerHTML = '<iframe class="mt-ctile-modal__frame" title="文档位置" src="../doc-20260907/location.html#embed=1&name=' + encodeURIComponent(source.title) + '"></iframe>';
+      modal.classList.add('is-on');
+      say('这份文档存放在「个人空间 / 设计需求 / 文档库」');
+    }
     function closeModal() {
       if (!modal.classList.contains('is-on')) return;
       modal.classList.remove('is-on');
-      modal.querySelector('.mt-local-stage').replaceChildren();
+      var stage = modal.querySelector('.mt-local-stage');
+      if (stage) stage.replaceChildren(); else { modalBox.className = 'mt-ctile-modal__box'; modalBox.innerHTML = modalBoxHTML; }
       /* 在弹窗里改过的内容要回写到格子的缩略图上，不然缩略图停在旧样子 */
       if (modalTile && modalTile.isConnected) { refreshThumb(modalTile); modalTile = null; }
       activeSurface = null;
       say('已关闭');
     }
     function openModal(source, tile) {
+      resetModalBox();
       var host = modal.querySelector('.mt-local-stage');
       modalTile = tile || null;
       activeSurface = host;
@@ -8392,21 +8484,19 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
         (source.kind === 'task' ? '<img class="mt-dincard__ava" src="' + MEM + 'p4.png" alt="负责人">' : '') + '</div>' +
         '<p class="mt-dincard__body" data-stage-open>' + escapeText(source.title) + '</p>' +
         '<div class="mt-dincard__foot"><div class="mt-dincard__chips">' +
-          (source.kind === 'document' ? '<button type="button" class="mt-chip28 mt-chip28--txt" data-stage-open aria-label="打开文档" title="打开文档">文</button>' : '') +
-          '<button type="button" class="mt-chip28 mt-chip28--lock" data-stage-info="当前内容仅会议成员可访问" aria-label="查看访问权限" title="会议成员可访问"><i class="cses-file-lock-01"></i></button>' +
-          '<button type="button" class="mt-chip28 mt-chip28--ava" data-stage-info="李书萍、何炜正在协作" aria-label="查看协作成员" title="协作成员"><img src="' + MEM + 'p6.png" alt=""></button>' +
-          '<button type="button" class="mt-chip28 mt-chip28--tv" data-stage-open aria-label="放入会议画面" title="放入会议画面"><i class="cses-tv"></i></button>' +
-          (source.kind === 'task' ? '<button type="button" class="mt-chip28 mt-chip28--all" data-stage-info="共享范围：全体参会成员" aria-label="全体参会成员" title="全体参会成员">全体</button>' : '') +
+          (source.kind === 'document' ? '<button type="button" class="mt-chip28 mt-chip28--txt" data-stage-doc aria-label="打开文档" title="打开文档">文</button>' : '') +
+          visChip(source.vis) +
+          (source.kind === 'document' ? '<button type="button" class="mt-chip28 mt-chip28--loc" data-stage-loc aria-label="文档位置" title="文档存放位置"><svg width="14" height="14" viewBox="0 0 13 13" fill="none" aria-hidden="true"><path d="M6.5 1.6c2 0 3.6 1.6 3.6 3.5 0 2.6-3.6 6.3-3.6 6.3S2.9 7.7 2.9 5.1c0-1.9 1.6-3.5 3.6-3.5z" stroke="currentColor" stroke-width="1.2"/><circle cx="6.5" cy="5.1" r="1.3" fill="currentColor"/></svg></button>' : '') +
         '</div><button type="button" class="mt-dincard__share" data-stage-info="本地演示：已转发这条卡片" aria-label="转发" title="转发"><i class="cses-share"></i></button></div>';
       /* 🔴 owner 2026-09-08：「任务视图仍占满主屏」—— 卡片上的按钮和拖拽必须是同一件事：
          先进会议画面占一格。上主屏只剩两条路：三个点里「设为主画面」，或点小格放大。 */
       card.querySelectorAll('[data-stage-open]').forEach(function (button) {
-        var justOpen = button.classList.contains('mt-chip28--txt');   /* 「文」= 只打开看看，不占格子 */
-        button.addEventListener('click', function (event) {
-          event.stopPropagation();
-          if (justOpen) openModal(source); else dropIn(source);
-        });
+        button.addEventListener('click', function (event) { event.stopPropagation(); dropIn(source); });
       });
+      var docBtn = card.querySelector('[data-stage-doc]');
+      if (docBtn) docBtn.addEventListener('click', function (event) { event.stopPropagation(); openModal(source); });
+      var locBtn = card.querySelector('[data-stage-loc]');
+      if (locBtn) locBtn.addEventListener('click', function (event) { event.stopPropagation(); openLocation(source); });
       var pinBtn = card.querySelector('[data-stage-pin]');
       if (pinBtn) pinBtn.addEventListener('click', function (event) {
         event.stopPropagation();
@@ -8535,6 +8625,7 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
         '<h3>完成企微承接链路压测</h3>' +
         '<p class="mt-nota-task-proposal__quote">“企微承接链路压测由我负责，5 月 25 日给出结果。”</p>' +
         '<dl class="mt-nota-task-proposal__meta"><div><dt>负责人</dt><dd><span class="mt-nota-task-proposal__person">何</span>何炜</dd></div><div><dt>截止时间</dt><dd>5 月 25 日 18:00</dd></div></dl>' +
+        '<div class="mt-dincard__chips" style="margin:2px 0 8px">' + (window.__visChip ? window.__visChip('person') : '') + '</div>' +
         '<div class="mt-nota-task-proposal__actions"><button type="button" class="mt-nota-task-proposal__primary" data-proposal-create>编辑并创建</button><span class="mt-nota-task-proposal__status" aria-live="polite"></span></div>';
       din.insertBefore(card, din.firstChild);
       card.querySelector('[data-proposal-dismiss]').addEventListener('click', function () {
@@ -8588,6 +8679,6 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
 
 })();
 </script>
-<script src="../guide.js?v=06c1ac79"></script>
+<script src="../guide.js?v=2e1a118e"></script>
 </body>
 </html>

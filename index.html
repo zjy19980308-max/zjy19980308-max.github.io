@@ -7,17 +7,17 @@
 <meta name="referrer" content="no-referrer">
 <title>张竞元 / PORTFOLIO</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/line-sidebar.css?v=69b4991e">
+<link rel="stylesheet" href="assets/line-sidebar.css?v=6e1eb33f">
 <link rel="stylesheet" href="assets/card-glow.css?v=fc49c41b">
 <link rel="stylesheet" href="assets/drift-wall.css?v=933478a3">
 <link rel="stylesheet" href="assets/gradual-blur.css?v=74580aae">
-<link rel="stylesheet" href="assets/metaballs.css?v=00eaafbc">
+<link rel="stylesheet" href="assets/metaballs.css?v=c1d0d0bd">
 <link rel="stylesheet" href="assets/cs-hub.css?v=46f841cb">
 <link rel="stylesheet" href="assets/dark-veil.css?v=27fb9132">
 <link rel="stylesheet" href="assets/bento.css?v=2b466175">
 <link rel="stylesheet" href="assets/lanyard.css?v=8457d0bc">
 <link rel="stylesheet" href="assets/fonts.css?v=d0647496">
-<link rel="stylesheet" href="assets/system.css?v=421a3058">
+<link rel="stylesheet" href="assets/system.css?v=6de4ae1e">
 <style>
   /* 待填标记 —— 全站统一，填完删掉这个 span 即可 */
   .todo{color:#FF65A3;border-bottom:1px dashed rgba(255,101,163,.5);white-space:nowrap}
@@ -125,6 +125,14 @@
   .doc-x:hover{color:#fff;border-color:#fff}
   /* 活页的引导条：画在蒙层顶栏（页面外的空白），收起态绝不压住画面。
      展开的步骤清单是用户主动点出来的，才允许浮在画面上。 */
+  /* 页面里的演示切换（视角 / 会议类型）挪到顶栏这块空白上 */
+  .doc-demo{margin-left:22px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  /* 🔴 hidden 属性压不过作者写的 display —— 现在看不见只是因为里面清空了，留着是隐患 */
+  .doc-demo[hidden],.doc-guide[hidden]{display:none}
+  .doc-demo .seg{display:flex;gap:2px;padding:2px;border:1px solid rgba(255,255,255,.16);border-radius:8px;background:rgba(255,255,255,.04)}
+  .doc-demo .seg button{border:0;background:transparent;color:rgba(255,255,255,.62);border-radius:6px;padding:3px 9px;font:12px inherit;cursor:pointer;white-space:nowrap}
+  .doc-demo .seg button:hover{color:#fff}
+  .doc-demo .seg button.on{background:rgba(255,255,255,.92);color:#0b0b10}
   .doc-guide{margin-left:auto;margin-right:14px;position:relative;display:flex;align-items:center;gap:8px;
     font-size:12.5px;color:rgba(255,255,255,.9);white-space:nowrap}
   .doc-guide .gk{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;color:var(--violet);
@@ -595,11 +603,12 @@
       <div class="role"><div class="rt"><b>企业内部工具搭建者</b><span>非设计岗也能快速搭起内部系统，降低协作门槛。</span></div></div>
     </div>
 
-    <h3 class="sub-head"><span class="num">02</span>传统设计产出痛点<span class="sub-en">PAIN · 3</span><span class="line"></span></h3>
-    <div class="pain-list">
-      <div class="pain-item"><div class="pi-n">01 · 转述失真</div><div class="pi-t">中间转述一道，必然丢东西</div><div class="pi-d">主对话读完 A 的报告，用自己的话再讲给 B。每转一手，细节少一层。</div></div>
-      <div class="pain-item"><div class="pi-n">02 · 规则形同虚设</div><div class="pi-t">约束的强度不在措辞，在能不能被执行层拦住</div><div class="pi-d">写在文档里的规范，AI 不去读、读了也跳读。写得再重也没用。</div></div>
-      <div class="pain-item"><div class="pi-n">03 · 静态稿验证不了</div><div class="pi-t">画得再准，也不知道点下去会怎样</div><div class="pi-d">设计师产出静态视觉稿速度慢，且无法在真实环境里验证交互逻辑与动态效果。</div></div>
+    <h3 class="sub-head"><span class="num">02</span>传统设计产出痛点<span class="sub-en">PAIN · 4</span><span class="line"></span></h3>
+    <div class="pain-list p4">
+      <div class="pain-item"><div class="pi-n">01 · 没计划就开工</div><div class="pi-t">做到哪算哪，漏了什么事后才发现</div><div class="pi-d">一套系统要哪些页面、每页要哪些状态，开工前没有清单。<strong>进度和缺口全靠脑子记，画到一半发现漏了空态、异常态，回头补。</strong></div></div>
+      <div class="pain-item"><div class="pi-n">02 · 手速就是产能上限</div><div class="pi-t">一套后台几十上百页，结构翻来覆去就那几种</div><div class="pi-d">表格、表单、弹窗、筛选条，每一页都从空白画布重摆一遍。<strong>想清楚这个功能怎么用的时间，被画的时间挤掉了。</strong></div></div>
+      <div class="pain-item"><div class="pi-n">03 · 规范靠自觉</div><div class="pi-t">用没用库里的组件，全凭记性和 review</div><div class="pi-d">色值随手吸一个、间距差两像素、明明有现成组件却又画了一个。<strong>页面一多必然走样，组件库建了复用率也上不去。</strong></div></div>
+      <div class="pain-item"><div class="pi-n">04 · 交付的是图</div><div class="pi-t">画得再准，也不知道点下去会怎样</div><div class="pi-d">静态稿验证不了交互和动效；开发还要照着重做一遍。<strong>设计和代码是两份东西，改一处要改两遍，久了必然对不上。</strong></div></div>
     </div>
 
     <h3 class="sub-head"><span class="num">03</span>能做什么<span class="sub-en">WHAT IT DOES · 4</span><span class="line"></span></h3>
@@ -2634,6 +2643,7 @@
 <div class="doc-mask" id="docMask" role="dialog" aria-modal="true">
   <div class="doc-bar">
     <div><span class="dk" id="docKey">PROCESS</span><h4 id="docTitle"></h4></div>
+    <div class="doc-demo" id="docDemo" hidden></div>
     <div class="doc-guide" id="docGuide" hidden></div>
     <button class="doc-x" id="docX" aria-label="关闭">✕</button>
   </div>
@@ -2655,8 +2665,28 @@
       ti=document.getElementById('docTitle'), x=document.getElementById('docX');
   if(!m) return;
   m.setAttribute('tabindex','-1');
-  var gb = document.getElementById('docGuide');
-  function clearGuide(){ if(!gb) return; gb.hidden = true; gb.classList.remove('open'); gb.innerHTML=''; }
+  var gb = document.getElementById('docGuide'), db = document.getElementById('docDemo');
+  function clearGuide(){ if(gb){ gb.hidden = true; gb.classList.remove('open'); gb.innerHTML=''; } if(db){ db.hidden = true; db.innerHTML=''; } }
+  function sendDemo(set, value){ var f = fr.querySelector('iframe'); if(f && f.contentWindow) f.contentWindow.postMessage({t:'demo-cmd', set:set, value:value},'*'); }
+  addEventListener('message', function(e){
+    var m = e.data; if(!m || m.t !== 'demo-bars' || !db) return;
+    var f = fr.querySelector('iframe'); if(!f || f.contentWindow !== e.source) return;
+    var html = '';
+    [['kind', m.kind], ['role', m.role]].forEach(function(pair){
+      var set = pair[0], data = pair[1];
+      if(!data || !data.items || !data.items.length) return;
+      html += '<span class="seg" data-set="' + set + '">' + data.items.map(function(it){
+        return '<button type="button" data-v="' + it.v + '"' + (it.v === data.on ? ' class="on"' : '') + '>' + it.t + '</button>';
+      }).join('') + '</span>';
+    });
+    db.innerHTML = html; db.hidden = !html;
+    f.contentWindow.postMessage({t:'demo-host-ok'},'*');
+  });
+  if (db) db.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    var seg = b.closest('.seg'); if(!seg) return;
+    sendDemo(seg.dataset.set, b.dataset.v);
+  });
   function sendGuide(cmd){ var f = fr.querySelector('iframe'); if(f && f.contentWindow) f.contentWindow.postMessage({t:'guide-cmd',cmd:cmd},'*'); }
   addEventListener('message', function(e){
     var g = e.data; if(!g || g.t !== 'guide-panel' || !gb) return;
@@ -2666,10 +2696,12 @@
     gb.innerHTML = '<span class="gk">GUIDE</span><b></b><span class="gn"></span>' +
       '<button type="button" data-g="steps">步骤</button>' +
       '<button type="button" class="pri" data-g="auto">▶ 自动演示</button>' +
+      '<button type="button" data-g="hint">提示</button>' +
       '<button type="button" data-g="reset">重来</button><ol></ol>';
     gb.querySelector('b').textContent = String(g.title || '').replace(/ · \d+ 步$/, '');
     gb.querySelector('.gn').textContent = Math.min((g.i|0) + 1, g.n) + '/' + g.n + (g.done ? ' ✓' : '');
     gb.querySelector('[data-g="auto"]').disabled = !!g.auto;
+    gb.querySelector('[data-g="hint"]').disabled = !!g.auto || !!g.tips;
     var ol = gb.querySelector('ol');
     (g.steps || []).forEach(function(txt, k){
       var li = document.createElement('li');
@@ -2963,7 +2995,7 @@
 <script src="assets/qr-matrix.js?v=4bfecbfa"></script>
 <script src="assets/lanyard.js?v=d4ef5b04"></script>
 <script src="assets/badge2d.js?v=32fba1ce"></script>
-<script src="assets/shape-blur.js?v=64e1ab0e"></script>
+<script src="assets/shape-blur.js?v=8d5db7eb"></script>
 <script>
 /* 挂绳工牌。标志路径直接从 assets/logo.svg 读，和导航、扉页、favicon 同一份。
    窄屏／低端机／关了动效的设备上不启动，容器 :empty 时不占高度。
@@ -2997,7 +3029,12 @@
       qrMatrix: (window.__QR_MATRIX || {}).m
     });
     /* 照片描边和工牌共用这一份 three：都只在桌面、能跑得动、没关动效的机器上出现 */
-    if (window.ShapeBlur) ShapeBlur.mount('.about-col-photo', { slot: '.portrait-slot' });
+    /* 参数照 owner 给的那张参考面板：Shape Size 1 / Roundness 0.5 /
+       Border Size 0.05 / Circle Size 0.25 / Circle Edge 1 */
+    if (window.ShapeBlur) ShapeBlur.mount('.about-col-photo', {
+      slot: '.portrait-slot',
+      roundness: 0.5, borderSize: 0.05, circleSize: 0.25, circleEdge: 1
+    });
   };
   document.head.appendChild(s);
 })();
@@ -3019,7 +3056,7 @@ DarkVeil.mount('.home-hero', {
 });
 </script>
 
-<script src="assets/metaballs.js?v=8e0dc70e"></script>
+<script src="assets/metaballs.js?v=391e8cc7"></script>
 <script>
 /* 协作平台章末尾的「未完待续」融球。参数照他调好的那一组：
    白色 · 7 球 · 速度 0.3 · 尺寸 29 · 聚拢 0.7 · 跟随光标 · 平滑 0.163 · 光标球 2。
@@ -3029,6 +3066,7 @@ MetaBalls.mount('#cses-tbc', {
   color: '#ffffff', cursorBallColor: '#ffffff',
   ballCount: 7, speed: 0.3, animationSize: 29, clumpFactor: 0.7,
   enableMouseInteraction: true, hoverSmoothness: 0.163, cursorBallSize: 2,
+  tiltGain: 1.8,                     /* 触屏上陀螺仪的放大倍数，桌面用不到 */
   enableTransparency: true
 });
 </script>
@@ -3185,7 +3223,8 @@ document.querySelectorAll('.bento-card--sm').forEach(function (c) {
   });
 })();
 </script>
-<div class="next-bar" id="nextBar" hidden><button type="button" class="nb-btn"><span class="nb-k">本章到底了 · 继续上滑或点这里</span><b class="nb-t"></b><i class="nb-fill"></i></button></div>
+<div class="next-bar" id="nextBar" hidden><button type="button" class="nb-btn"><span class="nb-k">本章到底了</span><b class="nb-t"></b><i class="nb-fill"></i></button></div>
+<div class="nb-load" id="nbLoad" hidden aria-hidden="true"><div class="nl-box"><span class="nl-num"></span><b class="nl-name"></b><i class="nl-line"></i></div></div>
 <script>
 /* ═══ 手机：翻到底再继续上滑 → 自动切下一章 ═══
    owner 怕面试官不知道章节带能横滑，所以到底之后给条带子：
@@ -3199,7 +3238,13 @@ document.querySelectorAll('.bento-card--sm').forEach(function (c) {
   var order = Array.prototype.map.call(document.querySelectorAll('.tab-btn'), function(b){
     return { key: b.dataset.tab, num: b.dataset.num, name: b.textContent.trim() };
   });
-  var TH = 150, acc = 0, decayT = 0, armed = false, lock = 0;
+  var TH = 190, acc = 0, decayT = 0, armed = false, lock = 0;
+  var kEl = bar.querySelector('.nb-k');
+  /* released：这一轮到底之后，手指是否已经松开过。
+     startedArmed：当前这一次触摸，是不是在「已经停在底部」的状态下按下的。
+     两个都为真才计进度 —— 否则「一路滑到底」的那同一次甩动会直接把人带进下一章。 */
+  var released = false, startedArmed = false;
+  function hint(){ kEl.textContent = released ? '上滑进入下一章 · 或点这里' : '本章到底了 · 松开手指'; }
   function cur(){ var a = document.querySelector('.tab-btn.active'); return a ? a.dataset.tab : null; }
   function next(){
     var k = cur(), i = -1;
@@ -3214,31 +3259,55 @@ document.querySelectorAll('.bento-card--sm').forEach(function (c) {
     var on = !!n && atBottom() && document.documentElement.scrollHeight > innerHeight + 200;
     if (on) {
       tEl.textContent = (order.length && n.key === order[0].key ? '回到 ' : '') + n.num + ' ' + n.name;
+      if (!armed) released = false;          /* 刚滑到底：这一次甩动不算数 */
+      hint();
       bar.hidden = false;
       requestAnimationFrame(function(){ bar.classList.add('on'); });
-    } else { bar.classList.remove('on'); acc = 0; setP(0); }
+    } else { bar.classList.remove('on'); acc = 0; setP(0); released = false; }
     armed = on;
   }
   function go(){
     var n = next(); if (!n || !window.__showTab) return;
-    lock = Date.now(); acc = 0; setP(0); bar.classList.remove('on'); armed = false;
-    __showTab(n.key);
+    lock = Date.now(); acc = 0; setP(0); bar.classList.remove('on'); armed = false; released = false;
+    /* 切章过场：先盖一层写着下一章名字的幕，再换内容。
+       手机上一滑就整页换掉太突兀，给三百毫秒让人知道去了哪儿。 */
+    var ld = document.getElementById('nbLoad');
+    if (ld && mq.matches) {
+      ld.querySelector('.nl-num').textContent = n.num;
+      ld.querySelector('.nl-name').textContent = n.name;
+      ld.hidden = false;
+      requestAnimationFrame(function(){ ld.classList.add('on'); });
+      setTimeout(function(){
+        __showTab(n.key);
+        setTimeout(function(){
+          ld.classList.remove('on');
+          setTimeout(function(){ ld.hidden = true; }, 320);
+        }, 200);
+      }, 320);
+    } else { __showTab(n.key); }
   }
-  function push(d){
+  function push(d, needGesture){
     if (!armed || d <= 0 || Date.now() - lock < 800) return;
+    if (needGesture && (!released || !startedArmed)) return;   /* 必须是松手之后新起的一次上滑 */
     acc += d; setP(acc / TH);
     clearTimeout(decayT); decayT = setTimeout(function(){ acc = 0; setP(0); }, 700);
     if (acc >= TH) go();
   }
   var ly = null;
-  addEventListener('touchstart', function(e){ ly = e.touches[0].clientY; }, { passive: true });
+  addEventListener('touchstart', function(e){
+    ly = e.touches[0].clientY;
+    startedArmed = armed && released;      /* 按下这一刻就已经停在底部，才是「再滑一次」 */
+  }, { passive: true });
   addEventListener('touchmove',  function(e){
     if (ly == null) return;
     var y = e.touches[0].clientY, d = ly - y; ly = y;
-    if (atBottom()) push(d);
+    if (atBottom()) push(d, true);
   }, { passive: true });
-  addEventListener('touchend', function(){ ly = null; }, { passive: true });
-  addEventListener('wheel', function(e){ if (atBottom()) push(e.deltaY); }, { passive: true });
+  addEventListener('touchend', function(){
+    ly = null; startedArmed = false; acc = 0; setP(0);
+    if (armed && !released) { released = true; hint(); }   /* 松手之后才提示可以上滑跳转 */
+  }, { passive: true });
+  addEventListener('wheel', function(e){ if (atBottom()) push(e.deltaY, false); }, { passive: true });
   var rt = 0;
   addEventListener('scroll', function(){ if (!rt) rt = requestAnimationFrame(function(){ rt = 0; refresh(); }); }, { passive: true });
   addEventListener('resize', refresh);

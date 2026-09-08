@@ -139,6 +139,7 @@
       ballCount:              opt.ballCount              != null ? opt.ballCount              : 15,
       clumpFactor:            opt.clumpFactor            != null ? opt.clumpFactor            : 1,
       cursorBallSize:         opt.cursorBallSize         != null ? opt.cursorBallSize         : 3,
+      tiltGain:               opt.tiltGain               != null ? opt.tiltGain               : 1.6,
       cursorBallColor:        opt.cursorBallColor        != null ? opt.cursorBallColor        : '#ffffff',
       enableTransparency:     opt.enableTransparency     != null ? opt.enableTransparency     : true,
       force:                  !!opt.force
@@ -222,9 +223,39 @@
     }
     function onEnter() { if (o.enableMouseInteraction) inside = true; }
     function onLeave() { if (o.enableMouseInteraction) inside = false; }
-    host.addEventListener('pointermove', onMove);
-    host.addEventListener('pointerenter', onEnter);
-    host.addEventListener('pointerleave', onLeave);
+
+    /* 触屏上不接指针事件：手指划过会把 inside 置真、光标球黏在最后一次触点上，
+       松手时 pointerleave 在不少安卓浏览器里根本不来，球就卡住不动了；
+       而且吃掉手势会和页面上下滑冲突。触屏改成「自己流动 + 陀螺仪放大」。 */
+    var coarse = root.matchMedia && matchMedia('(pointer: coarse)').matches;
+    var gx = 0, gy = 0, gbase = null, gyroOn = false;
+    if (!coarse) {
+      host.addEventListener('pointermove', onMove);
+      host.addEventListener('pointerenter', onEnter);
+      host.addEventListener('pointerleave', onLeave);
+    } else if (root.DeviceOrientationEvent) {
+      var onOri = function (e) {
+        if (e.beta == null || e.gamma == null) return;
+        if (gbase == null) gbase = e.beta;
+        /* 归一到 ±1，倾斜幅度按 o.tiltGain 放大 —— 手机上球的位移要比鼠标更明显 */
+        gx = Math.max(-1, Math.min(1, (e.gamma / 38) * o.tiltGain));
+        gy = Math.max(-1, Math.min(1, ((e.beta - gbase) / 38) * o.tiltGain));
+        gyroOn = true;
+      };
+      var DOE = root.DeviceOrientationEvent;
+      if (typeof DOE.requestPermission === 'function') {
+        /* iOS 需要手势里授权：页面上任意一次点击都试一次，成功就不再问 */
+        var ask = function () {
+          DOE.requestPermission().then(function (s) {
+            if (s === 'granted') addEventListener('deviceorientation', onOri, true);
+          }).catch(function () {});
+          removeEventListener('touchend', ask);
+        };
+        addEventListener('touchend', ask, { passive: true });
+      } else {
+        addEventListener('deviceorientation', onOri, true);
+      }
+    }
 
     var t0 = performance.now();
     function render(now) {
@@ -244,8 +275,10 @@
       var tx, ty;
       if (inside) { tx = px; ty = py; }
       else {
+        /* 默认自己绕圈；触屏上再叠一层陀螺仪位移，手机拿在手里也有反应 */
         tx = cv.width * 0.5 + Math.cos(t * o.speed) * cv.width * 0.15;
         ty = cv.height * 0.5 + Math.sin(t * o.speed) * cv.height * 0.15;
+        if (gyroOn) { tx += gx * cv.width * 0.34; ty -= gy * cv.height * 0.34; }
       }
       mouse.x += (tx - mouse.x) * o.hoverSmoothness;
       mouse.y += (ty - mouse.y) * o.hoverSmoothness;

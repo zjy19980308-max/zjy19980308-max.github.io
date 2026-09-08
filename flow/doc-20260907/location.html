@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>文档位置 · 移动到</title>
+<style>
+:root{--pri:#4857e2;--ink:#333;--ink2:#666;--ink3:#999;--line:#e6e6e6;--hover:#f5f5f7;--folder:#f5a623;
+  --font:"PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#fff;color:var(--ink);font:14px/1.5 var(--font);-webkit-font-smoothing:antialiased}
+.dlg{height:100%;display:flex;flex-direction:column;background:#fff;border-radius:12px;overflow:hidden}
+.hd{flex:none;height:64px;display:flex;align-items:center;gap:10px;padding:0 24px;border-bottom:1px solid var(--line)}
+.hd b{font-size:15px;font-weight:600}
+.hd span{color:var(--ink2)}
+.hd .x{margin-left:auto;width:28px;height:28px;border:0;background:none;border-radius:6px;cursor:pointer;color:var(--ink2);font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center}
+.hd .x:hover{background:var(--hover);color:var(--ink)}
+.bd{flex:1;min-height:0;display:flex}
+.rail{flex:none;width:236px;border-right:1px solid var(--line);padding:16px 12px;overflow:auto}
+.rail .lb{padding:8px 10px;color:var(--ink3);font-size:13px}
+.rail a{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:8px;color:var(--ink);text-decoration:none;cursor:pointer;font-size:14px}
+.rail a:hover{background:var(--hover)}
+.rail a.on{background:#f0f0f4;color:var(--pri);font-weight:500}
+.rail a svg{flex:none}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;padding:16px 20px}
+.tools{flex:none;display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.search{flex:1;min-width:0;display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid var(--line);border-radius:8px;color:var(--ink3)}
+.search input{flex:1;min-width:0;border:0;outline:0;font:14px var(--font);color:var(--ink);background:none}
+.newf{flex:none;display:flex;align-items:center;gap:6px;color:var(--pri);font-size:14px;cursor:pointer;background:none;border:0;font-family:inherit}
+.tree{flex:1;min-height:0;overflow:auto;padding-top:8px}
+.node{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.node:hover{background:var(--hover)}
+.node.on{background:#f2f2f5}
+.node .tw{width:16px;height:16px;flex:none;display:flex;align-items:center;justify-content:center;color:var(--ink3)}
+.node .tw svg{transition:transform .18s}
+.node.open > .tw svg{transform:rotate(90deg)}
+.node .nm{overflow:hidden;text-overflow:ellipsis}
+.node .pin{flex:none;display:flex;color:var(--pri)}
+.kids{display:none}
+.kids.open{display:block}
+.ft{flex:none;height:72px;display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:0 24px;border-top:1px solid var(--line)}
+.ft button{height:36px;min-width:88px;border-radius:6px;font:14px var(--font);cursor:pointer}
+.ft .c{border:1px solid var(--line);background:#fff;color:var(--ink2)}
+.ft .c:hover{color:var(--ink)}
+.ft .s{border:0;background:var(--pri);color:#fff}
+.ft .s:hover{filter:brightness(1.06)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#0b0b10;color:#fff;font-size:13px;padding:8px 14px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+</style></head><body>
+<div class="dlg">
+  <div class="hd"><b id="docName">设计部_文档库设计需求整理</b><span>移动到...</span><button class="x" id="btnX" aria-label="关闭">✕</button></div>
+  <div class="bd">
+    <nav class="rail">
+      <div class="lb">空间</div>
+      <a class="on" data-space="个人空间"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.6 14 5v6L8 14.4 2 11V5z" fill="#6b7bf0"/><path d="M8 1.6 14 5 8 8.4 2 5z" fill="#9aa6f7"/></svg>个人空间</a>
+      <a data-space="公司共享空间"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.6 14 5v6L8 14.4 2 11V5z" fill="#6b7bf0"/><path d="M8 1.6 14 5 8 8.4 2 5z" fill="#9aa6f7"/></svg>公司共享空间</a>
+      <a data-space="XPA共享空间"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.6 14 5v6L8 14.4 2 11V5z" fill="#6b7bf0"/><path d="M8 1.6 14 5 8 8.4 2 5z" fill="#9aa6f7"/></svg>XPA共享空间</a>
+      <a data-space="CSES空间"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.4" stroke="#4bb8e8" stroke-width="1.4"/><circle cx="8" cy="8" r="2.4" fill="#4bb8e8"/></svg>CSES空间</a>
+      <div class="lb">知识库</div>
+      <a data-space="公司企业文化"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="2.5" width="11" height="11" rx="2" stroke="#8a8a94" stroke-width="1.3"/><path d="M5.5 6h5M5.5 9h3" stroke="#8a8a94" stroke-width="1.3" stroke-linecap="round"/></svg>公司企业文化</a>
+      <a data-space="技术文档"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2.5" y="2.5" width="11" height="11" rx="2" stroke="#8a8a94" stroke-width="1.3"/><path d="M5.5 6h5M5.5 9h3" stroke="#8a8a94" stroke-width="1.3" stroke-linecap="round"/></svg>技术文档</a>
+    </nav>
+    <div class="main">
+      <div class="tools">
+        <label class="search"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6.2" cy="6.2" r="4.4" stroke="currentColor" stroke-width="1.3"/><path d="M9.6 9.6 12.4 12.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><input id="q" placeholder="搜索"></label>
+        <button class="newf" id="btnNew"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1.8 4.2A1.2 1.2 0 0 1 3 3h3l1.4 1.6H13a1.2 1.2 0 0 1 1.2 1.2v6A1.2 1.2 0 0 1 13 13H3a1.2 1.2 0 0 1-1.2-1.2z" stroke="currentColor" stroke-width="1.3"/><path d="M8 7.4v3.2M6.4 9h3.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>新建文件夹</button>
+      </div>
+      <div class="tree" id="tree"></div>
+    </div>
+  </div>
+  <div class="ft"><button class="c" id="btnCancel">取消</button><button class="s" id="btnMove">移动</button></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+  if (window.parent !== window || /(^#|&)embed/.test(location.hash)) document.documentElement.classList.add('embed');
+  var toast=document.getElementById('toast'),tt=null;
+  function say(t){ toast.textContent=t; toast.classList.add('on'); clearTimeout(tt); tt=setTimeout(function(){toast.classList.remove('on');},1800); }
+  var m=/[#&]name=([^&]*)/.exec(location.hash); if(m){ try{ document.getElementById('docName').textContent=decodeURIComponent(m[1]); }catch(e){} }
+  /* 树：当前文档所在位置打一个定位标，和稿子一致 */
+  var DATA=[{n:'个人空间',open:true,kids:[
+      {n:'设计需求',open:true,kids:[
+        {n:'文档库',open:true,pin:true,kids:[{n:document.getElementById('docName').textContent,doc:true,cur:true}]},
+        {n:'未迭代板块旧需求',kids:[{n:'旧版会议记录',doc:true}]},
+        {n:'工作文件'}]}]},
+    {n:'空间',kids:[{n:'子文件夹'}]},{n:'空间'},{n:'空间',kids:[{n:'子文件夹'}]},{n:'空间',kids:[{n:'子文件夹'}]}];
+  var CH='<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3.4 1.6 6.8 5 3.4 8.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var FD='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M1.8 4.2A1.2 1.2 0 0 1 3 3h3l1.4 1.6H13a1.2 1.2 0 0 1 1.2 1.2v6A1.2 1.2 0 0 1 13 13H3a1.2 1.2 0 0 1-1.2-1.2z" fill="#f5a623"/></svg>';
+  var DC='<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 2h5l3 3v9H4z" fill="#dfe3ef"/><path d="M9 2l3 3H9z" fill="#b9c0d8"/></svg>';
+  var PIN='<svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1.6c2 0 3.6 1.6 3.6 3.5 0 2.6-3.6 6.3-3.6 6.3S2.9 7.7 2.9 5.1c0-1.9 1.6-3.5 3.6-3.5z" stroke="currentColor" stroke-width="1.2"/><circle cx="6.5" cy="5.1" r="1.3" fill="currentColor"/></svg>';
+  var tree=document.getElementById('tree'), sel=null;
+  function render(list,depth,host){
+    list.forEach(function(it){
+      var row=document.createElement('div'); row.className='node'+(it.cur?' on':'')+(it.open?' open':'');
+      row.style.paddingLeft=(12+depth*22)+'px';
+      row.innerHTML='<span class="tw">'+(it.kids&&it.kids.length?CH:'')+'</span>'+(it.doc?DC:FD)+'<span class="nm"></span>'+(it.pin?'<span class="pin">'+PIN+'</span>':'');
+      row.querySelector('.nm').textContent=it.n;
+      host.appendChild(row);
+      if(it.cur) sel=it.n;
+      if(it.kids&&it.kids.length){
+        var box=document.createElement('div'); box.className='kids'+(it.open?' open':''); host.appendChild(box);
+        render(it.kids,depth+1,box);
+        row.addEventListener('click',function(e){ e.stopPropagation(); row.classList.toggle('open'); box.classList.toggle('open'); });
+      }
+      if(!it.doc) row.addEventListener('click',function(){ tree.querySelectorAll('.node').forEach(function(x){x.classList.remove('on');}); row.classList.add('on'); sel=it.n; });
+    });
+  }
+  render(DATA,0,tree);
+  document.querySelectorAll('.rail a').forEach(function(a){ a.addEventListener('click',function(){
+    document.querySelectorAll('.rail a').forEach(function(x){x.classList.remove('on');}); a.classList.add('on'); say('已切到「'+a.dataset.space+'」'); }); });
+  document.getElementById('btnNew').addEventListener('click',function(){ say('本地演示：新建文件夹'); });
+  document.getElementById('q').addEventListener('input',function(){
+    var v=this.value.trim();
+    tree.querySelectorAll('.node').forEach(function(n){ var t=n.querySelector('.nm').textContent; n.style.display=(!v||t.indexOf(v)>=0)?'':'none'; }); });
+  function close(saved){ try{ parent.postMessage({t:'close-location',saved:!!saved,to:sel},'*'); }catch(e){} }
+  document.getElementById('btnX').addEventListener('click',function(){ close(false); });
+  document.getElementById('btnCancel').addEventListener('click',function(){ close(false); });
+  document.getElementById('btnMove').addEventListener('click',function(){ say('已移动到「'+(sel||'个人空间')+'」'); setTimeout(function(){ close(true); },700); });
+</script></body></html>

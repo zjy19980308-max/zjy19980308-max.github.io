@@ -48,5 +48,5 @@ document.querySelectorAll('.meta .r span').forEach(function(s){s.addEventListene
 var cur=document.getElementById('cur'),pts=[[120,210],[640,420],[300,560],[720,760],[180,880]],pi=0;setInterval(function(){pi=(pi+1)%pts.length;cur.style.left=pts[pi][0]+'px';cur.style.top=pts[pi][1]+'px';},2200);
 var tt;function say(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},1400);}
 </script>
-<script src="../guide.js?v=06c1ac79"></script>
+<script src="../guide.js?v=2e1a118e"></script>
 </body></html>

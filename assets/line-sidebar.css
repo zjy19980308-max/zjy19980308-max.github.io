@@ -13,7 +13,9 @@
   --marker-length: 52px;
   --marker-gap: 0px;
   --tick-scale: 0.5;
-  --max-shift: 22px;
+  /* 22px 的位移配上 0.7→1.2 的标线缩放，同时有好几项在动，
+     看着就是左边抻出去右边也抻出去。两边都收一档，只留「谁离光标近」的提示。 */
+  --max-shift: 11px;
   --item-gap: 18px;
   --font-size: 0.86rem;
   --smoothing: 100ms;
@@ -74,7 +76,7 @@
   width: var(--marker-length);
   background-color: color-mix(in srgb, var(--accent-color) calc(var(--effect, 0) * 100%), var(--marker-color));
   transform-origin: left center;
-  transform: translateY(-50%) scaleX(calc(0.7 + var(--effect, 0) * 0.5));
+  transform: translateY(-50%) scaleX(calc(0.86 + var(--effect, 0) * 0.24));
 }
 
 /* 两项之间那根短刻度 */
@@ -91,7 +93,7 @@
 }
 .line-sidebar--scale-tick .line-sidebar__item:not(:last-child)::after {
   transform-origin: left center;
-  transform: translateY(-50%) scaleX(calc(0.7 + var(--effect, 0) * 0.6));
+  transform: translateY(-50%) scaleX(calc(0.86 + var(--effect, 0) * 0.28));
 }
 
 /* ── 贴在视口左侧的固定导轨 ──────────────────────────────
@@ -115,7 +117,11 @@
    注意 opacity:0 的文字依然占布局、依然吃指针事件 ——
    不把命中区收回来，导轨的实际感应带有 230px 宽、正压在正文上，
    光标还没走到刻度就已经触发展开了。 */
-.rail { width: 60px; overflow: visible; }
+.rail { width: 60px; overflow: visible; transition: width 0s; }
+/* 收起时只有 60px 的刻度列吃指针；一旦展开，元素本身撑到面板宽度，
+   这样指针在面板里任何位置 :hover 都成立 —— 原来只有 60px 列和文字本身是命中区，
+   往右挪一点就落到「面板背景」上（它 pointer-events:none），整块当场收起。 */
+.rail:hover { width: 288px; }
 
 .rail .line-sidebar { width: 60px; }
 .rail .line-sidebar__list { width: 60px; }

@@ -79,6 +79,34 @@
       damp: 8         // 阻尼（原组件 MathUtils.damp(…, 8, dt)）
     }, opt || {});
 
+    /* 原组件那套归一化滑杆（Roundness / Border Size / Circle Size / Circle Edge）
+       换算到这里的 CSS 像素单位。换算基准是照片短边 S，系数是拿现在这套
+       像素值反推出来的：border 1.5 ↔ 0.05、circle 90 ↔ 0.25、csoft 60 ↔ 1.0，
+       所以给这三个填参考值时观感不变，只有 roundness 是真的在改。 */
+    var NORM = null;
+    function applyNorm() {
+      if (NORM === null) return;
+      var r = slot.getBoundingClientRect(), S = Math.min(r.width, r.height);
+      if (!S) return;
+      if (NORM.roundness  != null) {
+        o.radius = NORM.roundness * S * 0.5;
+        /* 描边要贴着照片走，所以照片自己的圆角也跟着这个值改 ——
+           不然描边是个大圆角、照片还是 8px 直角，两条轮廓对不上。 */
+        slot.style.borderRadius = o.radius + 'px';
+        var im = slot.querySelector('img');
+        if (im) im.style.borderRadius = o.radius + 'px';
+      }
+      if (NORM.borderSize != null) o.border = NORM.borderSize * S * 0.12;
+      if (NORM.circleSize != null) o.circle = NORM.circleSize * S * 1.44;
+      if (NORM.circleEdge != null) o.csoft  = NORM.circleEdge * S * 0.24;
+    }
+    if (opt && (opt.roundness != null || opt.borderSize != null ||
+                opt.circleSize != null || opt.circleEdge != null)) {
+      NORM = { roundness: opt.roundness, borderSize: opt.borderSize,
+               circleSize: opt.circleSize, circleEdge: opt.circleEdge };
+      applyNorm();
+    }
+
     var wrap = document.createElement('div');
     wrap.className = 'portrait-fx';
     wrap.style.setProperty('--fx-bleed', o.bleed + 'px');
@@ -98,7 +126,7 @@
       u_mouse:  { value: new THREE.Vector2(-9999, -9999) },
       u_dpr:    { value: 1 },
       u_inset:  { value: o.bleed },
-      u_radius: { value: o.radius + o.bleed * 0 },   // 圆角贴照片：照片圆角 8px
+      u_radius: { value: o.radius },
       u_border: { value: o.border },
       u_circle: { value: o.circle },
       u_csoft:  { value: o.csoft },
@@ -116,6 +144,11 @@
     function resize() {
       var r = slot.getBoundingClientRect();
       if (!r.width || !r.height) return;              // display:none 时不动
+      if (NORM) {                                     // 归一化参数跟着短边重算
+        applyNorm();
+        uni.u_radius.value = o.radius; uni.u_border.value = o.border;
+        uni.u_circle.value = o.circle; uni.u_csoft.value  = o.csoft;
+      }
       w = Math.round(r.width + o.bleed * 2); h = Math.round(r.height + o.bleed * 2);
       dpr = Math.min(root.devicePixelRatio || 1, 2);
       renderer.setPixelRatio(dpr); renderer.setSize(w, h, false);
