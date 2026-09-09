@@ -8,7 +8,7 @@
 
 <!-- 基础三件套（顺序锁死）-->
 <link rel="stylesheet" href="./css/token.css?v=f0af025c">
-<link rel="stylesheet" href="./css/variable.css?v=3f0ed77c">
+<link rel="stylesheet" href="./css/variable.css?v=fd47559e">
 <link rel="stylesheet" href="./css/base.css?v=1289f0a9">
 <!-- 图标字体 -->
 <link rel="stylesheet" href="./fonts/cses-icons.css?v=6dcce2f8">
@@ -2664,8 +2664,10 @@ body .mt-solo.mt-deck__mini {
 /* ---- 投票态顶部：轮播卡片 ⇄ 我的投票（owner 2026-08-20 定的新交互）----
    「收起来以后这个区域变成我的投票，**字体也用 KR投票中 的字体**」→ 跟 .mt-kr__subt 同一套。
    「投几个显示几个点」→ 点数 = 我投的票数，样式沿用轮次那排点的选中态（16×4 主色）。 */
-.mt-kr__mine { width: 100%; flex: none; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 12px; padding: 18px 0; }
+/* 「我的投票」跟轮播卡片**占同一块地方**（高度对齐 193，切换时框子不跳），
+   标题钉住、下面的卡片区自己滚（owner 2026-09-08：「在上方这个区域做区域滚动」）。 */
+.mt-kr__mine { width: 100%; height: 193px; flex: none; box-sizing: border-box;
+  display: flex; flex-direction: column; align-items: stretch; gap: 10px; padding: 6px 0 0; }
 /* 🔴 `hidden` 属性靠的是 UA 那条 `[hidden]{display:none}`，**任何**作者写的 display 都压得过它。
    上面那句 display:flex 一写，krMineEl.hidden 就等于没用 —— 实测投票态里
    轮播卡片和「我的投票」同时露着，而且那块还停在「还没投」。
@@ -2673,11 +2675,28 @@ body .mt-solo.mt-deck__mini {
 .mt-kr__mine[hidden] { display: none; }
 .mt-kr__minet { margin: 0; font-family: 'PangMenZhengDao', var(--font-family-cn);
   font-size: 14px; line-height: 14px; color: var(--cs-color-meeting-kr-title); }
-.mt-kr__minedots { display: flex; align-items: center; gap: 4px; min-height: 4px; }
-.mt-kr__minedots b { width: 16px; height: 4px; border-radius: 2px; flex: none;
-  background: var(--cs-color-meeting-accent); }
-.mt-kr__minedots:empty::after { content: '还没投'; font-family: var(--font-family-cn);
-  font-size: 12px; line-height: 1; color: var(--cs-color-text-light2); }
+/* owner 2026-09-09 对我拍的是**靠左**：「我拍的投票是靠左」。
+   （隔壁那份是靠右，他们听到的是另一句；以我这句为准，已同步过去。）
+   靠左之后跟下面卡片的左边缘对齐，也跟面板里其他标题同一条起始线。 */
+.mt-kr__minet { flex: none; text-align: left; }
+/* 卡片区：区域内滚动 */
+.mt-kr__minelist { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 8px; padding-right: 2px; }
+.mt-kr__minelist::-webkit-scrollbar { width: 4px; }
+.mt-kr__minelist::-webkit-scrollbar-thumb { background: var(--cs-color-meeting-dot); border-radius: 999px; }
+.mt-kr__minelist::-webkit-scrollbar-track { background: transparent; }
+.mt-kr__mineempty { margin: 0; text-align: center; font-family: var(--font-family-cn);
+  font-size: 12px; color: var(--cs-color-text-light2); }
+/* 灰底的选票卡片：跟投票列表里那种同款，只是底色走灰（owner 2026-09-08）。
+   高度按内容走，不锁死 100 —— 这块地方只有 193，锁死的话一张就占满了。 */
+/* 🔴 提一级特指度：.mt-vote__card{height:100px} 在文件里比这条**更靠后**，
+   同特指度下它赢，卡就被撑成 100 高 —— 193 的区域里只看得见一张半（实测 3 张共 316）。
+   加个父选择器压过去，改成按内容走。 */
+.mt-kr__minelist .mt-vote__card--mine { flex: none; height: auto; min-height: 0; padding: 10px 12px;
+  background: var(--cs-color-meeting-row-active);
+  display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+.mt-kr__minelist .mt-vote__card--mine:hover { box-shadow: inset 0 0 0 1px var(--cs-color-meeting-dot); }
+.mt-kr__minekw { font-style: normal; font-size: 11px; color: var(--cs-color-text-light2); }
 
 /* 标题右边那颗开关：跟稿子里的蓝色标签**同一个位置、同一个外形**，只是换了图标、能点。
    🔴 非投票态一定要藏 —— 稿上那个位置就该是 📌，别平白多出一颗按钮。 */
@@ -2703,38 +2722,31 @@ body .mt-solo.mt-deck__mini {
 .mt-vote__list::-webkit-scrollbar { width: 4px; }
 .mt-vote__list::-webkit-scrollbar-thumb { background: var(--cs-color-meeting-dot); border-radius: 999px; }
 .mt-vote__list::-webkit-scrollbar-track { background: transparent; }
-/* 🔴 owner 2026-08-24：「我的投票什么也看不到……票很多，下翻三十多条后不确定这条是不是投过了，
-   我想对比看到。点击一个之后你就要上去一个，我知道我选择了什么；且在滚动的时候他处于置顶，
-   不会被滚动上去。」
-   → 原来只有几个小横杠（投几个几个杠），根本不知道投的是什么。
-   改成：**贴在投票列表顶上的一条**，里面是已投那几条的**真内容**，投一条长一条，
-   滚多远都钉在那儿；点某一条能跳回它在列表里的位置并闪一下，用来「对比看」。 */
-.mt-vote__mine {
-  position: sticky; top: 0; z-index: 3; flex: none;
-  margin: 0 0 4px; padding: 8px 2px 10px;
+/* （8-24 那条 sticky 芯片条已删：owner 9-08「点击投的票不是这种形式在上边显示我的投票」，
+   改成上方轮播区收起来变成「我的投票」，里面是灰底选票卡片。） */
+/* 已投的卡上悬浮出来的取消键（owner 2026-09-08：「悬浮选票删除的标志没有啊」）*/
+.mt-vote__del {
+  position: absolute; right: 6px; top: 6px; width: 22px; height: 22px;
+  border: 0; padding: 0; border-radius: 50%; cursor: pointer;
   background: var(--cs-color-meeting-sheet);
-  border-bottom: 1px solid var(--cs-color-border-light);
-  display: flex; flex-direction: column; gap: 7px;
-}
-.mt-vote__minet { margin: 0; display: flex; align-items: center; gap: 6px;
-  font-family: 'PangMenZhengDao', var(--font-family-cn); font-size: 13px; line-height: 13px;
-  color: var(--cs-color-meeting-kr-title); }
-.mt-vote__minet b { font-family: var(--font-family-cn); font-weight: 400; font-size: 11px;
-  color: var(--cs-color-text-light2); }
-.mt-vote__minelist { display: flex; flex-wrap: wrap; gap: 6px; }
-/* 芯片走「点亮态」那条统一规矩：白底 + 主色内容（规范 2-4b） */
-.mt-vote__minechip { max-width: 100%; box-sizing: border-box;
-  display: flex; align-items: center; gap: 5px; height: 24px; padding: 0 9px;
-  border: 0; border-radius: 999px; cursor: pointer;
-  background: var(--cs-color-meeting-sheet);
-  box-shadow: inset 0 0 0 1px var(--cs-color-meeting-accent);
-  color: var(--cs-color-meeting-accent);
-  font-family: var(--font-family-cn); font-size: 11px; line-height: 24px;
-  transition: background .18s ease, transform .12s ease; }
-.mt-vote__minechip:hover { background: var(--cs-color-meeting-accent-soft); transform: translateY(-1px); }
-.mt-vote__minechip em { font-style: normal; opacity: .7; flex: none; }
-.mt-vote__minechip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mt-vote__mineempty { font-family: var(--font-family-cn); font-size: 11px; color: var(--cs-color-text-light2); }
+  box-shadow: 0 0 0 1px var(--cs-color-meeting-accent-soft);
+  display: none; align-items: center; justify-content: center;
+  opacity: 0; transform: scale(.7);
+  transition: opacity .16s ease, transform .2s cubic-bezier(.34, 1.28, .64, 1); }
+.mt-vote__del .mt-i { width: 12px; height: 12px; background-color: var(--cs-color-meeting-accent); }
+.mt-vote__card.is-voted .mt-vote__del { display: flex; }
+.mt-vote__card.is-voted:hover .mt-vote__del,
+.mt-vote__del:focus-visible { opacity: 1; transform: none; }
+/* 「我的投票」里的卡**没有** is-voted 类（它本来就全是我投的），所以单独放行一条。
+   特指度 (0,3,0) 够压 `.mt-kr__minelist .mt-vote__card--mine` 那几条布局规则不冲突。 */
+.mt-kr__minelist .mt-vote__card--mine .mt-vote__del { display: flex; }
+.mt-kr__minelist .mt-vote__card--mine:hover .mt-vote__del { opacity: 1; transform: none; }
+/* mine 卡是 padding:10px 12px 的窄卡，✕ 往里收一点，别压住关键词 */
+.mt-kr__minelist .mt-vote__card--mine .mt-vote__del { right: 5px; top: 5px; }
+.mt-kr__minelist .mt-vote__card--mine > span { padding-right: 24px; }
+.mt-vote__del:hover { box-shadow: 0 0 0 1px var(--cs-color-meeting-accent); }
+@media (prefers-reduced-motion: reduce) { .mt-vote__del { transition: none; } }
+
 /* 从「我的投票」跳回列表里那张卡时闪一下，眼睛才跟得上 */
 @keyframes mt-vote-flash {
   0%, 100% { box-shadow: inset 0 0 0 1px transparent; }
@@ -2774,7 +2786,7 @@ body .mt-solo.mt-deck__mini {
 .mt-vote__card:active { transform: scale(.99); }
 /* 🔴 owner 2026-08-20：「选中样式和设计稿不一样，设计稿是底变浅蓝色」——
    我原来描了一圈主色边，改成**底色换浅蓝**（跟转写里人名胶囊同一支蓝）。 */
-.mt-vote__card.is-voted { background: var(--cs-color-meeting-mark-bg); }
+.mt-vote__card.is-voted { background: var(--cs-color-meeting-vote-picked); }
 .mt-vote__card--wide { height: auto; min-height: 62px; }
 .mt-vote__chk {
   position: absolute; right: 4px; top: 4px; width: 14px; height: 14px;
@@ -2784,7 +2796,8 @@ body .mt-solo.mt-deck__mini {
   opacity: 0; transform: scale(.6);
   transition: opacity .2s ease, transform .24s cubic-bezier(.34, 1.28, .64, 1);
 }
-.mt-vote__card.is-voted .mt-vote__chk { opacity: 1; transform: none; }
+/* owner 2026-09-09：「选中投票的样式你多了一个点」—— 选中只变底色，右上角不放任何标记 */
+.mt-vote__card .mt-vote__chk { display: none; }
 .mt-vote__acts { display: flex; gap: 10px; flex: none; }
 .mt-vote__acts button { flex: 1 1 0; height: 45px; box-sizing: border-box;
   border: 1px solid var(--cs-color-meeting-accent); border-radius: 26px; background: none; cursor: pointer;
@@ -3516,6 +3529,77 @@ body .mt-solo.mt-deck__mini {
 .mt-ctile-modal__frame { width: 100%; height: 100%; border: 0; display: block; }
 .mt-ctile-modal .mt-local-stage { display: flex; position: relative; inset: auto; width: 100%; height: 100%;
   border-radius: 0; box-shadow: none; }
+/* ===== KR 提交完的中间态（稿 112:6638）=====
+   🔴 三个量出来的坑（会议会话踩过，照搬结论）：
+     · 「已提交」字号是 18，不是照 frame 外框推的 28 —— 量墨迹才是真值。
+     · margin-top 写 16 不是 28：稿上总距离 28，.mt-kr__fields 自己还有 gap:12，12+16=28。
+     · 圈勾用 cses-check-contained（描边圆 + 绿勾），不是 check-circle（实心圆白勾）。 */
+.mt-kr__done { flex: none; margin-top: 16px; display: flex; flex-direction: column; align-items: center; gap: 11px; }
+.mt-kr__done[hidden] { display: none; }
+.mt-kr__doneline { width: 100%; box-sizing: border-box; padding: 0 36px; display: flex; align-items: center; gap: 22px; }
+.mt-kr__doneline > i { flex: 1 1 0; height: 1px; background: var(--cs-color-meeting-kr-field, rgba(0,0,0,.1)); }
+.mt-kr__donemark { flex: none; display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-family-cn); font-size: 18px; font-weight: 600; line-height: 1.2;
+  color: var(--cs-color-text, #333); white-space: nowrap; }
+.mt-kr__donemark .cses-check-contained { font-size: 18px; line-height: 1; flex: none; color: var(--cs-color-meeting-done, #22835a); }
+.mt-kr__donetip { margin: 0; font-family: var(--font-family-cn); font-size: 14px; line-height: 1.2; color: var(--cs-color-text-light2, #999); }
+/* 提交之后：三个框变只读展示，还留着我填的内容，只是不能再打字；提示语收起 */
+.mt-kr.is-submitted .mt-kr__in { pointer-events: none; caret-color: transparent; }
+.mt-kr.is-submitted .mt-kr__tip { display: none; }
+.mt-kr__submit.is-done { opacity: .6; cursor: default; }
+/* ===== 投完票、主持人还没结束（稿 115:9398）=====
+   稿是 1020 宽的弹窗，这里排进 KR 面板这一栏（内容宽 428），左右两栏改成上下两块。
+   🔴 两处按 owner 的话没照稿做：右边那个圈是**单选**（只能挑 1 条写评语）；底部只有一个按钮。
+   🔴 特指度：`.mt-kr.is-voting .mt-vote{display:flex}` 是 (0,2,0) 且更靠后，
+      要盖住它必须写两个类 `.mt-kr.is-voting.is-voted-view` = (0,3,0)。 */
+.mt-voted { display: none; flex-direction: column; gap: 12px; flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+.mt-voted[hidden] { display: none; }
+.mt-kr.is-voted-view .mt-voted { display: flex; }
+.mt-kr.is-voting.is-voted-view .mt-vote { display: none; }
+.mt-voted::-webkit-scrollbar { width: 4px; }
+.mt-voted::-webkit-scrollbar-thumb { background: var(--cs-color-meeting-dot, rgba(0,0,0,.16)); border-radius: 999px; }
+.mt-kr__done--tight { margin-top: 2px; gap: 6px; }
+.mt-voted__link { color: var(--cs-color-meeting-accent, #4857e2); cursor: pointer; margin-left: 4px; }
+.mt-voted__link:hover { text-decoration: underline; }
+.mt-voted__hd { flex: none; display: flex; align-items: center; justify-content: space-between; }
+.mt-voted__h { margin: 0; font-family: var(--font-family-cn); font-size: 15px; font-weight: 600; color: var(--cs-color-meeting-ink, #333); }
+.mt-voted__h b { font-weight: 400; color: var(--cs-color-text-light2, #999); }
+.mt-voted__edit { display: flex; align-items: center; gap: 4px; height: 22px; padding: 0; border: 0; background: none; cursor: pointer;
+  font-family: var(--font-family-cn); font-size: 13px; color: var(--cs-color-meeting-accent, #4857e2); }
+.mt-voted__edit:hover { text-decoration: underline; }
+.mt-voted__topic { margin: 0; flex: none; font-family: var(--font-family-cn); font-size: 13px; color: var(--cs-color-text-light2, #999); }
+.mt-voted__list { flex: none; display: flex; flex-direction: column; gap: 8px; }
+.mt-voted__row { display: flex; align-items: flex-start; gap: 10px; box-sizing: border-box; width: 100%; padding: 10px 12px;
+  border: 0; border-radius: 8px; cursor: pointer; text-align: left; background: var(--cs-color-meeting-row-active, #f5f5f7);
+  font-family: var(--font-family-cn); font-size: 13px; line-height: 1.55; color: var(--cs-color-text, #333);
+  transition: background .18s ease, box-shadow .18s ease; }
+.mt-voted__row:hover { box-shadow: inset 0 0 0 1px var(--cs-color-meeting-dot, rgba(0,0,0,.16)); }
+.mt-voted__row.is-pick { background: var(--cs-color-meeting-vote-picked, #eef0ff); box-shadow: inset 0 0 0 1px var(--cs-color-meeting-accent, #4857e2); }
+.mt-voted__row span { flex: 1 1 auto; min-width: 0; }
+.mt-voted__tick { flex: none; width: 18px; height: 18px; margin-top: 1px; border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--cs-color-meeting-dot, rgba(0,0,0,.16)); position: relative; }
+.mt-voted__row.is-pick .mt-voted__tick { background: var(--cs-color-meeting-accent, #4857e2); box-shadow: none; }
+.mt-voted__row.is-pick .mt-voted__tick::after { content: ''; position: absolute; left: 5px; top: 4px; width: 5px; height: 9px;
+  border: solid #fff; border-width: 0 1.6px 1.6px 0; transform: rotate(45deg); }
+.mt-voted__cmt { flex: none; box-sizing: border-box; padding: 12px; border-radius: 10px;
+  background: var(--cs-color-meeting-row-active, #f5f5f7); display: flex; flex-direction: column; gap: 8px; }
+.mt-voted__ct { margin: 0; font-family: var(--font-family-cn); font-size: 12px; color: var(--cs-color-text-light2, #999); }
+.mt-voted__tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.mt-voted__tag { height: 24px; padding: 0 10px; border: 0; border-radius: 6px; cursor: pointer;
+  background: var(--cs-color-meeting-sheet, #fff); color: var(--cs-color-text, #333);
+  font-family: var(--font-family-cn); font-size: 12px; line-height: 24px; transition: background .16s ease, color .16s ease, box-shadow .16s ease; }
+.mt-voted__tag:hover { box-shadow: inset 0 0 0 1px var(--cs-color-meeting-dot, rgba(0,0,0,.16)); }
+.mt-voted__tag.is-on { background: var(--cs-color-meeting-accent-soft, #eef0ff); color: var(--cs-color-meeting-accent, #4857e2); }
+.mt-voted__box { position: relative; }
+.mt-voted__in { width: 100%; height: 52px; box-sizing: border-box; padding: 8px 10px 20px; resize: none;
+  border: 1px solid var(--cs-color-meeting-kr-field, #e6e6e6); border-radius: 8px; background: var(--cs-color-meeting-sheet, #fff);
+  font-family: var(--font-family-cn); font-size: 13px; color: var(--cs-color-text, #333); outline: none; transition: border-color .2s ease; }
+.mt-voted__in:focus { border-color: var(--cs-color-meeting-accent, #4857e2); }
+.mt-voted__cnt { position: absolute; right: 10px; bottom: 6px; pointer-events: none;
+  font-family: var(--font-family-cn); font-size: 11px; color: var(--cs-color-text-light2, #999); }
+.mt-voted__acts { flex: none; display: flex; gap: 10px; }
+.mt-voted__acts button { flex: 1; height: 34px; border-radius: 8px; font: 13px var(--font-family-cn); cursor: pointer;
+  border: 1px solid var(--cs-color-meeting-accent, #4857e2); background: var(--cs-color-meeting-accent, #4857e2); color: #fff; }
 </style>
 </head>
 
@@ -4103,6 +4187,16 @@ body .mt-solo.mt-deck__mini {
                   <textarea class="mt-kr__in mt-kr__in--tall" placeholder="围绕主题填写 KR （ 30 字以内完成你的想法）"></textarea>
                   <textarea class="mt-kr__in" placeholder="围绕主题填写 KR （ 30 字以内完成你的想法）"></textarea>
                   <p class="mt-kr__tip">提示：填写过程中为匿名，请结合主题填写重要且易行的KR</p>
+                  <!-- 提交完的中间态（稿 112:6638）：两条线夹住「已提交」，下面一行等待文案。
+                       线 / 中块 / 线 = 428 正好一栏宽，所以线用 flex:1 自己算，别写死。 -->
+                  <div class="mt-kr__done" id="krDone" hidden>
+                    <div class="mt-kr__doneline">
+                      <i></i>
+                      <span class="mt-kr__donemark"><i class="cses-check-contained"></i>已提交</span>
+                      <i></i>
+                    </div>
+                    <p class="mt-kr__donetip">等待主持人结束填写进入投票环节</p>
+                  </div>
                 </div>
                 <!-- 投票态：AI 把大家填的 KR 归了类，每组一个关键词，组里是这类下的 KR（Figma 77:2500）-->
                 <div class="mt-vote" id="voteBox">
@@ -4112,6 +4206,29 @@ body .mt-solo.mt-deck__mini {
                          「我的投票」搬到上面那块去了（投完自动收起轮播换成它），这里不再重复一个入口。 -->
                     <button type="button" id="btnVoteSubmit">投出我的想法</button>
                   </div>
+                </div>
+                <!-- 投完票、主持人还没结束（稿 115:9398）。稿上那条三段进度条 owner 当面撤了，不画。 -->
+                <div class="mt-voted" id="krVoted" hidden>
+                  <div class="mt-kr__done mt-kr__done--tight">
+                    <div class="mt-kr__doneline"><i></i><span class="mt-kr__donemark"><i class="cses-check-contained"></i>已提交</span><i></i></div>
+                    <p class="mt-kr__donetip">可以选择 1 个你觉得最好的 KR<b class="mt-voted__link">写评语</b></p>
+                  </div>
+                  <div class="mt-voted__hd">
+                    <p class="mt-voted__h">我投票的KR <b id="votedN">(0)</b></p>
+                    <button class="mt-voted__edit" type="button" id="btnVotedEdit">修改投票</button>
+                  </div>
+                  <p class="mt-voted__topic" id="votedTopic">主题：</p>
+                  <div class="mt-voted__list" id="votedList"></div>
+                  <div class="mt-voted__cmt">
+                    <p class="mt-voted__ct">添加评语标签</p>
+                    <div class="mt-voted__tags" id="votedTags"></div>
+                    <p class="mt-voted__ct">写评语</p>
+                    <div class="mt-voted__box">
+                      <textarea class="mt-voted__in" id="votedIn" maxlength="10" placeholder="请填写评语"></textarea>
+                      <span class="mt-voted__cnt" id="votedCnt">0/10</span>
+                    </div>
+                  </div>
+                  <div class="mt-voted__acts"><button type="button" id="btnVotedAdd">添加评语</button></div>
                 </div>
                 <button class="mt-kr__submit" type="button" id="btnKrSubmit">提交我的想法💡</button>
               </div>
@@ -6655,7 +6772,8 @@ body .mt-solo.mt-deck__mini {
     '主题：通过市场调研和竞争分析，合理定产品和服务。',
     '主题：退货率 23% 太高，哪些动作能在本季度把它打下来？'
   ];
-  var krI = 1;                                  /* 稿里分页停在第 2 页 —— 照抄 */
+  var krI = 1;
+  var krSubmitted = false;                                  /* 稿里分页停在第 2 页 —— 照抄 */
   function krOpen(on, first) {
     if (on === (krPanel.parentNode === soloCol)) return;
     if (on) openSlot('kr'); else closePanel('krPanel');   /* 关只关 KR 自己，同一空间里叠着的别一起端走 */
@@ -6817,6 +6935,13 @@ body .mt-solo.mt-deck__mini {
       say('先写点想法再提交'); return;
     }
     /* 提交完的状态 owner 明确说本轮不做（UC-13 挂起），这里只给回执 */
+    /* 提交那一下同时发生四件事：框变只读、提示语收起、长出「已提交」、按钮进等待态 */
+    krSubmitted = true;
+    krPanel.classList.add('is-submitted');
+    krPanel.querySelectorAll('.mt-kr__in').forEach(function (t) { t.readOnly = true; });
+    var done = $('krDone'); if (done) done.hidden = false;
+    var sb = krPanel.querySelector('.mt-kr__submit');
+    if (sb) { sb.textContent = '已提交，等待进入投票环节'; sb.classList.add('is-done'); sb.disabled = true; }
     say('已匿名提交 ' + vals.length + ' 条想法');
   });
   /* ---- KR 阶段（稿 56:13591「KR填写中」/ 77:2822「KR投票中」）----
@@ -6849,6 +6974,20 @@ body .mt-solo.mt-deck__mini {
   var krPhase = 'fill';
   function setKrPhase(ph) {
     krPhase = ph;
+    /* 🔴 回填写态 = 新一轮，必须把提交态复位。不复位的话上一轮的「已提交」会留在新一轮里，
+       人一进来就被告知已经交过了。 */
+    if (ph === 'fill') {
+      /* 回填写 = 新一轮：这一屏也要收起，并把单选与标签清掉 */
+      krPanel.classList.remove('is-voted-view');
+      var kv = $('krVoted'); if (kv) kv.hidden = true;
+      votedPick = -1; votedTagOn = [];
+      krSubmitted = false;
+      krPanel.classList.remove('is-submitted');
+      krPanel.querySelectorAll('.mt-kr__in').forEach(function (t) { t.readOnly = false; });
+      var dn = $('krDone'); if (dn) dn.hidden = true;
+      var sb2 = krPanel.querySelector('.mt-kr__submit');
+      if (sb2) { sb2.textContent = '提交我的想法💡'; sb2.classList.remove('is-done'); sb2.disabled = false; }
+    }
     $('krPanel').querySelector('.mt-kr__subt').textContent = KR_PHASE[ph] || KR_PHASE.fill;
     $('krPanel').classList.toggle('is-voting', ph === 'vote');
     /* 投票态：填写框不再让人改，提示语也换掉 —— 别留个能打字但没意义的框 */
@@ -6899,6 +7038,7 @@ body .mt-solo.mt-deck__mini {
   ];
   var voteBox = $('voteBox'), voteList = $('voteList');
   var myVotes = [], voteMineOnly = false, voteDone = false;
+  var krAutoSwapped = false;   /* 首票自动切到「我的投票」，一轮只切一次 */
   function voteLimit() { return (krSetup && krSetup.vote) || 3; }
   function voteKey(g, i) { return g + '-' + i; }
 
@@ -6919,42 +7059,8 @@ body .mt-solo.mt-deck__mini {
       card.classList.remove('is-flash'); void card.offsetWidth; card.classList.add('is-flash');
     }, grp && grp.classList.contains('is-fold') ? 0 : 20);
   }
-  /* 已投的那几条：投一条长一条。两个地方共用这一个渲染器 ——
-     列表顶上那条常驻的，和顶部「轮播 ⇄ 我的投票」切过去的那块。 */
-  function fillMine(listEl, cntEl) {
-    if (!listEl) return;
-    listEl.innerHTML = '';
-    if (cntEl) cntEl.textContent = myVotes.length + '/' + voteLimit();
-    if (!myVotes.length) {
-      var e = document.createElement('span');
-      e.className = 'mt-vote__mineempty';
-      e.textContent = '还没投 —— 投一条这儿就留一条，翻多远都看得见';
-      listEl.appendChild(e); return;
-    }
-    myVotes.forEach(function (key) {
-      var m = decodeVote(key); if (!m) return;
-      var c = document.createElement('button');
-      c.type = 'button'; c.className = 'mt-vote__minechip';
-      c.title = m.kw + ' · ' + m.t + '（点一下跳回去看）';
-      var em = document.createElement('em'); em.textContent = m.kw;
-      var sp = document.createElement('span'); sp.textContent = m.t;
-      c.appendChild(em); c.appendChild(sp);
-      c.addEventListener('click', function () { jumpToVote(key); });
-      listEl.appendChild(c);
-    });
-  }
-  function renderMine() {
-    fillMine(document.getElementById('voteMineList'), document.getElementById('voteMineN'));
-  }
-
   function renderVote() {
     voteList.innerHTML = '';
-    /* 🔴 常驻在列表**顶部**（position:sticky），滚多远都在（owner 2026-08-24）*/
-    var mine = document.createElement('div');
-    mine.className = 'mt-vote__mine';
-    mine.innerHTML = '<p class="mt-vote__minet">我的投票<b id="voteMineN"></b></p>' +
-                     '<div class="mt-vote__minelist" id="voteMineList"></div>';
-    voteList.appendChild(mine);
     var shown = 0;
     VOTE_GROUPS.forEach(function (grp, gi) {
       var items = grp.items.filter(function (it, ii) {
@@ -6983,11 +7089,17 @@ body .mt-solo.mt-deck__mini {
         b.type = 'button';
         b.className = 'mt-vote__card' + (it.wide ? ' mt-vote__card--wide' : '');
         b.textContent = it.t;
-        var chk = document.createElement('i'); chk.className = 'mt-vote__chk'; b.appendChild(chk);
+        /* 已投的卡上悬浮出的取消键（owner 2026-09-08）。放 button 里，键盘也能到。 */
+        var del = document.createElement('button');
+        del.type = 'button'; del.className = 'mt-vote__del'; del.setAttribute('aria-label', '取消这一票');
+        del.innerHTML = '<i class="mt-i mt-i--xclose"></i>';
+        b.appendChild(del);
         var ii = grp.items.indexOf(it), key = voteKey(gi, ii);
         b.dataset.vkey = key;                    /* 「我的投票」点一下要能跳回这张卡 */
         b.classList.toggle('is-voted', myVotes.indexOf(key) >= 0);
         b.addEventListener('click', function () { toggleVote(key, b); });
+        /* 🔴 stopPropagation 必须有：不拦的话这一下会先取消票、再冒泡到卡身上又投一次。 */
+        del.addEventListener('click', function (e) { e.stopPropagation(); toggleVote(key, b); });
         return b;
       }
       if (narrow.length) {
@@ -7012,7 +7124,6 @@ body .mt-solo.mt-deck__mini {
       e.textContent = voteMineOnly ? '你还没投过票，点卡片投一条' : '还没有人提交 KR';
       voteList.appendChild(e);
     }
-    renderMine();                                   /* 列表是新建的，常驻条也得重新填 */
   }
   /* 收起/展开：先把内容高量出来，再动画到 0 / 回到那个高度。
      展开完把行内高度交还（transitionend 为主、定时器兜底）——
@@ -7056,8 +7167,14 @@ body .mt-solo.mt-deck__mini {
       myVotes.push(key); el.classList.add('is-voted');
     }
     syncVoteActs();
-    renderMine();                                   /* 投一条，「我的投票」就长一条 */
-    if (window.__krTopDots) window.__krTopDots();   /* 顶部那块（切过去时）也跟着刷 */
+    if (window.__krTopDots) window.__krTopDots();   /* 投一条，上面那块「我的投票」就长一条 */
+    /* 🔴 owner 2026-09-08：「首次点击投票的时候 KR 卡片自动收起切换到我的选票」。
+       条件卡三样，缺一不做：**是投出（不是取消）** + **这是第一票** + **这一轮还没自动切过**。
+       切法复用切换按钮那条路（krTopSwap），动画跟手点的完全一样。 */
+    if (!krAutoSwapped && at < 0 && myVotes.length === 1) {
+      krAutoSwapped = true;
+      if (krTopView !== 'mine') krTopSwap('mine');
+    }
   }
   function syncVoteActs() {
     /* owner 2026-08-20：「点击投出我的想法之后，变成**修改我的投票**」——
@@ -7084,12 +7201,44 @@ body .mt-solo.mt-deck__mini {
   var krMineEl = $('krMine'), krMineDots = $('krMineDots'), krTopToggle = $('krTopToggle');
   var krStageEl = $('krStage');
 
-  /* 顶部那块原来是「投几个显示几个杠」（owner 2026-08-20 定的）。
-     8-24 他说「什么也看不到，我知道我选择了什么」→ 换成跟列表顶上那条**同一套芯片**，
-     显示真内容。数量信息没丢（芯片本身就是一条一个），但现在看得出投的是什么。 */
   function renderMineDots() {
-    krMineDots.className = 'mt-vote__minelist';
-    fillMine(krMineDots, null);
+    krMineDots.className = 'mt-kr__minelist';
+    krMineDots.innerHTML = '';
+    if (!myVotes.length) {
+      var e = document.createElement('p');
+      e.className = 'mt-kr__mineempty';
+      e.textContent = '还没投 —— 投一条，这儿就留一张';
+      krMineDots.appendChild(e); return;
+    }
+    myVotes.forEach(function (key) {
+      var m = decodeVote(key); if (!m) return;
+      var c = document.createElement('button');
+      c.type = 'button'; c.className = 'mt-vote__card mt-vote__card--mine';
+      c.title = m.kw + ' · ' + m.t + '（点一下跳回列表里那张）';
+      var kw = document.createElement('em'); kw.className = 'mt-kr__minekw'; kw.textContent = m.kw;
+      var tx = document.createElement('span'); tx.textContent = m.t;
+      c.appendChild(kw); c.appendChild(tx);
+      /* 🔴 owner 2026-09-08：「悬浮选票删除的标志没有啊，我怎么删掉啊」。
+         根因：删除键我只做在了**投票列表**那种卡上（.mt-vote__card.is-voted），
+         而投第一票之后页面**自动切到「我的投票」**（krAutoSwapped）——
+         人眼前这一屏恰恰是唯一没有删除入口的那屏，只能「点一下跳回列表里那张」再去删。
+         要删一票得：切回卡片视图 → 找到那张 → 悬浮 → 点 ✕，四步。所以他找不到。
+         修法：这儿也挂同一颗 ✕，跟列表里那颗同款同行为。 */
+      var del = document.createElement('button');
+      del.type = 'button'; del.className = 'mt-vote__del';
+      del.setAttribute('aria-label', '取消这一票');
+      del.title = '取消这一票';
+      del.innerHTML = '<i class="mt-i mt-i--xclose"></i>';
+      del.addEventListener('click', function (e) {
+        e.stopPropagation();                   /* 不拦就会冒泡到卡身上，变成「跳回列表」 */
+        /* 真正要打 is-voted 的是**列表里那张原卡**，不是这张影子卡 */
+        var src = voteList.querySelector('.mt-vote__card[data-vkey="' + key + '"]');
+        toggleVote(key, src || c);
+      });
+      c.appendChild(del);
+      c.addEventListener('click', function () { jumpToVote(key); });
+      krMineDots.appendChild(c);
+    });
   }
   function syncKrTop() {
     var rounds = krTopView === 'rounds';
@@ -7150,7 +7299,7 @@ body .mt-solo.mt-deck__mini {
 
   $('btnVoteSubmit').addEventListener('click', function () {
     if (voteDone) {                       /* 「修改我的投票」：放回去接着改，顺便把轮播展开 */
-      voteDone = false; syncVoteActs();
+      voteDone = false; krAutoSwapped = false; syncVoteActs(); closeVoted();
       if (krTopView === 'mine') krTopSwap('rounds');
       say('可以改了，点卡片增减你的票');
       return;
@@ -7159,8 +7308,56 @@ body .mt-solo.mt-deck__mini {
     voteDone = true; syncVoteActs();
     renderMineDots();
     krTopSwap('mine');                    /* 投完 → 轮播缩成 icon 飞到标题右边，这块换成「我的投票」 */
+    openVoted();                          /* 进入「投完票、等主持人结束」那一屏 */
     say('已匿名投出 ' + myVotes.length + ' 票');
   });
+  /* ---- 投完票那一屏：只能挑 1 条写评语（owner 定的，不是稿上的多选）---- */
+  var VOTED_TAGS = ['很棒', '字字珠玑', '贴切主题', '超级大脑', '创意无敌', 'KR大神', '我怎么想不到'];
+  var votedPick = -1, votedTagOn = [];
+  function renderVoted() {
+    var list = $('votedList'); if (!list) return;
+    $('votedN').textContent = '(' + myVotes.length + ')';
+    $('votedTopic').textContent = (KR_ROUNDS[krI] || '主题：').replace(/^主题：?/, '主题：');
+    list.innerHTML = '';
+    myVotes.forEach(function (key, i) {
+      var m = decodeVote(key); if (!m) return;
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'mt-voted__row' + (votedPick === i ? ' is-pick' : '');
+      b.innerHTML = '<span></span><i class="mt-voted__tick"></i>';
+      b.querySelector('span').textContent = m.t;
+      b.addEventListener('click', function () {
+        votedPick = (votedPick === i) ? -1 : i;
+        Array.prototype.forEach.call(list.children, function (x, k) { x.classList.toggle('is-pick', k === votedPick); });
+        say(votedPick < 0 ? '取消选择' : '选了这条，可以给它写评语');
+      });
+      list.appendChild(b);
+    });
+    var tw = $('votedTags');
+    if (tw && !tw.children.length) {
+      VOTED_TAGS.forEach(function (t, i) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'mt-voted__tag'; b.textContent = t;
+        b.addEventListener('click', function () { votedTagOn[i] = !votedTagOn[i]; b.classList.toggle('is-on', votedTagOn[i]); });
+        tw.appendChild(b);
+      });
+    }
+  }
+  function openVoted() { krPanel.classList.add('is-voted-view'); $('krVoted').hidden = false; renderVoted(); }
+  function closeVoted() { krPanel.classList.remove('is-voted-view'); $('krVoted').hidden = true; }
+  if ($('votedIn')) $('votedIn').addEventListener('input', function () { $('votedCnt').textContent = this.value.length + '/10'; });
+  if ($('btnVotedEdit')) $('btnVotedEdit').addEventListener('click', function () {
+    voteDone = false; krAutoSwapped = false; syncVoteActs(); closeVoted(); say('可以改了，点卡片增减你的票');
+  });
+  if ($('btnVotedAdd')) $('btnVotedAdd').addEventListener('click', function () {
+    if (votedPick < 0) { say('先选一条 KR 再写评语'); return; }
+    var tags = VOTED_TAGS.filter(function (t, i) { return votedTagOn[i]; });
+    var txt = ($('votedIn').value || '').trim();
+    say('已给这条 KR 加上' + (tags.length ? '「' + tags.join('、') + '」' : '评语') + (txt ? '：' + txt : ''));
+  });
+  window.__voted = function () { return { rows: (document.querySelectorAll('#votedList .mt-voted__row') || []).length,
+                                          pick: votedPick, tags: votedTagOn.filter(Boolean).length,
+                                          len: ($('votedIn') || {}).value ? $('votedIn').value.length : 0,
+                                          open: krPanel.classList.contains('is-voted-view') }; };
   window.__renderVote = function () { renderVote(); syncVoteActs(); };
   window.__vote = function () { return { mine: myVotes.slice(), done: voteDone, limit: voteLimit(),
                                          groups: VOTE_GROUPS.length,
@@ -8460,6 +8657,17 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
       else say(isHost ? '已放入左侧，点右上角「设为主画面」上主屏' : '已放入左侧，点它可放大到主屏编辑');
       return tile;
     }
+    /* 🔴 dragover 阶段浏览器屏蔽 getData()，永远拿到空串。
+       悬停时判断「是不是内容卡」只能查 dataTransfer.types；真正取内容要等 drop。 */
+    function hasContentType(event) {
+      var tr = event.dataTransfer; if (!tr || !tr.types) return false;
+      return Array.prototype.indexOf.call(tr.types, DOCUMENT_MIME) >= 0
+          || Array.prototype.indexOf.call(tr.types, TASK_VIEW_MIME) >= 0;
+    }
+    function typeKind(event) {
+      var tr = event.dataTransfer; if (!tr || !tr.types) return null;
+      return Array.prototype.indexOf.call(tr.types, TASK_VIEW_MIME) >= 0 ? 'task' : 'document';
+    }
     function readPayload(event) {
       var transfer = event.dataTransfer;
       if (!transfer) return dragged;
@@ -8528,12 +8736,13 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
     ['btnFindPin', 'btnNewProject'].forEach(function (id) { var button = $(id); if (button) button.style.display = 'none'; });
 
     grid.addEventListener('dragover', function (event) {
-      var source = readPayload(event);
-      if (!source) return;
+      /* 不是内容卡就不 preventDefault —— 浏览器直接不给放，提示也不亮 */
+      var kind = hasContentType(event) ? typeKind(event) : (dragged ? dragged.kind : null);
+      if (!kind) { clearDropState(); return; }   /* 非内容：提示不亮，也把上一次的残留清掉 */
       event.preventDefault(); event.stopPropagation();
       if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
       clearDropState();
-      grid.classList.add(source.kind === 'task' ? 'mt-local-stage--drag-task' : 'mt-local-stage--drag-document');
+      grid.classList.add(kind === 'task' ? 'mt-local-stage--drag-task' : 'mt-local-stage--drag-document');
     });
     grid.addEventListener('dragleave', function (event) {
       if (event.relatedTarget instanceof Node && grid.contains(event.relatedTarget)) return;
@@ -8679,6 +8888,6 @@ window.addEventListener('message', function (e) { var m = e.data; if (!m || !m.t
 
 })();
 </script>
-<script src="../guide.js?v=2e1a118e"></script>
+<script src="../guide.js?v=e78bebb1"></script>
 </body>
 </html>

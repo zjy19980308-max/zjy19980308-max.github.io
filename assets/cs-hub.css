@@ -20,6 +20,8 @@
 .cs-card:hover .cs-thumb img{transform:scale(1.03)}
 .cs-meta{padding:18px 20px 20px;display:flex;flex-direction:column;flex:1}
 .cs-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.cs-head .cs-tag+.cs-tag{margin-left:-4px}   /* 两枚标签并排时收紧一点 */
+.cs-head b{flex:1;min-width:0}
 .cs-head b{font-family:var(--font-display);font-size:17px;font-weight:500;color:var(--fg);letter-spacing:.01em}
 .cs-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--fg-3);border:1px solid var(--line);border-radius:999px;padding:3px 9px;white-space:nowrap;flex:none}
 .cs-tag--old{color:#E7B86A;border-color:rgba(231,184,106,.38)}

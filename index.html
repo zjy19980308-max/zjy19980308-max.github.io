@@ -12,12 +12,12 @@
 <link rel="stylesheet" href="assets/drift-wall.css?v=933478a3">
 <link rel="stylesheet" href="assets/gradual-blur.css?v=74580aae">
 <link rel="stylesheet" href="assets/metaballs.css?v=c1d0d0bd">
-<link rel="stylesheet" href="assets/cs-hub.css?v=46f841cb">
+<link rel="stylesheet" href="assets/cs-hub.css?v=45a6edec">
 <link rel="stylesheet" href="assets/dark-veil.css?v=27fb9132">
 <link rel="stylesheet" href="assets/bento.css?v=2b466175">
 <link rel="stylesheet" href="assets/lanyard.css?v=8457d0bc">
 <link rel="stylesheet" href="assets/fonts.css?v=d0647496">
-<link rel="stylesheet" href="assets/system.css?v=6de4ae1e">
+<link rel="stylesheet" href="assets/system.css?v=b42e110a">
 <style>
   /* 待填标记 —— 全站统一，填完删掉这个 span 即可 */
   .todo{color:#FF65A3;border-bottom:1px dashed rgba(255,101,163,.5);white-space:nowrap}
@@ -225,6 +225,86 @@
   .mindmap .mm-h{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;fill:var(--fg-4)}
   .mindmap .mm-h--v{fill:var(--violet)}
   .mindmap .mm-foot{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
+  /* 只有文字、没有图位的一屏：正文占满整行，不留一列空白 */
+  .pg.pg--text{grid-template-columns:1fr}
+  .pg.pg--text .pg-body{max-width:78ch}
+  /* 图 02 时间轴：三家 AI 的介入时点与产物落点 */
+  .tline{width:100%;height:auto;display:block}
+  .tline .tl-band{fill:rgba(139,110,255,.05);stroke:rgba(139,110,255,.16)}
+  .tline .tl-div{stroke:rgba(255,255,255,.12);stroke-dasharray:3 5}
+  .tline .tl-seg{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;fill:var(--fg-4)}
+  .tline .tl-base{stroke:rgba(255,255,255,.14)}
+  .tline .tl-name{font-size:14px;font-weight:500;fill:var(--fg-2)}
+  .tline .tl-kind,.tline .tl-note{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
+  .tline .tl-dot{fill:#fff;opacity:.75}
+  .tline .tl-dot.is-good{fill:var(--violet);opacity:1}
+  .tline .tl-dot.is-small{fill:rgba(255,255,255,.45)}
+  .tline .tl-pill.is-bad{fill:rgba(224,87,91,.12);stroke:rgba(224,87,91,.4)}
+  .tline .tl-pill.is-warn{fill:rgba(255,255,255,.06);stroke:rgba(255,255,255,.2)}
+  .tline .tl-pill.is-good{fill:rgba(139,110,255,.18);stroke:var(--violet)}
+  .tline .tl-pill.is-move{fill:none;stroke:rgba(255,255,255,.18);stroke-dasharray:4 4}
+  .tline .tl-pt{font-size:13px;fill:var(--fg-2)}
+  .tline .tl-pt.is-good{fill:#fff;font-weight:500}
+  .tline .tl-pt.is-move{font-size:12px;fill:var(--fg-4)}
+  .tline .tl-move{stroke:rgba(255,255,255,.28);stroke-dasharray:5 5}
+  .tline .tl-arrow{fill:rgba(255,255,255,.4)}
+  .tline .tl-tiny{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
+  /* 图 03 用户旅程两轨 · 图 05 核心链路 */
+  .jmap,.clink{width:100%;height:auto;display:block}
+  .jmap .jm-lane{font-family:var(--font-mono);font-size:10px;letter-spacing:.14em}
+  .jmap .jm-lane.is-bad{fill:var(--pink)}
+  .jmap .jm-lane.is-good{fill:var(--violet)}
+  .jmap .jm-st{font-size:15px;font-weight:500;fill:var(--fg-2)}
+  .jmap .jm-cnt{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
+  .jmap .jm-card.is-bad{fill:rgba(224,87,91,.07);stroke:rgba(224,87,91,.32)}
+  .jmap .jm-card.is-good{fill:rgba(139,110,255,.09);stroke:rgba(139,110,255,.42)}
+  .jmap .jm-t{font-size:13.5px;font-weight:500;fill:var(--fg-2)}
+  .jmap .jm-t.is-good{fill:#fff}
+  .jmap .jm-d{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
+  .jmap .jm-arrow,.clink .cl-arrow{stroke:rgba(255,255,255,.28);fill:none}
+  .jmap .jm-tip,.clink .cl-tip{fill:rgba(255,255,255,.4)}
+  .jmap .jm-foot{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
+  .clink .cl-reg{fill:rgba(255,255,255,.03);stroke:rgba(255,255,255,.16)}
+  .clink .cl-rt{font-size:14px;font-weight:500;fill:var(--fg-2)}
+  .clink .cl-rd{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
+  .clink .cl-ag{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.12em;fill:var(--violet)}
+  .clink .cl-sep{stroke:rgba(255,255,255,.1)}
+  .clink .cl-title{font-size:14px;font-weight:500;fill:var(--fg-2)}
+  .clink .cl-step{fill:rgba(255,255,255,.04);stroke:rgba(255,255,255,.18)}
+  .clink .cl-step.is-end{fill:rgba(139,110,255,.16);stroke:var(--violet)}
+  .clink .cl-st{font-size:13px;fill:var(--fg-2)}
+  .clink .cl-st.is-end{fill:#fff;font-weight:500}
+  .clink .cl-out{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;fill:var(--violet)}
+  .clink .cl-note{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
+  /* 屏 6 改版前：四张小图，点开放大 */
+  .krold{display:flex;flex-direction:column;gap:10px}
+  .krold-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .krold-grid.krold-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .krold-it.is-new .pg-shot{border-color:rgba(122,87,208,.42)}
+  .krold-it{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
+  .krold-it .pg-shot{display:block;border:1px solid rgba(255,101,163,.32);border-radius:8px;overflow:hidden;cursor:zoom-in;background:#0b0b12}
+  .krold-it img{display:block;width:100%}
+  .krold-it figcaption{display:flex;flex-direction:column;gap:1px}
+  .krold-it b{font-size:12.5px;font-weight:500;color:var(--fg-2)}
+  .krold-it span{font-size:11.5px;font-weight:300;color:var(--fg-4)}
+  @media(max-width:900px){.krold-grid{grid-template-columns:1fr}}
+  /* 03 需求分布计数带 */
+  .cband{width:100%;height:auto;display:block}
+  .cband .cb-h{font-size:13px;font-weight:300;fill:var(--fg-4)}
+  .cband .cb-st{font-size:13.5px;font-weight:500;fill:var(--fg-2)}
+  .cband .cb-seg.is-side{fill:rgba(255,255,255,.06);stroke:rgba(255,255,255,.18)}
+  .cband .cb-seg.is-core{fill:rgba(139,110,255,.24);stroke:var(--violet)}
+  .cband .cb-seg.is-mute{fill:rgba(255,255,255,.03);stroke:rgba(255,255,255,.1)}
+  .cband .cb-tick{stroke:rgba(255,255,255,.14)}
+  .cband .cb-in{font-size:18px;font-weight:600;fill:var(--fg-2)}
+  .cband .cb-in.is-core{fill:#fff}
+  .cband .cb-in.is-mute{fill:var(--fg-4)}
+  .cband .cb-lead{stroke:rgba(255,255,255,.16)}
+  .cband .cb-nt{font-size:13px;font-weight:500;fill:var(--fg-2)}
+  .cband .cb-nt.is-core{fill:var(--violet)}
+  .cband .cb-nt.is-mute{fill:var(--fg-4)}
+  .cband .cb-nd{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
+  .cband .cb-foot{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
   .live-hint{margin:8px 0 0;font-size:12px;font-weight:300;line-height:1.7;color:var(--fg-4)}
   .live-hint b{color:var(--violet);font-weight:500}
   /* 没有对应页面的位置：红框占位，不装有 */
@@ -252,7 +332,7 @@
 <!-- ═══════════ TOP NAV ═══════════ -->
 <nav class="nav">
   <div class="wrap nav-inner">
-    <div class="nav-left"><svg class="brand-mark" viewBox="0 0 149.866 149.864" aria-label="张竞元" role="img"><path d="M91.4043 0C106.663 0 121.562 6.01089 132.71 17.1592C143.961 28.4103 149.972 43.566 149.818 58.9785V58.4141H149.813L149.815 59.7725C149.767 60.1223 149.767 60.4239 149.767 60.7256C149.809 60.4724 149.814 60.2191 149.815 59.9375L149.864 91.499V90.9346C149.967 106.398 144.008 121.503 132.757 132.754C121.506 144.005 106.35 150.015 90.9375 149.861H58.9306C43.4669 149.964 28.3624 144.005 17.1113 132.754C5.86022 121.503 -0.151122 106.347 0.00288716 90.9346V58.9277C-0.146101 43.4638 5.81383 28.3596 17.0136 17.1084C28.1621 6.01135 43.0091 0 58.2675 0H91.4043ZM87.2949 149.759C87.603 149.759 87.9624 149.811 88.2705 149.811C87.9624 149.811 87.6543 149.759 87.2949 149.759ZM81.9003 149.091C82.1572 149.142 82.4656 149.194 82.8252 149.245C82.517 149.194 82.2085 149.142 81.9003 149.091ZM74.2968 147.807C73.629 147.858 73.0637 147.961 72.4472 148.115C73.0637 148.012 73.6804 147.961 74.2968 147.807ZM111.44 115.234C111.851 114.31 110.978 113.436 110.054 113.796C99.5732 117.289 88.1168 117.803 77.3281 115.08C75.7355 114.669 74.0906 114.669 72.498 115.08C61.7093 117.803 50.2529 117.341 39.7724 113.796C38.8992 113.488 38.0258 114.361 38.4365 115.234C41.3135 121.656 45.321 127.513 50.4072 132.6C56.3666 138.61 63.6616 143.234 71.5732 146.111C73.7823 146.933 76.146 146.933 78.3037 146.111C86.2155 143.234 93.4598 138.611 99.4707 132.6C104.557 127.513 108.563 121.708 111.44 115.234ZM78.3037 36.8877C76.0945 36.0657 73.7309 36.0657 71.5732 36.8877C63.6616 39.7647 56.418 44.44 50.4072 50.3994C44.3964 56.3589 39.7725 63.6538 36.8955 71.5654C36.0735 73.7746 36.0735 76.1381 36.8955 78.2959C39.7211 86.259 44.3963 93.5034 50.4072 99.4629C56.3665 105.474 63.6618 110.097 71.5732 112.974C73.7823 113.796 76.1459 113.796 78.3037 112.974C86.2154 110.097 93.4598 105.474 99.4707 99.4629C105.482 93.5034 110.105 86.2077 112.982 78.2959C113.702 76.1381 113.702 73.7746 112.982 71.5654C110.105 63.6538 105.481 56.4102 99.4707 50.3994C93.5111 44.3885 86.2155 39.7647 78.3037 36.8877ZM115.191 38.4805C114.369 38.0695 113.445 38.8908 113.753 39.8154C117.246 50.296 117.709 61.7532 115.037 72.542C114.626 74.1346 114.626 75.7785 115.037 77.3711C117.76 88.1597 117.246 99.6162 113.753 110.097C113.445 110.97 114.318 111.844 115.191 111.433C121.664 108.556 127.47 104.549 132.556 99.4629C138.566 93.5034 143.19 86.2076 146.067 78.2959C146.838 76.1381 146.838 73.7749 146.067 71.6172C143.19 63.7054 138.567 56.4611 132.556 50.4502C127.47 45.3643 121.664 41.3574 115.191 38.4805ZM36.0732 39.7129C36.3814 38.8395 35.5081 37.966 34.6347 38.377C28.1616 41.2539 22.3566 45.2616 17.2705 50.3477C11.2596 56.3072 6.63576 63.6029 3.75875 71.5146C2.93683 73.7237 2.93683 76.0865 3.75875 78.2441C6.63576 86.1559 11.2596 93.4002 17.2705 99.4111C22.3566 104.497 28.1616 108.505 34.6347 111.382C35.4567 111.793 36.3814 110.971 36.0732 110.046C32.5797 99.5654 32.1175 88.1081 34.789 77.3193C35.1999 75.7268 35.2 74.0827 34.789 72.4902C32.1689 61.7015 32.5797 50.3475 36.0732 39.7129ZM0.054645 89.1875C0.00329675 89.4956 0.00288717 89.8037 0.00288716 90.1631C0.0541951 89.8037 0.054645 89.4956 0.054645 89.1875ZM149.767 89.1357C149.767 89.4954 149.767 89.8041 149.818 90.1123C149.818 89.8041 149.767 89.4954 149.767 89.1357ZM0.102497 87.5703C0.0880379 87.8038 0.0595278 88.0449 0.0595278 88.3145C0.0595278 88.0833 0.088046 87.8228 0.102497 87.5771V87.5703ZM0.264606 85.5908C0.213244 85.8476 0.213403 86.2074 0.162067 86.5156C0.213431 86.1561 0.264606 85.8476 0.264606 85.5908ZM149.561 85.54C149.562 85.8482 149.613 86.1567 149.664 86.4648C149.613 86.2081 149.613 85.8482 149.561 85.54ZM1.13863 80.0938C1.03589 80.3506 0.983942 80.7103 0.932575 81.0186C0.983957 80.7103 1.08726 80.3506 1.13863 80.0938ZM1.75484 77.4229C1.60075 77.9879 1.44644 78.6043 1.34371 79.2207C1.44644 78.6043 1.60074 78.0392 1.75484 77.4229ZM147.866 75.5732C147.918 76.1896 147.968 76.8065 148.174 77.4229C148.328 78.0392 148.431 78.6043 148.585 79.2207C148.482 78.6043 148.328 78.0392 148.174 77.4229C148.02 76.8065 147.918 76.1896 147.866 75.5732ZM1.24117 70.6924C1.34391 71.3088 1.49819 71.8738 1.6523 72.4902C1.80642 73.1067 1.90854 73.7234 1.95992 74.3398C1.90855 73.7234 1.85779 73.1067 1.6523 72.4902C1.4982 71.8738 1.39527 71.3088 1.24117 70.6924ZM148.482 70.6924C148.38 71.3088 148.225 71.8738 148.071 72.4902C148.225 71.9252 148.38 71.3088 148.482 70.6924ZM148.894 68.8945C148.842 69.2027 148.739 69.5626 148.687 69.8193C148.79 69.5626 148.842 69.2027 148.894 68.8945ZM0.162067 63.4482C0.213434 63.7051 0.213255 64.0648 0.264606 64.373C0.264594 64.0648 0.213436 63.7565 0.162067 63.4482ZM149.664 63.3975C149.613 63.7567 149.562 64.0646 149.561 64.3213C149.613 64.0646 149.613 63.7054 149.664 63.3975ZM149.767 61.5986C149.767 61.9069 149.716 62.2669 149.716 62.5752C149.716 62.2669 149.767 61.9583 149.767 61.5986ZM0.00776997 59.8008C0.00777246 60.109 0.0595278 60.4177 0.0595278 60.7773C0.0595278 60.4177 0.0591452 60.109 0.00776997 59.8008ZM149.815 59.9375V59.7725C149.816 59.7648 149.817 59.7567 149.818 59.749C149.818 59.8133 149.816 59.8762 149.815 59.9375ZM78.2529 3.80176C76.0438 2.97977 73.6802 2.97979 71.5224 3.80176C63.6106 6.67877 56.3663 11.3026 50.3554 17.3135C45.2694 22.3996 41.2627 28.2055 38.3857 34.6787C37.9749 35.6033 38.8478 36.4767 39.7724 36.1172C50.2528 32.6237 61.7093 32.1607 72.498 34.832C74.0906 35.243 75.7355 35.243 77.3281 34.832C88.1168 32.1093 99.5733 32.6237 110.054 36.1172C110.927 36.4253 111.8 35.5519 111.39 34.6787C108.513 28.2054 104.505 22.3996 99.4189 17.3135C93.4595 11.3027 86.1645 6.67877 78.2529 3.80176Z" fill="currentColor"/></svg>张竞元<span> · PORTFOLIO</span><a class="nav-tel" href="tel:15194884955">151 9488 4955</a></div>
+    <div class="nav-left"><svg class="brand-mark" viewBox="0 0 149.866 149.864" aria-label="张竞元" role="img"><path d="M91.4043 0C106.663 0 121.562 6.01089 132.71 17.1592C143.961 28.4103 149.972 43.566 149.818 58.9785V58.4141H149.813L149.815 59.7725C149.767 60.1223 149.767 60.4239 149.767 60.7256C149.809 60.4724 149.814 60.2191 149.815 59.9375L149.864 91.499V90.9346C149.967 106.398 144.008 121.503 132.757 132.754C121.506 144.005 106.35 150.015 90.9375 149.861H58.9306C43.4669 149.964 28.3624 144.005 17.1113 132.754C5.86022 121.503 -0.151122 106.347 0.00288716 90.9346V58.9277C-0.146101 43.4638 5.81383 28.3596 17.0136 17.1084C28.1621 6.01135 43.0091 0 58.2675 0H91.4043ZM87.2949 149.759C87.603 149.759 87.9624 149.811 88.2705 149.811C87.9624 149.811 87.6543 149.759 87.2949 149.759ZM81.9003 149.091C82.1572 149.142 82.4656 149.194 82.8252 149.245C82.517 149.194 82.2085 149.142 81.9003 149.091ZM74.2968 147.807C73.629 147.858 73.0637 147.961 72.4472 148.115C73.0637 148.012 73.6804 147.961 74.2968 147.807ZM111.44 115.234C111.851 114.31 110.978 113.436 110.054 113.796C99.5732 117.289 88.1168 117.803 77.3281 115.08C75.7355 114.669 74.0906 114.669 72.498 115.08C61.7093 117.803 50.2529 117.341 39.7724 113.796C38.8992 113.488 38.0258 114.361 38.4365 115.234C41.3135 121.656 45.321 127.513 50.4072 132.6C56.3666 138.61 63.6616 143.234 71.5732 146.111C73.7823 146.933 76.146 146.933 78.3037 146.111C86.2155 143.234 93.4598 138.611 99.4707 132.6C104.557 127.513 108.563 121.708 111.44 115.234ZM78.3037 36.8877C76.0945 36.0657 73.7309 36.0657 71.5732 36.8877C63.6616 39.7647 56.418 44.44 50.4072 50.3994C44.3964 56.3589 39.7725 63.6538 36.8955 71.5654C36.0735 73.7746 36.0735 76.1381 36.8955 78.2959C39.7211 86.259 44.3963 93.5034 50.4072 99.4629C56.3665 105.474 63.6618 110.097 71.5732 112.974C73.7823 113.796 76.1459 113.796 78.3037 112.974C86.2154 110.097 93.4598 105.474 99.4707 99.4629C105.482 93.5034 110.105 86.2077 112.982 78.2959C113.702 76.1381 113.702 73.7746 112.982 71.5654C110.105 63.6538 105.481 56.4102 99.4707 50.3994C93.5111 44.3885 86.2155 39.7647 78.3037 36.8877ZM115.191 38.4805C114.369 38.0695 113.445 38.8908 113.753 39.8154C117.246 50.296 117.709 61.7532 115.037 72.542C114.626 74.1346 114.626 75.7785 115.037 77.3711C117.76 88.1597 117.246 99.6162 113.753 110.097C113.445 110.97 114.318 111.844 115.191 111.433C121.664 108.556 127.47 104.549 132.556 99.4629C138.566 93.5034 143.19 86.2076 146.067 78.2959C146.838 76.1381 146.838 73.7749 146.067 71.6172C143.19 63.7054 138.567 56.4611 132.556 50.4502C127.47 45.3643 121.664 41.3574 115.191 38.4805ZM36.0732 39.7129C36.3814 38.8395 35.5081 37.966 34.6347 38.377C28.1616 41.2539 22.3566 45.2616 17.2705 50.3477C11.2596 56.3072 6.63576 63.6029 3.75875 71.5146C2.93683 73.7237 2.93683 76.0865 3.75875 78.2441C6.63576 86.1559 11.2596 93.4002 17.2705 99.4111C22.3566 104.497 28.1616 108.505 34.6347 111.382C35.4567 111.793 36.3814 110.971 36.0732 110.046C32.5797 99.5654 32.1175 88.1081 34.789 77.3193C35.1999 75.7268 35.2 74.0827 34.789 72.4902C32.1689 61.7015 32.5797 50.3475 36.0732 39.7129ZM0.054645 89.1875C0.00329675 89.4956 0.00288717 89.8037 0.00288716 90.1631C0.0541951 89.8037 0.054645 89.4956 0.054645 89.1875ZM149.767 89.1357C149.767 89.4954 149.767 89.8041 149.818 90.1123C149.818 89.8041 149.767 89.4954 149.767 89.1357ZM0.102497 87.5703C0.0880379 87.8038 0.0595278 88.0449 0.0595278 88.3145C0.0595278 88.0833 0.088046 87.8228 0.102497 87.5771V87.5703ZM0.264606 85.5908C0.213244 85.8476 0.213403 86.2074 0.162067 86.5156C0.213431 86.1561 0.264606 85.8476 0.264606 85.5908ZM149.561 85.54C149.562 85.8482 149.613 86.1567 149.664 86.4648C149.613 86.2081 149.613 85.8482 149.561 85.54ZM1.13863 80.0938C1.03589 80.3506 0.983942 80.7103 0.932575 81.0186C0.983957 80.7103 1.08726 80.3506 1.13863 80.0938ZM1.75484 77.4229C1.60075 77.9879 1.44644 78.6043 1.34371 79.2207C1.44644 78.6043 1.60074 78.0392 1.75484 77.4229ZM147.866 75.5732C147.918 76.1896 147.968 76.8065 148.174 77.4229C148.328 78.0392 148.431 78.6043 148.585 79.2207C148.482 78.6043 148.328 78.0392 148.174 77.4229C148.02 76.8065 147.918 76.1896 147.866 75.5732ZM1.24117 70.6924C1.34391 71.3088 1.49819 71.8738 1.6523 72.4902C1.80642 73.1067 1.90854 73.7234 1.95992 74.3398C1.90855 73.7234 1.85779 73.1067 1.6523 72.4902C1.4982 71.8738 1.39527 71.3088 1.24117 70.6924ZM148.482 70.6924C148.38 71.3088 148.225 71.8738 148.071 72.4902C148.225 71.9252 148.38 71.3088 148.482 70.6924ZM148.894 68.8945C148.842 69.2027 148.739 69.5626 148.687 69.8193C148.79 69.5626 148.842 69.2027 148.894 68.8945ZM0.162067 63.4482C0.213434 63.7051 0.213255 64.0648 0.264606 64.373C0.264594 64.0648 0.213436 63.7565 0.162067 63.4482ZM149.664 63.3975C149.613 63.7567 149.562 64.0646 149.561 64.3213C149.613 64.0646 149.613 63.7054 149.664 63.3975ZM149.767 61.5986C149.767 61.9069 149.716 62.2669 149.716 62.5752C149.716 62.2669 149.767 61.9583 149.767 61.5986ZM0.00776997 59.8008C0.00777246 60.109 0.0595278 60.4177 0.0595278 60.7773C0.0595278 60.4177 0.0591452 60.109 0.00776997 59.8008ZM149.815 59.9375V59.7725C149.816 59.7648 149.817 59.7567 149.818 59.749C149.818 59.8133 149.816 59.8762 149.815 59.9375ZM78.2529 3.80176C76.0438 2.97977 73.6802 2.97979 71.5224 3.80176C63.6106 6.67877 56.3663 11.3026 50.3554 17.3135C45.2694 22.3996 41.2627 28.2055 38.3857 34.6787C37.9749 35.6033 38.8478 36.4767 39.7724 36.1172C50.2528 32.6237 61.7093 32.1607 72.498 34.832C74.0906 35.243 75.7355 35.243 77.3281 34.832C88.1168 32.1093 99.5733 32.6237 110.054 36.1172C110.927 36.4253 111.8 35.5519 111.39 34.6787C108.513 28.2054 104.505 22.3996 99.4189 17.3135C93.4595 11.3027 86.1645 6.67877 78.2529 3.80176Z" fill="currentColor"/></svg>张竞元<span> · PORTFOLIO</span><a class="nav-tel" href="tel:15901431031">159 0143 1031</a></div>
     <div class="tabs" role="tablist">
       <button class="tab-btn active" data-tab="about"  data-num="01" role="tab" aria-selected="true">个人介绍</button>
       <button class="tab-btn"        data-tab="p-flow" data-num="02" role="tab" aria-selected="false">AI 设计流水线</button>
@@ -339,7 +419,7 @@
           <dl class="about-meta">
             <dt>城市</dt><dd>北京</dd>
             <dt>学历</dt><dd>本科 · 北京联合大学</dd>
-            <dt>手机</dt><dd><span class="am-val">151 9488 4955</span><button type="button" class="am-copy" data-copy="15194884955" aria-label="复制手机号">复制</button></dd>
+            <dt>手机</dt><dd><span class="am-val">159 0143 1031</span><button type="button" class="am-copy" data-copy="15901431031" aria-label="复制手机号">复制</button></dd>
             <dt>邮箱</dt><dd><span class="am-val">983972532@qq.com</span><button type="button" class="am-copy" data-copy="983972532@qq.com" aria-label="复制邮箱">复制</button></dd>
             <dt>微信</dt><dd><span class="am-val">Ethen_Z</span><button type="button" class="am-copy" data-copy="Ethen_Z" aria-label="复制微信号">复制</button></dd>
           </dl>
@@ -359,10 +439,10 @@
           <div class="about-block">
             <div class="about-block-head"><span>Personal Strengths</span>个人优势</div>
             <ul class="about-str-list">
-              <li><b>B 端复杂业务全链路</b>从需求分析、信息架构、原型到高保真与交互标注，独立完成。覆盖组织权限、计划实施、会议、文档库、HR 等业务模块。</li>
-              <li><b>需求理解与业务沟通</b>需求由业务负责人直接提出，没有现成文档。我负责确认使用者、场景与功能边界，形成可执行方案后再进入设计。</li>
-              <li><b>界面之外的视觉与排版</b>具备字体设计、版式设计、IP 形象、海报与 H5 的完整能力。B 端界面的难点不在堆组件，在密度、层级与留白的判断。</li>
-              <li><b>设计系统与工程化</b>49 个组件注入前端平台直接调用；自建五环节 AI 设计流水线，把「优先复用组件」写成强制规则，不合规的产出直接拦掉。</li>
+              <li><b>5 年 B 端全链路 · 产品与设计双角色</b>需求由业务负责人当面提出，<strong>没有现成文档</strong>，我负责确认使用者、场景与功能边界，形成可执行方案后再进入设计，从信息架构、原型到高保真与交互标注独立完成。<strong>CSES 企业协作平台</strong>用一套设计跑通组织权限、文档库、薪酬、考勤、招聘、人事六条业务线，岗位定组织位置、角色定权限集合，是<strong>从 0 到 1 建企业级协同办公生态的完整经验</strong>。</li>
+              <li><b>AI 设计流水线的搭建者</b>把设计流程做成能反复跑、规矩由程序管的产线：<strong>五个环节各固定一个 AI 负责</strong>，三个门卫程序在文件写入那一刻校验，不合规的产物根本落不了盘；页面做完还有一个只看不改的 AI 出检查报告。<strong>规则与验收标准由我定义，代码由 AI 实现，我验收</strong>。已产出 <strong>57 个成品页、91 条检查项、33 条返工登记</strong>。</li>
+              <li><b>AI 原生交互的实践者</b>NOTA 是公司第一个 AI 原生产品，完整设计方案由我出。核心判断是<strong>会议的产出物不是记录，是任务</strong>；AI 全程在场，但人正在说话时它不插嘴。计划实施同理，全平台 114 条反馈里 <strong>58 条落在这一块</strong>，用户的痛苦不在视觉层，在「<strong>我做的操作有没有真的生效</strong>」。这两个项目沉淀的是人机分工、任务编排与过程留痕的设计判断。</li>
+              <li><b>设计系统与工程化</b><strong>49 个组件注入前端平台直接调用</strong>，440 个样式变量、887 个图标、8 个锁死框架块沉淀成同一套底座，保证多端一致。「优先复用组件」写成流水线里的强制规则，不合规的产出直接拦掉。界面之外，字体设计、版式、IP 形象、海报与 H5 也能独立交付 —— B 端的难点从来不在堆组件，在密度、层级与留白的判断。</li>
             </ul>
           </div>
         </div>
@@ -506,46 +586,49 @@
         <div class="about-exp-item">
           <div class="ae-date">
             2023.07 — 至今
-            <span>UX 设计师 · UX DESIGNER</span>
+            <span>产品设计师 · PRODUCT DESIGNER</span>
           </div>
-          <div class="ae-co">北京中企云链（北京）信息科技有限公司</div>
+          <div class="ae-co">中企云链（北京）信息科技有限公司</div>
+          <div class="ae-note">公司搬迁，主体由 北京微视听文化传媒有限公司 变更为 中企云链（北京）信息科技有限公司</div>
           <ul class="ae-bullets">
-            <li>需求以口头形式提出，没有产品文档。调研同类做法、确认使用者与场景、界定功能边界，形成可执行方案后再进入设计</li>
-            <li>从信息架构、原型到高保真与交互标注独立完成，覆盖管理后台、计划实施、会议、审批、文档库、HR、薪酬、考勤八个业务模块</li>
-            <li>建立线上问题与用户反馈的收集归类方式，分析全平台 114 条反馈，判断哪些是表层体验问题、哪些是结构性问题，排出优先级</li>
-            <li>设计交付后跟进开发实现、走查还原度，负责到上线为止；上线后回收使用情况作为下一轮迭代依据</li>
-            <li>搭建公司业务的组件库共 49 个组件，通过 Claude 生成动态组件后上传物料库平台实现复用</li>
-            <li>自建五环节 AI 设计流水线（需求分析 → 结构骨架 → 高保真 → 交互实现 → 质量测试），质量由机制拦截而非人工检查。目前部分开发同事也直接使用这套流程完成设计产出</li>
+            <li><b>需求定义与方案设计</b>善于从模糊需求出发，自主完成竞品调研、用户场景界定与功能边界梳理，输出可执行方案，确保设计输入质量。同时兼任产品与设计双角色，深度参与从需求分析到开发落地的全生命周期。</li>
+            <li><b>B 端全链路产品设计</b>从 0 到 1 主导搭建企业协同办公生态，独立完成业务规划至上线全流程，覆盖 AI 原生应用会议 NOTA、任务、表单、审批、文档、HR、薪酬、考勤等核心业务模块，并完成信息架构、原型、高保真及交互全流程设计。</li>
+            <li><b>用户反馈驱动体验迭代</b>建立系统化的用户反馈收集与分类机制，精准区分表层体验问题与深层结构性问题，通过优先级排序驱动版本迭代，形成「收集 — 诊断 — 落地 — 验证」的体验优化闭环。</li>
+            <li><b>设计交付与效果追踪</b>深度跟进开发实现过程，严格执行设计走查与还原度修正，确保上线质量；同时建立上线后使用数据回收机制，为后续迭代提供客观决策依据。</li>
+            <li><b>设计系统与组件化建设</b>主导企业级组件库搭建，借助 Claude 生成动态组件并接入物料平台，实现设计资产的高效复用与团队协作提效。</li>
+            <li><b>AI 驱动的设计与工作流创新</b>自研五环节 AI 流水线 + AI Agent 设计工作流，沉淀可复用组件，该流程已被开发团队采纳复用。</li>
           </ul>
         </div>
 
         <div class="about-exp-item">
           <div class="ae-date">
             2022.08 — 2023.05
-            <span>UI 设计师 · UI DESIGNER</span>
+            <span>UX 设计师 · UX DESIGNER</span>
           </div>
           <div class="ae-co">北京艾阁广告有限公司</div>
           <ul class="ae-bullets">
-            <li>负责数字媒体平台界面设计，并在开发阶段配合实现、跟进还原效果，确保上线结果与设计稿一致</li>
-            <li>与项目经理、视觉设计师、开发协同推进，在需求、视觉与技术实现之间对齐，保证方案与品牌形象统一</li>
-            <li>主要负责后台管理系统与移动应用两类项目：前者关注信息密度与操作效率，后者关注交互流畅度与使用场景</li>
-            <li>参与产品调研与设计讨论，依据数据判断哪些体验问题真正值得优先解决</li>
-            <li>参与团队设计规范制定与维护，统一组件用法、间距与视觉语言，降低多人协作时的风格偏差</li>
+            <li><b>数字媒体平台 UI 设计</b>负责平台端界面设计，配合开发跟进还原度，确保上线与设计稿一致。</li>
+            <li><b>跨角色协同与品牌一致性</b>协同项目经理、视觉及开发团队，在需求、视觉与技术间建立对齐机制，确保交付符合客户诉求与品牌形象。</li>
+            <li><b>多端设计实践</b>并行负责后台管理系统与移动应用，针对 B 端高信息密度与操作效率、C 端交互流畅度与场景适配，分别制定差异化设计策略。</li>
+            <li><b>产品调研与数据驱动</b>参与产品调研与策略讨论，从数据变化反观体验问题，依据数据判定优化优先级。</li>
+            <li><b>用户反馈驱动迭代</b>收集客户与用户反馈，转化为设计优化方案，持续推动功能与体验迭代升级。</li>
+            <li><b>设计规范共建</b>参与设计规范制定与维护，统一组件用法、间距体系与视觉语言，降低协作风格偏差。</li>
           </ul>
         </div>
 
         <div class="about-exp-item">
           <div class="ae-date">
             2020.10 — 2022.06
-            <span>视觉设计师 / UI 设计师 · VISUAL &amp; UI</span>
+            <span>视觉设计师兼 UI 设计师 · VISUAL &amp; UI</span>
           </div>
-          <div class="ae-co">联大教师工作室</div>
+          <div class="ae-co">北京联合大学王晨设计工作室</div>
           <ul class="ae-bullets">
-            <li>负责产品界面设计，不只做视觉呈现，同时判断信息层级、操作路径与常用功能的可达性是否合理</li>
-            <li>书籍排版、Logo、H5、IP 形象设计等，覆盖平面与数字两类载体</li>
-            <li>动手前先了解同类产品的做法与用户偏好，再确定视觉方向</li>
-            <li>参与需求沟通，把零散的口头要求整理成明确的设计目标与交付清单，确认无误后再进入设计</li>
-            <li>初稿完成后持续打磨细节，并规划页面跳转关系与交互反馈，交付可直接进入开发的完整方案</li>
+            <li><b>界面设计 + 功能把关</b>设计阶段同步判断信息层级与操作路径合理性，确保功能可达。</li>
+            <li><b>多品类视觉</b>覆盖书籍排版、Logo、H5、IP 形象等平面与数字载体。</li>
+            <li><b>调研定方向</b>动手前调研同类产品与用户偏好，确定视觉策略。</li>
+            <li><b>需求整理</b>将口头需求梳理为明确的设计目标与交付清单。</li>
+            <li><b>协作对齐</b>多人分工项目中同步进度、收敛意见，确保方案一致。</li>
+            <li><b>打磨到交付</b>细化视觉 + 规划交互跳转，交付可开发的完整方案。</li>
           </ul>
         </div>
 
@@ -612,6 +695,7 @@
     </div>
 
     <h3 class="sub-head"><span class="num">03</span>能做什么<span class="sub-en">WHAT IT DOES · 4</span><span class="line"></span></h3>
+    
     <div class="cap-grid">
       <div class="cap-item"><span>01 · 规范</span><b class="ci-title">内置统一设计规范</b><p>49 个组件、377 个样式变量、887 个图标类名，所有页面共用同一套。颜色只能取变量、图标只能取图标字体、间距只能取规范阶梯——<strong>这几条由门卫在存文件时卡住，不靠 AI 自觉。</strong></p></div>
       <div class="cap-item"><span>02 · 推进</span><b class="ci-title">分角色分步骤推进</b><p>需求理解、结构骨架、高保真实现、交互接通、质量复检，每个环节交给一个固定的 AI 单独做。<strong>各管各的，不会一个 AI 一口气全生成、质量忽好忽坏。</strong></p></div>
@@ -973,7 +1057,7 @@
       <div class="cap-item"><span>05</span><b class="ci-title">流程动作按阶段出现</b><p>KR 填写与投票仅在流程开始时进入动态按钮区，完成后消失；底部按钮按「我的设备 / 流程动作 / AI 与投屏」三组收起。</p></div>
       <div class="cap-item"><span>06</span><b class="ci-title">人物等大，信息收起</b><p>四人四格等大；会议详情与成员列表收入标题右侧，需要时悬浮查看；主讲与全屏可切换。</p></div>
     </div>
-    <p class="jrn-lead" style="margin-top:18px">以下各节按这六点展开：02–03 说明问题来源，04–06 说明判断依据，07–11 说明设计方案，12 为复盘。每节末尾标注对应的设计点。</p>
+    <p class="jrn-lead" style="margin-top:18px">以下各节按这六点展开：02–03 说明问题来源，04–06 说明判断依据，07–11 说明设计方案，12 为剩余页面。每节末尾标注对应的设计点。</p>
 
 <h3 class="sub-head"><span class="num">02</span>为什么做<span class="sub-en">WHY · 3</span><span class="line"></span></h3>
     <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:16px 0 0">
@@ -1030,12 +1114,54 @@
         线上反馈中亦有同类诉求：「会议中可快速调出任务链接，边讨论边新增、修改任务，实时记录会议内容，杜绝会后遗漏。」
         本人的工作是将这些分散的诉求整理为可落地的界面与 AI 的边界。</p></div>
     </div>
+    <figure class="fig" style="margin:22px 0 6px">
+        <svg class="cband" viewBox="0 0 1200 320" role="img" aria-label="16 条会议相关反馈按三段的分布">
+        <text class="cb-h" x="20" y="40">68 页线上反馈里筛出的 16 条，按用户旅程三段分布</text>
+        <text class="cb-st" x="165" y="76" text-anchor="middle">想开会　4 条</text>
+        <text class="cb-st" x="636" y="76" text-anchor="middle">开会中　9 条</text>
+        <text class="cb-st" x="1071" y="76" text-anchor="middle">任务落到人　3 条</text>
+        <rect class="cb-seg is-side" x="20.0" y="96" width="290.0" height="58" rx="8"/>
+        <rect class="cb-seg is-core" x="310.0" y="96" width="290.0" height="58" rx="8"/>
+        <rect class="cb-seg is-mute" x="600.0" y="96" width="362.5" height="58" rx="8"/>
+        <rect class="cb-seg is-side" x="962.5" y="96" width="217.5" height="58" rx="8"/>
+        <line class="cb-tick" x1="92.5" y1="108" x2="92.5" y2="142"/>
+        <line class="cb-tick" x1="165.0" y1="108" x2="165.0" y2="142"/>
+        <line class="cb-tick" x1="237.5" y1="108" x2="237.5" y2="142"/>
+        <line class="cb-tick" x1="382.5" y1="108" x2="382.5" y2="142"/>
+        <line class="cb-tick" x1="455.0" y1="108" x2="455.0" y2="142"/>
+        <line class="cb-tick" x1="527.5" y1="108" x2="527.5" y2="142"/>
+        <line class="cb-tick" x1="672.5" y1="108" x2="672.5" y2="142"/>
+        <line class="cb-tick" x1="745.0" y1="108" x2="745.0" y2="142"/>
+        <line class="cb-tick" x1="817.5" y1="108" x2="817.5" y2="142"/>
+        <line class="cb-tick" x1="890.0" y1="108" x2="890.0" y2="142"/>
+        <line class="cb-tick" x1="1035.0" y1="108" x2="1035.0" y2="142"/>
+        <line class="cb-tick" x1="1107.5" y1="108" x2="1107.5" y2="142"/>
+        <text class="cb-in" x="165" y="132" text-anchor="middle">4</text>
+        <text class="cb-in is-core" x="455" y="132" text-anchor="middle">4</text>
+        <text class="cb-in is-mute" x="781" y="132" text-anchor="middle">5</text>
+        <text class="cb-in" x="1071" y="132" text-anchor="middle">3</text>
+        <line class="cb-lead" x1="165" y1="154" x2="165" y2="190"/>
+        <text class="cb-nt " x="165" y="206" text-anchor="middle">进会环节受阻</text>
+        <text class="cb-nd" x="165" y="226" text-anchor="middle">未到时间即开始、不能改时间、选人繁琐</text>
+        <line class="cb-lead" x1="455" y1="154" x2="455" y2="190"/>
+        <text class="cb-nt is-core" x="455" y="206" text-anchor="middle">会中无法产出　4 条</text>
+        <text class="cb-nd" x="455" y="226" text-anchor="middle">任务仅主持人可建、协同人看不到、无法边讨论边改</text>
+        <line class="cb-lead" x1="781" y1="154" x2="781" y2="246"/>
+        <text class="cb-nt is-mute" x="781" y="262" text-anchor="middle">稳定性问题　5 条</text>
+        <text class="cb-nd" x="781" y="282" text-anchor="middle">不在本次设计范围</text>
+        <line class="cb-lead" x1="1071" y1="154" x2="1071" y2="190"/>
+        <text class="cb-nt " x="1071" y="206" text-anchor="middle">事后靠转述或翻记录</text>
+        <text class="cb-nd" x="1071" y="226" text-anchor="middle">未到场即无信息</text>
+        <text class="cb-foot" x="20" y="304">这 4 条对应设计点 2、3、4、5，是六个设计点里最集中的一处来源。</text>
+        </svg>
+      <figcaption class="fig-cap"><span class="fig-no">图 02</span><b>16 条反馈的分布</b>四条集中在「会中无法产出」，其余五条属于稳定性问题，本次不处理。</figcaption>
+    </figure>
     <div class="cap-grid cap-3" style="margin-top:26px">
       <div class="cap-item"><span>想开会 · 4 条</span><b class="ci-title">进会环节受阻</b><p>预定会议未到时间即开始、不能修改时间、参会人选择流程繁琐。四条均发生在会议开始之前。</p></div>
       <div class="cap-item"><span>开会中 · 9 条</span><b class="ci-title">其中四条指向「会中无法产出」</b><p>任务仅主持人可建、协同人看不到会中任务、无法边讨论边修改。其余五条为稳定性问题，不在本次设计范围。这四条对应设计点 2、3、4、5。</p></div>
       <div class="cap-item"><span>任务落到人 · 3 条</span><b class="ci-title">会后需要人工搬运</b><p>会议与任务不连通、会中任务协同人不可见、会议记录无处存放。三条指向同一个断点，对应设计点 1。</p></div>
     </div>
-    <p class="jrn-lead" style="margin-top:22px">16 条全部来自线上反馈（个人及企业用户反馈，68 页全量枚举），逐条对应到 05 用户旅程的三段。<b>此处仅列统计，不放原文。</b>计数口径：P-024 一页含两个问题按一条计，拆开为 17 条。</p>
+    
 
 <h3 class="sub-head"><span class="num">04</span>三个角色，三种诉求<span class="sub-en">ROLES · 3</span><span class="line"></span></h3>
     <p class="rol-lead">同一场会议，三类角色的诉求不同。<b>分开分析后，AI 应在何时出现才有依据。</b></p>
@@ -1121,9 +1247,49 @@
         <text class="mm-d" x="708" y="393">「新流程下周执行」→ 进全员待办</text>
         <text class="mm-foot" x="708" y="440">四种范围都先生成框架，责任人与事项已填好，本人会后确认才生效。</text>
         </svg>
-      <figcaption class="fig-cap"><span class="fig-no">图 04</span><b>事项归属范围</b>转写识别出一条行动项后，AI 先判断它归谁，再决定生成什么。</figcaption>
+      <figcaption class="fig-cap"><span class="fig-no">图 03</span><b>事项归属范围</b>转写识别出一条行动项后，AI 先判断它归谁，再决定生成什么。</figcaption>
     </figure>
 <h3 class="sub-head"><span class="num">05</span>用户旅程 · 没有它 vs 有它<span class="sub-en">JOURNEY · WITHOUT · WITH</span><span class="line"></span></h3>
+    <figure class="fig" style="margin-bottom:26px">
+        <svg class="jmap" viewBox="0 0 1200 430" role="img" aria-label="用户旅程：没有它与有它的三段对比">
+        <text class="jm-lane is-bad" x="0" y="128">WITHOUT</text><text class="jm-lane is-bad" x="0" y="146">没有它</text>
+        <text class="jm-lane is-good" x="0" y="298">WITH</text><text class="jm-lane is-good" x="0" y="316">有它</text>
+        <text class="jm-st" x="260" y="40" text-anchor="middle">想开会</text>
+        <text class="jm-cnt" x="260" y="60" text-anchor="middle">线上反馈 4 条</text>
+        <rect class="jm-card is-bad" x="110" y="104" width="300" height="86" rx="12"/>
+        <text class="jm-t is-bad" x="128" y="138">预定会议未到时间即开始</text>
+        <text class="jm-d" x="128" y="164">不能改时间，选人流程繁琐</text>
+        <rect class="jm-card is-good" x="110" y="274" width="300" height="86" rx="12"/>
+        <text class="jm-t is-good" x="128" y="308">从会议列表进会，先进等待态</text>
+        <text class="jm-d" x="128" y="334">人到齐或到时间才开始</text>
+        <path class="jm-arrow" d="M418 147 H435"/>
+        <path class="jm-tip" d="M442 147 l-8 -4.5 l0 9 z"/>
+        <path class="jm-arrow" d="M418 317 H435"/>
+        <path class="jm-tip" d="M442 317 l-8 -4.5 l0 9 z"/>
+        <text class="jm-st" x="600" y="40" text-anchor="middle">开会中</text>
+        <text class="jm-cnt" x="600" y="60" text-anchor="middle">线上反馈 9 条</text>
+        <rect class="jm-card is-bad" x="450" y="104" width="300" height="86" rx="12"/>
+        <text class="jm-t is-bad" x="468" y="138">会中任务只有主持人能建</text>
+        <text class="jm-d" x="468" y="164">参会人无法边讨论边产出</text>
+        <rect class="jm-card is-good" x="450" y="274" width="300" height="86" rx="12"/>
+        <text class="jm-t is-good" x="468" y="308">参会人自主建任务</text>
+        <text class="jm-d" x="468" y="334">转写识别行动项，当场生成</text>
+        <path class="jm-arrow" d="M758 147 H775"/>
+        <path class="jm-tip" d="M782 147 l-8 -4.5 l0 9 z"/>
+        <path class="jm-arrow" d="M758 317 H775"/>
+        <path class="jm-tip" d="M782 317 l-8 -4.5 l0 9 z"/>
+        <text class="jm-st" x="940" y="40" text-anchor="middle">任务落到人</text>
+        <text class="jm-cnt" x="940" y="60" text-anchor="middle">线上反馈 3 条</text>
+        <rect class="jm-card is-bad" x="790" y="104" width="300" height="86" rx="12"/>
+        <text class="jm-t is-bad" x="808" y="138">未到场即无信息</text>
+        <text class="jm-d" x="808" y="164">事后靠转述或翻记录</text>
+        <rect class="jm-card is-good" x="790" y="274" width="300" height="86" rx="12"/>
+        <text class="jm-t is-good" x="808" y="308">任务带责任人与截止进入项目列表</text>
+        <text class="jm-d" x="808" y="334">缺席由 agent 按时长补看推送</text>
+        <text class="jm-foot" x="0" y="410">16 条会议相关反馈全部落在上行；下行每一步对应一张已完成的高保真。</text>
+        </svg>
+      <figcaption class="fig-cap"><span class="fig-no">图 04</span><b>一条主路径的两种走法</b>上行是没有它时的实际路径，下行是有它的路径。</figcaption>
+    </figure>
     <p class="jrn-lead">一条主路径：<b>想开会 → 开会中 → 任务落到人</b>。上行为没有它时的实际路径，下行为有它的路径。
       <b>16 条会议相关的线上反馈全部落在上行</b>：想开会 4 条、开会中 9 条、任务落到人 3 条。</p>
 
@@ -1207,8 +1373,49 @@
     </div>
 
 
-    <figure class="fig" style="--ar:2.6">
-      <div class="fig-slot"><span class="fig-no">图 02</span><b>三类产品 AI 的介入时点</b><em>同一条会议时间轴上标注三个时点：会后型在「会后」，Tana 在「会中」，NOTA 在「会中 + 会后确认」；纵轴为「能否直接产出」</em></div>
+    <figure class="fig">
+        <svg class="tline" viewBox="0 0 1200 470" role="img" aria-label="三类产品 AI 介入时点的时间轴对比">
+        <rect class="tl-band" x="400" y="74" width="360" height="352" rx="10"/>
+        <text class="tl-seg" x="186" y="60" text-anchor="start">会前</text>
+        <text class="tl-seg" x="580" y="60" text-anchor="middle">会中</text>
+        <text class="tl-seg" x="970" y="60" text-anchor="middle">会后</text>
+        <line class="tl-div" x1="400" y1="70" x2="400" y2="430"/>
+        <line class="tl-div" x1="760" y1="70" x2="760" y2="430"/>
+        <text class="tl-name" x="0" y="122">腾讯会议 · 飞书 · 钉钉</text>
+        <text class="tl-kind" x="0" y="142">会后型</text>
+        <line class="tl-base" x1="178" y1="126" x2="1180" y2="126"/>
+        <circle class="tl-dot" cx="812" cy="126" r="6"/>
+        <rect class="tl-pill is-bad" x="836" y="111" width="112" height="30" rx="15"/>
+        <text class="tl-pt is-bad" x="892" y="131" text-anchor="middle">一份纪要</text>
+        <line class="tl-move" x1="962" y1="126" x2="988" y2="126"/>
+        <path class="tl-arrow" d="M996 126 l-8 -4 l0 8 z"/>
+        <rect class="tl-pill is-move" x="1000" y="111" width="126" height="30" rx="15"/>
+        <text class="tl-pt is-move" x="1063" y="131" text-anchor="middle">人工转成任务</text>
+        <text class="tl-note" x="178" y="164">会中整段没有产物</text>
+        <text class="tl-name" x="0" y="232">Tana</text>
+        <text class="tl-kind" x="0" y="252">会中型</text>
+        <line class="tl-base" x1="178" y1="236" x2="1180" y2="236"/>
+        <circle class="tl-dot" cx="498" cy="236" r="6"/>
+        <rect class="tl-pill is-warn" x="522" y="221" width="74" height="30" rx="15"/>
+        <text class="tl-pt is-warn" x="559" y="241" text-anchor="middle">笔记</text>
+        <line class="tl-move" x1="610" y1="236" x2="674" y2="236"/>
+        <path class="tl-arrow" d="M682 236 l-8 -4 l0 8 z"/>
+        <rect class="tl-pill is-move" x="686" y="221" width="196" height="30" rx="15"/>
+        <text class="tl-pt is-move" x="784" y="241" text-anchor="middle">任务 / 文档 / 审批各在别处</text>
+        <text class="tl-note" x="178" y="274">解决了时机，没解决去处</text>
+        <text class="tl-name" x="0" y="342">NOTA</text>
+        <text class="tl-kind" x="0" y="362">会中 + 全业务</text>
+        <line class="tl-base" x1="178" y1="346" x2="1180" y2="346"/>
+        <circle class="tl-dot is-good" cx="498" cy="346" r="6"/>
+        <rect class="tl-pill is-good" x="522" y="331" width="168" height="30" rx="15"/>
+        <text class="tl-pt is-good" x="606" y="351" text-anchor="middle">任务 / 文档 / KR</text>
+        <circle class="tl-dot is-small" cx="900" cy="346" r="4"/>
+        <text class="tl-tiny" x="914" y="350">本人确认</text>
+        <text class="tl-note" x="178" y="384">产物不出平台，会后只剩本人确认</text>
+        <line class="tl-move" x1="178" y1="446" x2="212" y2="446"/>
+        <text class="tl-tiny" x="222" y="450">虚线 = 产物还要再搬一次家</text>
+        </svg>
+      <figcaption class="fig-cap"><span class="fig-no">图 05</span><b>三家 AI 出现的时刻与产物落点</b>同一条会议时间轴。虚线表示产物还要再搬一次家；只有第三条在会中就把产物接住了。</figcaption>
     </figure>
     <p class="cmp-foot">三条 AI 交互原则（<b>按需召唤 · 悬浮提示 · 不打断发言</b>）由此推出：
       AI 需要全程在场，因此不能持续发言；多人同步场景，提示不能遮挡他人；
@@ -1262,6 +1469,50 @@
     <div class="sec-head"><h2>设计方案</h2><span>[DESIGN]</span></div>
 
 <h3 class="sub-head"><span class="num">08</span>设计方案 · 核心链路<span class="sub-en">CORE · AI × 3</span><span class="line"></span></h3>
+    <figure class="fig" style="margin-top:22px">
+        <svg class="clink" viewBox="0 0 1200 400" role="img" aria-label="核心链路：三块区域与发言到任务的链条">
+        <rect class="cl-reg" x="45" y="26" width="330" height="76" rx="12"/>
+        <text class="cl-rt" x="210" y="58" text-anchor="middle">左　视频与协同区</text>
+        <text class="cl-rd" x="210" y="80" text-anchor="middle">人与文件在这里，拖进来即共享</text>
+        <text class="cl-ag" x="210" y="118" text-anchor="middle">一块区域 = 一个 agent</text>
+        <rect class="cl-reg" x="435" y="26" width="330" height="76" rx="12"/>
+        <text class="cl-rt" x="600" y="58" text-anchor="middle">中　实时转写</text>
+        <text class="cl-rd" x="600" y="80" text-anchor="middle">按发言人分段，可复制、可回溯</text>
+        <text class="cl-ag" x="600" y="118" text-anchor="middle">一块区域 = 一个 agent</text>
+        <rect class="cl-reg" x="825" y="26" width="330" height="76" rx="12"/>
+        <text class="cl-rt" x="990" y="58" text-anchor="middle">右　协同画板</text>
+        <text class="cl-rd" x="990" y="80" text-anchor="middle">会中共同标注与草图</text>
+        <text class="cl-ag" x="990" y="118" text-anchor="middle">一块区域 = 一个 agent</text>
+        <line class="cl-sep" x1="0" y1="152" x2="1200" y2="152"/>
+        <text class="cl-title" x="0" y="188">发言到任务，一条链路不出平台</text>
+        <rect class="cl-step" x="20" y="214" width="150" height="58" rx="10"/>
+        <text class="cl-st" x="95" y="249" text-anchor="middle">有人发言</text>
+        <path class="cl-arrow" d="M178 243 H197"/>
+        <path class="cl-tip" d="M204 243 l-8 -4.5 l0 9 z"/>
+        <rect class="cl-step" x="212" y="214" width="150" height="58" rx="10"/>
+        <text class="cl-st" x="287" y="249" text-anchor="middle">转写按人分段</text>
+        <path class="cl-arrow" d="M370 243 H389"/>
+        <path class="cl-tip" d="M396 243 l-8 -4.5 l0 9 z"/>
+        <rect class="cl-step" x="404" y="214" width="150" height="58" rx="10"/>
+        <text class="cl-st" x="479" y="249" text-anchor="middle">AI 识别行动项</text>
+        <path class="cl-arrow" d="M562 243 H581"/>
+        <path class="cl-tip" d="M588 243 l-8 -4.5 l0 9 z"/>
+        <rect class="cl-step" x="596" y="214" width="150" height="58" rx="10"/>
+        <text class="cl-st" x="671" y="249" text-anchor="middle">判定归属范围</text>
+        <path class="cl-arrow" d="M754 243 H773"/>
+        <path class="cl-tip" d="M780 243 l-8 -4.5 l0 9 z"/>
+        <rect class="cl-step" x="788" y="214" width="150" height="58" rx="10"/>
+        <text class="cl-st" x="863" y="249" text-anchor="middle">生成任务框架</text>
+        <path class="cl-arrow" d="M946 243 H965"/>
+        <path class="cl-tip" d="M972 243 l-8 -4.5 l0 9 z"/>
+        <rect class="cl-step is-end" x="980" y="214" width="150" height="58" rx="10"/>
+        <text class="cl-st is-end" x="1055" y="249" text-anchor="middle">本人确认后生效</text>
+        <text class="cl-out" x="1055" y="296" text-anchor="middle">进入项目任务列表</text>
+        <text class="cl-note" x="0" y="348">会中生成、会后确认，中间没有第二个系统。责任范围由 AI 依据岗位、部门、近期任务与相关文档判定。</text>
+        <text class="cl-note" x="0" y="372">AI 不常驻界面：被召唤后以一格成员位进入，有人发言时不打断。</text>
+        </svg>
+      <figcaption class="fig-cap"><span class="fig-no">图 06</span><b>三块区域与发言到任务的链条</b>左中右各由一个 agent 负责；一句发言经转写、识别、判定、生成，到本人确认后进入项目任务列表。</figcaption>
+    </figure>
     <div class="intro-grid">
       <div><p>实时转写 → 识别行动项 → 生成任务 → 判定归属范围 → 固定于右侧列。<span class="core-x">任务在会中生成，参会人可当场修改责任人与时间，<b>因为相关人员均在会议中</b>。</span>
       <span class="core-x">链路终点不在会议内，而在<b>计划实施</b>：会议生成的任务直接进入项目任务列表。这是它与纯会议工具的分界。<span style="color:var(--fg-4)">→ 设计点 1、4</span></span></p></div>
@@ -1276,10 +1527,9 @@
 
 <h3 class="sub-head"><span class="num">09</span>设计方案 · 逐页讲解<span class="sub-en">PAGES · 7</span><span class="line"></span></h3>
     <p class="jrn-lead">七屏按会议顺序展开：进会 → 会中 → 会后。<b>每一屏对应 05 用户旅程的一步或 07 之前问题的一条，并标注所体现的设计点。</b>有可点原型的直接试用，有高保真的放图。</p>
-<ol class="jt"><li><b>01</b><span>会议列表 → 进会</span></li><li><b>02</b><span>AI 召唤</span></li><li><b>03</b><span>三列 · 转写生成任务</span></li><li><b>04</b><span>转写列 · 三变体</span></li><li><b>05</b><span>参会人自主建任务</span></li><li><b>06</b><span>KR 填写</span></li><li><b>07</b><span>投票聚合 · 探索稿</span></li></ol><div class="jt-legend"><span><b>①</b>进会等待态 → 屏 1</span><span><b>②</b>会中协同 → 屏 2–5</span><span><b>③</b>会后确认 → 屏 6–7</span></div>
+<ol class="jt"><li><b>01</b><span>会议列表 → 进会</span></li><li><b>02</b><span>AI 召唤</span></li><li><b>03</b><span>三列 · 转写生成任务</span></li><li><b>04</b><span>转写列 · 三变体</span></li><li><b>05</b><span>参会人自主建任务</span></li><li><b>06</b><span>KR 填写</span></li></ol><div class="jt-legend"><span><b>①</b>进会等待态 → 屏 1</span><span><b>②</b>会中协同 → 屏 2–5</span><span><b>③</b>会后确认 → 屏 6</span></div>
 <div class="pg-act">幕一 · 进会 · 屏 1</div>
-<div class="pg">
-  <div class="pg-slot"><div class="fig-slot" style="--ar:16/10"><span class="fig-no">高保真 · 待脱敏</span><b>会议列表与进会等待态</b></div></div>
+<div class="pg pg--text">
   <div class="pg-body"><h4><span class="pg-n">1.</span>会议列表 → 进会<em>对应之前的问题：未到时间进入即开始</em></h4>
     <p>之前预定会议未到时间进入即开始。NOTA 从会议列表进会，先进入等待态，人员到齐或到达时间后开始。</p>
   </div>
@@ -1325,29 +1575,34 @@
     <p>转写卡可独占一列、与任务并列、或收起仅留提示。点击转写卡右上角的「会话独占一列」切换，再点一次回到原位。</p>
   </div>
 </div>
-<div class="pg">
-  <div class="pg-slot"><div class="fig-slot" style="--ar:16/10"><span class="fig-no">高保真 · 待脱敏</span><b>参会人右键建任务 · 协同人可见</b></div></div>
+<div class="pg pg--text">
   <div class="pg-body"><h4><span class="pg-n">5.</span>参会人自主建任务<em>该解法由用户提出 · 设计点 1</em></h4>
     <p>之前会中仅主持人可建任务。NOTA 参会人自主建任务，边讨论边修改。反馈标注「灵活度低，增加在会议中的等待时间」，影响程度 4 分。</p>
   </div>
 </div>
-<div class="pg-act">幕三 · 会后 · 屏 6–7</div>
+<div class="pg-act">幕三 · 会后 · 屏 6</div>
 <div class="pg">
   <div class="pg-slot pg-stack">
-    <button type="button" class="si si-open has-doc live" data-doc="flow/meeting-20260813/page.html" data-title="KR 填写（跟着引导点 6 步）" data-loop="kr" data-guide="kr">
-            <span class="si-prev"><iframe src="flow/meeting-20260813/page.html#loop=kr" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe></span>
-            <span class="si-lbl">KR 填写　点开跟着引导 →</span>
+    <div class="krold">
+      <span class="ba-tag old">BEFORE · 改版前 · 四个状态</span>
+      <div class="krold-grid">
+        <figure class="krold-it"><a class="pg-shot" href="assets/meeting/kr-old/krold-1-fill.webp" data-title="KR 填写 · 改版前 · 填写（整块弹窗盖住会议）"><img src="assets/meeting/kr-old/krold-1-fill.webp" alt="改版前 · 填写：整块弹窗盖住会议" loading="lazy"></a><figcaption><b>填写</b><span>整块弹窗盖住会议</span></figcaption></figure>
+        <figure class="krold-it"><a class="pg-shot" href="assets/meeting/kr-old/krold-2-vote.webp" data-title="KR 填写 · 改版前 · 投票（同一块弹窗，左选右已选）"><img src="assets/meeting/kr-old/krold-2-vote.webp" alt="改版前 · 投票：同一块弹窗，左选右已选" loading="lazy"></a><figcaption><b>投票</b><span>同一块弹窗，左选右已选</span></figcaption></figure>
+        <figure class="krold-it"><a class="pg-shot" href="assets/meeting/kr-old/krold-3-result.webp" data-title="KR 填写 · 改版前 · 结果与评语（仍在同一块弹窗里）"><img src="assets/meeting/kr-old/krold-3-result.webp" alt="改版前 · 结果与评语：仍在同一块弹窗里" loading="lazy"></a><figcaption><b>结果与评语</b><span>仍在同一块弹窗里</span></figcaption></figure>
+        <figure class="krold-it"><a class="pg-shot" href="assets/meeting/kr-old/krold-4-float.webp" data-title="KR 填写 · 改版前 · 填完之后（横幅与浮窗常驻不走）"><img src="assets/meeting/kr-old/krold-4-float.webp" alt="改版前 · 填完之后：横幅与浮窗常驻不走" loading="lazy"></a><figcaption><b>填完之后</b><span>横幅与浮窗常驻不走</span></figcaption></figure>
+      </div>
+      <p class="live-hint">四张都是改版前的设计稿，点开可放大。填写、投票、结果三步共用一块覆盖式弹窗；关掉弹窗后，顶部倒计时横幅与右下角「KR 填写中」浮窗仍然常驻。</p>
+    </div>
+    <button type="button" class="si si-open has-doc live" data-doc="flow/meeting-dev-20260907/index.html" data-title="KR 填写 · 投票（跟着引导点 11 步）" data-loop="kr" data-guide="kr">
+            <span class="si-prev"><iframe src="flow/meeting-dev-20260907/index.html#loop=kr" scrolling="no" tabindex="-1" aria-hidden="true" loading="lazy"></iframe></span>
+            <span class="si-lbl">现在　点开跟着引导 →</span>
           </button>
+        <p class="live-hint">缩略图循环播放整条链路：更多 → KR 填写 → 选主题 → 创建 → 提交（三个框变只读、长出「已提交」）→ 开启投票 → 投一票 → 投出我的想法。点开后按引导操作 11 步，数据为模拟。</p>
   </div>
-  <div class="pg-body"><h4><span class="pg-n">6.</span>KR 填写<em>从「更多」进入，六步完成 · 设计点 5</em></h4>
-    <p class="live-hint">缩略图循环播放从「更多」进入 KR 填写。点开后按引导：<b>更多</b> → <b>KR 填写</b> → <b>选择KR</b> → 选一条 → 确认 → 写一句想法并 <b>提交</b>。</p>
-    <p>KR 填写流程在试用后调整过一次，调整的原因见下方说明。</p><div class="pg-note">（待补：调整前的流程 → 问题 → 调整内容 → 依据。文案待口述后整理。）</div>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/meet-16.webp" data-title="投票 · 聚合分组（探索稿）"><img src="assets/shots/thumb/meet-16.webp" alt="投票 · 聚合分组（探索稿）"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">7.</span>投票聚合 · 探索稿<em>设计稿中标注「待思考」</em></h4>
-    <p>悬浮 KR 投票聚合分组在设计稿中标为探索方案，未定稿。保留于此是为了如实说明完成状态。</p>
+  <div class="pg-body"><h4><span class="pg-n">6.</span>KR 填写 · 投票<em>从「更多」进入，填写到投票十一步走完 · 设计点 5</em></h4>
+    <p><strong>改版前：整个流程都在一块弹窗里。</strong>填写、投票、结果与评语三步共用一个覆盖式弹窗，打开后会议画面被压在下面，看不见人，也做不了别的事。</p>
+    <p><strong>填完也没结束。</strong>关掉弹窗后，顶部留一条倒计时横幅提醒未填写的人，右下角还有一个「KR 填写中」的浮窗常驻，列着谁填了几条。两样东西一直挂在画面上，会中无法同时做别的事。</p>
+    <p><strong>调整成什么：</strong>KR 不再抢整块画面，改为占右侧一列，与其他面板一样可叠放、可切换空间；流程动作只在流程进行时出现在动态按钮区，完成后消失，不留常驻浮窗。<span style="color:var(--fg-4)">→ 设计点 5</span></p>
   </div>
 </div>
 
@@ -1355,7 +1610,7 @@
     <div class="cap-grid cap-3">
       <div class="cap-item"><span>转写列</span><b class="ci-title">三个变体</b><p>转写卡可独占一列、回到原位、或收起仅留一行。同一份内容，按是否需要持续查看切换。</p></div>
       <div class="cap-item"><span>KR 填写</span><b class="ci-title">试用后调整过一次</b><p>流程在试用后做过一次调整。原因见屏 6 的说明。</p></div>
-      <div class="cap-item"><span>投票聚合</span><b class="ci-title">探索方案</b><p>设计稿标注「待思考」，未定稿。展示时注明为探索方案。</p></div>
+      <div class="cap-item"><span>投票聚合</span><b class="ci-title">按关键词聚合</b><p>内容相近的 KR 聚成一组，一组里再选，人多时不必逐条比对。</p></div>
     </div>
 
 <h3 class="sub-head"><span class="num">10</span>自定义空间 · 一列一摞面板<span class="sub-en">SPACES · 可点引导</span><span class="line"></span></h3>
@@ -1411,26 +1666,7 @@
         <p><b>人物等大，信息收起，按钮分组。</b>四人四格等大，同时看到人和文件；右侧一列不再是详情，而是协同位；底部按钮按「我的设备 / 流程动作 / AI 与投屏」三组收起，KR 按钮仅在需要时出现。<span style="color:var(--fg-4)"> → 设计点 6</span></p>
       </div>
     </div>
-<h3 class="sub-head"><span class="num">12</span>我在这里做错的一处<span class="sub-en">RETRO</span><span class="line"></span></h3>
-    <div class="intro-grid">
-      <div><p>成员宫格的浏览方式最初做成翻页：一屏四人，翻页整屏切换。<span class="retro-x">2026-08-20 验收时一次被提出四条意见：<b>「翻页为什么滚一次不行必须两次？而且没有缓动，中间有一帧白屏……他就是竖着的一长溜，就像小红书那样滚动加载的啊。」</b></span>
-      <span class="retro-x">最初将四条当作四个独立问题分别修改，结果仍不符合要求。之后确认四条来自同一根因：<b>实现的是「换页」，需要的是「滚动」。</b>翻页无论如何调整曲线，都无法得到滚动的连续感；中间的白屏是换页瞬间新旧两批人员挤入同一行导致的错位。</span>
-      <span class="retro-x">改法不是继续调整参数，而是更换模型：所有人排成一列竖向滚动，惯性与连续性交给系统；每两行停靠一次，作为一页。</span>
-      <span class="retro-x">此处另有一次失误：更换模型后放开了停靠位置，导致停在半屏。验收意见为<b>「别让他随意停了，卡半屏看着不舒服」</b>。过程可以连续，落点必须整屏，两者不冲突。</span>
-      <span class="retro-so"><b>结论：</b>用户连续提出多条意见时，先判断它们是否为同一件事。<b>如果是，调整参数无法解决，需要更换模型。</b></span></p></div>
-    </div>
-    
-
-    
-    
-
-    
-
-    
-
-    
-
-    <h3 class="sub-head"><span class="num">13</span>剩余页面<span class="sub-en">MORE SCREENS</span><span class="line"></span></h3>
+<h3 class="sub-head"><span class="num">12</span>剩余页面<span class="sub-en">MORE SCREENS</span><span class="line"></span></h3>
     <p class="dw-lead">主视图、主讲、单人全屏、AI 助理召唤、成员面板、水滴消息、转写独占列三个变体、KR 拓展与填写、协同画板、投票开启与完成。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 253, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/meet-00.webp"><img src="assets/shots/thumb/meet-00.webp" alt="01-桌面端主视图" loading="lazy"></a>
@@ -1466,12 +1702,12 @@
         <div class="pn">项目三 · CASE STUDY</div>
         <h1>计划实施 · AI 自动任务</h1>
       </div>
-      <div class="pmeta"><b>2026</b>新项目 · 唯一有真实用研的一章</div>
+      <div class="pmeta"><b>2025</b>新项目 · 唯一有真实用研的一章</div>
     </div>
 
     <div class="sec-head"><h2>项目介绍</h2><span>[PLAN · 每一处改动都能追到一条真实反馈]</span></div>
     <div class="intro-grid">
-      <div><p>任务从「谁来做」到「做到哪一步」的全流程。这一章和别的章不一样：<strong>它的每一处改动都能追到一条真实的用户反馈。</strong><br><br>2026 年新增 AI 自动任务——让 agent 接手一部分执行。我给这块定了七条产品规则，<strong>三个月后回去走查，落地了一条。</strong>这一章最后讲的就是那六条为什么没落地。</p></div>
+      <div><p>任务从「谁来做」到「做到哪一步」的全流程。这一章和别的章不一样：<strong>它的每一处改动都能追到一条真实的用户反馈。</strong><br><br>2026 年新增 AI 自动任务——让 agent 接手一部分执行。我给这块定了八条产品规则，<strong>交给开发方实现，现在在内部测试。</strong>这一章最后讲的就是那八条。</p></div>
       <div class="intro-aside">
         <div class="row">我的角色<b>全链路独立负责</b></div>
         <div class="row">目标用户<b>任务参与者 · 项目负责人</b></div>
@@ -1540,14 +1776,32 @@
         <div class="rol-h"><i>03</i><b>运维 + 接 AI 任务的人</b><em>AI 自动处理任务链路</em></div>
         <div class="rol-need">诉求：问题从发现到落到人，中间不靠人转；AI 干活，但不越过我</div>
         <p class="rol-old"><s>没有它</s>运维在群里喊一声，等人认领，再手建任务；一环掉了就没人管。</p>
-        <p class="rol-new"><s class="ok">有它</s>AI 识别问题、建任务，按模块给部门或按 git 提交记录找到具体人，落到他的 CSES 里 <em>8</em>；他设前提——自动修改，还是等人工开始；执行中每一次产物过人 <em>9</em> <em>10</em>。</p>
-        <p class="rol-so">这一角色定下的是 AI 的边界：<b>AI 不得越过人工。</b><span style="color:var(--fg-4)">→ 07 六步链 · 内部测试使用中</span></p>
+        <p class="rol-new"><s class="ok">有它</s>AI 识别问题、生成待确认的任务，<b>人确认过才进池</b>，再按模块给部门或按 git 提交记录找到具体人，落到他的 CSES 里；他设前提——自动修改，还是等人工开始；执行中每一次产物过人。</p>
+        <p class="rol-so">这一角色定下的是 AI 的边界：<b>AI 不得越过人工。</b><span style="color:var(--fg-4)">→ 07 的链路 · 内部测试使用中</span></p>
       </div>
     </div>
 
 <h3 class="sub-head"><span class="num">04</span>用户旅程 · 没有它 vs 有它<span class="sub-en">JOURNEY</span><span class="line"></span></h3>
     <p class="jrn-lead" style="margin-top:16px">一条主路径：<b>领到任务 → 推进任务 → 交付任务</b>。上行是没有它之前人怎么干——像用钉钉 / 飞书那样，任务模块是齐的，但文档、会议、群聊各在各的模块，也没有 AI 自动处理任务。下行是有它之后：<b>任务把更多模块协同起来。</b></p>
 
+    
+    <svg class="dg" viewBox="0 0 1180 300" role="img" aria-label="用户旅程两轨：没有它时任务在三步之间靠人接一手，线是断的；有它之后三步连在同一个工作项里">
+<text class="m red" x="40" y="100" font-size="9.5">没它</text>
+<text class="m vio" x="40" y="210" font-size="9.5">有它</text>
+<text class="m" x="200" y="46" font-size="9.5" text-anchor="middle">领到任务</text><text class="m" x="590" y="46" font-size="9.5" text-anchor="middle">推进任务</text><text class="m" x="980" y="46" font-size="9.5" text-anchor="middle">交付任务</text>
+<line class="lnR" x1="110" y1="96" x2="330" y2="96"/>
+<line class="lnR" x1="462" y1="96" x2="720" y2="96"/>
+<line class="lnR" x1="852" y1="96" x2="1140" y2="96"/>
+<line class="lnV" x1="110" y1="206" x2="1140" y2="206"/>
+<text class="red m" x="396" y="100" font-size="9.5" text-anchor="middle">靠人问一手</text><text class="red m" x="786" y="100" font-size="9.5" text-anchor="middle">靠人搬一手</text>
+<circle class="dot" cx="200" cy="96" r="4"/><text class="k dim" x="200" y="80" font-size="12" text-anchor="middle">群里翻、开会问</text><text class="dim" x="200" y="118" font-size="10.5" text-anchor="middle">任务不在一个地方</text>
+<circle class="dot" cx="590" cy="96" r="4"/><text class="k dim" x="590" y="80" font-size="12" text-anchor="middle">材料开四个地方</text><text class="dim" x="590" y="118" font-size="10.5" text-anchor="middle">改了不知道生没生效</text>
+<circle class="dot" cx="980" cy="96" r="4"/><text class="k dim" x="980" y="80" font-size="12" text-anchor="middle">停掉就归零</text><text class="dim" x="980" y="118" font-size="10.5" text-anchor="middle">视图下次重配</text>
+<circle class="dotV" cx="200" cy="206" r="5.5"/><text class="k" x="200" y="190" font-size="12" text-anchor="middle">五种视图任选</text><text class="" x="200" y="228" font-size="10.5" text-anchor="middle">筛完存成自己那一版</text>
+<circle class="dotV" cx="590" cy="206" r="5.5"/><text class="k" x="590" y="190" font-size="12" text-anchor="middle">文档和群收进工作项</text><text class="" x="590" y="228" font-size="10.5" text-anchor="middle">操作后给回执</text>
+<circle class="dotV" cx="980" cy="206" r="5.5"/><text class="k" x="980" y="190" font-size="12" text-anchor="middle">停止保留进度</text><text class="" x="980" y="228" font-size="10.5" text-anchor="middle">视图存下来</text>
+<text class="dim" x="40" y="284" font-size="10.5">上轨每两步之间都断一次，要人接一手，接丢了没人知道；下轨三步在同一个工作项里，不换地方。</text>
+</svg>
     <div class="jrn jrn-vs">
       <div class="jrn-stage">
         <div class="jrn-st"><i>01</i>领到任务</div>
@@ -1558,8 +1812,8 @@
         <div class="jrn-new">
           <b>任务落在空间 / 工作项里，五种视图看同一批</b>
           <span>列表 / 看板 / 甘特图 / 日历 / 工时，多级分组 · 屏 <em>1</em></span>
-          <b class="j2">运维的问题由 AI 建任务、按 git 提交记录找到你</b>
-          <span>落到你的 CSES 里 · 屏 <em>8</em></span>
+          <b class="j2">运维的问题由 AI 生成任务，人确认后按 git 提交记录找到你</b>
+          <span>落到你的 CSES 里 · 链路见 07</span>
         </div>
       </div>
 
@@ -1573,7 +1827,7 @@
           <b>文档拖进工作项，工作项自带聊天和会议</b>
           <span>AI 助手在群里添加文档、开启会议；会议里生成的任务挂回来 · 屏 <em>6</em> <em>7</em></span>
           <b class="j2">操作后给回执；AI 执行时每一步产物过人</b>
-          <span>依赖用连线加箭头，任务条仍用状态色 · 屏 <em>1</em> <em>9</em></span>
+          <span>依赖用连线加箭头，任务条仍用状态色 · 屏 <em>1</em></span>
         </div>
       </div>
 
@@ -1598,6 +1852,24 @@
       只答一个问题：<strong style="color:var(--fg-2)">AI 在任务系统里，被允许做到哪一步？</strong>
       不比功能清单——功能谁都能加，边界才是判断。
     </p>
+    <svg class="dg" viewBox="0 0 1180 268" role="img" aria-label="竞品定位轴：AI 在任务系统里被允许做到哪一步。飞书钉钉 ClickUp 停在助手层，Multica 与 GoTeams 让 Agent 自主认领，我们在中间，AI 进执行链路但进池要人确认">
+<text class="m" x="40" y="28" font-size="9.5">AI 被允许做到哪一步 →</text>
+<line class="ln" x1="40" y1="168" x2="1140" y2="168"/>
+<text class="k" x="170" y="62" font-size="12" text-anchor="middle">飞书</text><text class="dim" x="170" y="79" font-size="10.5" text-anchor="middle">提待办 · 写摘要</text><line class="ln" x1="170" y1="88" x2="170" y2="161"/><circle class="dot" cx="170" cy="168" r="3.5"/>
+<text class="k" x="330" y="110" font-size="12" text-anchor="middle">钉钉</text><text class="dim" x="330" y="127" font-size="10.5" text-anchor="middle">群聊里提待办</text><line class="ln" x1="330" y1="136" x2="330" y2="161"/><circle class="dot" cx="330" cy="168" r="3.5"/>
+<text class="k" x="500" y="62" font-size="12" text-anchor="middle">ClickUp</text><text class="dim" x="500" y="79" font-size="10.5" text-anchor="middle">拆子任务 · 写摘要</text><line class="ln" x1="500" y1="88" x2="500" y2="161"/><circle class="dot" cx="500" cy="168" r="3.5"/>
+<text class="k vio" x="740" y="104" font-size="13" text-anchor="middle">我们</text><text class="vio" x="740" y="121" font-size="10.5" text-anchor="middle">进执行链路 · 每步过人</text><line class="lnV" x1="740" y1="130" x2="740" y2="161"/><circle class="dotV" cx="740" cy="168" r="5"/>
+<text class="k" x="960" y="62" font-size="12" text-anchor="middle">Multica</text><text class="dim" x="960" y="79" font-size="10.5" text-anchor="middle">Agent 自主认领</text><line class="ln" x1="960" y1="88" x2="960" y2="161"/><circle class="dot" cx="960" cy="168" r="3.5"/>
+<text class="k" x="1090" y="110" font-size="12" text-anchor="middle">GoTeams</text><text class="dim" x="1090" y="127" font-size="10.5" text-anchor="middle">规则引擎自动指派</text><line class="ln" x1="1090" y1="136" x2="1090" y2="161"/><circle class="dot" cx="1090" cy="168" r="3.5"/>
+<rect x="40" y="186" width="580" height="1" fill="rgba(255,255,255,.14)"/>
+<rect x="640" y="186" width="200" height="1" fill="rgba(122,87,208,.5)"/>
+<rect x="860" y="186" width="280" height="1" fill="rgba(255,255,255,.14)"/>
+<text class="m" x="40" y="206" font-size="9.5">助手层</text>
+<text class="m vio" x="640" y="206" font-size="9.5">进执行链路 · 有闸门</text>
+<text class="m" x="860" y="206" font-size="9.5">自主认领</text>
+<text class="dim" x="40" y="230" font-size="10.5">三家主流工具任务模块都齐，差别不在视图和模版，差在没有 AI 自动化处理任务；两家开源产品走到另一头，让 Agent 自己领活。</text>
+<text x="40" y="250" font-size="10.5">我们取中间：从发现问题到找到人让 AI 跑，<tspan class="k">进池要人确认，每一次产物要人过。</tspan></text>
+</svg>
     <div class="pain-list">
       <div class="pain-item"><div class="pi-n">飞书</div>
         <div class="pi-t">任务模块齐，AI 停在助手层</div>
@@ -1624,7 +1896,14 @@
     <p class="cmp-foot" style="margin-top:14px"><b>我们取中间：</b>从发现问题到找到人，让 AI 跑；执行中每一次产物，必须过人。这就是我不给 agent 自主认领权的全部理由。</p>
 
 <h3 class="sub-head"><span class="num">06</span>现状 · 没有它的时候人怎么干<span class="sub-en">AS-IS</span><span class="line"></span></h3>
-    <div class="fig-slot pg-empty" style="--ar:auto"><span class="fig-no">待填</span><b>现状分析待填</b><ul><li>状态不同步时，人怎么确认动作生效了</li><li>依赖失效时，人怎么对甘特图</li><li>保存失效时，人去哪找视图</li><li>每条对应 02 里的一类反馈</li></ul></div>
+    <p class="jrn-lead">这套系统不存在的时候，任务这件事不是没人管，是<b>靠人和一堆不相干的工具凑</b>。四个场景，每一个都是后面某一条设计的由来。</p>
+    <div class="cap-grid">
+      <div class="cap-item"><span>场景 01 · 起一个新项目</span><b class="ci-title">先拉个群，规矩每次重定</b><p>开张的动作是建一个群，事情在群里说。要记哪些字段、走什么流程，每个负责人自己定一遍，上一个项目的经验带不到下一个。<strong>同一家公司两个项目的任务长得不一样，想看全局只能挨个问。</strong></p></div>
+      <div class="cap-item"><span>场景 02 · 任务在哪、进度怎么看</span><b class="ci-title">散在群消息、纪要和各人脑子里</b><p>任务从群里的一句话、纪要里的一行、口头交代来。谁做到哪一步，靠开会时挨个报，或者负责人私聊问一圈。<strong>问一圈的成本全落在负责人身上，而且问到的是他说的进度，不是系统里的进度。</strong></p></div>
+      <div class="cap-item"><span>场景 03 · 干活要的东西在哪</span><b class="ci-title">需求、讨论、结论、任务，四个地方</b><p>需求文档在文档库，讨论在群里，评审结论在会议纪要，任务本身又在别处。<strong>做一个任务要开四个地方，谁都不确定手上这份是不是最新的。</strong></p></div>
+      <div class="cap-item"><span>场景 04 · 运维发现的问题怎么落到人</span><b class="ci-title">群里喊一声，靠人转手</b><p>监控告警先到运维，运维在群里喊一声，或者找一个看起来相关的人转过去。没人认领就一直挂着。<strong>从发现到有人动手，中间全是人工转手，转丢了没人知道。</strong></p></div>
+    </div>
+    <p class="cmp-foot">前三个场景是 58 条反馈直接指向的，第四个场景是老板提出 AI 自动任务时要解决的。<b>07 讲的就是这四件事分别被换成了什么。</b></p>
 
 
     <div class="sec-head"><h2>设计方案</h2><span>[DESIGN · 264 画板 / 155 页]</span></div>
@@ -1650,116 +1929,124 @@
         <div class="fs-label">AI AUTO-TASK · 内部测试使用中</div>
         <div class="fs-head">运维捕到问题，<br>AI 建任务、找人，<em>每一步产物都过人</em></div>
       </div>
-      <div class="fs-desc"><p>这一块和上面的任务模块分开讲：它从运维侧的异常开始，到具体的人在 CSES 里收到任务、AI 按他设的前提执行为止。<strong>界面成品还在幕二待画，链路先用文字定清楚。</strong></p></div>
+      <div class="fs-desc"><p>这一块和上面的任务模块分开讲：它从运维侧的异常开始，到具体的人在 CSES 里收到任务、AI 按他设的前提执行为止。<strong>界面还没画，链路先用文字定清楚。</strong></p></div>
     </div>
-<ol class="jt"><li><b>01</b><span>运维侧捕捉到问题</span></li><li><b>02</b><span>运维的 AI 识别问题，创建任务</span></li><li><b>03</b><span>找到人：对应部门，或按 git 提交记录定位到具体人</span></li><li><b>04</b><span>分配出去，任务落到他的 CSES 里</span></li><li><b>05</b><span>接收方设前提：自动修改，还是等人工开始</span></li><li><b>06</b><span>执行中每一次产物都经人工查验，AI 不得越过人工</span></li></ol><div class="jt-legend"><span><b>①</b>运维侧 · AI 发现与建任务 → 步 1–2</span><span><b>②</b>分发 · 找人 → 步 3–4</span><span><b>③</b>执行 · 人定前提、人验产物 → 步 5–6</span></div>
+<ol class="jt"><li><b>01</b><span>运维侧捕捉到问题</span></li><li><b>02</b><span>运维的 AI 识别问题，生成一条待确认的任务</span></li><li><b>03</b><span>人工确认，确认过才真正进任务池</span></li><li><b>04</b><span>找到人：对应部门，或按 git 提交记录定位到具体人</span></li><li><b>05</b><span>分配出去，任务落到他的 CSES 里</span></li><li><b>06</b><span>接收方设前提：自动修改，还是等人工开始</span></li><li><b>07</b><span>执行中每一次产物都经人工查验，AI 不得越过人工</span></li></ol><div class="jt-legend"><span><b>①</b>运维侧 · AI 发现与生成 → 步 1–2</span><span><b>②</b>人确认进池 · 找人分发 → 步 3–5</span><span><b>③</b>执行 · 人定前提、人验产物 → 步 6–7</span></div>
+    
+    <svg class="dg" viewBox="0 0 1180 316" role="img" aria-label="AI 自动处理任务七步链路：机器发现与生成，人确认进池，分发到人，人定前提，执行中每一次产物人工查验">
+<defs><marker id="dgA-ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="rgba(255,255,255,.35)"/></marker>
+<marker id="dgA-arv" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#7A57D0"/></marker></defs>
+<rect class="lane" x="88" y="56" width="1072" height="100" rx="10"/>
+<rect class="lane" x="88" y="176" width="1072" height="100" rx="10"/>
+<text class="m" x="80" y="112" font-size="9.5" text-anchor="end">AI 做</text>
+<text class="m" x="80" y="232" font-size="9.5" text-anchor="end">人 做</text>
+<line class="gate" x1="392.0" y1="34" x2="392.0" y2="292"/>
+<text class="vio m" x="392.0" y="26" font-size="9.5" text-anchor="middle">闸门</text>
+<rect class="bxAI" x="96" y="72" width="130" height="66" rx="8"/><text class="m" x="107" y="89" font-size="9">01</text><text class="k" x="161.0" y="110" font-size="11.5" text-anchor="middle">运维监控</text><text x="161.0" y="126" font-size="11" text-anchor="middle">捕到问题</text>
+<rect class="bxAI" x="250" y="72" width="130" height="66" rx="8"/><text class="m" x="261" y="89" font-size="9">02</text><text class="k" x="315.0" y="110" font-size="11.5" text-anchor="middle">AI 识别</text><text x="315.0" y="126" font-size="11" text-anchor="middle">生成待确认任务</text>
+<rect class="bxGate" x="404" y="192" width="130" height="66" rx="8"/><text class="m" x="415" y="209" font-size="9">03</text><text class="k" x="469.0" y="230" font-size="11.5" text-anchor="middle">人工确认</text><text x="469.0" y="246" font-size="11" text-anchor="middle">确认过才进池</text>
+<rect class="bxAI" x="558" y="72" width="130" height="66" rx="8"/><text class="m" x="569" y="89" font-size="9">04</text><text class="k" x="623.0" y="110" font-size="11.5" text-anchor="middle">找到人</text><text x="623.0" y="126" font-size="11" text-anchor="middle">部门或 git 记录</text>
+<rect class="bxAI" x="712" y="72" width="130" height="66" rx="8"/><text class="m" x="723" y="89" font-size="9">05</text><text class="k" x="777.0" y="110" font-size="11.5" text-anchor="middle">分配</text><text x="777.0" y="126" font-size="11" text-anchor="middle">落到他的 CSES</text>
+<rect class="bxHU" x="866" y="192" width="130" height="66" rx="8"/><text class="m" x="877" y="209" font-size="9">06</text><text class="k" x="931.0" y="230" font-size="11.5" text-anchor="middle">设前提</text><text x="931.0" y="246" font-size="11" text-anchor="middle">自动改或等人工</text>
+<rect class="bxAI" x="1020" y="72" width="130" height="66" rx="8"/><text class="m" x="1031" y="89" font-size="9">07</text><text class="k" x="1085.0" y="110" font-size="11.5" text-anchor="middle">AI 出产物</text>
+<rect class="bxHU" x="1020" y="192" width="130" height="66" rx="8"/><text class="k" x="1085.0" y="230" font-size="11.5" text-anchor="middle">人工查验</text>
+<path class="ln" d="M226,105.0 H244" marker-end="url(#dgA-ar)"/><path class="ln" d="M380,105.0 H392.0 V225.0 H398" marker-end="url(#dgA-ar)"/><path class="ln" d="M534,225.0 H546.0 V105.0 H552" marker-end="url(#dgA-ar)"/><path class="ln" d="M688,105.0 H706" marker-end="url(#dgA-ar)"/><path class="ln" d="M842,105.0 H854.0 V225.0 H860" marker-end="url(#dgA-ar)"/><path class="ln" d="M996,225.0 H1008.0 V105.0 H1014" marker-end="url(#dgA-ar)"/>
+<path class="lnV" d="M1099.0,138 V186" marker-end="url(#dgA-arv)"/>
+<path class="lnV" d="M1071.0,192 V144" marker-end="url(#dgA-arv)"/>
+<text class="vio m" x="1012" y="164" font-size="9" text-anchor="end">每一次</text>
+<text class="dim" x="88" y="306" font-size="10.5">AI 生成的任务不会自己变成别人手上的活；执行段每出一次产物，就回到人这一侧过一道。</text>
+</svg>
     <div class="intro-grid" style="margin-top:22px">
-      <div><p>前两步在运维那边：监控捕到异常，AI 识别出这是个要人处理的问题，直接生成任务。第三、四步是分发：先按模块给对应部门，能从 git 提交记录追到具体人的就直接给到人，任务出现在他的 CSES 里。<br><br>第五步是接收方自己定的前提：这类任务允许 AI 自动修改，还是必须等人工点开始。<strong>第六步是整条链路的底线——执行过程中 AI 每一次产物都必须经过人工查验，不得越过人工。</strong>所以执行过程不给百分比进度条，给事件流，每一步做了什么、产物是什么，人看得见才验得了：</p>
+      <div><p>前两步在运维那边：监控捕到异常，AI 识别出这是个要人处理的问题，生成一条<strong>待确认</strong>的任务。<strong>第三步是闸门——人确认过它才真正进任务池；AI 生成的东西，不会自己变成别人手上的活。</strong><br><br>第四、五步是分发：先按模块给对应部门，能从 git 提交记录追到具体人的就直接给到人，任务出现在他的 CSES 里。第六步是接收方自己定的前提：这类任务允许 AI 自动修改，还是必须等人工点开始。<strong>第七步是整条链路的底线——执行过程中 AI 每一次产物都必须经过人工查验，不得越过人工。</strong>所以执行过程不给百分比进度条，给事件流，每一步做了什么、产物是什么，人看得见才验得了：</p>
         <pre style="background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:16px 18px;font:12.5px/1.9 var(--font-mono);color:var(--fg-3);overflow-x:auto;margin:14px 0 0">10:21:06　读取任务上下文
 10:21:34　检查前置任务 · 发现 2 个前置，其中 1 个仍在进行
 10:22:18　分析后置影响
 10:23:42　生成处理建议 · 待人工查验</pre>
         <p style="margin-top:14px">百分比是假的——<strong>AI 不知道自己做到了百分之几，但它知道自己刚做完哪一步，而每一步都要有人看过。</strong></p></div>
       <div class="intro-aside">
-        <div class="row">AI 做<b>识别问题 · 建任务 · 找人</b></div>
+        <div class="row">AI 做<b>识别问题 · 生成待确认任务 · 找人</b></div>
         <div class="row">AI 做<b>按前提设置执行 · 出产物</b></div>
-        <div class="row">人做<b>定前提 · 查验每一次产物</b></div>
+        <div class="row">人做<b>确认进池 · 定前提 · 查验每一次产物</b></div>
         <div class="row">底线<b>AI 不得越过人工</b></div>
         <div class="row">状态<b>内部测试使用中</b></div>
       </div>
     </div>
-<h3 class="sub-head"><span class="num">08</span>设计方案 · 逐页讲解<span class="sub-en">PAGES · 10</span><span class="line"></span></h3>
-    <p class="jrn-lead">两幕。先是<b>多视图与自定义视图</b>——创建者按自己的习惯配工作项和视图；再是 <b>AI 自动化处理任务</b>。有 Figma 页的放图，没有的先空着，你画好我再放进来。</p>
-<ol class="jt"><li><b>01</b><span>工作项首页 · 五种视图</span></li><li><b>02</b><span>自定义视图 · 另存为新视图</span></li><li><b>03</b><span>新建工作项 · 选模版与视图</span></li><li><b>04</b><span>选择模版 · 八套行业模版</span></li><li><b>05</b><span>工作项 · 卡片平铺</span></li><li><b>06</b><span>工作项 · 文档拖进来</span></li><li><b>07</b><span>工作项 · 聊天 · AI 助手</span></li><li><b>08</b><span>AI 协作中心</span></li><li><b>09</b><span>执行过程 · 事件流</span></li><li><b>10</b><span>AI 边界 · 反提案</span></li></ol><div class="jt-legend"><span><b>①</b>多视图 · 自定义视图 · 协同更多模块 → 屏 1–7</span><span><b>②</b>AI 自动化处理任务 → 屏 8–10</span></div>
-<div class="pg-act">幕一 · 多视图 · 自定义视图 · 协同更多模块 · 屏 1–7</div>
+<h3 class="sub-head"><span class="num">08</span>设计方案 · 逐页讲解<span class="sub-en">PAGES · 7</span><span class="line"></span></h3>
+    <p class="jrn-lead">七屏一条线：创建者选模版、定默认视图把结构配好；使用者换视图、筛选分组、存成自己那一版；文档和聊天收在同一个工作项里。<b>AI 自动化处理任务这块界面还没画，链路见 07。</b></p>
+<ol class="jt"><li><b>01</b><span>工作项首页 · 五种视图</span></li><li><b>02</b><span>自定义视图 · 另存为新视图</span></li><li><b>03</b><span>新建工作项 · 选模版与视图</span></li><li><b>04</b><span>选择模版 · 八套行业模版</span></li><li><b>05</b><span>工作项 · 卡片平铺</span></li><li><b>06</b><span>工作项 · 文档拖进来</span></li><li><b>07</b><span>工作项 · 聊天 · AI 助手</span></li></ol>
 <div class="pg">
   <div class="pg-slot"><div class="pg-stack"><a class="pg-shot" href="assets/shots/task-v-list.webp" data-title="工作项首页 · 列表视图"><img src="assets/shots/thumb/task-v-list.webp" alt="工作项首页 · 列表视图"></a><a class="pg-shot" href="assets/shots/task-v-board.webp" data-title="看板视图 · 按状态分列"><img src="assets/shots/thumb/task-v-board.webp" alt="看板视图 · 按状态分列"></a><a class="pg-shot" href="assets/shots/task-v-gantt.webp" data-title="甘特图 · 时间条"><img src="assets/shots/thumb/task-v-gantt.webp" alt="甘特图 · 时间条"></a><a class="pg-shot" href="assets/shots/task-v-gantt2.webp" data-title="甘特图 · 展开左侧字段"><img src="assets/shots/thumb/task-v-gantt2.webp" alt="甘特图 · 展开左侧字段"></a><a class="pg-shot" href="assets/shots/task-v-cal.webp" data-title="日历视图 · 按月"><img src="assets/shots/thumb/task-v-cal.webp" alt="日历视图 · 按月"></a><a class="pg-shot" href="assets/shots/task-v-hours.webp" data-title="工时视图 · 按成员"><img src="assets/shots/thumb/task-v-hours.webp" alt="工时视图 · 按成员"></a></div></div>
   <div class="pg-body"><h4><span class="pg-n">1.</span>工作项首页 · 五种视图<em>列表 / 看板 / 甘特图 / 日历 / 工时，同一个工作项里切</em></h4>
-    <p>一个工作项，顶部五个视图 tab；同一批任务换一种组织方式看：列表管细节，甘特图管排期，日历管哪天干什么，工时管人花了多少。</p><p>列表里还带分组：按状态 / 优先级 / 人员把任务归成块，图里是按状态分的「待开始 / 进行中」两块。分组支持多级——一个分组里还能再按别的维度分，比如先按人员、再按状态。平铺和分组是同一批数据的两种组织方式。</p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
+    <p>一个工作项，顶部五个视图 tab；同一批任务换一种组织方式看：列表管细节，甘特图管排期，日历管哪天干什么，工时管人花了多少。</p><p>列表里还带分组：按状态 / 优先级 / 人员把任务归成块，图里是按状态分的「待开始 / 进行中」两块。分组支持多级——一个分组里还能再按别的维度分，比如先按人员、再按状态。平铺和分组是同一批数据的两种组织方式。</p><p class="pg-note"><b>为什么这么设计</b>　同一批任务在不同人眼里是不同的东西：排期的看时间轴，管人的看谁手上压了多少，干活的只要一行清单。所以我没去做「一个更好的默认视图」，做的是让每个人自己挑。分组做成多级，也是因为归类方式本身就因人而异。</p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/task-v-saveview.webp" data-title="自定义视图 · 筛选后另存为新视图"><img src="assets/shots/thumb/task-v-saveview.webp" alt="自定义视图 · 筛选后另存为新视图"></a></div>
   <div class="pg-body"><h4><span class="pg-n">2.</span>自定义视图 · 另存为新视图<em>按状态 / 负责人 / 时间范围 / 优先级 / 模块 / 项目 筛完，存成自己的视图</em></h4>
-    <p>筛选条件配好之后「另存为新视图」，下次进来直接落在自己那一版。</p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
+    <p>筛选条件配好之后「另存为新视图」，下次进来直接落在自己那一版。</p><p class="pg-note"><b>为什么这么设计</b>　筛选条件是一次性的，视图是长期的。人每天进来要看的其实就那一两组条件，只给筛选不给保存，等于每天重配一遍。这一步把一次性动作变成可复用的东西。</p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/task-newitem.webp" data-title="新建工作项 · 选空间与模版"><img src="assets/shots/thumb/task-newitem.webp" alt="新建工作项 · 选空间与模版"></a></div>
   <div class="pg-body"><h4><span class="pg-n">3.</span>新建工作项 · 选模版与视图<em>所属空间 → 模版 → 默认视图（列表、看板）</em></h4>
-    <p>新建时就把默认视图定下来：这个工作项打开先看列表还是看板，创建者自己选。</p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
+    <p>新建时就把默认视图定下来：这个工作项打开先看列表还是看板，创建者自己选。</p><p class="pg-note"><b>为什么这么设计</b>　默认视图放在新建时选，不放在设置里。这时候创建者脑子里最清楚这个工作项是干什么的——排期驱动就选看板，清单驱动就选列表。等建完再去设置里找，多数人不会去。</p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/task-templates.webp" data-title="选择工作项模版 · 八套行业模版"><img src="assets/shots/thumb/task-templates.webp" alt="选择工作项模版 · 八套行业模版"></a></div>
   <div class="pg-body"><h4><span class="pg-n">4.</span>选择工作项模版<em>八套行业模版</em></h4>
-    <p>客户需求管理、产品规划、团队工作管理、生产流程、金融、游戏、互联网研发、工单——按行业起手，不从空白开始。</p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
+    <p>客户需求管理、产品规划、团队工作管理、生产流程、金融、游戏、互联网研发、工单——按行业起手，不从空白开始。</p><p class="pg-note"><b>为什么这么设计</b>　模版不是为了省事，是为了让不同项目的任务长得一样。没有模版时每个负责人自己定字段和流程，管理层想看全局只能挨个问。按行业分，因为决定字段的是行业，不是团队大小。</p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/task-10.webp" data-title="工作项 · 卡片平铺视图"><img src="assets/shots/thumb/task-10.webp" alt="工作项 · 卡片平铺视图"></a></div>
   <div class="pg-body"><h4><span class="pg-n">5.</span>工作项 · 卡片平铺<em>空间里的工作项以卡片视图铺开</em></h4>
-    <p>封面 + 名称 + 更多菜单（收藏 / 分享 / 移动 / 重命名 / 设置 / 删除）。</p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
+    <p>封面 + 名称 + 更多菜单（收藏 / 分享 / 移动 / 重命名 / 设置 / 删除）。</p><p class="pg-note"><b>为什么这么设计</b>　卡片上显示哪些字段由使用者自己配，进度也在里面。我没有定死一套字段——同一个空间里，管排期的想看进度，找项目的只要认出封面和名字。<b>给默认值，但允许改</b>：自由度不等于好用，光给自定义不给默认，多数人第一次进来还是不知道该看什么。</p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/task-v-docs.webp" data-title="工作项 · 文档 tab · 文档拖进当前空间 / 项目"><img src="assets/shots/thumb/task-v-docs.webp" alt="工作项 · 文档 tab · 文档拖进当前空间 / 项目"></a></div>
   <div class="pg-body"><h4><span class="pg-n">6.</span>工作项 · 文档拖进来<em>当前空间 / 项目里的文档，和任务放在一处</em></h4>
-    <p>工作项顶部多一个「文档」tab：把文档库里的文档拖进当前空间或项目，按类型、归属、最近打开筛。做任务的人不用再去文档库找那份需求，<strong>任务和它依赖的文档在同一个地方。</strong></p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
+    <p>工作项顶部多一个「文档」tab：把文档库里的文档拖进当前空间或项目，按类型、归属、最近打开筛。做任务的人不用再去文档库找那份需求，<strong>任务和它依赖的文档在同一个地方。</strong></p><p class="pg-note"><b>为什么这么设计</b>　文档不该只属于文档库。做任务的人要的那份需求，和任务在同一个地方才叫协同。这里是「拖进来」不是「复制过来」——还是文档库那一份，改一处两边都新，不会出现谁手上是旧版本的问题。</p>
   </div>
 </div>
 <div class="pg">
   <div class="pg-slot"><a class="pg-shot" href="assets/shots/task-v-chat.webp" data-title="工作项 · 聊天 tab · AI agent 助手在群里"><img src="assets/shots/thumb/task-v-chat.webp" alt="工作项 · 聊天 tab · AI agent 助手在群里"></a></div>
   <div class="pg-body"><h4><span class="pg-n">7.</span>工作项 · 聊天 · AI agent 助手<em>工作项自带群聊，AI 助手能添加文档、开启会议、导入成员</em></h4>
-    <p>每个工作项自带一个群，AI agent 助手常驻：一句话添加文档、开启会议、从系统导入人员；群公告、临时会议都在这里发。<strong>讨论和任务不再分两个软件，会议里生成的任务直接挂回这个工作项。</strong></p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
+    <p>每个工作项自带一个群，AI agent 助手常驻：一句话添加文档、开启会议、从系统导入人员；群公告、临时会议都在这里发。<strong>讨论和任务不再分两个软件，会议里生成的任务直接挂回这个工作项。</strong></p><p class="pg-note"><b>为什么这么设计</b>　讨论和任务分在两个软件里，是协作工具最大的一处漏：群里说完的事要有人手动搬进任务，搬不搬全看自觉。把群放进工作项之后，AI 助手省掉的是手上的动作——添加文档、开启会议、导入人员。<b>它不建任务</b>：这条链路里 AI 建任务只发生在运维那一侧，而且要人确认过才进池。</p>
   </div>
 </div>
-<div class="pg-act">幕二 · AI 自动化处理任务 · 屏 8–10</div>
-<div class="pg">
-  <div class="pg-slot"><div class="fig-slot" style="--ar:16/10"><span class="fig-no">待画</span><b>AI 协作中心 · 首页</b><em>缺这页，空给你画</em></div></div>
-  <div class="pg-body"><h4><span class="pg-n">8.</span>AI 协作中心<em>AI 员工 · AI 执行节点</em></h4>
-    <p>左侧导航是「AI 协作中心」——AI 员工、AI 执行节点。任务交给 AI 之后从这里看它在干什么。</p><p class="pg-note">为什么这么设计 · <span class="todo">待你写</span></p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><div class="fig-slot" style="--ar:16/10"><span class="fig-no">待画</span><b>AI 执行过程 · 事件流</b><em>缺这页，空给你画</em></div></div>
-  <div class="pg-body"><h4><span class="pg-n">9.</span>执行过程 · 事件流<em>进度条换成事件流</em></h4>
-    <p>执行过程不给百分比进度条，给事件流：10:21:06 读取任务上下文 → 10:21:34 检查前置任务 · 发现 2 个前置，其中 1 个仍在进行 → 10:22:18 分析后置影响 → 10:23:42 生成处理建议。因为百分比是假的——AI 不知道自己做到了百分之几，但它知道自己刚做完哪一步。</p>
-  </div>
-</div>
-<div class="pg">
-  <div class="pg-slot"><div class="fig-slot" style="--ar:16/10"><span class="fig-no">待画</span><b>任务详情 · 交给 AI 执行 / 反提案</b><em>缺这页，空给你画</em></div></div>
-  <div class="pg-body"><h4><span class="pg-n">10.</span>AI 边界 · 反提案<em>AI 做读、查、分析、出建议；不直接改任务，不投票</em></h4>
-    <p>AI 做：读任务背景、查依赖、分析影响、出建议。AI 不做：直接改任务。同一条边界：AI 不投票，出反提案——等人确认。</p>
-  </div>
-</div>
-
 <h3 class="sub-head"><span class="num">09</span>有它 · 没它<span class="sub-en">WITH · WITHOUT</span><span class="line"></span></h3>
-    <div class="fig-slot pg-empty" style="--ar:auto"><span class="fig-no">待填</span><b>有它 / 没它 的对比待填</b><ul><li>左：没有它时，要一个新工作项类型 / 换一种看法得找谁</li><li>右：有它后创建者选模版就有，使用者自己换视图、存视图</li><li>AI 自动任务单独一行：没有它时运维发现问题到落到人要经过谁</li><li>六条未落地的规则如果配图，必须是灰度线框并标注「设计完成未开发」</li></ul></div>
+    <p class="jrn-lead">五件事，左边是没有它的时候，右边是有它之后。</p>
+    <div class="wow">
+      <div class="wh">这件事</div><div class="wh">没它</div><div class="wh">有它</div>
+      <div class="wk">起一个项目</div><div class="wo">建个群，字段和流程每次重定</div><div class="wn">选一套行业模版，<b>结构当场就有</b></div>
+      <div class="wk">找自己的活</div><div class="wo">群里翻、开会问</div><div class="wn">五种视图任选，<b>筛完存成自己那一版</b></div>
+      <div class="wk">拿干活要的材料</div><div class="wo">开四个地方，不确定哪份最新</div><div class="wn">文档拖进工作项，<b>和任务在一处</b></div>
+      <div class="wk">讨论变成任务</div><div class="wo">说完靠人手动搬，搬不搬看自觉</div><div class="wn">群在工作项里，<b>会议生成的任务直接挂回来</b></div>
+      <div class="wk">运维的问题落到人</div><div class="wo">群里喊一声，靠人转手，转丢了没人知道</div><div class="wn">AI 生成任务、<b>人确认后</b>按 git 提交记录找到人，落到他的 CSES</div>
+    </div>
+    <p class="cmp-foot">前四件是把散在各处的东西收进同一个工作项，第五件是把「人转手」换成「系统转手」——<b>但进池要人点头，每一步产物也要人过。</b></p>
 
-<h3 class="sub-head"><span class="num">10</span>七条决策落地对账<span class="sub-en">RECKONING · 全章高潮</span><span class="line"></span></h3>
+<h3 class="sub-head"><span class="num">10</span>八条 AI 边界决策<span class="sub-en">DECISIONS · 8</span><span class="line"></span></h3>
     <div class="feedback-split">
       <div>
-        <div class="fs-label">THREE MONTHS LATER</div>
-        <div class="fs-head">我定了七条规则，<br>回去走查<em>落地了一条</em></div>
+        <div class="fs-label">已实现 · 内部测试中</div>
+        <div class="fs-head">界面是设计产出，<br><em>规则才是产品产出</em></div>
       </div>
-      <div class="fs-desc"><p><strong>不是开发不听话。</strong>那六条全部依赖「还不存在的上游能力」——没有异常监控页，第一条无从触发；改动范围分级要 agent 能判断自己改了什么，现在还做不到。<br><br><strong>唯一落地的第七条，是唯一一条不挂任何前置的。</strong></p></div>
+      <div class="fs-desc"><p>这块功能是老板提的，<strong>规则我定</strong>：八条 AI 边界，交给开发方实现，现在在内部测试。<br><br>八条背后只有一条判据——<strong>可逆性，不是重要性。</strong>只读操作错了重跑一次就行，写操作错了要人擦屁股。</p></div>
     </div>
     <div class="cap-grid" style="margin-top:26px">
-      <div class="cap-item"><span>01 未落地</span><b class="ci-title">只有 P0/P1 才建任务，同类 24 小时一次</b><p>依赖：异常监控页。<strong>没有监控，就没有触发点。</strong></p></div>
-      <div class="cap-item"><span>02 未落地</span><b class="ci-title">无负责人的进未分配池等认领</b><p>依赖：任务与人的自动匹配能力。</p></div>
-      <div class="cap-item"><span>03 未落地</span><b class="ci-title">只读诊断全自动，改代码必须人确认</b><p>依赖：agent 能判断自己的改动范围。<strong>现在做不到。</strong></p></div>
-      <div class="cap-item"><span>04 未落地</span><b class="ci-title">验收看自动化测试，无覆盖退回人工</b><p>依赖：测试覆盖率可查询。</p></div>
-      <div class="cap-item"><span>05 未落地</span><b class="ci-title">agent 超时自动转人工</b><p>依赖：超时判定与转派流程。</p></div>
-      <div class="cap-item"><span>06 未落地</span><b class="ci-title">误报关闭必须填原因，原因反哺阈值</b><p>依赖：阈值可配置。</p></div>
+      <div class="cap-item"><span>决策 01</span><b class="ci-title">只有 P0/P1 才建任务，同类 24 小时内一次</b><p>埋点的职责是记录一切，任务的职责是驱动行动。<strong>两道闸把观测层的噪音挡在执行层之外</strong>——不然这个功能上线第一周就会被自己淹死。</p></div>
+      <div class="cap-item"><span>决策 02</span><b class="ci-title">按模块负责人分配，无主的进未分配池等认领</b><p>有主给主，无主进池。<strong>我没选「负载最低」那个方案，因为负载低不代表懂这个模块</strong>——分给不熟的人，返工成本比等认领高。</p></div>
+      <div class="cap-item"><span>决策 03</span><b class="ci-title">只读诊断全自动，改代码必须人确认</b><p>不按重要程度分级，<strong>按可逆性分级。</strong>查日志、跑分析错了没代价；改代码不可逆，必须过人。</p></div>
+      <div class="cap-item"><span>决策 04</span><b class="ci-title">验收优先看自动化测试，无覆盖退回人工</b><p>最好的验收是机器验收，它不会因为想早点收工而放水。<strong>我不接受 agent 自己判自己合格</strong>——那等于没有验收。</p></div>
+      <div class="cap-item"><span>决策 05</span><b class="ci-title">agent 卡住超时自动转人工，时长可配</b><p>静默卡死比报错更危险，报错至少有人知道。<strong>时长做成可配</strong>——写日志分析可能 30 秒，跑全量回归可能 10 分钟，一个固定值必然误伤。</p></div>
+      <div class="cap-item"><span>决策 06</span><b class="ci-title">误报关闭必须填原因，原因反哺告警阈值</b><p>关掉等于信息丢失，下次同样的误报还会来。<strong>我要的不是让系统一次做对，是让它有变准的机制。</strong></p></div>
+      <div class="cap-item"><span>决策 07</span><b class="ci-title">只在任务动态里直推关键节点，详情随时能点开看</b><p>流式看着酷，<strong>但人会关掉它</strong>——通知一旦被关，真出事那次也漏掉了。所以推送只给关键节点，<strong>完整的执行过程一步没少，留在任务动态里等人来看。</strong></p></div>
+      <div class="cap-item"><span>决策 08</span><b class="ci-title">AI 只能推进自己的状态，业务状态永远由人改</b><p>AI 执行的「已完成」和任务业务的「已完成」是两套状态。<strong>AI 说自己干完了，不等于这件事办成了</strong>——后面那句必须由人来说。</p></div>
     </div>
-    <div class="cap-grid cap-3" style="margin-top:14px">
-      <div class="cap-item"><span>07 ✅ 已落地</span><b class="ci-title">进度只报关键节点，不做实时流式</b><p><strong>唯一一条不挂任何前置条件的规则。</strong>它不需要别的能力先存在，所以它做成了。</p></div>
-      <div class="cap-item"><span>补 08</span><b class="ci-title">走查时开发告诉我一件我漏了的事</b><p><strong>AI 执行的「已完成」和任务业务的「已完成」是两套状态。</strong>补第八条的话我会写：AI 只能推进自己的状态，业务状态永远由人改。</p></div>
-      <div class="cap-item"><span>结论</span><b class="ci-title">这一条我以前不知道</b><p><strong>产品规则的落地率，取决于它挂在几个前置条件上。</strong>挂零个的会落地，挂三个的不会。</p></div>
-    </div>
-
-    <h3 class="sub-head"><span class="num">11</span>剩余页面<span class="sub-en">MORE SCREENS · 12</span><span class="line"></span></h3>
+<h3 class="sub-head"><span class="num">11</span>剩余页面<span class="sub-en">MORE SCREENS · 12</span><span class="line"></span></h3>
     <p class="dw-lead">待办列表、任务详情、工作项聊天、空间设置与成员、两种空态、新建空间 / 任务、预览模版。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 284, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/task-05.webp"><img src="assets/shots/thumb/task-05.webp" alt="空间权限 · 角色矩阵" loading="lazy"></a>
@@ -1860,6 +2147,32 @@
 
 <h3 class="sub-head"><span class="num">04</span>用户旅程 · 没有它 vs 有它<span class="sub-en">JOURNEY</span><span class="line"></span></h3>
     <p class="jrn-lead" style="margin-top:16px">一条主路径：<b>决定放哪 → 多人一起写 → 让事情落地 / 让别人看到</b>。上行是没有它的时候人怎么干，下行是有它之后。</p>
+    <figure class="fig" style="margin-top:20px">
+      <svg class="dfig" viewBox="0 0 1200 320" role="img" aria-label="用户旅程示意：没有它时路径在两处断开，有它之后闭合回到同一篇文档">
+        <text class="d-t" x="250" y="40" text-anchor="middle">决定放哪</text>
+        <text class="d-t" x="600" y="40" text-anchor="middle">多人一起写</text>
+        <text class="d-t" x="950" y="40" text-anchor="middle">让事情落地 / 让别人看到</text>
+        <text class="d-h d-h--bad" x="30" y="112">WITHOUT · 没有它</text>
+        <path class="d-ln--bad" d="M150 128 H1110"/>
+        <circle class="d-dot--bad" cx="250" cy="128" r="5"/><circle class="d-dot--bad" cx="600" cy="128" r="5"/><circle class="d-dot--bad" cx="950" cy="128" r="5"/>
+        <path class="d-x" d="M419 120 l14 16 M433 120 l-14 16"/>
+        <path class="d-x" d="M769 120 l14 16 M783 120 l-14 16"/>
+        <text class="d-lbl" x="426" y="164" text-anchor="middle">一份东西分成几个副本</text>
+        <text class="d-lbl" x="776" y="164" text-anchor="middle">跳到别的系统重录一遍</text>
+        <text class="d-h d-h--v" x="30" y="216">WITH · 有它</text>
+        <path class="d-ln--v" d="M150 232 H1110"/>
+        <path class="d-tip--v" d="M1118 232 l-9 -5 l0 10 z"/>
+        <circle class="d-dot" cx="250" cy="232" r="6"/><circle class="d-dot" cx="600" cy="232" r="6"/><circle class="d-dot" cx="950" cy="232" r="6"/>
+        <text class="d-lbl" x="250" y="262" text-anchor="middle">选空间即定权限</text>
+        <text class="d-lbl" x="600" y="262" text-anchor="middle">块 · 右侧操作列 · 改动留痕</text>
+        <text class="d-lbl" x="950" y="262" text-anchor="middle">当场建任务 · 点演示就讲</text>
+        <path class="d-ln--v" d="M1110 232 C1110 300, 720 306, 612 246"/>
+        <path class="d-tip--v" d="M604 240 l11 1 l-4 9 z"/>
+        <text class="d-lbl" x="860" y="300" text-anchor="middle">产物挂回同一篇文档</text>
+      </svg>
+      <figcaption>同一条路径：上面一条在两处断开，下面一条走完之后回到同一篇文档。</figcaption>
+    </figure>
+
 
     <div class="jrn jrn-vs">
       <div class="jrn-stage">
@@ -1911,6 +2224,39 @@
     <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:16px 0 0">
       只答一个问题：<strong style="color:var(--fg-2)">文档在这个产品里，是终点还是中转站？</strong>
     </p>
+    <figure class="fig" style="margin-top:20px">
+      <svg class="dfig" viewBox="0 0 1200 300" role="img" aria-label="竞品示意：Notion 文档是终点，飞书连整套生态，我们只连平台内部四条线">
+        <text class="d-h" x="40" y="34">01　NOTION</text>
+        <rect class="d-card" x="40" y="52" width="300" height="130" rx="12"/>
+        <rect class="d-chip" x="64" y="76" width="80" height="30" rx="6"/><rect class="d-chip" x="152" y="76" width="80" height="30" rx="6"/><rect class="d-chip" x="240" y="76" width="76" height="30" rx="6"/>
+        <rect class="d-chip" x="64" y="114" width="80" height="30" rx="6"/><rect class="d-chip" x="152" y="114" width="164" height="30" rx="6"/>
+        <rect class="d-chip" x="64" y="152" width="252" height="18" rx="6"/>
+        <text class="d-t" x="40" y="218">文档是终点</text>
+        <text class="d-d" x="40" y="244">块可以自由拼、可复用，</text><text class="d-d" x="40" y="264">但业务动作要自己搭一套。</text>
+        <text class="d-h" x="430" y="34">02　飞书文档</text>
+        <rect class="d-card" x="430" y="82" width="130" height="70" rx="10"/>
+        <text class="d-lbl" x="495" y="122" text-anchor="middle">文档</text>
+        <path class="d-ln" d="M560 100 H640"/><path class="d-ln" d="M560 117 H660"/><path class="d-ln" d="M560 134 H640"/>
+        <path class="d-ln" d="M600 100 V64 H660"/><path class="d-ln" d="M600 134 V170 H660"/>
+        <circle class="d-dot--bad" cx="668" cy="64" r="5" style="fill:rgba(255,255,255,.35)"/><circle cx="648" cy="100" r="5" style="fill:rgba(255,255,255,.35)"/>
+        <circle cx="668" cy="117" r="5" style="fill:rgba(255,255,255,.35)"/><circle cx="648" cy="134" r="5" style="fill:rgba(255,255,255,.35)"/><circle cx="668" cy="170" r="5" style="fill:rgba(255,255,255,.35)"/>
+        <text class="d-d" x="686" y="121">整套生态</text>
+        <text class="d-t" x="430" y="218">文档是中转站</text>
+        <text class="d-d" x="430" y="244">能唤起别的应用，协同最完整，</text><text class="d-d" x="430" y="264">代价是整套生态得一起用。</text>
+        <text class="d-h d-h--v" x="820" y="34">03　我们</text>
+        <rect class="d-card--v" x="820" y="82" width="120" height="70" rx="10"/>
+        <text class="d-lbl" x="880" y="122" text-anchor="middle" style="fill:#fff">文档</text>
+        <path class="d-ln--v" d="M940 100 H1000"/><path class="d-ln--v" d="M940 110 H1000"/><path class="d-ln--v" d="M940 127 H1000"/><path class="d-ln--v" d="M940 137 H1000"/>
+        <rect class="d-chip--v" x="1000" y="52" width="150" height="30" rx="6"/><text class="d-lbl" x="1075" y="72" text-anchor="middle">会议</text>
+        <rect class="d-chip--v" x="1000" y="90" width="150" height="30" rx="6"/><text class="d-lbl" x="1075" y="110" text-anchor="middle">任务</text>
+        <rect class="d-chip--v" x="1000" y="128" width="150" height="30" rx="6"/><text class="d-lbl" x="1075" y="148" text-anchor="middle">审批</text>
+        <rect class="d-chip--v" x="1000" y="166" width="150" height="30" rx="6"/><text class="d-lbl" x="1075" y="186" text-anchor="middle">招聘</text>
+        <text class="d-t" x="820" y="218">中转站，只连平台内部</text>
+        <text class="d-d" x="820" y="244">不做开放生态，范围小，</text><text class="d-d" x="820" y="264">但每一条都接到底。</text>
+      </svg>
+      <figcaption>同一个问题问三家：文档写完之后，还能不能接着把事办了。</figcaption>
+    </figure>
+
     <div class="pain-list">
       <div class="pain-item"><div class="pi-n">Notion</div>
         <div class="pi-t">文档是终点，一切都是块</div>
@@ -1929,6 +2275,38 @@
     <p style="color:var(--fg-3);font-size:15px;font-weight:300;line-height:1.9;max-width:64ch;margin:16px 0 0">
       在没有这套东西之前，大家其实一直有办法把活干完，只是这些办法都得靠人自己兜着。<strong style="color:var(--fg-2)">下面三件事，是改版前每天都在发生的。</strong>
     </p>
+    <figure class="fig" style="margin-top:20px">
+      <svg class="dfig" viewBox="0 0 1200 300" role="img" aria-label="改版前的三种土办法：群里传文件、各存一份、另做一版 PPT">
+        <text class="d-h d-h--bad" x="40" y="30">01</text>
+        <rect class="d-card--bad" x="40" y="48" width="200" height="40" rx="12"/><text class="d-lbl" x="60" y="73">「那份方案发我下」</text>
+        <rect class="d-card--bad" x="120" y="100" width="200" height="40" rx="12"/><text class="d-lbl" x="140" y="125">「我翻翻聊天记录」</text>
+        <rect class="d-chip" x="40" y="152" width="140" height="34" rx="8"/><text class="d-lbl" x="58" y="174">方案 v2.docx</text>
+        <path class="d-ln--bad" d="M180 169 H300"/><path class="d-tip--bad" d="M308 169 l-9 -5 l0 10 z"/>
+        <text class="d-t" x="40" y="228">文件在群里传</text>
+        <text class="d-d" x="40" y="254">要哪份就翻记录、问人，</text><text class="d-d" x="40" y="274">发出去的是一个副本。</text>
+        <text class="d-h d-h--bad" x="430" y="30">02</text>
+        <rect class="d-card--bad" x="430" y="60" width="86" height="106" rx="8"/><text class="d-lbl" x="473" y="118" text-anchor="middle">v1</text>
+        <rect class="d-card--bad" x="536" y="60" width="86" height="106" rx="8"/><text class="d-lbl" x="579" y="118" text-anchor="middle">v2</text>
+        <rect class="d-card--bad" x="642" y="60" width="86" height="106" rx="8"/><text class="d-lbl" x="685" y="118" text-anchor="middle">v2 改</text>
+        <path class="d-x" d="M572 178 l14 16 M586 178 l-14 16"/>
+        <text class="d-lbl" x="579" y="212" text-anchor="middle">哪个是最新的？</text>
+        <text class="d-t" x="430" y="240">各人电脑上各存一份</text>
+        <text class="d-d" x="430" y="266">三个人手里三个版本，谁最新说不清。</text>
+        <text class="d-h d-h--bad" x="820" y="30">03</text>
+        <rect class="d-card--bad" x="820" y="60" width="110" height="130" rx="8"/>
+        <rect class="d-chip" x="838" y="80" width="74" height="8" rx="4"/><rect class="d-chip" x="838" y="96" width="74" height="8" rx="4"/><rect class="d-chip" x="838" y="112" width="52" height="8" rx="4"/>
+        <text class="d-lbl" x="875" y="176" text-anchor="middle">文档</text>
+        <path class="d-ln--bad" d="M930 118 H1010"/>
+        <path class="d-x" d="M963 110 l14 16 M977 110 l-14 16"/>
+        <rect class="d-card--bad" x="1020" y="78" width="140" height="94" rx="8"/>
+        <rect class="d-chip" x="1038" y="96" width="104" height="10" rx="4"/><rect class="d-chip" x="1038" y="116" width="70" height="8" rx="4"/>
+        <text class="d-lbl" x="1090" y="158" text-anchor="middle">另一版 PPT</text>
+        <text class="d-t" x="820" y="240">为了讲一遍再做一版 PPT</text>
+        <text class="d-d" x="820" y="266">文档改了，幻灯片不会跟着改。</text>
+      </svg>
+      <figcaption>这三件事在改版前每天都在发生，共同点是都靠人自己兜着。</figcaption>
+    </figure>
+
     <div class="cap-grid cap-3" style="margin-top:14px">
       <div class="cap-item"><span>01</span><b class="ci-title">文件在群里传</b><p>要哪份就去聊天记录里翻，翻不到就问人。发出去的是一个副本，对方改完再发回来，最后谁手里的是最新版，说不清楚。</p></div>
       <div class="cap-item"><span>02</span><b class="ci-title">各人电脑上各存一份</b><p>同一份材料，三个人手里三个版本。有人改了不通知别人，换台电脑或者人一走，文件就散了。</p></div>
@@ -1948,9 +2326,38 @@
       <div class="fs-desc"><p>会议、任务、知识库各做各的事，产物却都要落成文字——纪要、说明、方案、制度。文档库因此成了平台里唯一一个所有业务线都会经过的地方，<strong>像企业里的中枢神经：各个模块的产物都挂在它上面，模块之间也通过它互相调用。</strong><br><br>所以这一章的主线是这条连接。<strong>权限不是主角，是让这条连接敢用的前提。</strong></p></div>
     </div>
 
+    <figure class="fig" style="margin-top:22px">
+      <svg class="dfig" viewBox="0 0 1200 510" role="img" aria-label="连接器示意：一篇文档连接会议、任务与知识库，双向往返，每一步留痕">
+        <text class="d-h d-h--v" x="235" y="128" text-anchor="middle">CONNECTOR · 连接器</text>
+        <rect class="d-card--v" x="70" y="150" width="330" height="180" rx="14"/>
+        <text class="d-t--w" x="235" y="232" text-anchor="middle">一篇文档</text>
+        <text class="d-d" x="235" y="262" text-anchor="middle">纪要 · 说明 · 方案 · 制度</text>
+        <path class="d-ln--v" d="M400 228 H560 V112 H752"/>
+        <path class="d-tip--v" d="M760 112 l-9 -5 l0 10 z"/><path class="d-tip--v" d="M400 228 l9 -5 l0 10 z"/>
+        <text class="d-lbl" x="660" y="100" text-anchor="middle">一键发起会议</text>
+        <text class="d-lbl" x="660" y="136" text-anchor="middle">会后纪要回写</text>
+        <path class="d-ln--v" d="M400 240 H752"/>
+        <path class="d-tip--v" d="M760 240 l-9 -5 l0 10 z"/><path class="d-tip--v" d="M400 240 l9 -5 l0 10 z"/>
+        <text class="d-lbl" x="560" y="220" text-anchor="middle">选中一句话即建任务</text>
+        <text class="d-lbl" x="560" y="274" text-anchor="middle">任务挂回这篇文档</text>
+        <path class="d-ln--v" d="M400 252 H560 V368 H752"/>
+        <path class="d-tip--v" d="M760 368 l-9 -5 l0 10 z"/><path class="d-tip--v" d="M400 252 l9 -5 l0 10 z"/>
+        <text class="d-lbl" x="660" y="356" text-anchor="middle">沉淀成标准</text>
+        <text class="d-lbl" x="660" y="392" text-anchor="middle">按可见范围公开</text>
+        <rect class="d-card" x="760" y="68" width="380" height="88" rx="12"/>
+        <text class="d-t" x="786" y="106">会议</text><text class="d-d" x="786" y="132">这篇文档就是议程</text>
+        <rect class="d-card" x="760" y="196" width="380" height="88" rx="12"/>
+        <text class="d-t" x="786" y="234">计划实施 · 任务</text><text class="d-d" x="786" y="260">落到负责人的「我的任务」</text>
+        <rect class="d-card" x="760" y="324" width="380" height="88" rx="12"/>
+        <text class="d-t" x="786" y="362">知识库</text><text class="d-d" x="786" y="388">标准、SOP、模板集中放</text>
+        <rect class="d-strip" x="70" y="440" width="1070" height="54" rx="10"/>
+        <text class="d-lbl" x="605" y="473" text-anchor="middle">每一步都留痕：谁改了什么 · 谁导出过 · 谁删过，事后都查得到</text>
+      </svg>
+      <figcaption>文档在中间，会议、任务、知识库在两边，箭头是双向的：从文档里发起，产物再回到这篇文档。</figcaption>
+    </figure>
 <ol class="jt"><li><b>01</b><span>会上说到一件事 · 在纪要里选中这句话</span></li><li><b>02</b><span>当场建任务 · 指定负责人、设好截止</span></li><li><b>03</b><span>任务落到他的「我的任务」，同时挂回这篇文档</span></li><li><b>04</b><span>要拍板 · 一键发起会议，这篇文档就是议程</span></li><li><b>05</b><span>会后的纪要回写到同一篇文档</span></li><li><b>06</b><span>每一步都留痕 · 谁改了什么、谁导出过、谁删过，事后查得到</span></li></ol><div class="jt-legend"><span><b>①</b>在文档里把活派出去 → 步 1–3</span><span><b>②</b>在文档里把会开起来 → 步 4–5</span><span><b>③</b>全程留痕 → 步 6</span></div>
     <div class="intro-grid" style="margin-top:22px">
-      <div><p>这条链路走下来，人始终没有离开文档：待办在文档里派出去，会议以文档为议程，会后的纪要又回到同一篇。<strong>模块之间不再靠人来回搬运，文档就是它们共用的那张桌子。</strong><br><br>这就是 CSES 说的<strong>「空间叠加」</strong>——文档库、计划实施、会议叠在同一个空间里互相调用，每一次调用都留下记录。知识沉淀下来之后不是躺着，而是一直在被追踪、被回溯、被执行。</p></div>
+      <div><p>这条链路走下来，人始终没有离开文档：待办在文档里派出去，会议以文档为议程，会后的纪要又回到同一篇。<strong>模块之间不再靠人来回搬运，文档就是它们共用的那张桌子。</strong><br><br>连得越多，越要说清楚每一步是谁做的：文档里建的任务、从文档发起的会议、导出和删除，都记在这篇文档名下，事后能顺着查回来。</p></div>
       <div class="intro-aside">
         <div class="row">连接<b>会议 · 任务 · 知识库</b></div>
         <div class="row">方式<b>在文档里直接建、直接发起</b></div>
@@ -1967,14 +2374,7 @@
       <div class="fs-desc"><p>敢把任务和会议接进文档，前提是先说清楚谁能看、谁能发出去。子文件夹继承父文件夹的权限，但<strong>「能不能分享到组织外」和「删除」这两条永远跟父级，子级改不了</strong>；其他权限，只有父级的范围大于子级时才允许子级修改。<br><br>判据是：<strong>一个动作的后果如果超出这个文件夹，那它就不该由这个文件夹里的人决定。</strong></p></div>
     </div>
 
-    <div class="feedback-split" style="margin-top:26px">
-      <div>
-        <div class="fs-label">TWO YEARS LATER</div>
-        <div class="fs-head">同一条判断，<br>两个模块，<em>隔了两年</em></div>
-      </div>
-      <div class="fs-desc"><p>连接越多，一个动作波及的范围就越难靠人记住。所以同步块上写着「已在 3 个位置同步」，删知识库要照着把库名输一遍——<strong>都是在按下之前，先把后果的范围摆出来。</strong><br><br>两年后我做薪酬核算，锁定按钮上写的是<strong>「这一锁涉及多少人、多少钱」</strong>，是同一条判断。我当时没意识到这是同一件事，是回头整理作品集才发现的。</p></div>
-    </div>
-
+    
 <h3 class="sub-head"><span class="num">08</span>设计方案 · 逐页讲解<span class="sub-en">PAGES · 12</span><span class="line"></span></h3>
     <p class="jrn-lead">十二屏，按用起来的顺序走：先在<b>列表</b>里找到文档，再进<b>文档内</b>写字、插入内容，然后把它<b>讲给别人听</b>，最后是团队共用的<b>知识库</b>和它的权限。每一屏下面写清楚这一页在解决什么问题。</p>
 <ol class="jt"><li><b>01</b><span>我的文档 · 两种视图</span></li><li><b>02</b><span>企业空间首页</span></li><li><b>03</b><span>空间权限</span></li><li><b>04</b><span>任务 · 文档维度</span></li><li><b>05</b><span>关系图谱</span></li><li><b>06</b><span>操作列 · 插入 / 格式</span></li><li><b>07</b><span>操作列 · 样式 / 修订</span></li><li><b>08</b><span>同步块</span></li><li><b>09</b><span>插入样式九宫格</span></li><li><b>10</b><span>演示 · 文档模式</span></li><li><b>11</b><span>知识库</span></li><li><b>12</b><span>安全设置</span></li></ol><div class="jt-legend"><span><b>①</b>文档列表 → 屏 1–5</span><span><b>②</b>文档内 → 屏 6–9</span><span><b>③</b>演示 → 屏 10</span><span><b>④</b>知识库 → 屏 11–12</span></div>
@@ -2100,47 +2500,75 @@
       <div class="jrn-stage">
         <div class="jrn-st"><i>04</i>回头看整个过程</div>
         <div class="jrn-old"><b>文档是终点，做完就断了</b><span>任务在一个系统、会议在另一个，谁改过什么、为什么这么定，过后查不到。</span></div>
-        <div class="jrn-new"><b>空间叠加：文档库、计划实施、会议互相协同</b><span>所有记录都留痕，板块之间叠加使用；文档不再是终点，而是驱动任务与会议的源头，每一份知识都能持续追踪、随时回溯，变成可延续、可执行的过程资产。</span></div>
+        <div class="jrn-new"><b>顺着这篇文档就能查回去</b><span>任务是从哪句话派出去的、会议是哪天以它为议程开的、谁改过、谁导出过、谁删过，都记在同一处，不用去几个系统里对。</span></div>
       </div>
     </div>
-    <div class="feedback-split">
+
+
+                <h3 class="sub-head"><span class="num">10</span>文档不是终点，是源头<span class="sub-en">ECOSYSTEM · 空间叠加</span><span class="line"></span></h3>
+    <div class="feedback-split" style="margin-top:8px">
       <div>
         <div class="fs-label">ECOSYSTEM · 空间叠加</div>
         <div class="fs-head">文档不是终点，<br><em>是源头</em></div>
       </div>
-      <div class="fs-desc"><p>CSES 搭的是生态。文档库、计划实施、会议不是三个并排的模块，而是叠在同一个空间里互相调用：文档里建任务，任务挂回文档；会议以文档为议程，纪要回写文档。<strong>所有记录都留痕，板块之间可以互相叠加使用——这就是我们说的「空间叠加」。</strong>知识沉淀下来之后不是躺着，而是一直在被追踪、被回溯、被执行。</p></div>
+      <div class="fs-desc"><p>CSES 搭的是生态。文档库、计划实施、会议不是三个并排的模块，而是叠在同一个空间里互相调用，<strong>这就是我们说的「空间叠加」。</strong><br><br>放在最后说，是因为前面每一屏都在铺它：<strong>文档是各个模块共用的那张桌子。</strong>知识沉淀下来之后不是躺着，而是一直在被追踪、被回溯、被执行。</p></div>
     </div>
 
-
-                <h3 class="sub-head"><span class="num">10</span>剩余页面<span class="sub-en">MORE SCREENS · 41</span><span class="line"></span></h3>
-    <p class="dw-lead">文档内部的各种操作、知识库剩下的页面、管理后台的操作记录与数据查看，都在这儿转。</p>
+    <h3 class="sub-head"><span class="num">11</span>剩余页面<span class="sub-en">MORE SCREENS · 67</span><span class="line"></span></h3>
+    <p class="dw-lead">文档内部的各种操作、知识库剩下的页面、管理后台的操作记录与数据查看，连同改版前旧文件里的那几版列表页，都在这儿转。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 284, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/dl-e-toc.webp"><img src="assets/shots/thumb/dl-e-toc.webp" alt="编辑器 · 左侧目录" loading="lazy"></a>
+      <a href="assets/shots/dl-01.webp"><img src="assets/shots/thumb/dl-01.webp" alt="旧版文件的主页 · 三维度筛选" loading="lazy"></a>
       <a href="assets/shots/dl-p13.webp"><img src="assets/shots/thumb/dl-p13.webp" alt="演示 · 放映工具栏与语音条" loading="lazy"></a>
+      <a href="assets/shots/dl-02.webp"><img src="assets/shots/thumb/dl-02.webp" alt="旧版文件的空间视角" loading="lazy"></a>
       <a href="assets/shots/dl-k-toc-collapsed.webp"><img src="assets/shots/thumb/dl-k-toc-collapsed.webp" alt="知识库 · 目录全部收起" loading="lazy"></a>
+      <a href="assets/shots/dl-03.webp"><img src="assets/shots/thumb/dl-03.webp" alt="旧版文件 · 选中全是自己的" loading="lazy"></a>
       <a href="assets/shots/dl-n-tags.webp"><img src="assets/shots/thumb/dl-n-tags.webp" alt="企业空间 · 标签视图" loading="lazy"></a>
+      <a href="assets/shots/dl-3b.webp"><img src="assets/shots/thumb/dl-3b.webp" alt="旧版文件 · 选中混着别人的" loading="lazy"></a>
       <a href="assets/shots/dl-09.webp"><img src="assets/shots/thumb/dl-09.webp" alt="新建知识库 · 建库先定可见范围" loading="lazy"></a>
+      <a href="assets/shots/dl-04.webp"><img src="assets/shots/thumb/dl-04.webp" alt="旧版文件 · 删除先问范围" loading="lazy"></a>
       <a href="assets/shots/dl-e-slash.webp"><img src="assets/shots/thumb/dl-e-slash.webp" alt="编辑器 · 输入「/」插入块" loading="lazy"></a>
+      <a href="assets/shots/dl-w01.webp"><img src="assets/shots/thumb/dl-w01.webp" alt="旧版文件 · 普通员工的个人空间" loading="lazy"></a>
       <a href="assets/shots/dl-n-doc-versions.webp"><img src="assets/shots/thumb/dl-n-doc-versions.webp" alt="文档内 · 目录、面包屑切换与版本列表" loading="lazy"></a>
+      <a href="assets/shots/dl-w02.webp"><img src="assets/shots/thumb/dl-w02.webp" alt="旧版文件 · 最近使用" loading="lazy"></a>
       <a href="assets/shots/dl-e-docset.webp"><img src="assets/shots/thumb/dl-e-docset.webp" alt="编辑器 · 文档设置" loading="lazy"></a>
+      <a href="assets/shots/dl-x-folder.webp"><img src="assets/shots/thumb/dl-x-folder.webp" alt="旧版文件 · 文件夹内" loading="lazy"></a>
       <a href="assets/shots/dl-10.webp"><img src="assets/shots/thumb/dl-10.webp" alt="库内首页 · 一个库一块仪表盘" loading="lazy"></a>
+      <a href="assets/shots/dl-x-folder-info.webp"><img src="assets/shots/thumb/dl-x-folder-info.webp" alt="旧版文件 · 文件夹简介与人员" loading="lazy"></a>
       <a href="assets/shots/dl-n-list-search.webp"><img src="assets/shots/thumb/dl-n-list-search.webp" alt="我的文档 · 全部文件 · 带搜索" loading="lazy"></a>
+      <a href="assets/shots/dl-x-space-grid.webp"><img src="assets/shots/thumb/dl-x-space-grid.webp" alt="旧版文件 · 云空间网格" loading="lazy"></a>
       <a href="assets/shots/dl-e-cover.webp"><img src="assets/shots/thumb/dl-e-cover.webp" alt="编辑器 · 添加封面" loading="lazy"></a>
+      <a href="assets/shots/dl-x-space-list.webp"><img src="assets/shots/thumb/dl-x-space-list.webp" alt="旧版文件 · 云空间列表" loading="lazy"></a>
       <a href="assets/shots/dl-11b.webp"><img src="assets/shots/thumb/dl-11b.webp" alt="知识库 · 目录收起后变悬浮菜单" loading="lazy"></a>
+      <a href="assets/shots/dl-k-lib-home-3.webp"><img src="assets/shots/thumb/dl-k-lib-home-3.webp" alt="库内首页 · 第三版" loading="lazy"></a>
       <a href="assets/shots/dl-w10.webp"><img src="assets/shots/thumb/dl-w10.webp" alt="知识库 · 全部文档" loading="lazy"></a>
+      <a href="assets/shots/dl-k-notice-edit-2.webp"><img src="assets/shots/thumb/dl-k-notice-edit-2.webp" alt="公告编辑 · 第二态" loading="lazy"></a>
       <a href="assets/shots/dl-e-mention.webp"><img src="assets/shots/thumb/dl-e-mention.webp" alt="编辑器 · @人员 / 文档 / 会议" loading="lazy"></a>
+      <a href="assets/shots/dl-k-toc-switch.webp"><img src="assets/shots/thumb/dl-k-toc-switch.webp" alt="知识库 · 目录切换" loading="lazy"></a>
       <a href="assets/shots/dl-12.webp"><img src="assets/shots/thumb/dl-12.webp" alt="知识库 · 打开文档 · 块手柄" loading="lazy"></a>
+      <a href="assets/shots/dl-k-unpublished-2.webp"><img src="assets/shots/thumb/dl-k-unpublished-2.webp" alt="发布到商学院 · 第二态" loading="lazy"></a>
       <a href="assets/shots/dl-w03.webp"><img src="assets/shots/thumb/dl-w03.webp" alt="分享内容 · 浏览统计、热门文档、活跃用户" loading="lazy"></a>
+      <a href="assets/shots/dl-k-unpublished-3.webp"><img src="assets/shots/thumb/dl-k-unpublished-3.webp" alt="发布到商学院 · 第三态" loading="lazy"></a>
       <a href="assets/shots/dl-n-tags-2.webp"><img src="assets/shots/thumb/dl-n-tags-2.webp" alt="企业空间 · 标签视图 · 第二态" loading="lazy"></a>
+      <a href="assets/shots/dl-w08.webp"><img src="assets/shots/thumb/dl-w08.webp" alt="知识库 · 公告收起" loading="lazy"></a>
       <a href="assets/shots/dl-13.webp"><img src="assets/shots/thumb/dl-13.webp" alt="成员权限 · 四档" loading="lazy"></a>
+      <a href="assets/shots/dl-w09.webp"><img src="assets/shots/thumb/dl-w09.webp" alt="库内首页 · 变体" loading="lazy"></a>
       <a href="assets/shots/dl-k-alldocs-switch.webp"><img src="assets/shots/thumb/dl-k-alldocs-switch.webp" alt="知识库 · 全部文档切换" loading="lazy"></a>
+      <a href="assets/shots/dl-w13.webp"><img src="assets/shots/thumb/dl-w13.webp" alt="添加协作者" loading="lazy"></a>
       <a href="assets/shots/dl-e-callout.webp"><img src="assets/shots/thumb/dl-e-callout.webp" alt="编辑器 · 高亮块与表情" loading="lazy"></a>
+      <a href="assets/shots/dl-w14.webp"><img src="assets/shots/thumb/dl-w14.webp" alt="添加协作者 · 搜索" loading="lazy"></a>
       <a href="assets/shots/dl-15.webp"><img src="assets/shots/thumb/dl-15.webp" alt="删除知识库 · 输库名确认" loading="lazy"></a>
+      <a href="assets/shots/dl-w17.webp"><img src="assets/shots/thumb/dl-w17.webp" alt="知识库设置 · 成员设置" loading="lazy"></a>
       <a href="assets/shots/dl-w11.webp"><img src="assets/shots/thumb/dl-w11.webp" alt="知识库 · 打开文档 · 封面与标题" loading="lazy"></a>
+      <a href="assets/shots/dl-w18.webp"><img src="assets/shots/thumb/dl-w18.webp" alt="删除知识库 · 确认后" loading="lazy"></a>
       <a href="assets/shots/dl-e-attach.webp"><img src="assets/shots/thumb/dl-e-attach.webp" alt="编辑器 · 附件块 · PDF / 视频 / 音频" loading="lazy"></a>
+      <a href="assets/shots/dl-w19.webp"><img src="assets/shots/thumb/dl-w19.webp" alt="后台 · 自定义分组管理" loading="lazy"></a>
       <a href="assets/shots/dl-16.webp"><img src="assets/shots/thumb/dl-16.webp" alt="后台 · 权限管理" loading="lazy"></a>
+      <a href="assets/shots/dl-p01.webp"><img src="assets/shots/thumb/dl-p01.webp" alt="演示 · 文档模式 · 全屏" loading="lazy"></a>
       <a href="assets/shots/dl-n-search-result.webp"><img src="assets/shots/thumb/dl-n-search-result.webp" alt="我的文档 · 搜索结果高亮" loading="lazy"></a>
+      <a href="assets/shots/dl-p09.webp"><img src="assets/shots/thumb/dl-p09.webp" alt="演示 · 音量" loading="lazy"></a>
       <a href="assets/shots/dl-w12.webp"><img src="assets/shots/thumb/dl-w12.webp" alt="知识库 · 发布到商学院" loading="lazy"></a>
+      <a href="assets/shots/dl-p10.webp"><img src="assets/shots/thumb/dl-p10.webp" alt="演示 · 幻灯片内容页" loading="lazy"></a>
       <a href="assets/shots/dl-17.webp"><img src="assets/shots/thumb/dl-17.webp" alt="后台 · 操作记录" loading="lazy"></a>
       <a href="assets/shots/dl-e-board-shapes.webp"><img src="assets/shots/thumb/dl-e-board-shapes.webp" alt="协同画板 · 形状库与设置" loading="lazy"></a>
       <a href="assets/shots/dl-w07.webp"><img src="assets/shots/thumb/dl-w07.webp" alt="知识库 · 公告编辑" loading="lazy"></a>
@@ -2175,10 +2603,22 @@
       <div class="pmeta"><b>其他五个模块</b>一级看入口，点卡进二级看页面</div>
     </div>
 
-    <!-- ═══ 一级：其他模块 · 五个入口 ═══ -->
+<!-- ═══ 一级：其他模块 · 五个入口 ═══ -->
     <div class="cs-hub" id="cs-hub">
-    <div class="sec-head"><h2>其他模块</h2><span>[MODULES · 5 · 入口]</span></div>
-    <p class="dw-lead">这是 CSES 里我做过的另外五个模块。不重点讲：每个挑几张图说清它是什么、我在里面做过什么判断，其余页面放在墙上。<b>考勤、薪酬、招聘是旧框架</b>的稿子，组织权限后台和审批是新框架。点卡进去看，顶部有返回。</p>
+    <div class="sec-head"><h2>项目介绍</h2><span>[PLATFORM · 五个模块 · 137 屏]</span></div>
+    <div class="intro-grid">
+      <div><p>这一章收的是 CSES 里另外五个模块：<strong>组织权限后台、审批、招聘、薪酬管理、考勤管理</strong>。<br><br>它们不是五个独立项目，是<strong>同一个平台的五条线</strong>——组织、岗位、角色、权限这套底座建一次，上面的业务线共用；平台端审核入驻企业，企业端管自己的组织，两端跑同一套模型。<br><br>这一章<strong>不逐条讲方法</strong>：每个模块挑五屏说清它是什么、我在里面做过什么判断，剩下的页面放在墙上，点开看大图。<strong>招聘、薪酬、考勤是旧框架</strong>的稿子，组织权限后台与审批是新框架。</p></div>
+      <div class="intro-aside">
+        <div class="row">我的角色<b>全链路独立负责</b></div>
+        <div class="row">目标用户<b>企业管理员 · 各业务线使用者</b></div>
+        <div class="row">底座<b>组织 · 岗位 · 角色 · 权限</b></div>
+        <div class="row">两端<b>平台端审核入驻 · 企业端管组织</b></div>
+        <div class="row">交付<b>137 屏 · 五个模块</b></div>
+      </div>
+    </div>
+
+        <div class="sec-head"><h2>其他模块</h2><span>[MODULES · 5 · 入口]</span></div>
+    <p class="dw-lead">点卡进二级页：每个模块五屏逐页讲解，加一面剩余页面的截图墙。二级页顶部有返回，滚到哪儿它都在。</p>
     <div class="cs-cards">
       <a class="cs-card" href="#p-cses/org" data-cs-go="org">
         <div class="cs-thumb"><img src="assets/shots/thumb/org-11.webp" alt="组织权限后台" loading="lazy"></div>
@@ -2186,19 +2626,19 @@
       </a>
       <a class="cs-card" href="#p-cses/appr" data-cs-go="appr">
         <div class="cs-thumb"><img src="assets/shots/thumb/cs-appr-ai.webp" alt="审批" loading="lazy"></div>
-        <div class="cs-meta"><div class="cs-head"><b>审批</b><span class="cs-tag">14 屏</span></div><p>审批中心三栏：待办列表、申请详情、审批记录。每条申请带 AI 建议，AI 不投票，AI 出反提案。</p><span class="cs-go">APPROVAL · 进入 →</span></div>
+        <div class="cs-meta"><div class="cs-head"><b>审批</b><span class="cs-tag">25 屏</span></div><p>审批中心三栏：待办列表、申请详情、审批记录。每条申请带 AI 建议：风险在哪、这张单子怎么改能过。</p><span class="cs-go">APPROVAL · 进入 →</span></div>
       </a>
       <a class="cs-card" href="#p-cses/hire" data-cs-go="hire">
         <div class="cs-thumb"><img src="assets/shots/thumb/cs-hire-transcript.webp" alt="招聘" loading="lazy"></div>
-        <div class="cs-meta"><div class="cs-head"><b>招聘</b><span class="cs-tag cs-tag--old">旧框架</span></div><p>从职位、候选人、面试到 Offer 和报表的一整条线。面试空间里已经有实时转写、发言人分离和 AI 标签。</p><span class="cs-go">RECRUITING · 进入 →</span></div>
+        <div class="cs-meta"><div class="cs-head"><b>招聘</b><span class="cs-tag">25 屏</span><span class="cs-tag cs-tag--old">旧框架</span></div><p>从职位、候选人、面试到 Offer 和报表的一整条线。面试空间里已经有实时转写、发言人分离和 AI 标签。</p><span class="cs-go">RECRUITING · 进入 →</span></div>
       </a>
       <a class="cs-card" href="#p-cses/pay" data-cs-go="pay">
         <div class="cs-thumb"><img src="assets/shots/thumb/cs-pay-board.webp" alt="薪酬管理" loading="lazy"></div>
-        <div class="cs-meta"><div class="cs-head"><b>薪酬管理</b><span class="cs-tag cs-tag--old">旧框架</span></div><p>薪酬看板、四步核算流程和工资条发送。算薪不让 AI 算，AI 只在钱发出去前指出哪一行不对劲。</p><span class="cs-go">PAYROLL · 进入 →</span></div>
+        <div class="cs-meta"><div class="cs-head"><b>薪酬管理</b><span class="cs-tag">25 屏</span><span class="cs-tag cs-tag--old">旧框架</span></div><p>薪酬看板、四步核算流程和工资条发送。算薪不让 AI 算，AI 只在钱发出去前指出哪一行不对劲。</p><span class="cs-go">PAYROLL · 进入 →</span></div>
       </a>
       <a class="cs-card" href="#p-cses/att" data-cs-go="att">
         <div class="cs-thumb"><img src="assets/shots/thumb/cs-att-monthly.webp" alt="考勤管理" loading="lazy"></div>
-        <div class="cs-meta"><div class="cs-head"><b>考勤管理</b><span class="cs-tag cs-tag--old">旧框架</span></div><p>考勤概览、排班、三步考勤确认、存证和假期额度。</p><span class="cs-go">ATTENDANCE · 进入 →</span></div>
+        <div class="cs-meta"><div class="cs-head"><b>考勤管理</b><span class="cs-tag">25 屏</span><span class="cs-tag cs-tag--old">旧框架</span></div><p>考勤概览、排班、三步考勤确认、存证和假期额度。</p><span class="cs-go">ATTENDANCE · 进入 →</span></div>
       </a>
     </div>
 
@@ -2257,7 +2697,7 @@
 </div>
 
     <h3 class="sub-head"><span class="num">03</span>剩余页面<span class="sub-en">MORE SCREENS · 32</span><span class="line"></span></h3>
-    <p class="dw-lead">企业端 · 架构图览、企业端 · 企业概览、企业端 · 企业信息、企业端 · 成员权限、企业端 · 成员权限变更、企业端 · 人员异动处理、企业端 · 异动成员权限提醒、企业端 · 用户组管理、企业端 · 邀请人员、企业端 · 申请列表、企业端 · 上下级申请列表、企业端 · 集团上下级、企业端 · 关联组织、企业端 · 资源分配、企业端 · 菜单管理、企业端 · 菜单详情、企业端 · 菜单权限查询、企业端 · 权限审计、企业端 · 权限规则变更记录、企业端 · 日志审计、企业端 · 建立查询任务、企业端 · 数据保护、企业端 · 终端安全、企业端 · 账号安全、企业端 · 登录密码管理、企业端 · 两步验证、企业端 · 多端登录、企业端 · 全局设置、平台端 · 入驻企业列表、平台端 · 菜单分配、平台端 · 菜单管理、平台端 · 菜单详情。</p>
+    <p class="dw-lead">企业端 32 屏加平台端 5 屏：组织与成员、岗位与角色、权限查询与审计、安全与登录、菜单与资源分配，以及平台端的企业入驻与菜单分配。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 284, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/org-19.webp"><img src="assets/shots/thumb/org-19.webp" alt="企业端 · 架构图览" loading="lazy"></a>
       <a href="assets/shots/org-04.webp"><img src="assets/shots/thumb/org-04.webp" alt="企业端 · 企业概览" loading="lazy"></a>
@@ -2298,8 +2738,8 @@
     <!-- ═══ 二级：审批 ═══ -->
     <div class="cs-sub" id="cs-appr" data-cs="appr" hidden>
     <div class="cs-backslot" aria-hidden="true"></div>
-    <div class="sec-head"><h2>审批</h2><span>[APPROVAL · 14 SCREENS]</span></div>
-    <p class="dw-lead">审批中心。左边是待处理 / 已处理 / 我发起 / 抄送我，中间是申请卡片，右边是详情和审批记录。每条申请上挂着 AI 的建议和理由，但同意与拒绝的按钮只有人能点。</p>
+    <div class="sec-head"><h2>审批</h2><span>[APPROVAL · 25 SCREENS]</span></div>
+    <p class="dw-lead">审批中心。左边是待处理 / 已处理 / 我发起 / 抄送我，中间是申请卡片，右边是详情和审批记录。每条申请上挂着 AI 的建议和理由——风险在哪、怎么改能过；同意与拒绝的按钮仍然只有人能点。</p>
 
     <h3 class="sub-head"><span class="num">01</span>逐页讲解<span class="sub-en">PAGES · 5</span><span class="line"></span></h3>
 <div class="pg">
@@ -2309,9 +2749,9 @@
   </div>
 </div>
 <div class="pg">
-  <div class="pg-slot"><a class="pg-shot" href="assets/shots/cs-appr-ai.webp" data-title="AI 分析 · 全屏 · AI 建议拒绝，方案给的是怎样才能同意"><img src="assets/shots/thumb/cs-appr-ai.webp" alt="AI 分析 · 全屏 · AI 建议拒绝，方案给的是怎样才能同意" loading="lazy"></a></div>
-  <div class="pg-body"><h4><span class="pg-n">2.</span>AI 分析 · 全屏<em>AI 建议拒绝，方案给的是怎样才能同意</em></h4>
-    <p>右侧 AI 面板三段：情况概述、风险预估（任务名称 / 截止时间 / 完成度 / 风险 / 核心职责的表格）、方案建议一和二。AI 跨系统读了项目管理里的任务数据，才判断出这次请假撞上了「表单开发」攻坚期。底部有追问输入框。</p><p class="pg-note">这页最值钱的一处是：AI 的结论是「拒绝」，但方案建议写的是推迟到项目截止后休、或者找谁交接。AI 不替人决定，AI 帮人把「不行」变成「怎样才行」。</p>
+  <div class="pg-slot"><a class="pg-shot" href="assets/shots/cs-appr-ai.webp" data-title="AI 分析 · 全屏 · 风险摊开，给出这张单子怎么改能过"><img src="assets/shots/thumb/cs-appr-ai.webp" alt="AI 分析 · 全屏 · 风险摊开，给出这张单子怎么改能过" loading="lazy"></a></div>
+  <div class="pg-body"><h4><span class="pg-n">2.</span>AI 分析 · 全屏<em>风险摊开，给出这张单子怎么改能过</em></h4>
+    <p>右侧 AI 面板三段：情况概述、风险预估（任务名称 / 截止时间 / 完成度 / 风险 / 核心职责的表格）、方案建议一和二。AI 跨系统读了项目管理里的任务数据，看出这次请假撞上了「表单开发」攻坚期。底部有追问输入框。</p><p class="pg-note">这块面板回答的不是「这个人行不行」，是「这张单子怎么审、怎么改能过、要避开哪些风险」。先把风险摊开：哪个任务、截止到哪天、完成度多少、谁在接手；再给可执行的改法——休假日期挪到项目截止之后，或者把测试、改 bug、分享会分别找人接。审批人照着改一处就能放行，申请人也知道自己该调整什么。</p>
   </div>
 </div>
 <div class="pg">
@@ -2333,8 +2773,8 @@
   </div>
 </div>
 
-    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 9</span><span class="line"></span></h3>
-    <p class="dw-lead">我发起的、已处理、抄送我、会签 · 均通过、协同人、查看反馈、消息、表单、费用报销。</p>
+    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 20</span><span class="line"></span></h3>
+    <p class="dw-lead">另外 20 屏：四类入口与会签或签、协同人与评论、查看反馈、消息与回复、流程设计器与全局设置、表单与费用报销。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 284, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/cs-appr-mine.webp"><img src="assets/shots/thumb/cs-appr-mine.webp" alt="我发起的" loading="lazy"></a>
       <a href="assets/shots/cs-appr-done.webp"><img src="assets/shots/thumb/cs-appr-done.webp" alt="已处理" loading="lazy"></a>
@@ -2342,9 +2782,20 @@
       <a href="assets/shots/cs-appr-all.webp"><img src="assets/shots/thumb/cs-appr-all.webp" alt="会签 · 均通过" loading="lazy"></a>
       <a href="assets/shots/cs-appr-collab.webp"><img src="assets/shots/thumb/cs-appr-collab.webp" alt="协同人" loading="lazy"></a>
       <a href="assets/shots/cs-appr-feedback.webp"><img src="assets/shots/thumb/cs-appr-feedback.webp" alt="查看反馈" loading="lazy"></a>
-      <a href="assets/shots/cs-appr-msg.webp"><img src="assets/shots/thumb/cs-appr-msg.webp" alt="消息" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-msg.webp"><img src="assets/shots/thumb/cs-appr-msg.webp" alt="审批 · 消息" loading="lazy"></a>
       <a href="assets/shots/cs-appr-form.webp"><img src="assets/shots/thumb/cs-appr-form.webp" alt="表单" loading="lazy"></a>
       <a href="assets/shots/cs-appr-expense.webp"><img src="assets/shots/thumb/cs-appr-expense.webp" alt="费用报销" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-comment-field.webp"><img src="assets/shots/thumb/cs-appr-w-comment-field.webp" alt="评论 · 落在字段上" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-msgcard.webp"><img src="assets/shots/thumb/cs-appr-w-msgcard.webp" alt="消息卡片" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-anypass.webp"><img src="assets/shots/thumb/cs-appr-w-anypass.webp" alt="或签 · 一人通过即可" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-collapsed.webp"><img src="assets/shots/thumb/cs-appr-w-collapsed.webp" alt="收起导航" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-collab2.webp"><img src="assets/shots/thumb/cs-appr-w-collab2.webp" alt="协同人 · 展开" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-comment-b.webp"><img src="assets/shots/thumb/cs-appr-w-comment-b.webp" alt="评论 · 方案二" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-feedback2.webp"><img src="assets/shots/thumb/cs-appr-w-feedback2.webp" alt="查看反馈 · 销假" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-msglist.webp"><img src="assets/shots/thumb/cs-appr-w-msglist.webp" alt="表单详情 · 带封面" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-reply.webp"><img src="assets/shots/thumb/cs-appr-w-reply.webp" alt="消息中心 · 回复" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-new.webp"><img src="assets/shots/thumb/cs-appr-w-new.webp" alt="流程设计器 · 已有流程" loading="lazy"></a>
+      <a href="assets/shots/cs-appr-w-new-field.webp"><img src="assets/shots/thumb/cs-appr-w-new-field.webp" alt="流程设计器 · 全局设置" loading="lazy"></a>
     </div>
     <p class="dw-hint">鼠标停在哪一张，那一列就停；点开看大图</p>
     </div>
@@ -2352,7 +2803,7 @@
     <!-- ═══ 二级：招聘 ═══ -->
     <div class="cs-sub" id="cs-hire" data-cs="hire" hidden>
     <div class="cs-backslot" aria-hidden="true"></div>
-    <div class="sec-head"><h2>招聘</h2><span>[RECRUITING · 旧框架 · 14 SCREENS]</span></div>
+    <div class="sec-head"><h2>招聘</h2><span>[RECRUITING · 旧框架 · 25 SCREENS]</span></div>
     <p class="dw-lead">招聘前台，旧框架。职位、候选人、面试管理、Offer、内推、统计报表一整条线。面试空间那一页三年前就做了实时转写和 AI 标签，是后来会议系统实时转写的同一条能力线。</p>
 
     <h3 class="sub-head"><span class="num">01</span>逐页讲解<span class="sub-en">PAGES · 5</span><span class="line"></span></h3>
@@ -2387,8 +2838,8 @@
   </div>
 </div>
 
-    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 9</span><span class="line"></span></h3>
-    <p class="dw-lead">简历库、面试管理 · 面试列表、面试列表 · 详情简历、候选人 · 安排面试、面试待办 · 今日初筛、内推、面试空间 · 发言人、面试空间 · 面试题、招聘管理。</p>
+    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 20</span><span class="line"></span></h3>
+    <p class="dw-lead">另外 20 屏：职位与筛选、简历库、初筛与淘汰、安排面试与换岗位、面试待办四态、Offer 与待入职、内推、人才标签、面试空间与面试题。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 284, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/cs-hire-resumes.webp"><img src="assets/shots/thumb/cs-hire-resumes.webp" alt="简历库" loading="lazy"></a>
       <a href="assets/shots/cs-hire-list.webp"><img src="assets/shots/thumb/cs-hire-list.webp" alt="面试管理 · 面试列表" loading="lazy"></a>
@@ -2399,6 +2850,17 @@
       <a href="assets/shots/cs-hire-speaker.webp"><img src="assets/shots/thumb/cs-hire-speaker.webp" alt="面试空间 · 发言人" loading="lazy"></a>
       <a href="assets/shots/cs-hire-questions.webp"><img src="assets/shots/thumb/cs-hire-questions.webp" alt="面试空间 · 面试题" loading="lazy"></a>
       <a href="assets/shots/cs-hire-manage.webp"><img src="assets/shots/thumb/cs-hire-manage.webp" alt="招聘管理" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-overview-empty.webp"><img src="assets/shots/thumb/cs-hire-w-overview-empty.webp" alt="招聘概览 · 空态" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-jobs-filter.webp"><img src="assets/shots/thumb/cs-hire-w-jobs-filter.webp" alt="职位 · 筛选" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-screen-empty.webp"><img src="assets/shots/thumb/cs-hire-w-screen-empty.webp" alt="初筛 · 未选择" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-rejected.webp"><img src="assets/shots/thumb/cs-hire-w-rejected.webp" alt="候选人 · 已淘汰" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-sendoffer.webp"><img src="assets/shots/thumb/cs-hire-w-sendoffer.webp" alt="候选人 · 发送 Offer" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-changejob.webp"><img src="assets/shots/thumb/cs-hire-w-changejob.webp" alt="面试 · 换岗位" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-files.webp"><img src="assets/shots/thumb/cs-hire-w-files.webp" alt="面试 · 相关文件" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-form.webp"><img src="assets/shots/thumb/cs-hire-w-form.webp" alt="应聘登记表" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-onboarding.webp"><img src="assets/shots/thumb/cs-hire-w-onboarding.webp" alt="面试待办 · 待入职" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-questions-rec.webp"><img src="assets/shots/thumb/cs-hire-w-questions-rec.webp" alt="面试题 · 录制面试" loading="lazy"></a>
+      <a href="assets/shots/cs-hire-w-tags.webp"><img src="assets/shots/thumb/cs-hire-w-tags.webp" alt="人才标签" loading="lazy"></a>
     </div>
     <p class="dw-hint">鼠标停在哪一张，那一列就停；点开看大图</p>
     </div>
@@ -2406,7 +2868,7 @@
     <!-- ═══ 二级：薪酬管理 ═══ -->
     <div class="cs-sub" id="cs-pay" data-cs="pay" hidden>
     <div class="cs-backslot" aria-hidden="true"></div>
-    <div class="sec-head"><h2>薪酬管理</h2><span>[PAYROLL · 旧框架 · 14 SCREENS]</span></div>
+    <div class="sec-head"><h2>薪酬管理</h2><span>[PAYROLL · 旧框架 · 25 SCREENS]</span></div>
     <p class="dw-lead">薪资社保模块，旧框架。薪酬看板、四步核算薪资、计薪规则、工资条发送。核算那一屏可以用下面的上一步 / 下一步走完整条流程。</p>
 
     <h3 class="sub-head"><span class="num">01</span>逐页讲解<span class="sub-en">PAGES · 4</span><span class="line"></span></h3>
@@ -2443,8 +2905,8 @@
   </div>
 </div>
 
-    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 7</span><span class="line"></span></h3>
-    <p class="dw-lead">薪酬档案、查看更多公式场景、设置工资条 · 员工签字、核算薪资 · 停留过久、核算薪资 · 明细、薪酬档案 · 批量调薪、工资条管理。</p>
+    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 18</span><span class="line"></span></h3>
+    <p class="dw-lead">另外 18 屏：薪酬档案与批量调薪、计薪规则与公式场景、社保同步、核算异常与明细、工资条设置与签字、发送与定时发送。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 284, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/cs-pay-archive.webp"><img src="assets/shots/thumb/cs-pay-archive.webp" alt="薪酬档案" loading="lazy"></a>
       <a href="assets/shots/cs-pay-formula.webp"><img src="assets/shots/thumb/cs-pay-formula.webp" alt="查看更多公式场景" loading="lazy"></a>
@@ -2453,6 +2915,17 @@
       <a href="assets/shots/cs-pay-detail.webp"><img src="assets/shots/thumb/cs-pay-detail.webp" alt="核算薪资 · 明细" loading="lazy"></a>
       <a href="assets/shots/cs-pay-batch.webp"><img src="assets/shots/thumb/cs-pay-batch.webp" alt="薪酬档案 · 批量调薪" loading="lazy"></a>
       <a href="assets/shots/cs-pay-slips.webp"><img src="assets/shots/thumb/cs-pay-slips.webp" alt="工资条管理" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-sync.webp"><img src="assets/shots/thumb/cs-pay-w-sync.webp" alt="薪资社保 · 同步" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-sync-done.webp"><img src="assets/shots/thumb/cs-pay-w-sync-done.webp" alt="同步完成" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-rule-people.webp"><img src="assets/shots/thumb/cs-pay-w-rule-people.webp" alt="规则设置 · 选择人员" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-rule-add.webp"><img src="assets/shots/thumb/cs-pay-w-rule-add.webp" alt="规则设置 · 添加薪资项" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-sickleave.webp"><img src="assets/shots/thumb/cs-pay-w-sickleave.webp" alt="病假扣除规则" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-adjust-hist.webp"><img src="assets/shots/thumb/cs-pay-w-adjust-hist.webp" alt="调薪历史" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-import.webp"><img src="assets/shots/thumb/cs-pay-w-import.webp" alt="导入导出模板" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-float.webp"><img src="assets/shots/thumb/cs-pay-w-float.webp" alt="确认浮动数据并修改" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-step4.webp"><img src="assets/shots/thumb/cs-pay-w-step4.webp" alt="核算第四步 · 完成" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-sent-all.webp"><img src="assets/shots/thumb/cs-pay-w-sent-all.webp" alt="发送成功 · 全部" loading="lazy"></a>
+      <a href="assets/shots/cs-pay-w-schedule.webp"><img src="assets/shots/thumb/cs-pay-w-schedule.webp" alt="工资条 · 定时发送" loading="lazy"></a>
     </div>
     <p class="dw-hint">鼠标停在哪一张，那一列就停；点开看大图</p>
     </div>
@@ -2460,7 +2933,7 @@
     <!-- ═══ 二级：考勤管理 ═══ -->
     <div class="cs-sub" id="cs-att" data-cs="att" hidden>
     <div class="cs-backslot" aria-hidden="true"></div>
-    <div class="sec-head"><h2>考勤管理</h2><span>[ATTENDANCE · 旧框架 · 14 SCREENS]</span></div>
+    <div class="sec-head"><h2>考勤管理</h2><span>[ATTENDANCE · 旧框架 · 25 SCREENS]</span></div>
     <p class="dw-lead">考勤模块，旧框架。考勤概览（月度汇总 / 每日汇总 / 打卡时间 / 原始记录）、排班管理、三步考勤确认、考勤存证、假期规则和剩余额度。考勤确认那一屏可以用下面的上一步 / 下一步走完三步。</p>
 
     <h3 class="sub-head"><span class="num">01</span>逐页讲解<span class="sub-en">PAGES · 5</span><span class="line"></span></h3>
@@ -2503,8 +2976,8 @@
   </div>
 </div>
 
-    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 7</span><span class="line"></span></h3>
-    <p class="dw-lead">考勤概览 · 每日汇总、考勤概览 · 原始记录、考勤概览 · 打卡时间、考勤组、班次管理、加班规则、假勤分析。</p>
+    <h3 class="sub-head"><span class="num">02</span>剩余页面<span class="sub-en">MORE SCREENS · 18</span><span class="line"></span></h3>
+    <p class="dw-lead">另外 18 屏：考勤概览四视图、排班与班次、考勤组与加班规则、三步确认的各种状态、考勤存证、假期规则与请假记录。</p>
     <div class="dw" data-dw='{"columns": 3, "tileW": 400, "tileH": 284, "gap": 16, "radius": 14, "tilt": 16, "turn": -14, "roll": 0, "perspective": 1200, "depth": 120, "speed": 24, "direction": "up", "variance": 0.35, "parallax": 1.7, "pauseOnHover": false, "lift": 64, "fade": 0.22, "dim": 0.96, "grayscale": false, "overlay": "#06060A"}'>
       <a href="assets/shots/cs-att-daily.webp"><img src="assets/shots/thumb/cs-att-daily.webp" alt="考勤概览 · 每日汇总" loading="lazy"></a>
       <a href="assets/shots/cs-att-raw.webp"><img src="assets/shots/thumb/cs-att-raw.webp" alt="考勤概览 · 原始记录" loading="lazy"></a>
@@ -2513,6 +2986,17 @@
       <a href="assets/shots/cs-att-shiftmgmt.webp"><img src="assets/shots/thumb/cs-att-shiftmgmt.webp" alt="班次管理" loading="lazy"></a>
       <a href="assets/shots/cs-att-overtime.webp"><img src="assets/shots/thumb/cs-att-overtime.webp" alt="加班规则" loading="lazy"></a>
       <a href="assets/shots/cs-att-analysis.webp"><img src="assets/shots/thumb/cs-att-analysis.webp" alt="假勤分析" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-monthly-lead.webp"><img src="assets/shots/thumb/cs-att-w-monthly-lead.webp" alt="月度汇总 · 考勤组组长" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-fields.webp"><img src="assets/shots/thumb/cs-att-w-fields.webp" alt="月度汇总 · 设置字段" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-confirm-list.webp"><img src="assets/shots/thumb/cs-att-w-confirm-list.webp" alt="考勤确认 · 列表" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-remind.webp"><img src="assets/shots/thumb/cs-att-w-remind.webp" alt="考勤确认 · 提醒" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-scope.webp"><img src="assets/shots/thumb/cs-att-w-scope.webp" alt="确认范围 · 选择人员" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-items.webp"><img src="assets/shots/thumb/cs-att-w-items.webp" alt="确认范围 · 选择考勤项" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-groupsel.webp"><img src="assets/shots/thumb/cs-att-w-groupsel.webp" alt="确认范围 · 考勤组选择" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-send.webp"><img src="assets/shots/thumb/cs-att-w-send.webp" alt="考勤确认 · 发送界面" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-leave-rec.webp"><img src="assets/shots/thumb/cs-att-w-leave-rec.webp" alt="假期管理 · 请假记录" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-holiday.webp"><img src="assets/shots/thumb/cs-att-w-holiday.webp" alt="加班规则 · 法定节假日" loading="lazy"></a>
+      <a href="assets/shots/cs-att-w-leave-rule.webp"><img src="assets/shots/thumb/cs-att-w-leave-rule.webp" alt="假期管理 · 假期规则" loading="lazy"></a>
     </div>
     <p class="dw-hint">鼠标停在哪一张，那一列就停；点开看大图</p>
     </div>
@@ -2520,8 +3004,10 @@
   </div>
 </section>
 
-
-
+<a class="cs-backbar" id="cs-backbar" href="#p-cses" hidden><i>←</i>返回 · 其他模块</a>
+<a class="cs-backbar" id="cs-backbar" href="#p-cses" hidden><i>←</i>返回 · 其他模块</a>
+<a class="cs-backbar" id="cs-backbar" href="#p-cses" hidden><i>←</i>返回 · 其他模块</a>
+<a class="cs-backbar" id="cs-backbar" href="#p-cses" hidden><i>←</i>返回 · 其他模块</a>
 <a class="cs-backbar" id="cs-backbar" href="#p-cses" hidden><i>←</i>返回 · 其他模块</a>
 <a class="cs-backbar" id="cs-backbar" href="#p-cses" hidden><i>←</i>返回 · 其他模块</a>
 <div class="rail" id="rail" aria-label="章节导航"></div>
@@ -2894,6 +3380,10 @@
 </script>
 <script src="assets/cs-hub.js?v=efb196dc"></script>
 <script src="assets/cs-hub.js?v=efb196dc"></script>
+<script src="assets/cs-hub.js?v=efb196dc"></script>
+<script src="assets/cs-hub.js?v=efb196dc"></script>
+<script src="assets/cs-hub.js?v=efb196dc"></script>
+<script src="assets/cs-hub.js?v=efb196dc"></script>
 <script src="assets/letter-magnet.js?v=76ad3f71"></script>
 <script>LetterMagnet.mount('.hero-line1, .hero-line2');</script>
 
@@ -3033,7 +3523,7 @@
        Border Size 0.05 / Circle Size 0.25 / Circle Edge 1 */
     if (window.ShapeBlur) ShapeBlur.mount('.about-col-photo', {
       slot: '.portrait-slot',
-      roundness: 0.5, borderSize: 0.05, circleSize: 0.25, circleEdge: 1
+      roundness: 0.22, borderSize: 0.05, circleSize: 0.25, circleEdge: 1
     });
   };
   document.head.appendChild(s);
@@ -3244,7 +3734,11 @@ document.querySelectorAll('.bento-card--sm').forEach(function (c) {
      startedArmed：当前这一次触摸，是不是在「已经停在底部」的状态下按下的。
      两个都为真才计进度 —— 否则「一路滑到底」的那同一次甩动会直接把人带进下一章。 */
   var released = false, startedArmed = false;
-  function hint(){ kEl.textContent = released ? '上滑进入下一章 · 或点这里' : '本章到底了 · 松开手指'; }
+  /* 只看距离不行：手指快甩一下轻松就是五六百像素，读到底那一下顺手一滑就翻页了
+     （owner：「翻着翻着就自动跳到最顶端」）。加一条时间门槛 —— 必须在到底状态下
+     按住往上拖够 HOLD 毫秒，快甩因为松手太早不算数。 */
+  var HOLD = 340, pullT0 = 0;
+  function hint(){ kEl.textContent = released ? '按住往上拖 · 或点这里进入' : '本章到底了 · 松开手指'; }
   function cur(){ var a = document.querySelector('.tab-btn.active'); return a ? a.dataset.tab : null; }
   function next(){
     var k = cur(), i = -1;
@@ -3263,12 +3757,12 @@ document.querySelectorAll('.bento-card--sm').forEach(function (c) {
       hint();
       bar.hidden = false;
       requestAnimationFrame(function(){ bar.classList.add('on'); });
-    } else { bar.classList.remove('on'); acc = 0; setP(0); released = false; }
+    } else { bar.classList.remove('on'); acc = 0; pullT0 = 0; setP(0); released = false; }
     armed = on;
   }
   function go(){
     var n = next(); if (!n || !window.__showTab) return;
-    lock = Date.now(); acc = 0; setP(0); bar.classList.remove('on'); armed = false; released = false;
+    lock = Date.now(); acc = 0; pullT0 = 0; setP(0); bar.classList.remove('on'); armed = false; released = false;
     /* 切章过场：先盖一层写着下一章名字的幕，再换内容。
        手机上一滑就整页换掉太突兀，给三百毫秒让人知道去了哪儿。 */
     var ld = document.getElementById('nbLoad');
@@ -3289,9 +3783,13 @@ document.querySelectorAll('.bento-card--sm').forEach(function (c) {
   function push(d, needGesture){
     if (!armed || d <= 0 || Date.now() - lock < 800) return;
     if (needGesture && (!released || !startedArmed)) return;   /* 必须是松手之后新起的一次上滑 */
-    acc += d; setP(acc / TH);
-    clearTimeout(decayT); decayT = setTimeout(function(){ acc = 0; setP(0); }, 700);
-    if (acc >= TH) go();
+    if (!pullT0) pullT0 = Date.now();
+    acc += d;
+    var held = Date.now() - pullT0;
+    /* 进度条同时反映「拖了多远」和「拖了多久」，取小的那个，用户看得见还差什么 */
+    setP(Math.min(acc / TH, needGesture ? held / HOLD : 1));
+    clearTimeout(decayT); decayT = setTimeout(function(){ acc = 0; pullT0 = 0; setP(0); }, 700);
+    if (acc >= TH && (!needGesture || held >= HOLD)) go();
   }
   var ly = null;
   addEventListener('touchstart', function(e){
@@ -3304,7 +3802,7 @@ document.querySelectorAll('.bento-card--sm').forEach(function (c) {
     if (atBottom()) push(d, true);
   }, { passive: true });
   addEventListener('touchend', function(){
-    ly = null; startedArmed = false; acc = 0; setP(0);
+    ly = null; startedArmed = false; acc = 0; pullT0 = 0; setP(0);
     if (armed && !released) { released = true; hint(); }   /* 松手之后才提示可以上滑跳转 */
   }, { passive: true });
   addEventListener('wheel', function(e){ if (atBottom()) push(e.deltaY, false); }, { passive: true });

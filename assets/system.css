@@ -540,6 +540,39 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   color:var(--fg-2)!important}
 .cmp-so b{color:var(--fg);font-weight:500}
 
+/* 章内示意图（04 旅程 / 05 竞品定位 / 07 链路）：内联 SVG，颜色全走变量 */
+.dg{display:block;width:100%;height:auto;margin-top:var(--sp-block);
+  border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.dg text{font-family:var(--font-body);fill:var(--fg-3);font-weight:300}
+.dg .k{font-family:var(--font-display);font-weight:500;fill:var(--fg)}
+.dg .m{font-family:var(--font-mono);letter-spacing:.12em;fill:var(--fg-4)}
+.dg .dim{fill:var(--fg-4)}
+.dg .vio{fill:var(--violet)}
+.dg .red{fill:#E0575B}
+.dg .lane{fill:rgba(255,255,255,.022)}
+.dg .bxAI{fill:rgba(122,87,208,.10);stroke:rgba(122,87,208,.42);stroke-width:1}
+.dg .bxHU{fill:rgba(255,255,255,.05);stroke:var(--line-2);stroke-width:1}
+.dg .bxGate{fill:rgba(122,87,208,.18);stroke:var(--violet);stroke-width:1.5}
+.dg .ln{stroke:var(--line-2);stroke-width:1;fill:none}
+.dg .lnV{stroke:var(--violet);stroke-width:1.5;fill:none}
+.dg .lnR{stroke:rgba(224,87,91,.55);stroke-width:1.5;fill:none;stroke-dasharray:5 5}
+.dg .gate{stroke:var(--violet);stroke-width:1;stroke-dasharray:3 4;opacity:.6}
+.dg .dot{fill:var(--fg-4)}
+.dg .dotV{fill:var(--violet)}
+/* 09 有它 · 没它：三列对照（事 / 没它 / 有它） */
+.wow{display:grid;grid-template-columns:minmax(110px,.85fr) 1.2fr 1.5fr;gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:var(--sp-block)}
+.wow>div{background:var(--surface);padding:15px 18px;font-size:13.5px;font-weight:300;line-height:1.8}
+.wow .wh{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--fg-4);padding:13px 18px}
+.wow .wk{font-family:var(--font-display);font-size:14px;font-weight:500;color:var(--fg);letter-spacing:.01em}
+.wow .wo{color:var(--fg-4)}
+.wow .wn{color:var(--fg-2)}
+.wow .wn b{color:var(--fg);font-weight:500}
+@media(max-width:640px){.wow{grid-template-columns:1fr}.wow .wh{display:none}
+  .wow .wk{padding-top:20px}
+  .wow .wo::before{content:'没它　';font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;color:#E0575B}
+  .wow .wn::before{content:'有它　';font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;color:var(--violet)}}
 .cmp-foot{font-size:13.5px;font-weight:300;line-height:1.9;color:var(--fg-3);
   max-width:78ch;margin:var(--sp-block) 0 0}
 .cmp-foot b{color:var(--fg-2);font-weight:500}
@@ -601,6 +634,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 /* 整节待填的占位：不编，列出要填什么 */
 .pg-empty{align-items:flex-start;text-align:left;padding:22px 26px}
 .pg-empty ul{margin:4px 0 0;padding:0 0 0 18px;color:var(--fg-4);font-size:12.5px;line-height:1.9;font-weight:300}
+.pg-empty ul b{color:var(--fg-2);font-weight:500}   /* 占位里的小标题 */
 .ph-red .fig-no{color:#E0575B;border-color:rgba(224,87,91,.45)}
 
 /* ── NOTA 用户旅程 · 改前 vs 改后 ──────────────────────────
@@ -609,9 +643,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    两轨用颜色分：旧版偏红（问题），新版紫（这一版做的）。 */
 .jrn-lead{font-size:15px;font-weight:300;line-height:1.9;color:var(--fg-3);max-width:74ch;margin:0 0 var(--sp-block)}
 .jrn-lead b{color:var(--fg-2);font-weight:500}
-.jrn{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+.jrn{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto 1fr;gap:1px;background:var(--line);
   border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.jrn-stage{background:var(--surface);display:flex;flex-direction:column}
+.jrn-stage{background:var(--surface);display:grid;grid-template-rows:subgrid;grid-row:span 3;row-gap:0}
+/* 三列共用父级的三行（标题 / 没它 / 有它）——各列自己 flex 时高度不一致，分界线会错开 */
 .jrn-st{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line);
   font-family:var(--font-display);font-size:15px;font-weight:500;color:var(--fg);letter-spacing:.01em}
 .jrn-st i{font-family:var(--font-mono);font-size:10px;font-style:normal;letter-spacing:.08em;
@@ -929,3 +964,58 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .nb-load.on .nl-line::after{content:'';position:absolute;inset:0;background:var(--blue);transform-origin:left;
   animation:nlrun .52s cubic-bezier(.22,1,.36,1) forwards}
 @keyframes nlrun{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ── 文档库章的四张手绘示意图（04 旅程 / 05 竞品 / 06 现状 / 07 连接器）── */
+.dfig{width:100%;height:auto;display:block;font-family:var(--font-display)}
+.dfig .d-card{fill:rgba(255,255,255,.03);stroke:var(--line-2);stroke-width:1}
+.dfig .d-card--v{fill:rgba(139,110,255,.11);stroke:var(--violet);stroke-width:1.5}
+.dfig .d-card--bad{fill:rgba(224,87,91,.06);stroke:rgba(224,87,91,.32);stroke-width:1}
+.dfig .d-chip{fill:rgba(255,255,255,.05);stroke:var(--line)}
+.dfig .d-chip--v{fill:rgba(139,110,255,.14);stroke:rgba(139,110,255,.5)}
+.dfig .d-t{font-size:14px;font-weight:500;fill:var(--fg-2)}
+.dfig .d-t--w{font-size:17px;font-weight:500;fill:#fff}
+.dfig .d-d{font-size:11.5px;font-weight:300;fill:var(--fg-4)}
+.dfig .d-lbl{font-size:11px;font-weight:300;fill:var(--fg-3)}
+.dfig .d-h{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.14em;fill:var(--fg-4)}
+.dfig .d-h--v{fill:var(--violet)}
+.dfig .d-h--bad{fill:#E0575B}
+.dfig .d-ln{fill:none;stroke:rgba(255,255,255,.22);stroke-width:1.2}
+.dfig .d-ln--v{fill:none;stroke:rgba(139,110,255,.6);stroke-width:1.4}
+.dfig .d-ln--bad{fill:none;stroke:rgba(224,87,91,.5);stroke-width:1.2;stroke-dasharray:5 4}
+.dfig .d-x{fill:none;stroke:#E0575B;stroke-width:1.8;stroke-linecap:round}
+.dfig .d-tip{fill:rgba(255,255,255,.4)}
+.dfig .d-tip--v{fill:var(--violet)}
+.dfig .d-tip--bad{fill:#E0575B}
+.dfig .d-strip{fill:rgba(255,255,255,.025);stroke:var(--line)}
+.dfig .d-dot{fill:var(--violet)}
+.dfig .d-dot--bad{fill:rgba(224,87,91,.5)}
+.fig figcaption{margin-top:10px;font-size:12px;font-weight:300;line-height:1.7;color:var(--fg-4)}
+@media(max-width:700px){.dfig .d-d,.dfig .d-lbl{font-size:12px}.dfig .d-t{font-size:15px}}
+
+/* 手机上示意图不缩成蚂蚁字：画布保持原宽，容器横向滑动 */
+@media(max-width:820px){
+  .fig:has(.dfig){overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px}
+  .fig:has(.dfig)::-webkit-scrollbar{height:4px}
+  .fig:has(.dfig)::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:2px}
+  .dfig{width:1000px;max-width:none}
+  .fig:has(.dfig) figcaption{position:sticky;left:0;width:calc(100vw - 2 * var(--gutter))}
+  .fig:has(.dfig) figcaption::after{content:"　← 左右滑动看全图";color:var(--fg-4)}
+}
+@media(max-width:820px){
+  .dfig .d-d,.dfig .d-lbl{font-size:13.5px}
+  .dfig .d-t{font-size:16.5px}
+  .dfig .d-t--w{font-size:19px}
+  .dfig .d-h{font-size:11px}
+}
+
+/* 个人优势里句内加重：正文是 300 字重的浅灰，重点处提亮提重，
+   但不能重到跟上面那行标签抢，所以字重停在 500、颜色用 fg-2 不用纯白。 */
+.about-str-list li strong{color:var(--fg-2);font-weight:500}
+
+/* 工作经历：每条前面带一个小标题，和简历一致。
+   标题跟正文同一行起排，靠字重和颜色分层，不另起一行——
+   每段六条，标题各占一行会把这一块拉得过长。 */
+.ae-bullets li b{color:var(--fg);font-weight:500;margin-right:.5em}
+.ae-bullets li b::after{content:'：';font-weight:400;color:var(--fg-4);margin-left:.05em}
+/* 主体变更那行小字，压在公司名下面 */
+.ae-note{font-family:var(--font-display);font-size:12px;font-weight:300;color:var(--fg-4);line-height:1.7;margin:-4px 0 10px}

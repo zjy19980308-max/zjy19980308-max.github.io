@@ -166,6 +166,7 @@
   /* 实时转写 / 待办（Figma 53:10787 · owner 2026-08-14）*/
   --cs-color-meeting-check: #d9d9d9;
   --cs-color-meeting-mark-bg: #e5ecff;
+  --cs-color-meeting-vote-picked: #eaecff;               /* 投票里选中那张卡的底（跟隔壁那份对齐，实测 rgb(234,236,255)）*/
   --cs-color-meeting-soft-fill: #f5f5f5;                  /* 小圆钮/浅填充（会话头那个 > 钮）*/
   --cs-color-meeting-vote-card: #f5f5f5;                  /* 投票态 KR 卡底（Figma 77:2881）*/
   --cs-color-meeting-mark-src: #fff1c1;                   /* 「这几句话分析出了这条」的黄色标记（Figma 56:13061 实测取色）*/
@@ -860,6 +861,7 @@ html[data-theme="meeting-dark"] {
   --cs-color-meeting-accent-ghost:  rgba(123, 136, 255, .08);
   --cs-color-meeting-hangup:        #e2604f;
   --cs-color-meeting-mark-bg:       rgba(123, 136, 255, .22);   /* 转写里人名胶囊底 */
+  --cs-color-meeting-vote-picked:   rgba(123, 136, 255, .18);
   --cs-color-meeting-soft-fill:     rgba(255, 255, 255, .08);
   --cs-color-meeting-vote-card:     rgba(255, 255, 255, .06);
   --cs-color-meeting-mark-src:      rgba(255, 209, 102, .24);   /* 深色下黄标记压成半透明琥珀，白字才读得清 */

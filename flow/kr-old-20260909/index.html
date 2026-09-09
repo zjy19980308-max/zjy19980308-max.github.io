@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KR 填写 · 改版前</title>
+<style>
+:root{--pri:#4b5bd7;--ink:#333;--ink2:#666;--ink3:#999;--line:#e6e6e6;--wall:#5b62d6;
+  --font:"PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#eceef3;color:var(--ink);font:14px/1.5 var(--font);-webkit-font-smoothing:antialiased}
+.app{position:relative;height:100%;display:flex;flex-direction:column;background:#f4f5f8;overflow:hidden}
+.tbar{flex:none;height:34px;display:flex;align-items:center;gap:8px;padding:0 12px;background:#fff;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink2)}
+.tbar .dots{display:flex;gap:6px}.tbar .dots i{width:10px;height:10px;border-radius:50%;display:block}
+.tbar .dots i:nth-child(1){background:#ff5f57}.tbar .dots i:nth-child(2){background:#febc2e}.tbar .dots i:nth-child(3){background:#28c840}
+.tbar .std{margin-left:auto;color:var(--ink3)}
+.body{flex:1;min-height:0;display:flex}
+.stage{flex:1;min-width:0;position:relative;display:flex;flex-direction:column;padding:10px;gap:10px}
+.tiles{flex:none;display:flex;gap:10px;justify-content:center}
+.tile{width:150px;height:74px;border-radius:8px;background:#e9ebf2;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;font-size:12px;color:var(--ink2)}
+.tile .av{position:absolute;margin-bottom:26px;width:38px;height:38px;border-radius:50%;background:#c9cef0}
+.wall{flex:1;border-radius:10px;background:var(--wall);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#fff;position:relative;overflow:hidden}
+.wall h2{margin:0;font-size:22px;font-weight:600}
+.wall .qr{width:104px;height:104px;background:#fff;border-radius:6px}
+.wall .meta{font-size:12px;opacity:.9}
+.side{flex:none;width:280px;border-left:1px solid var(--line);background:#fff;display:flex;flex-direction:column}
+.side .tabs{display:flex;padding:8px;gap:6px}
+.side .tabs span{flex:1;text-align:center;padding:6px;border-radius:6px;font-size:12px;color:var(--ink2)}
+.side .tabs span.on{background:#f0f1f6;color:var(--ink)}
+.side .rows{flex:1;overflow:auto;padding:0 10px 10px}
+.side .r{display:flex;align-items:center;gap:8px;padding:9px 4px;border-bottom:1px solid #f3f3f5;font-size:12.5px}
+.side .r .a{width:26px;height:26px;border-radius:50%;background:#dfe2ee;flex:none}
+.side .r small{color:var(--ink3);font-size:11px;display:block}
+.side .r .ic{margin-left:auto;color:var(--ink3);font-size:11px}
+.dock{flex:none;height:52px;background:#fff;border-top:1px solid var(--line);display:flex;align-items:center;gap:22px;padding:0 16px;font-size:11.5px;color:var(--ink2)}
+.dock b{font-weight:400}.dock .sp{margin-left:auto}
+/* ── 改版前：整块弹窗压在会议上 ── */
+.mask{position:absolute;inset:0;background:rgba(20,22,40,.34);display:none;align-items:center;justify-content:center;z-index:20}
+.mask.on{display:flex}
+.mdl{width:min(700px,86%);max-height:86%;background:#fff;border-radius:16px;box-shadow:0 22px 60px rgba(0,0,0,.28);display:flex;flex-direction:column;overflow:hidden}
+.steps{flex:none;display:flex;align-items:center;justify-content:center;gap:18px;padding:18px 22px 6px;font-size:13px;color:var(--ink3)}
+.steps .cur{display:flex;align-items:center;gap:8px}
+.steps .cur .kr{width:44px;height:34px;border-radius:6px;background:#3fb0ff;color:#fff;font:700 13px var(--font);display:flex;align-items:center;justify-content:center}
+.steps .cur b{font-size:22px;color:var(--ink);font-weight:700}
+.steps .cur em{font-style:normal;font-size:12px;color:#f5222d;display:block}
+.steps .dash{width:74px;border-top:1px dashed #d9d9de}
+.steps .done{color:#3aa76d}
+.mdl h3{margin:6px 22px 12px;font-size:16px;font-weight:600}
+.mbody{flex:1;min-height:0;overflow:auto;padding:0 22px 8px}
+.ta{border:1px solid var(--line);border-radius:8px;padding:10px 12px 22px;margin-bottom:12px;position:relative;font-size:13.5px;color:var(--ink);min-height:64px}
+.ta.ph{color:var(--ink3)}
+.ta i{position:absolute;right:10px;bottom:6px;font-style:normal;font-size:11px;color:var(--ink3)}
+.hint{font-size:11.5px;color:var(--ink3);margin:2px 0 6px}
+.grp{margin-bottom:10px}.grp .gt{font-size:12.5px;color:var(--ink2);margin-bottom:8px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12.5px;line-height:1.6;position:relative}
+.card.sel{border-color:var(--pri);background:#f4f6ff}
+.card.sel::after{content:"✓";position:absolute;right:8px;top:6px;width:16px;height:16px;border-radius:50%;background:var(--pri);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center}
+.two{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+.picked{border-left:1px solid var(--line);padding-left:16px}
+.picked b{font-size:13px}
+.picked .p{background:#f5f5f7;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:12.5px;line-height:1.6;position:relative}
+.picked .p span{position:absolute;right:8px;top:6px;color:var(--ink3);cursor:pointer}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.tags s{text-decoration:none;border:1px solid var(--line);border-radius:14px;padding:3px 10px;font-size:12px;color:var(--ink2)}
+.tags s.on{border-color:var(--pri);color:var(--pri);background:#f4f6ff}
+.mfoot{flex:none;display:flex;align-items:center;gap:12px;padding:14px 22px;border-top:1px solid #f0f0f2}
+.mfoot .n{font-size:11.5px;color:var(--ink3);margin-right:auto}
+.mfoot button{height:34px;min-width:92px;border-radius:6px;font:13px var(--font);cursor:pointer}
+.mfoot .c{border:1px solid var(--pri);background:#fff;color:var(--pri)}
+.mfoot .s{border:0;background:var(--pri);color:#fff}
+/* ── 填完之后：横幅 + 常驻小浮窗 ── */
+.banner{position:absolute;left:50%;top:8px;transform:translateX(-50%);z-index:18;display:none;align-items:center;gap:8px;background:#fff;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,.16);padding:8px 14px;font-size:12.5px}
+.banner.on{display:flex}
+.banner i{width:16px;height:16px;border-radius:50%;background:#ffa100;color:#fff;font-style:normal;font-size:11px;display:flex;align-items:center;justify-content:center}
+.float{position:absolute;right:22px;bottom:70px;width:214px;z-index:18;display:none;background:#fff;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);overflow:hidden}
+.float.on{display:block}
+.float .fh{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#f7f7fb;font-size:12.5px;font-weight:600}
+.float .fh em{margin-left:auto;font-style:normal;color:#f5222d;font-size:11.5px;font-weight:400}
+.float .ft{padding:8px 12px;font-size:11.5px;color:var(--ink2);border-bottom:1px solid #f0f0f2;line-height:1.5}
+.float .fr{display:flex;align-items:center;padding:7px 12px;font-size:12px;border-bottom:1px solid #f6f6f8}
+.float .fr b{font-weight:400}.float .fr span{margin-left:auto;color:var(--ink3);font-size:11.5px}
+.toast{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:#0b0b10;color:#fff;font-size:12.5px;padding:7px 13px;border-radius:8px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:40}
+.toast.on{opacity:1}
+</style></head><body>
+<div class="app">
+  <div class="tbar"><span class="dots"><i></i><i></i><i></i></span><span>小米电视推广投放相关问题讨论</span><span style="color:#bbb">01：24：32</span><span class="std">标准</span></div>
+  <div class="body">
+    <div class="stage">
+      <div class="tiles"><div class="tile"><span class="av"></span>李琳颖（主持人）</div><div class="tile"><span class="av"></span>姜乐乐</div></div>
+      <div class="wall"><h2>如何活到 99 岁？此处是主题名</h2><div class="qr"></div><div class="meta">会议号：882 017 62749　·　主持人：姜乐乐</div></div>
+      <div class="banner" id="banner"><i>!</i>KR 填写倒计时 3min，请未填写成员尽快填写</div>
+      <div class="float" id="float">
+        <div class="fh">KR 填写中<em>⏳ 03:59</em></div>
+        <div class="ft">主题：通过市场调研和竞争分析，合理定产品和服务。</div>
+        <div class="fr"><b>周静</b><span>填写 3 KR</span></div>
+        <div class="fr"><b>郑文锦</b><span>填写 3 KR</span></div>
+        <div class="fr"><b>孙婉茹</b><span>填写 3 KR</span></div>
+      </div>
+    </div>
+    <aside class="side">
+      <div class="tabs"><span class="on">基本信息</span><span>聊天</span></div>
+      <div class="rows" id="rows"></div>
+    </aside>
+  </div>
+  <div class="dock"><b>视频开启</b><b>语音开启</b><b>屏幕共享</b><b>参会成员</b><b>入会审核</b><b>会议纪要</b><b>聊天</b><b>更多</b><b id="dkKr">填写KR</b><b id="dkVote">开始投票</b><b class="sp" style="color:#f5222d">退出</b></div>
+  <div class="mask" id="mask"><div class="mdl" id="mdl"></div></div>
+  <div class="toast" id="toast"></div>
+</div>
+<script>
+  if (window.parent !== window || /(^#|&)embed/.test(location.hash)) document.documentElement.classList.add('embed');
+  var toast=document.getElementById('toast'),tt=null;
+  function say(t){ toast.textContent=t; toast.classList.add('on'); clearTimeout(tt); tt=setTimeout(function(){toast.classList.remove('on');},1700); }
+  var MEM=['郑婷雅|主持人','李梓发|嘉宾','李琳颖|','吴彦谦|','周俊|','李世海|','王凡玄|'];
+  document.getElementById('rows').innerHTML=MEM.map(function(m){var p=m.split('|');
+    return '<div class="r"><span class="a"></span><span><b style="font-weight:500">'+p[0]+'</b>'+(p[1]?' <small style="display:inline;color:#4b5bd7">'+p[1]+'</small>':'')+'<small>开发部 / 前端</small></span><span class="ic">🎤 📷 ⋯</span></div>';}).join('');
+  var mask=document.getElementById('mask'), mdl=document.getElementById('mdl');
+  function head(cur){
+    var L=[['KR 填写','fill'],['投票','vote'],['结果','res']], out='';
+    L.forEach(function(x,i){
+      if(i) out+='<span class="dash"></span>';
+      if(x[1]===cur) out+='<span class="cur"><span class="kr">KR</span><span><b>'+(cur==='fill'?'填写':cur==='vote'?'投票':'结果')+'</b><em>倒计时：03:59</em></span></span>';
+      else out+='<span class="'+((L.findIndex(function(y){return y[1]===cur;})>i)?'done':'')+'">'+(L.findIndex(function(y){return y[1]===cur;})>i?'⊘ ':'')+x[0]+'</span>';
+    });
+    return '<div class="steps">'+out+'</div>';
+  }
+  var VIEWS={
+    fill: head('fill')+'<h3>主题：何如为客户建立安全感？</h3><div class="mbody">'+
+      '<div class="ta ph">请围绕该主题填写 KR（想法）01<i>0/30</i></div>'+
+      '<div class="ta">把用户当小孩子，耐心、细心、照顾用户感受<i>24/30</i></div>'+
+      '<div class="ta ph">请围绕该主题填写 KR（想法）03<i>0/30</i></div>'+
+      '<p class="hint">提示：填写过程中为匿名，请结合主题填写重要且易行的 KR</p></div>'+
+      '<div class="mfoot"><span class="n"></span><button class="c" data-close>关闭</button><button class="s" data-next="vote">提交</button></div>',
+    vote: head('vote')+'<h3>主题：何如为客户建立安全感？</h3><div class="mbody"><div class="two"><div>'+
+      '<div class="grp"><div class="gt">▾ 1. 关键词：尊重与倾听（4）</div><div class="cards">'+
+      '<div class="card">用接纳的心态，站在客户的角度，进入他的场域思考，辐射他的想要</div><div class="card">把用户当小孩子，耐心、细心、照顾用户感受</div></div></div>'+
+      '<div class="grp"><div class="gt">▾ 2. 关键词：尊重与倾听（4）</div><div class="cards">'+
+      '<div class="card sel">和用户细心交流，场景还原，思考如何从产品角度来避免问题的发生</div><div class="card">积极倾听，换位思考——理解需求，用同理心化解矛盾</div>'+
+      '<div class="card">接纳客户的一切诉求、建议等，做客户工作需求空间承载者</div><div class="card sel">以尊重为前提，以合作为基础，追求共同成长与价值实现。</div></div></div>'+
+      '<div class="grp"><div class="gt">▾ 其他 KR（2）</div><div class="cards"><div class="card">先把问题复述一遍，确认理解一致再给方案</div><div class="card">承诺的时间点写进任务，不口头承诺</div></div></div>'+
+      '</div><div class="picked"><b>已选择（2/3）</b>'+
+      '<div class="p">和用户细心交流，场景还原，思考如何从产品角度来避免问题的发生<span>×</span></div>'+
+      '<div class="p">以尊重为前提，以合作为基础，追求共同成长与价值实现。<span>×</span></div></div></div></div>'+
+      '<div class="mfoot"><span class="n">注意：投票选择重要且易行的 KR</span><button class="c" data-close>关闭</button><button class="s" data-next="res">投票</button></div>',
+    res: head('vote')+'<div class="mbody" style="padding-top:6px"><p style="text-align:center;margin:6px 0 2px;color:#3aa76d;font-size:14px">⊘ 已提交</p>'+
+      '<p style="text-align:center;margin:0 0 14px;font-size:12.5px;color:#999">可以选择 1 个你觉得最好的 KR <a style="color:#4b5bd7">写评语</a></p>'+
+      '<div class="two"><div><b style="font-size:13px">我投票的 KR（3）</b><p class="hint">主题：何如为客户建立安全感？</p>'+
+      '<div class="card sel" style="margin-bottom:10px">用接纳的心态，站在客户的角度，进入他的场域思考，辐射他的想要</div>'+
+      '<div class="card" style="margin-bottom:10px">和用户细心交流，场景还原，思考如何从产品角度来避免问题的发生</div>'+
+      '<div class="card">以尊重为前提，以合作为基础，追求共同成长与价值实现。</div></div>'+
+      '<div class="picked"><b>添加评语标签</b><div class="tags"><s>很棒</s><s>字字珠玑</s><s>贴切主题</s><s>超级大脑</s><s>创意无敌</s><s class="on">KR 大神</s><s>我怎么没想到</s></div>'+
+      '<b>写评语</b><div class="ta ph" style="margin-top:8px">请填写评语<i>0/10</i></div></div></div></div>'+
+      '<div class="mfoot"><span class="n">注意：投票选择重要且易行的 KR</span><button class="c" data-close>关闭</button><button class="s" data-next="float">添加评语</button></div>'
+  };
+  function open(v){
+    if(v==='float'){ mask.classList.remove('on'); document.getElementById('banner').classList.add('on'); document.getElementById('float').classList.add('on');
+      say('已提交 · 填写中的浮窗与横幅会一直留在画面上'); return; }
+    document.getElementById('banner').classList.remove('on'); document.getElementById('float').classList.remove('on');
+    mdl.innerHTML=VIEWS[v]; mask.classList.add('on');
+    mdl.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click',function(){ mask.classList.remove('on'); say('已关闭 · 会议画面这时才露出来'); }); });
+    mdl.querySelectorAll('[data-next]').forEach(function(b){ b.addEventListener('click',function(){ open(b.dataset.next); }); });
+    mdl.querySelectorAll('.card').forEach(function(c){ c.addEventListener('click',function(){ c.classList.toggle('sel'); }); });
+    say({fill:'改版前：填写要开一整块弹窗',vote:'改版前：投票同样是整块弹窗',res:'改版前：结果与评语还在同一块弹窗里'}[v]);
+  }
+  document.getElementById('dkKr').addEventListener('click',function(){ open('fill'); });
+  document.getElementById('dkVote').addEventListener('click',function(){ open('vote'); });
+  window.__krOld=open;
+  open('fill');
+</script>
+<script src="../guide.js?v=e78bebb1"></script>
+</body></html>

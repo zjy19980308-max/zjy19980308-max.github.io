@@ -34,9 +34,10 @@
     tr:     [[function(d){ if(paused(d)) click(d,'.mt-tr__pill'); },2600],[function(d){ if(!paused(d)) click(d,'.mt-tr__pill'); },1800]],
     variants:[[function(d){ if(isSolo(d)) click(d,'.mt-tr__solo'); if(paused(d)) click(d,'.mt-tr__pill'); },2400],[function(d){ if(!isSolo(d)) click(d,'.mt-tr__solo'); },2600],[function(d){ if(!paused(d)) click(d,'.mt-tr__pill'); },2200]],
     main:   [['.mt-glass[aria-label="放大"]',2600],['text:退出全屏|恢复|缩小',600],['.mt-glass[aria-label="放大"]',0],[function(d){},1800]],
-    kr:     [['.mt-ctrl[aria-label="更多"]',900],['text:KR 填写',1400],['#btnKrPick',1200],['.mt-menu.show button',1200],['#btnKrNewOk',3200],['reload',600]],
+    kr:     [['.mt-ctrl[aria-label="更多"]',900],['text:KR 填写',1200],['#btnKrPick',1000],['.mt-menu.show button',1000],['#btnKrNewOk',1800],[function(d){ var t=d.querySelectorAll('.mt-kr__in'); if(t[0]&&!t[0].value){ t[0].value='把承接链路的失败原因当场记下来'; t[1].value='每条结论都指名到人'; } },900],['#btnKrSubmit',2400],[function(d){ if(d.defaultView.__setHost) d.defaultView.__setHost(true); },700],['#btnVote',1600],['.mt-vote__card',1200],['#btnVoteSubmit',2400],['.mt-voted__row',2600],['.mt-voted__tag',2400],['reload',900]],
     task:   [['drag:.mt-stage-source-card--task',3400],['.mt-tile--content',2600],['.mt-ctile-modal .mt-local-stage__close',2000],['.mt-tile--content [data-tilemenu]',1100],['in:.mt-menu.show|text:设为主画面|放大到主屏',3400],['.mt-nota-task-proposal__primary:not(:disabled)',2600],['reload',800]],
     doc:    [['drag:.mt-stage-source-card--document',3400],['.mt-tile--content',4000],['[data-proposal-accept]',2600],['.mt-ctile-modal .mt-local-stage__close',1800],['reload',800]],
+    krold:  [[function(d){ d.defaultView.__krOld('fill'); },2600],[function(d){ d.defaultView.__krOld('vote'); },2800],[function(d){ d.defaultView.__krOld('res'); },2600],[function(d){ d.defaultView.__krOld('float'); },3000]],
     space:  [['.mt-tr__solo',1400],['.mt-ctrl[aria-label="更多"]',900],['.mt-menu.show .mt-menu__actlb',1800],['.mt-ctrl[aria-label="更多"]',900],['text:KR 填写',1200],['#btnKrPick',1000],['.mt-menu.show button',1000],['#btnKrNewOk',2200],['#btnSpaceSwitch',1800],['.mt-deck__dots > i:not(.is-on), .mt-deck__card:not(.is-focus)',2600],['reload',800]]
   };
   /* ── 引导剧本：tour = 分步光点；switch = 顶部状态按钮 ── */
@@ -49,13 +50,20 @@
     tr:    { mode:'tour', title:'转写 · 2 步', steps:[
       { q:'.mt-orb', t:'第 1 步 · 点右下角「AI 助手」。' },
       { q:'.mt-tr__pill', t:'第 2 步 · 点「开启 AI 转写」。转写占据中间一列，按发言人分段，下方直接生成待办。' } ] },
-    kr:    { mode:'tour', title:'KR 填写 · 6 步', steps:[
-      { q:'.mt-ctrl[aria-label="更多"]', t:'第 1 步 · 点底部的「更多」。' },
-      { q:'text:KR 填写', t:'第 2 步 · 点「会中工具」里的「KR 填写」。KR 不常驻在底栏，只在流程开始时进入动态按钮区。' },
-      { q:'#btnKrPick', t:'第 3 步 · 点「选择KR」。' },
-      { q:'.mt-menu.show button', t:'第 4 步 · 在列表里选一条 KR 主题。' },
-      { q:'#btnKrNewOk', t:'第 5 步 · 点确认，开启这一轮填写。KR 面板出现在右侧，底部动态按钮区同时出现。' },
-      { q:'#btnKrSubmit', pre:function(d){ fill(d,'.mt-kr textarea, .mt-kr input[type="text"], textarea','把站外投放 ROI 目标从 1:2.8 提到 1:3.2'); }, t:'第 6 步 · 写一句想法，点「提交我的想法」。提交后按钮区消失，这就是「流程动作按阶段出现」。' } ] },
+    kr:    { mode:'tour', title:'KR 填写 · 投票 · 11 步', steps:[
+      { q:'.mt-ctrl[aria-label="更多"]', t:'第 1 步 · 点底部的「更多」。KR 不是常驻按钮，只在需要时从这里进。' },
+      { q:'text:KR 填写', t:'第 2 步 · 点「KR 填写」。普通会议没有现成的 KR 主题，先弹出「创建 KR 填写」。' },
+      { q:'#btnKrPick', t:'第 3 步 · 点「选择KR」，从本场会议关联的 KR 里选主题。' },
+      { q:'.mt-menu.show button', t:'第 4 步 · 选一条 KR 作为这一轮的主题。' },
+      { q:'#btnKrNewOk', t:'第 5 步 · 点「创建」。KR 填写面板占右侧一列，会议画面照常，不被遮挡。' },
+      { q:'#btnKrSubmit', pre:function(d){ var t=d.querySelectorAll('.mt-kr__in'); if(t[0]&&!t[0].value){ t[0].value='把承接链路的失败原因当场记下来'; t[1].value='每条结论都指名到人'; } },
+        t:'第 6 步 · 框里已经替你写了两条想法，点「提交我的想法」。填写过程匿名。' },
+      { q:'#btnVote', pre:function(d){ if(d.defaultView.__setHost) d.defaultView.__setHost(true); },
+        t:'第 7 步 · 提交后三个框变只读，中间长出「已提交」，底部按钮变成等待态。开启投票是主持人专属，这里已替你切到主持人视角，点中间那颗「开启投票」。' },
+      { q:'.mt-vote__card', t:'第 8 步 · AI 把大家填的 KR 按关键词归了类，一组一个关键词。点一张卡投它一票。' },
+      { q:'#btnVoteSubmit', t:'第 9 步 · 点「投出我的想法」。' },
+      { q:'.mt-voted__row', t:'第 10 步 · 投完之后这一栏换成「我投票的KR」，等主持人结束。点一条你觉得最好的，只能选一条。' },
+      { q:'.mt-voted__tag', t:'第 11 步 · 给它加个评语标签，也可以写一句十字以内的评语。整条链路里 KR 始终只占右侧一列，不留常驻浮窗。' } ] },
     task:  { mode:'tour', title:'任务工作项 · 8 步', steps:[
       { q:'.mt-stage-source-card--task', drag:true, done:function(d){ return !!d.querySelector('.mt-tile--content'); },
         t:'第 1 步 · 把「任务视图」这张卡拖到中间的会议画面里。它会占一格，和成员卡片一样大，格子里是任务列表的缩略图，不抢主屏。卡片上那几颗小标志是可见范围，不是按钮。' },
@@ -86,6 +94,11 @@
       { q:'.mt-menu.show button', t:'第 7 步 · 选一条 KR 作为填写主题。' },
       { q:'#btnKrNewOk', t:'第 8 步 · 点「创建」。KR 填写面板独占一列，不与其他面板合并，自动新开「自定义空间3」。' },
       { q:'#btnSpaceSwitch', t:'第 9 步 · 点空间条右侧的「切换空间」，展开这一列里的三个空间卡片；点另一张卡片即可切换，空间名可以点击直接修改。' } ] },
+    krold: { mode:'switch', title:'KR 填写 · 改版前', states:[
+      { name:'填写', t:'改版前：填写要开一整块弹窗，压在会议画面上。会议这时看不见，也做不了别的事。', run:function(d){ d.defaultView.__krOld('fill'); } },
+      { name:'投票', t:'投票同样是整块弹窗，左侧分组卡片、右侧已选，屏幕被占满。', run:function(d){ d.defaultView.__krOld('vote'); } },
+      { name:'结果与评语', t:'结果和写评语还在同一块弹窗里，整个流程从头到尾没让出画面。', run:function(d){ d.defaultView.__krOld('res'); } },
+      { name:'填完之后', t:'关掉弹窗也没结束：顶部横幅提醒未填写的人，右下角「KR 填写中」浮窗常驻，谁填了几条一直挂着，会中没法做别的。', run:function(d){ d.defaultView.__krOld('float'); } } ] },
     variants: { mode:'switch', title:'转写列 · 三个变体', states:[
       { name:'并列', t:'转写和任务卡并列在右侧一列（默认）。', run:function(d){ if(isSolo(d)) click(d,'.mt-tr__solo'); if(paused(d)) click(d,'.mt-tr__pill'); } },
       { name:'独占一列', t:'转写占满一列，任务卡退到后台空间。', run:function(d){ if(!isSolo(d)) click(d,'.mt-tr__solo'); if(paused(d)) click(d,'.mt-tr__pill'); } },
