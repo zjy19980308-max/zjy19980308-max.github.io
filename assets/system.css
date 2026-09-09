@@ -1018,4 +1018,4 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .ae-bullets li b{color:var(--fg);font-weight:500;margin-right:.5em}
 .ae-bullets li b::after{content:'：';font-weight:400;color:var(--fg-4);margin-left:.05em}
 /* 主体变更那行小字，压在公司名下面 */
-.ae-note{font-family:var(--font-display);font-size:12px;font-weight:300;color:var(--fg-4);line-height:1.7;margin:-4px 0 10px}
+.ae-note{display:block;font-family:var(--font-display);font-size:12px;font-weight:300;color:var(--fg-4);line-height:1.7;margin-top:7px}
