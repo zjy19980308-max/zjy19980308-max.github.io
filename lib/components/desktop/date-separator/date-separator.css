@@ -1,0 +1,35 @@
+/*
+ * 日期分隔符组件 (Date Separator)
+ * 标签：<cs-date-separator>
+ * 消息聊天中的日期分割线，左右横线中间日期文字
+ *
+ * 结构：
+ *   cs-date-separator > .separator-line + .separator-text + .separator-line
+ *
+ * 无 data 属性变体
+ */
+
+/* ========== 容器 ========== */
+cs-date-separator {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) 0;
+  box-sizing: border-box;
+}
+
+/* ========== 分隔线 ========== */
+cs-date-separator .separator-line {
+  flex: 1;
+  height: var(--line-width);
+  background: var(--cs-color-border);
+}
+
+/* ========== 日期文字 ========== */
+cs-date-separator .separator-text {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  white-space: nowrap;
+  user-select: none;
+}

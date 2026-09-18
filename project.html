@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<title>项目 — 张竞元</title>
+<script>/* 从别的页切过来：先把遮罩铺满，避免闪出页面（transition.js） */try{var t=+sessionStorage.getItem('v7-pt');if(t&&Date.now()-t<10000)document.documentElement.classList.add('pt-arriving')}catch(e){}</script>
+<link rel="stylesheet" href="css/fonts-noto.css?v=53">
+<link rel="stylesheet" href="css/gradual-blur.css?v=31">
+<link rel="stylesheet" href="css/drift-wall.css?v=31">
+<link rel="stylesheet" href="css/style.css?v=88">
+</head>
+<body class="page--project">
+<!-- 项目页：project.html?p=flow | nota | plan | agent | doc | cses。内容在 js/projects.js（window.V7P，由 v1.1 抽出，文案会话改值），渲染在 js/project.js?v=31。
+     版式沿用本站（leoparpeix 复刻）的 12 栏网格、庞门大字、reveal 缓动；剩余页面用首页同一套横滑（js/slider.js）。 -->
+<div class="pageTransition" id="pageTransition" aria-hidden="true"></div>
+
+<header class="navbarBlock visible is-instant" id="nav">
+  <div class="gridWrapper hasPadding navbarBlock__left">
+    <h1 class="left__title"><a class="mainButton" href="index.html" data-pt id="navName"></a></h1>
+    <h3 class="left__infos" id="navRole"></h3>
+  </div>
+  <div class="gridWrapper hasPadding navbarBlock__right"><nav class="right__links" id="navLinks"></nav></div>
+</header>
+
+<main class="page pj" id="pj"></main>
+
+<div class="pjLightbox" id="pjLightbox" hidden>
+  <button class="lb__close" type="button" aria-label="关闭">×</button>
+  <button class="lb__prev" type="button" aria-label="上一张">←</button>
+  <figure class="lb__figure"><img class="lb__img" alt=""><figcaption class="lb__cap"></figcaption></figure>
+  <button class="lb__next" type="button" aria-label="下一张">→</button>
+</div>
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/vendor/three.bundle.js"></script>
+<script src="js/logo-path.js?v=31"></script>
+<script src="js/logo3d.js?v=31"></script>
+<script src="js/copy.js?v=51"></script>
+<script src="js/nav-theme.js?v=19"></script>
+<script src="js/projects.js?v=40"></script>
+<script src="js/fx-config.js?v=34"></script>
+<script src="js/transition.js?v=32"></script>
+<script src="js/slider.js?v=33"></script>
+<script src="js/drift-wall.js?v=31"></script>
+<script src="js/project.js?v=46"></script>
+<script src="js/cursor-fx.js?v=34"></script>
+<script src="js/gradual-blur.js?v=31"></script>
+<script>
+/* 滚动时页面上下边缘的渐进模糊：从 v1.1 搬来（assets/gradual-blur.js，移植 React Bits GradualBlur），参数照 v1.1：桌面上下各 4.5rem（owner：高度缩短一半）、强度 1.25（owner：高度、模糊值各缩一半）、ease-out。
+   zIndex -97 → 实际 3，压在导航（4）之下、页面内容之上。 */
+(function () {
+  if (!window.GradualBlur) return;
+  var MOB = matchMedia('(max-width:760px)').matches;
+  GradualBlur.mount(null, { preset: 'page-header', zIndex: -97, height: MOB ? '2.5rem' : '4.5rem', strength: MOB ? .75 : 1.25, curve: 'ease-out' });
+  GradualBlur.mount(null, { preset: 'page-footer', zIndex: -97, height: MOB ? '1.75rem' : '4.5rem', strength: MOB ? .6 : 1.25, curve: 'ease-out' });
+})();
+</script>
+</body>
+</html>

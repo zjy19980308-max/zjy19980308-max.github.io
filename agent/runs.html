@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>运行监控 · 流程中台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{padding:0;max-width:none;display:flex;position:relative;flex:1;min-height:0}
+  .stat{height:36px;display:flex;align-items:center;gap:14px;padding:0 24px;font-size:11.5px;color:var(--ink-2);background:var(--panel);border-bottom:1px solid var(--line);z-index:20;font-variant-numeric:tabular-nums}
+  .stat b{font-weight:600;color:var(--ink)}
+  .page{flex:1;min-height:0}
+  .list{width:352px;flex:0 0 352px;border-right:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column}
+  .list__f{display:flex;gap:6px;padding:11px 12px;border-bottom:1px solid var(--line-2);flex-wrap:wrap}
+  .chip{height:25px;padding:0 9px;border-radius:6px;border:1px solid var(--line);background:var(--panel);font-size:11.5px;color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+  .chip.is-on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .list__l{flex:1;overflow:auto}
+  .run{padding:11px 14px;border-bottom:1px solid var(--line-2);cursor:pointer;transition:background .14s}
+  .run:hover{background:var(--panel-2)}
+  .run.is-on{background:var(--acc-soft)}
+  .run.pin{background:var(--warn-soft)}
+  .run.pin.is-on{background:var(--acc-soft)}
+  .run__t{display:flex;align-items:center;gap:7px}
+  .run__id{font-family:var(--mono);font-size:11.5px;font-weight:600}
+  .run__s{margin-left:auto}
+  .run__m{font-size:12px;color:var(--ink-2);margin-top:4px}
+  .run__n{font-size:11.5px;color:var(--ink-3);margin-top:4px;display:flex;gap:8px;align-items:center}
+  .det{flex:1;min-width:0;overflow:auto;padding:18px 22px 60px}
+  .det__h{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+  .det__h h2{font-size:16px;font-weight:600;font-family:var(--mono)}
+  .facts{display:flex;gap:26px;padding:12px 15px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);margin-bottom:14px;flex-wrap:wrap;box-shadow:var(--sd)}
+  .facts div{font-size:12.5px}
+  .facts span{display:block;font-size:11px;color:var(--ink-3);margin-bottom:2px}
+  .track{display:flex;align-items:center;gap:0;padding:14px 15px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);margin-bottom:14px;overflow-x:auto;box-shadow:var(--sd)}
+  .tn{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:84px;position:relative}
+  .tn i{width:11px;height:11px;border-radius:50%;background:#4857e2;display:block}
+  .tn span{font-size:11px;color:var(--ink-2);text-align:center;line-height:1.35}
+  .tn.now i{background:#e08a1e;box-shadow:0 0 0 0 var(--warn);animation:pulse 2s infinite}
+  .tn.todo i{background:var(--panel);border:1.5px dashed var(--ink-3)}
+  .tn.todo span{color:var(--ink-3)}
+  .tn.skip i{background:var(--line)}
+  .tn.skip span{color:var(--ink-3);text-decoration:line-through}
+  .tn.c i{background:var(--risk)}
+  .tl{width:26px;height:1.5px;background:var(--line);flex:1 0 20px}
+  .ev{width:100%;border-collapse:collapse;font-size:12.5px}
+  .ev th{text-align:left;font-size:11px;color:var(--ink-3);font-weight:500;padding:8px 12px;border-bottom:1px solid var(--line)}
+  .ev td{padding:11px 12px;border-bottom:1px solid var(--line-2);vertical-align:top}
+  .ev tr:last-child td{border:0}
+  .ev .t{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+  .ev .who{white-space:nowrap}
+  .ev .out{color:var(--ink-2)}
+  .ev tr.now{background:var(--warn-soft)}
+  .ev tr.todo td{color:var(--ink-3)}
+  .ev .exp{font-size:11.5px;color:var(--acc-ink);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+  .ev .detail{display:none;margin-top:8px;border:1px solid var(--line);border-radius:7px;background:var(--panel-2);padding:9px 11px;font-size:11.5px}
+  .ev tr.open .detail{display:block}
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:7px}
+  .three div{border:1px solid var(--line);border-radius:6px;background:var(--panel);padding:7px 9px}
+  .three b{display:block;font-size:11px;color:var(--ink-3);font-weight:500;margin-bottom:3px}
+
+  @media (max-width:1180px){.list{width:288px;flex:0 0 288px}.actbar{left:288px}}
+  @media (max-width:900px){.list{display:none}.actbar{left:0}}
+</style>
+</head>
+<body data-nav="runs" data-title="运行监控">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div id="topActions"><a class="btn btn--s" href="versions.html">查看版本</a></div>
+    <div class="stat">
+      <span>今日 <b>18</b> 次运行</span><span>进行中 <b>5</b></span><span>等待人工 <b style="color:var(--warn)">2</b></span><span>失败 <b>0</b></span><span>平均耗时 <b>6 小时 20 分</b></span>
+      <span style="margin-left:auto" class="dim">供应商付款审批 · 线上 v3</span>
+    </div>
+    <div class="page">
+      <aside class="list">
+        <div class="list__f">
+          <button class="chip is-on">全部流程</button><button class="chip" data-toast="只看等待人工的 2 条">等待人工 2</button><button class="chip" data-toast="只看进行中的 5 条">进行中 5</button><button class="chip" data-toast="只看今天发起的">今天</button>
+        </div>
+        <div class="list__l" id="runs"></div>
+      </aside>
+      <section class="det" id="det"></section>
+    </div>
+  </div>
+</div>
+<script src="ui.js"></script>
+<script>
+(function () {
+  var RUNS = [
+    { id: 'PAY-20260915-0042', t: '华东物流 · ¥38,000', st: '等待人工', node: '付款前人工确认', time: '09:02 发起', v: 'v3', pin: 1 },
+    { id: 'PAY-20260915-0041', t: '华东物流（上海）· ¥86,500', st: '等待人工', node: '三单匹配 · Agent 无法判断', time: '08:40 发起', v: 'v3', pin: 1 },
+    { id: 'PAY-20260915-0040', t: '中天建材 · ¥12,400', st: '进行中', node: '采购经理审批', time: '08:12 发起', v: 'v3' },
+    { id: 'ONB-20260915-0112', t: '入职 · 林珊', st: '进行中', node: '开通系统账号', time: '09:30 发起', v: 'v5' },
+    { id: 'PAY-20260915-0039', t: '恒通机电 · ¥152,000', st: '异常', node: '财务总监审批超时 26 小时', time: '昨天 07:05', v: 'v3' },
+    { id: 'PAY-20260915-0038', t: '锐格科技 · ¥6,800', st: '已完成', node: '通知供应商', time: '昨天 09:10', v: 'v3' },
+    { id: 'SEA-20260915-0077', t: '合同用印 · 采购框架协议', st: '已完成', node: '归档', time: '昨天 14:20', v: 'v2' }
+  ];
+  var tone = { '等待人工': 'warn', '进行中': 'acc', '异常': 'risk', '已完成': 'ok' };
+  document.getElementById('runs').innerHTML = RUNS.map(function (r, i) {
+    return '<div class="run' + (r.pin ? ' pin' : '') + (i === 0 ? ' is-on' : '') + '" data-i="' + i + '">'
+      + '<div class="run__t"><span class="run__id">' + r.id + '</span><span class="run__s tag tag--' + tone[r.st] + '"><i class="dot"></i>' + r.st + '</span></div>'
+      + '<div class="run__m">' + r.t + '</div>'
+      + '<div class="run__n"><span>' + r.node + '</span><span style="margin-left:auto" class="tag mono">' + r.v + '</span></div></div>';
+  }).join('');
+
+  var TRACK = [['提交付款申请', 'done'], ['三单匹配', 'done'], ['金额判断', 'done'], ['采购经理审批', 'done'], ['财务总监审批', 'skip'], ['生成付款指令', 'done'], ['付款前人工确认', 'now'], ['执行付款', 'todo c'], ['通知供应商', 'todo']];
+  var EV = [
+    ['09:02', '提交付款申请', '系统', '采购单 PO-7781 验收完成，自动发起', '付款申请单', 'A', '', ''],
+    ['09:03', '三单匹配', 'Agent', '发票、合同、验收单金额一致', '匹配报告', 'A', 'exp',
+      '<div class="three"><div><b>发票</b>华东物流有限公司 · ¥38,000</div><div><b>合同</b>华东物流有限公司 · ¥38,000</div><div><b>验收单</b>PO-7781 · ¥38,000</div></div>'],
+    ['09:03', '金额判断', '系统', '¥38,000 → 命中「5 万以下」档', '命中规则 R1', 'A', '', ''],
+    ['10:15', '采购经理审批', '高远', '同意 ·「已核对到货」', '审批意见', 'B', '', ''],
+    ['10:16', '生成付款指令', 'Agent', '生成付款指令草稿，<b>未执行</b>', '指令预览 · 可撤销', 'B', 'undo',
+      '<div>收款账户 6228 **** 4417 · 金额 ¥38,000 · 用途「PO-7781 货款」<br><span class="dim">这一步是 B 级：已经生成了数据，但可以撤销，撤销会留一条新事件。</span></div>']
+  ];
+  function detail(r) {
+    var host = document.getElementById('det');
+    var evRows = EV.map(function (e) {
+      return '<tr class="' + (e[6] ? '' : '') + '"><td class="t">' + e[0] + '</td><td>' + e[1] + '</td>'
+        + '<td class="who">' + (e[2] === 'Agent' ? '<span class="agentic">✦ Agent</span>' : e[2]) + '</td>'
+        + '<td>' + e[3] + (e[7] ? '<div class="detail">' + e[7] + '</div>' : '') + '</td>'
+        + '<td class="out">' + e[4] + (e[6] === 'exp' ? ' · <span class="exp">展开</span>' : '') + '</td>'
+        + '<td><span class="rev rev--' + e[5].toLowerCase() + '">' + e[5] + '</span></td>'
+        + '<td>' + (e[6] === 'undo' ? '<button class="btn btn--s" data-toast="已撤销付款指令 · 事件流新增一条撤销记录">撤销</button>' : '') + '</td></tr>';
+    }).join('');
+    host.innerHTML = '<div class="det__h"><h2>' + r.id + '</h2><span class="tag tag--warn"><i class="dot dot--live"></i>等待人工</span><span class="tag mono">v3</span>'
+      + '<div style="margin-left:auto;display:flex;gap:7px"><button class="btn btn--s" data-toast="已催办 · 30 分钟内不能重复催">催办</button><a class="btn btn--s" href="versions.html">查看版本</a></div></div>'
+      + '<div class="facts"><div><span>供应商</span>华东物流有限公司</div><div><span>金额</span>¥38,000</div><div><span>采购单</span>PO-7781</div><div><span>发起人</span>孙悦 · 应付会计</div><div><span>已等待</span>1 小时 12 分</div></div>'
+      + '<div class="track">' + TRACK.map(function (t, i) {
+          return (i ? '<span class="tl"></span>' : '') + '<div class="tn ' + t[1] + '"><i></i><span>' + t[0] + '</span></div>';
+        }).join('') + '</div>'
+      + '<div class="card"><div class="card__h"><h3>事件流</h3><span class="sub">每一步做了什么、产出了什么，不给百分比</span><div class="right"><span class="tag">正序</span></div></div>'
+      + '<div class="card__b card__b--flush"><table class="ev"><thead><tr><th>时间</th><th>节点</th><th>执行者</th><th>做了什么</th><th>产出 / 证据</th><th>可逆</th><th></th></tr></thead><tbody>'
+      + evRows
+      + '<tr class="now"><td class="t">进行中</td><td>付款前人工确认</td><td class="who">等待 孙悦</td><td>已等待 1 小时 12 分</td><td class="out">—</td><td>—</td><td><button class="btn btn--s" data-toast="已催办 · 已提醒孙悦">催办</button></td></tr>'
+      + '<tr class="todo"><td class="t">未开始</td><td>执行付款</td><td class="who">—</td><td>需人工确认后执行，不会自动跑</td><td class="out">—</td><td><span class="rev rev--c">C</span></td><td></td></tr>'
+      + '<tr class="todo"><td class="t">未开始</td><td>通知供应商</td><td class="who">—</td><td>对外发送付款回执</td><td class="out">—</td><td><span class="rev rev--c">C</span></td><td></td></tr>'
+      + '</tbody></table></div></div>'
+      + '<p class="dim" style="font-size:11.5px;margin-top:12px">事件不可删除、不可编辑。C 级节点在人工确认前永远显示「需人工确认后执行」。</p>';
+  }
+  detail(RUNS[0]);
+  document.getElementById('runs').addEventListener('click', function (e) {
+    var r = e.target.closest('.run'); if (!r) return;
+    [].forEach.call(this.querySelectorAll('.run'), function (x) { x.classList.toggle('is-on', x === r); });
+    var run = RUNS[+r.dataset.i];
+    if (run.st === '异常') { location.href = 'exceptions.html'; return; }
+    detail(run);
+    if (run.id !== 'PAY-20260915-0042') {
+      document.querySelector('.det__h h2').textContent = run.id;
+      document.querySelector('.facts').innerHTML = '<div><span>摘要</span>' + run.t + '</div><div><span>当前节点</span>' + run.node + '</div><div><span>版本</span>' + run.v + '</div>';
+    }
+  });
+  document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('exp')) { e.target.closest('tr').classList.toggle('open'); e.target.textContent = e.target.closest('tr').classList.contains('open') ? '收起' : '展开'; }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+/* task_id: 学员看板（老师版）-2026-05-21-1430 · component: cs-main-chart · PLAN-004 ★ */
+.cs-main-chart {
+  background: var(--cs-color-white);
+  border: 1px solid var(--cs-color-border);
+  border-radius: 12px;
+  padding: 20px 20px 16px;
+  box-shadow: var(--cs-shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cs-main-chart__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.cs-main-chart__title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cs-main-chart__title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cs-color-text-primary);
+  margin: 0;
+}
+.cs-main-chart__hint {
+  font-size: 12px;
+  color: var(--cs-color-text-tertiary);
+}
+.cs-main-chart__legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.cs-legend-item {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--cs-color-text-secondary);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+.cs-legend-item:hover {
+  background: var(--cs-color-bg-hover);
+}
+.cs-legend-item[data-active="false"] {
+  opacity: 0.35;
+  text-decoration: line-through;
+}
+.cs-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.cs-legend-dot--ok { background: var(--cs-color-success); }
+.cs-legend-dot--warn { background: var(--cs-color-warning); }
+.cs-legend-dot--bad { background: var(--cs-color-error); }
+.cs-legend-count {
+  font-weight: 600;
+  color: var(--cs-color-text-primary);
+}
+.cs-main-chart__avg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--cs-color-text-secondary);
+  padding-left: 8px;
+  border-left: 1px dashed var(--cs-color-border);
+}
+.cs-legend-dash {
+  display: inline-block;
+  width: 16px;
+  height: 0;
+  border-top: 1.5px dashed var(--cs-color-text-secondary);
+}
+.cs-main-chart__plot {
+  display: flex;
+  gap: 8px;
+  height: 280px;
+}
+.cs-main-chart__y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--cs-color-text-tertiary);
+  text-align: right;
+  width: 28px;
+  padding-bottom: 22px;
+}
+.cs-main-chart__canvas {
+  position: relative;
+  flex: 1;
+  background: var(--cs-color-bg-hover);
+  border-radius: 8px;
+  padding: 8px 8px 22px;
+  overflow: hidden;
+}
+.cs-main-chart__grid {
+  position: absolute;
+  inset: 8px 8px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.cs-main-chart__grid span {
+  display: block;
+  height: 0;
+  border-top: 1px dashed var(--cs-color-border);
+}
+.cs-main-chart__avg-line {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: calc(22px + var(--cs-avg));  height: 0;
+  border-top: 1.5px dashed var(--cs-color-text-secondary);
+  pointer-events: none;
+  z-index: 2;
+}
+.cs-main-chart__avg-line::after {
+  content: '班均';
+  position: absolute;
+  right: 0;
+  top: -10px;
+  font-size: 10px;
+  color: var(--cs-color-text-secondary);
+  background: var(--cs-color-white);
+  padding: 0 4px;
+}
+.cs-main-chart__bars {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 100%;
+  gap: 2px;
+  z-index: 1;
+}
+.cs-chart-bar {
+  position: relative;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+  padding: 0;
+}
+.cs-chart-bar__fill {
+  width: 100%;
+  height: var(--cs-bar-h);
+  border-radius: 3px 3px 0 0;
+  transition: opacity 0.15s ease, transform 0.15s ease, filter 0.15s ease;
+  background: var(--cs-color-success);
+}
+.cs-chart-bar[data-state="ok"] .cs-chart-bar__fill {
+  background: linear-gradient(180deg, var(--cs-color-green-400), var(--cs-color-success));}
+.cs-chart-bar[data-state="warn"] .cs-chart-bar__fill {
+  background: linear-gradient(180deg, var(--cs-color-orange-400), var(--cs-color-warning));}
+.cs-chart-bar[data-state="bad"] .cs-chart-bar__fill {
+  background: linear-gradient(180deg, var(--cs-color-red-400), var(--cs-color-error));}
+.cs-chart-bar:hover .cs-chart-bar__fill {
+  filter: brightness(1.08);
+  transform: scaleY(1.02);
+  transform-origin: bottom;
+}
+.cs-chart-bar__tip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--cs-color-text-primary);
+  color: var(--cs-color-white);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  box-shadow: var(--cs-shadow-card);
+}
+.cs-chart-bar__tip strong {
+  font-size: 12px;
+  font-weight: 600;
+}
+.cs-chart-bar__tip span {
+  font-size: 11px;
+  opacity: 0.85;
+}
+.cs-chart-bar__tip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--cs-color-text-primary);
+}
+.cs-chart-bar:hover .cs-chart-bar__tip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.cs-main-chart__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--cs-color-text-tertiary);
+  padding: 0 36px;
+}

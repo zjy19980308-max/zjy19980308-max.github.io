@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-task-row-smart 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../css/workspace.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="task-row-smart.css">
+  <style>
+    body { padding: 32px; background: #F5F6FA; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .list { background: #fff; border-radius: 12px; border: 1px solid var(--cs-color-ws-border); padding: 4px 16px; }
+  </style>
+</head>
+<body>
+
+<!-- 1. 5 种优先级（同一列表内） -->
+<div class="section">
+  <div class="section-title">5 种优先级 data-priority</div>
+  <div class="section-subtitle">overdue 红 / ai-pick 紫⭐ / high 橙 / normal 蓝 / low 灰 — 仅左侧 4px 色条做语义标记</div>
+
+  <div class="list">
+    <cs-task-row-smart data-priority="overdue" data-task-id="t1">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox" data-action="toggle-task" data-task="t1"></span>
+      <div class="ts-body">
+        <div class="ts-title-row">
+          <span class="ts-title">《Q1 数据分析》</span>
+          <span class="ts-tag" data-type="danger">即将逾期</span>
+        </div>
+        <div class="ts-meta">
+          <span class="ts-deadline"><i class="cses-time"></i> 4h 截止</span>
+          <span class="ts-dep"><i class="cses-link"></i> 依赖王伟</span>
+          <span>👤 张三</span>
+        </div>
+      </div>
+      <div class="ts-actions">
+        <button class="ts-action-btn" data-action="ai-decompose" data-task="t1">🤖 AI 拆解</button>
+        <button class="ts-action-btn" data-action="delegate-to-ai" data-task="t1">⏩ 转交 AI</button>
+      </div>
+    </cs-task-row-smart>
+
+    <cs-task-row-smart data-priority="ai-pick" data-task-id="t2">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox" data-action="toggle-task" data-task="t2"></span>
+      <div class="ts-body">
+        <div class="ts-title-row">
+          <span class="ts-title">产品规划修订</span>
+          <span class="ts-tag" data-type="info">阻塞评审</span>
+        </div>
+        <div class="ts-meta">
+          <span class="ts-deadline"><i class="cses-time"></i> 今天 14:00 前</span>
+          <span>预估 2h</span>
+        </div>
+      </div>
+      <div class="ts-actions">
+        <button class="ts-action-btn" data-action="ai-decompose" data-task="t2">🤖 拆解</button>
+      </div>
+    </cs-task-row-smart>
+
+    <cs-task-row-smart data-priority="high" data-task-id="t3">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox" data-action="toggle-task" data-task="t3"></span>
+      <div class="ts-body">
+        <div class="ts-title-row">
+          <span class="ts-title">对接接口优化</span>
+          <span class="ts-tag" data-type="warning">高优</span>
+        </div>
+        <div class="ts-meta">
+          <span class="ts-deadline">明天 18:00</span>
+        </div>
+      </div>
+      <div class="ts-actions">
+        <button class="ts-action-btn" data-action="view" data-task="t3">查看</button>
+      </div>
+    </cs-task-row-smart>
+
+    <cs-task-row-smart data-priority="normal" data-task-id="t4">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox" data-action="toggle-task" data-task="t4"></span>
+      <div class="ts-body">
+        <div class="ts-title-row">
+          <span class="ts-title">完成首页设计</span>
+        </div>
+        <div class="ts-meta">
+          <span class="ts-dep"><i class="cses-link"></i> 依赖王伟</span>
+        </div>
+      </div>
+      <div class="ts-actions"></div>
+    </cs-task-row-smart>
+
+    <cs-task-row-smart data-priority="low" data-task-id="t5">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox" data-action="toggle-task" data-task="t5"></span>
+      <div class="ts-body">
+        <div class="ts-title-row">
+          <span class="ts-title">整理本周文档归档</span>
+        </div>
+        <div class="ts-meta">
+          <span>本周内</span>
+        </div>
+      </div>
+      <div class="ts-actions"></div>
+    </cs-task-row-smart>
+  </div>
+</div>
+
+<!-- 2. 已完成态 -->
+<div class="section">
+  <div class="section-title">已完成态 data-completed="true"</div>
+  <div class="section-subtitle">checkbox 主色填充 + 标题删除线 + 渐隐</div>
+
+  <div class="list">
+    <cs-task-row-smart data-priority="low" data-completed="true" data-task-id="t6">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox"></span>
+      <div class="ts-body">
+        <div class="ts-title-row">
+          <span class="ts-title">已完成的需求评审</span>
+        </div>
+        <div class="ts-meta">
+          <span>10:30 完成</span>
+        </div>
+      </div>
+      <div class="ts-actions"></div>
+    </cs-task-row-smart>
+
+    <cs-task-row-smart data-priority="normal" data-completed="true" data-task-id="t7">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox"></span>
+      <div class="ts-body">
+        <div class="ts-title-row">
+          <span class="ts-title">PRD 撰写</span>
+        </div>
+        <div class="ts-meta">
+          <span>昨天 18:00 完成</span>
+        </div>
+      </div>
+      <div class="ts-actions"></div>
+    </cs-task-row-smart>
+  </div>
+</div>
+
+<!-- 3. tag 类型变体 -->
+<div class="section">
+  <div class="section-title">tag 类型 data-type（warning / danger / info）</div>
+  <div class="section-subtitle">仅"逾期/紧急"才用 danger，其余用浅灰底（v2 §13.2 智能待办整改）</div>
+
+  <div class="list">
+    <cs-task-row-smart data-priority="overdue" data-task-id="g1">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox"></span>
+      <div class="ts-body">
+        <div class="ts-title-row">
+          <span class="ts-title">客户合同审批</span>
+          <span class="ts-tag" data-type="danger">逾期 2 天</span>
+        </div>
+        <div class="ts-meta"><span class="ts-deadline"><i class="cses-time"></i> 已超时</span></div>
+      </div>
+      <div class="ts-actions"></div>
+    </cs-task-row-smart>
+
+    <cs-task-row-smart data-priority="high" data-task-id="g2">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox"></span>
+      <div class="ts-body">
+        <div class="ts-title-row">
+          <span class="ts-title">安全例会准备</span>
+          <span class="ts-tag" data-type="warning">明天截止</span>
+        </div>
+        <div class="ts-meta"><span class="ts-deadline">明天 14:00</span></div>
+      </div>
+      <div class="ts-actions"></div>
+    </cs-task-row-smart>
+
+    <cs-task-row-smart data-priority="normal" data-task-id="g3">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox"></span>
+      <div class="ts-body">
+        <div class="ts-title-row">
+          <span class="ts-title">设计稿走查</span>
+          <span class="ts-tag" data-type="info">关联评审</span>
+        </div>
+        <div class="ts-meta"><span>预估 1h</span></div>
+      </div>
+      <div class="ts-actions"></div>
+    </cs-task-row-smart>
+  </div>
+</div>
+
+</body>
+</html>

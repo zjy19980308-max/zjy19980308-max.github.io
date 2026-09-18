@@ -1,0 +1,33 @@
+cs-doc-update-item {
+  display: block;
+  padding: var(--cs-sem-spacing-comp-padding-xl);
+  border: var(--border-width) solid var(--cs-sem-border-secondary);
+  border-radius: var(--radius-xxl);
+  background: var(--cs-sem-bg-primary);
+}
+
+cs-doc-update-item[data-state="highlight"] {
+  border-color: var(--cs-sem-border-strong);
+  background: var(--cs-sem-bg-secondary);
+}
+
+cs-doc-update-item .update-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-sem-spacing-comp-gap-sm);
+}
+
+cs-doc-update-item .update-title {
+  font: var(--cs-typo-body-large);
+  color: var(--cs-sem-text-primary);
+}
+
+cs-doc-update-item .update-meta {
+  font: var(--cs-typo-body-medium);
+  color: var(--cs-sem-text-tertiary);
+}
+
+cs-doc-update-item .update-summary {
+  font: var(--cs-typo-body-medium);
+  color: var(--cs-sem-text-secondary);
+}

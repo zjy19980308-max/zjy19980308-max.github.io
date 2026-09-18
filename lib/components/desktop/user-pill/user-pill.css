@@ -1,0 +1,89 @@
+/*
+ * 用户药丸组件 (User Pill)
+ * 标签：<cs-user-pill>
+ * 数据来源：任务抽屉成员、会议参与人列表
+ *
+ * Figma 实测：
+ *   整体: h:28 bg:#f3f4f4 r:17(pill) p:(2,8,2,2)
+ *   头像: 24x24 圆形
+ *   文字: 14px/400 色:#1d2129
+ *   关闭: cses-guanbi 12px
+ *
+ * data 属性：
+ *   data-closable          — 显示关闭按钮
+ */
+
+/* ========== 基础样式 ========== */
+cs-user-pill {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+
+  height: var(--spacing-28);
+  border-radius: var(--radius-pill);
+  padding: var(--spacing-2) var(--space-xs) var(--spacing-2) var(--spacing-2);
+  background: var(--cs-color-bg-light);
+
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+
+  cursor: default;
+  transition: background 0.2s ease;
+}
+
+/* ========== 交互状态 ========== */
+cs-user-pill:hover {
+  background: var(--cs-color-bg-lighter);
+}
+
+/* ========== 子元素：头像（使用 cs-avatar 组件） ========== */
+cs-user-pill > cs-avatar {
+  flex-shrink: 0;
+}
+
+/* ========== 子元素：名称 ========== */
+cs-user-pill .pill-name {
+  margin-left: var(--space-2xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: var(--spacing-120);
+}
+
+/* ========== 子元素：关闭按钮 ========== */
+cs-user-pill .pill-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  margin-left: var(--space-2xs);
+  width: var(--cs-sem-size-icon-sm);
+  height: var(--cs-sem-size-icon-sm);
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+
+  color: var(--cs-color-text-light2);
+  font-size: var(--font-size-xs);
+
+  transition: color 0.2s ease;
+}
+
+cs-user-pill .pill-close:hover {
+  color: var(--cs-color-text);
+}
+
+/* data-closable 时显示关闭按钮 */
+cs-user-pill[data-closable] .pill-close {
+  display: inline-flex;
+}
+
+/* ========== 溢出计数器（+N） ========== */
+cs-user-pill[data-type="overflow"] {
+  background: var(--cs-color-bg-lighter);
+  color: var(--cs-color-text-light2);
+  padding: var(--spacing-2) var(--space-xs);
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-thumbnail 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="thumbnail.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+    .type-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); text-align: center; margin-top: 4px; }
+    .icon-grid { display: flex; flex-wrap: wrap; gap: 24px; }
+    .icon-cell { display: flex; flex-direction: column; align-items: center; }
+  </style>
+</head>
+<body>
+
+<!-- 文件类型图标（带颜色） -->
+<div class="section">
+  <div class="section-title">文件类型图标</div>
+  <div class="section-subtitle">data-type="file-icon" + data-filetype 控制颜色 — 颜色来自 Figma 旧设计规范</div>
+
+  <div class="icon-grid">
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-doc.svg" width="24" height="24" alt="文档">
+      <div class="type-label">文档</div>
+    </div>
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-word.svg" width="24" height="24" alt="Word">
+      <div class="type-label">Word</div>
+    </div>
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-excel.svg" width="24" height="24" alt="Excel">
+      <div class="type-label">Excel</div>
+    </div>
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-ppt.svg" width="24" height="24" alt="PPT">
+      <div class="type-label">PPT</div>
+    </div>
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-pdf.svg" width="24" height="24" alt="PDF">
+      <div class="type-label">PDF</div>
+    </div>
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-image.svg" width="24" height="24" alt="图片">
+      <div class="type-label">图片</div>
+    </div>
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-video.svg" width="24" height="24" alt="视频">
+      <div class="type-label">视频</div>
+    </div>
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-audio.svg" width="24" height="24" alt="音频">
+      <div class="type-label">音频</div>
+    </div>
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-text.svg" width="24" height="24" alt="文本">
+      <div class="type-label">文本</div>
+    </div>
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-zip.svg" width="24" height="24" alt="压缩">
+      <div class="type-label">压缩</div>
+    </div>
+    <div class="icon-cell">
+      <img src="../../../assets/filetype-unknown.svg" width="24" height="24" alt="未知">
+      <div class="type-label">未知</div>
+    </div>
+  </div>
+</div>
+
+<!-- 尺寸对比 -->
+<div class="section">
+  <div class="section-title">尺寸对比</div>
+
+  <div class="row">
+    <span class="row-label">sm (24px)</span>
+    <img src="../../../assets/filetype-pdf.svg" width="24" height="24" alt="PDF">
+    <img src="../../../assets/filetype-word.svg" width="24" height="24" alt="Word">
+    <img src="../../../assets/filetype-excel.svg" width="24" height="24" alt="Excel">
+    <img src="../../../assets/filetype-ppt.svg" width="24" height="24" alt="PPT">
+  </div>
+
+  <div class="row">
+    <span class="row-label">md (32px)</span>
+    <img src="../../../assets/filetype-pdf.svg" width="32" height="32" alt="PDF">
+    <img src="../../../assets/filetype-word.svg" width="32" height="32" alt="Word">
+    <img src="../../../assets/filetype-excel.svg" width="32" height="32" alt="Excel">
+    <img src="../../../assets/filetype-ppt.svg" width="32" height="32" alt="PPT">
+  </div>
+
+  <div class="row">
+    <span class="row-label">lg (48px)</span>
+    <img src="../../../assets/filetype-pdf.svg" width="48" height="48" alt="PDF">
+    <img src="../../../assets/filetype-word.svg" width="48" height="48" alt="Word">
+    <img src="../../../assets/filetype-excel.svg" width="48" height="48" alt="Excel">
+    <img src="../../../assets/filetype-ppt.svg" width="48" height="48" alt="PPT">
+  </div>
+</div>
+
+<!-- 图片预览 -->
+<div class="section">
+  <div class="section-title">图片预览</div>
+  <div class="section-subtitle">data-type="image"（默认）</div>
+
+  <div class="row">
+    <span class="row-label">sm (24px)</span>
+    <cs-thumbnail data-type="image" data-size="sm"><img src="https://picsum.photos/48/48?random=1" alt=""></cs-thumbnail>
+  </div>
+  <div class="row">
+    <span class="row-label">md (32px)</span>
+    <cs-thumbnail data-type="image"><img src="https://picsum.photos/64/64?random=2" alt=""></cs-thumbnail>
+  </div>
+  <div class="row">
+    <span class="row-label">lg (48px)</span>
+    <cs-thumbnail data-type="image" data-size="lg"><img src="https://picsum.photos/96/96?random=3" alt=""></cs-thumbnail>
+  </div>
+</div>
+
+</body>
+</html>

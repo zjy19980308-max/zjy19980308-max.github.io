@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-notification 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="notification.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+    .stage { position: relative; min-height: 320px; background: #fafafa; border-radius: 4px; padding: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 四种类型 ========== -->
+<div class="section">
+  <div class="section-title">四种类型 Types</div>
+  <div class="section-subtitle">data-type="success | info | warning | danger"</div>
+  <div class="row">
+    <cs-notification data-type="success">
+      <i class="notification-icon cses-check-circle"></i>
+      <div class="notification-body">
+        <div class="notification-title">提交成功</div>
+        <div class="notification-desc">您的请假申请已成功提交，等待审批。</div>
+      </div>
+      <button class="notification-close" type="button" aria-label="关闭"><i class="cses-guanbi"></i></button>
+    </cs-notification>
+
+    <cs-notification data-type="info">
+      <i class="notification-icon cses-info-circle"></i>
+      <div class="notification-body">
+        <div class="notification-title">系统通知</div>
+        <div class="notification-desc">您有 3 条新的待处理事项，请尽快查看。</div>
+      </div>
+      <button class="notification-close" type="button" aria-label="关闭"><i class="cses-guanbi"></i></button>
+    </cs-notification>
+
+    <cs-notification data-type="warning">
+      <i class="notification-icon cses-exclamation-circle"></i>
+      <div class="notification-body">
+        <div class="notification-title">即将到期</div>
+        <div class="notification-desc">您的会员将在 7 天后到期，请及时续费以避免服务中断。</div>
+      </div>
+      <button class="notification-close" type="button" aria-label="关闭"><i class="cses-guanbi"></i></button>
+    </cs-notification>
+
+    <cs-notification data-type="danger">
+      <i class="notification-icon cses-close-circle"></i>
+      <div class="notification-body">
+        <div class="notification-title">操作失败</div>
+        <div class="notification-desc">网络连接异常，无法保存您的修改。请检查网络后重试。</div>
+      </div>
+      <button class="notification-close" type="button" aria-label="关闭"><i class="cses-guanbi"></i></button>
+    </cs-notification>
+  </div>
+</div>
+
+<!-- ========== 2. 右上角堆叠 ========== -->
+<div class="section">
+  <div class="section-title">右上角堆叠 Top-Right Container</div>
+  <div class="section-subtitle">.notification-container 用于堆叠多条 notification</div>
+  <div class="stage">
+    <div class="notification-container" style="position: absolute;">
+      <cs-notification data-type="success">
+        <i class="notification-icon cses-check-circle"></i>
+        <div class="notification-body">
+          <div class="notification-title">同步完成</div>
+          <div class="notification-desc">已同步 12 个文件至云端。</div>
+        </div>
+        <button class="notification-close" type="button" aria-label="关闭"><i class="cses-guanbi"></i></button>
+      </cs-notification>
+      <cs-notification data-type="info">
+        <i class="notification-icon cses-info-circle"></i>
+        <div class="notification-body">
+          <div class="notification-title">新版本可用</div>
+          <div class="notification-desc">CSES 2026.04 已发布，新增 10 项实用功能。</div>
+        </div>
+        <button class="notification-close" type="button" aria-label="关闭"><i class="cses-guanbi"></i></button>
+      </cs-notification>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 3. 仅标题 ========== -->
+<div class="section">
+  <div class="section-title">仅标题 Title Only</div>
+  <div class="section-subtitle">省略 .notification-desc 即可</div>
+  <div class="row">
+    <cs-notification data-type="success">
+      <i class="notification-icon cses-check-circle"></i>
+      <div class="notification-body">
+        <div class="notification-title">已成功复制到剪贴板</div>
+      </div>
+      <button class="notification-close" type="button" aria-label="关闭"><i class="cses-guanbi"></i></button>
+    </cs-notification>
+  </div>
+</div>
+
+</body>
+</html>

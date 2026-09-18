@@ -1,0 +1,358 @@
+/* ============================================================
+ * workspace.css — 工作台首页专用 tokens + widget 网格样式
+ * 来源：shared/knowledge/design/style-profiles/工作台.md（SSOT）
+ * 消费方：home.html / 工作台 widget 组件
+ * ============================================================ */
+
+:root {
+  /* ---------- 工作台品牌色（叠加在 cs-color-* 之上） ---------- */
+  --cs-color-ws-primary: var(--color-blue-500);              /* #4857e2 平台主色 */
+  --cs-color-ws-brand-2: #6B5BFF;                            /* hero 高光 */
+  --cs-color-ws-brand-deep: #3A2D7A;                         /* hero 起色（深紫） */
+  --cs-color-ws-cyan: #2BC8B7;                               /* 已读/完成 */
+  --cs-color-ws-orange: #FF8A3D;                             /* 待处理/警示 */
+  --cs-color-ws-pink: #FF6B9A;                               /* 资源饼图 */
+  --cs-color-ws-info: #4F8BFF;                               /* KPI 蓝 */
+
+  /* ---------- 工作台中性 / 背景 ---------- */
+  --cs-color-ws-bg-page: #F5F6FA;                            /* 主背景 */
+  --cs-color-ws-bg-card: var(--color-neutral-0);             /* 卡片 */
+  --cs-color-ws-bg-subtle: #F8F9FB;                          /* hover 底 / 占位 */
+  --cs-color-ws-border: #EBEDF3;                             /* 卡内分隔 */
+
+  /* ---------- 工作台文字色阶 ---------- */
+  --cs-color-ws-text-primary: #1A1B2E;
+  --cs-color-ws-text-regular: #3D3F50;
+  --cs-color-ws-text-secondary: #7C7F94;
+  --cs-color-ws-text-placeholder: #B5B8C8;
+
+  /* ---------- 渐变（v2 升级 2026-04-28：饱和度 ≤ 8% / 透明度 ≤ 10%，§14.3/§15.3） ---------- */
+  /* hero 渐变饱和度 -10%（S 60% → 50%） */
+  --cs-gradient-hero: linear-gradient(135deg, #3F347A 0%, #6457E5 100%);
+  --cs-gradient-hero-overlay: radial-gradient(circle at 85% 15%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 60%);
+  /* KPI 顶部柔光：仅 30% 高度，饱和度 ≤ 8% */
+  --cs-gradient-kpi-blue: linear-gradient(180deg, #F2F6FE 0%, var(--cs-color-ws-white) 30%, var(--cs-color-ws-white) 100%);
+  --cs-gradient-kpi-purple: linear-gradient(180deg, #F5F3FE 0%, var(--cs-color-ws-white) 30%, var(--cs-color-ws-white) 100%);
+  --cs-gradient-kpi-cyan: linear-gradient(180deg, #F1FAF8 0%, var(--cs-color-ws-white) 30%, var(--cs-color-ws-white) 100%);
+  --cs-gradient-kpi-orange: linear-gradient(180deg, #FBF5EE 0%, var(--cs-color-ws-white) 30%, var(--cs-color-ws-white) 100%);
+  /* AI 主动建议条：去强渐变，改为极弱渐变（v2：白底 + 主色色条） */
+  --cs-gradient-suggestion-bar: linear-gradient(90deg, #FAF9FE 0%, var(--cs-color-ws-white) 60%);
+  --cs-gradient-card-pink: linear-gradient(180deg, #FBF2F5 0%, var(--cs-color-ws-white) 100%);
+  --cs-gradient-card-orange: linear-gradient(180deg, #FBF5EE 0%, var(--cs-color-ws-white) 100%);
+
+  /* ---------- 圆角 ---------- */
+  --cs-radius-ws-xs: 4px;
+  --cs-radius-ws-sm: 8px;
+  --cs-radius-ws-md: 12px;          /* 默认卡片 */
+  --cs-radius-ws-lg: 16px;          /* hero / 大卡 */
+  --cs-radius-ws-pill: 999px;
+
+  /* ---------- 阴影（紫调阴影） ---------- */
+  --cs-shadow-ws-card: 0 2px 8px rgba(31, 38, 87, 0.04);
+  --cs-shadow-ws-card-hover: 0 6px 20px rgba(31, 38, 87, 0.08);
+  --cs-shadow-ws-pop: 0 12px 40px rgba(31, 38, 87, 0.12);
+
+  /* ---------- 工作台间距（沿用 4 倍数体系；v2 升级 §14.1） ---------- */
+  --cs-space-ws-xs: 4px;
+  --cs-space-ws-sm: 8px;
+  --cs-space-ws-md: 12px;
+  --cs-space-ws-lg: 16px;
+  --cs-space-ws-xl: 20px;
+  --cs-space-ws-2xl: 24px;
+  --cs-space-ws-3xl: 32px;
+  --cs-space-ws-4xl: 40px;     /* v2：模块纵向间距优先值 */
+  --cs-space-ws-5xl: 56px;     /* v2：区块顶级分隔（hero ↔ 主内容） */
+
+  /* ---------- 网格（v2：紧凑网格 16 → 20） ---------- */
+  --cs-grid-cols: 12;
+  --cs-grid-row-h: 80px;
+  --cs-grid-gap: 20px;
+
+  /* ---------- 字号 ---------- */
+  --cs-fs-ws-h1: 28px;
+  --cs-fs-ws-h2: 18px;
+  --cs-fs-ws-h3: 16px;
+  --cs-fs-ws-body: 14px;
+  --cs-fs-ws-caption: 12px;
+  --cs-fs-ws-tag: 11px;
+
+  /* ---------- 状态色（语义） ---------- */
+  --cs-color-ws-success: #22C55E;
+  --cs-color-ws-success-bg: #E8F8EF;
+  --cs-color-ws-warning: #F59E0B;
+  --cs-color-ws-warning-bg: #FFF4E1;
+  --cs-color-ws-danger: #EF4444;
+  --cs-color-ws-danger-bg: #FDECEC;
+  --cs-color-ws-info-bg: #E8F0FF;
+
+  /* ---------- Agent 来源色 ---------- */
+  --cs-color-agent-self: #5B5BF5;          /* 自有 */
+  --cs-color-agent-anthropic: #D97757;     /* Claude 橙 */
+  --cs-color-agent-openai: #10A37F;        /* GPT 绿 */
+  --cs-color-agent-google: #4F8BFF;        /* Gemini 蓝 */
+  --cs-color-agent-coze: #FF8A3D;          /* Coze 橙 */
+  --cs-color-agent-custom: #B5B8C8;        /* 自定义 灰 */
+
+  /* ---------- 工具色（替代裸色值） ---------- */
+  --cs-color-ws-white: var(--color-neutral-0);
+  --cs-color-ws-primary-bg: #EEEEFE;
+  --cs-color-ws-primary-active: #4351CD;
+  --cs-color-ws-meeting-soft: #FEF6E5;
+  --cs-color-ws-meeting-border: #FFD9A0;
+  --cs-color-ws-mask: rgb(26 27 46 / 40%);
+  --cs-color-ws-mask-strong: rgb(26 27 46 / 50%);
+  --cs-color-ws-toast-shadow-tip: rgb(31 38 87 / 6%);
+  --cs-color-ws-overlay-light-12: rgb(255 255 255 / 12%);
+  --cs-color-ws-overlay-light-14: rgb(255 255 255 / 14%);
+  --cs-color-ws-overlay-light-18: rgb(255 255 255 / 18%);
+  --cs-color-ws-overlay-light-22: rgb(255 255 255 / 22%);
+  --cs-color-ws-overlay-light-85: rgb(255 255 255 / 85%);
+  --cs-color-ws-overlay-light-95: rgb(255 255 255 / 95%);
+  --cs-color-ws-divider-soft: rgb(239 68 68 / 15%);
+  --cs-color-ws-pulse-out: rgb(91 91 245 / 0%);
+  --cs-color-ws-pulse-in: rgb(91 91 245 / 50%);
+  --cs-color-ws-self-soft: rgb(91 91 245 / 12%);
+  --cs-color-ws-anthropic-soft: rgb(217 119 87 / 12%);
+  --cs-color-ws-openai-soft: rgb(16 163 127 / 12%);
+  --cs-color-ws-google-soft: rgb(79 139 255 / 12%);
+  --cs-color-ws-orange-soft: rgb(255 138 61 / 12%);
+}
+
+/* ============================================================
+ * 页面壳层
+ * ============================================================ */
+
+.ws-page {
+  background: var(--cs-color-ws-bg-page);
+  padding: var(--cs-space-ws-2xl);
+  min-height: 100%;
+  overflow-y: auto;
+  font-family: var(--font-family-cn, "PingFang SC");
+  color: var(--cs-color-ws-text-regular);
+}
+
+/* v2 升级（§14.1）：模块纵向间距 24 → 40px，hero ↔ 第一行 → 56px（具体在 home.css 收紧） */
+.ws-page > * + * {
+  margin-top: var(--cs-space-ws-4xl);
+}
+
+/* ============================================================
+ * 12 列 widget grid
+ * ============================================================ */
+
+.ws-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cs-grid-cols), 1fr);
+  grid-auto-rows: var(--cs-grid-row-h);
+  gap: var(--cs-grid-gap);
+}
+
+/* widget 跨列/跨行 */
+.ws-grid > [data-col-span="12"] { grid-column: span 12; }
+.ws-grid > [data-col-span="8"]  { grid-column: span 8; }
+.ws-grid > [data-col-span="6"]  { grid-column: span 6; }
+.ws-grid > [data-col-span="4"]  { grid-column: span 4; }
+.ws-grid > [data-col-span="3"]  { grid-column: span 3; }
+
+.ws-grid > [data-row-span="1"]  { grid-row: span 1; }
+.ws-grid > [data-row-span="2"]  { grid-row: span 2; }
+.ws-grid > [data-row-span="3"]  { grid-row: span 3; }
+.ws-grid > [data-row-span="4"]  { grid-row: span 4; }
+.ws-grid > [data-row-span="5"]  { grid-row: span 5; }
+.ws-grid > [data-row-span="6"]  { grid-row: span 6; }
+
+/* 4 套预设布局（v2：默认 gap 20px；compact 16px；minimal 24px 让呼吸） */
+.ws-grid[data-preset="comfort"]  { /* 默认舒适 → 20px */ }
+.ws-grid[data-preset="compact"]  { gap: 16px; }
+.ws-grid[data-preset="dashboard"] { /* leader：放大 KPI / Agent 总线 */ }
+.ws-grid[data-preset="minimal"]  { gap: 24px; }
+
+/* widget hover：浮出工具条 */
+[data-widget="true"] {
+  position: relative;
+  transition: box-shadow 0.2s ease;
+}
+[data-widget="true"]:hover {
+  box-shadow: var(--cs-shadow-ws-card-hover);
+}
+[data-widget="true"] .ws-widget-tools {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: none;
+  gap: 4px;
+  background: var(--cs-color-ws-overlay-light-95);
+  border-radius: var(--cs-radius-ws-sm);
+  padding: 4px;
+  box-shadow: var(--cs-shadow-ws-card);
+}
+[data-widget="true"]:hover .ws-widget-tools {
+  display: inline-flex;
+}
+.ws-widget-tools i {
+  font-size: var(--cs-fs-ws-body);
+  color: var(--cs-color-ws-text-secondary);
+  padding: 4px;
+  cursor: pointer;
+  border-radius: var(--cs-radius-ws-xs);
+}
+.ws-widget-tools i:hover {
+  color: var(--cs-color-ws-primary);
+  background: var(--cs-color-ws-bg-subtle);
+}
+
+/* 编辑模式：紫色虚线边 + resize 把手 */
+.ws-grid[data-edit="true"] [data-widget="true"] {
+  border: 2px dashed var(--cs-color-ws-primary);
+  border-radius: var(--cs-radius-ws-md);
+}
+.ws-grid[data-edit="true"] [data-widget="true"] .ws-widget-tools {
+  display: inline-flex;          /* 编辑态常驻 */
+}
+.ws-grid[data-edit="true"] [data-widget="true"]::after {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, transparent 0%, transparent 50%, var(--cs-color-ws-primary) 50%, var(--cs-color-ws-primary) 100%);
+  cursor: nwse-resize;
+}
+
+/* 添加 widget 占位卡 */
+.ws-widget-add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 2px dashed var(--cs-color-ws-text-placeholder);
+  border-radius: var(--cs-radius-ws-md);
+  background: transparent;
+  color: var(--cs-color-ws-text-secondary);
+  cursor: pointer;
+  font-size: var(--cs-fs-ws-body);
+  transition: all 0.2s ease;
+}
+.ws-widget-add:hover {
+  border-color: var(--cs-color-ws-primary);
+  color: var(--cs-color-ws-primary);
+  background: var(--cs-color-ws-primary-bg);
+}
+.ws-widget-add i {
+  font-size: var(--cs-fs-ws-h1);
+}
+
+/* ============================================================
+ * widget 卡片基础样式（白底 + 圆角 + 阴影 + padding）
+ * ============================================================ */
+.ws-card {
+  background: var(--cs-color-ws-bg-card);
+  border-radius: var(--cs-radius-ws-md);
+  box-shadow: var(--cs-shadow-ws-card);
+  padding: var(--cs-space-ws-xl);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+.ws-card-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* ============================================================
+ * 工具栏：4 套预设布局快切
+ * ============================================================ */
+.ws-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cs-space-ws-md);
+  padding: var(--cs-space-ws-md) var(--cs-space-ws-lg);
+  background: var(--cs-color-ws-bg-card);
+  border-radius: var(--cs-radius-ws-md);
+  box-shadow: var(--cs-shadow-ws-card);
+}
+.ws-toolbar-title {
+  font-size: var(--cs-fs-ws-h3);
+  font-weight: 600;
+  color: var(--cs-color-ws-text-primary);
+}
+.ws-preset-group {
+  display: inline-flex;
+  background: var(--cs-color-ws-bg-subtle);
+  border-radius: var(--cs-radius-ws-sm);
+  padding: 4px;
+  gap: 2px;
+}
+.ws-preset-btn {
+  padding: 6px 14px;
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--cs-radius-ws-xs);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ws-preset-btn:hover {
+  color: var(--cs-color-ws-text-regular);
+}
+.ws-preset-btn[data-active="true"] {
+  background: var(--cs-color-ws-bg-card);
+  color: var(--cs-color-ws-primary);
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(31, 38, 87, 0.06);
+}
+
+/* ============================================================
+ * Skeleton 占位骨架
+ * ============================================================ */
+@keyframes ws-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.ws-skeleton {
+  background: linear-gradient(90deg, #EBEDF3 0%, #F5F6FA 50%, #EBEDF3 100%);
+  background-size: 200% 100%;
+  animation: ws-shimmer 1.4s linear infinite;
+  border-radius: var(--cs-radius-ws-xs);
+}
+
+/* ============================================================
+ * Toast（应用内通知，AI 拖延预警等）
+ * ============================================================ */
+.ws-toast {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cs-space-ws-md);
+  background: var(--cs-color-ws-bg-card);
+  border-left: 4px solid var(--cs-color-ws-warning);
+  border-radius: var(--cs-radius-ws-md);
+  padding: var(--cs-space-ws-lg);
+  min-width: 320px;
+  max-width: 420px;
+  box-shadow: var(--cs-shadow-ws-pop);
+  animation: ws-toast-in 0.3s ease;
+}
+@keyframes ws-toast-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.ws-toast[data-type="danger"] { border-left-color: var(--cs-color-ws-danger); }
+.ws-toast[data-type="success"] { border-left-color: var(--cs-color-ws-success); }
+.ws-toast[data-type="info"] { border-left-color: var(--cs-color-ws-info); }
+.ws-toast .toast-icon { font-size: var(--cs-fs-ws-h2); flex-shrink: 0; color: var(--cs-color-ws-warning); }
+.ws-toast .toast-body { flex: 1; min-width: 0; }
+.ws-toast .toast-title { font-size: var(--cs-fs-ws-body); font-weight: 600; color: var(--cs-color-ws-text-primary); }
+.ws-toast .toast-desc  { margin-top: 4px; font-size: var(--cs-fs-ws-caption); color: var(--cs-color-ws-text-secondary); }
+.ws-toast .toast-actions { margin-top: 8px; display: flex; gap: 8px; }
+.ws-toast .toast-close { font-size: var(--cs-fs-ws-body); color: var(--cs-color-ws-text-placeholder); cursor: pointer; }

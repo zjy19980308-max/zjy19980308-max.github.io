@@ -1,0 +1,74 @@
+<!-- cs-trend-chart · Timeline 视图主件 · 多线趋势对比 · CSS-only（红线 4 禁内联 SVG · 用 div 折线 + ::before 模拟线段） -->
+<cs-trend-chart class="cs-trend-chart" data-period="quarter" data-tone="business-blue">
+  <header class="cs-trend-chart__header">
+    <div class="cs-trend-chart__title">本季度 vs 上季度 · 推进势能</div>
+    <ul class="cs-trend-chart__legend" role="list">
+      <li class="cs-trend-chart__legend-item" data-series="done">
+        <span class="cs-trend-chart__legend-dot cs-trend-chart__legend-dot--done"></span>完成数
+      </li>
+      <li class="cs-trend-chart__legend-item" data-series="start">
+        <span class="cs-trend-chart__legend-dot cs-trend-chart__legend-dot--start"></span>新启动数
+      </li>
+      <li class="cs-trend-chart__legend-item" data-series="delay">
+        <span class="cs-trend-chart__legend-dot cs-trend-chart__legend-dot--delay"></span>延期数
+      </li>
+    </ul>
+  </header>
+  <div class="cs-trend-chart__canvas">
+    <div class="cs-trend-chart__grid" aria-hidden="true">
+      <span class="cs-trend-chart__grid-line"></span>
+      <span class="cs-trend-chart__grid-line"></span>
+      <span class="cs-trend-chart__grid-line"></span>
+      <span class="cs-trend-chart__grid-line"></span>
+    </div>
+    <!-- 完成数 · 本季度 实线（7 段折线 · 每段一个 div 用 ::before 旋转模拟） -->
+    <div class="cs-trend-chart__series cs-trend-chart__series--done" aria-label="本季度完成数趋势">
+      <span class="cs-trend-chart__point" style="left:0%;   bottom:45%"></span>
+      <span class="cs-trend-chart__point" style="left:16.7%; bottom:55%"></span>
+      <span class="cs-trend-chart__point" style="left:33.3%; bottom:62.5%"></span>
+      <span class="cs-trend-chart__point" style="left:50%;   bottom:70%"></span>
+      <span class="cs-trend-chart__point" style="left:66.7%; bottom:72.5%"></span>
+      <span class="cs-trend-chart__point" style="left:83.3%; bottom:76%"></span>
+      <span class="cs-trend-chart__point" style="left:100%;  bottom:79%"></span>
+    </div>
+    <!-- 完成数 · 上季度 虚线 -->
+    <div class="cs-trend-chart__series cs-trend-chart__series--done-prev" aria-label="上季度完成数趋势">
+      <span class="cs-trend-chart__point" style="left:0%;    bottom:40%"></span>
+      <span class="cs-trend-chart__point" style="left:16.7%; bottom:45%"></span>
+      <span class="cs-trend-chart__point" style="left:33.3%; bottom:47.5%"></span>
+      <span class="cs-trend-chart__point" style="left:50%;   bottom:51%"></span>
+      <span class="cs-trend-chart__point" style="left:66.7%; bottom:54%"></span>
+      <span class="cs-trend-chart__point" style="left:83.3%; bottom:55%"></span>
+      <span class="cs-trend-chart__point" style="left:100%;  bottom:56%"></span>
+    </div>
+    <!-- 新启动数 -->
+    <div class="cs-trend-chart__series cs-trend-chart__series--start" aria-label="新启动数趋势">
+      <span class="cs-trend-chart__point" style="left:0%;    bottom:55%"></span>
+      <span class="cs-trend-chart__point" style="left:16.7%; bottom:57.5%"></span>
+      <span class="cs-trend-chart__point" style="left:33.3%; bottom:65%"></span>
+      <span class="cs-trend-chart__point" style="left:50%;   bottom:60%"></span>
+      <span class="cs-trend-chart__point" style="left:66.7%; bottom:62.5%"></span>
+      <span class="cs-trend-chart__point" style="left:83.3%; bottom:65%"></span>
+      <span class="cs-trend-chart__point" style="left:100%;  bottom:66%"></span>
+    </div>
+    <!-- 延期数 -->
+    <div class="cs-trend-chart__series cs-trend-chart__series--delay" aria-label="延期数趋势">
+      <span class="cs-trend-chart__point" style="left:0%;    bottom:20%"></span>
+      <span class="cs-trend-chart__point" style="left:16.7%; bottom:22.5%"></span>
+      <span class="cs-trend-chart__point" style="left:33.3%; bottom:25%"></span>
+      <span class="cs-trend-chart__point" style="left:50%;   bottom:30%"></span>
+      <span class="cs-trend-chart__point" style="left:66.7%; bottom:32.5%"></span>
+      <span class="cs-trend-chart__point" style="left:83.3%; bottom:31%"></span>
+      <span class="cs-trend-chart__point" style="left:100%;  bottom:29%"></span>
+    </div>
+    <!-- 关键事件 marker · 绝对定位 -->
+    <div class="cs-trend-chart__markers" aria-hidden="true">
+      <span class="cs-trend-chart__marker" style="left:33.3%; bottom:62.5%" data-event="融资完成"></span>
+      <span class="cs-trend-chart__marker" style="left:66.7%; bottom:72.5%" data-event="换帅"></span>
+      <span class="cs-trend-chart__marker" style="left:83.3%; bottom:76%"  data-event="重大里程碑"></span>
+    </div>
+  </div>
+  <ul class="cs-trend-chart__x-labels">
+    <li>W14</li><li>W16</li><li>W18</li><li>W20</li><li>W22</li><li>W24</li><li>W26</li>
+  </ul>
+</cs-trend-chart>

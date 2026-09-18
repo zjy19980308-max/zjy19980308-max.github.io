@@ -1,0 +1,198 @@
+/*
+ * 考勤日历组件 (Attendance Calendar)
+ * 标签：<cs-attendance-calendar>
+ *
+ * 结构：
+ *   cs-attendance-calendar
+ *   ├── .cal-header      ← 月份切换 + 统计摘要
+ *   ├── .cal-weekdays    ← 星期标题行
+ *   └── .cal-grid        ← 日期网格（7列）
+ */
+
+/* ========== 容器 ========== */
+cs-attendance-calendar {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  border: var(--line-width) solid var(--cs-color-border);
+  background: var(--cs-color-bg);
+}
+
+/* ========== 头部 ========== */
+cs-attendance-calendar .cal-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+}
+
+cs-attendance-calendar .cal-month {
+  font: var(--typo-cn-16-medium);
+  color: var(--cs-color-text);
+}
+
+cs-attendance-calendar .cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--cs-color-text-light);
+  transition: background 0.15s ease;
+}
+
+cs-attendance-calendar .cal-nav:hover {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text);
+}
+
+cs-attendance-calendar .cal-nav i {
+  font-size: var(--cs-sem-size-icon-sm);
+}
+
+/* ========== 统计摘要 ========== */
+cs-attendance-calendar .cal-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-left: auto;
+}
+
+cs-attendance-calendar .cal-summary-item {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+cs-attendance-calendar .cal-summary-item::before {
+  content: "";
+  display: inline-block;
+  width: var(--spacing-6);
+  height: var(--spacing-6);
+  border-radius: var(--radius-full);
+}
+
+cs-attendance-calendar .cal-summary-item[data-type="normal"]::before { background: var(--cs-color-success); }
+cs-attendance-calendar .cal-summary-item[data-type="late"]::before { background: var(--cs-color-warning); }
+cs-attendance-calendar .cal-summary-item[data-type="early"]::before { background: var(--cs-color-warning); }
+cs-attendance-calendar .cal-summary-item[data-type="absent"]::before { background: var(--cs-color-error); }
+cs-attendance-calendar .cal-summary-item[data-type="leave"]::before { background: var(--cs-color-primary); }
+cs-attendance-calendar .cal-summary-item[data-type="overtime"]::before { background: var(--cs-sem-status-info); }
+
+/* ========== 星期标题行 ========== */
+cs-attendance-calendar .cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  height: 36px;
+}
+
+cs-attendance-calendar .cal-weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: var(--typo-cn-12-medium);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 日期网格 ========== */
+cs-attendance-calendar .cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* ========== 日期单元格 ========== */
+cs-attendance-calendar .cal-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-height: 72px;
+  padding: var(--space-xs);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  cursor: default;
+  transition: background 0.15s ease;
+}
+
+cs-attendance-calendar .cal-day:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+cs-attendance-calendar .cal-day-number {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+}
+
+cs-attendance-calendar .cal-day-status {
+  font: var(--typo-cn-12-regular);
+  padding: var(--spacing-2) var(--spacing-6);
+  border-radius: var(--radius);
+}
+
+/* ========== 非当月日期 ========== */
+cs-attendance-calendar .cal-day[data-other-month] .cal-day-number {
+  color: var(--cs-color-text-light2);
+  opacity: 0.4;
+}
+
+/* ========== 周末 ========== */
+cs-attendance-calendar .cal-day[data-weekend] {
+  background: var(--cs-color-bg-hover);
+}
+
+cs-attendance-calendar .cal-day[data-weekend] .cal-day-number {
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 今天高亮 ========== */
+cs-attendance-calendar .cal-day[data-today] .cal-day-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  border-radius: var(--radius-full);
+  background: var(--cs-color-primary);
+  color: var(--cs-color-text-inverse);
+}
+
+/* ========== 状态：正常 ========== */
+cs-attendance-calendar .cal-day[data-status="normal"] .cal-day-status {
+  color: var(--cs-color-success);
+  background: var(--cs-sem-bg-success);
+}
+
+/* ========== 状态：迟到 ========== */
+cs-attendance-calendar .cal-day[data-status="late"] .cal-day-status {
+  color: var(--cs-color-warning);
+  background: var(--cs-sem-bg-warning);
+}
+
+/* ========== 状态：早退 ========== */
+cs-attendance-calendar .cal-day[data-status="early"] .cal-day-status {
+  color: var(--cs-color-warning);
+  background: var(--cs-sem-bg-warning);
+}
+
+/* ========== 状态：缺勤 ========== */
+cs-attendance-calendar .cal-day[data-status="absent"] .cal-day-status {
+  color: var(--cs-color-error);
+  background: var(--cs-sem-bg-error);
+}
+
+/* ========== 状态：请假 ========== */
+cs-attendance-calendar .cal-day[data-status="leave"] .cal-day-status {
+  color: var(--cs-color-primary);
+  background: var(--cs-color-primary-a2);
+}
+
+/* ========== 状态：加班 ========== */
+cs-attendance-calendar .cal-day[data-status="overtime"] .cal-day-status {
+  color: var(--cs-sem-status-info);
+  background: var(--cs-sem-status-info-light);
+}

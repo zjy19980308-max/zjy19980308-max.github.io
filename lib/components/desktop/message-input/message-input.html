@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-message-input 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="message-input.css">
+  <link rel="stylesheet" href="../button/button.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo-container { max-width: 480px; border: 1px solid var(--cs-color-border); border-radius: 8px; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+<!-- 默认状态 -->
+<div class="section">
+  <div class="section-title">默认状态</div>
+  <div class="section-subtitle">消息输入区域，包含工具栏、输入框和发送栏</div>
+
+  <div class="demo-container">
+    <cs-message-input>
+      <div class="input-toolbar">
+        <span class="toolbar-icon"><i class="cses-biaoqian"></i></span>
+        <span class="toolbar-icon"><i class="cses-fenxiang"></i></span>
+        <span class="toolbar-icon"><i class="cses-edit"></i></span>
+      </div>
+      <div class="input-area" contenteditable="true" data-placeholder="输入消息..."></div>
+      <div class="input-footer">
+        <span class="recipient-selector">所有人 <i class="cses-xiala"></i></span>
+        <span class="send-action">
+          <cs-button data-size="sm"><span class="btn-label">发送</span></cs-button>
+        </span>
+      </div>
+    </cs-message-input>
+  </div>
+</div>
+
+<!-- 带内容 -->
+<div class="section">
+  <div class="section-title">带输入内容</div>
+  <div class="section-subtitle">输入区域包含用户输入的文字</div>
+
+  <div class="demo-container">
+    <cs-message-input data-focused>
+      <div class="input-toolbar">
+        <span class="toolbar-icon"><i class="cses-biaoqian"></i></span>
+        <span class="toolbar-icon"><i class="cses-fenxiang"></i></span>
+        <span class="toolbar-icon"><i class="cses-edit"></i></span>
+      </div>
+      <div class="input-area" contenteditable="true">大家好，今天的会议改到下午3点</div>
+      <div class="input-footer">
+        <span class="recipient-selector">所有人 <i class="cses-xiala"></i></span>
+        <span class="send-action">
+          <cs-button data-size="sm"><span class="btn-label">发送</span></cs-button>
+        </span>
+      </div>
+    </cs-message-input>
+  </div>
+</div>
+
+<!-- 禁用状态 -->
+<div class="section">
+  <div class="section-title">禁用状态</div>
+  <div class="section-subtitle">data-disabled</div>
+
+  <div class="demo-container">
+    <cs-message-input data-disabled>
+      <div class="input-toolbar">
+        <span class="toolbar-icon"><i class="cses-biaoqian"></i></span>
+        <span class="toolbar-icon"><i class="cses-fenxiang"></i></span>
+        <span class="toolbar-icon"><i class="cses-edit"></i></span>
+      </div>
+      <div class="input-area" data-placeholder="输入消息..."></div>
+      <div class="input-footer">
+        <span class="recipient-selector">所有人 <i class="cses-xiala"></i></span>
+        <span class="send-action">
+          <cs-button data-size="sm" data-disabled><span class="btn-label">发送</span></cs-button>
+        </span>
+      </div>
+    </cs-message-input>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>容器预览 — filter-bar</title>
+
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="filter-bar.css">
+
+  <style>
+    body { margin: 24px; background: var(--cs-color-white); }
+    .label { font-size: 11px; color: var(--cs-color-text-secondary); margin: 16px 0 8px; font-family: var(--font-family-cn); }
+    .filter-left, .filter-right, .filter-row-top, .filter-row-bottom { font-size: 12px; color: var(--cs-color-text-secondary); padding: var(--space-xs); }
+    cs-filter-bar { padding: var(--space-xs) var(--space-md); border-bottom: 1px solid var(--cs-color-border); }
+  </style>
+</head>
+<body>
+  <div class="label">filter-bar — 单行变体（默认）</div>
+  <cs-filter-bar>
+    <div class="filter-left">filter-left 左侧筛选项</div>
+    <div class="filter-right">filter-right 右侧操作</div>
+  </cs-filter-bar>
+
+  <div class="label">filter-bar — 双行变体（data-variant="double"）</div>
+  <cs-filter-bar data-variant="double">
+    <div class="filter-row-top">
+      <span>上方操作栏 left</span>
+      <span>上方操作栏 right</span>
+    </div>
+    <div class="filter-row-bottom">
+      <span>下方筛选栏 left</span>
+      <span>下方筛选栏 right</span>
+    </div>
+  </cs-filter-bar>
+</body>
+</html>

@@ -1,0 +1,88 @@
+/*
+ * 学习榜单 (Leaderboard) · <cs-leaderboard>
+ * 业务：员工学习时长 / 课程完成度排行榜（5 行典型 · 滚动）
+ * data: .leaderboard-row[data-rank="1|2|3"] = 金/银/铜渐变 · 其他=普通
+ * 子类 7 必备（RULES.md 见详）：wrapper / row / rank / avatar / name / hours(+ -unit) / trend
+ */
+
+cs-leaderboard {
+  display: block;
+  box-sizing: border-box;
+}
+
+.leaderboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-md);
+  max-height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 48px 40px 1fr auto auto;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: 56px;
+  padding: 0 var(--space-sm);
+  border-radius: var(--radius-sm);
+  background: var(--cs-color-bg-page);
+  transition: background-color 0.15s;
+}
+
+.leaderboard-row:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+.leaderboard-rank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaderboard-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leaderboard-name {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.leaderboard-hours {
+  font: var(--typo-cn-16-medium);
+  color: var(--cs-color-text);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.leaderboard-hours-unit {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  margin-left: var(--space-3xs);
+}
+
+.leaderboard-trend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 60px;
+}
+
+/* 前三名背景渐变强调 */
+.leaderboard-row[data-rank="1"] {
+  background: linear-gradient(90deg, var(--cs-color-bg-warning-light) 0%, var(--cs-color-bg-page) 60%);
+}
+.leaderboard-row[data-rank="2"] {
+  background: linear-gradient(90deg, var(--cs-color-bg-info-light) 0%, var(--cs-color-bg-page) 60%);
+}
+.leaderboard-row[data-rank="3"] {
+  background: linear-gradient(90deg, var(--cs-color-bg-neutral-light) 0%, var(--cs-color-bg-page) 60%);
+}

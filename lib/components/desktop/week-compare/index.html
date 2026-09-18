@@ -1,0 +1,88 @@
+<!-- task_id: 学员看板（老师版）-2026-05-21-1430 · component: cs-week-compare · PLAN-006 ★ -->
+<section class="cs-week-compare" data-component="cs-week-compare" aria-label="本周 vs 上周对比">
+  <header class="cs-week-compare__head">
+    <div class="cs-week-compare__title-wrap">
+      <h3 class="cs-week-compare__title">本周 vs 上周</h3>
+      <span class="cs-week-compare__sub">运营复盘 · 2026-W21</span>
+    </div>
+    <div class="cs-week-compare__tabs" role="tablist">
+      <button class="cs-tab" data-active="true" role="tab">完成率</button>
+      <button class="cs-tab" role="tab">平均时长</button>
+      <button class="cs-tab" role="tab">卡壳数</button>
+    </div>
+  </header>
+
+  <div class="cs-week-compare__body">
+    <div class="cs-week-compare__bars">
+      <div class="cs-compare-bar-group">
+        <div class="cs-compare-bar" data-week="prev" style="--cs-bar-h:52%">
+          <span class="cs-compare-bar__label">52%</span>
+        </div>
+        <div class="cs-compare-bar" data-week="curr" style="--cs-bar-h:64%">
+          <span class="cs-compare-bar__label">64%</span>
+        </div>
+      </div>
+      <div class="cs-compare-bar-meta">
+        <span class="cs-delta cs-delta--up">
+          <i class="cses-paixushang" aria-hidden="true"></i>
+          <span>+12%</span>
+        </span>
+        <span class="cs-compare-bar-meta__caption">较上周</span>
+      </div>
+      <div class="cs-compare-legend">
+        <span class="cs-compare-legend__item">
+          <i class="cs-legend-dot cs-legend-dot--prev" aria-hidden="true"></i>
+          <span>上周</span>
+        </span>
+        <span class="cs-compare-legend__item">
+          <i class="cs-legend-dot cs-legend-dot--curr" aria-hidden="true"></i>
+          <span>本周</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="cs-week-compare__sub-section">
+      <h4 class="cs-week-compare__sub-title">
+        <i class="cses-alert" aria-hidden="true"></i>
+        卡壳学员 Top 3
+      </h4>
+      <div class="cs-compare-hbar-list">
+        <div class="cs-compare-hbar">
+          <span class="cs-compare-hbar__name">郑昊</span>
+          <span class="cs-compare-hbar__track">
+            <span class="cs-compare-hbar__fill cs-compare-hbar__fill--bad" style="--cs-hbar:88%"></span>
+          </span>
+          <span class="cs-compare-hbar__value">4 次</span>
+        </div>
+        <div class="cs-compare-hbar">
+          <span class="cs-compare-hbar__name">梁雯</span>
+          <span class="cs-compare-hbar__track">
+            <span class="cs-compare-hbar__fill cs-compare-hbar__fill--bad" style="--cs-hbar:72%"></span>
+          </span>
+          <span class="cs-compare-hbar__value">3 次</span>
+        </div>
+        <div class="cs-compare-hbar">
+          <span class="cs-compare-hbar__name">褚芷</span>
+          <span class="cs-compare-hbar__track">
+            <span class="cs-compare-hbar__fill cs-compare-hbar__fill--warn" style="--cs-hbar:58%"></span>
+          </span>
+          <span class="cs-compare-hbar__value">2 次</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-ai-summary">
+      <span class="cs-ai-summary__badge">
+        <i class="cses-aite" aria-hidden="true"></i>
+        AI 复盘
+      </span>
+      <p class="cs-ai-summary__text">
+        本周完成率 <strong>+12%</strong> · 主要由前 5 名学员推动 · 第 3 章卡壳率上升 <strong>+8%</strong> · 建议增加直播答疑频率
+        <button class="cs-ai-summary__more" type="button">
+          <span>展开完整周复盘</span>
+          <i class="cses-right" aria-hidden="true"></i>
+        </button>
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-collapse 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="collapse.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo-stage { max-width: 720px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 默认有边框 ========== -->
+<div class="section">
+  <div class="section-title">默认有边框 Bordered</div>
+  <div class="section-subtitle">基于原生 details/summary，点击表头展开/收起</div>
+  <div class="demo-stage">
+    <cs-collapse>
+      <details class="collapse-item" open>
+        <summary class="collapse-header">
+          <i class="collapse-arrow cses-xiala" style="transform: rotate(-90deg);"></i>
+          <span class="collapse-title">基础信息</span>
+          <span class="collapse-extra">3 项</span>
+        </summary>
+        <div class="collapse-content">
+          姓名：张三<br>
+          部门：研发中心<br>
+          职位：高级前端工程师
+        </div>
+      </details>
+
+      <details class="collapse-item">
+        <summary class="collapse-header">
+          <i class="collapse-arrow cses-xiala" style="transform: rotate(-90deg);"></i>
+          <span class="collapse-title">联系方式</span>
+          <span class="collapse-extra">2 项</span>
+        </summary>
+        <div class="collapse-content">
+          手机：138-0000-0000<br>
+          邮箱：zhang.san@example.com
+        </div>
+      </details>
+
+      <details class="collapse-item">
+        <summary class="collapse-header">
+          <i class="collapse-arrow cses-xiala" style="transform: rotate(-90deg);"></i>
+          <span class="collapse-title">历史记录</span>
+          <span class="collapse-extra">查看更多</span>
+        </summary>
+        <div class="collapse-content">
+          2026-04-01 入职研发中心<br>
+          2026-04-08 完成新手引导
+        </div>
+      </details>
+    </cs-collapse>
+  </div>
+</div>
+
+<!-- ========== 2. 无边框 ========== -->
+<div class="section">
+  <div class="section-title">无边框 Borderless</div>
+  <div class="section-subtitle">data-borderless — 仅保留分割线</div>
+  <div class="demo-stage">
+    <cs-collapse data-borderless>
+      <details class="collapse-item">
+        <summary class="collapse-header">
+          <i class="collapse-arrow cses-xiala" style="transform: rotate(-90deg);"></i>
+          <span class="collapse-title">如何重置我的密码？</span>
+        </summary>
+        <div class="collapse-content">
+          您可以在【个人设置 - 安全中心】中点击「修改密码」，按提示完成验证后即可重置密码。
+        </div>
+      </details>
+      <details class="collapse-item">
+        <summary class="collapse-header">
+          <i class="collapse-arrow cses-xiala" style="transform: rotate(-90deg);"></i>
+          <span class="collapse-title">忘记密码怎么办？</span>
+        </summary>
+        <div class="collapse-content">
+          点击登录页的「忘记密码」链接，通过手机或邮箱验证码即可找回密码。
+        </div>
+      </details>
+      <details class="collapse-item">
+        <summary class="collapse-header">
+          <i class="collapse-arrow cses-xiala" style="transform: rotate(-90deg);"></i>
+          <span class="collapse-title">如何修改账号绑定的手机？</span>
+        </summary>
+        <div class="collapse-content">
+          请前往【个人设置 - 账号绑定】，在已绑定的手机号右侧点击「更换」并完成验证。
+        </div>
+      </details>
+    </cs-collapse>
+  </div>
+</div>
+
+<!-- ========== 3. 幽灵风 ========== -->
+<div class="section">
+  <div class="section-title">幽灵风 Ghost</div>
+  <div class="section-subtitle">data-ghost — 适合嵌入更复杂的容器</div>
+  <div class="demo-stage">
+    <cs-collapse data-ghost>
+      <details class="collapse-item" open>
+        <summary class="collapse-header">
+          <i class="collapse-arrow cses-xiala" style="transform: rotate(-90deg);"></i>
+          <span class="collapse-title">高级筛选</span>
+        </summary>
+        <div class="collapse-content">
+          按状态、类型、创建时间等条件进行过滤。
+        </div>
+      </details>
+      <details class="collapse-item">
+        <summary class="collapse-header">
+          <i class="collapse-arrow cses-xiala" style="transform: rotate(-90deg);"></i>
+          <span class="collapse-title">显示设置</span>
+        </summary>
+        <div class="collapse-content">
+          自定义列、排序方式、密度。
+        </div>
+      </details>
+    </cs-collapse>
+  </div>
+</div>
+
+</body>
+</html>

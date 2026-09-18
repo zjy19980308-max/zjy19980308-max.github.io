@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<title>关于 — 张竞元</title>
+<script>/* 从别的页切过来：先把遮罩铺满，避免闪出页面（transition.js） */try{var t=+sessionStorage.getItem('v7-pt');if(t&&Date.now()-t<10000)document.documentElement.classList.add('pt-arriving')}catch(e){}</script>
+<link rel="stylesheet" href="css/fonts-noto.css?v=53">
+<link rel="stylesheet" href="css/gradual-blur.css?v=31">
+<link rel="stylesheet" href="css/style.css?v=88">
+</head>
+<body class="page--about">
+<!-- 关于页：结构照原站 leoparpeix.com/about 七屏（首屏 3D / 深绿大字 / 大照片 / 大字宣言 / 经历卡片 / 产出与模块 / 页脚），内容是 owner 自己的。文字在 js/copy.js 的 V7.about。 -->
+<div class="pageTransition" id="pageTransition" aria-hidden="true"></div>
+
+<header class="navbarBlock visible is-instant" id="nav">
+  <div class="gridWrapper hasPadding navbarBlock__left">
+    <h1 class="left__title"><a class="mainButton" href="index.html" data-pt id="navName"></a></h1>
+    <h3 class="left__infos" id="navRole"></h3>
+  </div>
+  <div class="gridWrapper hasPadding navbarBlock__right"><nav class="right__links" id="navLinks"></nav></div>
+</header>
+
+<div class="sceneLayer" id="scene" aria-hidden="true"></div><!-- 首屏背景：和首页同一个方块场景（js/scene.js），正中间加 3D logo -->
+
+<main class="page" id="top">
+  <!-- 1 首屏：3D 标志 + 左下三行 -->
+  <section class="gridWrapper hasPadding headerBlock" id="header">
+    <div class="headerBlock__content" id="headerContent">
+      <div class="textComponent content__description"><p class="textComponent__content" id="abHeader"></p></div>
+      <div class="textComponent content__scrollIndication"><p class="textComponent__content" id="abScroll"></p></div>
+    </div>
+  </section>
+
+  <!-- 2 深绿大字 -->
+  <section class="aboutHero" id="abHero">
+    <div class="gridWrapper hasPadding aboutHero__top">
+      <p class="top__left" id="abHeroLeft"></p>
+      <p class="top__center" id="abHeroCenter"></p>
+      <p class="top__right" id="abHeroRight"></p>
+    </div>
+    <div class="beeBlock aboutHero__titles" id="abBee">
+      <div class="beeBlock__container" id="abBeeBox">
+        <div class="container__titles--default" id="abTitlesA"></div>
+        <div class="container__titles--reveal" id="abTitlesB"></div>
+      </div>
+      <span class="indication textComponent"><span class="textComponent__content" id="abHint"></span></span>
+    </div>
+  </section>
+
+  <!-- 3 大照片 -->
+  <section class="aboutIntro" id="abIntro">
+    <div class="gridWrapper hasPadding">
+      <figure class="aboutIntro__media" id="abMedia"><img src="assets/portrait-2-wide.jpg" alt="张竞元" loading="lazy"></figure><!-- owner：大照片用托腮那张、完整显示不放大脸，两边补背景。portrait-2-wide.jpg 由原图（portrait-2.jpg 同一张）按影棚灰背景往两边延展生成，比例 = 照片框 1400×774。下面「产出与模块」屏仍用 portrait.jpg -->
+      <div class="aboutIntro__infos">
+        <div class="infos__left"><p id="abPlace"></p><p class="left__date" id="abDate"></p></div>
+        <p id="abCredit"></p>
+      </div>
+      <div class="aboutIntro__texts" id="abTexts"></div>
+      <p class="aboutIntro__star">*</p>
+    </div>
+  </section>
+
+  <!-- 4 大字宣言 -->
+  <section class="aboutStatement" id="abStatement">
+    <div class="aboutStatement__container" id="abLines"></div>
+  </section>
+
+  <!-- 4b 个人优势五条（排法照 v1「关于我」：标题 + 英文小字一行带下划线；「— 标题」加粗一行 + 灰色正文） -->
+  <section class="aboutStrengths" id="abStrengths">
+    <div class="gridWrapper hasPadding">
+      <div class="v1Head"><h2 class="v1Head__title" id="abStrTitle"></h2><span class="v1Head__en" lang="en">PERSONAL STRENGTHS</span></div>
+      <ul class="strengths__list" id="abStrList"></ul>
+    </div>
+  </section>
+
+  <!-- 5 经历卡片 -->
+  <section class="aboutExp" id="abExp">
+    <div class="aboutExp__card" id="abCard"></div>
+  </section>
+
+  <!-- 6 产出与模块 -->
+  <section class="aboutRecog" id="abRecog">
+    <div class="gridWrapper hasPadding">
+      <div class="v1Head aboutRecog__head"><h2 class="v1Head__title" id="abRecStatement"></h2><span class="v1Head__en" lang="en">PROJECTS</span></div>
+      <div class="aboutRecog__left">
+        <figure class="left__media"><img src="assets/portrait.jpg" alt="张竞元" loading="lazy"></figure>
+        <div id="abRecParas"></div>
+      </div>
+      <div class="aboutRecog__right">
+        <div class="right__stats" id="abStats"></div>
+        <div class="right__list" id="abList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 页脚 -->
+  <section class="aboutFooter" id="abFooter">
+    <div class="beeBlock aboutFooter__titles" id="abFootBee">
+      <div class="beeBlock__container" id="abFootBox">
+        <div class="container__titles--default" id="abFootA"></div>
+        <div class="container__titles--reveal" id="abFootB"></div>
+      </div>
+    </div>
+    <!-- 基本信息 + 工牌（owner：基本信息放最下方；工牌是 v1 的 lanyard 组件） -->
+    <div class="gridWrapper hasPadding aboutContact" id="abContact">
+      <div class="contact__info">
+        <div class="v1Head"><h2 class="v1Head__title">基本信息</h2><span class="v1Head__en" lang="en">PROFILE</span></div>
+        <dl class="about-meta" id="abProfileRows"></dl>
+        <div class="about-types-head" id="abTagsTitle"></div>
+        <div class="about-types" id="abProfileTags"></div>
+      </div>
+      <div class="lanyard" id="lanyard" aria-hidden="true"><span class="lanyard-hint" lang="en">拖动工牌 · Drag the badge</span></div>
+    </div>
+    <div class="gridWrapper hasPadding aboutFooter__bottom">
+      <p class="bottom__left" id="abFootLeft"></p>
+      <div class="bottom__links" id="abFootLinks"></div>
+      <p class="bottom__right" id="abFootCopy"></p>
+    </div>
+  </section>
+</main>
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/vendor/three.bundle.js"></script>
+<script src="js/vendor/RoomEnvironment.js"></script>
+<script src="js/vendor/cannon.min.js"></script>
+<script src="js/logo-path.js?v=31"></script>
+<script src="js/logo3d.js?v=31"></script>
+<script src="js/copy.js?v=51"></script>
+<script src="js/nav-theme.js?v=19"></script>
+<script src="js/fx-config.js?v=34"></script>
+<script src="js/transition.js?v=32"></script>
+<script src="js/qr-matrix.js?v=31"></script>
+<script src="js/lanyard.js?v=31"></script>
+<script src="js/about.js?v=46"></script>
+<script>window.V7_SCENE_LOGO = true;</script>
+<script src="js/scene.js?v=46"></script>
+<script src="js/cursor-fx.js?v=34"></script>
+<script src="js/gradual-blur.js?v=31"></script>
+<script>
+/* 页面顶部渐进模糊（owner：头部加模糊，免得导航和滚上来的内容互相干扰）。参数同项目页：高 4.5rem、强度 1.25；zIndex -97 → 实际 3，在导航（4）之下 */
+(function () { if (!window.GradualBlur) return; var MOB = matchMedia('(max-width:760px)').matches;
+  GradualBlur.mount(null, { preset: 'page-header', zIndex: -97, height: MOB ? '2.5rem' : '4.5rem', strength: MOB ? .75 : 1.25, curve: 'ease-out' }); })();
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!-- task_id: 学员看板（老师版）-2026-05-21-1430 · component: cs-student-table · PLAN-008 -->
+<section class="cs-student-table" data-component="cs-student-table" aria-label="学员管理列表">
+  <div class="cs-student-table__group" data-group="catch-up">
+    <header class="cs-student-table__group-head">
+      <span class="cs-student-table__group-title">
+        <i class="cses-alert" aria-hidden="true"></i>
+        待跟进 catch-up
+        <span class="cs-student-table__group-count cs-student-table__group-count--warn">12</span>
+      </span>
+      <span class="cs-student-table__group-hint">7 天内卡壳/未活的学员 · 建议本周优先触达</span>
+      <button class="cs-student-table__group-toggle" aria-label="收起分组">
+        <i class="cses-paixuxia" aria-hidden="true"></i>
+      </button>
+    </header>
+    <table class="cs-table">
+      <thead class="cs-table__head">
+        <tr>
+          <th class="cs-table__th cs-table__th--check">
+            <label class="cs-checkbox">
+              <input type="checkbox" />
+              <span class="cs-checkbox__box" aria-hidden="true"></span>
+            </label>
+          </th>
+          <th class="cs-table__th cs-table__th--name">学员</th>
+          <th class="cs-table__th">状态</th>
+          <th class="cs-table__th cs-table__th--num">今日时长</th>
+          <th class="cs-table__th cs-table__th--num">完成章节</th>
+          <th class="cs-table__th">最近活跃</th>
+          <th class="cs-table__th cs-table__th--actions">操作</th>
+        </tr>
+      </thead>
+      <tbody class="cs-table__body">
+        <tr class="cs-table__row" data-state="bad">
+          <td class="cs-table__td"><label class="cs-checkbox"><input type="checkbox" checked /><span class="cs-checkbox__box" aria-hidden="true"></span></label></td>
+          <td class="cs-table__td">
+            <span class="cs-table__avatar" aria-hidden="true">魏</span>
+            <span class="cs-table__name">魏然</span>
+          </td>
+          <td class="cs-table__td"><span class="cs-status-pill cs-status-pill--danger">长期未活</span></td>
+          <td class="cs-table__td cs-table__td--num">6min</td>
+          <td class="cs-table__td cs-table__td--num">0 / 8</td>
+          <td class="cs-table__td"><span class="cs-table__time">7 天前</span></td>
+          <td class="cs-table__td cs-table__td--actions">
+            <button class="cs-table__btn cs-table__btn--primary"><i class="cses-xiaoxi" aria-hidden="true"></i>私聊</button>
+            <button class="cs-table__btn">详情</button>
+          </td>
+        </tr>
+        <tr class="cs-table__row" data-state="bad">
+          <td class="cs-table__td"><label class="cs-checkbox"><input type="checkbox" checked /><span class="cs-checkbox__box" aria-hidden="true"></span></label></td>
+          <td class="cs-table__td"><span class="cs-table__avatar" aria-hidden="true">郑</span><span class="cs-table__name">郑昊</span></td>
+          <td class="cs-table__td"><span class="cs-status-pill cs-status-pill--warn">章节卡壳</span></td>
+          <td class="cs-table__td cs-table__td--num">10min</td>
+          <td class="cs-table__td cs-table__td--num">2 / 8</td>
+          <td class="cs-table__td"><span class="cs-table__time">6 小时前</span></td>
+          <td class="cs-table__td cs-table__td--actions">
+            <button class="cs-table__btn cs-table__btn--primary"><i class="cses-edit" aria-hidden="true"></i>调计划</button>
+            <button class="cs-table__btn">详情</button>
+          </td>
+        </tr>
+        <tr class="cs-table__row" data-state="bad">
+          <td class="cs-table__td"><label class="cs-checkbox"><input type="checkbox" checked /><span class="cs-checkbox__box" aria-hidden="true"></span></label></td>
+          <td class="cs-table__td"><span class="cs-table__avatar" aria-hidden="true">麦</span><span class="cs-table__name">麦野</span></td>
+          <td class="cs-table__td"><span class="cs-status-pill cs-status-pill--danger">作业逾期 3</span></td>
+          <td class="cs-table__td cs-table__td--num">8min</td>
+          <td class="cs-table__td cs-table__td--num">1 / 8</td>
+          <td class="cs-table__td"><span class="cs-table__time">9 天前</span></td>
+          <td class="cs-table__td cs-table__td--actions">
+            <button class="cs-table__btn cs-table__btn--primary"><i class="cses-xiaoxi" aria-hidden="true"></i>提醒</button>
+            <button class="cs-table__btn">详情</button>
+          </td>
+        </tr>
+        <tr class="cs-table__row" data-state="warn">
+          <td class="cs-table__td"><label class="cs-checkbox"><input type="checkbox" /><span class="cs-checkbox__box" aria-hidden="true"></span></label></td>
+          <td class="cs-table__td"><span class="cs-table__avatar" aria-hidden="true">梁</span><span class="cs-table__name">梁雯</span></td>
+          <td class="cs-table__td"><span class="cs-status-pill cs-status-pill--warn">学时偏低</span></td>
+          <td class="cs-table__td cs-table__td--num">14min</td>
+          <td class="cs-table__td cs-table__td--num">2 / 8</td>
+          <td class="cs-table__td"><span class="cs-table__time">4 小时前</span></td>
+          <td class="cs-table__td cs-table__td--actions">
+            <button class="cs-table__btn cs-table__btn--primary"><i class="cses-xiaoxi" aria-hidden="true"></i>私聊</button>
+            <button class="cs-table__btn">详情</button>
+          </td>
+        </tr>
+        <tr class="cs-table__row" data-state="warn">
+          <td class="cs-table__td"><label class="cs-checkbox"><input type="checkbox" /><span class="cs-checkbox__box" aria-hidden="true"></span></label></td>
+          <td class="cs-table__td"><span class="cs-table__avatar" aria-hidden="true">褚</span><span class="cs-table__name">褚芷</span></td>
+          <td class="cs-table__td"><span class="cs-status-pill cs-status-pill--warn">日学时下降</span></td>
+          <td class="cs-table__td cs-table__td--num">15min</td>
+          <td class="cs-table__td cs-table__td--num">1 / 8</td>
+          <td class="cs-table__td"><span class="cs-table__time">3.5 小时前</span></td>
+          <td class="cs-table__td cs-table__td--actions">
+            <button class="cs-table__btn cs-table__btn--primary"><i class="cses-edit" aria-hidden="true"></i>调计划</button>
+            <button class="cs-table__btn">详情</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cs-student-table__group" data-group="chase">
+    <header class="cs-student-table__group-head">
+      <span class="cs-student-table__group-title">
+        <i class="cses-xiaoxi" aria-hidden="true"></i>
+        待催促 chase
+        <span class="cs-student-table__group-count">8</span>
+      </span>
+      <span class="cs-student-table__group-hint">本周时长偏低但仍活跃 · 建议提醒</span>
+      <button class="cs-student-table__group-toggle" aria-label="收起分组">
+        <i class="cses-paixuxia" aria-hidden="true"></i>
+      </button>
+    </header>
+    <table class="cs-table">
+      <thead class="cs-table__head">
+        <tr>
+          <th class="cs-table__th cs-table__th--check"><label class="cs-checkbox"><input type="checkbox" /><span class="cs-checkbox__box" aria-hidden="true"></span></label></th>
+          <th class="cs-table__th cs-table__th--name">学员</th>
+          <th class="cs-table__th">状态</th>
+          <th class="cs-table__th cs-table__th--num">今日时长</th>
+          <th class="cs-table__th cs-table__th--num">完成章节</th>
+          <th class="cs-table__th">最近活跃</th>
+          <th class="cs-table__th cs-table__th--actions">操作</th>
+        </tr>
+      </thead>
+      <tbody class="cs-table__body">
+        <tr class="cs-table__row" data-state="warn">
+          <td class="cs-table__td"><label class="cs-checkbox"><input type="checkbox" /><span class="cs-checkbox__box" aria-hidden="true"></span></label></td>
+          <td class="cs-table__td"><span class="cs-table__avatar" aria-hidden="true">孙</span><span class="cs-table__name">孙浩</span></td>
+          <td class="cs-table__td"><span class="cs-status-pill cs-status-pill--warn">学时偏低</span></td>
+          <td class="cs-table__td cs-table__td--num">36min</td>
+          <td class="cs-table__td cs-table__td--num">2 / 8</td>
+          <td class="cs-table__td"><span class="cs-table__time">1 小时前</span></td>
+          <td class="cs-table__td cs-table__td--actions">
+            <button class="cs-table__btn cs-table__btn--primary"><i class="cses-xiaoxi" aria-hidden="true"></i>催学</button>
+            <button class="cs-table__btn">详情</button>
+          </td>
+        </tr>
+        <tr class="cs-table__row" data-state="warn">
+          <td class="cs-table__td"><label class="cs-checkbox"><input type="checkbox" /><span class="cs-checkbox__box" aria-hidden="true"></span></label></td>
+          <td class="cs-table__td"><span class="cs-table__avatar" aria-hidden="true">韩</span><span class="cs-table__name">韩梅</span></td>
+          <td class="cs-table__td"><span class="cs-status-pill cs-status-pill--warn">学时偏低</span></td>
+          <td class="cs-table__td cs-table__td--num">30min</td>
+          <td class="cs-table__td cs-table__td--num">1 / 8</td>
+          <td class="cs-table__td"><span class="cs-table__time">2 小时前</span></td>
+          <td class="cs-table__td cs-table__td--actions">
+            <button class="cs-table__btn cs-table__btn--primary"><i class="cses-xiaoxi" aria-hidden="true"></i>催学</button>
+            <button class="cs-table__btn">详情</button>
+          </td>
+        </tr>
+        <tr class="cs-table__row" data-state="warn">
+          <td class="cs-table__td"><label class="cs-checkbox"><input type="checkbox" /><span class="cs-checkbox__box" aria-hidden="true"></span></label></td>
+          <td class="cs-table__td"><span class="cs-table__avatar" aria-hidden="true">何</span><span class="cs-table__name">何凯</span></td>
+          <td class="cs-table__td"><span class="cs-status-pill cs-status-pill--warn">学时偏低</span></td>
+          <td class="cs-table__td cs-table__td--num">34min</td>
+          <td class="cs-table__td cs-table__td--num">2 / 8</td>
+          <td class="cs-table__td"><span class="cs-table__time">1.5 小时前</span></td>
+          <td class="cs-table__td cs-table__td--actions">
+            <button class="cs-table__btn cs-table__btn--primary"><i class="cses-xiaoxi" aria-hidden="true"></i>催学</button>
+            <button class="cs-table__btn">详情</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer class="cs-student-table__foot">
+    <span class="cs-student-table__total">共 50 学员 · 显示 1-20</span>
+    <nav class="cs-pagination" aria-label="分页">
+      <button class="cs-pagination__btn" disabled><i class="cses-fanhui" aria-hidden="true"></i></button>
+      <button class="cs-pagination__btn" data-active="true">1</button>
+      <button class="cs-pagination__btn">2</button>
+      <button class="cs-pagination__btn">3</button>
+      <button class="cs-pagination__btn"><i class="cses-right" aria-hidden="true"></i></button>
+    </nav>
+  </footer>
+</section>

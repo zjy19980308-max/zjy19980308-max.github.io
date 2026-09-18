@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <!-- Magnifying glass -->
+  <!-- Circle -->
+  <circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
+  <path d="M10 4c3.3 0 6 2.7 6 6s-2.7 6-6 6-6-2.7-6-6 2.7-6 6-6z"/>
+  <!-- Handle -->
+  <path d="M15.5 15.5l6.4 6.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <!-- Solid version using path -->
+</svg>

@@ -1,0 +1,63 @@
+/* ==========================================================
+   cs-block-add — 段落左侧悬浮加号
+   父级 hover 时显示
+
+   data 属性：
+     data-active   — 激活态（常驻显示 + 悬停背景色）
+     data-disabled — 禁用态（透明度 0.3 + 拒绝点击）
+   ========================================================== */
+
+cs-block-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--cs-color-text-light2);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity var(--motion-duration-fast) var(--motion-easing-standard),
+    background var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+cs-block-add:hover {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text);
+}
+
+cs-block-add:active {
+  background: var(--cs-color-highlight);
+}
+
+cs-block-add:focus-visible {
+  outline: 2px solid var(--cs-color-primary);
+  outline-offset: 1px;
+}
+
+cs-block-add[data-active] {
+  opacity: 1;
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text);
+}
+
+cs-block-add[data-disabled] {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* 父级 hover 触发显示 */
+.block-row:hover cs-block-add,
+*:hover > cs-block-add {
+  opacity: 1;
+}
+
+.ba-icon {
+  font-size: var(--cs-sem-size-icon-sm);
+  line-height: 1;
+}

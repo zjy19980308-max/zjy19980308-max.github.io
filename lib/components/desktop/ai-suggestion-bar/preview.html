@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-ai-suggestion-bar preview</title>
+  <link rel="stylesheet" href="../../../../css/base.css">
+  <link rel="stylesheet" href="../../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="../../../css/workspace.css">
+  <link rel="stylesheet" href="ai-suggestion-bar.css">
+  <style>body{padding:24px;background:#F5F6FA;font-family:PingFang SC;}</style>
+</head>
+<body>
+  <cs-ai-suggestion-bar data-scenario="first-recommend" data-page="1/4">
+    <span class="ai-avatar">🤖</span>
+    <div class="ai-content">
+      <div class="ai-label"><span class="ai-tag">⭐ AI 推荐</span>今日第一推荐</div>
+      <div class="ai-message">
+        你今天最该先做 <b>《Q1 产品规划修订》</b>，因为它阻塞了 15:00 的产品评审会。
+      </div>
+    </div>
+    <div class="ai-actions">
+      <button class="ai-action-btn" data-variant="primary">立即开始</button>
+      <button class="ai-action-btn" data-variant="secondary">改时间</button>
+      <button class="ai-action-btn" data-variant="text">稍后再说</button>
+    </div>
+    <span class="ai-pager">
+      <i class="cses-arrow"></i>1/4<i class="cses-right"></i>
+    </span>
+  </cs-ai-suggestion-bar>
+</body>
+</html>

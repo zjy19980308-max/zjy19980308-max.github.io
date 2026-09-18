@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-notice-item 通知列表项</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="notice-item.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .demo-section { margin-bottom: 32px; }
+    .demo-label { font: var(--typo-cn-12-medium); color: var(--cs-color-text-light2); margin-bottom: 12px; }
+    .demo-container { width: 400px; background: var(--cs-color-bg); padding: 16px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="demo-section">
+  <div class="demo-label">通知列表（含新通知标记）</div>
+  <div class="demo-container">
+    <cs-notice-item data-new>
+      <span class="notice-dot"></span>
+      <span class="notice-title">关于OA系统新版即将上线的通知</span>
+      <span class="notice-date">2024-03-15</span>
+    </cs-notice-item>
+    <cs-notice-item data-new>
+      <span class="notice-dot"></span>
+      <span class="notice-title">资产管理部2024年第三季度工作安排</span>
+      <span class="notice-date">2024-03-12</span>
+    </cs-notice-item>
+    <cs-notice-item>
+      <span class="notice-dot"></span>
+      <span class="notice-title">"关心小区"城镇化改善方案综合整理最新改善集</span>
+      <span class="notice-date">2024-03-10</span>
+    </cs-notice-item>
+    <cs-notice-item>
+      <span class="notice-dot"></span>
+      <span class="notice-title">总行发布2024年度IT基础设施升级计划</span>
+      <span class="notice-date">2024-03-08</span>
+    </cs-notice-item>
+  </div>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">公文列表</div>
+  <div class="demo-container">
+    <cs-notice-item data-type="document" data-new>
+      <span class="notice-dot"></span>
+      <span class="notice-title">关于印发《员工行为规范手册（2024版）》的通知</span>
+      <span class="notice-date">2024-03-14</span>
+    </cs-notice-item>
+    <cs-notice-item data-type="document">
+      <span class="notice-dot"></span>
+      <span class="notice-title">内部审计管理办法修订稿征求意见</span>
+      <span class="notice-date">2024-03-11</span>
+    </cs-notice-item>
+  </div>
+</div>
+
+</body>
+</html>

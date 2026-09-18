@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-timeline 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="timeline.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-title">基础时间轴 Default</div>
+  <div class="section-subtitle">顺序事件流</div>
+  <cs-timeline>
+    <li class="timeline-item">
+      <span class="timeline-dot"></span>
+      <div class="timeline-content">
+        <span class="timeline-time">2026-04-08 10:30</span>
+        <span class="timeline-title">需求评审通过</span>
+        <span class="timeline-desc">产品经理已确认本期需求范围</span>
+      </div>
+    </li>
+    <li class="timeline-item">
+      <span class="timeline-dot"></span>
+      <div class="timeline-content">
+        <span class="timeline-time">2026-04-08 14:20</span>
+        <span class="timeline-title">设计稿提交</span>
+        <span class="timeline-desc">高保真稿已上传至 Figma</span>
+      </div>
+    </li>
+    <li class="timeline-item">
+      <span class="timeline-dot"></span>
+      <div class="timeline-content">
+        <span class="timeline-time">2026-04-08 16:45</span>
+        <span class="timeline-title">开发开始</span>
+        <span class="timeline-desc">前端工程师认领任务</span>
+      </div>
+    </li>
+  </cs-timeline>
+</div>
+
+<div class="section">
+  <div class="section-title">语义颜色 Colors</div>
+  <div class="section-subtitle">data-color 标记节点状态</div>
+  <cs-timeline>
+    <li class="timeline-item" data-color="success">
+      <span class="timeline-dot"></span>
+      <div class="timeline-content">
+        <span class="timeline-time">10:00</span>
+        <span class="timeline-title">订单已支付</span>
+      </div>
+    </li>
+    <li class="timeline-item" data-color="primary">
+      <span class="timeline-dot"></span>
+      <div class="timeline-content">
+        <span class="timeline-time">10:15</span>
+        <span class="timeline-title">商家已接单</span>
+      </div>
+    </li>
+    <li class="timeline-item" data-color="warning">
+      <span class="timeline-dot"></span>
+      <div class="timeline-content">
+        <span class="timeline-time">10:45</span>
+        <span class="timeline-title">配送中</span>
+      </div>
+    </li>
+    <li class="timeline-item" data-pending>
+      <span class="timeline-dot"></span>
+      <div class="timeline-content">
+        <span class="timeline-time">--:--</span>
+        <span class="timeline-title">待签收</span>
+        <span class="timeline-desc">预计 11:30 送达</span>
+      </div>
+    </li>
+  </cs-timeline>
+</div>
+
+<div class="section">
+  <div class="section-title">含图标节点 With Icons</div>
+  <div class="section-subtitle">timeline-dot 内放 i 元素</div>
+  <cs-timeline>
+    <li class="timeline-item" data-color="success">
+      <span class="timeline-dot"><i class="cses-check-circle"></i></span>
+      <div class="timeline-content">
+        <span class="timeline-time">2026-04-08</span>
+        <span class="timeline-title">阶段一完成</span>
+      </div>
+    </li>
+    <li class="timeline-item" data-color="primary">
+      <span class="timeline-dot"><i class="cses-bianji" style="font-style:normal;"></i></span>
+      <div class="timeline-content">
+        <span class="timeline-time">2026-04-08</span>
+        <span class="timeline-title">阶段二进行中</span>
+      </div>
+    </li>
+    <li class="timeline-item" data-pending>
+      <span class="timeline-dot"></span>
+      <div class="timeline-content">
+        <span class="timeline-time">待定</span>
+        <span class="timeline-title">阶段三未开始</span>
+      </div>
+    </li>
+  </cs-timeline>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+cs-doc-category-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-sem-spacing-content-inline);
+}
+
+cs-doc-category-nav[data-variant="pill"] .category-track {
+  gap: var(--cs-sem-spacing-content-inline);
+}
+
+cs-doc-category-nav[data-variant="quiet"] .category-track {
+  gap: var(--cs-sem-spacing-comp-gap-md);
+}
+
+cs-doc-category-nav .category-header {
+  font: var(--cs-typo-title-extra-large);
+  color: var(--cs-sem-text-primary);
+}
+
+cs-doc-category-nav .category-track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSES 设计规范预览</title>
+  <link rel="stylesheet" href="colors.css">
+  <link rel="stylesheet" href="font.css">
+  <link rel="stylesheet" href="font-size.css">
+  <link rel="stylesheet" href="space.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-family-cn);
+      color: var(--cs-font-color);
+      background: #f8f9fa;
+      padding: 40px;
+    }
+    h1 {
+      font: var(--typo-cn-24-medium);
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    h2 {
+      font: var(--typo-cn-20-medium);
+      margin: 40px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--cs-primary-color);
+      color: var(--cs-primary-color);
+    }
+    h3 {
+      font: var(--typo-cn-16-medium);
+      margin: 24px 0 12px;
+      color: var(--cs-font-color-2);
+    }
+
+    /* 颜色展示 */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .color-card {
+      background: #fff;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-base);
+    }
+    .color-swatch {
+      height: 64px;
+      position: relative;
+    }
+    .color-swatch.border-preview {
+      border: 2px dashed;
+    }
+    .color-info {
+      padding: 10px 12px;
+    }
+    .color-name {
+      font: var(--typo-cn-12-medium);
+      color: var(--cs-font-color);
+      word-break: break-all;
+    }
+    .color-value {
+      font: var(--typo-en-12-regular);
+      color: var(--cs-font-color-3);
+      margin-top: 2px;
+    }
+
+    /* 字体展示 */
+    .font-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-base);
+      margin-bottom: 16px;
+    }
+    .font-table th, .font-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--cs-border-color);
+    }
+    .font-table th {
+      background: var(--cs-bg-color-2);
+      font: var(--typo-cn-13-medium);
+      color: var(--cs-font-color-2);
+    }
+    .font-table td {
+      font: var(--typo-cn-14-regular);
+    }
+    .font-table .sample { min-width: 240px; }
+
+    /* 间距展示 */
+    .space-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .space-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #fff;
+      padding: 12px 16px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-base);
+    }
+    .space-bar {
+      height: 24px;
+      background: var(--cs-primary-color);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .space-label {
+      font: var(--typo-cn-13-medium);
+      color: var(--cs-font-color);
+      min-width: 160px;
+    }
+    .space-value {
+      font: var(--typo-en-12-regular);
+      color: var(--cs-font-color-3);
+    }
+
+    /* 圆角展示 */
+    .radius-grid {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .radius-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .radius-box {
+      width: 80px;
+      height: 80px;
+      background: var(--cs-primary-color);
+    }
+    .radius-label {
+      font: var(--typo-cn-12-medium);
+      color: var(--cs-font-color);
+    }
+    .radius-value {
+      font: var(--typo-en-12-regular);
+      color: var(--cs-font-color-3);
+    }
+
+    /* 阴影展示 */
+    .shadow-grid {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .shadow-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .shadow-box {
+      width: 120px;
+      height: 120px;
+      background: #fff;
+      border-radius: var(--border-radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: var(--typo-cn-12-medium);
+      color: var(--cs-font-color-3);
+    }
+    .shadow-label {
+      font: var(--typo-cn-13-medium);
+      color: var(--cs-font-color);
+    }
+  </style>
+</head>
+<body>
+
+<h1>CSES 设计规范预览</h1>
+
+<!-- ==================== 颜色 ==================== -->
+<h2>颜色 Colors</h2>
+
+<h3>主色 / Primary</h3>
+<div class="color-grid">
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-primary-color);"></div>
+    <div class="color-info"><div class="color-name">--cs-primary-color</div><div class="color-value">#4857e2</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-primary-color-hover);"></div>
+    <div class="color-info"><div class="color-name">--cs-primary-color-hover</div><div class="color-value">#4958de</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-primary-color-active);"></div>
+    <div class="color-info"><div class="color-name">--cs-primary-color-active</div><div class="color-value">#4351cd</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-primary-color-disabled);"></div>
+    <div class="color-info"><div class="color-name">--cs-primary-color-disabled</div><div class="color-value">#ced3ff</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-primary-color-transparent);"></div>
+    <div class="color-info"><div class="color-name">--cs-primary-color-transparent</div><div class="color-value">#4857e214</div></div>
+  </div>
+</div>
+
+<h3>功能色 / Functional</h3>
+<div class="color-grid">
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-error-color);"></div>
+    <div class="color-info"><div class="color-name">--cs-error-color</div><div class="color-value">#f53f3f</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-error-color-hover);"></div>
+    <div class="color-info"><div class="color-name">--cs-error-color-hover</div><div class="color-value">#ffa2a2</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-warning-color);"></div>
+    <div class="color-info"><div class="color-name">--cs-warning-color</div><div class="color-value">#ff7d00</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-warning-color-hover);"></div>
+    <div class="color-info"><div class="color-name">--cs-warning-color-hover</div><div class="color-value">#ffc892</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-success-color);"></div>
+    <div class="color-info"><div class="color-name">--cs-success-color</div><div class="color-value">#00b42a</div></div>
+  </div>
+</div>
+
+<h3>文字颜色 / Font Color</h3>
+<div class="color-grid">
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-font-color);"></div>
+    <div class="color-info"><div class="color-name">--cs-font-color</div><div class="color-value">#333333</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-font-color-2);"></div>
+    <div class="color-info"><div class="color-name">--cs-font-color-2</div><div class="color-value">#666666</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-font-color-3);"></div>
+    <div class="color-info"><div class="color-name">--cs-font-color-3</div><div class="color-value">#999999</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-font-color-disabled);"></div>
+    <div class="color-info"><div class="color-name">--cs-font-color-disabled</div><div class="color-value">#efefef</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-font-color-anchor);"></div>
+    <div class="color-info"><div class="color-name">--cs-font-color-anchor</div><div class="color-value">#0062ff</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-text-primary);"></div>
+    <div class="color-info"><div class="color-name">--color-text-primary</div><div class="color-value">#262626</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-text-secondary);"></div>
+    <div class="color-info"><div class="color-name">--color-text-secondary</div><div class="color-value">#525252</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-text-tertiary);"></div>
+    <div class="color-info"><div class="color-name">--color-text-tertiary</div><div class="color-value">#a1a1a1</div></div>
+  </div>
+</div>
+
+<h3>背景色 / Background</h3>
+<div class="color-grid">
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-bg-color-2);"></div>
+    <div class="color-info"><div class="color-name">--cs-bg-color-2</div><div class="color-value">#f5f5f5</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-bg-color-3);"></div>
+    <div class="color-info"><div class="color-name">--cs-bg-color-3</div><div class="color-value">#eaeaea</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--cs-bg-color-disabled);"></div>
+    <div class="color-info"><div class="color-name">--cs-bg-color-disabled</div><div class="color-value">#f9f9f9</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-bg-mask);"></div>
+    <div class="color-info"><div class="color-name">--color-bg-mask</div><div class="color-value">#00000066</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-highlight);"></div>
+    <div class="color-info"><div class="color-name">--color-highlight</div><div class="color-value">#ebedef</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-selected);"></div>
+    <div class="color-info"><div class="color-name">--color-selected</div><div class="color-value">#eaecff</div></div>
+  </div>
+</div>
+
+<h3>边框色 / Border</h3>
+<div class="color-grid">
+  <div class="color-card">
+    <div class="color-swatch border-preview" style="background: #fff; border-color: var(--cs-border-color);"></div>
+    <div class="color-info"><div class="color-name">--cs-border-color</div><div class="color-value">#e6e6e6</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch border-preview" style="background: #fff; border-color: var(--color-line-2);"></div>
+    <div class="color-info"><div class="color-name">--color-line-2</div><div class="color-value">#e5e6eb</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch border-preview" style="background: #fff; border-color: var(--color-grey-gray4-border);"></div>
+    <div class="color-info"><div class="color-name">--color-grey-gray4-border</div><div class="color-value">#dcdcdc</div></div>
+  </div>
+</div>
+
+<h3>Brand 品牌色</h3>
+<div class="color-grid">
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-brand-1);"></div>
+    <div class="color-info"><div class="color-name">--color-brand-1</div><div class="color-value">#e8f3ff</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-brand-3);"></div>
+    <div class="color-info"><div class="color-name">--color-brand-3</div><div class="color-value">#94bfff</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-brand-4);"></div>
+    <div class="color-info"><div class="color-name">--color-brand-4</div><div class="color-value">#6aa1ff</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-brand-5);"></div>
+    <div class="color-info"><div class="color-name">--color-brand-5</div><div class="color-value">#4080ff</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-brand-6);"></div>
+    <div class="color-info"><div class="color-name">--color-brand-6</div><div class="color-value">#165dff</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-brand-7);"></div>
+    <div class="color-info"><div class="color-name">--color-brand-7</div><div class="color-value">#0e42d2</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-violet-600);"></div>
+    <div class="color-info"><div class="color-name">--color-violet-600</div><div class="color-value">#7f22fe</div></div>
+  </div>
+  <div class="color-card">
+    <div class="color-swatch" style="background: var(--color-cyan-6);"></div>
+    <div class="color-info"><div class="color-name">--color-cyan-6</div><div class="color-value">#14c9c9</div></div>
+  </div>
+</div>
+
+<!-- ==================== 字体 ==================== -->
+<h2>字体 Typography</h2>
+
+<h3>字体族 / Font Family</h3>
+<table class="font-table">
+  <tr><th>变量名</th><th>字体</th><th class="sample">示例</th></tr>
+  <tr>
+    <td>--font-family-cn</td>
+    <td>PingFang SC</td>
+    <td style="font-family: var(--font-family-cn);">中文字体示例 ABCDEFG 1234567890</td>
+  </tr>
+  <tr>
+    <td>--font-family-en</td>
+    <td>Nunito Sans</td>
+    <td style="font-family: var(--font-family-en);">The quick brown fox jumps 1234567890</td>
+  </tr>
+  <tr>
+    <td>--font-family-en-alt</td>
+    <td>Helvetica Neue</td>
+    <td style="font-family: var(--font-family-en-alt);">The quick brown fox jumps 1234567890</td>
+  </tr>
+</table>
+
+<h3>中文字体组合 / CN Typography</h3>
+<table class="font-table">
+  <tr><th>变量名</th><th>规格</th><th class="sample">示例</th></tr>
+  <tr><td>--typo-cn-12-regular</td><td>12px / 20px / 400</td><td style="font: var(--typo-cn-12-regular);">中文正文示例 Regular 12px</td></tr>
+  <tr><td>--typo-cn-12-medium</td><td>12px / 20px / 500</td><td style="font: var(--typo-cn-12-medium);">中文正文示例 Medium 12px</td></tr>
+  <tr><td>--typo-cn-13-regular</td><td>13px / 22px / 400</td><td style="font: var(--typo-cn-13-regular);">中文正文示例 Regular 13px</td></tr>
+  <tr><td>--typo-cn-13-medium</td><td>13px / 22px / 500</td><td style="font: var(--typo-cn-13-medium);">中文正文示例 Medium 13px</td></tr>
+  <tr><td>--typo-cn-14-regular</td><td>14px / 22px / 400</td><td style="font: var(--typo-cn-14-regular);">中文正文示例 Regular 14px</td></tr>
+  <tr><td>--typo-cn-14-medium</td><td>14px / 22px / 500</td><td style="font: var(--typo-cn-14-medium);">中文正文示例 Medium 14px</td></tr>
+  <tr><td>--typo-cn-16-medium</td><td>16px / 24px / 500</td><td style="font: var(--typo-cn-16-medium);">中文正文示例 Medium 16px</td></tr>
+  <tr><td>--typo-cn-20-regular</td><td>20px / 28px / 400</td><td style="font: var(--typo-cn-20-regular);">中文标题示例 Regular 20px</td></tr>
+  <tr><td>--typo-cn-20-medium</td><td>20px / 28px / 500</td><td style="font: var(--typo-cn-20-medium);">中文标题示例 Medium 20px</td></tr>
+  <tr><td>--typo-cn-24-regular</td><td>24px / 32px / 400</td><td style="font: var(--typo-cn-24-regular);">中文标题示例 Regular 24px</td></tr>
+  <tr><td>--typo-cn-24-medium</td><td>24px / 32px / 500</td><td style="font: var(--typo-cn-24-medium);">中文标题示例 Medium 24px</td></tr>
+</table>
+
+<h3>英文字体组合 / EN Typography</h3>
+<table class="font-table">
+  <tr><th>变量名</th><th>规格</th><th class="sample">示例</th></tr>
+  <tr><td>--typo-en-10-regular</td><td>10px / 18px / 400</td><td style="font: var(--typo-en-10-regular);">The quick brown fox jumps 10px</td></tr>
+  <tr><td>--typo-en-10-medium</td><td>10px / 18px / 600</td><td style="font: var(--typo-en-10-medium);">The quick brown fox jumps 10px</td></tr>
+  <tr><td>--typo-en-12-regular</td><td>12px / 20px / 400</td><td style="font: var(--typo-en-12-regular);">The quick brown fox jumps 12px</td></tr>
+  <tr><td>--typo-en-12-medium</td><td>12px / 20px / 600</td><td style="font: var(--typo-en-12-medium);">The quick brown fox jumps 12px</td></tr>
+  <tr><td>--typo-en-13-regular</td><td>13px / 22px / 400</td><td style="font: var(--typo-en-13-regular);">The quick brown fox jumps 13px</td></tr>
+  <tr><td>--typo-en-13-medium</td><td>13px / 22px / 600</td><td style="font: var(--typo-en-13-medium);">The quick brown fox jumps 13px</td></tr>
+  <tr><td>--typo-en-14-regular</td><td>14px / 22px / 400</td><td style="font: var(--typo-en-14-regular);">The quick brown fox jumps 14px</td></tr>
+  <tr><td>--typo-en-14-medium</td><td>14px / 22px / 600</td><td style="font: var(--typo-en-14-medium);">The quick brown fox jumps 14px</td></tr>
+  <tr><td>--typo-en-16-regular</td><td>16px / 24px / 400</td><td style="font: var(--typo-en-16-regular);">The quick brown fox jumps 16px</td></tr>
+  <tr><td>--typo-en-16-medium</td><td>16px / 24px / 600</td><td style="font: var(--typo-en-16-medium);">The quick brown fox jumps 16px</td></tr>
+  <tr><td>--typo-en-20-regular</td><td>20px / 28px / 400</td><td style="font: var(--typo-en-20-regular);">The quick brown fox jumps 20px</td></tr>
+  <tr><td>--typo-en-20-medium</td><td>20px / 28px / 500</td><td style="font: var(--typo-en-20-medium);">The quick brown fox jumps 20px</td></tr>
+  <tr><td>--typo-en-24-regular</td><td>24px / 32px / 400</td><td style="font: var(--typo-en-24-regular);">The quick brown fox jumps 24px</td></tr>
+  <tr><td>--typo-en-24-medium</td><td>24px / 32px / 600</td><td style="font: var(--typo-en-24-medium);">The quick brown fox jumps 24px</td></tr>
+</table>
+
+<h3>语义化字体 / Semantic Typography</h3>
+<table class="font-table">
+  <tr><th>变量名</th><th>用途</th><th class="sample">示例</th></tr>
+  <tr><td>--typo-display-medium</td><td>Display 展示</td><td style="font: var(--typo-display-medium);">展示标题 48px</td></tr>
+  <tr><td>--typo-title-extra-large</td><td>Title 大标题</td><td style="font: var(--typo-title-extra-large);">页面大标题 20px</td></tr>
+  <tr><td>--typo-body-large</td><td>Body 大正文</td><td style="font: var(--typo-body-large);">正文内容示例文字 Body Large 16px</td></tr>
+  <tr><td>--typo-body-medium</td><td>Body 正文</td><td style="font: var(--typo-body-medium);">正文内容示例文字 Body Medium 14px</td></tr>
+</table>
+
+<!-- ==================== 间距 ==================== -->
+<h2>间距 Spacing</h2>
+
+<h3>外边距 / Margin</h3>
+<div class="space-list">
+  <div class="space-item">
+    <div class="space-label">--margin-xxs</div>
+    <div class="space-bar" style="width: var(--margin-xxs);"></div>
+    <div class="space-value">4px</div>
+  </div>
+  <div class="space-item">
+    <div class="space-label">--margin-xs</div>
+    <div class="space-bar" style="width: var(--margin-xs);"></div>
+    <div class="space-value">8px</div>
+  </div>
+  <div class="space-item">
+    <div class="space-label">--margin</div>
+    <div class="space-bar" style="width: var(--margin);"></div>
+    <div class="space-value">16px</div>
+  </div>
+  <div class="space-item">
+    <div class="space-label">--size-base</div>
+    <div class="space-bar" style="width: var(--size-base);"></div>
+    <div class="space-value">16px</div>
+  </div>
+</div>
+
+<h3>圆角 / Border Radius</h3>
+<div class="radius-grid">
+  <div class="radius-item">
+    <div class="radius-box" style="border-radius: var(--border-radius);"></div>
+    <div class="radius-label">--border-radius</div>
+    <div class="radius-value">4px</div>
+  </div>
+  <div class="radius-item">
+    <div class="radius-box" style="border-radius: var(--border-radius-sm);"></div>
+    <div class="radius-label">--border-radius-sm</div>
+    <div class="radius-value">8px</div>
+  </div>
+</div>
+
+<h3>线宽 / Line Width</h3>
+<div class="space-list">
+  <div class="space-item">
+    <div class="space-label">--line-width</div>
+    <div style="width: 120px; height: 0; border-top: var(--line-width) solid var(--cs-primary-color);"></div>
+    <div class="space-value">1px</div>
+  </div>
+</div>
+
+<!-- ==================== 阴影 ==================== -->
+<h2>阴影 Shadow</h2>
+
+<div class="shadow-grid">
+  <div class="shadow-item">
+    <div class="shadow-box" style="box-shadow: var(--shadow-base);">基础投影</div>
+    <div class="shadow-label">--shadow-base</div>
+  </div>
+  <div class="shadow-item">
+    <div class="shadow-box" style="box-shadow: var(--shadow-middle);">中层投影</div>
+    <div class="shadow-label">--shadow-middle</div>
+  </div>
+  <div class="shadow-item">
+    <div class="shadow-box" style="box-shadow: var(--shadow-upper);">上层投影</div>
+    <div class="shadow-label">--shadow-upper</div>
+  </div>
+  <div class="shadow-item">
+    <div class="shadow-box" style="box-shadow: var(--shadow-card);">卡片投影</div>
+    <div class="shadow-label">--shadow-card</div>
+  </div>
+</div>
+
+</body>
+</html>

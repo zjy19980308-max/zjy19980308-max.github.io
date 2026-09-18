@@ -1,0 +1,187 @@
+/* ============================================================
+ * cs-task-row-smart — 智能待办行（7 重智能化）
+ * REQ-006 / REQ-013 / REQ-014
+ *
+ * data 属性：
+ *   data-priority:
+ *     - overdue             拖延预警（红 4px 色条）
+ *     - ai-pick             AI 推荐第一条（紫色条 + 标题前缀 ⭐）
+ *     - high                高优（橙色条）
+ *     - normal              普通（蓝色条）
+ *     - low                 低优（灰色条）
+ *   data-completed:
+ *     - true                已完成（checkbox 填充 + 标题删除线 + 渐隐）
+ *     - false / 缺省        进行中
+ *   data-task-id:
+ *     - 字符串              用于 AI 拆解锚点 / toggle 操作目标
+ *
+ * 子元素 data 属性：
+ *   .ts-checkbox[data-action]:
+ *     - toggle-task
+ *   .ts-checkbox[data-task]:
+ *     - 字符串              对应 task-id
+ *   .ts-tag[data-type]:
+ *     - warning             浅橙底 + 橙字（即将截止/高优）
+ *     - danger              浅红底 + 红字（仅"逾期/紧急"用，v2 §13.2）
+ *     - info                浅蓝底 + 蓝字（关联评审等）
+ *     - 缺省                浅灰底 + 灰字（默认）
+ *   .ts-action-btn[data-action]:
+ *     - ai-decompose        AI 拆解（紫色边框高亮）
+ *     - delegate-to-ai      转交 AI
+ *     - view                查看详情
+ *   .ts-action-btn[data-task]:
+ *     - 字符串              对应 task-id
+ * ============================================================ */
+
+cs-task-row-smart {
+  display: grid;
+  grid-template-columns: 4px 24px 1fr auto;
+  align-items: start;
+  gap: 8px;
+  padding: 12px 12px 12px 0;
+  border-bottom: 1px solid var(--cs-color-ws-border);
+  position: relative;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+cs-task-row-smart:hover { background: var(--cs-color-ws-bg-subtle); }
+cs-task-row-smart:last-child { border-bottom: none; }
+
+/* ① 优先级色条（左侧 4px） */
+cs-task-row-smart .ts-priority-bar {
+  width: 4px;
+  align-self: stretch;
+  border-radius: 2px;
+  background: var(--cs-color-ws-text-placeholder);
+}
+cs-task-row-smart[data-priority="overdue"] .ts-priority-bar { background: var(--cs-color-ws-danger); }
+cs-task-row-smart[data-priority="ai-pick"] .ts-priority-bar { background: var(--cs-color-ws-primary); }
+cs-task-row-smart[data-priority="high"]    .ts-priority-bar { background: var(--cs-color-ws-orange); }
+cs-task-row-smart[data-priority="normal"]  .ts-priority-bar { background: var(--cs-color-ws-info); }
+cs-task-row-smart[data-priority="low"]     .ts-priority-bar { background: var(--cs-color-ws-text-placeholder); }
+
+/* ② 复选框 */
+cs-task-row-smart .ts-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--cs-color-ws-text-placeholder);
+  border-radius: 4px;
+  background: var(--cs-color-ws-white);
+  cursor: pointer;
+  margin-top: 2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+cs-task-row-smart .ts-checkbox:hover { border-color: var(--cs-color-ws-primary); }
+cs-task-row-smart[data-completed="true"] .ts-checkbox {
+  background: var(--cs-color-ws-primary);
+  border-color: var(--cs-color-ws-primary);
+}
+cs-task-row-smart[data-completed="true"] .ts-checkbox::after {
+  content: "✓";
+  color: var(--cs-color-ws-white);
+  font-size: var(--cs-fs-ws-caption);
+}
+
+/* 主体 */
+cs-task-row-smart .ts-body { min-width: 0; }
+cs-task-row-smart .ts-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+cs-task-row-smart .ts-title {
+  font-size: var(--cs-fs-ws-body);
+  font-weight: 600;
+  color: var(--cs-color-ws-text-primary);
+}
+cs-task-row-smart[data-completed="true"] .ts-title {
+  text-decoration: line-through;
+  color: var(--cs-color-ws-text-secondary);
+  font-weight: 400;
+}
+cs-task-row-smart[data-priority="ai-pick"] .ts-title::before {
+  content: "⭐ ";
+}
+
+cs-task-row-smart .ts-tag {
+  display: inline-block;
+  font-size: var(--cs-fs-ws-tag);
+  padding: 2px 8px;
+  border-radius: var(--cs-radius-ws-xs);
+  background: var(--cs-color-ws-bg-subtle);
+  color: var(--cs-color-ws-text-secondary);
+}
+cs-task-row-smart .ts-tag[data-type="warning"] { background: var(--cs-color-ws-warning-bg); color: var(--cs-color-ws-warning); }
+cs-task-row-smart .ts-tag[data-type="danger"]  { background: var(--cs-color-ws-danger-bg);  color: var(--cs-color-ws-danger); }
+cs-task-row-smart .ts-tag[data-type="info"]    { background: var(--cs-color-ws-info-bg);    color: var(--cs-color-ws-info); }
+
+cs-task-row-smart .ts-meta {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+  flex-wrap: wrap;
+}
+cs-task-row-smart .ts-meta i { font-size: var(--cs-fs-ws-caption); }
+
+/* ③ 截止剩余时间（≤ 4h 红色预警） */
+cs-task-row-smart .ts-deadline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+cs-task-row-smart[data-priority="overdue"] .ts-deadline {
+  color: var(--cs-color-ws-danger);
+  font-weight: 600;
+}
+
+/* ④ 依赖标签 */
+cs-task-row-smart .ts-dep {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+cs-task-row-smart .ts-dep i { color: var(--cs-color-ws-orange); }
+
+/* 操作区（hover 出现） */
+cs-task-row-smart .ts-actions {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+cs-task-row-smart:hover .ts-actions { opacity: 1; }
+cs-task-row-smart[data-priority="ai-pick"] .ts-actions { opacity: 1; }
+
+cs-task-row-smart .ts-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  font-size: var(--cs-fs-ws-tag);
+  background: var(--cs-color-ws-white);
+  border: 1px solid var(--cs-color-ws-border);
+  border-radius: var(--cs-radius-ws-xs);
+  cursor: pointer;
+  color: var(--cs-color-ws-text-regular);
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+cs-task-row-smart .ts-action-btn:hover {
+  border-color: var(--cs-color-ws-primary);
+  color: var(--cs-color-ws-primary);
+}
+cs-task-row-smart .ts-action-btn[data-action="ai-decompose"] {
+  border-color: var(--cs-color-ws-primary);
+  color: var(--cs-color-ws-primary);
+  background: var(--cs-color-ws-primary-bg);
+}

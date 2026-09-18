@@ -1,0 +1,208 @@
+/* task_id: 学员看板（老师版）-2026-05-21-1430 · component: cs-rank-list · PLAN-009 */
+.cs-rank-list {
+  background: var(--cs-color-white);
+  border: 1px solid var(--cs-color-border);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--cs-shadow-card);
+}
+.cs-rank-list__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cs-rank-list__title-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cs-rank-list__crown {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--cs-color-yellow-300), var(--cs-color-orange-500));  color: var(--cs-color-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.cs-rank-list__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cs-color-text-primary);
+  margin: 0;
+}
+.cs-rank-list__hint {
+  font-size: 11px;
+  color: var(--cs-color-text-tertiary);
+  padding-left: 8px;
+  border-left: 1px solid var(--cs-color-border);
+}
+.cs-rank-list__bulk {
+  appearance: none;
+  border: 1px solid var(--cs-color-primary);
+  background: var(--cs-color-white);
+  color: var(--cs-color-primary);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+  font-weight: 500;
+}
+.cs-rank-list__bulk:hover {
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+}
+.cs-rank-list__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.cs-rank-row {
+  display: grid;
+  grid-template-columns: 32px 32px 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 6px;
+  border-bottom: 1px solid var(--cs-color-border);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.cs-rank-row:last-child { border-bottom: 0; }
+.cs-rank-row:hover {
+  background: var(--cs-color-bg-hover);
+  border-radius: 8px;
+  transform: translateX(2px);
+}
+.cs-medal {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cs-color-white);
+  position: relative;
+}
+.cs-medal i {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  font-size: 10px;
+  color: var(--cs-color-yellow-500);
+}
+.cs-medal--gold {
+  background: linear-gradient(135deg, var(--cs-color-yellow-300), var(--cs-color-orange-500));
+  box-shadow: var(--cs-shadow-card);
+}
+.cs-medal--silver {
+  background: linear-gradient(135deg, var(--color-neutral-200), var(--color-neutral-500));
+  box-shadow: var(--cs-shadow-card);
+}
+.cs-medal--bronze {
+  background: linear-gradient(135deg, var(--cs-color-orange-300), var(--cs-color-orange-700));
+  box-shadow: var(--cs-shadow-card);
+}
+.cs-medal--plain {
+  background: var(--cs-color-bg-lighter);
+  color: var(--cs-color-text-secondary);
+}
+.cs-rank-row__avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cs-color-primary), var(--cs-color-primary-hover));  color: var(--cs-color-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+.cs-rank-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.cs-rank-row__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cs-color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cs-rank-row__badge {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--cs-color-primary);
+  background: var(--cs-color-selected);
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+.cs-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cs-progress__track {
+  flex: 1;
+  height: 6px;
+  background: var(--cs-color-bg-hover);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.cs-progress__fill {
+  display: block;
+  height: 100%;
+  width: var(--cs-progress);
+  background: linear-gradient(90deg, var(--cs-color-primary), var(--cs-color-success));  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.cs-progress__value {
+  font-size: 11px;
+  color: var(--cs-color-text-secondary);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  width: 36px;
+  text-align: right;
+}
+.cs-rank-row__mins {
+  font-size: 12px;
+  color: var(--cs-color-text-secondary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+.cs-rank-list__foot {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  border-top: 1px dashed var(--cs-color-border);
+}
+.cs-rank-list__more {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--cs-color-primary);
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+.cs-rank-list__more:hover { background: var(--cs-color-selected); }

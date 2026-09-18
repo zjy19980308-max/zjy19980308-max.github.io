@@ -1,0 +1,156 @@
+/* ==========================================================
+   cs-insert-panel — 右侧「插入」抽屉（320px）
+
+   data 属性：
+     data-open — 展开抽屉（translateX 0 + 可见）；不开启时收起到屏幕外
+   ========================================================== */
+
+cs-insert-panel {
+  display: flex;
+  flex-direction: column;
+  width: var(--spacing-320);
+  height: 100%;
+  background: var(--cs-color-bg);
+  border-left: 1px solid var(--cs-color-border);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.08);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform var(--motion-duration-normal) var(--motion-easing-standard),
+    visibility 0s linear var(--motion-duration-normal);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+cs-insert-panel[data-open] {
+  transform: translateX(0);
+  visibility: visible;
+  transition:
+    transform var(--motion-duration-normal) var(--motion-easing-standard),
+    visibility 0s linear 0s;
+}
+
+/* ---- 顶部标题栏 ---- */
+.ip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--spacing-48);
+  padding: 0 var(--space-md);
+  border-bottom: 1px solid var(--cs-color-border);
+  flex-shrink: 0;
+}
+
+.ip-title {
+  margin: 0;
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+}
+
+.ip-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--cs-color-text-light);
+  cursor: pointer;
+  transition:
+    background var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.ip-close:hover {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text);
+}
+
+.ip-close i {
+  font-size: var(--cs-sem-size-icon-sm);
+}
+
+/* ---- 主体（可滚动） ---- */
+.ip-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-md);
+}
+
+.ip-section {
+  margin-bottom: var(--spacing-24);
+}
+
+.ip-section:last-child {
+  margin-bottom: 0;
+}
+
+.ip-section-title {
+  margin: 0 0 var(--space-xs);
+  font: var(--typo-cn-12-medium);
+  color: var(--cs-color-text-light2);
+}
+
+/* ---- 4 列网格 ---- */
+.ip-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xs);
+}
+
+/* ---- 单个插入项卡片 ---- */
+.ip-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: var(--spacing-64);
+  padding: var(--space-2xs);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background: var(--cs-color-bg-light);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text);
+  cursor: pointer;
+  transition:
+    background var(--motion-duration-fast) var(--motion-easing-standard),
+    border-color var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.ip-item:hover {
+  background: var(--cs-color-bg);
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-primary);
+}
+
+.ip-item:active {
+  background: var(--cs-color-selected);
+}
+
+.ip-item:focus-visible {
+  outline: 2px solid var(--cs-color-primary);
+  outline-offset: 2px;
+}
+
+.ip-item-icon {
+  font-size: var(--cs-sem-size-icon-xl);
+  color: var(--cs-color-text-light);
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.ip-item:hover .ip-item-icon {
+  color: var(--cs-color-primary);
+}
+
+.ip-item-label {
+  font: var(--typo-cn-12-regular);
+  text-align: center;
+  line-height: 1.2;
+  word-break: break-all;
+}

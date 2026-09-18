@@ -1,0 +1,154 @@
+/*
+ * 加班记录行组件 (Overtime Row)
+ * 标签：<cs-overtime-row>
+ *
+ * 结构：
+ *   cs-overtime-row
+ *   ├── .ot-checkbox     ← 复选框（可选）
+ *   ├── .ot-employee     ← 员工信息
+ *   ├── .ot-date         ← 加班日期
+ *   ├── .ot-time         ← 时间段
+ *   ├── .ot-duration     ← 时长
+ *   ├── .ot-type         ← 加班类型（cs-tag）
+ *   ├── .ot-reason       ← 原因（flex:1）
+ *   ├── .ot-status       ← 审批状态（cs-status-badge）
+ *   └── .ot-actions      ← 操作按钮（hover 显示）
+ */
+
+/* ========== 容器 ========== */
+cs-overtime-row {
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: var(--space-xs) var(--space-md);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  background: var(--cs-color-bg);
+  transition: background 0.15s ease;
+}
+
+cs-overtime-row:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 复选框列 ========== */
+cs-overtime-row .ot-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-40);
+  flex-shrink: 0;
+}
+
+/* ========== 员工信息列 ========== */
+cs-overtime-row .ot-employee {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 160px;
+  flex-shrink: 0;
+}
+
+cs-overtime-row .employee-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  min-width: 0;
+}
+
+cs-overtime-row .employee-name {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+cs-overtime-row .employee-dept {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========== 日期列 ========== */
+cs-overtime-row .ot-date {
+  display: flex;
+  align-items: center;
+  width: 120px;
+  flex-shrink: 0;
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text);
+}
+
+/* ========== 时间段列 ========== */
+cs-overtime-row .ot-time {
+  display: flex;
+  align-items: center;
+  width: 140px;
+  flex-shrink: 0;
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text);
+}
+
+/* ========== 时长列 ========== */
+cs-overtime-row .ot-duration {
+  display: flex;
+  align-items: center;
+  width: 80px;
+  flex-shrink: 0;
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+}
+
+/* ========== 加班类型列 ========== */
+cs-overtime-row .ot-type {
+  display: flex;
+  align-items: center;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+/* ========== 原因列 ========== */
+cs-overtime-row .ot-reason {
+  flex: 1;
+  min-width: 0;
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 var(--space-xs);
+}
+
+/* ========== 审批状态列 ========== */
+cs-overtime-row .ot-status {
+  display: flex;
+  align-items: center;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+/* ========== 操作列 ========== */
+cs-overtime-row .ot-actions {
+  display: none;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+cs-overtime-row:hover .ot-actions {
+  display: flex;
+}
+
+cs-overtime-row .ot-actions i {
+  font-size: var(--cs-sem-size-icon-md);
+  color: var(--cs-color-text-light2);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+cs-overtime-row .ot-actions i:hover {
+  color: var(--cs-color-primary);
+}

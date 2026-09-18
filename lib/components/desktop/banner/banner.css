@@ -1,0 +1,123 @@
+/*
+ * 横幅组件 (Banner)
+ * 标签：<cs-banner>
+ *
+ * data 属性：
+ *   data-size="sm|md|lg"  — 高度预设
+ *
+ * 子元素结构：
+ *   .banner-bg       — 背景图片
+ *   .banner-content  — 文字叠层
+ *     .banner-title    — 主标题
+ *     .banner-subtitle — 副标题
+ *     .banner-actions  — 操作区
+ */
+
+/* ========== 基础 ========== */
+cs-banner {
+  display: block;
+  position: relative;
+  height: 160px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-blue-500) 0%, var(--color-blue-700) 100%);
+}
+
+/* ========== 背景图 ========== */
+cs-banner .banner-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* ========== 文字叠层 ========== */
+cs-banner .banner-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: var(--spacing-24);
+  box-sizing: border-box;
+}
+
+cs-banner .banner-title {
+  font: var(--typo-cn-20-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cs-color-white);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+cs-banner .banner-subtitle {
+  font: var(--typo-cn-14-regular);
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: var(--space-xs);
+}
+
+cs-banner .banner-actions {
+  display: flex;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+/* ========== 尺寸变体 ========== */
+cs-banner[data-size="sm"] {
+  height: 120px;
+}
+
+cs-banner[data-size="md"] {
+  height: 160px;
+}
+
+cs-banner[data-size="lg"] {
+  height: 200px;
+}
+
+/* ========== Welcome 变体（浅色背景 + 左右布局） ========== */
+cs-banner[data-variant="welcome"] {
+  background: var(--cs-color-primary-a2);
+  height: auto;
+  min-height: 100px;
+}
+
+cs-banner[data-variant="welcome"] .banner-content {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+}
+
+cs-banner[data-variant="welcome"] .banner-title {
+  color: var(--cs-color-text);
+  text-shadow: none;
+  font: var(--typo-cn-20-medium);
+  font-weight: var(--font-weight-semibold);
+}
+
+cs-banner[data-variant="welcome"] .banner-subtitle {
+  color: var(--cs-color-text-light);
+  margin-top: var(--space-2xs);
+}
+
+cs-banner[data-variant="welcome"] .banner-left {
+  display: flex;
+  flex-direction: column;
+}
+
+cs-banner[data-variant="welcome"] .banner-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light);
+  flex-shrink: 0;
+}
+
+cs-banner[data-variant="welcome"] .banner-right i {
+  font-size: var(--cs-sem-size-icon-lg);
+  color: var(--cs-color-primary);
+}

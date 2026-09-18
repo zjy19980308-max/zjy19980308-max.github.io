@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-task-row 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../checkbox/checkbox.css">
+  <link rel="stylesheet" href="../../../components/desktop/avatar/avatar.css">
+  <link rel="stylesheet" href="task-row.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    /* 表头样式 */
+    .task-header {
+      display: flex;
+      align-items: center;
+      padding: 0 var(--space-md);
+      height: 36px;
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-text-light2);
+      border-bottom: var(--line-width) solid var(--cs-color-border);
+      background: var(--cs-color-bg-light);
+    }
+    .task-header .col-checkbox { width: 40px; flex-shrink: 0; }
+    .task-header .col-title { flex: 1; min-width: 0; }
+    .task-header .col-status { width: 80px; flex-shrink: 0; }
+    .task-header .col-priority { width: 80px; flex-shrink: 0; }
+    .task-header .col-start { width: 120px; flex-shrink: 0; }
+    .task-header .col-due { width: 120px; flex-shrink: 0; }
+    .task-header .col-space { width: 140px; flex-shrink: 0; }
+    .task-list { border-top: var(--line-width) solid var(--cs-color-border); }
+  </style>
+</head>
+<body>
+
+<!-- ==================== 完整列表（带表头） ==================== -->
+<div class="section">
+  <div class="section-title">任务列表（两行布局 · 完整列）</div>
+  <div class="section-subtitle">复选框 / 任务名+活动 / 状态 / 优先级 / 开始日期 / 截止日期 / 空间项目，hover 显示操作图标</div>
+
+  <div class="task-header">
+    <span class="col-checkbox"></span>
+    <span class="col-title">任务名称</span>
+    <span class="col-status">状态</span>
+    <span class="col-priority">优先级</span>
+    <span class="col-start">开始日期</span>
+    <span class="col-due">截止日期</span>
+    <span class="col-space">所属空间</span>
+  </div>
+
+  <div class="task-list">
+
+    <!-- 行 1：紧急 + 进行中 + 即将过期 -->
+    <cs-task-row>
+      <span class="task-checkbox">
+        <cs-checkbox></cs-checkbox>
+      </span>
+      <span class="task-info">
+        <span class="task-title-row">
+          <span class="task-title">完成产品需求文档初稿</span>
+          <span class="task-tag" data-type="warning">即将过期</span>
+          <span class="task-actions">
+            <i class="cses-edit" title="编辑"></i>
+            <i class="cses-liebiao" title="详情"></i>
+            <i class="cses-gengduo" title="更多"></i>
+          </span>
+        </span>
+        <span class="task-activity">
+          <span class="activity-avatars">
+            <cs-avatar data-size="xs">张</cs-avatar>
+          </span>
+          <span class="activity-text">张明修改了截止时间为'03.30 18:00'</span>
+        </span>
+      </span>
+      <span class="task-status">
+        <span class="task-status-pill" data-status="in-progress">进行中</span>
+      </span>
+      <span class="task-priority" data-level="urgent">
+        <i class="cses-youxianji"></i>
+        紧急
+      </span>
+      <span class="task-date">09月22日 17:56</span>
+      <span class="task-date">03月30日 18:00</span>
+      <span class="task-space">XPA的空间 / 目 开...</span>
+    </cs-task-row>
+
+    <!-- 行 2：重要 + 进行中 + 已过期 -->
+    <cs-task-row>
+      <span class="task-checkbox">
+        <cs-checkbox></cs-checkbox>
+      </span>
+      <span class="task-info">
+        <span class="task-title-row">
+          <span class="task-title">设计评审会议准备资料整理</span>
+          <span class="task-tag" data-type="danger">已过期</span>
+          <span class="task-actions">
+            <i class="cses-edit" title="编辑"></i>
+            <i class="cses-liebiao" title="详情"></i>
+            <i class="cses-gengduo" title="更多"></i>
+          </span>
+        </span>
+        <span class="task-activity">
+          <span class="activity-avatars">
+            <cs-avatar data-size="xs">李</cs-avatar>
+          </span>
+          <span class="activity-text">李薇添加了评论'设计方案已确认'</span>
+        </span>
+      </span>
+      <span class="task-status">
+        <span class="task-status-pill" data-status="in-progress">进行中</span>
+      </span>
+      <span class="task-priority" data-level="important">
+        <i class="cses-youxianji"></i>
+        重要
+      </span>
+      <span class="task-date">09月18日 09:00</span>
+      <span class="task-date">03月28日 12:00</span>
+      <span class="task-space">产品设计 / UI 规范</span>
+    </cs-task-row>
+
+    <!-- 行 3：普通 + 未开始 -->
+    <cs-task-row>
+      <span class="task-checkbox">
+        <cs-checkbox></cs-checkbox>
+      </span>
+      <span class="task-info">
+        <span class="task-title-row">
+          <span class="task-title">前端组件库迁移至新版设计系统</span>
+          <span class="task-actions">
+            <i class="cses-edit" title="编辑"></i>
+            <i class="cses-liebiao" title="详情"></i>
+            <i class="cses-gengduo" title="更多"></i>
+          </span>
+        </span>
+        <span class="task-activity">
+          <span class="activity-avatars">
+            <cs-avatar data-size="xs">王</cs-avatar>
+          </span>
+          <span class="activity-text">王明明修改了截止时间为'12.03 12:09'</span>
+        </span>
+      </span>
+      <span class="task-status">
+        <span class="task-status-pill" data-status="not-started">未开始</span>
+      </span>
+      <span class="task-priority" data-level="normal">
+        <i class="cses-youxianji"></i>
+        普通
+      </span>
+      <span class="task-date">10月01日 10:00</span>
+      <span class="task-date">12月03日 12:09</span>
+      <span class="task-space">XPA的空间 / 前端...</span>
+    </cs-task-row>
+
+    <!-- 行 4：较低 + 进行中 -->
+    <cs-task-row>
+      <span class="task-checkbox">
+        <cs-checkbox></cs-checkbox>
+      </span>
+      <span class="task-info">
+        <span class="task-title-row">
+          <span class="task-title">整理项目文档归档至知识库</span>
+          <span class="task-actions">
+            <i class="cses-edit" title="编辑"></i>
+            <i class="cses-liebiao" title="详情"></i>
+            <i class="cses-gengduo" title="更多"></i>
+          </span>
+        </span>
+        <span class="task-activity">
+          <span class="activity-avatars">
+            <cs-avatar data-size="xs">陈</cs-avatar>
+          </span>
+          <span class="activity-text">陈芳创建了任务</span>
+        </span>
+      </span>
+      <span class="task-status">
+        <span class="task-status-pill" data-status="in-progress">进行中</span>
+      </span>
+      <span class="task-priority" data-level="low">
+        <i class="cses-youxianji"></i>
+        较低
+      </span>
+      <span class="task-date">03月15日 14:30</span>
+      <span class="task-date">04月05日 18:00</span>
+      <span class="task-space">研发中心 / 文档管理</span>
+    </cs-task-row>
+
+    <!-- 行 5：已完成态 -->
+    <cs-task-row data-completed>
+      <span class="task-checkbox">
+        <cs-checkbox data-checked></cs-checkbox>
+      </span>
+      <span class="task-info">
+        <span class="task-title-row">
+          <span class="task-title">前端组件库基础样式定义</span>
+          <span class="task-actions">
+            <i class="cses-edit" title="编辑"></i>
+            <i class="cses-liebiao" title="详情"></i>
+            <i class="cses-gengduo" title="更多"></i>
+          </span>
+        </span>
+        <span class="task-activity">
+          <span class="activity-avatars">
+            <cs-avatar data-size="xs">赵</cs-avatar>
+          </span>
+          <span class="activity-text">赵宇将状态变更为'已完成'</span>
+        </span>
+      </span>
+      <span class="task-status">
+        <span class="task-status-pill" data-status="completed">已完成</span>
+      </span>
+      <span class="task-priority" data-level="normal">
+        <i class="cses-youxianji"></i>
+        普通
+      </span>
+      <span class="task-date">03月10日 09:00</span>
+      <span class="task-date">03月25日 18:00</span>
+      <span class="task-space">XPA的空间 / 目 开...</span>
+    </cs-task-row>
+
+    <!-- 行 6：长标题溢出 + 紧急 + 未开始 + 即将过期 -->
+    <cs-task-row>
+      <span class="task-checkbox">
+        <cs-checkbox></cs-checkbox>
+      </span>
+      <span class="task-info">
+        <span class="task-title-row">
+          <span class="task-title">这是一个非常长的任务标题用来测试文本溢出省略号效果在有限的空间内是否正常显示截断处理这里继续添加更多文字</span>
+          <span class="task-tag" data-type="warning">即将过期</span>
+          <span class="task-actions">
+            <i class="cses-edit" title="编辑"></i>
+            <i class="cses-liebiao" title="详情"></i>
+            <i class="cses-gengduo" title="更多"></i>
+          </span>
+        </span>
+        <span class="task-activity">
+          <span class="activity-avatars">
+            <cs-avatar data-size="xs">刘</cs-avatar>
+            <cs-avatar data-size="xs">周</cs-avatar>
+          </span>
+          <span class="activity-text">刘洋修改了任务描述</span>
+        </span>
+      </span>
+      <span class="task-status">
+        <span class="task-status-pill" data-status="not-started">未开始</span>
+      </span>
+      <span class="task-priority" data-level="urgent">
+        <i class="cses-youxianji"></i>
+        紧急
+      </span>
+      <span class="task-date">03月29日 08:00</span>
+      <span class="task-date">04月01日 12:00</span>
+      <span class="task-space">客户管理 / 演示准备</span>
+    </cs-task-row>
+
+  </div>
+</div>
+
+<!-- ==================== 最简结构 ==================== -->
+<div class="section">
+  <div class="section-title">最简结构</div>
+  <div class="section-subtitle">仅复选框 + 标题（无第二行活动信息、无额外列）</div>
+
+  <div class="task-list">
+    <cs-task-row>
+      <span class="task-checkbox">
+        <cs-checkbox></cs-checkbox>
+      </span>
+      <span class="task-info">
+        <span class="task-title-row">
+          <span class="task-title">仅标题的任务行</span>
+        </span>
+      </span>
+    </cs-task-row>
+
+    <cs-task-row data-completed>
+      <span class="task-checkbox">
+        <cs-checkbox data-checked></cs-checkbox>
+      </span>
+      <span class="task-info">
+        <span class="task-title-row">
+          <span class="task-title">已完成的简单任务</span>
+        </span>
+      </span>
+    </cs-task-row>
+  </div>
+</div>
+
+<!-- ==================== 标签变体展示 ==================== -->
+<div class="section">
+  <div class="section-title">状态标签变体</div>
+  <div class="section-subtitle">即将过期（warning）/ 已过期（danger）/ 状态药丸（进行中 / 未开始 / 已完成）</div>
+
+  <div class="task-list">
+    <!-- 即将过期标签 -->
+    <cs-task-row>
+      <span class="task-checkbox">
+        <cs-checkbox></cs-checkbox>
+      </span>
+      <span class="task-info">
+        <span class="task-title-row">
+          <span class="task-title">带即将过期标签的任务</span>
+          <span class="task-tag" data-type="warning">即将过期</span>
+        </span>
+        <span class="task-activity">
+          <span class="activity-avatars">
+            <cs-avatar data-size="xs">周</cs-avatar>
+          </span>
+          <span class="activity-text">周杰修改了优先级为'紧急'</span>
+        </span>
+      </span>
+      <span class="task-status">
+        <span class="task-status-pill" data-status="in-progress">进行中</span>
+      </span>
+      <span class="task-priority" data-level="urgent">
+        <i class="cses-youxianji"></i>
+        紧急
+      </span>
+      <span class="task-date">03月20日 09:00</span>
+      <span class="task-date">03月31日 18:00</span>
+      <span class="task-space">XPA的空间 / 目 开...</span>
+    </cs-task-row>
+
+    <!-- 已过期标签 -->
+    <cs-task-row>
+      <span class="task-checkbox">
+        <cs-checkbox></cs-checkbox>
+      </span>
+      <span class="task-info">
+        <span class="task-title-row">
+          <span class="task-title">带已过期标签的任务</span>
+          <span class="task-tag" data-type="danger">已过期</span>
+        </span>
+        <span class="task-activity">
+          <span class="activity-avatars">
+            <cs-avatar data-size="xs">孙</cs-avatar>
+          </span>
+          <span class="activity-text">孙磊添加了子任务'修复紧急Bug'</span>
+        </span>
+      </span>
+      <span class="task-status">
+        <span class="task-status-pill" data-status="not-started">未开始</span>
+      </span>
+      <span class="task-priority" data-level="important">
+        <i class="cses-youxianji"></i>
+        重要
+      </span>
+      <span class="task-date">03月10日 10:00</span>
+      <span class="task-date">03月25日 18:00</span>
+      <span class="task-space">产品设计 / Bug 修复</span>
+    </cs-task-row>
+  </div>
+</div>
+
+</body>
+</html>

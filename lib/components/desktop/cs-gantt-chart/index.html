@@ -1,0 +1,83 @@
+<!-- cs-gantt-chart · Gantt 视图主件 · 横向时间刻度 + 任务横条（计划 vs 实际 偏差高亮） -->
+<cs-gantt-chart class="cs-gantt-chart" data-period="quarter">
+  <header class="cs-gantt-chart__header">
+    <div class="cs-gantt-chart__title">
+      <i class="cses-gantt_chart_normality cs-gantt-chart__title-icon"></i>
+      <span>项目甘特 · 平台升级 V2</span>
+    </div>
+    <div class="cs-gantt-chart__legend">
+      <span class="cs-gantt-chart__legend-item"><i class="cs-gantt-chart__legend-bar cs-gantt-chart__legend-bar--plan"></i>计划</span>
+      <span class="cs-gantt-chart__legend-item"><i class="cs-gantt-chart__legend-bar cs-gantt-chart__legend-bar--actual"></i>实际</span>
+      <span class="cs-gantt-chart__legend-item"><i class="cs-gantt-chart__legend-bar cs-gantt-chart__legend-bar--delay"></i>偏差</span>
+    </div>
+  </header>
+  <div class="cs-gantt-chart__scale">
+    <span>W14</span><span>W15</span><span>W16</span><span>W17</span>
+    <span>W18</span><span>W19</span><span>W20</span><span>W21</span>
+    <span>W22</span><span>W23</span><span>W24</span><span>W25</span>
+  </div>
+  <ul class="cs-gantt-chart__rows" role="list">
+    <li class="cs-gantt-chart__row">
+      <div class="cs-gantt-chart__row-label">
+        <span class="cs-gantt-chart__row-name">需求评审</span>
+        <span class="cs-gantt-chart__row-owner">@王晓</span>
+      </div>
+      <div class="cs-gantt-chart__row-track">
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--plan"   style="left:0%; width:16%"></div>
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--actual" style="left:0%; width:16%"></div>
+      </div>
+    </li>
+    <li class="cs-gantt-chart__row">
+      <div class="cs-gantt-chart__row-label">
+        <span class="cs-gantt-chart__row-name">架构设计</span>
+        <span class="cs-gantt-chart__row-owner">@李辰</span>
+      </div>
+      <div class="cs-gantt-chart__row-track">
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--plan"   style="left:8%;  width:25%"></div>
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--actual" style="left:8%;  width:30%"></div>
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--delay"  style="left:33%; width:5%" title="延期 4 天"></div>
+      </div>
+    </li>
+    <li class="cs-gantt-chart__row">
+      <div class="cs-gantt-chart__row-label">
+        <span class="cs-gantt-chart__row-name">前端开发</span>
+        <span class="cs-gantt-chart__row-owner">@张璐</span>
+      </div>
+      <div class="cs-gantt-chart__row-track">
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--plan"   style="left:25%; width:40%"></div>
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--actual" style="left:30%; width:38%"></div>
+      </div>
+    </li>
+    <li class="cs-gantt-chart__row">
+      <div class="cs-gantt-chart__row-label">
+        <span class="cs-gantt-chart__row-name">后端开发</span>
+        <span class="cs-gantt-chart__row-owner">@刘洋</span>
+      </div>
+      <div class="cs-gantt-chart__row-track">
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--plan"   style="left:25%; width:40%"></div>
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--actual" style="left:28%; width:45%"></div>
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--delay"  style="left:65%; width:8%" title="延期 7 天"></div>
+      </div>
+    </li>
+    <li class="cs-gantt-chart__row">
+      <div class="cs-gantt-chart__row-label">
+        <span class="cs-gantt-chart__row-name">联调测试</span>
+        <span class="cs-gantt-chart__row-owner">@陈昊</span>
+      </div>
+      <div class="cs-gantt-chart__row-track">
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--plan"   style="left:65%; width:20%"></div>
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--actual" style="left:70%; width:18%"></div>
+      </div>
+    </li>
+    <li class="cs-gantt-chart__row">
+      <div class="cs-gantt-chart__row-label">
+        <span class="cs-gantt-chart__row-name">灰度上线</span>
+        <span class="cs-gantt-chart__row-owner">@吴雨</span>
+      </div>
+      <div class="cs-gantt-chart__row-track">
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--plan"   style="left:85%; width:12%"></div>
+        <div class="cs-gantt-chart__bar cs-gantt-chart__bar--actual" style="left:88%; width:10%"></div>
+      </div>
+    </li>
+  </ul>
+</cs-gantt-chart>

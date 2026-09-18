@@ -1,0 +1,148 @@
+/*
+ * 请假申请行组件 (Leave Row)
+ * 标签：<cs-leave-row>
+ *
+ * 结构：
+ *   cs-leave-row
+ *   ├── .leave-checkbox      ← 复选框（可选）
+ *   ├── .leave-employee      ← 员工信息（头像+姓名+部门）
+ *   ├── .leave-type          ← 假期类型（cs-tag）
+ *   ├── .leave-date          ← 日期范围
+ *   ├── .leave-duration      ← 时长
+ *   ├── .leave-reason        ← 事由（flex:1）
+ *   ├── .leave-status        ← 审批状态（cs-status-badge）
+ *   └── .leave-actions       ← 操作按钮（hover 显示）
+ */
+
+/* ========== 容器 ========== */
+cs-leave-row {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  padding: var(--space-xs) var(--space-md);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  background: var(--cs-color-bg);
+  transition: background 0.15s ease;
+}
+
+cs-leave-row:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 紧急标识 ========== */
+cs-leave-row[data-urgent] {
+  border-left: 3px solid var(--cs-color-warning);
+}
+
+/* ========== 复选框列 ========== */
+cs-leave-row .leave-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-40);
+  flex-shrink: 0;
+}
+
+/* ========== 员工信息列 ========== */
+cs-leave-row .leave-employee {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 160px;
+  flex-shrink: 0;
+}
+
+cs-leave-row .employee-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+  min-width: 0;
+}
+
+cs-leave-row .employee-name {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+cs-leave-row .employee-dept {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========== 假期类型列 ========== */
+cs-leave-row .leave-type {
+  display: flex;
+  align-items: center;
+  width: 80px;
+  flex-shrink: 0;
+}
+
+/* ========== 日期范围列 ========== */
+cs-leave-row .leave-date {
+  display: flex;
+  align-items: center;
+  width: 180px;
+  flex-shrink: 0;
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text);
+}
+
+/* ========== 时长列 ========== */
+cs-leave-row .leave-duration {
+  display: flex;
+  align-items: center;
+  width: 80px;
+  flex-shrink: 0;
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+}
+
+/* ========== 事由列 ========== */
+cs-leave-row .leave-reason {
+  flex: 1;
+  min-width: 0;
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 var(--space-xs);
+}
+
+/* ========== 审批状态列 ========== */
+cs-leave-row .leave-status {
+  display: flex;
+  align-items: center;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+/* ========== 操作列 ========== */
+cs-leave-row .leave-actions {
+  display: none;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 80px;
+  flex-shrink: 0;
+}
+
+cs-leave-row:hover .leave-actions {
+  display: flex;
+}
+
+cs-leave-row .leave-actions i {
+  font-size: var(--cs-sem-size-icon-md);
+  color: var(--cs-color-text-light2);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+cs-leave-row .leave-actions i:hover {
+  color: var(--cs-color-primary);
+}

@@ -1,0 +1,114 @@
+/*
+ * 看板列组件 (Kanban Column)
+ * 标签：<cs-kanban-column>
+ * 数据来源：Figma u20fmHv0ItyHTSVNC1JJss 节点 1-5969
+ *
+ * 列：290x740 gap:12
+ * 列头：状态标签(bg:#E6E6E6 r:12 14px/500) + 数量 + 操作按钮
+ * 卡片区：gap:12 bg:#fff（进行中/已完成列）或透明
+ *
+ * 子元素结构：
+ *   .column-header   — 列头
+ *   .column-status   — 状态标签
+ *   .column-count    — 数量
+ *   .column-actions  — 操作按钮
+ *   .column-body     — 卡片列表区
+ *   .column-add      — 底部新建按钮
+ */
+
+/* ========== 列容器 ========== */
+cs-kanban-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 290px;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+/* ========== 列头部 ========== */
+cs-kanban-column .column-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ========== 状态标签 ========== */
+cs-kanban-column .column-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: var(--font-family-cn);
+  color: #333;
+  background: #E6E6E6;
+}
+
+cs-kanban-column .column-status[data-status="not-started"] {
+  background: #E6E6E6;
+  color: #333;
+}
+
+cs-kanban-column .column-status[data-status="in-progress"] {
+  background: #CED3FF;
+  color: #4857E2;
+}
+
+cs-kanban-column .column-status[data-status="completed"] {
+  background: #E0FFED;
+  color: #167D3C;
+}
+
+cs-kanban-column .column-status[data-status="closed"] {
+  background: #E6E6E6;
+  color: #333;
+}
+
+/* ========== 数量 ========== */
+cs-kanban-column .column-count {
+  font-size: 14px;
+  color: #999;
+  font-family: var(--font-family-cn);
+}
+
+/* ========== 操作按钮区 ========== */
+cs-kanban-column .column-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+/* ========== 卡片列表区 ========== */
+cs-kanban-column .column-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* 有白色背景的列（如进行中、已完成） */
+cs-kanban-column .column-body[data-bg="white"] {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+/* ========== 底部新建按钮 ========== */
+cs-kanban-column .column-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px;
+  background: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  font-family: var(--font-family-cn);
+  cursor: pointer;
+}

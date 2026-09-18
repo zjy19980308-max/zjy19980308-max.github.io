@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-affix 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="affix.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+
+    /* 滚动容器（用于演示 sticky 效果） */
+    .scroll-stage {
+      height: 280px;
+      overflow-y: auto;
+      background: var(--cs-color-bg-light);
+      border-radius: 8px;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    .scroll-stage .filler {
+      padding: 16px;
+      margin-bottom: 12px;
+      background: #fff;
+      border-radius: 4px;
+      font: var(--typo-cn-14-regular);
+      color: var(--cs-color-text-light);
+    }
+
+    /* 演示用的固钉条 */
+    .affix-bar {
+      padding: 12px 16px;
+      background: var(--cs-color-primary);
+      color: var(--cs-color-white);
+      border-radius: 4px;
+      font: var(--typo-cn-14-regular);
+      box-shadow: var(--cs-shadow-card);
+    }
+  </style>
+</head>
+<body>
+
+<!-- 1. 顶部固钉 -->
+<div class="section">
+  <div class="section-title">顶部固钉 Top Affix</div>
+  <div class="section-subtitle">data-placement="top"（默认） — 滚动到顶部时贴住</div>
+
+  <div class="scroll-stage">
+    <div class="filler">向下滚动，看顶部条贴住容器顶部 ↓</div>
+    <cs-affix>
+      <div class="affix-bar">我是顶部固钉条 — 滚动时我会贴住</div>
+    </cs-affix>
+    <div class="filler">内容 1 — Lorem ipsum dolor sit amet</div>
+    <div class="filler">内容 2 — Lorem ipsum dolor sit amet</div>
+    <div class="filler">内容 3 — Lorem ipsum dolor sit amet</div>
+    <div class="filler">内容 4 — Lorem ipsum dolor sit amet</div>
+    <div class="filler">内容 5 — Lorem ipsum dolor sit amet</div>
+    <div class="filler">内容 6 — Lorem ipsum dolor sit amet</div>
+    <div class="filler">内容 7 — Lorem ipsum dolor sit amet</div>
+  </div>
+</div>
+
+<!-- 2. 带偏移量的顶部固钉 -->
+<div class="section">
+  <div class="section-title">带偏移 Offset</div>
+  <div class="section-subtitle">通过 --cs-affix-offset 设置距离视口边缘的偏移</div>
+
+  <div class="scroll-stage">
+    <div class="filler">向下滚动 ↓</div>
+    <cs-affix style="--cs-affix-offset: 16px;">
+      <div class="affix-bar">距顶部 16px 的固钉条</div>
+    </cs-affix>
+    <div class="filler">内容 1</div>
+    <div class="filler">内容 2</div>
+    <div class="filler">内容 3</div>
+    <div class="filler">内容 4</div>
+    <div class="filler">内容 5</div>
+    <div class="filler">内容 6</div>
+    <div class="filler">内容 7</div>
+  </div>
+</div>
+
+<!-- 3. 底部固钉 -->
+<div class="section">
+  <div class="section-title">底部固钉 Bottom Affix</div>
+  <div class="section-subtitle">data-placement="bottom" — 元素在视口底部贴住</div>
+
+  <div class="scroll-stage">
+    <div class="filler">内容 1</div>
+    <div class="filler">内容 2</div>
+    <div class="filler">内容 3</div>
+    <div class="filler">内容 4</div>
+    <div class="filler">内容 5</div>
+    <div class="filler">内容 6</div>
+    <div class="filler">内容 7</div>
+    <cs-affix data-placement="bottom">
+      <div class="affix-bar">我是底部固钉条 — 向上滚动时我会贴住底部</div>
+    </cs-affix>
+    <div class="filler">向上滚动 ↑</div>
+  </div>
+</div>
+
+<!-- 4. 章节侧边导航场景 -->
+<div class="section">
+  <div class="section-title">章节侧边导航 Sidebar Anchor</div>
+  <div class="section-subtitle">典型用法：文档侧边的小目录</div>
+
+  <div class="scroll-stage" style="display: flex; gap: 16px;">
+    <div style="flex: 1;">
+      <div class="filler">第一章 — 介绍</div>
+      <div class="filler">第二章 — 安装</div>
+      <div class="filler">第三章 — 配置</div>
+      <div class="filler">第四章 — API</div>
+      <div class="filler">第五章 — 示例</div>
+      <div class="filler">第六章 — 常见问题</div>
+      <div class="filler">第七章 — 更新日志</div>
+    </div>
+    <div style="width: 160px;">
+      <cs-affix style="--cs-affix-offset: 16px;">
+        <div class="affix-bar" style="background: var(--cs-color-white); color: var(--cs-color-text); border: 1px solid var(--cs-color-border); font: var(--typo-cn-12-regular);">
+          目录<br>· 介绍<br>· 安装<br>· 配置<br>· API
+        </div>
+      </cs-affix>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

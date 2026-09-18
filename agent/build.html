@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>搭建 · 审批工作台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{max-width:none;padding:0;display:flex;justify-content:center}
+  .bd{width:100%;max-width:880px;padding:64px 32px 60px}
+  .bd h2{font-size:34px;font-weight:700;letter-spacing:-.02em;text-align:center;margin-bottom:30px}
+  .box{border:1px solid var(--line);border-radius:12px;background:var(--panel);box-shadow:var(--sd);padding:14px 16px 12px;transition:border-color .16s,box-shadow .16s}
+  .box:focus-within{border-color:#8f99cf;box-shadow:0 0 0 4px rgba(72,87,226,.09)}
+  .box__in{display:flex;align-items:center;gap:9px}
+  .box__in svg{width:16px;height:16px;color:#4857e2;flex:0 0 16px}
+  .box__in input{flex:1;border:0;outline:0;font:inherit;font-size:15px;background:transparent;min-width:0}
+  .box__in input::placeholder{color:var(--ink-3)}
+  .box__b{display:flex;align-items:center;gap:8px;margin-top:14px}
+  .mdl{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border:1px solid var(--line);border-radius:var(--r-s);background:var(--panel);font-size:12px;color:var(--ink-2);cursor:pointer}
+  .mdl i{width:13px;height:13px;border-radius:50%;background:conic-gradient(from 210deg,#4857e2,#8f99cf,#dcdfeb,#4857e2);flex:0 0 13px;font-style:normal}
+  .mic{margin-left:auto;width:28px;height:28px;border-radius:var(--r-s);border:1px solid transparent;background:transparent;display:grid;place-items:center;color:var(--ink-3);cursor:pointer}
+  .mic:hover{background:var(--surf);color:var(--ink)}
+  .mic svg{width:15px;height:15px}
+  .send{height:28px;padding:0 16px;border-radius:var(--r-s);border:0;background:var(--ink);color:#fff;font-size:12.5px;font-weight:600;cursor:pointer;transition:transform .12s,background .15s}
+  .send:hover{background:#1e293b}
+  .send:active{transform:scale(.96)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+  .c{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:16px;box-shadow:var(--sd);display:flex;flex-direction:column;transition:border-color .16s,transform .16s}
+  .c:hover{border-color:#8f99cf;transform:translateY(-1px)}
+  .c__i{width:32px;height:32px;border-radius:var(--r-s);background:var(--surf);border:1px solid var(--line-2);display:grid;place-items:center;color:var(--ink-2);margin-bottom:12px}
+  .c__i svg{width:16px;height:16px}
+  .c b{font-size:13.5px;font-weight:700}
+  .c p{font-size:12.5px;color:var(--ink-3);margin-top:6px;line-height:1.7;min-height:36px}
+  .c__f{display:flex;align-items:center;font-size:12px;color:var(--ink-2);margin-top:14px;padding-top:12px;border-top:1px solid var(--line-2)}
+  .c__f svg{width:13px;height:13px;margin-left:auto;color:var(--ink-3)}
+  .rec{margin-top:34px}
+  .rec h3{font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:8px}
+  .rec__l{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);overflow:hidden}
+  .rec__i{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line-2);font-size:13px;cursor:pointer;transition:background .14s}
+  .rec__i:last-child{border-bottom:0}
+  .rec__i:hover{background:var(--surf)}
+  .rec__i i{width:6px;height:6px;border-radius:50%;background:#4857e2;flex:0 0 6px;font-style:normal}
+  .rec__i time{margin-left:auto;font-size:11.5px;color:var(--ink-3)}
+  @media (max-width:860px){.cards{grid-template-columns:1fr}.bd{padding:40px 16px}.bd h2{font-size:22px}}
+</style>
+</head>
+<body data-app="front" data-nav="build" data-title="搭建">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div class="page">
+      <div class="bd">
+        <h2>用一句话，搭建属于你的流程</h2>
+
+        <form class="box" id="ask" action="chat.html">
+          <div class="box__in">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.2l1.5 3.9 3.9 1.5-3.9 1.5L8 13l-1.5-3.9L2.6 7.6l3.9-1.5z"/></svg>
+            <input name="q" autocomplete="off" placeholder="比如：采购付款超过 10 万需要 CFO 审批">
+          </div>
+          <div class="box__b">
+            <button class="mdl" type="button" data-toast="规则拆解模式：先把你的话拆成一条条规则再生成流程；另一种是直接出图"><i></i>规则拆解模式
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" style="width:11px;height:11px"><path d="M4 6.5 8 10.5 12 6.5"/></svg></button>
+            <button class="mic" type="button" aria-label="语音" data-toast="语音输入：说一段制度，Agent 直接转成规则"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="4" height="7" rx="2"/><path d="M3.8 7.4a4.2 4.2 0 0 0 8.4 0M8 11.6V14"/></svg></button>
+            <button class="send" type="submit">发送</button>
+          </div>
+        </form>
+
+        <div class="h-sec" style="margin-top:30px;display:flex;align-items:center">模板
+          <a class="btn btn--p btn--s" href="builder.html?new=1" style="margin-left:auto">＋ 新建流程</a></div>
+        <div class="cards">
+          <a class="c" href="templates.html?tab=flow">
+            <span class="c__i"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5.5" width="4" height="5" rx="1"/><rect x="10" y="2.5" width="4" height="4" rx="1"/><rect x="10" y="9.5" width="4" height="4" rx="1"/><path d="M6 8h2.2a1.8 1.8 0 0 0 1.8-1.8V4.5M6 8h2.2a1.8 1.8 0 0 1 1.8 1.8v1.7"/></svg></span>
+            <b>工作流</b><p>审批、通知、数据流转这类多步骤流程。</p>
+            <span class="c__f">查看模板<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></span>
+          </a>
+          <a class="c" href="templates.html?tab=insight">
+            <span class="c__i"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 13.5V8M6.5 13.5V4M10.5 13.5v-7M14 13.5V2.5"/></svg></span>
+            <b>智能洞察</b><p>运行数据的看板、周报与异常预警。</p>
+            <span class="c__f">查看模板<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></span>
+          </a>
+          <a class="c" href="templates.html?tab=approve">
+            <span class="c__i"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.5h6.2L13 5.3v8.2H4z"/><path d="M6.2 8.6 7.6 10l2.6-2.8"/></svg></span>
+            <b>审批与工单</b><p>付款、用印、报销这类要留痕的单据。</p>
+            <span class="c__f">查看模板<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></span>
+          </a>
+        </div>
+
+        <div class="rec">
+          <h3>最近对话</h3>
+          <div class="rec__l">
+            <div class="rec__i" data-q="供应商付款要按金额分级审批，5 万以下采购经理批，5 万以上加财务总监，超过 50 万要 CFO，付款前得有人确认一下"><i></i>供应商付款分级审批<time>12 分钟前</time></div>
+            <div class="rec__i" data-q="员工离职当天回收账号和门禁，设备归还后结算工资"><i style="background:var(--m-amber)"></i>员工离职回收账号<time>昨天</time></div>
+            <div class="rec__i" data-q="客户退款超过 5000 元需要主管审批，原路退回"><i style="background:var(--m-green)"></i>客户退款主管审批<time>9 月 14 日</time></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="ui.js"></script>
+<script>
+(function () {
+  document.getElementById('ask').addEventListener('submit', function (e) {
+    e.preventDefault(); var v = this.q.value.trim();
+    location.href = 'chat.html' + (v ? '?q=' + encodeURIComponent(v) : '');
+  });
+  document.querySelector('.rec__l').addEventListener('click', function (e) {
+    var r = e.target.closest('[data-q]'); if (!r) return;
+    location.href = 'chat.html?q=' + encodeURIComponent(r.dataset.q);
+  });
+})();
+</script>
+</body>
+</html>

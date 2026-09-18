@@ -1,0 +1,65 @@
+/*
+ * 通知列表项组件 (Notice Item)
+ * 标签：<cs-notice-item>
+ *
+ * data 属性：
+ *   data-new          — 新通知标记（显示蓝色圆点）
+ *   data-type="notice|document" — 类型
+ *
+ * 子元素结构：
+ *   .notice-dot   — 新通知圆点
+ *   .notice-title — 标题
+ *   .notice-date  — 日期
+ */
+
+/* ========== 基础 ========== */
+cs-notice-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) 0;
+  border-bottom: var(--line-width) solid var(--cs-sem-border-secondary);
+  cursor: pointer;
+}
+
+cs-notice-item:last-child {
+  border-bottom: none;
+}
+
+cs-notice-item:hover .notice-title {
+  color: var(--cs-color-primary);
+}
+
+/* ========== 新通知圆点 ========== */
+cs-notice-item .notice-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--cs-color-primary);
+  flex-shrink: 0;
+  display: none;
+}
+
+cs-notice-item[data-new] .notice-dot {
+  display: block;
+}
+
+/* ========== 标题 ========== */
+cs-notice-item .notice-title {
+  flex: 1;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  transition: color 0.15s ease;
+}
+
+/* ========== 日期 ========== */
+cs-notice-item .notice-date {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+  white-space: nowrap;
+}

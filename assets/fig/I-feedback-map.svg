@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<style>
+  .bg{fill:#083D2A}
+  .t{fill:#EED6C8;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .m{fill:#8FB3A0;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mb{fill:#EED6C8;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .d{fill:#EED6C8;font-family:'Instrument Serif',Georgia,serif}
+  .a{fill:#DAAB00}
+  .am{fill:#DAAB00;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mu{fill:#8FB3A0;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .ln{stroke:#EED6C8;fill:none}
+  .ln2{stroke:#EED6C8;fill:none;opacity:.35}
+  .la{stroke:#DAAB00;fill:none}
+  .ds{stroke:#8FB3A0;fill:none;stroke-dasharray:6 6}
+  .box{fill:none;stroke:#EED6C8;stroke-opacity:.55}
+  .boxa{fill:#DAAB00;fill-opacity:.12;stroke:#DAAB00}
+  .fill{fill:#EED6C8;fill-opacity:.06;stroke:#EED6C8;stroke-opacity:.35}
+  .hatch{fill:url(#hz);stroke:#EED6C8;stroke-opacity:.35}
+  .pill{fill:none;stroke:#EED6C8;stroke-opacity:.6}
+</style>
+<defs>
+  <pattern id="hz" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#EED6C8" stroke-opacity=".22" stroke-width="1"/>
+  </pattern>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#EED6C8"/>
+  </marker>
+  <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#DAAB00"/>
+  </marker>
+  <marker id="arm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#8FB3A0"/>
+  </marker>
+</defs>
+<rect class="bg" width="1600" height="900"/><text x="90" y="96" class="d" font-size="48" text-anchor="start" font-weight="400" >114 条线上反馈落在哪</text><text x="90" y="132" class="mu" font-size="18" text-anchor="start" font-weight="400" >个人 76 + 企业 38 · 唯一能说「这是用户告诉我的」的项目</text><text x="1510" y="80" class="m" font-size="13" text-anchor="end" font-weight="400" >FIG I · FEEDBACK MAP</text><rect x="90" y="420" width="718.4561403508771" height="96" fill="#DAAB00" fill-opacity="1" stroke="#DAAB00" stroke-opacity="1"/><text x="449.2280701754386" y="366" class="d" font-size="44" text-anchor="middle" font-weight="400" >58</text><text x="449.2280701754386" y="394" class="t" font-size="14" text-anchor="middle" font-weight="400" >计划实施</text><text x="449.2280701754386" y="476.0" class="mb" font-size="16" text-anchor="middle" font-weight="400" >任务 · 甘特 · 依赖 · 视图</text><rect x="812.4561403508771" y="420" width="195.2982456140351" height="96" fill="#EED6C8" fill-opacity="0.12" stroke="#EED6C8" stroke-opacity="0.35"/><text x="910.1052631578947" y="366" class="d" font-size="30" text-anchor="middle" font-weight="400" >16</text><text x="910.1052631578947" y="394" class="mu" font-size="14" text-anchor="middle" font-weight="400" >会议</text><rect x="1011.7543859649122" y="420" width="145.47368421052633" height="96" fill="#EED6C8" fill-opacity="0.12" stroke="#EED6C8" stroke-opacity="0.35"/><text x="1084.4912280701753" y="366" class="d" font-size="30" text-anchor="middle" font-weight="400" >12</text><text x="1084.4912280701753" y="394" class="mu" font-size="14" text-anchor="middle" font-weight="400" >文档库</text><rect x="1161.2280701754385" y="420" width="344.7719298245614" height="96" fill="#EED6C8" fill-opacity="0.12" stroke="#EED6C8" stroke-opacity="0.35"/><text x="1333.6140350877192" y="366" class="d" font-size="30" text-anchor="middle" font-weight="400" >28</text><text x="1333.6140350877192" y="394" class="mu" font-size="14" text-anchor="middle" font-weight="400" >其他模块</text><text x="90" y="580" class="m" font-size="12" text-anchor="start" font-weight="400" >ROOT CAUSE</text><text x="90" y="622" class="t" font-size="20" text-anchor="start" font-weight="500" >三条反馈表面是三个 bug，归到一起是同一件事：用户做完动作，得不到确认</text><text x="90" y="656" class="mu" font-size="15" text-anchor="start" font-weight="400" >这是反馈可见性问题，不是界面美观问题 → 要做的不是视觉，是每一次操作之后系统怎么回话</text><text x="90" y="740" class="mu" font-size="13" text-anchor="start" font-weight="400" >58 条里多数是 bug 和不会用：证明的是「在用、在疼」，不是需求本身；需求从卖点反推，页面上标明「模拟需求」</text></svg>

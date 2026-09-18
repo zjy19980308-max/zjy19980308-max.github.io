@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>容器预览 — modal</title>
+
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="modal.css">
+
+  <style>
+    body { margin: 0; background: var(--cs-color-bg-secondary); height: 100vh; }
+    .label { padding: 16px; font-size: 11px; color: var(--cs-color-text-secondary); font-family: var(--font-family-cn); }
+    .preview-stage {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 60px);
+      background: var(--cs-color-white);
+      overflow: hidden;
+    }
+    .slot-header, .slot-body, .slot-footer { font-size: 12px; color: var(--cs-color-text-secondary); }
+  </style>
+</head>
+<body>
+  <div class="label">modal 预览 — md 尺寸 + 打开态</div>
+
+  <div class="preview-stage">
+
+    <cs-modal data-open data-size="md">
+      <div class="dialog">
+        <div class="slot-header">slot-header · 弹窗标题</div>
+        <div class="slot-body">slot-body · 弹窗内容</div>
+        <div class="slot-footer">
+          <span>slot-footer · 操作按钮</span>
+        </div>
+      </div>
+    </cs-modal>
+
+  </div>
+</body>
+</html>

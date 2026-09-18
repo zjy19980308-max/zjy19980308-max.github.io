@@ -1,0 +1,36 @@
+cs-doc-result-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cs-sem-spacing-icon-text-inline);
+  padding: var(--cs-sem-spacing-comp-padding-md);
+  border-radius: var(--radius-xl);
+  background: transparent;
+}
+
+cs-doc-result-entry[data-active] {
+  background: var(--cs-sem-bg-secondary);
+}
+
+cs-doc-result-entry .result-icon {
+  flex: 0 0 auto;
+  font-size: var(--cs-sem-size-icon-md);
+  color: var(--cs-sem-text-brand);
+}
+
+cs-doc-result-entry .result-copy {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--cs-sem-spacing-comp-gap-sm);
+}
+
+cs-doc-result-entry .result-title {
+  font: var(--cs-typo-body-medium);
+  color: var(--cs-sem-text-primary);
+}
+
+cs-doc-result-entry .result-meta {
+  font: var(--cs-typo-body-medium);
+  color: var(--cs-sem-text-secondary);
+}

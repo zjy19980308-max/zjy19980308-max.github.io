@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-agent-detail-panel 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../css/workspace.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="agent-detail-panel.css">
+  <style>
+    body { padding: 32px; background: #F5F6FA; font-family: "PingFang SC", sans-serif; min-height: 100vh; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; max-width: 720px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .note { font: var(--typo-cn-12-regular); color: var(--cs-color-ws-text-secondary); padding: 8px 12px; background: var(--cs-color-ws-bg-subtle); border-radius: 6px; }
+  </style>
+</head>
+<body>
+
+<!-- 1. 状态说明 -->
+<div class="section">
+  <div class="section-title">cs-agent-detail-panel 详情面板</div>
+  <div class="section-subtitle">REQ-026：点击 Agent 头像/磁贴时从右侧滑出，固定 fixed 定位 width:420px / height:100vh</div>
+  <div class="note">
+    本组件为 fixed 定位的右侧滑出面板。下方第 1 个为 <code>data-open="true"</code>（默认展示），用于预览样式；
+    第 2 个为 <code>data-open="false"</code>（隐藏，作为 DOM 占位演示）。
+  </div>
+</div>
+
+<!-- 2. 打开态 (Anthropic / Claude) -->
+<cs-agent-detail-panel data-open="true" data-source="anthropic" data-agent-id="claude">
+  <div class="adp-head">
+    <span class="adp-avatar">A</span>
+    <div class="adp-meta">
+      <div class="adp-name">Claude Sonnet 4.6</div>
+      <div class="adp-provider">Anthropic · <span class="adp-status">工作中</span></div>
+    </div>
+    <button class="adp-close" data-action="close-agent-panel">×</button>
+  </div>
+  <div class="adp-body">
+    <div class="adp-section">
+      <div class="adp-section-title">能力</div>
+      <div class="adp-capabilities">
+        <span class="adp-cap-tag">长文档生成</span>
+        <span class="adp-cap-tag">推理</span>
+        <span class="adp-cap-tag">代码生成</span>
+        <span class="adp-cap-tag">多模态</span>
+      </div>
+    </div>
+    <div class="adp-section">
+      <div class="adp-section-title">📊 本周战绩</div>
+      <div class="adp-stat-grid">
+        <div class="adp-stat-cell"><span class="num">12</span><span class="label">篇文档</span></div>
+        <div class="adp-stat-cell"><span class="num">8</span><span class="label">段代码</span></div>
+        <div class="adp-stat-cell"><span class="num">4</span><span class="label">次纪要</span></div>
+        <div class="adp-stat-cell"><span class="num">24</span><span class="label">总完成</span></div>
+      </div>
+    </div>
+    <div class="adp-section">
+      <div class="adp-section-title">🚨 当前需要</div>
+      <div class="adp-needs-card">
+        <div class="needs-msg">等待你确认《Q1 报告》大纲</div>
+        <div class="needs-btns">
+          <button class="needs-btn" data-variant="primary" data-action="view-outline">查看大纲</button>
+          <button class="needs-btn" data-action="approve">确认采纳</button>
+          <button class="needs-btn" data-action="reject">拒绝并重做</button>
+        </div>
+      </div>
+    </div>
+    <div class="adp-section">
+      <div class="adp-section-title">🔗 调用方式</div>
+      <div>API · 今日 137 次 · ¥6.8</div>
+    </div>
+  </div>
+  <div class="adp-foot">
+    <button class="adp-btn" data-action="config-agent">配置</button>
+    <button class="adp-btn" data-action="pause-agent">暂停</button>
+    <button class="adp-btn" data-variant="danger" data-action="remove-agent">移除</button>
+  </div>
+</cs-agent-detail-panel>
+<div class="adp-mask" data-action="close-agent-panel"></div>
+
+<!-- 3. 关闭态 - 仅作为占位（不会渲染，验证 data-open=false 的隐藏） -->
+<div class="section">
+  <div class="section-title">关闭态（隐藏）</div>
+  <div class="section-subtitle">data-open="false" 时 display:none，下方 DOM 节点不可见</div>
+
+  <cs-agent-detail-panel data-open="false" data-source="self" data-agent-id="doc-helper">
+    <div class="adp-head">
+      <span class="adp-avatar">文</span>
+      <div class="adp-meta">
+        <div class="adp-name">文档助手</div>
+        <div class="adp-provider">自有 · <span class="adp-status">空闲</span></div>
+      </div>
+      <button class="adp-close" data-action="close-agent-panel">×</button>
+    </div>
+    <div class="adp-body">
+      <div class="adp-section">
+        <div class="adp-section-title">能力</div>
+        <div class="adp-capabilities">
+          <span class="adp-cap-tag">摘要</span>
+          <span class="adp-cap-tag">提纲</span>
+        </div>
+      </div>
+    </div>
+  </cs-agent-detail-panel>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,108 @@
+/*
+ * 假期余额卡片组件 (Leave Balance Card)
+ * 标签：<cs-leave-balance-card>
+ *
+ * 结构：
+ *   cs-leave-balance-card[data-color]
+ *   ├── .balance-header       ← 图标 + 假期类型名
+ *   ├── .balance-remaining    ← 剩余天数大字
+ *   ├── .balance-progress     ← 进度条
+ *   └── .balance-detail       ← 已用/总额度
+ */
+
+/* ========== 容器 ========== */
+cs-leave-balance-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  border: var(--line-width) solid var(--cs-color-border);
+  background: var(--cs-color-bg);
+  transition: box-shadow 0.15s ease;
+}
+
+cs-leave-balance-card:hover {
+  box-shadow: 0 6px 36px 5px rgba(0, 0, 0, 0.04);
+}
+
+/* ========== 头部 ========== */
+cs-leave-balance-card .balance-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+cs-leave-balance-card .balance-icon {
+  font-size: var(--cs-sem-size-icon-md);
+  color: var(--cs-color-primary);
+}
+
+cs-leave-balance-card .balance-title {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+}
+
+/* ========== 主题色图标 ========== */
+cs-leave-balance-card[data-color="success"] .balance-icon { color: var(--cs-color-success); }
+cs-leave-balance-card[data-color="warning"] .balance-icon { color: var(--cs-color-warning); }
+cs-leave-balance-card[data-color="danger"] .balance-icon { color: var(--cs-color-error); }
+cs-leave-balance-card[data-color="info"] .balance-icon { color: var(--cs-sem-status-info); }
+
+/* ========== 剩余天数 ========== */
+cs-leave-balance-card .balance-remaining {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+}
+
+cs-leave-balance-card .balance-number {
+  font-size: var(--font-size-28);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-36);
+  font-family: var(--font-family-en);
+  color: var(--cs-color-text);
+}
+
+cs-leave-balance-card .balance-unit {
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 进度条 ========== */
+cs-leave-balance-card .balance-progress {
+  width: 100%;
+  height: var(--spacing-6);
+  border-radius: var(--radius-xs);
+  background: var(--cs-color-bg-light);
+  overflow: hidden;
+}
+
+cs-leave-balance-card .balance-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-xs);
+  background: var(--cs-color-primary);
+  transition: width 0.25s ease;
+}
+
+/* ========== 进度条主题色 ========== */
+cs-leave-balance-card[data-color="success"] .balance-progress-fill { background: var(--cs-color-success); }
+cs-leave-balance-card[data-color="warning"] .balance-progress-fill { background: var(--cs-color-warning); }
+cs-leave-balance-card[data-color="info"] .balance-progress-fill { background: var(--cs-sem-status-info); }
+
+/* ========== 额度用完 ========== */
+cs-leave-balance-card[data-exhausted] .balance-number { color: var(--cs-color-error); }
+cs-leave-balance-card[data-exhausted] .balance-progress-fill { background: var(--cs-color-error); }
+
+/* ========== 底部详情 ========== */
+cs-leave-balance-card .balance-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+cs-leave-balance-card .balance-used,
+cs-leave-balance-card .balance-total {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}

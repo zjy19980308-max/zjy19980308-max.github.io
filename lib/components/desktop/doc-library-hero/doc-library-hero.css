@@ -1,0 +1,43 @@
+cs-doc-library-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--cs-sem-spacing-content-stack);
+  padding: var(--cs-sem-spacing-comp-padding-xl);
+  border: var(--border-width) solid var(--cs-sem-border-secondary);
+  border-radius: var(--radius-3xl);
+  background: var(--cs-sem-bg-primary);
+  box-shadow: var(--cs-shadow-card);
+}
+
+cs-doc-library-hero[data-variant="compact"] {
+  gap: var(--cs-sem-spacing-content-inline);
+  padding: var(--cs-sem-spacing-comp-padding-lg);
+}
+
+cs-doc-library-hero .hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-sem-spacing-comp-gap-md);
+}
+
+cs-doc-library-hero .hero-title {
+  margin: 0;
+  font: var(--cs-typo-display-medium);
+  color: var(--cs-sem-text-primary);
+}
+
+cs-doc-library-hero .hero-description {
+  margin: 0;
+  font: var(--cs-typo-body-large);
+  color: var(--cs-sem-text-secondary);
+}
+
+cs-doc-library-hero .hero-search {
+  display: flex;
+  justify-content: flex-end;
+}
+
+cs-doc-library-hero .hero-search > * {
+  width: 100%;
+}

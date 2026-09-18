@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="data:,">
+<title>弹跳卡片 · 交互小案例 — 张竞元</title>
+<!-- 实验场 · 交互小案例「弹跳卡片」。维护：网站交互调整。
+     owner 给了 BounceCards（React + GSAP）做参照，这里用站里已有的 GSAP 重写成原生，不引 React。
+     照参照：5 张 1:1 的卡各自带一点旋转和左右位移叠着摆；鼠标停在某一张上，那张把旋转抹平转正，
+     左右两边的卡各自往外让开 160px，离得越远让得越晚（每远一位多等 0.05s）。
+     ?v=1 出片模式：不接鼠标，自己从左到右挨个走一遍，末尾复位——首尾同一个姿态，接得上。 -->
+<style>
+  @font-face{font-family:'CaseSC';font-weight:400;font-display:swap;src:url(../assets/fonts/NotoSansSC-400-subset.woff2) format('woff2')}
+  html,body{margin:0;height:100%;background:#0c0c0d;overflow:hidden;font-family:CaseSC,system-ui,sans-serif}
+  .cap{position:fixed;left:22px;top:20px;color:#f1eee7;z-index:3}
+  .cap b{display:block;font-size:15px;font-weight:400;letter-spacing:.06em}
+  .cap i{display:block;font-style:normal;font-size:11px;opacity:.45;letter-spacing:.14em;margin-top:3px}
+  .hint{position:fixed;left:0;right:0;bottom:22px;text-align:center;color:rgba(241,238,231,.4);font-size:12.5px;letter-spacing:.08em;z-index:3}
+  body.vid .hint{display:none}
+
+  /* 舞台按视口缩放：卡片摊开后总宽 540px，窄屏（九宫格 454 宽）放不下，整体等比缩。 */
+  .stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  .wrap{position:relative;width:400px;height:400px;display:flex;align-items:center;justify-content:center;
+        transform-origin:center center}
+  /* absolute 又不给 top/left，就会落在 flex 的 static position 上，实测整组偏上 70px。显式钉到正中。 */
+  .card{position:absolute;top:50%;left:50%;box-sizing:border-box;width:210px;height:210px;margin:-105px 0 0 -105px;
+        border:5px solid #fff;border-radius:25px;overflow:hidden;
+        box-shadow:0 4px 10px rgba(0,0,0,.2);will-change:transform}
+  .card img{width:100%;height:100%;object-fit:cover;display:block}
+</style>
+</head>
+<body>
+<div class="cap"><b>弹跳卡片</b><i>BOUNCE CARDS</i></div>
+<div class="stage"><div class="wrap" id="wrap"></div></div>
+<div class="hint">鼠标停在任意一张上，两边的卡会让开</div>
+<script src="../js/vendor/gsap.min.js"></script>
+<script>
+(function () {
+  'use strict';
+  var VIDEO = /[?&]v=1/.test(location.search);
+  if (VIDEO) document.body.className = 'vid';
+
+  var SRC = ['card-01.jpg', 'card-11.jpg', 'card-17.jpg', 'card-26.jpg', 'card-21.jpg'];
+  /* 参照里的五个基准姿态，一个都没改 */
+  var TF = ['rotate(10deg) translate(-170px)', 'rotate(5deg) translate(-85px)', 'rotate(-3deg)',
+            'rotate(-10deg) translate(85px)', 'rotate(2deg) translate(170px)'];
+  var PUSH = 160, wrap = document.getElementById('wrap'), cards = [];
+
+  SRC.forEach(function (s, i) {
+    var d = document.createElement('div'); d.className = 'card';
+    d.style.transform = TF[i];   /* 不设 z-index：照参照按 DOM 顺序阶梯叠放，右边压左边；
+                                    一设中间最上，中间那张就把左右两张的可悬停区盖掉了 */
+    var im = new Image(); im.src = '../assets/lab/cards/' + s; im.alt = '';
+    d.appendChild(im); wrap.appendChild(d); cards.push(d);
+    if (!VIDEO) { d.addEventListener('mouseenter', function () { push(i); }); d.addEventListener('mouseleave', reset); }
+  });
+
+  function noRot(t) {
+    return /rotate\([\s\S]*?\)/.test(t) ? t.replace(/rotate\([\s\S]*?\)/, 'rotate(0deg)')
+         : t === 'none' ? 'rotate(0deg)' : t + ' rotate(0deg)';
+  }
+  function pushed(t, dx) {
+    var m = t.match(/translate\(([-0-9.]+)px\)/);
+    if (m) return t.replace(/translate\(([-0-9.]+)px\)/, 'translate(' + (parseFloat(m[1]) + dx) + 'px)');
+    return t === 'none' ? 'translate(' + dx + 'px)' : t + ' translate(' + dx + 'px)';
+  }
+  function push(k) {
+    cards.forEach(function (el, i) {
+      gsap.killTweensOf(el);
+      if (i === k) gsap.to(el, { transform: noRot(TF[i]), duration: .4, ease: 'back.out(1.4)', overwrite: 'auto' });
+      else gsap.to(el, { transform: pushed(TF[i], i < k ? -PUSH : PUSH), duration: .4, ease: 'back.out(1.4)',
+                         delay: Math.abs(k - i) * .05, overwrite: 'auto' });
+    });
+  }
+  function reset() {
+    cards.forEach(function (el, i) {
+      gsap.killTweensOf(el);
+      gsap.to(el, { transform: TF[i], duration: .4, ease: 'back.out(1.4)', overwrite: 'auto' });
+    });
+  }
+
+  /* 舞台缩放：卡摊开最宽到 ±(170+160)+100 = 530，两边留点余量 */
+  function fit() {
+    var need = 880, k = Math.min(1, innerWidth / need, innerHeight / 320);
+    /* 五张卡的 rotate+translate 各带一点纵向分量，加起来平均 -22px，整组会偏上，补回来 */
+    wrap.style.transform = 'translateY(22px) scale(' + k.toFixed(3) + ')';
+  }
+  fit(); addEventListener('resize', fit);
+
+  /* ---- 出片模式：手动推进 GSAP 的全局时钟，一帧一帧来，跟录制对齐 ---- */
+  /* 开头留 0.4s 不动、结尾复位后再留 0.4s，首尾都停在同一个基础姿态，视频接得上 */
+  var HOLD = 1.4, LEAD = .4, VDUR = LEAD + SRC.length * HOLD + HOLD, acc = 0, fired = -2;
+  if (VIDEO) gsap.ticker.remove(gsap.updateRoot);   /* 不让它自己跑，否则录制前它已经走了一截 */
+
+  function tick(dt) {
+    acc += dt;
+    var slot = acc < LEAD ? -1 : Math.floor((acc - LEAD) / HOLD);
+    if (slot !== fired) { fired = slot; if (slot >= 0) { if (slot < SRC.length) push(slot); else reset(); } }
+    gsap.updateRoot(acc);
+  }
+
+  window.__case = {
+    cycle: function () { return VDUR; },
+    step: function (dt) { tick(dt); },
+    ready: function () { return cards.every(function (c) { var im = c.querySelector('img'); return im.complete && im.naturalWidth > 0; }); },
+    at: function () { return fired; }
+  };
+})();
+</script>
+</body>
+</html>

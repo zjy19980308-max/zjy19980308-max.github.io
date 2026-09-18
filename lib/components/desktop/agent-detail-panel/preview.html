@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-agent-detail-panel preview</title>
+  <link rel="stylesheet" href="../../../../css/base.css">
+  <link rel="stylesheet" href="../../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="../../../css/workspace.css">
+  <link rel="stylesheet" href="agent-detail-panel.css">
+  <style>body{padding:24px;background:#F5F6FA;font-family:PingFang SC;min-height:100vh;}</style>
+</head>
+<body>
+  <p>右侧面板已默认打开（data-open="true"），实际场景由点击触发。</p>
+  <cs-agent-detail-panel data-open="true" data-source="anthropic" data-agent-id="claude">
+    <div class="adp-head">
+      <span class="adp-avatar">A</span>
+      <div class="adp-meta">
+        <div class="adp-name">Claude Sonnet 4.6</div>
+        <div class="adp-provider">Anthropic · <span class="adp-status">工作中</span></div>
+      </div>
+      <button class="adp-close">×</button>
+    </div>
+    <div class="adp-body">
+      <div class="adp-section">
+        <div class="adp-section-title">能力</div>
+        <div class="adp-capabilities">
+          <span class="adp-cap-tag">长文档生成</span>
+          <span class="adp-cap-tag">推理</span>
+          <span class="adp-cap-tag">代码生成</span>
+          <span class="adp-cap-tag">多模态</span>
+        </div>
+      </div>
+      <div class="adp-section">
+        <div class="adp-section-title">📊 本周战绩</div>
+        <div class="adp-stat-grid">
+          <div class="adp-stat-cell"><span class="num">12</span><span class="label">篇文档</span></div>
+          <div class="adp-stat-cell"><span class="num">8</span><span class="label">段代码</span></div>
+          <div class="adp-stat-cell"><span class="num">4</span><span class="label">次纪要</span></div>
+          <div class="adp-stat-cell"><span class="num">24</span><span class="label">总完成</span></div>
+        </div>
+      </div>
+      <div class="adp-section">
+        <div class="adp-section-title">🚨 当前需要</div>
+        <div class="adp-needs-card">
+          <div class="needs-msg">等待你确认《Q1 报告》大纲</div>
+          <div class="needs-btns">
+            <button class="needs-btn" style="padding:4px 10px;font-size:11px;border:1px solid #5B5BF5;background:#5B5BF5;color:#fff;border-radius:4px;cursor:pointer;">查看大纲</button>
+            <button class="needs-btn" style="padding:4px 10px;font-size:11px;border:1px solid #EBEDF3;background:#fff;color:#3D3F50;border-radius:4px;cursor:pointer;">确认采纳</button>
+            <button class="needs-btn" style="padding:4px 10px;font-size:11px;border:1px solid #EBEDF3;background:#fff;color:#3D3F50;border-radius:4px;cursor:pointer;">拒绝并重做</button>
+          </div>
+        </div>
+      </div>
+      <div class="adp-section">
+        <div class="adp-section-title">🔗 调用方式</div>
+        <div>API · 今日 137 次 · ¥6.8</div>
+      </div>
+    </div>
+    <div class="adp-foot">
+      <button class="adp-btn">配置</button>
+      <button class="adp-btn">暂停</button>
+      <button class="adp-btn" data-variant="danger">移除</button>
+    </div>
+  </cs-agent-detail-panel>
+</body>
+</html>

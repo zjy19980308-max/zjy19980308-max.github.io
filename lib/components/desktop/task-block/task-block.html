@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-task-block 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="../../../components/desktop/avatar/avatar.css">
+  <link rel="stylesheet" href="../../../components/desktop/button/button.css">
+  <link rel="stylesheet" href="task-block.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .section { background: var(--cs-color-bg); border-radius: var(--radius-lg); padding: var(--spacing-24); margin-bottom: var(--spacing-24); }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: var(--space-md); }
+    .row { display: flex; flex-direction: column; gap: var(--space-sm); margin-bottom: var(--space-md); }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); }
+  </style>
+</head>
+<body>
+
+<div id="screenshot-target">
+
+  <div class="section">
+    <div class="section-title">任务块 Task Block — 嵌入文档</div>
+
+    <div class="row">
+      <span class="row-label">进行中（默认）</span>
+      <cs-task-block data-status="processing">
+        <div class="task-icon-box">
+          <i class="task-icon cses-task_card_workItem"></i>
+        </div>
+        <div class="task-body">
+          <span class="task-title">完成文档库 V2 设计稿评审</span>
+          <span class="task-status">进行中</span>
+        </div>
+        <div class="task-actions">
+          <div class="task-avatars">
+            <cs-avatar data-size="xs" data-color="blue"><span class="avatar-text">张</span></cs-avatar>
+            <cs-avatar data-size="xs" data-color="purple"><span class="avatar-text">李</span></cs-avatar>
+            <cs-avatar data-size="xs" data-color="green"><span class="avatar-text">王</span></cs-avatar>
+          </div>
+          <span class="task-date">04/27</span>
+          <i class="task-bell cses-tongzhi"></i>
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-task-block>
+    </div>
+
+    <div class="row">
+      <span class="row-label">待处理</span>
+      <cs-task-block data-status="pending">
+        <div class="task-icon-box">
+          <i class="task-icon cses-task_card_workItem"></i>
+        </div>
+        <div class="task-body">
+          <span class="task-title">下周一前提交需求文档</span>
+          <span class="task-status">待处理</span>
+        </div>
+        <div class="task-actions">
+          <div class="task-avatars">
+            <cs-avatar data-size="xs" data-color="orange"><span class="avatar-text">赵</span></cs-avatar>
+          </div>
+          <span class="task-date">05/04</span>
+          <i class="task-bell cses-tongzhi"></i>
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-task-block>
+    </div>
+
+    <div class="row">
+      <span class="row-label">已完成</span>
+      <cs-task-block data-status="done">
+        <div class="task-icon-box">
+          <i class="task-icon cses-task_card_workItem"></i>
+        </div>
+        <div class="task-body">
+          <span class="task-title">原型评审会议纪要</span>
+          <span class="task-status">已完成</span>
+        </div>
+        <div class="task-actions">
+          <span class="task-date">04/20</span>
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-task-block>
+    </div>
+
+    <div class="row">
+      <span class="row-label">禁用</span>
+      <cs-task-block data-status="processing" data-disabled>
+        <div class="task-icon-box">
+          <i class="task-icon cses-task_card_workItem"></i>
+        </div>
+        <div class="task-body">
+          <span class="task-title">权限受限的任务</span>
+          <span class="task-status">无访问权限</span>
+        </div>
+        <div class="task-actions">
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-task-block>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

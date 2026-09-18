@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cs-doc-search-suggestion-list</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="../doc-result-entry/doc-result-entry.css">
+  <link rel="stylesheet" href="./doc-search-suggestion-list.css">
+  <style>
+    body {
+      margin: 0;
+      padding: var(--cs-sem-spacing-layout-gutter);
+      background: var(--cs-sem-bg-secondary);
+      font: var(--cs-typo-body-medium);
+    }
+
+    .preview-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cs-sem-spacing-content-stack);
+      max-width: var(--cs-sem-size-content-lg);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-stack">
+    <cs-doc-search-suggestion-list data-state="default">
+      <div class="suggestion-header">猜你想找</div>
+      <div class="suggestion-items">
+        <cs-doc-result-entry>
+          <i class="result-icon cses-placeholder"></i>
+          <div class="result-copy">
+            <div class="result-title">设计规范总览</div>
+            <div class="result-meta">规范 / 设计系统</div>
+          </div>
+        </cs-doc-result-entry>
+        <cs-doc-result-entry data-active>
+          <i class="result-icon cses-placeholder"></i>
+          <div class="result-copy">
+            <div class="result-title">组件约定说明</div>
+            <div class="result-meta">组件 / 契约 / CSS</div>
+          </div>
+        </cs-doc-result-entry>
+      </div>
+    </cs-doc-search-suggestion-list>
+
+    <cs-doc-search-suggestion-list data-state="empty">
+      <div class="suggestion-header">暂无命中</div>
+      <div class="suggestion-items">
+        <cs-doc-result-entry>
+          <i class="result-icon cses-placeholder"></i>
+          <div class="result-copy">
+            <div class="result-title">尝试更换关键词</div>
+            <div class="result-meta">可按标题、摘要或分类搜索</div>
+          </div>
+        </cs-doc-result-entry>
+      </div>
+    </cs-doc-search-suggestion-list>
+  </div>
+</body>
+</html>

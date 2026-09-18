@@ -1,0 +1,102 @@
+/*
+ * 结果页组件 (Result)
+ * 标签：<cs-result>
+ *
+ * 作用：用于反馈一系列操作任务的处理结果。承载图标、标题、副标题、操作区。
+ * 对标 ng-zorro Result。常用于支付成功、404、403、500 等结果展示页。
+ *
+ * data 属性：
+ *   data-status="success" — 成功（绿）
+ *   data-status="info"    — 信息（蓝，默认）
+ *   data-status="warning" — 警告（橙）
+ *   data-status="danger"  — 错误（红）
+ *
+ * 子元素：
+ *   .result-icon       — 顶部大图标（72px）
+ *   .result-title      — 主标题
+ *   .result-subtitle   — 副标题描述
+ *   .result-extra      — 操作按钮区
+ *   .result-content    — 详情卡片（可选，如错误堆栈）
+ */
+
+/* ========== 容器 ========== */
+cs-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-32) var(--space-md);
+  background: var(--cs-color-white);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* ========== 大图标 ========== */
+cs-result .result-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-icon-5xl);
+  height: var(--cs-sem-size-icon-5xl);
+  font-size: var(--cs-sem-size-icon-5xl);
+  margin-bottom: var(--spacing-24);
+  color: var(--cs-color-text-light2);
+  line-height: 1;
+}
+
+cs-result[data-status="success"] .result-icon {
+  color: var(--color-green-500);
+}
+
+cs-result[data-status="info"] .result-icon {
+  color: var(--cs-color-primary);
+}
+
+cs-result[data-status="warning"] .result-icon {
+  color: var(--color-orange-500);
+}
+
+cs-result[data-status="danger"] .result-icon {
+  color: var(--cs-sem-text-error);
+}
+
+/* ========== 标题 ========== */
+cs-result .result-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium, 500);
+  color: var(--cs-color-text);
+  line-height: 1.4;
+  margin-bottom: var(--space-xs);
+}
+
+/* ========== 副标题 ========== */
+cs-result .result-subtitle {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light);
+  line-height: 1.6;
+  max-width: 480px;
+  margin-bottom: var(--spacing-24);
+}
+
+/* ========== 操作区 ========== */
+cs-result .result-extra {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+/* ========== 详情卡片（可选） ========== */
+cs-result .result-content {
+  width: 100%;
+  max-width: 640px;
+  margin-top: var(--spacing-24);
+  padding: var(--space-md);
+  background: var(--cs-color-bg-light);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+  line-height: 1.6;
+}

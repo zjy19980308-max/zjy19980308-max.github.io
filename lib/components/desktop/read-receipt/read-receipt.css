@@ -1,0 +1,123 @@
+/*
+ * 已读未读回执组件 (Read Receipt)
+ * 标签：<cs-read-receipt>
+ * 数据来源：消息 — 已读/未读面板
+ *
+ * data 属性：
+ *   （无组件级 data 属性，通过子元素 data-active 控制 tab 状态）
+ *
+ * 子元素：
+ *   .receipt-header            — 头部 tab 切换区
+ *   .receipt-tab               — 单个 tab（"已读"/"未读"）
+ *   .receipt-tab[data-active]  — 激活态 tab
+ *   .receipt-tab-count         — tab 中的计数
+ *   .receipt-list              — 人员列表容器
+ *   .receipt-item              — 单个人员行
+ *   .receipt-avatar            — 头像（引用 cs-avatar sm）
+ *   .receipt-name              — 人员名称
+ *   .receipt-time              — 时间，右对齐
+ */
+
+/* ========== 容器 ========== */
+cs-read-receipt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  background: var(--cs-color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--cs-shadow);
+  padding: var(--space-md);
+}
+
+/* ========== 头部 Tab 区 ========== */
+cs-read-receipt .receipt-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-md);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  padding-bottom: var(--space-xs);
+}
+
+/* ========== 单个 Tab ========== */
+cs-read-receipt .receipt-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light2);
+  cursor: pointer;
+  padding-bottom: var(--space-xs);
+  border-bottom: var(--spacing-2, 2px) solid transparent;
+  margin-bottom: calc(var(--line-width) * -1);
+  transition: color 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+}
+
+cs-read-receipt .receipt-tab:hover {
+  color: var(--cs-color-text);
+}
+
+/* ========== 激活态 Tab ========== */
+cs-read-receipt .receipt-tab[data-active] {
+  color: var(--cs-color-primary);
+  font: var(--typo-cn-14-medium);
+  border-bottom-color: var(--cs-color-primary);
+}
+
+/* ========== Tab 计数 ========== */
+cs-read-receipt .receipt-tab-count {
+  font: var(--typo-cn-12-regular);
+  color: inherit;
+}
+
+/* ========== 人员列表 ========== */
+cs-read-receipt .receipt-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* ========== 单个人员行 ========== */
+cs-read-receipt .receipt-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* ========== 头像 ========== */
+cs-read-receipt .receipt-avatar {
+  width: var(--cs-sem-size-icon-xl);
+  height: var(--cs-sem-size-icon-xl);
+  border-radius: var(--radius-full);
+  background: var(--cs-color-bg-light);
+  flex-shrink: 0;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-read-receipt .receipt-avatar img {
+  width: var(--cs-sem-size-content-full, 100%);
+  height: var(--cs-sem-size-content-full, 100%);
+  object-fit: cover;
+}
+
+/* ========== 人员名称 ========== */
+cs-read-receipt .receipt-name {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  flex: 1;
+}
+
+/* ========== 时间 ========== */
+cs-read-receipt .receipt-time {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+  margin-left: auto;
+}

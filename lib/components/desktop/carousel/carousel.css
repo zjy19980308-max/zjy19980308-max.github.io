@@ -1,0 +1,175 @@
+/*
+ * 走马灯组件 (Carousel)
+ * 标签：<cs-carousel>
+ *
+ * 作用：纯 CSS 实现的自动轮播容器，循环展示多个 slide。
+ * 对标 ng-zorro Carousel。
+ *
+ * 工作原理：
+ *   - .carousel-track 横向 flex 容器
+ *   - 通过 @keyframes 平移 transform: translateX 实现自动切换
+ *   - 支持 3 / 4 / 5 个 slide 的预设动画
+ *
+ * data 属性：
+ *   data-count="3"     — 轮播数量（3-5）
+ *   data-autoplay      — 启用自动播放（默认）
+ *   data-pause-on-hover — 悬停暂停
+ *   data-dots="bottom" — 指示点位置（仅 bottom）
+ *   data-arrows        — 是否显示左右翻页按钮（静态）
+ *
+ * 子元素：
+ *   .carousel-track    — 轨道容器（包裹所有 slide）
+ *   .carousel-slide    — 单个 slide
+ *   .carousel-dots     — 指示点容器
+ *   .carousel-dot      — 单个指示点
+ *   .carousel-arrow    — 左右翻页按钮
+ */
+
+/* ========== 容器 ========== */
+cs-carousel {
+  display: block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--cs-color-bg-light);
+}
+
+/* ========== 轨道 ========== */
+cs-carousel .carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+cs-carousel .carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: var(--typo-cn-16-medium);
+  color: var(--cs-color-text);
+  user-select: none;
+}
+
+/* ========== 自动播放动画 ========== */
+/* 3 张 slide：每张停 2.7s，切换 0.3s，总周期 9s */
+cs-carousel[data-count="3"][data-autoplay] .carousel-track {
+  width: 300%;
+  animation: cs-carousel-3 9s ease-in-out infinite;
+}
+
+@keyframes cs-carousel-3 {
+  0%, 30%   { transform: translateX(0); }
+  33%, 63%  { transform: translateX(-33.333%); }
+  66%, 96%  { transform: translateX(-66.666%); }
+  100%      { transform: translateX(0); }
+}
+
+cs-carousel[data-count="3"] .carousel-slide {
+  flex: 0 0 33.333%;
+}
+
+/* 4 张 slide：每张停 2.5s，切换 0.5s，总周期 12s */
+cs-carousel[data-count="4"][data-autoplay] .carousel-track {
+  width: 400%;
+  animation: cs-carousel-4 12s ease-in-out infinite;
+}
+
+@keyframes cs-carousel-4 {
+  0%, 22%   { transform: translateX(0); }
+  25%, 47%  { transform: translateX(-25%); }
+  50%, 72%  { transform: translateX(-50%); }
+  75%, 97%  { transform: translateX(-75%); }
+  100%      { transform: translateX(0); }
+}
+
+cs-carousel[data-count="4"] .carousel-slide {
+  flex: 0 0 25%;
+}
+
+/* 5 张 slide */
+cs-carousel[data-count="5"][data-autoplay] .carousel-track {
+  width: 500%;
+  animation: cs-carousel-5 15s ease-in-out infinite;
+}
+
+@keyframes cs-carousel-5 {
+  0%, 18%   { transform: translateX(0); }
+  20%, 38%  { transform: translateX(-20%); }
+  40%, 58%  { transform: translateX(-40%); }
+  60%, 78%  { transform: translateX(-60%); }
+  80%, 98%  { transform: translateX(-80%); }
+  100%      { transform: translateX(0); }
+}
+
+cs-carousel[data-count="5"] .carousel-slide {
+  flex: 0 0 20%;
+}
+
+/* ========== 悬停暂停 ========== */
+cs-carousel[data-pause-on-hover]:hover .carousel-track {
+  animation-play-state: paused;
+}
+
+/* ========== 指示点 ========== */
+cs-carousel .carousel-dots {
+  position: absolute;
+  bottom: var(--space-md);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  z-index: 2;
+}
+
+cs-carousel .carousel-dot {
+  width: var(--space-md);
+  height: 3px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  transition: background 0.2s ease, width 0.2s ease;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+}
+
+cs-carousel .carousel-dot[data-active] {
+  background: var(--cs-color-white);
+  width: var(--spacing-24);
+}
+
+/* ========== 左右翻页按钮 ========== */
+cs-carousel .carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-interactive-md);
+  height: var(--cs-sem-size-interactive-md);
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--cs-color-white);
+  border: 0;
+  border-radius: 50%;
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s ease;
+}
+
+cs-carousel .carousel-arrow:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+cs-carousel .carousel-arrow[data-direction="prev"] {
+  left: var(--space-md);
+}
+
+cs-carousel .carousel-arrow[data-direction="next"] {
+  right: var(--space-md);
+}

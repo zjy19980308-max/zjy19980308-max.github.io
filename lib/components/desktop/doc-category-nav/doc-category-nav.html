@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cs-doc-category-nav</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="../doc-category-chip/doc-category-chip.css">
+  <link rel="stylesheet" href="./doc-category-nav.css">
+  <style>
+    body {
+      margin: 0;
+      padding: var(--cs-sem-spacing-layout-gutter);
+      background: var(--cs-sem-bg-secondary);
+      font: var(--cs-typo-body-medium);
+    }
+
+    .preview-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cs-sem-spacing-content-stack);
+      max-width: var(--cs-sem-size-content-xl);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-stack">
+    <cs-doc-category-nav data-variant="pill">
+      <div class="category-header">按分类浏览</div>
+      <div class="category-track">
+        <cs-doc-category-chip data-active>
+          <i class="chip-icon cses-placeholder"></i>
+          <span class="chip-label">设计规范</span>
+          <span class="chip-count">12</span>
+        </cs-doc-category-chip>
+        <cs-doc-category-chip>
+          <i class="chip-icon cses-placeholder"></i>
+          <span class="chip-label">组件契约</span>
+          <span class="chip-count">8</span>
+        </cs-doc-category-chip>
+      </div>
+    </cs-doc-category-nav>
+
+    <cs-doc-category-nav data-variant="quiet">
+      <div class="category-header">热门分类</div>
+      <div class="category-track">
+        <cs-doc-category-chip>
+          <i class="chip-icon cses-placeholder"></i>
+          <span class="chip-label">流程文档</span>
+          <span class="chip-count">5</span>
+        </cs-doc-category-chip>
+        <cs-doc-category-chip>
+          <i class="chip-icon cses-placeholder"></i>
+          <span class="chip-label">知识沉淀</span>
+          <span class="chip-count">4</span>
+        </cs-doc-category-chip>
+      </div>
+    </cs-doc-category-nav>
+  </div>
+</body>
+</html>

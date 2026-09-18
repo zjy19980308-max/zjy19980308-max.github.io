@@ -1,0 +1,95 @@
+/* =====================================================
+   cs-meeting-block — 嵌入文档的会议卡片块
+   高 56px / 圆角 8 / 1px 边框 / 白底 / 绿色图标盒
+
+   data 属性：
+     data-status="ongoing"  — 进行中（绿色状态文字）
+     data-status="upcoming" — 即将开始（蓝色状态文字）
+     data-status="ended"    — 已结束（淡灰状态文字）
+     data-disabled          — 禁用态（透明度降低 + 拒绝点击，用于无访问权限）
+   ===================================================== */
+
+cs-meeting-block {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  height: 56px;
+  padding: 0 var(--space-sm);
+  background: var(--cs-color-bg);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--cs-transition-fast);
+  box-sizing: border-box;
+}
+
+cs-meeting-block:hover {
+  border-color: var(--cs-color-primary);
+}
+
+cs-meeting-block[data-disabled] {
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* ---- 左侧图标盒（绿底） ---- */
+cs-meeting-block .meeting-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: var(--color-green-100);
+}
+
+cs-meeting-block .meeting-icon {
+  font-size: var(--cs-sem-size-icon-xl);
+  color: var(--cs-color-success);
+}
+
+/* ---- 中部内容区 ---- */
+cs-meeting-block .meeting-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  flex: 1;
+  min-width: 0;
+}
+
+cs-meeting-block .meeting-title {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+cs-meeting-block .meeting-meta {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 状态变体（meta 末尾的状态色由 meta 整体承载，状态高亮通过 status 内嵌片段实现） */
+cs-meeting-block[data-status="ongoing"] .meeting-meta {
+  color: var(--cs-color-primary);
+}
+
+cs-meeting-block[data-status="upcoming"] .meeting-meta {
+  color: var(--cs-color-warning);
+}
+
+cs-meeting-block[data-status="ended"] .meeting-meta {
+  color: var(--cs-color-text-light2);
+}
+
+/* ---- 右侧操作区 ---- */
+cs-meeting-block .meeting-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}

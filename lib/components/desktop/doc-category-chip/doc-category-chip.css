@@ -1,0 +1,28 @@
+cs-doc-category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cs-sem-spacing-icon-text-inline);
+  padding: 0 var(--cs-sem-spacing-comp-padding-lg);
+  min-height: var(--cs-sem-size-interactive-sm-plus);
+  border: var(--border-width) solid var(--cs-sem-border-primary);
+  border-radius: var(--radius-full);
+  background: var(--cs-sem-bg-primary);
+  font: var(--cs-typo-body-medium);
+  color: var(--cs-sem-text-secondary);
+}
+
+cs-doc-category-chip[data-active] {
+  border-color: var(--cs-sem-border-strong);
+  background: var(--cs-sem-bg-brand);
+  color: var(--cs-sem-text-inverse);
+}
+
+cs-doc-category-chip .chip-icon {
+  flex: 0 0 auto;
+  font-size: var(--cs-sem-size-icon-sm);
+}
+
+cs-doc-category-chip .chip-label,
+cs-doc-category-chip .chip-count {
+  white-space: nowrap;
+}

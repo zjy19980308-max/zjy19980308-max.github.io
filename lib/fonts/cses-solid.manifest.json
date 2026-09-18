@@ -1,0 +1,584 @@
+{
+ "family": "CSES-Solid",
+ "prefix": "cses-",
+ "count": 72,
+ "icons": [
+  {
+   "name": "jieshuluzhi",
+   "class": "cses-jieshuluzhi",
+   "codepoint": 59785,
+   "zh": "结束录制",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "xiaoxi-dingshifasong",
+   "class": "cses-xiaoxi-dingshifasong",
+   "codepoint": 59735,
+   "zh": "消息-定时发送",
+   "category": "消息",
+   "kind": "fill"
+  },
+  {
+   "name": "xiaoxi-xiaoxijilu",
+   "class": "cses-xiaoxi-xiaoxijilu",
+   "codepoint": 59736,
+   "zh": "消息-消息记录",
+   "category": "消息",
+   "kind": "fill"
+  },
+  {
+   "name": "tiwenliebiao",
+   "class": "cses-tiwenliebiao",
+   "codepoint": 59726,
+   "zh": "提问列表",
+   "category": "互动",
+   "kind": "fill"
+  },
+  {
+   "name": "dianpingliebiao",
+   "class": "cses-dianpingliebiao",
+   "codepoint": 59728,
+   "zh": "点评列表",
+   "category": "互动",
+   "kind": "fill"
+  },
+  {
+   "name": "hudongkaiqi",
+   "class": "cses-hudongkaiqi",
+   "codepoint": 59729,
+   "zh": "互动开启",
+   "category": "互动",
+   "kind": "fill"
+  },
+  {
+   "name": "shexiangtou",
+   "class": "cses-shexiangtou",
+   "codepoint": 59731,
+   "zh": "摄像头",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "shandian",
+   "class": "cses-shandian",
+   "codepoint": 59722,
+   "zh": "闪电",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "xiaoxi",
+   "class": "cses-xiaoxi",
+   "codepoint": 59703,
+   "zh": "消息",
+   "category": "消息",
+   "kind": "fill"
+  },
+  {
+   "name": "yijiaozhuchiren",
+   "class": "cses-yijiaozhuchiren",
+   "codepoint": 59698,
+   "zh": "移交主持人",
+   "category": "成员",
+   "kind": "fill"
+  },
+  {
+   "name": "qingkong",
+   "class": "cses-qingkong",
+   "codepoint": 59685,
+   "zh": "清空",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "shezhi",
+   "class": "cses-shezhi",
+   "codepoint": 59688,
+   "zh": "设置",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "huiyixinxi",
+   "class": "cses-huiyixinxi",
+   "codepoint": 59213,
+   "zh": "会议信息",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "xunibeijing",
+   "class": "cses-xunibeijing",
+   "codepoint": 59278,
+   "zh": "虚拟背景",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "fenxiangxinxi",
+   "class": "cses-fenxiangxinxi",
+   "codepoint": 59279,
+   "zh": "分享信息",
+   "category": "消息",
+   "kind": "fill"
+  },
+  {
+   "name": "settings",
+   "class": "cses-settings",
+   "codepoint": 59091,
+   "zh": "会议中_顶部功能_设置",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "chuangjianqunliao",
+   "class": "cses-chuangjianqunliao",
+   "codepoint": 59667,
+   "zh": "创建群聊",
+   "category": "消息",
+   "kind": "fill"
+  },
+  {
+   "name": "duoxuanbanxuanzhong",
+   "class": "cses-duoxuanbanxuanzhong",
+   "codepoint": 58951,
+   "zh": "多选半选中",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "dianping",
+   "class": "cses-dianping",
+   "codepoint": 59643,
+   "zh": "点评",
+   "category": "互动",
+   "kind": "fill"
+  },
+  {
+   "name": "zhankaigonggaohou",
+   "class": "cses-zhankaigonggaohou",
+   "codepoint": 59632,
+   "zh": "展开公告后",
+   "category": "消息",
+   "kind": "fill"
+  },
+  {
+   "name": "erjidaohang_zhishiku",
+   "class": "cses-erjidaohang_zhishiku",
+   "codepoint": 59630,
+   "zh": "二级导航_知识库",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "ren",
+   "class": "cses-ren",
+   "codepoint": 59629,
+   "zh": "人",
+   "category": "成员",
+   "kind": "fill"
+  },
+  {
+   "name": "kaishitoupiao",
+   "class": "cses-kaishitoupiao",
+   "codepoint": 59624,
+   "zh": "开始投票",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "tiwen2",
+   "class": "cses-tiwen2",
+   "codepoint": 59626,
+   "zh": "提问",
+   "category": "互动",
+   "kind": "fill"
+  },
+  {
+   "name": "guanbishipin",
+   "class": "cses-guanbishipin",
+   "codepoint": 59621,
+   "zh": "关闭视频",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "tianxie",
+   "class": "cses-tianxie",
+   "codepoint": 59622,
+   "zh": "填写",
+   "category": "编辑器",
+   "kind": "fill"
+  },
+  {
+   "name": "yichuchengyuan",
+   "class": "cses-yichuchengyuan",
+   "codepoint": 59607,
+   "zh": "移除成员",
+   "category": "成员",
+   "kind": "fill"
+  },
+  {
+   "name": "jieshutoupiao",
+   "class": "cses-jieshutoupiao",
+   "codepoint": 59586,
+   "zh": "结束投票",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "shibai",
+   "class": "cses-shibai",
+   "codepoint": 59506,
+   "zh": "失败",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "jinchengzhong",
+   "class": "cses-jinchengzhong",
+   "codepoint": 59507,
+   "zh": "进程中",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "qiehuanshexiangtou",
+   "class": "cses-qiehuanshexiangtou",
+   "codepoint": 59470,
+   "zh": "切换摄像头",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "tianjia",
+   "class": "cses-tianjia",
+   "codepoint": 59469,
+   "zh": "添加",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "daiban",
+   "class": "cses-daiban",
+   "codepoint": 59452,
+   "zh": "待办",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "jiyao",
+   "class": "cses-jiyao",
+   "codepoint": 59330,
+   "zh": "纪要",
+   "category": "编辑器",
+   "kind": "fill"
+  },
+  {
+   "name": "tasklist_Kanban",
+   "class": "cses-tasklist_Kanban",
+   "codepoint": 59328,
+   "zh": "看板",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "jixu",
+   "class": "cses-jixu",
+   "codepoint": 59313,
+   "zh": "继续",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "toupiao",
+   "class": "cses-toupiao",
+   "codepoint": 59305,
+   "zh": "投票",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "gongge",
+   "class": "cses-gongge",
+   "codepoint": 59300,
+   "zh": "宫格",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "yanjiangzhe",
+   "class": "cses-yanjiangzhe",
+   "codepoint": 59301,
+   "zh": "演讲者",
+   "category": "成员",
+   "kind": "fill"
+  },
+  {
+   "name": "biaozhun",
+   "class": "cses-biaozhun",
+   "codepoint": 59302,
+   "zh": "标准",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "shipin",
+   "class": "cses-shipin",
+   "codepoint": 59292,
+   "zh": "视频",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "tuichu",
+   "class": "cses-tuichu",
+   "codepoint": 59290,
+   "zh": "退出",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "info-circle",
+   "class": "cses-info-circle",
+   "codepoint": 59275,
+   "zh": "info-circle",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "check-circle",
+   "class": "cses-check-circle",
+   "codepoint": 59268,
+   "zh": "check-circle",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "exclamation-circle",
+   "class": "cses-exclamation-circle",
+   "codepoint": 59269,
+   "zh": "exclamation-circle",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "close-circle",
+   "class": "cses-close-circle",
+   "codepoint": 59270,
+   "zh": "close-circle",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "gouxuan_xuanzhong",
+   "class": "cses-gouxuan_xuanzhong",
+   "codepoint": 59254,
+   "zh": "勾选_选中",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "cancelled",
+   "class": "cses-cancelled",
+   "codepoint": 59092,
+   "zh": "已取消",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "completed03",
+   "class": "cses-completed03",
+   "codepoint": 59217,
+   "zh": "已完成",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "under_way03",
+   "class": "cses-under_way03",
+   "codepoint": 59216,
+   "zh": "进行中",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "xialunhuiyi",
+   "class": "cses-xialunhuiyi",
+   "codepoint": 59211,
+   "zh": "下轮会议",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "subtitles",
+   "class": "cses-subtitles",
+   "codepoint": 59210,
+   "zh": "会议中_顶部功能_字幕",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "crown1",
+   "class": "cses-crown1",
+   "codepoint": 59209,
+   "zh": "crown",
+   "category": "状态",
+   "kind": "fill"
+  },
+  {
+   "name": "append",
+   "class": "cses-append",
+   "codepoint": 59198,
+   "zh": "编辑器_添加",
+   "category": "编辑器",
+   "kind": "fill"
+  },
+  {
+   "name": "kehuduan_zuixiaohua1",
+   "class": "cses-kehuduan_zuixiaohua1",
+   "codepoint": 58919,
+   "zh": "客户端_最小化",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "off03",
+   "class": "cses-off03",
+   "codepoint": 58916,
+   "zh": "客户端_关闭",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "blow_up02",
+   "class": "cses-blow_up02",
+   "codepoint": 58918,
+   "zh": "客户端_放大",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "fill_in_kr_alert",
+   "class": "cses-fill_in_kr_alert",
+   "codepoint": 59100,
+   "zh": "会议中_右上角功能_填写KR_提醒",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "done",
+   "class": "cses-done",
+   "codepoint": 59094,
+   "zh": "会议中_待办",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "video_back",
+   "class": "cses-video_back",
+   "codepoint": 59074,
+   "zh": "会议弹窗_已完成_视频_后退",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "record",
+   "class": "cses-record",
+   "codepoint": 59083,
+   "zh": "会议中_顶部功能_录制",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "screen_sharing",
+   "class": "cses-screen_sharing",
+   "codepoint": 59058,
+   "zh": "屏幕共享_",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "lattice_view",
+   "class": "cses-lattice_view",
+   "codepoint": 59061,
+   "zh": "会议中_宫格视图",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "video_forward",
+   "class": "cses-video_forward",
+   "codepoint": 59066,
+   "zh": "会议弹窗_已完成_视频_前进",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "top_view",
+   "class": "cses-top_view",
+   "codepoint": 58913,
+   "zh": "会议中_顶部视图",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "right_view",
+   "class": "cses-right_view",
+   "codepoint": 58911,
+   "zh": "会议中_右视图",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "me",
+   "class": "cses-me",
+   "codepoint": 58900,
+   "zh": "投票列表_我",
+   "category": "会议",
+   "kind": "fill"
+  },
+  {
+   "name": "minimization",
+   "class": "cses-minimization",
+   "codepoint": 58922,
+   "zh": "客户端_最小化",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "maximize",
+   "class": "cses-maximize",
+   "codepoint": 58926,
+   "zh": "客户端_最大化",
+   "category": "窗口与视图",
+   "kind": "fill"
+  },
+  {
+   "name": "switch_off",
+   "class": "cses-switch_off",
+   "codepoint": 58993,
+   "zh": "需求文档_开关_关",
+   "category": "编辑器",
+   "kind": "fill"
+  },
+  {
+   "name": "switch_on",
+   "class": "cses-switch_on",
+   "codepoint": 58999,
+   "zh": "需求文档_开关_开",
+   "category": "编辑器",
+   "kind": "fill"
+  },
+  {
+   "name": "folder-team",
+   "class": "cses-folder-team",
+   "codepoint": null,
+   "zh": "团队空间",
+   "category": "成员",
+   "kind": "mask",
+   "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 34 30.1354\" fill=\"currentColor\">\n<path d=\"M34 15.1589V16.2141C33.8724 19.0878 31.5148 21.7528 28.6437 22.2804C28.1527 22.3698 27.6544 22.4147 27.155 22.4145H17.8278L17.8035 22.3877C17.7715 22.302 17.7601 22.2102 17.77 22.1194C17.77 21.0403 17.77 19.9612 17.77 18.8821C17.7617 18.7818 17.7846 18.6815 17.8356 18.5942C17.8866 18.5069 17.9633 18.4369 18.0557 18.3932C19.0684 17.8129 20.0811 17.2267 21.0938 16.6345C21.3369 16.4944 21.3976 16.5063 21.6103 16.6732C22.0215 17.0256 22.5317 17.2478 23.0739 17.3106C23.6161 17.3733 24.165 17.2738 24.6485 17.025C25.1412 16.8004 25.5573 16.441 25.8468 15.9899C26.1362 15.5388 26.2866 15.0152 26.28 14.4822C26.292 13.8468 26.0902 13.2252 25.7057 12.7138C25.3212 12.2023 24.7755 11.8296 24.1533 11.6533C23.7666 11.5543 23.3633 11.5351 22.9687 11.5968C22.5742 11.6586 22.1969 11.7999 21.8608 12.012C21.5248 12.2241 21.2372 12.5022 21.0163 12.8289C20.7954 13.1556 20.6459 13.5236 20.5773 13.9099C20.5136 14.2518 20.5136 14.6023 20.5773 14.9443C20.5964 15.0135 20.5895 15.0872 20.5577 15.1518C20.5259 15.2165 20.4713 15.2676 20.4042 15.296C19.6264 15.7521 18.8425 16.1903 18.0617 16.6523C17.843 16.7805 17.7579 16.7388 17.7579 16.4884C17.7579 14.8966 17.7579 13.3047 17.7579 11.7188C17.7543 11.6398 17.7783 11.562 17.8258 11.4981C17.8732 11.4342 17.9415 11.388 18.0192 11.3671C18.5473 11.158 19.0027 10.8039 19.3308 10.3472C19.6589 9.89047 19.8456 9.35057 19.8687 8.79228C19.8918 8.23399 19.7502 7.68101 19.461 7.19972C19.1717 6.71842 18.747 6.32924 18.2379 6.07887C17.6982 5.82913 17.092 5.75232 16.5053 5.85932C15.9186 5.96632 15.3811 6.25171 14.9689 6.67506C14.4796 7.17461 14.1877 7.82877 14.1454 8.52031C14.1031 9.21185 14.3132 9.89558 14.738 10.449C15.0606 10.8769 15.5043 11.2024 16.014 11.385C16.0941 11.3986 16.1666 11.4402 16.218 11.5021C16.2693 11.564 16.2962 11.642 16.2935 11.7218C16.2935 13.3137 16.2935 14.9055 16.2935 16.4914C16.2935 16.7358 16.2175 16.7895 15.9897 16.6523C15.1998 16.1992 14.4068 15.7581 13.6229 15.2841C13.5591 15.2496 13.5092 15.1947 13.4816 15.1286C13.4539 15.0624 13.4502 14.9889 13.471 14.9204C13.5396 14.5512 13.5325 14.1723 13.4501 13.8058C13.3677 13.4393 13.2116 13.0926 12.991 12.786C12.6729 12.312 12.2128 11.9465 11.6741 11.7399C11.1354 11.5333 10.5446 11.4957 9.98321 11.6324C9.30692 11.8023 8.71419 12.2025 8.3108 12.7616C7.90741 13.3206 7.71965 14.0021 7.78098 14.6844C7.8423 15.3667 8.14874 16.0055 8.64562 16.4866C9.1425 16.9677 9.79748 17.26 10.4936 17.3111C11.1149 17.3493 11.7306 17.1767 12.2375 16.8223C12.3218 16.7696 12.4011 16.7098 12.4745 16.6434C12.5338 16.5833 12.614 16.5474 12.6991 16.543C12.7842 16.5386 12.8679 16.5659 12.9333 16.6196C13.6047 17.022 14.2853 17.4036 14.9597 17.797C15.3304 18.0117 15.7041 18.2203 16.0717 18.4409C16.1396 18.4763 16.1958 18.5298 16.234 18.5952C16.2721 18.6606 16.2907 18.7353 16.2874 18.8106C16.2874 19.9433 16.2874 21.0761 16.2874 22.2089C16.2914 22.2693 16.2799 22.3298 16.254 22.3847L16.2297 22.4116C13.0062 22.4116 9.7827 22.4712 6.5592 22.3877C3.75496 22.3192 1.74975 20.8972 0.601322 18.4141C0.0350082 17.1762 -0.136589 15.7992 0.109028 14.4639C0.354646 13.1287 1.00601 11.8974 1.97762 10.9319C2.99588 9.88617 4.3496 9.21574 5.8118 9.03301C6.01536 9.00618 6.07308 8.91973 6.11562 8.73491C6.46702 7.08252 7.20785 5.53381 8.2788 4.21278C9.1828 3.04722 10.3219 2.07694 11.6251 1.3625C12.9282 0.648056 14.3675 0.204772 15.853 0.0603029C18.1007 -0.172778 20.3674 0.273251 22.3497 1.33871C24.332 2.40416 25.9354 4.03822 26.9454 6.02223C27.4026 6.91103 27.7416 7.85377 27.954 8.82732C27.9783 8.94358 28.0178 8.98232 28.1424 9.00021C29.5866 9.18397 30.9318 9.82026 31.9779 10.8144C33.024 11.8086 33.7151 13.1075 33.9483 14.518C33.9666 14.7356 33.9757 14.9472 34 15.1589Z\"/>\n<path d=\"M18.0526 24.969C17.9819 24.9489 17.921 24.9042 17.8813 24.8434C17.8417 24.7825 17.8259 24.7096 17.8369 24.6381C17.8369 23.8929 17.8369 23.1477 17.8369 22.3994C17.7713 22.3489 17.6892 22.3234 17.606 22.3279H16.4576C16.3744 22.3245 16.2927 22.3498 16.2267 22.3994C16.2 22.4781 16.1927 22.5619 16.2054 22.6439C16.2054 23.3295 16.2054 24.0161 16.2054 24.7037C16.2152 24.7541 16.2058 24.8063 16.1789 24.8503C16.152 24.8943 16.1095 24.927 16.0595 24.9422C15.4636 25.1627 14.9647 25.5804 14.6492 26.1233C14.3336 26.6661 14.2211 27.3 14.331 27.9156C14.4409 28.5311 14.7664 29.0897 15.2513 29.495C15.7362 29.9002 16.35 30.1266 16.9869 30.1352C17.6238 30.1437 18.2437 29.9338 18.7397 29.5418C19.2357 29.1497 19.5767 28.6001 19.7037 27.9877C19.8308 27.3753 19.7359 26.7386 19.4356 26.1875C19.1353 25.6364 18.6483 25.2054 18.0587 24.969H18.0526ZM17.0166 28.883C16.832 28.8815 16.6495 28.8442 16.4796 28.7734C16.3097 28.7025 16.1558 28.5995 16.0265 28.4702C15.8973 28.3409 15.7953 28.1878 15.7264 28.0198C15.6575 27.8518 15.6231 27.672 15.6251 27.4909C15.6299 27.2213 15.7158 26.959 15.8721 26.7371C16.0283 26.5152 16.2479 26.3435 16.5033 26.2437C16.7587 26.1439 17.0384 26.1203 17.3074 26.176C17.5764 26.2317 17.8226 26.3642 18.015 26.5567C18.2075 26.7493 18.3377 26.9934 18.3892 27.2583C18.4407 27.5233 18.4113 27.7972 18.3046 28.0458C18.1979 28.2944 18.0188 28.5065 17.7896 28.6555C17.5604 28.8044 17.2915 28.8836 17.0166 28.883Z\"/>\n<path d=\"M22.1055 14.4347C22.1019 14.2631 22.1333 14.0925 22.1978 13.933C22.2623 13.7734 22.3587 13.6282 22.4812 13.5057C22.6038 13.3832 22.7501 13.286 22.9115 13.2198C23.0729 13.1536 23.2461 13.1197 23.4211 13.1201C23.765 13.1362 24.0894 13.2816 24.327 13.5261C24.5646 13.7706 24.6971 14.0954 24.6971 14.4332C24.6971 14.7711 24.5646 15.0959 24.327 15.3404C24.0894 15.5849 23.765 15.7303 23.4211 15.7464C23.2461 15.7476 23.0728 15.7144 22.9112 15.6486C22.7496 15.5829 22.6031 15.486 22.4805 15.3637C22.3578 15.2413 22.2614 15.0961 22.197 14.9365C22.1326 14.7769 22.1015 14.6063 22.1055 14.4347Z\"/>\n<path d=\"M15.7072 8.65977C15.7047 8.48787 15.7373 8.31722 15.8028 8.1578C15.8684 7.99837 15.9657 7.85336 16.089 7.73124C16.2123 7.60912 16.3592 7.51235 16.5211 7.44657C16.683 7.38079 16.8566 7.34733 17.0318 7.34814C17.3819 7.35826 17.7139 7.50245 17.957 7.74983C18.2 7.9972 18.3347 8.3281 18.3321 8.67169C18.3321 9.01323 18.1939 9.34078 17.9477 9.58229C17.7016 9.82379 17.3678 9.95947 17.0197 9.95947C16.6716 9.95947 16.3377 9.82379 16.0916 9.58229C15.8455 9.34078 15.7072 9.01323 15.7072 8.67169V8.65977Z\"/>\n<path d=\"M10.6304 13.1201C10.9743 13.1362 11.2987 13.2816 11.5363 13.5261C11.7739 13.7706 11.9064 14.0954 11.9064 14.4332C11.9064 14.7711 11.7739 15.0959 11.5363 15.3404C11.2987 15.5849 10.9743 15.7303 10.6304 15.7463C10.2865 15.7303 9.96207 15.5849 9.72448 15.3404C9.48689 15.0959 9.35431 14.7711 9.35431 14.4332C9.35431 14.0954 9.48689 13.7706 9.72448 13.5261C9.96207 13.2816 10.2865 13.1362 10.6304 13.1201Z\"/>\n</svg>\n"
+  }
+ ]
+}

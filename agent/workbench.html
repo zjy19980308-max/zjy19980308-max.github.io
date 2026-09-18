@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>工作台 · 审批工作台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{max-width:none}
+  .two{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+  .todo{display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+  .t{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:14px 16px;box-shadow:var(--sd);transition:border-color .16s}
+  .t:hover{border-color:#8f99cf}
+  .t__i{width:34px;height:34px;border-radius:var(--r-m);display:grid;place-items:center;flex:0 0 34px;background:var(--surf);border:1px solid var(--line-2);color:var(--ink-2)}
+  .t__i svg{width:16px;height:16px}
+  .t > div:nth-child(2){flex:1;min-width:0}
+  .t b{display:block;font-size:13.5px;font-weight:600}
+  .t span{font-size:12px;color:var(--ink-2)}
+  .t .right{margin-left:auto;display:flex;align-items:center;gap:10px;flex:0 0 auto}
+  .t .ago{font-size:11.5px;color:var(--ink-3)}
+  .quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-bottom:26px}
+  .q{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:14px;box-shadow:var(--sd);transition:border-color .16s,transform .16s}
+  .q:hover{border-color:#8f99cf;transform:translateY(-1px)}
+  .q i{display:grid;place-items:center;width:28px;height:28px;border-radius:var(--r-s);background:var(--surf);border:1px solid var(--line-2);margin-bottom:10px;color:var(--ink-2)}
+  .q i svg{width:15px;height:15px}
+  .q b{display:block;font-size:13px;font-weight:600}
+  .q span{font-size:11.5px;color:var(--ink-3)}
+  .mine{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--sd)}
+  .mi{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line-2)}
+  .mi:last-child{border:0}
+  .mi b{font-size:13px;font-weight:600}
+  .mi .m{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+  .mi .right{margin-left:auto;text-align:right}
+  .prog{display:flex;align-items:center;gap:5px;margin-top:6px}
+  .prog i{width:22px;height:3px;border-radius:2px;background:var(--line);display:block}
+  .prog i.on{background:#4857e2}
+  .prog i.now{background:#8a6a3c}
+  .side-card{margin-bottom:16px}
+  .rule{display:flex;gap:9px;font-size:12.5px;line-height:1.65;padding:9px 0;border-bottom:1px solid var(--line-2)}
+  .rule:last-child{border:0}
+  .rule i{font-style:normal;flex:0 0 18px;height:18px;border-radius:5px;background:var(--surf);border:1px solid var(--line);display:grid;place-items:center;font-size:9px;font-weight:700;color:var(--ink-3);margin-top:1px}
+  @media (max-width:1100px){.two{grid-template-columns:1fr}.quick{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:1000px){.t{flex-wrap:wrap}.t .right{width:100%;margin-left:46px;justify-content:flex-start}}
+  @media (max-width:760px){.quick{grid-template-columns:1fr}.t .right{margin-left:0}}
+</style>
+</head>
+<body data-app="front" data-nav="work" data-title="工作台">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div class="page">
+
+      <div class="pagehead">
+        <h2>下午好，孙悦</h2>
+        <span class="sub">有 3 项待你处理，2 项由你发起的正在流转，可自动核对的部分 Agent 已经做完。</span>
+      </div>
+
+      <div class="h-sec">等你处理</div>
+      <div class="todo">
+        <a class="t" href="approvals.html">
+          <div class="t__i"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.5h6.2L13 5.3v8.2H4z"/><path d="M6.2 8.6 7.6 10l2.6-2.8"/></svg></div>
+          <div><b>付款前人工确认 · 华东物流 ¥38,000</b><span>下一步就是执行付款，确认之后不可撤回</span></div>
+          <div class="right"><span class="tag tag--risk">含不可逆</span><span class="ago">已等 1 小时 12 分</span><span class="obtn obtn--yes" style="padding:8px 18px;font-size:13px">去确认</span></div>
+        </a>
+        <a class="t" href="approvals.html">
+          <div class="t__i"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.4M8 10.6h.01"/></svg></div>
+          <div><b>付款申请 · 华东物流（上海）¥86,500</b><span>发票抬头与合同主体不一致，Agent 要你看一眼证据</span></div>
+          <div class="right"><span class="tag tag--warn">要看证据</span><span class="ago">已等 40 分钟</span><span class="btn btn--s">去看</span></div>
+        </a>
+        <a class="t" href="approvals.html">
+          <div class="t__i"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5h5l3 3v8h-8z"/><path d="M9.5 2.5v3h3"/></svg></div>
+          <div><b>用印申请 · 采购框架协议</b><span>林珊提交，法务已签，等你这一道</span></div>
+          <div class="right"><span class="tag tag--ok">Agent 建议通过</span><span class="ago">昨天</span><span class="btn btn--s">去审</span></div>
+        </a>
+      </div>
+
+      <div class="h-sec">发起一张单</div>
+      <div class="quick">
+        <a class="q" href="form.html?t=%E4%BB%98%E6%AC%BE%E7%94%B3%E8%AF%B7"><i><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5h11v7h-11z"/><path d="M2.5 7h11"/></svg></i><b>付款申请</b><span>按金额自动分档</span></a>
+        <a class="q" href="form.html?t=%E5%90%88%E5%90%8C%E7%94%A8%E5%8D%B0"><i><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5h5l3 3v8h-8z"/><path d="M9.5 2.5v3h3"/></svg></i><b>用印申请</b><span>法务 + 行政双签</span></a>
+        <a class="q" href="form.html?t=%E5%85%A5%E8%81%8C"><i><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.6" r="2.6"/><path d="M3 13.4c.6-2.4 2.6-3.6 5-3.6s4.4 1.2 5 3.6"/></svg></i><b>入职开通</b><span>账号与门禁</span></a>
+        <a class="q" href="apply.html"><i><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5v11M3.5 7 8 2.5 12.5 7"/></svg></i><b>费用报销</b><span class="dim">流程暂停中</span></a>
+      </div>
+
+      <div class="two">
+        <div>
+          <div class="h-sec">我发起的</div>
+          <div class="mine">
+            <div class="mi">
+              <div><b>付款申请 · 华东物流 ¥38,000</b><div class="m">9 月 15 日 09:02 提交 · 走到第 4 步</div>
+                <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="now"></i><i></i><i></i></div></div>
+              <div class="right"><span class="tag tag--warn">等你确认</span></div>
+            </div>
+            <div class="mi">
+              <div><b>付款申请 · 华东物流（上海）¥86,500</b><div class="m">9 月 15 日 08:40 提交 · 停在第 3 步</div>
+                <div class="prog"><i class="on"></i><i class="on"></i><i class="now"></i><i></i><i></i><i></i></div></div>
+              <div class="right"><span class="tag tag--risk">转人工中</span></div>
+            </div>
+            <div class="mi">
+              <div><b>付款申请 · 锐格科技 ¥6,800</b><div class="m">9 月 14 日提交 · 已完成</div>
+                <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div></div>
+              <div class="right"><span class="tag tag--ok">已付款</span></div>
+            </div>
+          </div>
+        </div>
+
+        <aside>
+          <div class="card side-card"><div class="card__h"><h3>处理规则</h3></div>
+            <div class="card__b" style="padding:6px 16px 12px">
+              <div class="rule"><i>A</i><div>可自动核对的内容由 Agent 完成并给出结论</div></div>
+              <div class="rule"><i>B</i><div>可撤销的动作自动执行，全程留痕，可随时撤销</div></div>
+              <div class="rule"><i style="border-color:var(--risk-line);background:var(--risk-soft);color:var(--risk)">C</i><div>付款、对外发送等不可撤销动作，须人工确认后执行</div></div>
+            </div>
+          </div>
+          <div class="card side-card"><div class="card__h"><h3>单据去向</h3></div>
+            <div class="card__b" style="font-size:12.5px;line-height:1.75;color:var(--ink-2)">
+              抄送给你的在「抄送我的」，已完成的在「我已处理」。<br>
+              每张单据的流转节点与操作人都可追溯，记录不可删除、不可修改。
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+/* =====================================================
+   cs-people-block — 嵌入文档的人员 / 群名片块
+   高 56px / 圆角 8 / 1px 主色描边（被引用提及的资源） / 白底
+
+   data 属性：
+     data-type="group"  — 群名片（语义标记，配合不同头像内容）
+     data-type="person" — 个人名片（语义标记，配合不同头像内容）
+     data-disabled      — 禁用态（透明度降低 + 拒绝点击，用于无访问权限）
+   ===================================================== */
+
+cs-people-block {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  height: 56px;
+  padding: 0 var(--space-sm);
+  background: var(--cs-color-bg);
+  border: var(--line-width) solid var(--cs-color-primary);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--cs-transition-fast);
+  box-sizing: border-box;
+}
+
+cs-people-block:hover {
+  border-color: var(--cs-color-primary-hover);
+}
+
+cs-people-block[data-disabled] {
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* ---- 左侧头像盒（紫色底） ---- */
+cs-people-block .people-avatar-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: var(--color-purple-500);
+}
+
+cs-people-block .people-avatar-text {
+  font: var(--typo-cn-18-medium);
+  color: var(--cs-color-white);
+}
+
+cs-people-block .people-avatar-icon {
+  font-size: var(--cs-sem-size-icon-xl);
+  color: var(--cs-color-white);
+}
+
+/* ---- 中部内容区 ---- */
+cs-people-block .people-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  flex: 1;
+  min-width: 0;
+}
+
+cs-people-block .people-name {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+cs-people-block .people-subtitle {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ---- 右侧操作区 ---- */
+cs-people-block .people-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+}

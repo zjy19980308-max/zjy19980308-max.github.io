@@ -1,0 +1,99 @@
+/*
+ * 会议控制条 <cs-meeting-control-bar> · 64h
+ * .mcb-btn[data-toggled] 绿  · [data-muted] 红 · [data-recording] 红+闪烁
+ * .mcb-leave 红色 danger 离开按钮
+ */
+cs-meeting-control-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 64px;
+  padding: 0 var(--space-lg);
+  background: var(--cs-color-bg-app-dark);
+  box-sizing: border-box;
+  user-select: none;
+}
+
+cs-meeting-control-bar .mcb-timer {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-white);
+  font-variant-numeric: tabular-nums;
+  min-width: 80px;
+  opacity: 0.8;
+}
+
+cs-meeting-control-bar .mcb-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  flex: 1;
+}
+
+cs-meeting-control-bar .mcb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-interactive-md);
+  height: var(--cs-sem-size-interactive-md);
+  border-radius: var(--radius-pill);
+  background: var(--cs-color-bg-active-dark);
+  color: var(--cs-color-white);
+  border: var(--line-width) solid transparent;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+cs-meeting-control-bar .mcb-btn:hover {
+  background: var(--cs-color-bg-input-dark);
+  border-color: var(--cs-color-bg-active-dark);
+}
+
+cs-meeting-control-bar .mcb-btn > i,
+cs-meeting-control-bar .mcb-leave > i {
+  font-size: var(--cs-sem-size-icon-lg);
+  line-height: 1;
+}
+
+cs-meeting-control-bar .mcb-btn[data-toggled] {
+  background: transparent;
+  border-color: var(--cs-color-success);
+  color: var(--cs-color-success);
+}
+
+cs-meeting-control-bar .mcb-btn[data-muted],
+cs-meeting-control-bar .mcb-btn[data-recording] {
+  background: transparent;
+  border-color: var(--cs-color-error);
+  color: var(--cs-color-error);
+}
+
+cs-meeting-control-bar .mcb-btn[data-recording] {
+  animation: mcb-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes mcb-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+cs-meeting-control-bar .mcb-leave {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  height: var(--cs-sem-size-interactive-md);
+  padding: 0 var(--space-md);
+  border-radius: var(--radius-pill);
+  background: var(--cs-color-error);
+  color: var(--cs-color-white);
+  font: var(--typo-cn-14-medium);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+cs-meeting-control-bar .mcb-leave:hover {
+  background: var(--cs-color-error-hover);
+}

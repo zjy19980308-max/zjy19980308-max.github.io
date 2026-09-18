@@ -1,0 +1,92 @@
+/*
+ * KPI 指标卡组件 (Metric Card)
+ * 标签：<cs-metric-card>
+ *
+ * data 属性：
+ *   data-trend="up|down"           — 趋势方向
+ *   data-color="primary|success|warning|danger|info" — 强调色
+ *
+ * 子元素结构：
+ *   .metric-label  — 指标名称
+ *   .metric-value  — 数字值
+ *   .metric-unit   — 单位
+ *   .metric-trend  — 趋势容器
+ *     .metric-arrow  — 箭头图标
+ *     .metric-change — 变化率
+ */
+
+/* ========== 基础 ========== */
+cs-metric-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: var(--cs-color-bg);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ========== 指标名称 ========== */
+cs-metric-card .metric-label {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 数字值 ========== */
+cs-metric-card .metric-value {
+  font: var(--typo-cn-24-medium);
+  color: var(--cs-color-text);
+  line-height: 1.2;
+}
+
+/* ========== 单位 ========== */
+cs-metric-card .metric-unit {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  margin-left: var(--space-2xs);
+}
+
+/* ========== 趋势 ========== */
+cs-metric-card .metric-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font: var(--typo-cn-12-medium);
+}
+
+cs-metric-card .metric-arrow {
+  font-size: var(--font-size-sm);
+}
+
+/* ========== 趋势方向 ========== */
+cs-metric-card[data-trend="up"] .metric-trend {
+  color: var(--cs-sem-status-success);
+}
+
+cs-metric-card[data-trend="down"] .metric-trend {
+  color: var(--cs-sem-status-error);
+}
+
+/* ========== 颜色变体（左边线强调） ========== */
+cs-metric-card[data-color="primary"] {
+  border-top: 2px solid var(--cs-color-primary);
+}
+
+cs-metric-card[data-color="success"] {
+  border-top: 2px solid var(--cs-sem-status-success);
+}
+
+cs-metric-card[data-color="warning"] {
+  border-top: 2px solid var(--cs-sem-status-warning);
+}
+
+cs-metric-card[data-color="danger"] {
+  border-top: 2px solid var(--cs-sem-status-error);
+}
+
+cs-metric-card[data-color="info"] {
+  border-top: 2px solid var(--cs-sem-status-info);
+}

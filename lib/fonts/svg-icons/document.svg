@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <!-- Document with fold corner -->
+  <path d="M5 2h12v10h2V2c0-1.1-.9-2-2-2H5C3.9 0 3 .9 3 2v20c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-2v8H5V2z"/>
+  <!-- Fold corner -->
+  <path d="M17 2v6h6L17 2z" opacity="0.3"/>
+  <!-- Lines representing text -->
+  <rect x="7" y="7" width="8" height="1.5" rx="0.75"/>
+  <rect x="7" y="10" width="8" height="1.5" rx="0.75"/>
+  <rect x="7" y="13" width="5" height="1.5" rx="0.75"/>
+</svg>

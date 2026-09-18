@@ -1,0 +1,20 @@
+cs-doc-recent-update-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-sem-spacing-content-inline);
+}
+
+cs-doc-recent-update-list[data-density="compact"] .update-stack {
+  gap: var(--cs-sem-spacing-comp-gap-md);
+}
+
+cs-doc-recent-update-list .update-header {
+  font: var(--cs-typo-title-extra-large);
+  color: var(--cs-sem-text-primary);
+}
+
+cs-doc-recent-update-list .update-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-sem-spacing-content-inline);
+}

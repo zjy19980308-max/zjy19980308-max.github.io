@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-editor-toolbar 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="editor-toolbar.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .section { background: var(--cs-color-bg); border-radius: var(--radius-lg); margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .section-title { padding: 16px 24px 0; font: var(--typo-cn-14-medium); color: var(--cs-color-text-light); }
+  </style>
+</head>
+<body>
+
+<div id="screenshot-target">
+
+  <div class="section">
+    <div class="section-title">默认</div>
+    <cs-editor-toolbar>
+      <div class="etb-group">
+        <button class="etb-btn">
+          <i class="etb-btn-icon cses-add"></i>
+          <span class="etb-btn-label">插入</span>
+          <i class="etb-btn-caret cses-arrow"></i>
+        </button>
+        <button class="etb-btn" data-variant="accent">
+          <i class="etb-btn-icon cses-brainstorming"></i>
+          <span class="etb-btn-label">AI 帮写</span>
+        </button>
+        <button class="etb-btn">
+          <i class="etb-btn-icon cses-keshihuabianji"></i>
+          <span class="etb-btn-label">工具</span>
+          <i class="etb-btn-caret cses-arrow"></i>
+        </button>
+      </div>
+      <span class="etb-divider"></span>
+      <div class="etb-group">
+        <button class="etb-btn" title="撤销"><i class="etb-btn-icon cses-chexiao"></i></button>
+        <button class="etb-btn" title="重做"><i class="etb-btn-icon cses-huifu"></i></button>
+        <button class="etb-btn" title="格式刷"><i class="etb-btn-icon cses-huabi"></i></button>
+        <button class="etb-btn" title="清除格式"><i class="etb-btn-icon cses-guanbi"></i></button>
+      </div>
+      <span class="etb-divider"></span>
+      <div class="etb-group">
+        <div class="etb-select">
+          <span class="etb-select-text">默认字体</span>
+          <i class="etb-btn-caret cses-arrow"></i>
+        </div>
+        <div class="etb-select">
+          <span class="etb-select-text">标题1</span>
+          <i class="etb-btn-caret cses-arrow"></i>
+        </div>
+        <div class="etb-select">
+          <span class="etb-select-text">24</span>
+          <i class="etb-btn-caret cses-arrow"></i>
+        </div>
+      </div>
+      <span class="etb-divider"></span>
+      <div class="etb-group">
+        <button class="etb-btn" title="加粗"><i class="etb-btn-icon cses-bold"></i></button>
+        <button class="etb-btn" title="斜体"><span class="etb-btn-label" style="font-style:italic;font-weight:500;">I</span></button>
+        <button class="etb-btn" title="下划线"><span class="etb-btn-label" style="text-decoration:underline;font-weight:500;">U</span></button>
+        <button class="etb-btn" title="删除线"><i class="etb-btn-icon cses-strikethrough"></i></button>
+      </div>
+      <span class="etb-divider"></span>
+      <div class="etb-group">
+        <button class="etb-btn" title="代码"><i class="etb-btn-icon cses-code"></i></button>
+        <button class="etb-btn" title="字体颜色">
+          <i class="etb-btn-icon cses-yanse"></i>
+          <i class="etb-btn-caret cses-arrow"></i>
+        </button>
+        <button class="etb-btn" title="高亮">
+          <i class="etb-btn-icon cses-marker"></i>
+          <i class="etb-btn-caret cses-arrow"></i>
+        </button>
+      </div>
+      <span class="etb-divider"></span>
+      <div class="etb-group">
+        <button class="etb-btn" title="无序列表">
+          <i class="etb-btn-icon cses-list"></i>
+          <i class="etb-btn-caret cses-arrow"></i>
+        </button>
+        <button class="etb-btn" data-variant="active" title="编号列表">
+          <span class="etb-btn-label">列表</span>
+        </button>
+        <button class="etb-btn" title="代办列表"><i class="etb-btn-icon cses-tasklist"></i></button>
+      </div>
+      <span class="etb-divider"></span>
+      <div class="etb-group">
+        <button class="etb-btn" title="增加缩进"><i class="etb-btn-icon cses-indent-increase"></i></button>
+        <button class="etb-btn" title="减少缩进"><i class="etb-btn-icon cses-indent-increase" style="transform:scaleX(-1)"></i></button>
+        <button class="etb-btn" title="对齐">
+          <i class="etb-btn-icon cses-alignment"></i>
+          <i class="etb-btn-caret cses-arrow"></i>
+        </button>
+        <button class="etb-btn" title="行距">
+          <i class="etb-btn-icon cses-fengexian"></i>
+          <i class="etb-btn-caret cses-arrow"></i>
+        </button>
+      </div>
+      <span class="etb-divider"></span>
+      <div class="etb-group">
+        <button class="etb-btn" title="搜索"><i class="etb-btn-icon cses-sousuo"></i></button>
+      </div>
+    </cs-editor-toolbar>
+  </div>
+
+</div>
+
+</body>
+</html>

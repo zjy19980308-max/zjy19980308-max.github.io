@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-app-shortcut 应用快捷入口</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="app-shortcut.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .demo-section { margin-bottom: 32px; }
+    .demo-label { font: var(--typo-cn-12-medium); color: var(--cs-color-text-light2); margin-bottom: 12px; }
+    .demo-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<div class="demo-section">
+  <div class="demo-label">颜色变体（我的常用）</div>
+  <div class="demo-row">
+    <cs-app-shortcut data-color="red">
+      <span class="shortcut-icon"><i class="cses-renwu"></i></span>
+      <span class="shortcut-label">员工心语</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="orange">
+      <span class="shortcut-icon"><i class="cses-rili"></i></span>
+      <span class="shortcut-label">打卡</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="blue">
+      <span class="shortcut-icon"><i class="cses-document"></i></span>
+      <span class="shortcut-label">周报</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="green">
+      <span class="shortcut-icon"><i class="cses-renwuguanli"></i></span>
+      <span class="shortcut-label">汇报</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="purple">
+      <span class="shortcut-icon"><i class="cses-guanzhu"></i></span>
+      <span class="shortcut-label">飞书OKR</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="sky">
+      <span class="shortcut-icon"><i class="cses-tongzhi"></i></span>
+      <span class="shortcut-label">飞书提醒</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="pink">
+      <span class="shortcut-icon"><i class="cses-edit"></i></span>
+      <span class="shortcut-label">机器人助手</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="yellow">
+      <span class="shortcut-icon"><i class="cses-erjidaohang_zhishiku"></i></span>
+      <span class="shortcut-label">企业百科</span>
+    </cs-app-shortcut>
+  </div>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">尺寸变体 — sm / md / lg</div>
+  <div class="demo-row" style="align-items: flex-end;">
+    <cs-app-shortcut data-color="blue" data-size="sm">
+      <span class="shortcut-icon"><i class="cses-renwu"></i></span>
+      <span class="shortcut-label">sm</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="blue" data-size="md">
+      <span class="shortcut-icon"><i class="cses-renwu"></i></span>
+      <span class="shortcut-label">md（默认）</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="blue" data-size="lg">
+      <span class="shortcut-icon"><i class="cses-renwu"></i></span>
+      <span class="shortcut-label">lg</span>
+    </cs-app-shortcut>
+  </div>
+</div>
+
+
+<div class="demo-section">
+  <div class="demo-label">圆形变体 data-shape="circle"（hover 上移+加深）</div>
+  <div class="demo-row">
+    <cs-app-shortcut data-color="blue" data-shape="circle">
+      <span class="shortcut-icon"><i class="cses-renwu"></i></span>
+      <span class="shortcut-label">新建任务</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="green" data-shape="circle">
+      <span class="shortcut-icon"><i class="cses-document"></i></span>
+      <span class="shortcut-label">新建文档</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="purple" data-shape="circle">
+      <span class="shortcut-icon"><i class="cses-chuangjianhuiyi"></i></span>
+      <span class="shortcut-label">发起会议</span>
+    </cs-app-shortcut>
+    <cs-app-shortcut data-color="orange" data-shape="circle">
+      <span class="shortcut-icon"><i class="cses-rili"></i></span>
+      <span class="shortcut-label">考勤打卡</span>
+    </cs-app-shortcut>
+  </div>
+</div>
+
+</body>
+</html>

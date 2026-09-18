@@ -1,0 +1,1176 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>流程配置 · 流程中台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  /* 左：结构目录 */
+  /* 左栏：AI 智能助手（照 Figma 14:7665） */
+  .ai{background:var(--panel)}
+  .ai__h{display:flex;align-items:center;gap:8px;padding:14px 14px 10px}
+  .ai__h b{font-size:13px;font-weight:700}
+  .ai__h svg{width:15px;height:15px;color:#4857e2}
+  .ai__h .x{margin-left:auto}
+  .ai__d{font-size:11.5px;color:var(--ink-3);padding:0 14px 12px;line-height:1.6}
+  .ai__b{flex:1;overflow:auto;padding:0 14px 14px}
+  .bub{background:var(--pri-50);border:1px solid var(--pri-200);border-radius:10px;padding:10px 12px;font-size:12.5px;line-height:1.7;color:var(--ink-2);margin-bottom:10px}
+  .bub--me{background:var(--panel);border-color:var(--line);color:var(--ink);font-weight:500}
+  .ai__card{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px}
+  .ai__card b{display:block;font-size:12.5px;margin-bottom:8px}
+  .ai__card ul{list-style:none;padding:0;margin:0 0 10px;font-size:12.5px;color:var(--ink-2);line-height:1.9}
+  .ai__card li::before{content:'· ';color:var(--ink-3)}
+  .ai__card .btn{width:100%}
+  .ai__f{border-top:1px solid var(--line-2);padding:10px 14px}
+  .ai__in{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:9px;padding:7px 9px}
+  .ai__in input{flex:1;border:0;outline:0;font:inherit;font-size:12.5px;background:transparent;min-width:0}
+  .ai__in button{width:24px;height:24px;border-radius:6px;border:0;background:#4857e2;color:#fff;display:grid;place-items:center;cursor:pointer}
+  .ai__in button svg{width:12px;height:12px}
+  .ai__tip{font-size:11px;color:var(--ink-3);line-height:1.6;margin-bottom:8px}
+  /* 顶栏分段 */
+  .seg2{display:inline-flex;padding:3px;background:var(--surf);border:1px solid var(--line);border-radius:8px;gap:2px}
+  .seg2 button{border:0;background:transparent;padding:5px 14px;border-radius:6px;font-size:12.5px;color:var(--ink-2);cursor:pointer}
+  .seg2 button.is-on{background:var(--panel);color:var(--ink);font-weight:600;box-shadow:var(--sd)}
+  /* 右栏验证块 */
+  .vf{border:1px solid var(--line);border-radius:var(--r-m);padding:10px 12px;margin-bottom:10px}
+  .vf span{display:block;font-size:11px;color:var(--ink-3);margin-bottom:5px}
+  .vf b{font-size:12.5px;font-weight:600}
+  .vf--ok{border-color:#bfe0cc;background:#f3f8f5}
+  .vf--no{border-color:var(--risk-line);background:var(--risk-soft)}
+  .vrow{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:var(--r-s);padding:9px 11px;margin-bottom:8px;font-size:12.5px}
+  .vrow svg{margin-left:auto;width:14px;height:14px;color:var(--ok)}
+  .vrow.bad svg{color:var(--risk)}
+  /* 中：画布 */
+  .cv{flex:1;min-width:0;position:relative;overflow:auto;background:var(--bg);
+      background-image:radial-gradient(circle at 1px 1px, #DEE1E4 1px, transparent 0);background-size:22px 22px}
+  .cv{padding:0 var(--padR,366px) 0 var(--padL,288px)}
+  .cv__in{position:relative;width:660px;height:1120px;margin:22px auto 40px;transform-origin:top center;transition:transform .3s cubic-bezier(.23,1,.32,1)}
+  .cv__svg{position:absolute;inset:0;overflow:visible;pointer-events:none}
+  .nd{position:absolute;width:204px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 11px;cursor:pointer;box-shadow:var(--sd);transition:border-color .16s,box-shadow .16s,transform .16s}
+  .nd:hover{border-color:#CDD2D8;transform:translateY(-1px)}
+  .nd.is-on{border-color:var(--acc);box-shadow:0 0 0 3px rgba(19,111,99,.11)}
+  .nd.dim{opacity:.34}
+  .nd.lit{border-color:var(--acc);background:var(--acc-soft)}
+  .nd__t{display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
+  .nd__n{flex:0 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nd__k,.nd__r{flex:0 0 auto}
+  .nd__n{font-size:12.5px;font-weight:600}
+  .nd__k{font-size:10.5px;color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:0 4px;line-height:15px}
+  .nd__s{font-size:11.5px;color:var(--ink-3);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nd__r{margin-left:auto;display:flex;gap:4px;align-items:center}
+  /* 节点末尾固定的自动化位 */
+  .nd__au{display:flex;align-items:center;gap:5px;margin:8px -11px -9px;padding:5px 11px;border-top:1px dashed var(--line);font-size:10.5px;color:var(--ink-3);cursor:pointer;border-radius:0 0 9px 9px;transition:background .14s,color .14s}
+  .nd__au:hover{background:var(--pri-50);color:#4857e2}
+  .nd__au svg{width:11px;height:11px;flex:0 0 11px}
+  .nd__au span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nd__au i{font-style:normal;opacity:0;flex:0 0 auto;font-weight:600}
+  .nd__au:hover i{opacity:1}
+  .nd__au.on{color:#4857e2;border-top-color:var(--pri-200);background:var(--pri-50)}
+  .nd--c{border-color:var(--risk-line);background:#FFFDFC}
+  .nd--c.is-on{border-color:var(--risk);box-shadow:0 0 0 3px rgba(174,52,32,.1)}
+  .nd--h{border-style:dashed;border-color:var(--acc-line);background:var(--acc-soft)}
+  .flag{font-size:10.5px;border-radius:4px;padding:0 5px;line-height:16px;font-weight:600}
+  .flag--new{background:var(--ok-soft);color:var(--ok)}
+  .flag--mod{background:var(--warn-soft);color:var(--warn)}
+  .elbl{font-size:10.5px;fill:var(--ink-3)}
+  /* 连线上的加号：默认不显示，鼠标靠近这一段才冒出来（照 Figma 1:57300） */
+  .addp{position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:0;background:#4857e2;color:#fff;display:grid;place-items:center;cursor:pointer;opacity:0;transform:scale(.7);transition:opacity .16s,transform .18s cubic-bezier(.23,1,.32,1);z-index:6;box-shadow:0 2px 6px rgba(72,87,226,.4)}
+  .addp svg{width:11px;height:11px}
+  .addp.on{opacity:1;transform:scale(1)}
+  .addmenu{position:absolute;z-index:30;width:186px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 28px -10px rgba(15,23,42,.35);padding:6px;display:none}
+  .addmenu.on{display:block}
+  .addmenu button{display:flex;align-items:center;gap:9px;width:100%;padding:8px 9px;border:0;background:transparent;border-radius:7px;font-size:13px;color:var(--ink);cursor:pointer;text-align:left}
+  .addmenu button:hover{background:var(--pri-50);color:#4857e2}
+  .addmenu i{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;flex:0 0 24px;font-style:normal}
+  .addmenu i svg{width:13px;height:13px;color:#fff}
+  .addmenu hr{border:0;border-top:1px solid var(--line-2);margin:5px 4px}
+  .addmenu__g{font-size:11.5px;color:var(--ink-3);padding:7px 9px 4px}
+  /* 右：配置面板 */
+  .cfg{background:var(--panel)}
+  .cfg__h{padding:13px 15px 0}
+  .cfg__t{display:flex;align-items:center;gap:8px;margin-bottom:11px}
+  .cfg__t b{font-size:13.5px;font-weight:600}
+  .cfg__t svg{width:15px;height:15px;flex:0 0 15px;color:var(--ink-3)}
+  .cfg__t{padding-right:30px}
+  .cfg__b{flex:1;overflow:auto;padding:14px 15px 20px}
+  .cfg__e{padding:60px 24px;text-align:center;color:var(--ink-3);font-size:12.5px;line-height:1.9}
+  .tabs{display:flex;width:100%;border-bottom:1px solid var(--line-2);padding:0;background:none;border-radius:0;gap:0}
+  .tabs button{padding:8px 10px;border-radius:0;border-bottom:2px solid transparent;font-size:12.5px;flex:1}
+  .tabs button.is-on{background:none;box-shadow:none;border-bottom-color:var(--ink);color:var(--ink);font-weight:600}
+  .rowline{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line-2);font-size:12.5px}
+  .rowline span:first-child{color:var(--ink-3);width:74px;flex:0 0 74px}
+  .rowline b{font-weight:500}
+  .note{font-size:11.5px;color:var(--ink-3);line-height:1.7;margin-top:7px}
+  .brk{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+  .brk th{text-align:left;color:var(--ink-3);font-weight:500;font-size:11px;padding:6px 8px;border-bottom:1px solid var(--line)}
+  .brk td{padding:7px 8px;border-bottom:1px solid var(--line-2)}
+  .brk tr.bad td{background:var(--warn-soft)}
+  .bar3{display:flex;height:26px;border-radius:6px;overflow:hidden;margin-top:9px;font-size:10.5px}
+  .bar3 i{display:grid;place-items:center;font-style:normal;color:#fff}
+  .disabled{opacity:.5;pointer-events:none}
+  /* 审批人配置（照 Figma 1:79729，去掉多人审批那一组） */
+  .sw{width:34px;height:19px;border-radius:19px;background:var(--line);position:relative;cursor:pointer;flex:0 0 34px;transition:background .18s}
+  .sw::after{content:'';position:absolute;top:2px;left:2px;width:15px;height:15px;border-radius:50%;background:#fff;transition:transform .18s cubic-bezier(.23,1,.32,1)}
+  .sw.on{background:#4857e2}
+  .sw.on::after{transform:translateX(15px)}
+  .who{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:var(--r-s);padding:6px 8px;background:var(--panel)}
+  .who .ava{width:22px;height:22px;border-radius:50%;background:var(--pri-100);color:#4857e2;font-size:10px;font-weight:700;display:grid;place-items:center;flex:0 0 22px}
+  .who b{font-size:12.5px;font-weight:600}
+  .who span{font-size:11px;color:var(--ink-3)}
+  .who a{margin-left:auto;font-size:12px;color:#4857e2;cursor:pointer}
+  .rad{display:flex;align-items:center;gap:7px;font-size:12.5px;padding:6px 0;cursor:pointer}
+  .rad i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line);flex:0 0 14px;position:relative;font-style:normal}
+  .rad.on i{border-color:#4857e2}
+  .rad.on i::after{content:'';position:absolute;inset:3px;border-radius:50%;background:#4857e2}
+  .btbl{width:100%;border-collapse:collapse;font-size:12px}
+  .btbl th{text-align:left;color:var(--ink-3);font-weight:500;font-size:11px;padding:6px 6px;border-bottom:1px solid var(--line)}
+  .btbl td{padding:7px 6px;border-bottom:1px solid var(--line-2)}
+  .btbl td:last-child{text-align:right}
+  .btbl .nm{color:var(--ink-3)}
+  /* 自动化配置弹窗（照 Figma 1:75201 / 75359 / 75511 / 75711） */
+  .auto{position:fixed;left:50%;top:50%;transform:translate(-50%,-48%) scale(.98);opacity:0;pointer-events:none;width:min(940px,94vw);height:min(700px,90vh);background:#fff;border-radius:16px;z-index:80;box-shadow:var(--sd-l);transition:opacity .2s,transform .24s cubic-bezier(.23,1,.32,1);display:flex;flex-direction:column;overflow:hidden}
+  .auto.on{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+  .auto__h{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line-2)}
+  .auto__h h3{font-size:15px;font-weight:700}
+  .auto__h .sub{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+  .auto__h .right{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .auto__b{flex:1;overflow:auto;padding:20px}
+  .tg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .tg__c{border:1px solid var(--line);border-radius:var(--r);padding:14px;cursor:pointer;background:#fff;transition:border-color .16s,box-shadow .16s;display:flex;flex-direction:column;min-height:148px}
+  .tg__c:hover{border-color:#4857e2;box-shadow:0 0 0 3px rgba(72,87,226,.08)}
+  .tg__c.blank{align-items:center;justify-content:center;gap:10px;color:var(--ink-3)}
+  .tg__c.blank i{width:34px;height:34px;border-radius:50%;background:#4857e2;color:#fff;display:grid;place-items:center;font-style:normal;font-size:18px}
+  .tg__i{display:flex;align-items:center;gap:5px;margin-bottom:10px;flex-wrap:wrap}
+  .tg__i em{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;font-style:normal}
+  .tg__i em svg{width:12px;height:12px;color:#fff}
+  .tg__i s{color:var(--ink-3);text-decoration:none;font-size:10px}
+  .tg__t{font-size:13px;font-weight:600;line-height:1.55}
+  .tg__f{margin-top:auto;padding-top:10px;display:flex;align-items:center;font-size:11px;color:var(--ink-3)}
+  .tg__f svg{margin-left:auto;width:13px;height:13px}
+  .ac{display:grid;grid-template-columns:1fr 1fr;gap:16px;height:100%}
+  .ac__p{border:1px solid var(--line);border-radius:var(--r);padding:16px;background:var(--surf);overflow:auto}
+  .ac__p--r{background:#fff}
+  .ac h4{font-size:12.5px;font-weight:600;margin-bottom:10px}
+  .stepc{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
+  .stepc__d{width:16px;height:16px;border-radius:50%;flex:0 0 16px;margin-top:12px;display:grid;place-items:center;font-size:9px;color:#fff;font-style:normal}
+  .stepc__b{flex:1;border:1px solid var(--line);border-radius:var(--r-s);background:#fff;padding:9px 11px;display:flex;align-items:center;gap:9px}
+  .stepc__b.sel{border-color:#4857e2;background:var(--pri-50)}
+  .stepc__i{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;flex:0 0 24px}
+  .stepc__i svg{width:13px;height:13px;color:#fff}
+  .stepc__t span{display:block;font-size:11px;color:var(--ink-3)}
+  .stepc__t b{font-size:12.5px;font-weight:600}
+  .stepc__m{margin-left:auto;color:var(--ink-3);cursor:pointer}
+  .ac__add{width:26px;height:26px;border-radius:50%;background:#4857e2;color:#fff;border:0;display:grid;place-items:center;margin:4px auto 0;cursor:pointer;font-size:15px}
+  .cond{border:1px solid var(--line);border-radius:var(--r-s);padding:12px;margin-bottom:10px;background:var(--surf)}
+  .cond__h{display:flex;align-items:center;font-size:12px;font-weight:600;margin-bottom:10px}
+  .cond__h svg{margin-left:auto;width:13px;height:13px;color:var(--ink-3);cursor:pointer}
+  .cond .row{display:flex;gap:8px;margin-bottom:8px}
+  .cond .row .inp{font-size:12px;padding:6px 9px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;border:1px solid var(--line);border-radius:var(--r-s);padding:7px 8px;background:#fff;margin-bottom:6px}
+  .chips span{display:inline-flex;align-items:center;gap:5px;background:var(--pri-50);border:1px solid var(--pri-200);color:#4857e2;border-radius:5px;padding:2px 7px;font-size:11.5px}
+  .chips span b{cursor:pointer;font-weight:400;opacity:.6}
+  .andor{display:flex;gap:8px;margin-top:8px}
+  .andor button{border:1px dashed var(--line);background:#fff;border-radius:var(--r-s);padding:5px 12px;font-size:12px;color:var(--ink-2);cursor:pointer}
+  .andor button:hover{border-color:#4857e2;color:#4857e2}
+  .sim__r{border:1px solid var(--line);border-radius:var(--r-s);padding:11px 12px;margin-top:12px;background:var(--panel-2)}
+  .sim__p{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+
+  /* ══ owner 2026-09-16：流程配置是一条 1→2→3→4 的流水线，左右面板都做成悬浮窗 ══ */
+  .wiz{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:0;padding:12px 24px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.9);position:relative;z-index:20}
+  .wz{display:inline-flex;align-items:center;gap:9px;padding:6px 14px;border-radius:999px;font-size:12.5px;color:var(--ink-3);cursor:pointer;border:1px solid transparent;background:transparent;white-space:nowrap;transition:background .16s,color .16s,border-color .16s}
+  .wz:hover{background:var(--surf);color:var(--ink-2)}
+  .wz i{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:700;background:var(--surf);border:1px solid var(--line);color:var(--ink-3);flex:0 0 20px}
+  .wz.is-on{background:var(--pri-50);border-color:var(--pri-200);color:#4857e2;font-weight:600}
+  .wz.is-on i{background:#4857e2;border-color:#4857e2;color:#fff}
+  .wz.done i{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok)}
+  .wz.done{color:var(--ink-2)}
+  .wzl{width:26px;height:1px;background:var(--line);flex:0 0 26px;margin:0 2px}
+  .page{padding:0;max-width:none;position:relative;flex:1;min-height:0;display:block}
+  .st{position:absolute;inset:0;display:none;overflow:auto}
+  .st.is-on{display:block}
+  .st--cv.is-on{display:block;overflow:hidden}
+  .wizf{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:12px 24px;border-top:1px solid var(--line);background:var(--panel);position:relative;z-index:20}
+  .wizf .hintx{font-size:12px;color:var(--ink-3)}
+  .wizf .right{margin-left:auto;display:flex;gap:10px}
+  /* 悬浮窗：左（AI / 控件库）与右（属性 / 节点配置）都脱离文档流，浮在画布上 */
+  .fw2{position:absolute;top:14px;bottom:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 2px rgba(15,23,42,.06),0 18px 40px -22px rgba(15,23,42,.42);display:flex;flex-direction:column;overflow:hidden;z-index:12;transition:transform .28s cubic-bezier(.32,.72,0,1),opacity .2s}
+  .fwL{left:14px}
+  .fwR{right:14px}
+  .fwx{position:absolute;top:10px;right:10px;z-index:3;margin:0;background:var(--panel)}
+  .ai{width:258px;flex:0 0 258px;border-right:0;border:1px solid var(--line)}
+  .ai.off{transform:translateX(calc(-100% - 20px));opacity:0;pointer-events:none}
+  .lib{width:236px}
+  .lib.shift{left:286px}
+  .cfg{width:340px;flex:0 0 340px;border-left:0;border:1px solid var(--line)}
+  .cfg.off{transform:translateX(calc(100% + 20px));opacity:0;pointer-events:none}
+  .fab{position:absolute;bottom:18px;width:40px;height:40px;border-radius:50%;border:0;background:#4857e2;color:#fff;display:none;place-items:center;cursor:pointer;z-index:14;box-shadow:0 6px 18px -6px rgba(72,87,226,.7);transition:transform .14s}
+  .fab.on{display:grid}
+  .fab:hover{transform:scale(1.06)}
+  .fab:active{transform:scale(.94)}
+  .fab svg{width:18px;height:18px}
+  .fabL{left:18px}
+  .fabR{right:18px}
+  /* 步骤 1：基础信息 */
+  .basic{max-width:720px;margin:0 auto;padding:28px 24px 40px}
+  .basic h2{font-size:18px;font-weight:700;margin-bottom:4px}
+  .basic > p{font-size:12.5px;color:var(--ink-3);margin-bottom:22px}
+  .bsec{margin-bottom:22px}
+  .bsec > span{display:block;font-size:12px;color:var(--ink-3);margin-bottom:9px}
+  .kinds{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .kind{border:1px solid var(--line);border-radius:var(--r);padding:13px 14px;cursor:pointer;background:var(--panel);text-align:left;transition:border-color .15s,background .15s}
+  .kind:hover{border-color:#cbd5e1}
+  .kind.on{border-color:var(--pri);background:var(--pri-50)}
+  .kind b{display:block;font-size:13.5px;font-weight:600;margin-bottom:4px}
+  .kind span{font-size:11.5px;color:var(--ink-3);line-height:1.6}
+  .scopes{display:flex;gap:10px}
+  .scopes .kind{flex:1}
+  .gpick{display:flex;flex-wrap:wrap;gap:8px}
+  .icons{display:flex;gap:10px;flex-wrap:wrap}
+  .ic{width:36px;height:36px;border-radius:9px;border:2px solid transparent;cursor:pointer;display:grid;place-items:center;padding:0}
+  .ic svg{width:17px;height:17px;color:#fff}
+  .ic.on{border-color:var(--ink)}
+  /* 步骤 2：表单设计 */
+  .lib__b{flex:1;overflow:auto;padding:4px 12px 14px}
+  .lib__g{font-size:11.5px;color:var(--ink-3);margin:12px 0 7px}
+  .lib__l{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .lc{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:7px;padding:7px 8px;font-size:12px;cursor:grab;background:var(--panel);transition:border-color .15s,background .15s}
+  .lc:hover{border-color:var(--pri-l);background:var(--pri-50);color:#4857e2}
+  .lc svg{width:13px;height:13px;flex:0 0 13px;opacity:.8}
+  .lc.wide{grid-column:span 2}
+  .fcv{position:absolute;inset:0;overflow:auto;padding:0 var(--padR,366px) 0 var(--padL,524px);background:var(--surf);
+       background-image:radial-gradient(circle at 1px 1px,#DEE1E4 1px,transparent 0);background-size:22px 22px}
+  .fpaper{width:min(660px,100%);margin:24px auto 60px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sd);padding:22px 26px 30px}
+  .fpaper h3{font-size:16px;font-weight:700;margin-bottom:3px}
+  .fpaper .sub{font-size:12px;color:var(--ink-3);margin-bottom:18px}
+  .fgrid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+  .ff{position:relative;border:1px solid transparent;border-radius:8px;padding:8px;cursor:pointer;transition:border-color .14s,background .14s}
+  .ff:hover{border-color:var(--pri-200);background:var(--pri-50)}
+  .ff.on{border-color:var(--pri);background:var(--pri-50)}
+  .ff > label{display:block;font-size:12px;color:var(--ink-2);margin-bottom:6px}
+  .ff > label em{font-style:normal;color:#dd4439;margin-right:2px}
+  .ff .box{border:1px solid var(--line);border-radius:var(--r-s);background:var(--panel);padding:8px 11px;font-size:12.5px;color:var(--ink-3);min-height:34px;display:flex;align-items:center}
+  .ff .box.tall{min-height:64px;align-items:flex-start}
+  .ff .rm{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:5px;border:0;background:#fff;color:var(--ink-3);cursor:pointer;display:none;place-items:center;box-shadow:var(--sd);font-size:12px}
+  .ff:hover .rm{display:grid}
+  .ff .rm:hover{color:#dd4439}
+  .ffhint{grid-column:span 12;border:1px dashed var(--line);border-radius:8px;padding:16px;text-align:center;font-size:12px;color:var(--ink-3)}
+  /* 属性面板（表单设计用）——分节带左侧蓝条，照 Figma 1:14555 那一套 */
+  .pgrp{margin-bottom:6px}
+  .pgrp__h{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line-2);cursor:pointer}
+  .pgrp__h::before{content:'';width:3px;height:13px;border-radius:2px;background:#4857e2;flex:0 0 3px}
+  .pgrp__h b{font-size:12.5px;font-weight:600;flex:1}
+  .pgrp__h svg{width:12px;height:12px;color:var(--ink-3);transition:transform .18s}
+  .pgrp.fold .pgrp__h svg{transform:rotate(-90deg)}
+  .pgrp.fold .pgrp__b{display:none}
+  .pgrp__b{padding:12px 0 6px}
+  .pf{margin-bottom:13px}
+  .pf > span{display:block;font-size:11.5px;color:var(--ink-3);margin-bottom:5px}
+  .pf > span em{font-style:normal;color:#dd4439;margin-right:2px}
+  .pf .inp{font-size:12.5px;padding:7px 10px}
+  .prow{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .cbx{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;cursor:pointer;color:var(--ink-2)}
+  .cbx i{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--line);flex:0 0 14px;font-style:normal;position:relative;background:#fff}
+  .cbx.on i{background:#4857e2;border-color:#4857e2}
+  .cbx.on i::after{content:'';position:absolute;left:4px;top:1px;width:4px;height:8px;border:solid #fff;border-width:0 1.6px 1.6px 0;transform:rotate(42deg)}
+  .ratio{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:var(--r-s);padding:6px 10px;font-size:12.5px;color:var(--ink-2)}
+  .ratio input{width:34px;border:0;outline:0;font:inherit;text-align:center;background:transparent}
+  /* 步骤 4：更多设置 */
+  .more{max-width:840px;margin:0 auto;padding:26px 24px 44px}
+  .more h2{font-size:18px;font-weight:700;margin-bottom:4px}
+  .more > p{font-size:12.5px;color:var(--ink-3);margin-bottom:22px}
+  .mrow{display:grid;grid-template-columns:104px minmax(0,1fr);gap:18px;padding:16px 0;border-top:1px solid var(--line-2);align-items:start}
+  .mrow:first-of-type{border-top:0}
+  .mrow > .lb{font-size:12.5px;font-weight:600;padding-top:1px}
+  .mopt{margin-bottom:11px}
+  .mopt:last-child{margin-bottom:0}
+  .mopt p{font-size:11.5px;color:var(--ink-3);margin:3px 0 0 20px;line-height:1.6}
+  .mini{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:var(--r-s);padding:4px 9px;font-size:12.5px;background:var(--panel)}
+  .mini input{width:38px;border:0;outline:0;font:inherit;text-align:center;background:transparent}
+  .aisum{display:flex;align-items:flex-start;gap:8px;border:1px solid var(--pri-200);background:var(--pri-50);border-radius:var(--r-m);padding:9px 11px;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+  .aisum svg{width:14px;height:14px;flex:0 0 14px;color:#4857e2;margin-top:3px}
+  .aisum b{color:var(--ink);font-weight:600}
+  @media (max-width:1460px){.fcv{--padL:470px}}
+  @media (max-width:1180px){.ai{display:none}.lib.shift{left:14px}.fcv{--padL:266px}.cv{--padL:30px}}
+  @media (max-width:900px){.cfg{display:none}.fcv,.cv{--padR:30px}.kinds{grid-template-columns:1fr}.fpaper{width:auto;margin:14px;padding:16px}.mrow{grid-template-columns:1fr;gap:8px}}
+</style>
+</head>
+<body data-nav="builder" data-noai="1" data-editor="1" data-title="流程配置" data-back="flows.html" data-flow="供应商付款审批" data-ver="v4 草稿" data-state="编辑中" data-state-tone="info">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div id="topMeta"><span class="top__meta"><span class="tag tag--info">相对 v3：+1 · ~2</span><span class="dim">已保存 · 刚刚</span></span></div>
+    <div id="topCenter"><div class="seg2"><button class="is-on">编辑器</button><button data-toast="执行记录在「运行监控」里，这条流程还没上线">执行记录</button></div></div>
+    <div id="topActions">
+      <button class="btn btn--s" data-toast="已撤销上一步">撤销</button>
+      <button class="btn btn--s" data-open="#sim">测试</button>
+      <a class="btn btn--p btn--s" href="check.html">提交体检</a>
+    </div>
+    <div class="wiz" id="wiz"></div>
+    <div class="page">
+
+      <section class="st" data-st="1">
+        <div class="basic">
+          <h2>基础信息</h2>
+          <p>先说清这条流程是什么、给谁用。分组会跟着类别变 —— 审批与工单归到审批的分组里，工作流归到工作流的分组里。</p>
+
+          <div class="bsec"><span>这是哪一类</span><div class="kinds" id="bKind"></div></div>
+          <div class="bsec"><span>参与范围</span><div class="scopes" id="bScope"></div></div>
+          <div class="bsec"><span>流程名称</span><input class="inp" id="bName" maxlength="24" placeholder="比如：供应商付款审批" value="供应商付款审批"></div>
+          <div class="bsec"><span>所属分组 <em class="dim" id="bGroupFrom"></em></span><div class="gpick" id="bGroup"></div></div>
+          <div class="bsec"><span>图标</span><div class="icons" id="bIcon"></div></div>
+        </div>
+      </section>
+
+      <section class="st st--cv" data-st="2">
+        <div class="fcv" id="fcv">
+          <div class="fpaper">
+            <h3 id="fpT">供应商付款审批</h3>
+            <div class="sub">发起人填这张表。带 <em style="color:#dd4439;font-style:normal">*</em> 的是必填；Agent 能自动带出的字段会标出来。</div>
+            <div class="fgrid" id="fgrid"></div>
+          </div>
+        </div>
+        <aside class="fw2 fwL ai" id="ai2"></aside>
+        <aside class="fw2 fwL lib shift" id="lib">
+          <div class="ai__h"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/></svg><b>控件库</b></div>
+          <div class="lib__b" id="libB"></div>
+        </aside>
+        <aside class="fw2 fwR cfg" id="fprop">
+          <div class="cfg__h" id="fpropH"></div>
+          <div class="cfg__b" id="fpropB"></div>
+        </aside>
+        <button class="fab fabL" type="button" id="fabAI2" aria-label="展开 AI 智能助手"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.2l1.5 3.9 3.9 1.5-3.9 1.5L8 13l-1.5-3.9L2.6 7.6l3.9-1.5z"/></svg></button>
+        <button class="fab fabR" type="button" id="fabP2" aria-label="展开属性"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button>
+      </section>
+
+      <section class="st st--cv is-on" data-st="3">
+      <aside class="fw2 fwL ai">
+        <div class="ai__h">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.2l1.5 3.9 3.9 1.5-3.9 1.5L8 13l-1.5-3.9L2.6 7.6l3.9-1.5z"/></svg>
+          <b>AI 智能助手</b><button class="x" type="button" aria-label="收起">✕</button>
+        </div>
+        <div class="ai__d">用自然语言改流程：加节点、改条件、调审批人都行。改完我会告诉你动了哪里。</div>
+        <div class="ai__b">
+          <div class="bub">我能帮你搭流程、改规则，也会顺手检查有没有漏掉的分支和不可逆动作。</div>
+          <div class="bub bub--me">给财务团队做一条供应商付款审批</div>
+          <div class="ai__card">
+            <b>我已创建以下流程步骤：</b>
+            <ul><li>采购单验收完成后自动发起</li><li>三单匹配核对发票、合同、验收单</li><li>按金额分三档选审批人</li><li>执行付款前加一道人工确认</li></ul>
+            <div class="ai__tip">执行付款是不可逆动作，所以我默认在它前面加了人工确认。要去掉的话，上线前体检不会给过。</div>
+            <button class="btn btn--acc btn--s" data-toast="已应用 · 画布上新增 1 个节点、修改 2 处">已应用工作流</button>
+          </div>
+          <div class="ai__card">
+            <b>可以继续跟我说</b>
+            <ul><li>「把 5 万改成 10 万」</li><li>「财务总监出差时转给刘恒」</li><li>「付款前再加一道合同复核」</li></ul>
+          </div>
+        </div>
+        <div class="ai__f">
+          <div class="ai__in"><input placeholder="告诉我要改什么" aria-label="对 AI 说">
+            <button type="button" data-toast="已理解：这类改动会生成新版本草稿，线上 v3 不动"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3.5M4 7 8 3l4 4"/></svg></button>
+          </div>
+        </div>
+      </aside>
+      <section class="cv"><div class="cv__in"><svg class="cv__svg" id="svg"></svg><div id="nodes"></div></div>
+
+      </section>
+      <aside class="fw2 fwR cfg" id="cfg3">
+        <div class="cfg__h" id="cfgh"></div>
+        <div class="cfg__b" id="cfgb"><div class="cfg__e">点画布上的节点，在这里改它的执行者、条件、可逆等级。</div></div>
+      </aside>
+      <button class="fab fabL" type="button" id="fabAI" aria-label="展开 AI 智能助手"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.2l1.5 3.9 3.9 1.5-3.9 1.5L8 13l-1.5-3.9L2.6 7.6l3.9-1.5z"/></svg></button>
+      <button class="fab fabR" type="button" id="fabP" aria-label="展开节点配置"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button>
+      </section>
+
+      <section class="st" data-st="4">
+        <div class="more" id="more"></div>
+      </section>
+
+    </div>
+    <div class="wizf">
+      <span class="hintx" id="wizHint"></span>
+      <span class="right">
+        <button class="btn" type="button" id="wizPrev">上一步</button>
+        <button class="btn btn--p" type="button" id="wizNext">下一步：表单设计</button>
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="drawer" id="sim">
+  <div class="drawer__h"><h3>预演</h3><button class="x" data-close>✕</button></div>
+  <div class="drawer__b">
+    <p class="note" style="margin:0 0 12px">给一个假设场景，看它会走哪条路径、命中哪几条规则。<b>预演只走逻辑，不会真的付款。</b></p>
+    <div data-optgroup id="simOpts">
+      <div class="opt is-on" data-amt="120000"><b>付款 12 万 · 供应商正常</b><p>落在 10–50 万档</p></div>
+      <div class="opt" data-amt="30000" style="margin-top:8px"><b>付款 3 万 · 供应商正常</b><p>落在 10 万以下档</p></div>
+      <div class="opt" data-amt="800000" style="margin-top:8px"><b>付款 80 万 · 供应商正常</b><p>落在 50 万以上档</p></div>
+      <div class="opt" data-amt="120000" data-black="1" style="margin-top:8px"><b>付款 12 万 · 供应商在黑名单</b><p>v4 新增的校验应当拦下它</p></div>
+    </div>
+    <div class="sim__r" id="simR"></div>
+  </div>
+  <div class="drawer__f"><button class="btn" data-close>关闭</button><button class="btn btn--acc" id="simGo">开始预演</button></div>
+</div>
+
+<div class="auto" id="autoModal">
+  <div class="auto__h">
+    <button class="x" type="button" data-close style="margin:0">‹</button>
+    <div><h3 id="autoT">自动化</h3><div class="sub" id="autoSub"></div></div>
+    <div class="right">
+      <span class="tool dim" style="font-size:12.5px" id="autoAct" hidden>执行记录</span>
+      <button class="btn btn--p btn--s" type="button" id="autoSave">保存并启用</button>
+      <button class="x" type="button" data-close>✕</button>
+    </div>
+  </div>
+  <div class="auto__b" id="autoB"></div>
+</div>
+
+<script src="ui.js"></script>
+<script>
+(function () {
+  var W = 204, H = 84;   /* 每个节点末尾固定一条自动化位，卡片比原来高 22px */
+  var N = [
+    { id: 'n1', no: '1', x: 228, y: 0, k: '触发', n: '提交付款申请', s: '采购单验收完成后自动发起', rev: 'A' },
+    { id: 'n2', no: '2', x: 228, y: 118, k: '检查', n: '供应商黑名单校验', s: '命中黑名单 → 退回并通知', rev: 'A', flag: 'new', agent: true },
+    { id: 'n3', no: '3', x: 228, y: 236, k: '检查', n: '发票与合同三单匹配', s: '不匹配 → 退回发起人', rev: 'A' },
+    { id: 'n4', no: '4', x: 228, y: 354, k: '条件', n: '金额判断', s: '< 10 万 / 10–50 万 / > 50 万', rev: 'A', flag: 'mod' },
+    { id: 'n5a', no: '5a', x: 0, y: 496, k: '审批', n: '采购经理审批', s: '高远 · 所有档位都经过', rev: 'B' },
+    { id: 'n5b', no: '5b', x: 228, y: 496, k: '审批', n: '财务总监审批', s: '陈立 · 金额 ≥ 10 万', rev: 'B' },
+    { id: 'n5c', no: '5c', x: 456, y: 496, k: '审批', n: 'CFO 审批', s: '金额 > 50 万', rev: 'B' },
+    { id: 'n6', no: '6', x: 228, y: 638, k: '动作', n: '生成付款指令', s: '生成指令草稿，可撤销', rev: 'B' },
+    { id: 'n7', no: '7', x: 228, y: 756, k: '人工确认', n: '付款前人工确认', s: '孙悦复核后才继续', rev: 'H' },
+    { id: 'n8', no: '8', x: 228, y: 874, k: '动作', n: '执行付款', s: '调用银企直连，执行后无法撤回', rev: 'C' },
+    { id: 'n9', no: '9', x: 228, y: 992, k: '通知', n: '通知供应商', s: '对外发送付款回执邮件', rev: 'C' }
+  ];
+  var E = [['n1', 'n2'], ['n2', 'n3'], ['n3', 'n4'], ['n4', 'n5a', '全部'], ['n4', 'n5b', '≥ 10 万'], ['n4', 'n5c', '> 50 万'],
+           ['n5a', 'n6'], ['n5b', 'n6'], ['n5c', 'n6'], ['n6', 'n7'], ['n7', 'n8'], ['n8', 'n9']];
+  var by = {}; N.forEach(function (n) { by[n.id] = n; });
+
+  /* ── 画布 ── */
+  /* 已经挂了自动化的节点（演示数据）；空的就是「未设置」，点一下就能配 */
+  var AU = { n2: '命中黑名单 → 通知采购', n8: '付款成功 → 回写付款状态' };
+  /* 一句话改节点：例句 + 规则。命中就改并说清动了哪里，命中不了就反问，不瞎猜。 */
+  var NLQ_EX = ['超时改成 12 小时', '这一步改成人工确认', '换成陈立审批', '失败了不要重试'];
+  var NLQ = [
+    [/超时.*?(\d+)\s*(小时|分钟|天)/, function (n, m) { return ['超时时间：24 小时 → ' + m[1] + ' ' + m[2], '超时 ' + m[1] + ' ' + m[2] + ' 后转人工']; }],
+    [/(人工确认|要人确认|加一道人工)/, function (n) { return ['可逆等级：' + n.rev + ' → 人工确认（H）', '这一步必须有人点，Agent 不会自动过']; }],
+    [/换成(.{1,4})审批|审批人改成(.{1,4})/, function (n, m) { var who = (m[1] || m[2]).trim(); return ['审批人：→ ' + who, who + ' 审批，原审批人转为代理人']; }],
+    [/(不要重试|不重试|禁止重试)/, function () { return ['失败重试：2 次 → 不允许', '失败后一律转人工，不自动重试']; }],
+    [/(不可逆|改成\s*C)/, function () { return ['可逆等级：→ C 不可逆', '体检会要求它前面必须有人工确认']; }],
+    [/(可撤销|改成\s*B)/, function () { return ['可逆等级：→ B 可撤销', 'Agent 自动执行，留痕可撤销']; }]
+  ];
+  function nlqApply(text) {
+    var t = (text || '').trim(); if (!t) return AG.toast('说一句就行，比如「超时改成 12 小时」');
+    var n = by[cur];
+    for (var i = 0; i < NLQ.length; i++) {
+      var m = t.match(NLQ[i][0]);
+      if (m) {
+        var r = NLQ[i][1](n, m);
+        n.s = r[1];
+        var card = document.getElementById(n.id);
+        if (card) { card.querySelector('.nd__s').textContent = n.s; card.animate([{ boxShadow: '0 0 0 4px rgba(72,87,226,.22)' }, { boxShadow: '0 0 0 0 rgba(72,87,226,0)' }], { duration: 900 }); }
+        render();
+        AG.toast('「' + n.n + '」已改：' + r[0]);
+        return;
+      }
+    }
+    AG.toast('这句我没把握改对：你是想改超时、审批人、可逆等级，还是失败重试？');
+  }
+
+  var host = document.getElementById('nodes'), svg = document.getElementById('svg');
+  host.innerHTML = N.map(function (n) {
+    return '<div class="nd' + (n.rev === 'C' ? ' nd--c' : n.rev === 'H' ? ' nd--h' : '') + '" id="' + n.id + '" style="left:' + n.x + 'px;top:' + n.y + 'px">'
+      + '<div class="nd__t"><span class="nd__n">' + n.n + '</span><span class="nd__k">' + n.k + '</span>'
+      + '<span class="nd__r">' + (n.flag ? '<span class="flag flag--' + n.flag + '">' + (n.flag === 'new' ? '新增' : '修改') + '</span>' : '')
+      + (n.rev === 'H' ? '<span class="tag tag--acc" style="height:18px;font-size:10.5px;padding:0 5px">人工</span>' : '<span class="rev rev--' + n.rev.toLowerCase() + '">' + n.rev + '</span>') + '</span></div>'
+      + '<div class="nd__s">' + n.s + (n.agent ? ' · Agent 建议' : '') + '</div>'
+      /* owner：每个节点最后固定有一个自动化位，点进去配置；跟连线上临时加的那种自动化节点是两回事 */
+      + '<div class="nd__au' + (AU[n.id] ? ' on' : '') + '" data-au="' + n.id + '" title="给这个节点挂自动化">'
+      + '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1.8 3.8 8.6H8l-1 5.6L12.2 7H8z"/></svg>'
+      + '<span>' + (AU[n.id] || '自动化 · 未设置') + '</span><i>设置</i></div></div>';
+  }).join('');
+
+  function path(a, b) {
+    var x1 = a.x + W / 2, y1 = a.y + H, x2 = b.x + W / 2, y2 = b.y, mid = y1 + (y2 - y1) / 2, r = 8;
+    if (Math.abs(x1 - x2) < 2) return 'M' + x1 + ' ' + y1 + 'V' + y2;
+    var d = x2 > x1 ? 1 : -1;
+    return 'M' + x1 + ' ' + y1 + 'V' + (mid - r) + 'q0 ' + r + ' ' + (d * r) + ' ' + r + 'H' + (x2 - d * r) + 'q' + (d * r) + ' 0 ' + (d * r) + ' ' + r + 'V' + y2;
+  }
+/* 加节点菜单：照 Figma 1:75057 一比一 —— 分「对内审批 / 对外审批」两组，图标用原稿的圆形彩色 */
+  var MENU = [
+    ['g', '对内审批'],
+    ['审批人', '#6366F1', 'M8 3.4a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4z M3.8 12.8c.4-2 2.1-3 4.2-3 .8 0 1.6.2 2.2.5 M10.4 11.6l1.2 1.2 2.4-2.6'],
+    ['办理人', '#22C55E', 'M4.4 2.6h4.8l2.4 2.4v8H4.4z M9.2 2.6v2.4h2.4 M6.4 8.6h3.2M6.4 10.8h2'],
+    ['抄送人', '#FB923C', 'M13.6 2.8 2.6 7.2l3.8 1.6 1.6 3.8z M6.4 8.8l7.2-6'],
+    ['d'],
+    ['条件分支', '#16A34A', 'M4.6 3.2v3.2a2 2 0 0 0 2 2h4.8 M4.6 8.4v4.4 M9.8 6.2l2 2.2-2 2.2'],
+    ['并行分支', '#0D9488', 'M8 2.8v3 M4 8.6a4 4 0 0 1 8 0 M4 8.6v4.6M12 8.6v4.6M8 5.8v7.4'],
+    ['d'],
+    ['自动化', '#22D3EE', 'M8 5.4a2.6 2.6 0 1 1 0 5.2 2.6 2.6 0 0 1 0-5.2z M8 1.8v1.6M8 12.6v1.6M14.2 8h-1.6M3.4 8H1.8M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1M12.4 12.4l-1.1-1.1M4.7 4.7 3.6 3.6'],
+    ['g', '对外审批'],
+    ['外部审批人', '#3B82F6', 'M8 3.4a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4z M3.8 12.8c.4-2 2.1-3 4.2-3 .8 0 1.6.2 2.2.5 M10.4 11.6l1.2 1.2 2.4-2.6'],
+    ['外部办理人', '#22C55E', 'M4.4 2.6h4.8l2.4 2.4v8H4.4z M9.2 2.6v2.4h2.4 M6.4 8.6h3.2M6.4 10.8h2'],
+    ['外部抄送人', '#FB923C', 'M13.6 2.8 2.6 7.2l3.8 1.6 1.6 3.8z M6.4 8.8l7.2-6']
+  ];
+  var addHost = document.createElement('div'); addHost.style.cssText = 'position:absolute;inset:0;pointer-events:none';
+  var menu = document.createElement('div'); menu.className = 'addmenu';
+  menu.innerHTML = MENU.map(function (m) {
+    if (m[0] === 'g') return '<div class="addmenu__g">' + m[1] + '</div>';
+    if (m[0] === 'd') return '<hr>';
+    return '<button type="button" data-add="' + m[0] + '"><i style="background:' + m[1] + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="' + m[2] + '"/></svg></i>' + m[0] + '</button>';
+  }).join('');
+
+  svg.innerHTML = E.map(function (e) {
+    var a = by[e[0]], b = by[e[1]], lbl = '';
+    if (e[2]) { var lx = b.x + W / 2, ly = a.y + H + (b.y - a.y - H) / 2 - 6; lbl = '<text class="elbl" x="' + lx + '" y="' + ly + '" text-anchor="middle">' + e[2] + '</text>'; }
+    return '<path d="' + path(a, b) + '" fill="none" stroke="#C9CED4" stroke-width="1.4" data-e="' + e[0] + '-' + e[1] + '"/>' + lbl;
+  }).join('') + '<defs></defs>';
+
+  /* ── 连线加号 + 加节点菜单 ── */
+  (function () {
+    var wrap = document.querySelector('.cv__in');
+    wrap.appendChild(addHost); wrap.appendChild(menu);
+    E.forEach(function (e, i) {
+      var a = by[e[0]], b = by[e[1]];
+      var x = (a.x + b.x) / 2 + W / 2, y = (a.y + H + b.y) / 2;
+      if (Math.abs(a.x - b.x) > 2) { x = b.x + W / 2; y = a.y + H + (b.y - a.y - H) / 2 + 12; }
+      var btn = document.createElement('button');
+      btn.className = 'addp'; btn.style.left = x + 'px'; btn.style.top = y + 'px'; btn.style.pointerEvents = 'auto';
+      btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M8 3.5v9M3.5 8h9"/></svg>';
+      btn.dataset.edge = i; addHost.appendChild(btn);
+    });
+    var cv = document.querySelector('.cv');
+    cv.addEventListener('mousemove', function (ev) {
+      if (menu.classList.contains('on')) return;
+      var r = wrap.getBoundingClientRect(), k = zoom || 1;
+      var mx = (ev.clientX - r.left) / k, my = (ev.clientY - r.top) / k, best = null, bd = 9e9;
+      [].forEach.call(addHost.children, function (b) {
+        var d = Math.sqrt(Math.pow(parseFloat(b.style.left) - mx, 2) + Math.pow(parseFloat(b.style.top) - my, 2));
+        if (d < bd) { bd = d; best = b; }
+      });
+      [].forEach.call(addHost.children, function (b) { b.classList.toggle('on', b === best && bd < 64); });
+    });
+    cv.addEventListener('mouseleave', function () { [].forEach.call(addHost.children, function (b) { b.classList.remove('on'); }); });
+    addHost.addEventListener('click', function (ev) {
+      var b = ev.target.closest('.addp'); if (!b) return;
+      ev.stopPropagation();
+      menu.style.left = (parseFloat(b.style.left) + 14) + 'px';
+      menu.style.top = (parseFloat(b.style.top) - 6) + 'px';
+      menu.dataset.edge = b.dataset.edge; menu.classList.add('on');
+    });
+    document.addEventListener('click', function (ev) { if (!ev.target.closest('.addmenu')) menu.classList.remove('on'); });
+    menu.addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-add]'); if (!b) return;
+      menu.classList.remove('on');
+      var kind = b.dataset.add;
+      if (kind === '自动化') { openAuto(); return; }
+      var e = E[+menu.dataset.edge];
+      AG.toast('已在「' + by[e[0]].n + '」后面加了一个' + kind + '节点 · 记在 v4 草稿上');
+    });
+  })();
+
+  /* ── 右侧配置 ── */
+  var REV = { A: ['A · 只读', '只查询、不改变任何东西，Agent 可以全自动执行。'], B: ['B · 可撤销', '会改数据，但可以撤回；Agent 自动执行，事后留痕可撤销。'], C: ['C · 不可逆', '执行后无法撤回，必须有人确认才执行。'] };
+  var CFG = {
+    n2: { who: 'Agent 自动执行', proxy: '—', basis: 'R6 · Agent 补充', why: 'v3 运行中出现过 1 次向已列入黑名单的供应商发起付款，被人工拦下。这一版把校验前置到审批之前。' },
+    n4: { who: '系统判断', proxy: '—', basis: 'R1 / R2 / R3 · 对话第 1 句', why: '采购经理审批权限上调，阈值由 5 万改为 10 万，见《付款管理办法》2026 修订。' },
+    n5b: { who: '陈立（财务总监）', proxy: '刘恒（副总监）· 来自体检建议', basis: 'R2 · 对话第 1 句', why: '审批人出差期间避免流程停滞，体检第 2 项要求补代理人。' },
+    n7: { who: '孙悦（应付会计）', proxy: '转上一级', basis: 'R4 · 对话第 1 句', why: '你在对话里说「付款前得有人确认一下」，确认人选的是应付会计复核。' },
+    n8: { who: '系统执行（需人工确认后）', proxy: '—', basis: 'R6 · Agent 补充', why: '执行付款是不可逆动作，按产品规则必须有前置人工确认，不允许自动重试。' }
+  };
+  var cur = null, tab = '基本';
+  function render() {
+    var n = by[cur], c = CFG[cur] || { who: '系统执行', proxy: '—', basis: '—', why: 'Agent 按你描述的规则生成，未做额外判断。' };
+    var tabs = ['基本'].concat(n.k === '条件' ? ['条件'] : []).concat(['风险与可逆', '验证', '依据']);
+    if (tabs.indexOf(tab) < 0) tab = '基本';
+    document.getElementById('cfgh').innerHTML = '<div class="cfg__t"><b>' + n.n + '</b>'
+      + (n.rev === 'H' ? '<span class="tag tag--acc">人工确认</span>' : '<span class="rev rev--' + n.rev.toLowerCase() + '">' + n.rev + '</span>')
+      + (n.agent ? '<span class="agentic">' + AG.svg('spark', 1.3) + 'Agent 建议</span>' : '') + '</div>'
+      + '<div class="tabs">' + tabs.map(function (t) { return '<button class="' + (t === tab ? 'is-on' : '') + '" data-t="' + t + '">' + t + '</button>'; }).join('') + '</div>';
+    var h = '';
+    if (tab === '基本' && (n.k === '审批' || n.k === '人工确认')) {
+      h = approverPanel(n, c);
+    } else if (tab === '基本') {
+      h = '<div class="rowline"><span>节点名称</span><b>' + n.n + '</b></div>'
+        + '<div class="rowline"><span>类型</span><b>' + n.k + '</b><span class="dim" style="width:auto;flex:none;margin-left:auto;font-size:11px">类型不可改</span></div>'
+        + '<div class="rowline"><span>执行者</span><b>' + c.who + '</b></div>'
+        + '<div class="rowline"><span>代理人</span><b>' + c.proxy + '</b></div>'
+        + '<div class="rowline" style="border:0"><span>说明</span><b style="font-weight:400">' + n.s + '</b></div>'
+        + (n.agent ? '<div class="banner" style="margin-top:12px"><span>这个节点是 Agent 建议加的，还没人工确认。体检会把它列成「需确认」。</span></div><div style="display:flex;gap:7px;margin-top:9px"><button class="btn btn--s" data-toast="已确认保留 · 体检里这一项会转为通过">确认保留</button><button class="btn btn--s btn--ghost">删除节点</button></div>' : '');
+    } else if (tab === '条件') {
+      h = '<div class="h-sec">判断字段</div><div class="rowline" style="border:0;padding-top:0"><span>字段</span><b>付款金额（元）</b></div>'
+        + '<div class="bar3"><i style="flex:2;background:#8FA5B8">&lt; 10 万</i><i style="flex:4;background:#5E7C93">10–50 万</i><i style="flex:3;background:#3C5A70">&gt; 50 万</i></div>'
+        + '<table class="brk"><thead><tr><th>下限</th><th>上限</th><th>去往</th></tr></thead><tbody>'
+        + '<tr><td>0</td><td>99,999.99</td><td>采购经理审批</td></tr>'
+        + '<tr class="bad"><td>100,000</td><td>500,000</td><td>＋ 财务总监审批</td></tr>'
+        + '<tr><td>500,000.01</td><td>—</td><td>＋ CFO 审批</td></tr></tbody></table>'
+        + '<div class="banner" style="margin-top:11px"><span><b>边界未定义</b>：金额正好 100,000 时，可能同时命中两档。体检第 1 项拦的就是这里。</span></div>'
+        + '<button class="btn btn--s" style="margin-top:9px" data-toast="已把 10 万归入「10–50 万」档">把 10 万归入 10–50 万档</button>'
+        + '<div class="h-sec" style="margin-top:16px">默认分支</div><div class="rowline" style="border:0"><span>都不命中</span><b>退回发起人并通知流程管理员</b></div>';
+    } else if (tab === '风险与可逆') {
+      h = '<div class="h-sec">可逆等级</div><div data-optgroup>'
+        + ['A', 'B', 'C'].map(function (k) {
+            var on = (n.rev === 'C' ? 'C' : n.rev === 'H' ? 'A' : n.rev) === k;
+            return '<div class="opt' + (on ? ' is-on' : '') + (k === 'C' ? ' opt--danger' : '') + '" style="margin-bottom:7px"><b><span class="rev rev--' + k.toLowerCase() + '">' + k + '</span>' + REV[k][0] + '</b><p>' + REV[k][1] + '</p></div>';
+          }).join('') + '</div>'
+        + (n.rev === 'C'
+            ? '<div class="banner banner--ok" style="margin-top:4px">' + AG.svg('ok') + '<span>前置人工确认已存在：<b>付款前人工确认</b>（孙悦）</span></div>'
+            : '<div class="note">这一级 Agent 可以自动执行，出问题可撤销。</div>')
+        + '<div class="h-sec" style="margin-top:16px">超时</div>'
+        + '<div class="rowline"><span>等待超过</span><b>24 小时</b></div><div class="rowline" style="border:0"><span>超时后</span><b>' + (n.k === '审批' ? '转给代理人，并通知流程管理员' : '转人工处理') + '</b></div>'
+        + '<div class="h-sec" style="margin-top:16px">失败重试</div>'
+        + (n.rev === 'C'
+            ? '<div class="rowline disabled" style="border:0"><span>自动重试</span><b>不允许</b></div><div class="note" style="color:var(--risk)">不可逆节点不允许自动重试：重试可能造成重复付款。失败后一律转人工。</div>'
+            : '<div class="rowline" style="border:0"><span>自动重试</span><b>2 次 · 间隔 5 分钟</b></div>');
+    } else if (tab === '验证') {
+      h = '<div class="h-sec">这一步要校验什么</div>'
+        + '<div class="vf"><span>校验对象</span><b>' + (n.k === '审批' ? '审批人身份与权限' : n.k === '动作' ? '执行参数与账户' : '单据字段') + '</b></div>'
+        + '<div class="h-sec" style="margin-top:16px">下一步</div>'
+        + '<div class="vf vf--ok"><span>成功（有效）</span><b>' + (n.rev === 'C' ? '执行并写回结果' : '继续下一节点') + '</b></div>'
+        + '<div class="vf vf--no"><span>失败（无效）</span><b>' + (n.rev === 'C' ? '停止并通知人工，不重试' : '退回发起人并说明原因') + '</b></div>'
+        + '<div class="h-sec" style="margin-top:16px">校验规则</div>'
+        + ['必填字段齐全', '金额与采购单一致', '执行者在职且有权限'].map(function (t2) {
+            return '<div class="vrow">' + t2 + '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.4 6.4 11.8 13 4.6"/></svg></div>';
+          }).join('')
+        + (n.rev === 'C' ? '<div class="vrow bad">失败后自动重试<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></div>' : '');
+    } else {
+      h = '<div class="h-sec">这个节点来自哪条规则</div>'
+        + '<div class="rowline"><span>规则</span><b>' + c.basis + '</b></div>'
+        + '<a class="btn btn--s" style="margin-top:9px" href="chat.html">回到对话看原句</a>'
+        + '<div class="h-sec" style="margin-top:18px">Agent 的设计理由</div><p class="note" style="margin-top:0">' + c.why + '</p>';
+    }
+    /* owner：节点配置可通过描述进行配置 —— 不用在表单里翻，直接说一句 */
+    if (tab === '基本') {
+      h += '<div class="h-sec" style="margin-top:18px">用一句话改这个节点</div>'
+        + '<div class="nlq"><input id="nlqIn" placeholder="比如：超时改成 12 小时" autocomplete="off">'
+        + '<button class="btn btn--p btn--s" type="button" id="nlqGo">应用</button></div>'
+        + '<div class="nlq__ex">'
+        + NLQ_EX.map(function (x) { return '<span data-ex="' + x + '">' + x + '</span>'; }).join('')
+        + '</div><p class="note" style="margin-top:8px">改动完成后会提示差异，不确定条件会反问确定需求。</p>';
+    }
+    document.getElementById('cfgb').innerHTML = h;
+    [].forEach.call(document.querySelectorAll('.nd'), function (e) { e.classList.toggle('is-on', e.id === cur); });
+
+  }
+  function select(id) { cur = id; render(); }
+  document.addEventListener('click', function (e) {
+    var au = e.target.closest('[data-au]');
+    if (au) { e.stopPropagation(); select(au.dataset.au); openAuto(au.dataset.au); return; }
+    var n = e.target.closest('.nd'); if (n) return select(n.id);
+
+    var b = e.target.closest('[data-t]'); if (b) { tab = b.dataset.t; render(); }
+  });
+  select('n8'); tab = '风险与可逆'; render();
+
+  /* ── 缩放：默认适配到一屏 ── */
+  var inn = document.querySelector('.cv__in'), cvEl = document.querySelector('.cv'), zoom = 1;
+  function setZoom(z) { zoom = Math.max(.5, Math.min(1.2, z)); inn.style.transform = 'scale(' + zoom + ')'; }
+  function fit() { var r = cvEl.getBoundingClientRect(); setZoom(Math.min(1, (r.height - 120) / 910, (r.width - 40) / 660)); }
+  fit(); addEventListener('resize', fit);
+
+  /* ── 审批人配置面板（Figma 1:79729；按 owner 要求去掉「一个节点多位审批主体」那一组） ── */
+  function approverPanel(n, c) {
+    var who = (c.who || '').split('（')[0] || '待指定';
+    var BTNS = [['同意', '同意', 1], ['拒绝', '拒绝', 1], ['保存', '保存', 0], ['转交', '转交', 1], ['加签', '加签', 0], ['退回', '退回', 1], ['收回', '收回', 0]];
+    return '<div class="h-sec">审批基础设置</div>'
+      + '<label class="field"><span>名称</span><input class="inp" value="' + n.n + '"></label>'
+      + '<label class="field"><span>人员设置</span><select class="inp"><option>指定成员</option><option>指定角色</option><option>指定岗位</option><option>部门主管</option><option>发起人本人</option><option>发起人自选</option></select></label>'
+      + '<div class="field"><span>选择人员（一个节点只配一个审批主体）</span>'
+      + '<div class="who"><span class="ava">' + who.charAt(0) + '</span><div><b>' + who + '</b><span>' + (n.n.indexOf('财务') >= 0 ? '财务部 · 出差中' : '采购部') + '</span></div><a>更换</a></div></div>'
+      + '<div class="field"><span>审批人为空时</span>'
+      + ['自动通过', '指定成员审批', '转给管理员审批'].map(function (t, i) { return '<div class="rad' + (i === 1 ? ' on' : '') + '" data-rad><i></i>' + t + '</div>'; }).join('') + '</div>'
+      + '<p class="note">· 审批人为空时，会走这里选的兜底方式，不会把单子悬着。<br>· 同一个人在流程里出现多次时，默认只审一次，可改。</p>'
+      + '<div class="h-sec" style="margin-top:18px">办理按钮设置</div>'
+      + '<table class="btbl"><thead><tr><th>操作按钮</th><th>显示名称</th><th>启用</th></tr></thead><tbody>'
+      + BTNS.map(function (b) {
+          return '<tr><td>' + b[0] + '</td><td class="nm">' + b[1] + '</td><td><span class="sw' + (b[2] ? ' on' : '') + '" data-sw></span></td></tr>';
+        }).join('') + '</tbody></table>'
+      + '<div class="h-sec" style="margin-top:18px">高级设置</div>'
+      + '<div class="rowline"><span>发起人自动审批</span><b>当前节点为发起人时 · 自动同意</b></div>'
+      + '<div class="rowline" style="border:0"><span>相邻节点</span><b>与上一节点同一人时，自动通过</b></div>'
+      + '<div class="h-sec" style="margin-top:18px">抄送人设置</div>'
+      + '<div class="rowline" style="border:0"><span>仅同意时抄送</span><b>财务运营部 · 采购部</b></div>'
+      + (n.rev === 'C' ? '<div class="banner banner--risk" style="margin-top:14px"><span>这是不可逆节点，办理按钮里的「保存」「加签」不可开启。</span></div>' : '');
+  }
+  document.addEventListener('click', function (e) {
+    var sw = e.target.closest('[data-sw]'); if (sw) { sw.classList.toggle('on'); return; }
+    var rd = e.target.closest('[data-rad]');
+    if (rd) { [].forEach.call(rd.parentNode.querySelectorAll('[data-rad]'), function (x) { x.classList.toggle('on', x === rd); }); }
+  });
+
+  /* ── 自动化节点配置（Figma 1:75201 模板库 → 1:75359/75511/75711 配置） ── */
+  var AUTO_T = [
+    ['当有用户在当前审批中添加评论时，自动发送消息到指定人', ['#a98a5c', '#5c68a8'], '审批添加评论 + 发送消息'],
+    ['当有用户分享当前流程时，自动发送消息到指定人', ['#4857e2', '#5c68a8'], '审批转交 + 发送消息'],
+    ['当审批通过时，自动发送消息到指定人', ['#5f8b79', '#5c68a8'], '审批通过 + 发送消息'],
+    ['当审批拒绝时，自动发送消息到指定人', ['#9c5449', '#5c68a8'], '审批拒绝 + 发送消息'],
+    ['当审批撤回时，自动发送消息到指定人', ['#5c68a8', '#5c68a8'], '审批撤回 + 发送消息'],
+    ['当审批通过时，自动创建以发起人为负责人的任务', ['#5f8b79', '#a98a5c'], '审批通过 + 创建任务'],
+    ['当审批通过时，自动创建发起人的待办', ['#5f8b79', '#4857e2'], '审批通过 + 创建待办'],
+    ['当审批通过时，自动发送消息、创建任务、创建待办、创建日程', ['#5f8b79', '#5c68a8', '#a98a5c', '#4857e2'], '审批通过 + 发送消息 + 创建任务 + 创建待办 + 创建日程']
+  ];
+  function autoEl() { return document.getElementById('autoModal'); }
+  var auFor = null;
+  function openAuto(nodeId) {
+    var m = autoEl();
+    auFor = nodeId || null;
+    var nn = nodeId && by[nodeId];
+    m.querySelector('#autoT').textContent = nn ? '自动化 · ' + nn.n : '自动化';
+    m.querySelector('#autoSub').textContent = nn
+      ? (AU[nodeId] ? '这个节点已挂：' + AU[nodeId] + '。换一个模板会替换掉它。' : '「' + nn.n + '」跑完之后自动做什么 —— 这是每个节点末尾固定的那一个自动化位')
+      : '给这个节点挂一段自动动作：什么结果发生时，自动做什么';
+    m.querySelector('#autoAct').hidden = true;
+    m.querySelector('#autoB').innerHTML = '<div class="h-sec">自动化流程模板</div><div class="tg">'
+      + '<div class="tg__c blank" data-t="-1"><i>＋</i><b style="font-size:13px;color:var(--ink)">空白模板</b><span style="font-size:11px">从新搭建新的空白模板</span></div>'
+      + AUTO_T.map(function (t, i) {
+          return '<div class="tg__c" data-t="' + i + '"><div class="tg__i">'
+            + t[1].map(function (col, k) { return (k ? '<s>›</s>' : '') + '<em style="background:' + col + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.5h6.2L13 5.3v8.2H4z"/></svg></em>'; }).join('')
+            + '</div><div class="tg__t">' + t[0] + '</div>'
+            + '<div class="tg__f">' + t[2].slice(0, 12) + '…<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5"/></svg></div></div>';
+        }).join('') + '</div>';
+    m.classList.add('on'); document.querySelector('.scrim') && document.querySelector('.scrim').classList.add('is-on');
+    AG.open(m);
+  }
+  function autoConfig(i) {
+    var t = i < 0 ? ['自定义自动化', ['#4857e2'], '自己搭'] : AUTO_T[i], m = autoEl();
+    m.querySelector('#autoT').textContent = t[0];
+    m.querySelector('#autoSub').textContent = t[2];
+    m.querySelector('#autoAct').hidden = false;
+    var steps = [['审批', '步骤一：当审批通过后', '#5f8b79', 'sel', 'ok'],
+      ['审批助手', '步骤二：发送消息至某人或某群', '#5c68a8', '', 'ok'],
+      ['任务', '步骤三：创建任务', '#a98a5c', '', 'warn'],
+      ['待办', '步骤四：创建待办', '#4857e2', '', 'ok'],
+      ['', '步骤五：未选择', '#cbd5e1', '', 'none']];
+    var dot = { ok: '#4857e2', warn: '#e08a1e', none: '#cbd5e1' };
+    m.querySelector('#autoB').innerHTML = '<div class="ac">'
+      + '<div class="ac__p"><h4>当以下结果发生：</h4>'
+      + card(steps[0]) + '<h4 style="margin-top:16px">就执行以下操作：</h4>'
+      + steps.slice(1).map(card).join('')
+      + '<button class="ac__add" type="button" data-toast="选择一个动作添加">＋</button>'
+      + '<p class="note" style="text-align:center;margin-top:12px">请确认数据及后续动作的接收对象范围，避免数据不当泄露</p></div>'
+      + '<div class="ac__p ac__p--r"><h4>触发条件：</h4>' + card(steps[0], 1)
+      + '<h4 style="margin-top:16px">触发条件：</h4><p class="note" style="margin:0 0 10px">审批流程结束后，仅满足以下条件的才触发后续动作</p>'
+      + cond('条件组 1', 1) + '<div style="font-size:12px;color:var(--ink-3);margin:8px 0">或</div>' + cond('条件组 2', 0)
+      + '<div class="andor"><button type="button">＋ 或</button></div>'
+      + '</div></div>';
+    function card(s2, plain) {
+      return '<div class="stepc">' + (plain ? '' : '<i class="stepc__d" style="background:' + dot[s2[4]] + '">' + (s2[4] === 'none' ? '···' : s2[4] === 'warn' ? '!' : '✓') + '</i>')
+        + '<div class="stepc__b ' + (plain ? '' : s2[3]) + '"><span class="stepc__i" style="background:' + s2[2] + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2.5h6.2L13 5.3v8.2H4z"/></svg></span>'
+        + '<div class="stepc__t"><span>' + (s2[0] || '未选择') + '</span><b>' + s2[1] + '</b></div>'
+        + (plain ? '<a class="stepc__m" style="font-size:12px;color:#4857e2">更换</a>' : '<span class="stepc__m">···</span>') + '</div></div>';
+    }
+    function cond(title, full) {
+      return '<div class="cond"><div class="cond__h">' + title + '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 4.5h10M6.5 4.5V3h3v1.5M5 4.5v8h6v-8"/></svg></div>'
+        + '<div class="row"><select class="inp"><option>付款金额</option><option>供应商</option><option>发起人</option></select></div>'
+        + '<div class="row"><select class="inp"><option>大于</option><option>包含</option></select><select class="inp"><option>固定值</option><option>表单字段</option></select></div>'
+        + '<div class="chips"><span>100,000 <b>✕</b></span><span>华东物流 <b>✕</b></span><span>+3</span></div>'
+        + (full ? '<div style="font-size:12px;color:var(--ink-3);margin:8px 0">且</div>'
+            + '<div class="row"><select class="inp"><option>发起人</option></select></div>'
+            + '<div class="row"><select class="inp"><option>包含</option></select><select class="inp"><option>固定值</option></select></div>'
+            + '<div class="chips"><span>孙悦 <b>✕</b></span><span>高远 <b>✕</b></span></div>'
+            + '<p class="note" style="margin:4px 0 0">仅支持引用组织内员工</p>' : '')
+        + '<div class="andor"><button type="button">＋ 且</button></div></div>';
+    }
+  }
+
+  /* 保存：写回那个节点的自动化位，卡片上立刻能看到 */
+  document.getElementById('autoSave').addEventListener('click', function () {
+    var t = document.getElementById('autoT').textContent;
+    /* 模板名太长，卡片那条只留到第一个逗号，够认出是哪一段 */
+    var label = t.indexOf('自动化 · ') === 0 ? '通过后 → 通知 + 建任务' : t.split(/[，,。]/)[0];
+    if (auFor) {
+      AU[auFor] = label;
+      var el = document.querySelector('[data-au="' + auFor + '"]');
+      if (el) { el.classList.add('on'); el.querySelector('span').textContent = AU[auFor]; }
+      AG.toast('已挂到「' + by[auFor].n + '」的自动化位上，这个节点跑完就会自动执行');
+    } else AG.toast('自动化已保存并启用');
+    document.getElementById('autoModal').classList.remove('on'); AG.close();
+  });
+
+  /* 模板卡 → 配置页 */
+  document.getElementById('cfgb').addEventListener('click', function (e) {
+    var ex = e.target.closest('[data-ex]');
+    if (ex) { var i = document.getElementById('nlqIn'); if (i) { i.value = ex.dataset.ex; i.focus(); } return; }
+    if (e.target.closest('#nlqGo')) nlqApply((document.getElementById('nlqIn') || {}).value);
+  });
+  document.getElementById('cfgb').addEventListener('keydown', function (e) {
+    if (e.target.id === 'nlqIn' && e.key === 'Enter') { e.preventDefault(); nlqApply(e.target.value); }
+  });
+
+  document.getElementById('autoB').addEventListener('click', function (e) {
+    var c = e.target.closest('[data-t]'); if (!c) return;
+    autoConfig(+c.dataset.t);
+  });
+  document.getElementById('autoModal').addEventListener('click', function (e) {
+    if (e.target.closest('[data-close]')) { document.getElementById('autoModal').classList.remove('on'); AG.close(); }
+  });
+
+  /* ── 预演 ── */
+  var simR = document.getElementById('simR'); simR.innerHTML = '<span class="dim" style="font-size:12px">选一个场景，点「开始预演」。</span>';
+  document.getElementById('simGo').addEventListener('click', function () {
+    var o = document.querySelector('#simOpts .opt.is-on'), amt = +o.dataset.amt, black = o.dataset.black;
+    var hit = black ? ['n1', 'n2'] : amt >= 500000 ? ['n1', 'n2', 'n3', 'n4', 'n5a', 'n5b', 'n5c', 'n6', 'n7', 'n8', 'n9']
+      : amt >= 100000 ? ['n1', 'n2', 'n3', 'n4', 'n5a', 'n5b', 'n6', 'n7', 'n8', 'n9'] : ['n1', 'n2', 'n3', 'n4', 'n5a', 'n6', 'n7', 'n8', 'n9'];
+    [].forEach.call(document.querySelectorAll('.nd'), function (e) { e.classList.toggle('lit', hit.indexOf(e.id) >= 0); e.classList.toggle('dim', hit.indexOf(e.id) < 0); });
+    var txt = black
+      ? '<b style="color:var(--risk)">在第 2 步被拦下</b><p class="note">供应商命中黑名单，流程退回发起人并通知，没有进入任何审批。这正是 v4 新增这个节点的目的。</p>'
+      : '<b>走通 ' + hit.length + ' 个节点</b><p class="note">命中规则：' + (amt >= 500000 ? 'R3（&gt; 50 万 → CFO）' : amt >= 100000 ? 'R2（10–50 万 → 财务总监）' : 'R1（&lt; 10 万 → 采购经理）') + ' · R4（付款前人工确认）· R6（执行付款不可逆）</p>';
+    simR.innerHTML = txt + '<div class="sim__p">' + hit.map(function (id) { return '<span class="nd__k">' + by[id].n + '</span>'; }).join('') + '</div>'
+      + '<p class="note" style="color:var(--acc-ink)">预演只走逻辑，没有产生任何付款。</p>';
+  });
+})();
+</script>
+
+<script>
+/* ══ 流程配置 = 1 基础信息 → 2 表单设计 → 3 流程配置 → 4 更多设置 ══ */
+(function () {
+  'use strict';
+  var STEPS = [['1', '基础信息'], ['2', '表单设计'], ['3', '流程配置'], ['4', '更多设置']];
+  var q = location.search, isNew = /[?&]new=1/.test(q);
+  var m = /[?&]step=(\d)/.exec(q), step = m ? +m[1] : (isNew ? 1 : 1);
+
+  /* 只有改已有流程才有「编辑器 / 执行记录」（外壳是 DOMContentLoaded 时才渲染的，得等它） */
+  document.addEventListener('DOMContentLoaded', function () {
+    if (isNew) { var tc = document.querySelector('.top__center'); if (tc) tc.remove(); }
+    paintWiz();
+  });
+
+  var wiz = document.getElementById('wiz'), hint = document.getElementById('wizHint');
+  var prev = document.getElementById('wizPrev'), next = document.getElementById('wizNext');
+  var HINTS = ['类别和分组定了之后，后面几步的可选项会跟着变',
+               '将左侧控件拖入表单，选中字段可在右侧修改属性',
+               '连线上悬浮会冒出 ⊕，可以插审批人、分支、自动化',
+               '这些是整条流程的开关，跟单个节点无关'];
+  function paintWiz() {
+    wiz.innerHTML = STEPS.map(function (x, i) {
+      var n = i + 1;
+      return (i ? '<span class="wzl"></span>' : '')
+        + '<button class="wz' + (n === step ? ' is-on' : (n < step ? ' done' : '')) + '" type="button" data-s="' + n + '">'
+        + '<i>' + (n < step ? '✓' : x[0]) + '</i>' + x[1] + '</button>';
+    }).join('');
+    [].forEach.call(document.querySelectorAll('.st'), function (e) { e.classList.toggle('is-on', +e.dataset.st === step); });
+    hint.textContent = HINTS[step - 1];
+    prev.hidden = step === 1;
+    next.textContent = step < 4 ? '下一步：' + STEPS[step][1] : '保存并提交体检';
+    next.className = 'btn btn--p';
+    /* owner：顶栏不再放「流程配置 · 第几步」——返回和面包屑不能同时存在，步骤交给下面的步骤条；标题页只改 document.title */
+    document.title = '流程配置 · ' + STEPS[step - 1][1] + ' · 流程中台';
+  }
+  wiz.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-s]'); if (!b) return;
+    step = +b.dataset.s; paintWiz();
+  });
+  prev.addEventListener('click', function () { if (step > 1) { step--; paintWiz(); } });
+  next.addEventListener('click', function () {
+    if (step === 1 && !document.getElementById('bName').value.trim()) { AG.toast('先给这条流程起个名字'); return; }
+    if (step < 4) { step++; paintWiz(); return; }
+    AG.toast('已保存 · 去跑上线前体检');
+    setTimeout(function () { location.href = 'check.html'; }, 600);
+  });
+
+  /* ── 第 1 步：基础信息（分组跟着类别变）── */
+  var KINDS = [
+    ['approve', '审批与工单', '要人拍板的单子：付款、用印、请假、退款'],
+    ['flow', '工作流', '把跨系统的动作串起来自动跑，比如入职当天开门禁'],
+    ['insight', '智能洞察', '从运行数据里出结论：时效、卡点、风险']
+  ];
+  var GBY = {
+    approve: ['财务管理', '假勤管理', '人事管理', '法务管理', '业务管理', '其他'],
+    flow: ['采购与付款', '人事流程', '法务与合规', 'IT 与权限'],
+    insight: ['运行分析', '风险体检', '成本分析']
+  };
+  var SCOPES = [['in', '对内', '只在明远集团内部流转'], ['out', '对外', '会有外部审批人或办理人参与']];
+  var ICONS = ['#4857e2', '#22C55E', '#FB923C', '#0EA5E9', '#A855F7', '#EF4444'];
+  var B = { kind: 'approve', scope: 'in', group: '财务管理', icon: 0 };
+  /* 从模板库进来时，类别已经定了，进来不给改（owner：点应用后默认就是那个板块，不能更改） */
+  var qk = (q.match(/[?&]kind=(\w+)/) || [])[1];
+  if (qk && GBY[qk]) B.kind = qk;
+  var lockKind = /[?&]lock=1/.test(q) && !!qk;
+  var qn = (q.match(/[?&]name=([^&]+)/) || [])[1];
+
+  function paintBasic() {
+    document.getElementById('bKind').innerHTML = (lockKind ? KINDS.filter(function (k) { return k[0] === B.kind; }) : KINDS).map(function (k) {
+      return '<button class="kind' + (B.kind === k[0] ? ' on' : '') + '" type="button"' + (lockKind ? ' disabled style="cursor:default"' : ' data-k="' + k[0] + '"') + '><b>' + k[1] + '</b><span>' + k[2] + '</span>'
+        + (lockKind ? '<span class="tag" style="display:inline-flex;margin-top:9px">来自模板，类别不改</span>' : '') + '</button>';
+    }).join('');
+    document.getElementById('bScope').innerHTML = SCOPES.map(function (k) {
+      return '<button class="kind' + (B.scope === k[0] ? ' on' : '') + '" type="button" data-sc="' + k[0] + '"><b>' + k[1] + '</b><span>' + k[2] + '</span></button>';
+    }).join('');
+    var gs = GBY[B.kind];
+    if (gs.indexOf(B.group) < 0) B.group = gs[0];
+    document.getElementById('bGroupFrom').textContent = '（' + KINDS.filter(function (k) { return k[0] === B.kind; })[0][1] + '下的分组）';
+    document.getElementById('bGroup').innerHTML = gs.map(function (g) {
+      return '<button class="pill' + (B.group === g ? ' is-on' : '') + '" type="button" data-g="' + g + '">' + g + '</button>';
+    }).join('');
+    document.getElementById('bIcon').innerHTML = ICONS.map(function (c, i) {
+      return '<button class="ic' + (B.icon === i ? ' on' : '') + '" type="button" data-i="' + i + '" style="background:' + c + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5h5l3 3v8h-8z"/><path d="M9.5 2.5v3h3"/></svg></button>';
+    }).join('');
+  }
+  paintBasic();
+  if (qn) { var nm = document.getElementById('bName'); nm.value = decodeURIComponent(qn.replace(/\+/g, ' ')); document.getElementById('fpT').textContent = nm.value; }
+  document.querySelector('.st[data-st="1"]').addEventListener('click', function (e) {
+    var k = e.target.closest('[data-k]'), sc = e.target.closest('[data-sc]'), g = e.target.closest('[data-g]'), i = e.target.closest('[data-i]');
+    if (k) { B.kind = k.dataset.k; paintBasic(); AG.toast('分组已经换成「' + KINDS.filter(function (x) { return x[0] === B.kind; })[0][1] + '」下的那几个'); return; }
+    if (sc) { B.scope = sc.dataset.sc; paintBasic(); return; }
+    if (g) { B.group = g.dataset.g; paintBasic(); return; }
+    if (i) { B.icon = +i.dataset.i; paintBasic(); return; }
+  });
+  document.getElementById('bName').addEventListener('input', function () {
+    document.getElementById('fpT').textContent = this.value || '未命名流程';
+  });
+
+  /* ── 第 2 步：表单设计 ── */
+  var LIB = [
+    ['布局', [['布局容器', 'grid'], ['分组', 'grp']]],
+    ['文档', [['文档', 'doc']]],
+    ['文本', [['单行文本', 'txt'], ['多行文本', 'area'], ['条件', 'cond'], ['说明', 'info']]],
+    ['数值', [['数值', 'num'], ['金额', 'money'], ['计算公式', 'calc']]],
+    ['选项', [['单选', 'radio'], ['多选', 'check'], ['下拉单选', 'sel']]],
+    ['日期', [['日期', 'date'], ['日期区间', 'range']]],
+    ['其他', [['明细/表格', 'tbl'], ['图片', 'img'], ['附件', 'file'], ['关联审批', 'link'], ['省市区', 'area2'], ['流水号', 'sn'], ['评分', 'star'], ['身份证', 'id'], ['进度', 'prog'], ['手写签名', 'sign'], ['电话', 'tel']]]
+  ];
+  var LICO = {
+    grid: '<rect x="2.5" y="3" width="11" height="10" rx="1"/><path d="M8 3v10"/>', grp: '<rect x="2.5" y="3" width="11" height="10" rx="1"/><path d="M2.5 6.5h11"/>',
+    doc: '<path d="M4.5 2.5h5l3 3v8h-8z"/><path d="M9.5 2.5v3h3"/>', txt: '<path d="M3 5V3.5h10V5M8 3.5v9M6 12.5h4"/>',
+    area: '<path d="M3 4h10M3 7h10M3 10h7"/>', cond: '<path d="M3 4h2M3 8h2M3 12h2M7 4h6M7 8h6M7 12h6"/>',
+    info: '<circle cx="8" cy="8" r="5.6"/><path d="M8 7.4v3.6M8 5.2h.01"/>', num: '<rect x="2.5" y="4" width="11" height="8" rx="1"/><path d="M5 8h1M7.5 8h1M10 8h1"/>',
+    money: '<path d="M8 3.6v8.8"/><path d="M5.6 5.4h3.6a1.7 1.7 0 0 1 0 3.4H6.8a1.7 1.7 0 0 0 0 3.4h3.6"/>', calc: '<path d="M4 4l8 8M12 4l-8 8"/>',
+    radio: '<circle cx="8" cy="8" r="5.6"/><circle cx="8" cy="8" r="2.2"/>', check: '<path d="M3 5h10M3 8h10M3 11h10"/>',
+    sel: '<rect x="2.5" y="4" width="11" height="8" rx="1"/><path d="M6 7.5 8 9.5l2-2"/>', date: '<rect x="2.6" y="3.4" width="10.8" height="10" rx="1.2"/><path d="M2.6 6.4h10.8M5.6 2.2v2.2M10.4 2.2v2.2"/>',
+    range: '<rect x="2.6" y="3.4" width="10.8" height="10" rx="1.2"/><path d="M2.6 6.4h10.8M5.5 9.5h5"/>', tbl: '<rect x="2.5" y="3.5" width="11" height="9" rx="1"/><path d="M2.5 6.5h11M6.5 6.5v6"/>',
+    img: '<rect x="2.5" y="3.5" width="11" height="9" rx="1"/><path d="m3.5 11 3-3 2.2 2.2 2-2 2.3 2.3"/>', file: '<path d="M10.5 6 6.3 10.2a1.9 1.9 0 0 0 2.7 2.7l4.4-4.4a3.2 3.2 0 1 0-4.5-4.5L4.3 8.7"/>',
+    link: '<path d="M4.5 2.5h5l3 3v8h-8z"/><path d="M6.2 8.6 7.6 10l2.6-2.8"/>', area2: '<circle cx="8" cy="6.6" r="2.2"/><path d="M8 1.9c2.6 0 4.6 2 4.6 4.7 0 3-3.2 6-4.6 7.5-1.4-1.5-4.6-4.5-4.6-7.5 0-2.7 2-4.7 4.6-4.7z"/>',
+    sn: '<path d="M3.5 3.5v9M6 3.5v9M8.5 3.5v9M11 3.5v9M13 3.5v9"/>', star: '<path d="M8 2.6 9.7 6l3.7.5-2.7 2.6.6 3.7L8 11.1 4.7 12.8l.6-3.7L2.6 6.5 6.3 6z"/>',
+    id: '<rect x="2.4" y="4" width="11.2" height="8" rx="1.2"/><circle cx="6" cy="7.6" r="1.4"/><path d="M9.5 7h3M9.5 9.4h3M3.8 10.4c.4-1 1.2-1.5 2.2-1.5s1.8.5 2.2 1.5"/>',
+    prog: '<rect x="2.4" y="6.6" width="11.2" height="3" rx="1.5"/><path d="M2.4 8.1h5"/>', sign: '<path d="M2.6 11.4c2.6 0 3-6.4 5-6.4s1.6 6.4 3.4 6.4c1 0 1.6-1 2.4-2.4"/>',
+    tel: '<path d="M5.4 2.8 3.2 5c-.5.5-.4 1.3 0 2a14 14 0 0 0 5.8 5.8c.7.4 1.5.5 2 0l2.2-2.2-2.6-2-1.6 1.2a10 10 0 0 1-3-3L7.4 5.4z"/>'
+  };
+  function lsvg(k) { return '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + (LICO[k] || LICO.txt) + '</svg>'; }
+  document.getElementById('libB').innerHTML = LIB.map(function (g) {
+    return '<div class="lib__g">' + g[0] + '</div><div class="lib__l">'
+      + g[1].map(function (c) { return '<button class="lc" type="button" draggable="true" data-add="' + c[0] + '" data-ic="' + c[1] + '">' + lsvg(c[1]) + c[0] + '</button>'; }).join('')
+      + '</div>';
+  }).join('');
+
+  /* 表单字段：t 控件类型、n 标题、c 占几列、req 必填、ph 占位、agent Agent 带出 */
+  var FF = [
+    { t: 'txt', n: '供应商', c: 6, req: 1, ph: '搜索或选择供应商' },
+    { t: 'sel', n: '采购单', c: 6, req: 1, ph: '只能选已验收的采购单' },
+    { t: 'money', n: '付款金额', c: 6, req: 1, ph: '0.00' },
+    { t: 'txt', n: '合同编号', c: 6, ph: '来自采购单', agent: 1 },
+    { t: 'sel', n: '付款方式', c: 6, req: 1, ph: '银企直连 · 对公转账' },
+    { t: 'sel', n: '收款账户', c: 6, req: 1, ph: '选合同约定账户' },
+    { t: 'area', n: '付款事由', c: 12, req: 1, ph: '写清这笔钱付的是什么' },
+    { t: 'tbl', n: '三单匹配', c: 12, ph: '发票 · 合同 · 验收单，Agent 自动核对', agent: 1 },
+    { t: 'file', n: '附件', c: 12, ph: '发票与验收单必传' }
+  ];
+  var sel = 0;
+  var grid = document.getElementById('fgrid');
+  function paintForm() {
+    grid.innerHTML = FF.map(function (f, i) {
+      var tall = f.t === 'area' || f.t === 'tbl' || f.t === 'file';
+      return '<div class="ff' + (i === sel ? ' on' : '') + '" data-f="' + i + '" style="grid-column:span ' + f.c + '">'
+        + '<button class="rm" type="button" data-rm="' + i + '" title="删除">✕</button>'
+        + '<label>' + (f.req ? '<em>*</em>' : '') + f.n + (f.agent ? ' <span class="tag tag--acc" style="height:16px;font-size:10px;padding:0 5px">Agent 带出</span>' : '') + '</label>'
+        + '<div class="box' + (tall ? ' tall' : '') + '">' + (f.ph || '请输入') + '</div></div>';
+    }).join('') + '<div class="ffhint">从左侧拖入控件，或点击控件直接添加到末尾</div>';
+    paintProp();
+  }
+  var STATES = ['正常', '禁用', '只读', '隐藏'];
+  function grp(title, body, fold) {
+    return '<div class="pgrp' + (fold ? ' fold' : '') + '"><div class="pgrp__h"><b>' + title + '</b>'
+      + '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6.5 8 10.5 12 6.5"/></svg></div>'
+      + '<div class="pgrp__b">' + body + '</div></div>';
+  }
+  function cbx(t, on, key) { return '<span class="cbx' + (on ? ' on' : '') + '" data-cb="' + key + '"><i></i>' + t + '</span>'; }
+  function paintProp() {
+    var f = FF[sel];
+    if (!f) {
+      document.getElementById('fpropH').innerHTML = '<div class="cfg__t"><b>属性</b></div>';
+      document.getElementById('fpropB').innerHTML = '<div class="cfg__e">点表单里的字段，在这里改它的标题、状态、默认值和布局。</div>';
+      return;
+    }
+    var name = (LIB.reduce(function (a, g) { return a.concat(g[1]); }, []).filter(function (c) { return c[1] === f.t; })[0] || ['字段'])[0];
+    document.getElementById('fpropH').innerHTML = '<div class="cfg__t">' + lsvg(f.t) + '<b>' + f.n + '</b><span class="tag">' + name + '</span></div>';
+    var h = grp(name,
+        '<div class="pf"><span><em>*</em>标题</span><input class="inp" id="pTitle" value="' + f.n + '"></div>'
+      + '<div class="pf"><span>状态</span><div class="prow" id="pState">'
+      + STATES.map(function (x, i) { return '<span class="rad' + ((f.st || 0) === i ? ' on' : '') + '" data-st2="' + i + '"><i></i>' + x + '</span>'; }).join('')
+      + '</div></div>'
+      + '<div class="pf"><span>描述信息</span><input class="inp" placeholder="请输入" value="' + (f.desc || '') + '"></div>'
+      + '<div class="pf"><span style="display:flex;align-items:center;gap:8px">默认值设置 <button class="sw' + (f.def ? ' on' : '') + '" type="button" data-cb="def"></button></span>'
+      + '<input class="inp" placeholder="请输入"' + (f.def ? '' : ' disabled') + ' value="' + (f.ph || '') + '"></div>');
+    if (f.t === 'money' || f.t === 'num') {
+      h += grp('格式',
+        '<div class="pf"><div class="prow">' + cbx('显示千分位', f.k1 !== 0, 'k1') + cbx('显示大写', f.k2 !== 0, 'k2') + '</div></div>'
+        + '<div class="pf"><span>小数位</span><span class="ratio">保留 <input value="2"> 位</span></div>'
+        + '<div class="note">示例：38,000.00 · 人民币叁万捌仟元整</div>');
+    }
+    if (f.t === 'radio' || f.t === 'check' || f.t === 'money' || f.t === 'range') {
+      h += grp('显隐设置',
+        '<div class="note" style="margin:0 0 10px">这个控件可以决定别的字段出不出现。比如金额超过 10 万时，才显示「预算科目」。</div>'
+        + '<div class="pf"><span>当</span><span class="ratio">' + f.n + ' 大于 <input value="100000"></span></div>'
+        + '<div class="pf"><span>就显示</span><div class="chips"><span>预算科目<b>✕</b></span><span>成本中心<b>✕</b></span></div></div>');
+    }
+    h += grp('布局',
+        '<div class="pf"><span>占几列（共 12 列）</span><div class="prow" id="pCol">'
+      + [12, 6, 4, 3].map(function (c) { return '<span class="rad' + (f.c === c ? ' on' : '') + '" data-col="' + c + '"><i></i>' + (c === 12 ? '整行' : '1/' + (12 / c)) + '</span>'; }).join('')
+      + '</div></div>'
+      + '<div class="pf"><span>列间距</span><select class="inp"><option>中（16px）</option><option>大（20px）</option><option>小（12px）</option><option>无（0px）</option></select></div>'
+      + '<div class="pf"><span>行间距</span><select class="inp"><option>中（16px）</option><option>大（20px）</option><option>小（12px）</option></select></div>');
+    h += grp('其他', '<div class="prow">' + cbx('打印', f.pr !== 0, 'pr') + cbx('必填', !!f.req, 'req') + '</div>');
+    document.getElementById('fpropB').innerHTML = h;
+  }
+  paintForm();
+
+  grid.addEventListener('click', function (e) {
+    var rm = e.target.closest('[data-rm]');
+    if (rm) { var i = +rm.dataset.rm; var g = FF.splice(i, 1)[0]; if (sel >= FF.length) sel = FF.length - 1; paintForm(); AG.toast('已删除字段「' + g.n + '」'); return; }
+    var f = e.target.closest('[data-f]'); if (!f) return;
+    sel = +f.dataset.f; paintForm();
+  });
+  document.getElementById('fpropB').addEventListener('click', function (e) {
+    var g = e.target.closest('.pgrp__h'); if (g) { g.parentNode.classList.toggle('fold'); return; }
+    var st = e.target.closest('[data-st2]'); if (st) { FF[sel].st = +st.dataset.st2; paintProp(); AG.toast('「' + FF[sel].n + '」状态：' + STATES[FF[sel].st]); return; }
+    var col = e.target.closest('[data-col]'); if (col) { FF[sel].c = +col.dataset.col; paintForm(); return; }
+    var cb = e.target.closest('[data-cb]');
+    if (cb) {
+      var k = cb.dataset.cb, f = FF[sel];
+      if (k === 'req') f.req = f.req ? 0 : 1;
+      else if (k === 'def') f.def = f.def ? 0 : 1;
+      else f[k] = f[k] === 0 ? 1 : 0;
+      paintForm(); return;
+    }
+  });
+  document.getElementById('fpropB').addEventListener('input', function (e) {
+    if (e.target.id === 'pTitle') { FF[sel].n = e.target.value || '未命名字段'; paintForm(); document.getElementById('pTitle') && document.getElementById('pTitle').focus(); }
+  });
+  /* 控件库：点一下加到末尾，也能拖进来 */
+  var libB = document.getElementById('libB');
+  libB.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-add]'); if (!b) return;
+    addField(b.dataset.ic, b.dataset.add);
+  });
+  libB.addEventListener('dragstart', function (e) {
+    var b = e.target.closest('[data-add]'); if (!b) return;
+    e.dataTransfer.setData('text/plain', b.dataset.ic + '|' + b.dataset.add);
+  });
+  function addField(t, n) {
+    FF.push({ t: t, n: n, c: (t === 'area' || t === 'tbl' || t === 'file' ? 12 : 6), ph: '请输入' });
+    sel = FF.length - 1; paintForm();
+    AG.toast('已加入「' + n + '」· 在右边改它的属性');
+    grid.lastElementChild.previousElementSibling.scrollIntoView({ block: 'nearest' });
+  }
+  var fcv = document.getElementById('fcv');
+  fcv.addEventListener('dragover', function (e) { e.preventDefault(); });
+  fcv.addEventListener('drop', function (e) {
+    e.preventDefault();
+    var d = (e.dataTransfer.getData('text/plain') || '').split('|');
+    if (d.length === 2) addField(d[0], d[1]);
+  });
+
+  /* ── AI 智能助手：两步共用，关掉之后左下角有个悬浮按钮再展开 ── */
+  var ai3 = document.querySelector('.st[data-st="3"] .ai');
+  var ai2 = document.getElementById('ai2');
+  ai2.innerHTML = ai3.innerHTML.replace('用自然语言改流程：加节点、改条件、调审批人都行。改完我会告诉你动了哪里。',
+    '用自然语言改表单：加字段、改必填、调布局都行。改完我会告诉你动了哪里。');
+  var lib = document.getElementById('lib');
+  function toggle(panel, fab, on, after) {
+    panel.classList.toggle('off', !on); fab.classList.toggle('on', !on); if (after) after(on);
+    relayout();
+  }
+  /* 悬浮窗收起后，画布把让出来的位置收回去 */
+  function relayout() {
+    var f = document.getElementById('fcv'), cv = document.querySelector('.cv');
+    var aiOn = !ai2.classList.contains('off'), pOn = !document.getElementById('fprop').classList.contains('off');
+    f.style.setProperty('--padL', (aiOn ? 524 : 266) + 'px');
+    f.style.setProperty('--padR', (pOn ? 366 : 30) + 'px');
+    var a3 = !ai3.classList.contains('off'), c3 = !document.getElementById('cfg3').classList.contains('off');
+    cv.style.setProperty('--padL', (a3 ? 288 : 30) + 'px');
+    cv.style.setProperty('--padR', (c3 ? 366 : 30) + 'px');
+  }
+  function bindAI(panel, fab, after) {
+    panel.querySelector('.ai__h .x').addEventListener('click', function () { toggle(panel, fab, false, after); });
+    fab.addEventListener('click', function () { toggle(panel, fab, true, after); });
+  }
+  bindAI(ai3, document.getElementById('fabAI'));
+  bindAI(ai2, document.getElementById('fabAI2'), function (on) { lib.classList.toggle('shift', on); });
+  function bindRight(panel, fab) {
+    var b = document.createElement('button');
+    b.className = 'x fwx'; b.type = 'button'; b.innerHTML = '✕'; b.setAttribute('aria-label', '收起');
+    panel.appendChild(b);
+    b.addEventListener('click', function () { toggle(panel, fab, false); });
+    fab.addEventListener('click', function () { toggle(panel, fab, true); });
+  }
+  bindRight(document.getElementById('cfg3'), document.getElementById('fabP'));
+  bindRight(document.getElementById('fprop'), document.getElementById('fabP2'));
+  /* owner：表单设计这一步先把 AI 智能助手收起来，不然中间画布太小；左下角那颗悬浮按钮随时展开 */
+  toggle(ai2, document.getElementById('fabAI2'), false, function (on) { lib.classList.toggle('shift', on); });
+  relayout();
+
+  /* ── 第 4 步：更多设置（照 Figma 1:60048）── */
+  var MORE = [
+    ['提交人权限', [['允许撤销审批中的申请', '第一个节点通过、发起人依然可以撤销', 1],
+                    ['允许撤销流程结束前的审批', '已经打款这类不可逆动作跑过之后就不能撤了', 1],
+                    ['允许代他人提交', '代提交会写清「谁替谁提的」，审批人看得到', 1]]],
+    ['审批人权限', [['允许审批人撤回', '发出去之后、下一个人还没动，可以撤回来重审', 1],
+                    ['秒批提示', '连续几单在很短时间内批完，会提醒他是不是没看内容', 1],
+                    ['可在审批卡片上直接同意 / 拒绝', '不用点进详情，列表上就能批，含不可逆节点的单子除外', 1]]],
+    ['转发设置', [['只能转发给审批相关人员', '发起人、审批人、办理人、抄送人之外的不能转', 1]]],
+    ['跨组织审批', [['允许跨组织审批', '对外流程必须开，外部审批人才能收到单子', 1]]],
+    ['统计设置', [['这条流程计入统计', '在运行监控和智能洞察里看得到它的数据', 1]]]
+  ];
+  var more = document.getElementById('more');
+  function paintMore() {
+    var h = '<h2>更多设置</h2><p>这些是整条流程的开关，跟单个节点无关。不可逆节点相关的几条不能关，上线前体检会拦。</p>';
+    MORE.forEach(function (g, gi) {
+      h += '<div class="mrow"><div class="lb">' + g[0] + '</div><div>'
+        + g[1].map(function (o, oi) {
+            return '<div class="mopt"><span class="cbx' + (o[2] ? ' on' : '') + '" data-m="' + gi + ',' + oi + '"><i></i>' + o[0] + '</span><p>' + o[1] + '</p></div>';
+          }).join('') + '</div></div>';
+    });
+    h += '<div class="mrow"><div class="lb">审批标题</div><div>'
+      + '<div class="mopt"><span class="rad on"><i></i>系统默认：显示表单名称</span></div>'
+      + '<div class="mopt"><span class="rad"><i></i>自定义标题</span>'
+      + '<div class="chips" style="margin:8px 0 0 20px"><span>发起人<b>✕</b></span><span>·<b>✕</b></span><span>付款金额<b>✕</b></span><span class="lnk" style="border:0;background:none;color:#4857e2">＋ 插入表单字段</span></div></div>'
+      + '</div></div>';
+    /* owner：审批摘要也做成两个选项，跟上面审批标题一样；多出来的那个是 AI 智能摘要 */
+    h += '<div class="mrow"><div class="lb">审批摘要</div><div>'
+      + '<div class="note" style="margin:0 0 10px">审批人在列表上不点开就能看到的那一段。</div>'
+      + '<div class="mopt"><span class="rad on"><i></i>选定字段：固定显示这几个字段</span>'
+      + '<div class="chips" style="margin:8px 0 0 20px"><span>供应商<b>✕</b></span><span>付款金额<b>✕</b></span><span>采购单<b>✕</b></span><span class="lnk" style="border:0;background:none;color:#4857e2">＋ 插入表单字段</span></div></div>'
+      + '<div class="mopt"><span class="rad"><i></i>AI 智能摘要：Agent 按这张单的内容写一句话</span>'
+      + '<p>字段多、每张单重点不一样时用它。比如金额异常或供应商是新的，会被写进摘要里。</p>'
+      + '<div class="aisum" style="margin:8px 0 0 20px">' + AG.svg('spark', 1.4)
+      + '<div><b>示例：</b>华东物流 ¥38,000，三单一致、供应商正常，下一步是不可逆的执行付款。</div></div>'
+      + '<div class="prow" style="margin:9px 0 0 20px"><span class="cbx on" data-m="s0"><i></i>摘要里带上 Agent 的判断结论</span></div>'
+      + '<div class="prow" style="margin:7px 0 0 20px"><span class="cbx on" data-m="s1"><i></i>金额、账户这类敏感字段按原文显示，不改写</span></div>'
+      + '</div></div></div>';
+    h += '<div class="mrow"><div class="lb">审批超时</div><div>'
+      + '<div class="mopt"><span class="cbx on" data-m="t0"><i></i>开启审批超时配置</span>'
+      + '<p>某一个节点停太久就提醒，再久就自动转人工。</p></div>'
+      + '<div class="prow" style="margin:10px 0 0 20px"><span class="mini">超过 <input value="24"> 小时</span><span class="dim" style="font-size:12px">未处理 → 提醒审批人</span></div>'
+      + '<div class="prow" style="margin:8px 0 0 20px"><span class="mini">再等 <input value="24"> 小时</span><span class="dim" style="font-size:12px">仍未处理 → 转人工处理（不会自动同意）</span></div>'
+      + '</div></div>';
+    h += '<div class="banner banner--risk" style="margin-top:20px"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.4M8 10.6h.01"/></svg>'
+      + '超时之后一律转人工，不会自动同意。这条流程里有 1 个不可逆节点（执行付款），任何情况下都要人点。</div>';
+    more.innerHTML = h;
+  }
+  paintMore();
+  more.addEventListener('click', function (e) {
+    var c = e.target.closest('[data-m]');
+    if (c) {
+      var k = c.dataset.m;
+      if (k.indexOf(',') > 0) { var a = k.split(','); MORE[+a[0]][1][+a[1]][2] = MORE[+a[0]][1][+a[1]][2] ? 0 : 1; paintMore(); }
+      else c.classList.toggle('on');
+      return;
+    }
+    var r = e.target.closest('.rad');
+    if (r) { [].forEach.call(r.closest('.mrow').querySelectorAll('.rad'), function (x) { x.classList.toggle('on', x === r); }); }
+  });
+
+  paintWiz();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>容器预览 — tab-bar</title>
+
+  <!-- 基础样式（本项目内路径 · 顺序锁死） -->
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+
+  <!-- 本 fragment 自身 css（自包含） -->
+  <link rel="stylesheet" href="tab-bar.css">
+
+  <style>
+    /* 仅预览页用 · 不进 fragment css */
+    body { margin: 24px; background: var(--cs-color-bg-app-dark); }
+    .label { font-size: 11px; color: var(--cs-color-text-light2); margin-bottom: 8px; font-family: var(--font-family-cn); }
+  </style>
+</head>
+<body>
+  <div class="label">tab-bar 预览 — Figma 12:2345 · 自包含模式</div>
+
+  <cs-tabbar class="tabbar">
+
+    <!-- 左槽：mac 3 圆点 + 搜索 + tabs -->
+    <div class="slot-left">
+
+      <!-- 三圆点（mac 窗口控件） -->
+      <div class="slot-buttons">
+        <cs-window-control>
+          <span class="ctrl-close"></span>
+          <span class="ctrl-minimize"></span>
+          <span class="ctrl-maximize"></span>
+        </cs-window-control>
+      </div>
+
+      <!-- 搜索框（深底之上） -->
+      <div class="slot-search">
+        <cs-search-input data-variant="dark-on-dark">
+          <input type="text" placeholder="搜索" />
+          <i class="cses-sousuo"></i>
+        </cs-search-input>
+      </div>
+
+      <!-- Tab 列表（占位文案） -->
+      <div class="slot-tabs">
+        <cs-tab data-active>
+          <span class="tab-label">页面框架</span>
+          <i class="tab-close cses-guanbi"></i>
+        </cs-tab>
+        <cs-tab>
+          <span class="tab-label">视觉基础</span>
+          <i class="tab-close cses-guanbi"></i>
+        </cs-tab>
+      </div>
+
+    </div>
+
+    <!-- 中间竖分隔线（1×44） -->
+    <div class="slot-divider"></div>
+
+    <!-- 右槽：通知 + 头像呼吸圈 -->
+    <div class="slot-actions">
+
+      <!-- 通知铃铛 + 红点 -->
+      <span class="tabbar-notify-wrap">
+        <i class="cses-tongzhi tabbar-notify-icon"></i>
+        <span class="tabbar-notify-badge">2</span>
+      </span>
+
+      <!-- 头像 + 呼吸装饰圈（1 头像 + 2 层光环 · 在线态） -->
+      <div class="avatar-pulse" data-online>
+        <span class="avatar-pulse-ring avatar-pulse-ring--outer"></span>
+        <span class="avatar-pulse-ring avatar-pulse-ring--mid"></span>
+        <img class="avatar-pulse-img" src="../../../assets/avatar/avatar-rectangle-1020.png" alt="头像" />
+      </div>
+
+    </div>
+
+  </cs-tabbar>
+</body>
+</html>

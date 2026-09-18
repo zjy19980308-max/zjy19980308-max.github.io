@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-splitter 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="splitter.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .demo-box { height: 240px; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-title">水平分隔 Horizontal（左右）</div>
+  <div class="demo-box">
+    <cs-splitter>
+      <div class="splitter-panel" style="flex: 0 0 260px;">
+        <strong>左侧面板</strong>
+        <p>导航树 / 筛选条件 / 列表</p>
+      </div>
+      <div class="splitter-bar"></div>
+      <div class="splitter-panel">
+        <strong>右侧主内容区</strong>
+        <p>详情 / 编辑器 / 预览</p>
+      </div>
+    </cs-splitter>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">垂直分隔 Vertical（上下）</div>
+  <div class="demo-box">
+    <cs-splitter data-direction="vertical">
+      <div class="splitter-panel" style="flex: 0 0 80px;">
+        <strong>顶部面板</strong>
+      </div>
+      <div class="splitter-bar"></div>
+      <div class="splitter-panel">
+        <strong>底部面板</strong>
+      </div>
+    </cs-splitter>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">三段分隔</div>
+  <div class="demo-box">
+    <cs-splitter>
+      <div class="splitter-panel" style="flex: 0 0 200px;">导航</div>
+      <div class="splitter-bar"></div>
+      <div class="splitter-panel">列表</div>
+      <div class="splitter-bar"></div>
+      <div class="splitter-panel" style="flex: 0 0 320px;">预览</div>
+    </cs-splitter>
+  </div>
+</div>
+
+<script src="splitter.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-meeting-block 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="../../../components/desktop/button/button.css">
+  <link rel="stylesheet" href="meeting-block.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .section { background: var(--cs-color-bg); border-radius: var(--radius-lg); padding: var(--spacing-24); margin-bottom: var(--spacing-24); }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: var(--space-md); }
+    .row { display: flex; flex-direction: column; gap: var(--space-sm); margin-bottom: var(--space-md); }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); }
+  </style>
+</head>
+<body>
+
+<div id="screenshot-target">
+
+  <div class="section">
+    <div class="section-title">会议块 Meeting Block — 嵌入文档</div>
+
+    <div class="row">
+      <span class="row-label">进行中</span>
+      <cs-meeting-block data-status="ongoing">
+        <div class="meeting-icon-box">
+          <i class="meeting-icon cses-putonghuiyi"></i>
+        </div>
+        <div class="meeting-body">
+          <span class="meeting-title">文档库需求对接会</span>
+          <span class="meeting-meta">2025/09/09 12:00-12:30 · 进行中</span>
+        </div>
+        <div class="meeting-actions">
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-meeting-block>
+    </div>
+
+    <div class="row">
+      <span class="row-label">即将开始</span>
+      <cs-meeting-block data-status="upcoming">
+        <div class="meeting-icon-box">
+          <i class="meeting-icon cses-putonghuiyi"></i>
+        </div>
+        <div class="meeting-body">
+          <span class="meeting-title">设计周会</span>
+          <span class="meeting-meta">2025/09/10 10:00-11:00 · 5 分钟后开始</span>
+        </div>
+        <div class="meeting-actions">
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-meeting-block>
+    </div>
+
+    <div class="row">
+      <span class="row-label">已结束</span>
+      <cs-meeting-block data-status="ended">
+        <div class="meeting-icon-box">
+          <i class="meeting-icon cses-putonghuiyi"></i>
+        </div>
+        <div class="meeting-body">
+          <span class="meeting-title">原型评审会</span>
+          <span class="meeting-meta">2025/09/05 14:00-15:00 · 已结束</span>
+        </div>
+        <div class="meeting-actions">
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-meeting-block>
+    </div>
+
+    <div class="row">
+      <span class="row-label">禁用</span>
+      <cs-meeting-block data-status="ended" data-disabled>
+        <div class="meeting-icon-box">
+          <i class="meeting-icon cses-putonghuiyi"></i>
+        </div>
+        <div class="meeting-body">
+          <span class="meeting-title">无访问权限的会议</span>
+          <span class="meeting-meta">2025/08/01 09:00-10:00 · 已结束</span>
+        </div>
+        <div class="meeting-actions">
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-meeting-block>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

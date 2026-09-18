@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-status-badge 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="status-badge.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 100px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- 所有状态 -->
+<div class="section">
+  <div class="section-title">状态徽标（data-status）</div>
+  <div class="section-subtitle">内联药丸式标签，用于任务/会议列表的状态展示</div>
+
+  <div class="row">
+    <span class="row-label">not-started</span>
+    <cs-status-badge data-status="not-started">未开始</cs-status-badge>
+  </div>
+
+  <div class="row">
+    <span class="row-label">in-progress</span>
+    <cs-status-badge data-status="in-progress">进行中</cs-status-badge>
+  </div>
+
+  <div class="row">
+    <span class="row-label">completed</span>
+    <cs-status-badge data-status="completed">已完成</cs-status-badge>
+  </div>
+
+  <div class="row">
+    <span class="row-label">overdue</span>
+    <cs-status-badge data-status="overdue">已逾期</cs-status-badge>
+  </div>
+
+  <div class="row">
+    <span class="row-label">paused</span>
+    <cs-status-badge data-status="paused">已暂停</cs-status-badge>
+  </div>
+</div>
+
+<!-- 内联使用示例 -->
+<div class="section">
+  <div class="section-title">内联使用示例</div>
+  <div class="section-subtitle">在任务列表或会议列表中显示状态</div>
+
+  <div class="row">
+    <cs-status-badge data-status="in-progress">进行中</cs-status-badge>
+    <span style="font: var(--typo-cn-14-regular); color: var(--cs-color-text);">产品需求评审会议</span>
+  </div>
+
+  <div class="row">
+    <cs-status-badge data-status="completed">已完成</cs-status-badge>
+    <span style="font: var(--typo-cn-14-regular); color: var(--cs-color-text);">前端组件库搭建</span>
+  </div>
+
+  <div class="row">
+    <cs-status-badge data-status="overdue">已逾期</cs-status-badge>
+    <span style="font: var(--typo-cn-14-regular); color: var(--cs-color-text);">UI 设计走查</span>
+  </div>
+
+  <div class="row">
+    <cs-status-badge data-status="paused">已暂停</cs-status-badge>
+    <span style="font: var(--typo-cn-14-regular); color: var(--cs-color-text);">后端接口联调</span>
+  </div>
+</div>
+
+</body>
+</html>

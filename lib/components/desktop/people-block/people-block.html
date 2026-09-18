@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-people-block 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="../../../components/desktop/button/button.css">
+  <link rel="stylesheet" href="people-block.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .section { background: var(--cs-color-bg); border-radius: var(--radius-lg); padding: var(--spacing-24); margin-bottom: var(--spacing-24); }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: var(--space-md); }
+    .row { display: flex; flex-direction: column; gap: var(--space-sm); margin-bottom: var(--space-md); }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); }
+  </style>
+</head>
+<body>
+
+<div id="screenshot-target">
+
+  <div class="section">
+    <div class="section-title">人员/群名片块 People Block — 嵌入文档（蓝色描边表示被引用提及）</div>
+
+    <div class="row">
+      <span class="row-label">群名片（文字头像）</span>
+      <cs-people-block data-type="group">
+        <div class="people-avatar-box">
+          <span class="people-avatar-text">中</span>
+        </div>
+        <div class="people-body">
+          <span class="people-name">中企云链@开发团队</span>
+          <span class="people-subtitle">群名片</span>
+        </div>
+        <div class="people-actions">
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-people-block>
+    </div>
+
+    <div class="row">
+      <span class="row-label">群名片（图标头像）</span>
+      <cs-people-block data-type="group">
+        <div class="people-avatar-box">
+          <i class="people-avatar-icon cses-qunzutaolun"></i>
+        </div>
+        <div class="people-body">
+          <span class="people-name">设计协作群</span>
+          <span class="people-subtitle">群名片</span>
+        </div>
+        <div class="people-actions">
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-people-block>
+    </div>
+
+    <div class="row">
+      <span class="row-label">个人名片</span>
+      <cs-people-block data-type="person">
+        <div class="people-avatar-box">
+          <span class="people-avatar-text">张</span>
+        </div>
+        <div class="people-body">
+          <span class="people-name">张三</span>
+          <span class="people-subtitle">个人名片</span>
+        </div>
+        <div class="people-actions">
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-people-block>
+    </div>
+
+    <div class="row">
+      <span class="row-label">禁用</span>
+      <cs-people-block data-type="group" data-disabled>
+        <div class="people-avatar-box">
+          <span class="people-avatar-text">归</span>
+        </div>
+        <div class="people-body">
+          <span class="people-name">已归档群组</span>
+          <span class="people-subtitle">群名片</span>
+        </div>
+        <div class="people-actions">
+          <cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button>
+        </div>
+      </cs-people-block>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+/*
+ * 聊天列表项组件 (Chat Item)
+ * 标签：<cs-chat-item>
+ * 数据来源：消息设计稿 Figma（聊天列表 330x57）
+ *
+ * Figma 实测：
+ *   容器: 330x57, padding 8 16, flex row, gap 8, align center
+ *   头像: 40x40 cs-avatar lg
+ *   内容: flex:1, flex-column, overflow hidden
+ *   名称: 14px/500 PingFang SC, color #1d2129 → var(--cs-color-text)
+ *   预览: 12px/400 PingFang SC, color #8c8c8d → var(--cs-color-text-light2)
+ *   时间: 10px/400, color #8c8c8d → var(--cs-color-text-light2)
+ *   选中态: bg → var(--cs-color-selected)
+ *   悬浮态: bg → var(--cs-color-bg-hover)
+ *
+ * data 属性：
+ *   data-active         — 选中/激活态
+ *   data-muted          — 消息免打扰
+ *   data-pinned         — 置顶
+ *   data-style="soft"   — 飞书风格软选中态（浅灰底 + 右侧 ✓）
+ */
+
+/* ========== 基础样式 ========== */
+cs-chat-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-md);
+  cursor: pointer;
+  user-select: none;
+  box-sizing: border-box;
+  transition: background var(--cs-transition-fast);
+}
+
+/* ========== 悬浮态 ========== */
+cs-chat-item:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 选中/激活态 ========== */
+cs-chat-item[data-active] {
+  background: var(--cs-color-selected);
+}
+
+/* ========== 头像 ========== */
+cs-chat-item .chat-avatar {
+  flex-shrink: 0;
+}
+
+/* ========== 内容区 ========== */
+cs-chat-item .chat-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* 名称 */
+cs-chat-item .chat-name {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 消息预览 */
+cs-chat-item .chat-preview {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========== 右侧元数据区 ========== */
+cs-chat-item .chat-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2xs);
+  flex-shrink: 0;
+}
+
+/* 时间 */
+cs-chat-item .chat-time {
+  font-size: var(--font-size-xs);
+  color: var(--cs-color-text-light2);
+  white-space: nowrap;
+}
+
+/* ========== 免打扰状态 ========== */
+cs-chat-item[data-muted] .chat-preview {
+  opacity: 0.6;
+}
+
+cs-chat-item[data-muted] .chat-muted-icon {
+  display: inline-flex;
+  font-size: var(--cs-sem-size-icon-sm);
+  color: var(--cs-color-text-light2);
+}
+
+/* 默认隐藏免打扰图标 */
+cs-chat-item .chat-muted-icon {
+  display: none;
+}
+
+/* ========== 置顶状态 ========== */
+cs-chat-item[data-pinned] .chat-pin-icon {
+  display: inline-flex;
+  font-size: var(--cs-sem-size-icon-sm);
+  color: var(--cs-color-text-light2);
+}
+
+/* 默认隐藏置顶图标 */
+cs-chat-item .chat-pin-icon {
+  display: none;
+}
+
+/* ========== style: soft · 飞书风格软选中（浅灰底 + 右侧 ✓ · 不是蓝底）==========
+ * 优先级强保：!important 覆盖默认 [data-active] 蓝底
+ * 实证：visual round 5 默认 [data-active] 优先级被同级覆盖 → 加 !important 物理强保
+ */
+cs-chat-item[data-style="soft"][data-active] {
+  background: var(--cs-color-bg-hover) !important;
+  position: relative;
+}
+cs-chat-item[data-style="soft"][data-active]::after {
+  content: '✓';
+  position: absolute;
+  right: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--cs-color-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+/* soft 模式 hover 也保持浅灰（不再变深）*/
+cs-chat-item[data-style="soft"]:hover {
+  background: var(--cs-color-bg-hover);
+}

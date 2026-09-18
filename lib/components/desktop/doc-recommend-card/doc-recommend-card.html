@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cs-doc-recommend-card</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="./doc-recommend-card.css">
+  <style>
+    body {
+      margin: 0;
+      padding: var(--cs-sem-spacing-layout-gutter);
+      background: var(--cs-sem-bg-secondary);
+      font: var(--cs-typo-body-medium);
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--cs-sem-spacing-content-inline);
+      max-width: var(--cs-sem-size-content-xl);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-grid">
+    <cs-doc-recommend-card data-variant="feature">
+      <div class="card-top">
+        <span class="card-badge">推荐</span>
+      </div>
+      <div class="card-title">设计系统总览</div>
+      <div class="card-summary">覆盖变量、组件、布局与流程的统一入口。</div>
+      <div class="card-meta">8 分钟阅读</div>
+      <div class="card-action">立即查看</div>
+    </cs-doc-recommend-card>
+
+    <cs-doc-recommend-card>
+      <div class="card-top">
+        <span class="card-badge">常用</span>
+      </div>
+      <div class="card-title">组件契约说明</div>
+      <div class="card-summary">快速定位 class、data 属性与预览规范。</div>
+      <div class="card-meta">5 分钟阅读</div>
+      <div class="card-action">加入阅读队列</div>
+    </cs-doc-recommend-card>
+  </div>
+</body>
+</html>

@@ -1,0 +1,110 @@
+/* ============================================================
+ * cs-hero-banner — 工作台顶部品牌欢迎区
+ * 视觉骨架：ref-03 智能陪练 banner（深紫渐变 + 3D 火箭 + 4 快捷）
+ *
+ * data 属性：
+ *   （本组件无变体 data 属性，所有变化通过子元素增减控制：
+ *    - 必填：.hero-content（含 .hero-greeting + .hero-summary）
+ *    - 可选：.hero-shortcuts（含 1-N 个 .hero-shortcut[data-action]）
+ *    - 可选：.hero-illustration）
+ *
+ * 子元素 data 属性：
+ *   .hero-shortcut[data-action]
+ *     - daily-checkin / create-task / quick-meeting / create-doc / 自定义动作 ID
+ * ============================================================ */
+
+cs-hero-banner {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 180px;
+  border-radius: var(--cs-radius-ws-lg);
+  background: var(--cs-gradient-hero), var(--cs-gradient-hero-overlay);
+  background-blend-mode: normal, screen;
+  padding: var(--cs-space-ws-3xl);
+  overflow: hidden;
+  color: var(--cs-color-ws-white);
+}
+
+/* 装饰光斑 */
+cs-hero-banner::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--cs-color-ws-overlay-light-18) 0%, var(--cs-color-ws-pulse-out) 70%);
+  pointer-events: none;
+}
+
+cs-hero-banner .hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 70%;
+}
+
+cs-hero-banner .hero-greeting {
+  font-size: var(--cs-fs-ws-h1);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+cs-hero-banner .hero-summary {
+  margin-top: 6px;
+  font-size: var(--cs-fs-ws-body);
+  color: var(--cs-color-ws-overlay-light-85);
+}
+
+cs-hero-banner .hero-summary b {
+  color: var(--cs-color-ws-white);
+  font-weight: 600;
+}
+
+/* 4 快捷入口横排 */
+cs-hero-banner .hero-shortcuts {
+  position: relative;
+  z-index: 1;
+  margin-top: 22px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+cs-hero-banner .hero-shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--cs-color-ws-overlay-light-14);
+  border: 1px solid var(--cs-color-ws-overlay-light-18);
+  border-radius: var(--cs-radius-ws-md);
+  color: var(--cs-color-ws-white);
+  font-size: var(--cs-fs-ws-body);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+cs-hero-banner .hero-shortcut:hover {
+  background: var(--cs-color-ws-overlay-light-22);
+  transform: translateY(-1px);
+}
+cs-hero-banner .hero-shortcut i {
+  font-size: var(--cs-fs-ws-h2);
+}
+
+/* 右侧 3D 装饰区（占位 emoji 或插画） */
+cs-hero-banner .hero-illustration {
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 96px; /* hero illustration emoji 仅一处 */
+  line-height: 1;
+  opacity: 0.95;
+  z-index: 0;
+  user-select: none;
+}

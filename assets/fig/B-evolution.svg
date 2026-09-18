@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<style>
+  .bg{fill:#083D2A}
+  .t{fill:#EED6C8;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .m{fill:#8FB3A0;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mb{fill:#EED6C8;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .d{fill:#EED6C8;font-family:'Instrument Serif',Georgia,serif}
+  .a{fill:#DAAB00}
+  .am{fill:#DAAB00;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mu{fill:#8FB3A0;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .ln{stroke:#EED6C8;fill:none}
+  .ln2{stroke:#EED6C8;fill:none;opacity:.35}
+  .la{stroke:#DAAB00;fill:none}
+  .ds{stroke:#8FB3A0;fill:none;stroke-dasharray:6 6}
+  .box{fill:none;stroke:#EED6C8;stroke-opacity:.55}
+  .boxa{fill:#DAAB00;fill-opacity:.12;stroke:#DAAB00}
+  .fill{fill:#EED6C8;fill-opacity:.06;stroke:#EED6C8;stroke-opacity:.35}
+  .hatch{fill:url(#hz);stroke:#EED6C8;stroke-opacity:.35}
+  .pill{fill:none;stroke:#EED6C8;stroke-opacity:.6}
+</style>
+<defs>
+  <pattern id="hz" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#EED6C8" stroke-opacity=".22" stroke-width="1"/>
+  </pattern>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#EED6C8"/>
+  </marker>
+  <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#DAAB00"/>
+  </marker>
+  <marker id="arm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#8FB3A0"/>
+  </marker>
+</defs>
+<rect class="bg" width="1600" height="900"/><text x="90" y="96" class="d" font-size="48" text-anchor="start" font-weight="400" >四代架构，三次转向</text><text x="90" y="132" class="mu" font-size="18" text-anchor="start" font-weight="400" >每一次都是上一种撞了墙才换的 · 2026</text><text x="1510" y="80" class="m" font-size="13" text-anchor="end" font-weight="400" >FIG B · EVOLUTION</text><line x1="150" y1="560" x2="1450" y2="560" class="ln2" marker-end="url(#ar)"/><circle cx="300" cy="560" r="11" fill="#083D2A" stroke="#EED6C8" stroke-width="2"/><text x="300" y="468" class="m" font-size="12" text-anchor="middle" font-weight="400" >GEN 01</text><text x="300" y="504" class="t" font-size="26" text-anchor="middle" font-weight="500" >单 agent 对话出图</text><text x="300" y="530" class="mu" font-size="14" text-anchor="middle" font-weight="400" >一个对话框从头聊到尾</text><text x="300" y="606" class="t" font-size="14" text-anchor="middle" font-weight="400" >结果不可重复：换个说法换一套风格</text><circle cx="650" cy="560" r="11" fill="#083D2A" stroke="#EED6C8" stroke-width="2"/><text x="650" y="468" class="m" font-size="12" text-anchor="middle" font-weight="400" >GEN 02</text><text x="650" y="504" class="t" font-size="26" text-anchor="middle" font-weight="500" >多 agent 编排</text><text x="650" y="530" class="mu" font-size="14" text-anchor="middle" font-weight="400" >拆成十五个 AI 分工</text><text x="650" y="606" class="t" font-size="14" text-anchor="middle" font-weight="400" >想让它们共用一份记忆 → 被我否决</text><circle cx="1000" cy="560" r="11" fill="#083D2A" stroke="#EED6C8" stroke-width="2"/><text x="1000" y="468" class="m" font-size="12" text-anchor="middle" font-weight="400" >GEN 03</text><text x="1000" y="504" class="t" font-size="26" text-anchor="middle" font-weight="500" >子 agent 调度</text><text x="1000" y="530" class="mu" font-size="14" text-anchor="middle" font-weight="400" >用完就散，临时召唤</text><text x="1000" y="606" class="t" font-size="14" text-anchor="middle" font-weight="400" >每次都是新人：同一个错抓三遍</text><circle cx="1350" cy="560" r="11" fill="#DAAB00" stroke="#DAAB00" stroke-width="2"/><text x="1350" y="468" class="am" font-size="12" text-anchor="middle" font-weight="400" >GEN 04</text><text x="1350" y="504" class="t" font-size="26" text-anchor="middle" font-weight="500" >多 session 编排</text><text x="1350" y="530" class="mu" font-size="14" text-anchor="middle" font-weight="400" >一环一个 AI，长期在岗</text><text x="1350" y="606" class="t" font-size="14" text-anchor="middle" font-weight="400" >八个会话，五个出页面 · 返工找原人</text><rect x="1275.0" y="635.0" width="150" height="34" rx="17.0" class="pill"/><text x="1350" y="657" class="mb" font-size="12" text-anchor="middle" font-weight="400" >NOW · 现在跑的</text><path d="M650 548 L650 330" class="ds"/><rect x="480" y="220" width="340" height="110" rx="10" class="box" stroke-dasharray="6 6"/><line x1="574" y1="281" x2="726" y2="281" stroke="#DAAB00" stroke-width="3"/><text x="800" y="246" class="a" font-size="18" text-anchor="end" font-weight="400" >✕</text><text x="650" y="258" class="am" font-size="12" text-anchor="middle" font-weight="400" >REJECTED · 被否决的方案</text><text x="650" y="288" class="t" font-size="24" text-anchor="middle" font-weight="500" >共用一份记忆</text><text x="650" y="314" class="mu" font-size="13" text-anchor="middle" font-weight="400" >15 个 agent 共享上下文 · 填满速度 15×</text><text x="650" y="372" class="t" font-size="14" text-anchor="middle" font-weight="400" >想要「一直记得」，实际得到「一直在忘」</text><text x="650" y="396" class="a" font-size="14" text-anchor="middle" font-weight="400" >→ 反过来做：文件共用，记忆各管各的</text></svg>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>容器预览 — space-switcher</title>
+
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="space-switcher.css">
+
+  <style>
+    body { margin: 24px; background: var(--cs-color-bg-app-dark); min-height: 100vh; display: flex; }
+    .label { position: fixed; top: 4px; left: 24px; font-size: 11px; color: var(--cs-color-text-light2); font-family: var(--font-family-cn); }
+  </style>
+</head>
+<body>
+  <div class="label">space-switcher 预览 — 自包含模式</div>
+
+  <cs-space-switcher class="right-sidebar">
+    <div class="inner">
+
+      <div class="slot-tools">
+
+        <!-- 顶部 4 工具组（embed PNG 占位 · 业务页提供真实图标） -->
+        <div class="tool-group">
+          <a class="tool-item" href="javascript:;">
+            <i class="cses-add"></i>
+          </a>
+          <a class="tool-item" href="javascript:;">
+            <i class="cses-shoucang"></i>
+          </a>
+          <a class="tool-item" href="javascript:;">
+            <i class="cses-zhinengrenshi"></i>
+          </a>
+          <a class="tool-item" href="javascript:;">
+            <i class="cses-richeng"></i>
+          </a>
+        </div>
+
+        <!-- 顶部分割线 -->
+        <div class="divider"></div>
+
+        <!-- 空间块组 -->
+        <div class="tool-group spaces-group">
+          <div class="space-card" data-active>
+            <i class="cses-wenjian"></i>
+            <span class="space-label">我的空间</span>
+          </div>
+          <div class="space-card">
+            <i class="cses-wenjian"></i>
+            <span class="space-label">空间1</span>
+          </div>
+          <a class="add-btn" href="javascript:;">
+            <i class="cses-add"></i>
+          </a>
+          <div class="divider"></div>
+          <div class="space-card is-trash">
+            <i class="cses-huishouzhan"></i>
+            <span class="space-label">回收站</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 底部客服 -->
+      <div class="slot-bottom">
+        <div class="customer-service">
+          <i class="cses-kefu"></i>
+          <span class="notify-badge"></span>
+        </div>
+      </div>
+
+    </div>
+  </cs-space-switcher>
+</body>
+</html>

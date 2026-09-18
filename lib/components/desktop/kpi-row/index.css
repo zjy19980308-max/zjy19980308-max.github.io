@@ -1,0 +1,177 @@
+/* task_id: 学员看板（老师版）-2026-05-21-1430 · component: cs-kpi-row · PLAN-003 ★ */
+.cs-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+.cs-kpi-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 20px 16px;
+  background: var(--cs-color-white);
+  border: 1px solid var(--cs-color-border);
+  border-radius: 12px;
+  box-shadow: var(--cs-shadow-card);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  overflow: hidden;
+}
+.cs-kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--cs-color-primary);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+.cs-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--cs-shadow-card);
+  border-color: var(--cs-color-primary-light);
+}
+.cs-kpi-card:hover::before { opacity: 1; }
+.cs-kpi-card--warning::before {
+  background: var(--cs-color-warning);
+  opacity: 1;
+}
+.cs-kpi-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cs-kpi-card__label {
+  font-size: 13px;
+  color: var(--cs-color-text-secondary);
+  font-weight: 500;
+}
+.cs-kpi-card__icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cs-color-selected);
+  color: var(--cs-color-primary);
+  font-size: 14px;
+}
+.cs-kpi-card--warning .cs-kpi-card__icon {
+  background: var(--cs-color-warning-hover);
+  color: var(--cs-color-warning);
+}
+.cs-kpi-card__value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.cs-kpi-card__num {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--cs-color-text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.cs-kpi-card__unit {
+  font-size: 13px;
+  color: var(--cs-color-text-tertiary);
+}
+.cs-kpi-card__rate {
+  font-size: 13px;
+  color: var(--cs-color-success);
+  font-weight: 600;
+  margin-left: auto;
+}
+.cs-kpi-card__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--cs-color-border);
+}
+.cs-kpi-card__foot--chart {
+  border-top: 0;
+  padding-top: 0;
+  justify-content: space-between;
+}
+.cs-kpi-card__spark {
+  position: relative;
+  width: 60%;
+  height: 24px;
+  display: inline-block;
+  background: linear-gradient(180deg, transparent 0%, transparent 60%, var(--cs-color-green-50) 100%);
+  border-radius: 4px;
+  color: var(--cs-color-success);
+}
+.cs-kpi-card__spark--down { color: var(--cs-color-success); }
+.cs-kpi-card__spark-dot {
+  position: absolute;
+  left: var(--cs-spark-x);
+  top: var(--cs-spark-y);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+.cs-kpi-card__spark-dot::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 50%;
+  width: 14px;
+  height: 1.5px;
+  background: currentColor;
+  opacity: 0.6;
+  transform-origin: left center;
+}
+.cs-kpi-card__spark-dot:last-child::after { display: none; }
+.cs-kpi-card__compare {
+  font-size: 12px;
+  color: var(--cs-color-text-tertiary);
+}
+.cs-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.cs-delta--up {
+  color: var(--cs-color-success);
+  background: var(--cs-color-green-50);
+}
+.cs-delta--down {
+  color: var(--cs-color-error);
+  background: var(--cs-color-red-50);
+}
+.cs-delta--bad {
+  color: var(--cs-color-error);
+  background: var(--cs-color-red-50);
+}
+.cs-delta i {
+  font-size: 10px;
+}
+.cs-status-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: auto;
+}
+.cs-status-pill--danger {
+  background: var(--cs-color-red-50);
+  color: var(--cs-color-error);
+  border: 1px solid var(--cs-color-red-200);
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-message 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="message.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+    .stage { background: #fafafa; padding: 24px; border-radius: 4px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 五种类型 ========== -->
+<div class="section">
+  <div class="section-title">五种类型 Types</div>
+  <div class="section-subtitle">data-type="success | info | warning | danger | loading"</div>
+  <div class="row">
+    <cs-message data-type="success">
+      <i class="message-icon cses-check-circle"></i>
+      <span class="message-text">操作成功</span>
+    </cs-message>
+    <cs-message data-type="info">
+      <i class="message-icon cses-info-circle"></i>
+      <span class="message-text">这是一条提示消息</span>
+    </cs-message>
+    <cs-message data-type="warning">
+      <i class="message-icon cses-exclamation-circle"></i>
+      <span class="message-text">请注意，此操作不可撤销</span>
+    </cs-message>
+    <cs-message data-type="danger">
+      <i class="message-icon cses-close-circle"></i>
+      <span class="message-text">操作失败，请稍后再试</span>
+    </cs-message>
+    <cs-message data-type="loading">
+      <i class="message-icon cses-refresh"></i>
+      <span class="message-text">加载中，请稍候...</span>
+    </cs-message>
+  </div>
+</div>
+
+<!-- ========== 2. 顶部居中浮层（贴近真实场景） ========== -->
+<div class="section">
+  <div class="section-title">顶部居中浮层 Top Container</div>
+  <div class="section-subtitle">.message-container 用于堆叠多条 message，固定顶部居中</div>
+  <div class="stage" style="position: relative; min-height: 200px;">
+    <div class="message-container" style="position: absolute;">
+      <cs-message data-type="success">
+        <i class="message-icon cses-check-circle"></i>
+        <span class="message-text">文件已保存</span>
+      </cs-message>
+      <cs-message data-type="info">
+        <i class="message-icon cses-info-circle"></i>
+        <span class="message-text">3 个新更新可用</span>
+      </cs-message>
+      <cs-message data-type="warning">
+        <i class="message-icon cses-exclamation-circle"></i>
+        <span class="message-text">即将自动登出</span>
+      </cs-message>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 3. 长文本 ========== -->
+<div class="section">
+  <div class="section-title">长文本 Long Text</div>
+  <div class="section-subtitle">message 默认 nowrap，超长内容由业务侧自行控制宽度</div>
+  <div class="row">
+    <cs-message data-type="info" style="max-width: 480px;">
+      <i class="message-icon cses-info-circle"></i>
+      <span class="message-text" style="white-space: normal;">这是一条比较长的提示消息，用于演示在限定宽度下的多行换行效果，实际项目中应避免出现过长的轻提示。</span>
+    </cs-message>
+  </div>
+</div>
+
+</body>
+</html>

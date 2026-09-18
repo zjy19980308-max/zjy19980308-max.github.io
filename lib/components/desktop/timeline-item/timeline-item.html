@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-timeline-item 时间线条目</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="timeline-item.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg); }
+    h2 { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin: 24px 0 12px; }
+    h2:first-child { margin-top: 0; }
+    .demo-timeline { max-width: 480px; }
+  </style>
+</head>
+<body>
+
+<h2>工作时间线</h2>
+<div class="demo-timeline">
+
+  <cs-timeline-item data-active>
+    <span class="timeline-node"></span>
+    <span class="timeline-line"></span>
+    <div class="timeline-content">
+      <span class="timeline-date">3月30日（周日）</span>
+      <div class="timeline-entry">
+        <i class="timeline-entry-icon cses-check_arrow"></i>
+        <span class="timeline-entry-text">完成任务管理仪表盘页面设计</span>
+      </div>
+      <div class="timeline-entry">
+        <i class="timeline-entry-icon cses-check_arrow"></i>
+        <span class="timeline-entry-text">新增 kanban-card、timeline-item 组件</span>
+      </div>
+    </div>
+  </cs-timeline-item>
+
+  <cs-timeline-item>
+    <span class="timeline-node"></span>
+    <span class="timeline-line"></span>
+    <div class="timeline-content">
+      <span class="timeline-date">3月29日（周六）</span>
+      <div class="timeline-entry">
+        <i class="timeline-entry-icon cses-check_arrow"></i>
+        <span class="timeline-entry-text">完成人事管理工作台页面</span>
+      </div>
+      <div class="timeline-entry">
+        <i class="timeline-entry-icon cses-check_arrow"></i>
+        <span class="timeline-entry-text">新增考勤日历、假勤行等 HR 组件</span>
+      </div>
+    </div>
+  </cs-timeline-item>
+
+  <cs-timeline-item>
+    <span class="timeline-node"></span>
+    <span class="timeline-line"></span>
+    <div class="timeline-content">
+      <span class="timeline-date">3月28日（周五）</span>
+      <div class="timeline-entry">
+        <i class="timeline-entry-icon cses-check_arrow"></i>
+        <span class="timeline-entry-text">完成文档库首页设计</span>
+      </div>
+    </div>
+  </cs-timeline-item>
+
+  <cs-timeline-item data-color="success">
+    <span class="timeline-node"></span>
+    <div class="timeline-content">
+      <span class="timeline-date">3月27日（周四）</span>
+      <div class="timeline-entry">
+        <i class="timeline-entry-icon cses-check_arrow"></i>
+        <span class="timeline-entry-text">搭建设计工程化基础框架</span>
+      </div>
+    </div>
+  </cs-timeline-item>
+
+</div>
+
+<h2>颜色变体</h2>
+<div class="demo-timeline">
+  <cs-timeline-item data-color="primary">
+    <span class="timeline-node"></span>
+    <span class="timeline-line"></span>
+    <div class="timeline-content">
+      <span class="timeline-date">Primary（默认）</span>
+      <div class="timeline-entry">
+        <i class="timeline-entry-icon cses-check_arrow"></i>
+        <span class="timeline-entry-text">主色蓝节点</span>
+      </div>
+    </div>
+  </cs-timeline-item>
+  <cs-timeline-item data-color="success">
+    <span class="timeline-node"></span>
+    <span class="timeline-line"></span>
+    <div class="timeline-content">
+      <span class="timeline-date">Success</span>
+      <div class="timeline-entry">
+        <i class="timeline-entry-icon cses-check_arrow"></i>
+        <span class="timeline-entry-text">成功绿节点</span>
+      </div>
+    </div>
+  </cs-timeline-item>
+  <cs-timeline-item data-color="warning">
+    <span class="timeline-node"></span>
+    <span class="timeline-line"></span>
+    <div class="timeline-content">
+      <span class="timeline-date">Warning</span>
+      <div class="timeline-entry">
+        <i class="timeline-entry-icon cses-check_arrow"></i>
+        <span class="timeline-entry-text">警告橙节点</span>
+      </div>
+    </div>
+  </cs-timeline-item>
+  <cs-timeline-item data-color="danger">
+    <span class="timeline-node"></span>
+    <div class="timeline-content">
+      <span class="timeline-date">Danger</span>
+      <div class="timeline-entry">
+        <i class="timeline-entry-icon cses-check_arrow"></i>
+        <span class="timeline-entry-text">危险红节点</span>
+      </div>
+    </div>
+  </cs-timeline-item>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-doc-header 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="doc-header.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .section { background: var(--cs-color-bg); border-radius: var(--radius-lg); padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .section-title { font: var(--typo-cn-14-medium); color: var(--cs-color-text-light); margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+<div id="screenshot-target">
+
+  <div class="section">
+    <div class="section-title">默认（hover 卡片显示快捷按钮）</div>
+    <cs-doc-header data-show-actions>
+      <div class="dh-actions">
+        <button class="dh-action">
+          <i class="dh-action-icon cses-biaoqing"></i>
+          <span class="dh-action-label">添加表情</span>
+        </button>
+        <button class="dh-action">
+          <i class="dh-action-icon cses-tupian"></i>
+          <span class="dh-action-label">添加封面</span>
+        </button>
+      </div>
+
+      <h1 class="dh-title" contenteditable="true">文档库改版方案</h1>
+
+      <div class="dh-meta">
+        <div class="dh-meta-author">
+          <div class="dh-avatar">王</div>
+          <span class="dh-author-name">王晨宇</span>
+          <span class="dh-author-role">UI 设计/设计部</span>
+        </div>
+        <span class="dh-meta-time">今日 13:23 创建</span>
+        <div class="dh-meta-stats">
+          <span class="dh-stat"><i class="dh-stat-icon cses-dianzan"></i>0</span>
+          <span class="dh-stat"><i class="dh-stat-icon cses-pinglun"></i>0</span>
+        </div>
+      </div>
+
+      <div class="dh-hint">
+        <i class="dh-hint-icon cses-add"></i>
+        <span class="dh-hint-text">输入"/"快速插入内容，按"空格"启用 ✨ CSES AI</span>
+      </div>
+    </cs-doc-header>
+  </div>
+
+  <div class="section">
+    <div class="section-title">空标题占位</div>
+    <cs-doc-header data-empty-title>
+      <div class="dh-actions">
+        <button class="dh-action">
+          <i class="dh-action-icon cses-biaoqing"></i>
+          <span class="dh-action-label">添加表情</span>
+        </button>
+        <button class="dh-action">
+          <i class="dh-action-icon cses-tupian"></i>
+          <span class="dh-action-label">添加封面</span>
+        </button>
+      </div>
+
+      <h1 class="dh-title" contenteditable="true"></h1>
+
+      <div class="dh-meta">
+        <div class="dh-meta-author">
+          <div class="dh-avatar">未</div>
+          <span class="dh-author-name">未命名作者</span>
+        </div>
+        <span class="dh-meta-time">刚刚 创建</span>
+        <div class="dh-meta-stats">
+          <span class="dh-stat"><i class="dh-stat-icon cses-dianzan"></i>0</span>
+          <span class="dh-stat"><i class="dh-stat-icon cses-pinglun"></i>0</span>
+        </div>
+      </div>
+
+      <div class="dh-hint">
+        <i class="dh-hint-icon cses-add"></i>
+        <span class="dh-hint-text">输入"/"快速插入内容，按"空格"启用 ✨ CSES AI</span>
+      </div>
+    </cs-doc-header>
+  </div>
+
+</div>
+
+</body>
+</html>

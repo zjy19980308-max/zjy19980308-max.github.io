@@ -1,0 +1,176 @@
+/*
+ * 气泡确认框 (Popconfirm)
+ * 标签：<cs-popconfirm>
+ *
+ * 作用：点击触发元素后弹出轻量确认框（确认/取消），用于删除、归档等轻量危险操作。
+ * 对标 ng-zorro Popconfirm。由 popconfirm.js 接管 toggle。
+ *
+ * data 属性：
+ *   data-placement="top"(默认) / "bottom" / "left" / "right"
+ *   data-color="default"(默认) / "danger" / "warning"  — 图标颜色
+ *   data-open   — 展开态
+ *   data-disabled
+ *
+ * 子元素：
+ *   .popconfirm-trigger  — 触发元素（<button>）
+ *   .popconfirm-panel    — 弹出面板
+ *   .popconfirm-icon     — 问号/警告图标
+ *   .popconfirm-message  — 确认提示文字
+ *   .popconfirm-actions  — 按钮区
+ *   .popconfirm-btn      — 按钮（cancel / ok）
+ */
+
+/* ========== 容器 ========== */
+cs-popconfirm {
+  position: relative;
+  display: inline-block;
+}
+
+/* ========== 触发器 ========== */
+cs-popconfirm .popconfirm-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+}
+
+cs-popconfirm[data-disabled] .popconfirm-trigger {
+  cursor: not-allowed;
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* ========== 面板 ========== */
+cs-popconfirm .popconfirm-panel {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  min-width: calc(var(--spacing-160) * 1.2);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--cs-shadow-card);
+  box-sizing: border-box;
+}
+
+cs-popconfirm[data-open] .popconfirm-panel {
+  display: block;
+}
+
+/* ========== 位置 ========== */
+cs-popconfirm .popconfirm-panel,
+cs-popconfirm[data-placement="top"] .popconfirm-panel {
+  bottom: calc(100% + var(--space-xs));
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+cs-popconfirm[data-placement="bottom"] .popconfirm-panel {
+  top: calc(100% + var(--space-xs));
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+cs-popconfirm[data-placement="left"] .popconfirm-panel {
+  right: calc(100% + var(--space-xs));
+  top: 50%;
+  bottom: auto;
+  left: auto;
+  transform: translateY(-50%);
+}
+
+cs-popconfirm[data-placement="right"] .popconfirm-panel {
+  left: calc(100% + var(--space-xs));
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+}
+
+/* ========== 头部：图标 + 文字 ========== */
+cs-popconfirm .popconfirm-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+cs-popconfirm .popconfirm-icon {
+  flex-shrink: 0;
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  font-size: var(--font-size-md);
+  color: var(--color-orange-500);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-2xs);
+}
+
+cs-popconfirm[data-color="danger"] .popconfirm-icon {
+  color: var(--cs-sem-text-error);
+}
+
+cs-popconfirm[data-color="warning"] .popconfirm-icon {
+  color: var(--color-orange-500);
+}
+
+cs-popconfirm .popconfirm-message {
+  flex: 1;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* ========== 按钮区 ========== */
+cs-popconfirm .popconfirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+}
+
+cs-popconfirm .popconfirm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--cs-sem-size-interactive-xs);
+  padding: 0 var(--space-sm);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-white);
+  color: var(--cs-color-text);
+  font: var(--typo-cn-12-regular);
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+cs-popconfirm .popconfirm-btn:hover {
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-primary);
+}
+
+/* 主按钮（ok） */
+cs-popconfirm .popconfirm-btn[data-variant="primary"] {
+  background: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-white);
+}
+
+cs-popconfirm .popconfirm-btn[data-variant="primary"]:hover {
+  opacity: 0.9;
+}
+
+/* 危险主按钮 */
+cs-popconfirm[data-color="danger"] .popconfirm-btn[data-variant="primary"] {
+  background: var(--cs-sem-text-error);
+  border-color: var(--cs-sem-text-error);
+  color: var(--cs-color-white);
+}

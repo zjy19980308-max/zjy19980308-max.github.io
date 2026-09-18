@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<style>
+  .bg{fill:#083D2A}
+  .t{fill:#EED6C8;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .m{fill:#8FB3A0;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mb{fill:#EED6C8;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .d{fill:#EED6C8;font-family:'Instrument Serif',Georgia,serif}
+  .a{fill:#DAAB00}
+  .am{fill:#DAAB00;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mu{fill:#8FB3A0;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .ln{stroke:#EED6C8;fill:none}
+  .ln2{stroke:#EED6C8;fill:none;opacity:.35}
+  .la{stroke:#DAAB00;fill:none}
+  .ds{stroke:#8FB3A0;fill:none;stroke-dasharray:6 6}
+  .box{fill:none;stroke:#EED6C8;stroke-opacity:.55}
+  .boxa{fill:#DAAB00;fill-opacity:.12;stroke:#DAAB00}
+  .fill{fill:#EED6C8;fill-opacity:.06;stroke:#EED6C8;stroke-opacity:.35}
+  .hatch{fill:url(#hz);stroke:#EED6C8;stroke-opacity:.35}
+  .pill{fill:none;stroke:#EED6C8;stroke-opacity:.6}
+</style>
+<defs>
+  <pattern id="hz" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#EED6C8" stroke-opacity=".22" stroke-width="1"/>
+  </pattern>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#EED6C8"/>
+  </marker>
+  <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#DAAB00"/>
+  </marker>
+  <marker id="arm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#8FB3A0"/>
+  </marker>
+</defs>
+<rect class="bg" width="1600" height="900"/><text x="90" y="96" class="d" font-size="48" text-anchor="start" font-weight="400" >把屏幕还给协同</text><text x="90" y="132" class="mu" font-size="18" text-anchor="start" font-weight="400" >之前：最重要的位置给了使用率最低的内容 · 现在：三块区域，三个 agent</text><text x="1510" y="80" class="m" font-size="13" text-anchor="end" font-weight="400" >FIG F · SPACE REALLOCATION</text><text x="110" y="232" class="m" font-size="12" text-anchor="start" font-weight="400" >BEFORE · 之前</text><rect x="110" y="250" width="620" height="400" rx="8" class="box"/><rect x="124" y="264" width="430" height="30" class="hatch"/><text x="339.0" y="284" class="mu" font-size="12" text-anchor="middle" font-weight="400" >成员压成两个小头像</text><rect x="124" y="304" width="430" height="276" class="fill"/><text x="339.0" y="442.0" class="t" font-size="20" text-anchor="middle" font-weight="400" >主讲大屏</text><text x="339.0" y="466.0" class="mu" font-size="12" text-anchor="middle" font-weight="400" >协同只能靠共享屏幕</text><rect x="564" y="264" width="152" height="316" class="hatch"/><text x="640" y="370" class="mu" font-size="14" text-anchor="middle" font-weight="400" >基本信息</text><text x="640" y="410" class="mu" font-size="14" text-anchor="middle" font-weight="400" >成员列表</text><text x="640" y="450" class="mu" font-size="14" text-anchor="middle" font-weight="400" >聊天</text><text x="640" y="540" class="am" font-size="11" text-anchor="middle" font-weight="400" >整列常驻 · 几乎不用</text><rect x="124" y="590" width="592" height="46" class="hatch"/><text x="420.0" y="618" class="mu" font-size="13" text-anchor="middle" font-weight="400" >9 个按钮全部外露 + 「更多」里 7 个</text><text x="870" y="232" class="am" font-size="12" text-anchor="start" font-weight="400" >NOTA · 现在</text><rect x="870" y="250" width="620" height="400" rx="8" class="box" stroke="#DAAB00"/><rect x="884.0" y="264.0" width="125.0" height="152.0" class="fill"/><rect x="1015.0" y="264.0" width="125.0" height="152.0" class="fill"/><rect x="884.0" y="422.0" width="125.0" height="152.0" class="fill"/><rect x="1015.0" y="422.0" width="125.0" height="152.0" class="fill"/><rect x="898" y="392.0" width="228" height="58" rx="6" fill="#083D2A" stroke="#DAAB00" stroke-opacity=".8"/><text x="1012.0" y="416.0" class="t" font-size="18" text-anchor="middle" font-weight="500" >人与文件</text><text x="1012.0" y="436.0" class="am" font-size="10" text-anchor="middle" font-weight="400" >AGENT 01 · 四格等大 · 拖入即共享</text><rect x="1154" y="264" width="176" height="316" class="boxa"/><text x="1242.0" y="416.0" class="t" font-size="18" text-anchor="middle" font-weight="500" >实时转写</text><text x="1242.0" y="436.0" class="am" font-size="10" text-anchor="middle" font-weight="400" >AGENT 02 · 按人分段</text><rect x="1338" y="264" width="134" height="316" class="boxa"/><text x="1405.0" y="416.0" class="t" font-size="18" text-anchor="middle" font-weight="500" >个人工作区</text><text x="1405.0" y="436.0" class="am" font-size="10" text-anchor="middle" font-weight="400" >AGENT 03 · 面板叠放</text><rect x="884.0" y="590" width="143.33333333333334" height="46" rx="6" class="box"/><text x="955.6666666666666" y="619" class="t" font-size="14" text-anchor="middle" font-weight="400" >固定操作区</text><rect x="1035.3333333333333" y="590" width="143.33333333333334" height="46" rx="6" class="box"/><text x="1107.0" y="619" class="t" font-size="14" text-anchor="middle" font-weight="400" >动态功能区</text><rect x="1186.6666666666667" y="590" width="143.33333333333334" height="46" rx="6" class="box"/><text x="1258.3333333333335" y="619" class="t" font-size="14" text-anchor="middle" font-weight="400" >投屏与转换</text><rect x="1338" y="590" width="134" height="46" rx="6" class="boxa"/><text x="1405.0" y="612" class="t" font-size="13" text-anchor="middle" font-weight="400" >个人 agent</text><text x="1405.0" y="628" class="am" font-size="10" text-anchor="middle" font-weight="400" >唤醒对话</text><line x1="760" y1="450.0" x2="840" y2="450.0" class="la" marker-end="url(#ara)"/><text x="110" y="730" class="m" font-size="12" text-anchor="start" font-weight="400" >依据</text><text x="110" y="766" class="t" font-size="16" text-anchor="start" font-weight="400" >八成用户会前已看详情 · 会中极少有人打字 · 多数按钮并非主要操作</text><text x="110" y="800" class="mu" font-size="14" text-anchor="start" font-weight="400" >做法：常驻区收起，详情与成员悬浮查看；底部分四区，KR 与投票只在流程进行时出现在动态功能区</text></svg>

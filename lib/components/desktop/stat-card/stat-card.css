@@ -1,0 +1,98 @@
+/*
+ * 统计卡片组件 (Stat Card)
+ * 标签：<cs-stat-card>
+ *
+ * data 属性：
+ *   data-color="primary|success|warning|danger|info"  — 颜色主题
+ *
+ * 子元素结构：
+ *   .stat-icon     — 图标容器（40px 圆形）
+ *   .stat-content  — 文字区
+ *     .stat-value  — 数字值（24px medium）
+ *     .stat-label  — 描述文字（12px 灰色）
+ */
+
+/* ========== 卡片基础 ========== */
+cs-stat-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--cs-color-bg);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+cs-stat-card:hover {
+  box-shadow: var(--cs-shadow-card);
+}
+
+/* ========== 图标容器 ========== */
+cs-stat-card .stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--spacing-40);
+  height: var(--spacing-40);
+  border-radius: var(--radius-lg);
+  font-size: var(--cs-sem-size-icon-lg);
+}
+
+/* ========== 内容区 ========== */
+cs-stat-card .stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  min-width: 0;
+}
+
+cs-stat-card .stat-value {
+  font: var(--typo-cn-24-medium);
+  color: var(--cs-color-text);
+  line-height: 1;
+}
+
+cs-stat-card .stat-label {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  white-space: nowrap;
+}
+
+/* ========== 颜色变体 ========== */
+
+/* Primary */
+cs-stat-card[data-color="primary"] .stat-icon {
+  background: var(--color-blue-50);
+  color: var(--cs-color-primary);
+}
+
+/* Success */
+cs-stat-card[data-color="success"] .stat-icon {
+  background: var(--cs-sem-bg-success);
+  color: var(--cs-sem-status-success);
+}
+
+/* Warning */
+cs-stat-card[data-color="warning"] .stat-icon {
+  background: var(--cs-sem-bg-warning);
+  color: var(--cs-sem-status-warning);
+}
+
+/* Danger */
+cs-stat-card[data-color="danger"] .stat-icon {
+  background: var(--cs-sem-bg-error);
+  color: var(--cs-sem-status-error);
+}
+
+/* Info */
+cs-stat-card[data-color="info"] .stat-icon {
+  background: var(--color-sky-100);
+  color: var(--cs-sem-status-info);
+}

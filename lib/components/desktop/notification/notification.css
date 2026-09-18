@@ -1,0 +1,127 @@
+/*
+ * 通知卡片组件 (Notification)
+ * 标签：<cs-notification>
+ *
+ * 作用：右上角浮层通知卡片，承载标题 + 内容 + 关闭按钮的较重信息。
+ * 对标 ng-zorro Notification。本组件库静态结构版，业务侧动态插入到
+ * .notification-container 中即可。
+ *
+ * data 属性：
+ *   data-type="success" — 成功（绿）
+ *   data-type="info"    — 信息（蓝，默认）
+ *   data-type="warning" — 警告（橙）
+ *   data-type="danger"  — 错误（红）
+ *
+ * 子元素：
+ *   .notification-icon    — 左侧语义图标
+ *   .notification-body    — 右侧文字区
+ *     .notification-title   — 标题
+ *     .notification-desc    — 内容描述
+ *   .notification-close   — 右上角关闭按钮
+ */
+
+/* ========== 容器 ========== */
+cs-notification {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  width: 360px;
+  padding: var(--space-md);
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--cs-shadow-card);
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* ========== 图标 ========== */
+cs-notification .notification-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-icon-xl);
+  height: var(--cs-sem-size-icon-xl);
+  font-size: var(--font-size-xxl);
+  flex-shrink: 0;
+  color: var(--cs-color-text-light2);
+}
+
+cs-notification[data-type="success"] .notification-icon {
+  color: var(--color-green-500);
+}
+
+cs-notification[data-type="info"] .notification-icon {
+  color: var(--cs-color-primary);
+}
+
+cs-notification[data-type="warning"] .notification-icon {
+  color: var(--color-orange-500);
+}
+
+cs-notification[data-type="danger"] .notification-icon {
+  color: var(--cs-sem-text-error);
+}
+
+/* ========== 文字区 ========== */
+cs-notification .notification-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  min-width: 0;
+  padding-right: var(--spacing-20);
+}
+
+cs-notification .notification-title {
+  font: var(--typo-cn-16-medium);
+  color: var(--cs-color-text);
+  word-break: break-word;
+}
+
+cs-notification .notification-desc {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light);
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+/* ========== 关闭按钮 ========== */
+cs-notification .notification-close {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-interactive-xs);
+  height: var(--cs-sem-size-interactive-xs);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius);
+  color: var(--cs-color-text-light2);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+cs-notification .notification-close:hover {
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-text);
+}
+
+/* ========== 右上角堆叠容器 ========== */
+.notification-container {
+  position: fixed;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 1010;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  pointer-events: none;
+}
+
+.notification-container cs-notification {
+  pointer-events: auto;
+}

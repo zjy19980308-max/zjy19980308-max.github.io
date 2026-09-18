@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-task-group-header 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../checkbox/checkbox.css">
+  <link rel="stylesheet" href="task-group-header.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .group-list { border: var(--line-width) solid var(--cs-color-border); border-radius: var(--radius); overflow: hidden; }
+  </style>
+</head>
+<body>
+
+<!-- 展开/折叠状态 -->
+<div class="section">
+  <div class="section-title">展开/折叠状态</div>
+  <div class="section-subtitle">左侧：checkbox + 折叠箭头 + 状态圆点 + 分组名 + 计数 | 右侧：列标题（匹配 task-row 列宽）</div>
+
+  <div class="group-list">
+    <!-- 展开态 - 未开始（灰色圆点） -->
+    <cs-task-group-header data-expanded>
+      <div class="group-left">
+        <div class="group-checkbox">
+          <cs-checkbox>
+            <span class="checkbox-inner"><i class="checkbox-icon cses-check_arrow"></i></span>
+          </cs-checkbox>
+        </div>
+        <i class="group-arrow cses-qianjin"></i>
+        <span class="group-dot" data-status="not-started"></span>
+        <span class="group-title">未开始</span>
+        <span class="group-count">13</span>
+      </div>
+      <div class="group-columns">
+        <div class="gc-cell" data-col="priority">
+          <i class="gc-icon cses-liebiao"></i>
+          <span class="gc-label">优先级</span>
+        </div>
+        <div class="gc-cell" data-col="status">
+          <i class="gc-icon cses-gouxuan_xuanzhong"></i>
+          <span class="gc-label">状态</span>
+        </div>
+        <div class="gc-cell" data-col="start">
+          <i class="gc-icon cses-rili"></i>
+          <span class="gc-label">开始时间</span>
+        </div>
+        <div class="gc-cell" data-col="due">
+          <i class="gc-icon cses-rili"></i>
+          <span class="gc-label">截止时间</span>
+        </div>
+        <div class="gc-cell" data-col="assignee">
+          <i class="gc-icon cses-aite"></i>
+          <span class="gc-label">负责人</span>
+        </div>
+      </div>
+    </cs-task-group-header>
+
+    <!-- 展开态 - 进行中（蓝色圆点） -->
+    <cs-task-group-header data-expanded>
+      <div class="group-left">
+        <div class="group-checkbox">
+          <cs-checkbox>
+            <span class="checkbox-inner"><i class="checkbox-icon cses-check_arrow"></i></span>
+          </cs-checkbox>
+        </div>
+        <i class="group-arrow cses-qianjin"></i>
+        <span class="group-dot" data-status="in-progress"></span>
+        <span class="group-title">进行中</span>
+        <span class="group-count">13</span>
+      </div>
+      <div class="group-columns">
+        <div class="gc-cell" data-col="priority">
+          <i class="gc-icon cses-liebiao"></i>
+          <span class="gc-label">优先级</span>
+        </div>
+        <div class="gc-cell" data-col="status">
+          <i class="gc-icon cses-gouxuan_xuanzhong"></i>
+          <span class="gc-label">状态</span>
+        </div>
+        <div class="gc-cell" data-col="start">
+          <i class="gc-icon cses-rili"></i>
+          <span class="gc-label">开始时间</span>
+        </div>
+        <div class="gc-cell" data-col="due">
+          <i class="gc-icon cses-rili"></i>
+          <span class="gc-label">截止时间</span>
+        </div>
+        <div class="gc-cell" data-col="assignee">
+          <i class="gc-icon cses-aite"></i>
+          <span class="gc-label">负责人</span>
+        </div>
+      </div>
+    </cs-task-group-header>
+
+    <!-- 折叠态 - 已完成（绿色圆点） -->
+    <cs-task-group-header data-collapsed>
+      <div class="group-left">
+        <div class="group-checkbox">
+          <cs-checkbox>
+            <span class="checkbox-inner"><i class="checkbox-icon cses-check_arrow"></i></span>
+          </cs-checkbox>
+        </div>
+        <i class="group-arrow cses-qianjin"></i>
+        <span class="group-dot" data-status="completed"></span>
+        <span class="group-title">已完成</span>
+        <span class="group-count">23</span>
+      </div>
+      <div class="group-columns">
+        <div class="gc-cell" data-col="priority">
+          <i class="gc-icon cses-liebiao"></i>
+          <span class="gc-label">优先级</span>
+        </div>
+        <div class="gc-cell" data-col="status">
+          <i class="gc-icon cses-gouxuan_xuanzhong"></i>
+          <span class="gc-label">状态</span>
+        </div>
+        <div class="gc-cell" data-col="start">
+          <i class="gc-icon cses-rili"></i>
+          <span class="gc-label">开始时间</span>
+        </div>
+        <div class="gc-cell" data-col="due">
+          <i class="gc-icon cses-rili"></i>
+          <span class="gc-label">截止时间</span>
+        </div>
+        <div class="gc-cell" data-col="assignee">
+          <i class="gc-icon cses-aite"></i>
+          <span class="gc-label">负责人</span>
+        </div>
+      </div>
+    </cs-task-group-header>
+
+    <!-- 折叠态 - 已取消（红色圆点） -->
+    <cs-task-group-header data-collapsed>
+      <div class="group-left">
+        <div class="group-checkbox">
+          <cs-checkbox>
+            <span class="checkbox-inner"><i class="checkbox-icon cses-check_arrow"></i></span>
+          </cs-checkbox>
+        </div>
+        <i class="group-arrow cses-qianjin"></i>
+        <span class="group-dot" data-status="cancelled"></span>
+        <span class="group-title">已取消</span>
+        <span class="group-count">2</span>
+      </div>
+      <div class="group-columns">
+        <div class="gc-cell" data-col="priority">
+          <i class="gc-icon cses-liebiao"></i>
+          <span class="gc-label">优先级</span>
+        </div>
+        <div class="gc-cell" data-col="status">
+          <i class="gc-icon cses-gouxuan_xuanzhong"></i>
+          <span class="gc-label">状态</span>
+        </div>
+        <div class="gc-cell" data-col="start">
+          <i class="gc-icon cses-rili"></i>
+          <span class="gc-label">开始时间</span>
+        </div>
+        <div class="gc-cell" data-col="due">
+          <i class="gc-icon cses-rili"></i>
+          <span class="gc-label">截止时间</span>
+        </div>
+        <div class="gc-cell" data-col="assignee">
+          <i class="gc-icon cses-aite"></i>
+          <span class="gc-label">负责人</span>
+        </div>
+      </div>
+    </cs-task-group-header>
+  </div>
+</div>
+
+</body>
+</html>

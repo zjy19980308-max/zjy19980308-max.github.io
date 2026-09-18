@@ -1,0 +1,81 @@
+/*
+ * 分隔面板 (Splitter)
+ * 标签：<cs-splitter>
+ *
+ * 静态展示版本（拖拽行为由页面层接管，本组件只提供视觉结构）
+ *
+ * data 属性：
+ *   data-direction="horizontal"（默认左右）| "vertical"（上下）
+ *
+ * 子元素：
+ *   .splitter-panel      — 面板内容区（任意数量）
+ *   .splitter-bar        — 拖拽分隔条
+ */
+
+cs-splitter {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-sm);
+  background: var(--cs-color-white);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+cs-splitter .splitter-panel {
+  flex: 1;
+  padding: var(--space-md);
+  overflow: auto;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  background: var(--cs-color-white);
+  min-width: 0;
+}
+
+cs-splitter .splitter-bar {
+  flex: 0 0 auto;
+  width: 4px;
+  background: var(--cs-color-border);
+  cursor: col-resize;
+  position: relative;
+  transition: background-color 0.15s ease;
+}
+
+cs-splitter .splitter-bar:hover {
+  background: var(--cs-color-primary);
+}
+
+cs-splitter .splitter-bar::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 24px;
+  background: var(--cs-color-text-light2);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+cs-splitter .splitter-bar:hover::before {
+  background: var(--cs-color-white);
+}
+
+/* ========== Vertical ========== */
+cs-splitter[data-direction="vertical"] {
+  flex-direction: column;
+}
+
+cs-splitter[data-direction="vertical"] .splitter-bar {
+  width: auto;
+  height: 4px;
+  cursor: row-resize;
+}
+
+cs-splitter[data-direction="vertical"] .splitter-bar::before {
+  width: 24px;
+  height: 2px;
+}

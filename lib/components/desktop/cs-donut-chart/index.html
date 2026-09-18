@@ -1,0 +1,29 @@
+<!-- cs-donut-chart · Milestone 视图主件 · 季度达成率环图 · 商务蓝 + 三色分段 · CSS-only conic-gradient（红线 4 禁内联 SVG） -->
+<cs-donut-chart class="cs-donut-chart" data-size="md" data-tone="business-blue"
+                style="--seg-success-deg: 273.6deg; --seg-neutral-from: 273.6deg; --seg-neutral-to: 316.8deg; --seg-danger-from: 316.8deg;">
+  <div class="cs-donut-chart__canvas" role="img" aria-label="季度达成率 76%">
+    <div class="cs-donut-chart__ring" aria-hidden="true"></div>
+    <div class="cs-donut-chart__hole" aria-hidden="true"></div>
+    <div class="cs-donut-chart__center">
+      <div class="cs-donut-chart__pct">76%</div>
+      <div class="cs-donut-chart__label">达成率</div>
+    </div>
+  </div>
+  <ul class="cs-donut-chart__legend" role="list">
+    <li class="cs-donut-chart__legend-item">
+      <span class="cs-donut-chart__legend-dot cs-donut-chart__legend-dot--success"></span>
+      <span class="cs-donut-chart__legend-name">已达成</span>
+      <span class="cs-donut-chart__legend-val">76</span>
+    </li>
+    <li class="cs-donut-chart__legend-item">
+      <span class="cs-donut-chart__legend-dot cs-donut-chart__legend-dot--neutral"></span>
+      <span class="cs-donut-chart__legend-name">进行中</span>
+      <span class="cs-donut-chart__legend-val">12</span>
+    </li>
+    <li class="cs-donut-chart__legend-item">
+      <span class="cs-donut-chart__legend-dot cs-donut-chart__legend-dot--danger"></span>
+      <span class="cs-donut-chart__legend-name">延期</span>
+      <span class="cs-donut-chart__legend-val">12</span>
+    </li>
+  </ul>
+</cs-donut-chart>

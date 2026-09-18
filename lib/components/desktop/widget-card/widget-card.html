@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-widget-card 仪表盘卡片</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="widget-card.css">
+  <link rel="stylesheet" href="../button/button.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .demo-section { margin-bottom: 32px; }
+    .demo-label { font: var(--typo-cn-12-medium); color: var(--cs-color-text-light2); margin-bottom: 12px; }
+    .demo-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<div class="demo-section">
+  <div class="demo-label">基础用法 — 标题 + 内容</div>
+  <div class="demo-row">
+    <cs-widget-card style="width: 360px;">
+      <div class="widget-header">
+        <span class="widget-title">审批</span>
+        <span class="widget-extra">
+          <cs-button data-variant="text" data-size="sm">查看全部</cs-button>
+        </span>
+      </div>
+      <div class="widget-body">
+        <p style="font: var(--typo-cn-14-regular); color: var(--cs-color-text-light);">审批内容区域</p>
+      </div>
+    </cs-widget-card>
+  </div>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">带标签页 — 标题 + 标签切换 + 内容</div>
+  <div class="demo-row">
+    <cs-widget-card style="width: 360px;">
+      <div class="widget-header">
+        <span class="widget-title">企业资讯</span>
+      </div>
+      <div class="widget-body">
+        <p style="font: var(--typo-cn-14-regular); color: var(--cs-color-text-light);">资讯列表区域</p>
+      </div>
+    </cs-widget-card>
+  </div>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">尺寸预设 — sm / md / lg</div>
+  <div class="demo-row">
+    <cs-widget-card data-size="sm" style="width: 240px;">
+      <div class="widget-header">
+        <span class="widget-title">sm 小卡片</span>
+      </div>
+      <div class="widget-body"></div>
+    </cs-widget-card>
+    <cs-widget-card data-size="md" style="width: 240px;">
+      <div class="widget-header">
+        <span class="widget-title">md 中卡片</span>
+      </div>
+      <div class="widget-body"></div>
+    </cs-widget-card>
+    <cs-widget-card data-size="lg" style="width: 240px;">
+      <div class="widget-header">
+        <span class="widget-title">lg 大卡片</span>
+      </div>
+      <div class="widget-body"></div>
+    </cs-widget-card>
+  </div>
+</div>
+
+</body>
+</html>

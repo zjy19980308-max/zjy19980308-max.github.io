@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-news-item 新闻列表项</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="news-item.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .demo-section { margin-bottom: 32px; }
+    .demo-label { font: var(--typo-cn-12-medium); color: var(--cs-color-text-light2); margin-bottom: 12px; }
+    .demo-container { width: 400px; background: var(--cs-color-bg); padding: 16px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="demo-section">
+  <div class="demo-label">带缩略图的新闻列表</div>
+  <div class="demo-container">
+    <cs-news-item>
+      <img class="news-thumb" src="" alt="">
+      <div class="news-content">
+        <span class="news-title">银行季度大会如期召开 深入讨论前沿工具使用与客户创新</span>
+        <span class="news-meta">
+          <span class="news-source">新闻动态</span>
+          <span class="news-date">2024-03-15</span>
+        </span>
+      </div>
+    </cs-news-item>
+    <cs-news-item>
+      <img class="news-thumb" src="" alt="">
+      <div class="news-content">
+        <span class="news-title">银行季天大洲银行2022年四季度全流程金融服务业务工作推进大会如期</span>
+        <span class="news-meta">
+          <span class="news-source">行领导动态</span>
+          <span class="news-date">2024-03-12</span>
+        </span>
+      </div>
+    </cs-news-item>
+    <cs-news-item>
+      <img class="news-thumb" src="" alt="">
+      <div class="news-content">
+        <span class="news-title">明日银行员工频登全球获8项知识产权认证的创新改良研究</span>
+        <span class="news-meta">
+          <span class="news-source">总行动态</span>
+          <span class="news-date">2024-03-10</span>
+        </span>
+      </div>
+    </cs-news-item>
+  </div>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">无缩略图</div>
+  <div class="demo-container">
+    <cs-news-item>
+      <div class="news-content">
+        <span class="news-title">新一代智能营销平台即将上线，敬请期待</span>
+        <span class="news-meta">
+          <span class="news-date">2024-03-08</span>
+        </span>
+      </div>
+    </cs-news-item>
+  </div>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">头条样式 (data-featured)</div>
+  <div class="demo-container">
+    <cs-news-item data-featured>
+      <img class="news-thumb" src="" alt="">
+      <div class="news-content">
+        <span class="news-title">年度金融峰会圆满落幕</span>
+        <span class="news-meta">
+          <span class="news-source">重要资讯</span>
+          <span class="news-date">2024-03-20</span>
+        </span>
+      </div>
+    </cs-news-item>
+  </div>
+</div>
+
+</body>
+</html>

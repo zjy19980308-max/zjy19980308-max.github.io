@@ -6,9 +6,9 @@
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
 <title>框架 · 张竞元</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/fonts.css?v=d0647496">
-<link rel="stylesheet" href="assets/system.css?v=71e5fb81">
-<link rel="stylesheet" href="assets/raw-light.css?v=1102f794">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/system.css">
+<link rel="stylesheet" href="assets/raw-light.css">
 <style>
   /* 和组件库同一套外壳：整屏 flex，不滚动，舞台吃满剩余高度。
      上一版是「1280 版心 + min(78vh,860px) 的 iframe」——
@@ -65,7 +65,7 @@
 <body>
 
 <div class="top"><div class="top-in">
-  <a class="back" href="index.html">← 返回作品集</a>
+  <a class="back" href="project.html?p=flow">← 返回项目</a>
   <div class="ttl">框架<span>RAW MATERIAL · 04</span></div>
   <div class="cnt">15 个容器 · 画布 1440 × 1024</div>
 </div></div>
@@ -122,12 +122,12 @@
    记录由本稿在离开前写入 sessionStorage，这里只读不删 ——
    本稿加载时还要用它还原滚动位置。 */
 (function(){
-  var a = document.querySelector('a[href^="index.html"]');
+  var a = document.querySelector('a.back');
   if (!a) return;
   try {
     var r = JSON.parse(sessionStorage.getItem('zjy:return') || 'null');
     if (r && r.tab) {
-      a.setAttribute('href', 'index.html#' + r.tab);
+      a.setAttribute('href', 'project.html?p=flow#t-' + encodeURIComponent('设计系统资产'));
       var LABEL = {about:'个人介绍','p-flow':'AI 设计流水线','p-nota':'NOTA · AI 原生会议','p-cses':'CSES 企业协作平台'};
       if (LABEL[r.tab]) a.textContent = '← 返回 ' + LABEL[r.tab];
     }

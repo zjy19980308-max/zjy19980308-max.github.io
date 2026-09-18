@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>发起付款申请 · 流程智能体</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{padding:0;max-width:none;display:flex;position:relative;flex:1;min-height:0}
+  .form{flex:1;min-width:0;overflow:auto;padding:24px 28px 96px}
+  .form__in{max-width:720px}
+  .form__hd h2{font-size:22px;font-weight:700;letter-spacing:-.01em}
+  .form__hd p{font-size:12.5px;color:var(--ink-2);margin-top:6px}
+  .ftabs{display:flex;gap:8px;margin:18px 0 22px}
+  .ftabs button{height:30px;padding:0 13px;border-radius:var(--r-s);border:1px solid var(--line);background:var(--panel);font-size:12.5px;color:var(--ink-2);cursor:pointer}
+  .ftabs button.is-on{background:var(--pri-50);border-color:var(--pri-200);color:#404a99;font-weight:600}
+  .fsec{margin-bottom:28px}
+  .fsec__t{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:700;margin-bottom:4px}
+  .fsec__d{font-size:12px;color:var(--ink-3);margin-bottom:14px}
+  .fi{display:flex;gap:16px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line-2)}
+  .fi > label{width:92px;flex:0 0 92px;font-size:13px;color:var(--ink-2);padding-top:7px}
+  .fi > label em{font-style:normal;color:#9c5449;margin-left:3px}
+  .fi__c{flex:1;min-width:0}
+  .fi__c .hint{font-size:11.5px;color:var(--ink-3);margin-top:6px;line-height:1.6}
+  .fi__c .hint b{color:var(--ink-2);font-weight:600}
+  .row2{display:flex;gap:10px}
+  .row2 > *{flex:1;min-width:0}
+  select.inp{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%2394a3b8' stroke-width='1.6' stroke-linecap='round'><path d='M4 6.5 8 10.5 12 6.5'/></svg>");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
+  .money{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+  .auto{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#404a99;background:var(--pri-50);border:1px solid var(--pri-200);border-radius:5px;padding:2px 7px}
+  .auto svg{width:11px;height:11px}
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .ff{border:1px solid var(--line);border-radius:var(--r-m);padding:11px 12px;background:var(--panel)}
+  .ff b{display:block;font-size:11px;color:var(--ink-3);font-weight:600;margin-bottom:7px}
+  .ff div{font-size:12.5px;padding:3px 0}
+  .ff .ok{color:var(--ok);font-weight:600}
+  .drop{border:1px dashed var(--line);border-radius:var(--r-m);padding:18px;text-align:center;font-size:12.5px;color:var(--ink-3);background:var(--surf);cursor:pointer}
+  .drop:hover{border-color:#8f99cf;color:var(--ink-2)}
+  .files{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+  .file{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:var(--r-m);padding:10px 12px;font-size:12.5px}
+  .file svg{width:15px;height:15px;color:var(--ink-3);flex:0 0 15px}
+  .file .x{margin-left:auto;font-size:11.5px;color:var(--ink-3);cursor:pointer}
+  .chain{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surf)}
+  .cn{display:inline-flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-s);padding:6px 9px;font-size:12px;white-space:nowrap}
+  .cn .ava{width:18px;height:18px;font-size:9px;flex:0 0 18px}
+  .cn--c{border-color:var(--risk-line);background:var(--risk-soft);color:var(--risk);font-weight:600}
+  .cn--skip{opacity:.5}
+  .arrw{color:var(--ink-3);font-size:11px}
+  /* 右栏 */
+  .fside{width:322px;flex:0 0 322px;border-left:1px solid var(--line);background:var(--panel);overflow:auto;padding:22px 20px 90px}
+  .fside h3{font-size:13px;font-weight:700;margin-bottom:10px}
+  .fside .card{margin-bottom:16px}
+  .willi{display:flex;gap:9px;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:12.5px;line-height:1.6}
+  .willi:last-child{border:0}
+  .willi i{width:16px;height:16px;border-radius:5px;background:var(--surf);border:1px solid var(--line);display:grid;place-items:center;flex:0 0 16px;margin-top:2px;font-size:9px;font-weight:700;color:var(--ink-3);font-style:normal}
+
+  
+  /* 发起申请先选类型（照 Figma 809:19994），选完才进表单 */
+  @media (max-width:1320px){.fside{display:none}}
+  @media (max-width:760px){.form{padding:18px 16px 96px}.fi{flex-direction:column;gap:6px}.fi > label{width:auto;flex:none}.three{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-app="front" data-nav="new" data-title="发起付款申请" data-back="apply.html" data-back-text="返回发起申请">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div id="topActions"><span class="dim" style="font-size:11.5px">草稿已自动保存 · 刚刚</span></div>
+    <div class="page">
+
+      <section class="form">
+        <div class="form__in">
+          <div class="form__hd">
+            <h2>发起付款申请</h2>
+            <p>这张表单由「供应商付款审批 v3」定义。填完提交后，审批人由流程按金额自动判定，不需要你选。</p>
+          </div>
+
+          <div class="ftabs"><button class="is-on">付款申请表</button><button>发票信息</button><button>合同信息</button><button>验收单</button></div>
+
+          <div class="fsec">
+            <div class="fsec__t">付款信息</div>
+            <div class="fsec__d">带 <em style="font-style:normal;color:#9c5449">*</em> 的是必填项。供应商与采购单选好后，其余字段 Agent 会自动带出。</div>
+
+            <div class="fi"><label>供应商 <em>*</em></label><div class="fi__c">
+              <select class="inp" id="vendor"><option>华东物流有限公司</option><option>中天建材有限公司</option><option>恒通机电有限公司</option></select>
+              <div class="hint" id="vhint"><b>黑名单校验：</b>未命中黑名单 · 数据更新于今天 02:00</div>
+            </div></div>
+
+            <div class="fi"><label>采购单 <em>*</em></label><div class="fi__c">
+              <select class="inp" id="po"><option>PO-7781 · 已验收 · ¥38,000</option><option>PO-7802 · 已验收 · ¥86,500</option></select>
+              <div class="hint">只能选已验收的采购单，这是流程第 1 步的触发条件。</div>
+            </div></div>
+
+            <div class="fi"><label>付款金额 <em>*</em></label><div class="fi__c">
+              <input class="inp money" id="amt" value="38,000.00" inputmode="decimal">
+              <div class="hint" id="amtHint"><b>人民币叁万捌仟元整</b> · 金额与采购单一致</div>
+            </div></div>
+
+            <div class="fi"><label>合同编号</label><div class="fi__c">
+              <input class="inp" value="HT-2026-0288" readonly>
+              <div class="hint"><span class="auto">✦ Agent 带出</span> 来自采购单 PO-7781 关联的合同</div>
+            </div></div>
+
+            <div class="fi"><label>付款方式 <em>*</em></label><div class="fi__c">
+              <div class="row2">
+                <select class="inp"><option>银企直连 · 对公转账</option><option>银行汇票</option></select>
+                <input class="inp" value="2026-09-18" type="date">
+              </div>
+              <div class="hint">右边是期望到账日。合同约定 9 月 18 日前付款，已按合同预填。</div>
+            </div></div>
+
+            <div class="fi"><label>收款账户 <em>*</em></label><div class="fi__c">
+              <select class="inp"><option>招商银行 6228 **** 4417（合同约定账户）</option><option>＋ 使用其他账户</option></select>
+              <div class="hint">选非合同约定账户时，流程会多加一道财务复核。</div>
+            </div></div>
+
+            <div class="fi"><label>付款事由 <em>*</em></label><div class="fi__c">
+              <textarea class="inp" rows="2">2026 年 8 月华东区干线运输费用，已验收。</textarea>
+            </div></div>
+          </div>
+
+          <div class="fsec">
+            <div class="fsec__t">三单匹配 <span class="auto">✦ Agent 自动核对</span></div>
+            <div class="fsec__d">发票、合同、验收单三方金额与主体是否一致，提交前就会告诉你，不用等审批人发现。</div>
+            <div class="three">
+              <div class="ff"><b>发票</b><div>华东物流有限公司</div><div>¥38,000.00</div><div class="ok">✓ 与合同一致</div></div>
+              <div class="ff"><b>合同</b><div>华东物流有限公司</div><div>¥38,000.00</div><div class="ok">✓ 与验收单一致</div></div>
+              <div class="ff"><b>验收单</b><div>PO-7781</div><div>¥38,000.00</div><div class="ok">✓ 已验收</div></div>
+            </div>
+          </div>
+
+          <div class="fsec">
+            <div class="fsec__t">附件</div>
+            <div class="fsec__d">发票与验收单是必传项，合同可以从采购单直接引用。</div>
+            <div class="drop">将文件拖到此处，或点击选择 · 支持 PDF / JPG / PNG，单个不超过 20 MB</div>
+            <div class="files">
+              <div class="file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5h5l3 3v8h-8z"/><path d="M9.5 2.5v3h3"/></svg>增值税专用发票.pdf<span class="dim" style="margin-left:6px;font-size:11px">1.2 MB</span><span class="tag tag--ok" style="margin-left:10px">已识别金额</span><span class="x" data-rm>移除</span></div>
+              <div class="file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5h5l3 3v8h-8z"/><path d="M9.5 2.5v3h3"/></svg>验收单-PO-7781.jpg<span class="dim" style="margin-left:6px;font-size:11px">420 KB</span><span class="x" data-rm>移除</span></div>
+              <div class="file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5h5l3 3v8h-8z"/><path d="M9.5 2.5v3h3"/></svg>运输服务合同.pdf<span class="auto" style="margin-left:8px">✦ 从采购单引用</span><span class="x" data-rm>移除</span></div>
+            </div>
+          </div>
+
+          <div class="fsec">
+            <div class="fsec__t">这张单会交给谁</div>
+            <div class="fsec__d">审批人由流程按金额自动判定，你不能改。改规则要去流程配置，并且走版本发布。</div>
+            <div class="chain" id="chain"></div>
+            <div class="hint" style="font-size:11.5px;color:var(--ink-3);margin-top:10px" id="chainHint"></div>
+          </div>
+
+          <div class="fsec">
+            <div class="fsec__t">抄送与备注</div>
+            <div class="fi"><label>抄送</label><div class="fi__c"><input class="inp" value="财务运营部 · 采购部"></div></div>
+            <div class="fi" style="border:0"><label>备注</label><div class="fi__c"><textarea class="inp" rows="2" placeholder="需要审批人特别留意的，写在这里。"></textarea></div></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="fside">
+        <h3>提交后会怎么走</h3>
+        <div class="card"><div class="card__b" style="padding:12px 14px" id="fside"></div></div>
+        <h3>提交前 Agent 会检查</h3>
+        <div class="card"><div class="card__b" style="padding:6px 14px">
+          <div class="willi"><i>A</i><div>三单金额与主体是否一致</div></div>
+          <div class="willi"><i>A</i><div>供应商是否在黑名单</div></div>
+          <div class="willi"><i>A</i><div>收款账户是否为合同约定账户</div></div>
+          <div class="willi"><i>A</i><div>是否重复提交过同一张采购单</div></div>
+        </div></div>
+        <div class="banner banner--risk" style="align-items:flex-start">
+          <div><b style="display:block;margin-bottom:3px">这条流程里有 1 个不可逆节点</b>执行付款一旦跑了就追不回来，所以它前面永远有一道人工确认，Agent 不会自己点。</div>
+        </div>
+      </aside>
+
+      <div class="actbar"><div class="actbar__c">
+        <span class="dim" style="font-size:13px">草稿只有你能看到，提交后才进入审批</span>
+        <div class="right">
+          <button class="btn" data-toast="草稿已保存 · 在「我发起的」里能找到">保存草稿</button>
+          <button class="btn" id="pre">提交前自检</button>
+          <button class="obtn obtn--yes" id="submit">提交申请</button>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</div>
+
+<script src="ui.js"></script>
+<script>
+(function () {
+  /* ── 单据类型由「发起申请」整页（apply.html）挑好后带过来：form.html?t=付款申请 ── */
+  var mt = /[?&]t=([^&]+)/.exec(location.search);
+  if (mt) {
+    var tname = decodeURIComponent(mt[1].replace(/\+/g, ' '));
+    var hd = document.querySelector('.form__hd h2'); if (hd) hd.textContent = '发起' + tname;
+    var h1 = document.querySelector('#top h1'); if (h1) h1.textContent = '发起' + tname;
+    document.title = '发起' + tname + ' · 审批工作台';
+  }
+  if (/[?&]pick=1/.test(location.search)) { location.replace('apply.html'); return; }
+
+  function n(t, cls, ava) { return '<span class="cn ' + (cls || '') + '">' + (ava ? '<span class="ava">' + ava + '</span>' : '') + t + '</span>'; }
+  function draw(amount) {
+    var over10 = amount >= 100000, over50 = amount >= 500000;
+    var html = n('提交申请', '', '孙') + '<span class="arrw">→</span>' + n('三单匹配') + '<span class="arrw">→</span>'
+      + n('采购经理审批', '', '高') + '<span class="arrw">→</span>'
+      + n('财务总监审批', over10 ? '' : 'cn--skip', '陈') + '<span class="arrw">→</span>'
+      + n('CFO 审批', over50 ? '' : 'cn--skip') + '<span class="arrw">→</span>'
+      + n('付款前人工确认', '', '孙') + '<span class="arrw">→</span>' + n('执行付款 · C', 'cn--c');
+    document.getElementById('chain').innerHTML = html;
+    document.getElementById('chainHint').innerHTML = '当前金额 <b>¥' + amount.toLocaleString() + '</b> 命中「'
+      + (over50 ? '50 万以上' : over10 ? '10–50 万' : '10 万以下') + '」档 · 需要 '
+      + (over50 ? '3' : over10 ? '2' : '1') + ' 位审批人 · 灰掉的是本档跳过的节点。';
+    document.getElementById('fside').innerHTML =
+      '<div class="willi"><i>1</i><div><b>采购经理 高远</b> 审批<br><span class="dim">一般 4 小时内处理</span></div></div>'
+      + (over10 ? '<div class="willi"><i>2</i><div><b>财务总监 陈立</b> 审批<br><span class="dim">出差中，超时 24 小时自动转代理人 刘恒</span></div></div>' : '')
+      + (over50 ? '<div class="willi"><i>3</i><div><b>CFO</b> 审批</div></div>' : '')
+      + '<div class="willi"><i>' + (over50 ? 4 : over10 ? 3 : 2) + '</i><div><b>你本人</b> 做付款前确认</div></div>'
+      + '<div class="willi"><i style="border-color:var(--risk-line);background:var(--risk-soft);color:var(--risk)">C</i><div><b style="color:var(--risk)">执行付款</b><br><span class="dim">不可逆 · 确认后才执行</span></div></div>';
+  }
+  function parse(v) { return Math.max(0, parseFloat(String(v).replace(/[^\d.]/g, '')) || 0); }
+  var amt = document.getElementById('amt');
+  /* 人民币大写：财务单据必须有，写错了审批人一眼能看出来。零的处理已按银行写法单测过。 */
+  function rmb(n) {
+    var D = '零壹贰叁肆伍陆柒捌玖', U = ['', '拾', '佰', '仟'], G = ['', '万', '亿', '万亿'];
+    var i = Math.floor(n), f = Math.round((n - i) * 100), s = '', gi = 0;
+    while (i > 0) {
+      var part = i % 10000, higher = Math.floor(i / 10000), seg = '', zero = false, p = part, k = 0;
+      while (p > 0) {
+        var d = p % 10;
+        if (d === 0) { if (seg) zero = true; }
+        else { seg = D[d] + U[k] + (zero ? '零' : '') + seg; zero = false; }
+        p = Math.floor(p / 10); k++;
+      }
+      if (part > 0) s = (part < 1000 && higher > 0 ? '零' : '') + seg + G[gi] + s;
+      else if (s && s.charAt(0) !== '零') s = '零' + s;
+      i = higher; gi++;
+    }
+    s = s.replace(/零+/g, '零').replace(/^零/, '').replace(/零$/, '');
+    if (!s) s = '零';
+    s += '元';
+    if (f === 0) return s + '整';
+    var jiao = Math.floor(f / 10), fen = f % 10;
+    return s + (jiao ? D[jiao] + '角' : '零') + (fen ? D[fen] + '分' : '整');
+  }
+  function sync() {
+    var v = parse(amt.value);
+    draw(v);
+    document.getElementById('amtHint').innerHTML = '<b>人民币' + rmb(v) + '</b> · '
+      + (v === 38000 ? '金额与采购单一致' : '<span style="color:var(--warn)">与采购单 ¥38,000 不一致，提交时会被三单匹配拦下</span>');
+  }
+  amt.addEventListener('input', sync);
+  amt.addEventListener('blur', function () { var v = parse(this.value); this.value = v.toLocaleString(undefined, { minimumFractionDigits: 2 }); sync(); });
+  sync();
+
+  document.addEventListener('click', function (e) {
+    var rm = e.target.closest('[data-rm]'); if (!rm) return;
+    var row = rm.closest('.file'); var name = row.textContent.replace('移除', '').trim();
+    row.remove(); AG.toast('已移除 ' + name.split('.pdf')[0].split('.jpg')[0] + ' · 必传项缺失时提交会被拦下');
+  });
+  document.getElementById('pre').addEventListener('click', function () {
+    AG.toast('自检通过：三单一致 · 不在黑名单 · 账户为合同约定账户 · 无重复提交');
+  });
+  document.getElementById('submit').addEventListener('click', function () {
+    AG.toast('已提交 · 进入「采购经理审批」，可在审批中心「我发起的」里跟进');
+    setTimeout(function () { location.href = 'approvals.html'; }, 1600);
+  });
+  document.querySelector('.ftabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    [].forEach.call(this.querySelectorAll('button'), function (x) { x.classList.toggle('is-on', x === b); });
+  });
+  document.getElementById('vendor').addEventListener('change', function () {
+    var v = this.value, hint = document.getElementById('vhint');
+    hint.innerHTML = v.indexOf('恒通') === 0
+      ? '<b style="color:var(--risk)">黑名单校验：命中</b> · 该供应商 9 月 12 日被列入黑名单，提交会被第 2 步拦下'
+      : '<b>黑名单校验：</b>未命中黑名单 · 数据更新于今天 02:00';
+  });
+})();
+</script>
+</body>
+</html>

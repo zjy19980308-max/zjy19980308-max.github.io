@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>容器预览 — drawer</title>
+
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="drawer.css">
+
+  <style>
+    body { margin: 0; background: var(--cs-color-bg-secondary); height: 100vh; }
+    .label { padding: 16px; font-size: 11px; color: var(--cs-color-text-secondary); font-family: var(--font-family-cn); }
+    /* 预览：模拟 main-content 容器，让 drawer 有"基"可定位 */
+    .preview-stage {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 60px);
+      background: var(--cs-color-white);
+      overflow: hidden;
+    }
+    .slot-header, .slot-body, .slot-footer { padding: var(--space-md); font-size: 12px; color: var(--cs-color-text-secondary); }
+  </style>
+</head>
+<body>
+  <div class="label">drawer 预览 — md 宽度 + 打开态</div>
+
+  <div class="preview-stage">
+
+    <!-- 抽屉示例（含遮罩） -->
+    <cs-drawer-overlay data-visible></cs-drawer-overlay>
+
+    <cs-drawer data-open data-width="md">
+      <div class="slot-header">slot-header · 抽屉标题</div>
+      <div class="slot-body">slot-body · 抽屉内容（可滚动）</div>
+      <div class="slot-footer">slot-footer · 抽屉底部按钮</div>
+    </cs-drawer>
+
+  </div>
+</body>
+</html>

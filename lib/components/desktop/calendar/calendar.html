@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-calendar 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="calendar.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo { max-width: 360px; }
+    .demo-large { max-width: 720px; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-title">基础月视图 Default</div>
+  <div class="section-subtitle">2026 年 4 月，含今天 / 选中 / 标记</div>
+  <cs-calendar class="demo">
+    <div class="calendar-header">
+      <span class="calendar-title">2026 年 4 月</span>
+      <span class="calendar-nav">
+        <button class="calendar-nav-btn" type="button"><i class="cses-riqizuo"></i></button>
+        <button class="calendar-nav-btn" type="button">今</button>
+        <button class="calendar-nav-btn" type="button"><i class="cses-riqiyou"></i></button>
+      </span>
+    </div>
+    <div class="calendar-weekdays">
+      <span class="calendar-weekday">日</span><span class="calendar-weekday">一</span><span class="calendar-weekday">二</span><span class="calendar-weekday">三</span><span class="calendar-weekday">四</span><span class="calendar-weekday">五</span><span class="calendar-weekday">六</span>
+    </div>
+    <div class="calendar-days">
+      <div class="calendar-day" data-other-month><span class="calendar-day-num">29</span></div>
+      <div class="calendar-day" data-other-month><span class="calendar-day-num">30</span></div>
+      <div class="calendar-day" data-other-month><span class="calendar-day-num">31</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">1</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">2</span></div>
+      <div class="calendar-day" data-marked><span class="calendar-day-num">3</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">4</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">5</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">6</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">7</span></div>
+      <div class="calendar-day" data-today><span class="calendar-day-num">8</span></div>
+      <div class="calendar-day" data-marked><span class="calendar-day-num">9</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">10</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">11</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">12</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">13</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">14</span></div>
+      <div class="calendar-day" data-selected><span class="calendar-day-num">15</span></div>
+      <div class="calendar-day" data-marked><span class="calendar-day-num">16</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">17</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">18</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">19</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">20</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">21</span></div>
+      <div class="calendar-day" data-disabled><span class="calendar-day-num">22</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">23</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">24</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">25</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">26</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">27</span></div>
+      <div class="calendar-day" data-marked><span class="calendar-day-num">28</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">29</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">30</span></div>
+      <div class="calendar-day" data-other-month><span class="calendar-day-num">1</span></div>
+      <div class="calendar-day" data-other-month><span class="calendar-day-num">2</span></div>
+    </div>
+  </cs-calendar>
+</div>
+
+<div class="section">
+  <div class="section-title">Fullscreen 全屏模式</div>
+  <div class="section-subtitle">data-fullscreen — 单元格内放事件列表</div>
+  <cs-calendar data-fullscreen class="demo-large">
+    <div class="calendar-header">
+      <span class="calendar-title">2026 年 4 月</span>
+      <span class="calendar-nav">
+        <button class="calendar-nav-btn" type="button"><i class="cses-riqizuo"></i></button>
+        <button class="calendar-nav-btn" type="button"><i class="cses-riqiyou"></i></button>
+      </span>
+    </div>
+    <div class="calendar-weekdays">
+      <span class="calendar-weekday">日</span><span class="calendar-weekday">一</span><span class="calendar-weekday">二</span><span class="calendar-weekday">三</span><span class="calendar-weekday">四</span><span class="calendar-weekday">五</span><span class="calendar-weekday">六</span>
+    </div>
+    <div class="calendar-days">
+      <div class="calendar-day"><span class="calendar-day-num">5</span><div class="calendar-day-content">设计评审</div></div>
+      <div class="calendar-day"><span class="calendar-day-num">6</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">7</span></div>
+      <div class="calendar-day" data-today><span class="calendar-day-num">8</span><div class="calendar-day-content">周会 10:00<br>评审 14:00</div></div>
+      <div class="calendar-day"><span class="calendar-day-num">9</span><div class="calendar-day-content">需求确认</div></div>
+      <div class="calendar-day"><span class="calendar-day-num">10</span></div>
+      <div class="calendar-day"><span class="calendar-day-num">11</span></div>
+    </div>
+  </cs-calendar>
+</div>
+
+</body>
+</html>

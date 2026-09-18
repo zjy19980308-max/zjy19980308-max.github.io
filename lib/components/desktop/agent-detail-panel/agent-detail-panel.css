@@ -1,0 +1,213 @@
+/* ============================================================
+ * cs-agent-detail-panel — Agent 详情面板（侧滑/弹层）
+ * REQ-026
+ *
+ * data 属性：
+ *   data-open:
+ *     - true                显示（display:flex + transform:translateX(0)）
+ *     - false               隐藏（display:none）
+ *   data-source:
+ *     - self                自有（默认深紫色头像）
+ *     - anthropic           Anthropic（橙）
+ *     - openai              OpenAI
+ *     - google              Google
+ *     - coze                Coze
+ *     - custom              自定义
+ *   data-agent-id:
+ *     - 字符串              当前 Agent 的 ID（用于回写战绩/调用次数）
+ *
+ * 子元素 data 属性：
+ *   .adp-close[data-action]:
+ *     - close-agent-panel
+ *   .needs-btn[data-variant]:
+ *     - primary             查看大纲等主动作（默认浅灰描边）
+ *   .needs-btn[data-action]:
+ *     - view-outline / approve / reject / 自定义动作 ID
+ *   .adp-btn[data-action]:
+ *     - config-agent / pause-agent / remove-agent
+ *   .adp-btn[data-variant]:
+ *     - danger              红色文字（用于"移除"等不可逆动作）
+ *   .adp-mask[data-action]:
+ *     - close-agent-panel   点击遮罩关闭面板
+ * ============================================================ */
+
+cs-agent-detail-panel {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 420px;
+  height: 100vh;
+  background: var(--cs-color-ws-bg-card);
+  box-shadow: var(--cs-shadow-ws-pop);
+  z-index: 1000;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+cs-agent-detail-panel[data-open="true"] {
+  display: flex;
+  transform: translateX(0);
+}
+
+cs-agent-detail-panel .adp-mask {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--cs-color-ws-mask);
+  z-index: 999;
+}
+cs-agent-detail-panel[data-open="true"] ~ .adp-mask {
+  display: block;
+}
+
+cs-agent-detail-panel .adp-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: var(--cs-space-ws-xl);
+  border-bottom: 1px solid var(--cs-color-ws-border);
+  flex-shrink: 0;
+}
+cs-agent-detail-panel .adp-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--cs-color-agent-self);
+  color: var(--cs-color-ws-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--cs-fs-ws-h2);
+  flex-shrink: 0;
+}
+cs-agent-detail-panel[data-source="anthropic"] .adp-avatar { background: var(--cs-color-agent-anthropic); }
+cs-agent-detail-panel[data-source="openai"]    .adp-avatar { background: var(--cs-color-agent-openai); }
+cs-agent-detail-panel[data-source="google"]    .adp-avatar { background: var(--cs-color-agent-google); }
+cs-agent-detail-panel[data-source="coze"]      .adp-avatar { background: var(--cs-color-agent-coze); }
+
+cs-agent-detail-panel .adp-meta { flex: 1; min-width: 0; }
+cs-agent-detail-panel .adp-name {
+  font-size: var(--cs-fs-ws-h3);
+  font-weight: 600;
+  color: var(--cs-color-ws-text-primary);
+}
+cs-agent-detail-panel .adp-provider {
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+  margin-top: 2px;
+}
+cs-agent-detail-panel .adp-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-success);
+}
+cs-agent-detail-panel .adp-status::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--cs-color-ws-success);
+}
+cs-agent-detail-panel .adp-close {
+  background: transparent;
+  border: none;
+  font-size: var(--cs-fs-ws-h2);
+  color: var(--cs-color-ws-text-secondary);
+  cursor: pointer;
+  padding: 4px;
+}
+
+cs-agent-detail-panel .adp-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--cs-space-ws-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-space-ws-lg);
+}
+
+cs-agent-detail-panel .adp-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+cs-agent-detail-panel .adp-section-title {
+  font-size: var(--cs-fs-ws-caption);
+  font-weight: 600;
+  color: var(--cs-color-ws-text-secondary);
+}
+cs-agent-detail-panel .adp-capabilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+cs-agent-detail-panel .adp-cap-tag {
+  padding: 3px 10px;
+  font-size: var(--cs-fs-ws-tag);
+  background: var(--cs-color-ws-bg-subtle);
+  color: var(--cs-color-ws-text-regular);
+  border-radius: var(--cs-radius-ws-pill);
+}
+
+cs-agent-detail-panel .adp-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+cs-agent-detail-panel .adp-stat-cell {
+  background: var(--cs-color-ws-bg-subtle);
+  border-radius: var(--cs-radius-ws-sm);
+  padding: 12px;
+}
+cs-agent-detail-panel .adp-stat-cell .num {
+  font-size: var(--cs-fs-ws-h2);
+  font-weight: 700;
+  color: var(--cs-color-ws-text-primary);
+  display: block;
+}
+cs-agent-detail-panel .adp-stat-cell .label {
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+}
+
+cs-agent-detail-panel .adp-needs-card {
+  background: var(--cs-color-ws-danger-bg);
+  border-left: 3px solid var(--cs-color-ws-danger);
+  border-radius: var(--cs-radius-ws-sm);
+  padding: 12px;
+}
+cs-agent-detail-panel .adp-needs-card .needs-msg {
+  font-size: var(--cs-fs-ws-body);
+  color: var(--cs-color-ws-text-primary);
+  margin-bottom: 8px;
+}
+cs-agent-detail-panel .adp-needs-card .needs-btns {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+cs-agent-detail-panel .adp-foot {
+  border-top: 1px solid var(--cs-color-ws-border);
+  padding: var(--cs-space-ws-lg) var(--cs-space-ws-xl);
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+cs-agent-detail-panel .adp-btn {
+  padding: 6px 16px;
+  font-size: var(--cs-fs-ws-caption);
+  border-radius: var(--cs-radius-ws-sm);
+  border: 1px solid var(--cs-color-ws-border);
+  background: var(--cs-color-ws-white);
+  color: var(--cs-color-ws-text-regular);
+  cursor: pointer;
+  font-family: inherit;
+}
+cs-agent-detail-panel .adp-btn[data-variant="danger"] { color: var(--cs-color-ws-danger); }
+cs-agent-detail-panel .adp-btn:hover { border-color: var(--cs-color-ws-primary); color: var(--cs-color-ws-primary); }

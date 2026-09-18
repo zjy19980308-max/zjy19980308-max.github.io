@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-vote-option-editor 预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="vote-option-editor.css">
+</head>
+<body>
+  <cs-vote-option-editor data-density="default">
+    <div class="voe-header">
+      <span class="voe-title">选项配置</span>
+      <span class="voe-hint">最多可添加 10 个选项</span>
+    </div>
+    <div class="voe-list">
+      <div class="voe-item">
+        <i class="voe-drag cses-liebiao"></i>
+        <label class="voe-input-wrap">
+          <input class="voe-input" type="text" value="方案 A">
+        </label>
+        <button class="voe-remove" type="button"><i class="cses-shanchu"></i></button>
+      </div>
+      <div class="voe-item">
+        <i class="voe-drag cses-liebiao"></i>
+        <label class="voe-input-wrap">
+          <input class="voe-input" type="text" value="方案 B">
+        </label>
+        <button class="voe-remove" type="button"><i class="cses-shanchu"></i></button>
+      </div>
+    </div>
+    <div class="voe-meta">已配置 2 / 10 项</div>
+    <button class="voe-add" type="button"><i class="cses-tianjia"></i><span>新增选项</span></button>
+  </cs-vote-option-editor>
+
+  <cs-vote-option-editor data-density="compact" data-maxed>
+    <div class="voe-header">
+      <span class="voe-title">紧凑模式（已上限）</span>
+      <span class="voe-hint">已达最大选项数量</span>
+    </div>
+    <div class="voe-list">
+      <div class="voe-item">
+        <i class="voe-drag cses-liebiao"></i>
+        <label class="voe-input-wrap">
+          <input class="voe-input" type="text" value="方案 1">
+        </label>
+        <button class="voe-remove" type="button"><i class="cses-shanchu"></i></button>
+      </div>
+    </div>
+    <div class="voe-meta">已配置 10 / 10 项</div>
+    <button class="voe-add" type="button"><i class="cses-tianjia"></i><span>新增选项</span></button>
+  </cs-vote-option-editor>
+</body>
+</html>

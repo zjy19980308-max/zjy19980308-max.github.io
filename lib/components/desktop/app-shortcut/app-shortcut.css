@@ -1,0 +1,105 @@
+/*
+ * 应用快捷入口组件 (App Shortcut)
+ * 标签：<cs-app-shortcut>
+ *
+ * data 属性：
+ *   data-color="blue|orange|green|red|purple|sky|pink|yellow" — 图标背景色
+ *   data-size="sm|md|lg" — 尺寸
+ *
+ * 子元素结构：
+ *   .shortcut-icon  — 图标容器
+ *   .shortcut-label — 应用名称
+ */
+
+/* ========== 基础 ========== */
+cs-app-shortcut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  cursor: pointer;
+  width: 80px;
+  text-decoration: none;
+}
+
+cs-app-shortcut:hover .shortcut-icon {
+  transform: translateY(-2px);
+  filter: brightness(0.9);
+}
+
+/* ========== 图标容器 ========== */
+cs-app-shortcut .shortcut-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-40);
+  height: var(--spacing-40);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-xl);
+  color: var(--cs-color-white);
+  transition: transform 0.15s ease, filter 0.15s ease;
+  flex-shrink: 0;
+}
+
+/* ========== 标签 ========== */
+cs-app-shortcut .shortcut-label {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ========== 尺寸变体 ========== */
+cs-app-shortcut[data-size="sm"] .shortcut-icon {
+  width: var(--spacing-32);
+  height: var(--spacing-32);
+  font-size: var(--font-size-lg);
+}
+
+cs-app-shortcut[data-size="lg"] .shortcut-icon {
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+  font-size: var(--font-size-xxl);
+}
+
+/* ========== 颜色变体 ========== */
+cs-app-shortcut .shortcut-icon,
+cs-app-shortcut[data-color="blue"] .shortcut-icon {
+  background: var(--color-blue-500);
+}
+
+cs-app-shortcut[data-color="orange"] .shortcut-icon {
+  background: var(--color-orange-500);
+}
+
+cs-app-shortcut[data-color="green"] .shortcut-icon {
+  background: var(--color-green-500);
+}
+
+cs-app-shortcut[data-color="red"] .shortcut-icon {
+  background: var(--color-red-500);
+}
+
+cs-app-shortcut[data-color="purple"] .shortcut-icon {
+  background: var(--color-purple-500);
+}
+
+cs-app-shortcut[data-color="sky"] .shortcut-icon {
+  background: var(--color-sky-500);
+}
+
+cs-app-shortcut[data-color="pink"] .shortcut-icon {
+  background: var(--color-pink-500);
+}
+
+cs-app-shortcut[data-color="yellow"] .shortcut-icon {
+  background: var(--color-yellow-500);
+}
+
+/* ========== 圆形变体 ========== */
+cs-app-shortcut[data-shape="circle"] .shortcut-icon {
+  border-radius: var(--radius-full);
+}

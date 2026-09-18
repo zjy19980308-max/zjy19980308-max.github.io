@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-stat-card 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="stat-card.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .card-row { display: flex; gap: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- ==================== 所有颜色变体 ==================== -->
+<div class="section">
+  <div class="section-title">统计卡片 — 颜色变体</div>
+  <div class="card-row">
+
+    <cs-stat-card data-color="primary">
+      <span class="stat-icon">
+        <i class="cses-renwu"></i>
+      </span>
+      <span class="stat-content">
+        <span class="stat-value">12</span>
+        <span class="stat-label">待审批</span>
+      </span>
+    </cs-stat-card>
+
+    <cs-stat-card data-color="success">
+      <span class="stat-icon">
+        <i class="cses-check_arrow"></i>
+      </span>
+      <span class="stat-content">
+        <span class="stat-value">36</span>
+        <span class="stat-label">已通过</span>
+      </span>
+    </cs-stat-card>
+
+    <cs-stat-card data-color="warning">
+      <span class="stat-icon">
+        <i class="cses-alert"></i>
+      </span>
+      <span class="stat-content">
+        <span class="stat-value">3</span>
+        <span class="stat-label">即将到期</span>
+      </span>
+    </cs-stat-card>
+
+    <cs-stat-card data-color="danger">
+      <span class="stat-icon">
+        <i class="cses-guanbi"></i>
+      </span>
+      <span class="stat-content">
+        <span class="stat-value">2</span>
+        <span class="stat-label">已驳回</span>
+      </span>
+    </cs-stat-card>
+
+    <cs-stat-card data-color="info">
+      <span class="stat-icon">
+        <i class="cses-rili"></i>
+      </span>
+      <span class="stat-content">
+        <span class="stat-value">156</span>
+        <span class="stat-label">本月出勤天数</span>
+      </span>
+    </cs-stat-card>
+
+  </div>
+</div>
+
+<!-- ==================== 无图标简化版 ==================== -->
+<div class="section">
+  <div class="section-title">统计卡片 — 无图标</div>
+  <div class="card-row">
+
+    <cs-stat-card data-color="primary">
+      <span class="stat-content">
+        <span class="stat-value">24</span>
+        <span class="stat-label">本月请假人次</span>
+      </span>
+    </cs-stat-card>
+
+    <cs-stat-card data-color="success">
+      <span class="stat-content">
+        <span class="stat-value">98%</span>
+        <span class="stat-label">出勤率</span>
+      </span>
+    </cs-stat-card>
+
+  </div>
+</div>
+
+</body>
+</html>

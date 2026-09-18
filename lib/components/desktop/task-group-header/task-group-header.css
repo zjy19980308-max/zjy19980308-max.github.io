@@ -1,0 +1,165 @@
+/*
+ * 任务分组标题组件 (Task Group Header)
+ * 标签：<cs-task-group-header>
+ * 数据来源：Figma 任务管理分组列表头
+ *
+ * data 属性：
+ *   data-expanded              — 展开态（箭头旋转 90deg）
+ *   data-collapsed             — 折叠态（默认，箭头不旋转）
+ *
+ * 子元素：
+ *   .group-left                — 左侧区域（checkbox + 箭头 + 状态点 + 标题 + 计数）
+ *   .group-checkbox            — 分组全选复选框（40px，与 task-row 对齐）
+ *   .group-arrow               — 展开/折叠箭头图标
+ *   .group-dot                 — 状态颜色圆点
+ *   .group-title               — 分组标题文本
+ *   .group-count               — 分组任务计数
+ *   .group-columns             — 右侧列标题区域（与表头对齐）
+ *   .gc-cell                   — 列标题单元格
+ *   .gc-icon                   — 列标题前图标
+ *   .gc-label                  — 列标题文字
+ *
+ * 状态圆点颜色变体（通过 data-status）：
+ *   data-status="not-started"  — 灰色（未开始）
+ *   data-status="in-progress"  — 蓝色（进行中）
+ *   data-status="completed"    — 绿色（已完成）
+ *   data-status="cancelled"    — 红色（已取消）
+ */
+
+/* ========== 基础样式 ========== */
+cs-task-group-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: var(--spacing-36);
+  padding: 0 var(--space-md);
+  background: var(--cs-color-white);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ========== 左侧区域 ========== */
+cs-task-group-header .group-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ========== 分组复选框 ========== */
+cs-task-group-header .group-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+}
+
+/* ========== 箭头图标 ========== */
+cs-task-group-header .group-arrow {
+  font-size: var(--cs-sem-size-icon-xs);
+  color: var(--cs-color-text-light2);
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  transform: rotate(0deg);
+  margin-right: var(--space-2xs);
+}
+
+/* ========== 展开态箭头旋转 ========== */
+cs-task-group-header[data-expanded] .group-arrow {
+  transform: rotate(90deg);
+}
+
+/* ========== 状态颜色圆点 ========== */
+cs-task-group-header .group-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-right: var(--space-2xs);
+  background: var(--cs-color-text-light2);
+}
+
+/* 状态颜色变体 */
+cs-task-group-header .group-dot[data-status="not-started"] {
+  background: var(--cs-color-text-light2);
+}
+
+cs-task-group-header .group-dot[data-status="in-progress"] {
+  background: var(--cs-color-primary);
+}
+
+cs-task-group-header .group-dot[data-status="completed"] {
+  background: var(--cs-color-success);
+}
+
+cs-task-group-header .group-dot[data-status="cancelled"] {
+  background: var(--color-danger);
+}
+
+/* ========== 分组标题 ========== */
+cs-task-group-header .group-title {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  flex-shrink: 0;
+  margin-right: var(--space-2xs);
+}
+
+/* ========== 任务计数 ========== */
+cs-task-group-header .group-count {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 右侧列标题区域 ========== */
+cs-task-group-header .group-columns {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ========== 列标题单元格 ========== */
+cs-task-group-header .gc-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  font: var(--typo-cn-12-medium);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 列标题前图标 ========== */
+cs-task-group-header .gc-icon {
+  font-size: 14px;
+  line-height: 1;
+  color: inherit;
+  flex-shrink: 0;
+}
+
+/* ========== 列标题文字 ========== */
+cs-task-group-header .gc-label {
+  white-space: nowrap;
+}
+
+/* ========== 列宽定义（匹配 task-row） ========== */
+cs-task-group-header .gc-cell[data-col="priority"] {
+  width: 80px;
+}
+
+cs-task-group-header .gc-cell[data-col="status"] {
+  width: 80px;
+}
+
+cs-task-group-header .gc-cell[data-col="start"] {
+  width: 120px;
+}
+
+cs-task-group-header .gc-cell[data-col="due"] {
+  width: 120px;
+}
+
+cs-task-group-header .gc-cell[data-col="assignee"] {
+  width: 80px;
+}

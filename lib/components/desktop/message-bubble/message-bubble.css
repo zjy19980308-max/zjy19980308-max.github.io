@@ -1,0 +1,127 @@
+/*
+ * 消息气泡组件 (Message Bubble)
+ * 标签：<cs-message-bubble>
+ * 数据来源：消息设计稿 Figma（聊天区域消息气泡）
+ *
+ * Figma 实测：
+ *   容器: flex row, gap 8
+ *   发送: row-reverse, 气泡 bg #165DFF → var(--cs-color-primary), 文字白色
+ *   接收: 默认, 气泡 bg #f2f3f5 → var(--cs-color-bg-light), 文字深色
+ *   气泡: padding 8 12, font 14px/400, max-width 60%
+ *   名称: 12px/500, color #8c8c8d
+ *   时间: 10px/400, color #8c8c8d
+ *
+ * data 属性：
+ *   data-variant="sent"      — 发送的消息（右侧蓝色）
+ *   data-variant="received"  — 接收的消息（左侧灰色，默认）
+ */
+
+/* ========== 基础样式（接收消息） ========== */
+cs-message-bubble {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-xs);
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+/* ========== 头像 ========== */
+cs-message-bubble .bubble-avatar {
+  flex-shrink: 0;
+}
+
+/* ========== 气泡主体容器 ========== */
+cs-message-bubble .bubble-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  max-width: 60%;
+}
+
+/* ========== 发送者名称（仅接收方显示） ========== */
+cs-message-bubble .bubble-name {
+  font: var(--typo-cn-12-medium);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 气泡内容 ========== */
+cs-message-bubble .bubble-body {
+  display: inline-block;
+  padding: var(--space-xs) var(--space-sm);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  background: var(--cs-color-bg-light);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) var(--radius-2);
+  word-break: break-word;
+  position: relative;
+}
+
+/* ========== 时间 ========== */
+cs-message-bubble .bubble-time {
+  font-size: var(--font-size-xs);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 操作按钮（默认隐藏，hover 显示） ========== */
+cs-message-bubble .bubble-actions {
+  display: none;
+  flex-direction: row;
+  gap: var(--space-2xs);
+  align-items: center;
+}
+
+cs-message-bubble:hover .bubble-actions {
+  display: flex;
+}
+
+cs-message-bubble .bubble-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  border-radius: var(--radius);
+  border: none;
+  background: none;
+  color: var(--cs-color-text-light2);
+  font-size: var(--cs-sem-size-icon-sm);
+  cursor: pointer;
+  transition: background var(--cs-transition-fast);
+}
+
+cs-message-bubble .bubble-action:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 已读回执 ========== */
+cs-message-bubble .bubble-receipt {
+  font-size: var(--font-size-xs);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 发送消息变体 ========== */
+cs-message-bubble[data-variant="sent"] {
+  flex-direction: row-reverse;
+}
+
+cs-message-bubble[data-variant="sent"] .bubble-wrapper {
+  align-items: flex-end;
+}
+
+cs-message-bubble[data-variant="sent"] .bubble-name {
+  display: none;
+}
+
+cs-message-bubble[data-variant="sent"] .bubble-body {
+  background: var(--cs-color-primary);
+  color: var(--cs-color-text-inverse);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-2) var(--radius-lg);
+}
+
+/* ========== 接收消息变体（显式声明） ========== */
+cs-message-bubble[data-variant="received"] .bubble-body,
+cs-message-bubble:not([data-variant]) .bubble-body {
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-text);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) var(--radius-2);
+}

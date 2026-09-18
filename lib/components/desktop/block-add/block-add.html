@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-block-add 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="block-add.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .section { background: var(--cs-color-bg); border-radius: var(--radius-lg); padding: 24px 32px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .section-title { font: var(--typo-cn-14-medium); color: var(--cs-color-text-light); margin-bottom: 16px; }
+    .block-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      padding: 6px 0;
+    }
+    .block-content {
+      flex: 1;
+      font: var(--typo-cn-14-regular);
+      color: var(--cs-color-text);
+      line-height: var(--line-height-md);
+      margin: 0;
+    }
+    .row-label {
+      display: inline-block;
+      width: 80px;
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-text-light2);
+    }
+    .demo-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="screenshot-target">
+
+  <div class="section">
+    <div class="section-title">默认（鼠标悬停段落时左侧加号显现）</div>
+
+    <div class="block-row">
+      <cs-block-add aria-label="插入块">
+        <i class="ba-icon cses-add"></i>
+      </cs-block-add>
+      <p class="block-content">这是第一段段落，悬停整行可以看到左侧加号。</p>
+    </div>
+
+    <div class="block-row">
+      <cs-block-add aria-label="插入块">
+        <i class="ba-icon cses-add"></i>
+      </cs-block-add>
+      <p class="block-content">第二段。点击加号会在此段上方插入新块。</p>
+    </div>
+
+    <div class="block-row">
+      <cs-block-add aria-label="插入块">
+        <i class="ba-icon cses-add"></i>
+      </cs-block-add>
+      <p class="block-content">第三段段落，演示长文档中的常态。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">变体演示</div>
+
+    <div class="demo-row">
+      <span class="row-label">默认（隐藏）</span>
+      <cs-block-add aria-label="插入块">
+        <i class="ba-icon cses-add"></i>
+      </cs-block-add>
+      <span style="font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2);">opacity: 0</span>
+    </div>
+
+    <div class="demo-row">
+      <span class="row-label">激活态</span>
+      <cs-block-add data-active aria-label="插入块">
+        <i class="ba-icon cses-add"></i>
+      </cs-block-add>
+      <span style="font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2);">data-active</span>
+    </div>
+
+    <div class="demo-row">
+      <span class="row-label">禁用态</span>
+      <cs-block-add data-disabled data-active aria-label="插入块">
+        <i class="ba-icon cses-add"></i>
+      </cs-block-add>
+      <span style="font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2);">data-disabled</span>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

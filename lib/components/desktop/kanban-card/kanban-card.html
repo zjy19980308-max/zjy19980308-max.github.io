@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-kanban-card 看板卡片</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=103">
+  <link rel="stylesheet" href="kanban-card.css">
+  <link rel="stylesheet" href="../avatar/avatar.css">
+  <style>
+    body { padding: 32px; background: #f0f0f0; }
+    h2 { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin: 24px 0 12px; }
+    h2:first-child { margin-top: 0; }
+    .demo-row { display: flex; gap: 16px; flex-wrap: wrap; }
+    .demo-col { width: 290px; }
+  </style>
+</head>
+<body>
+
+<h2>基础卡片</h2>
+<div class="demo-row">
+  <div class="demo-col">
+    <cs-kanban-card>
+      <div class="kanban-title-row">
+        <span class="kanban-title">CSES_SJ_月度导向板块改版任务</span>
+        <span class="kanban-meta"><img src="../../../assets/icon-kanban-folder.svg" width="12" height="12" alt="项目"> CSES项目 / 设计模块</span>
+      </div>
+      <div class="kanban-tags">
+        <span class="kanban-tag" data-type="urgent">紧急</span>
+      </div>
+      <div class="kanban-footer">
+        <div class="kanban-assignees">
+          <cs-avatar data-size="xs" data-color="blue">张</cs-avatar>
+          <cs-avatar data-size="xs" data-color="red">李</cs-avatar>
+        </div>
+      </div>
+      <div class="kanban-icons">
+        <span class="kanban-icon-item"><i class="cses-git-branch-01"></i> 4</span>
+        <span class="kanban-icon-item"><i class="cses-target-01"></i> 5</span>
+      </div>
+    </cs-kanban-card>
+  </div>
+
+  <div class="demo-col">
+    <cs-kanban-card>
+      <div class="kanban-title-row">
+        <span class="kanban-title">CSES_SJ_月度导向板块改版任务</span>
+        <span class="kanban-meta"><img src="../../../assets/icon-kanban-folder.svg" width="12" height="12" alt="项目"> CSES项目 / 设计模块</span>
+      </div>
+      <div class="kanban-tags">
+        <span class="kanban-tag" data-type="normal">预估</span>
+      </div>
+      <div class="kanban-footer">
+        <div class="kanban-assignees">
+          <cs-avatar data-size="xs" data-color="green">王</cs-avatar>
+          <cs-avatar data-size="xs" data-color="orange">赵</cs-avatar>
+          <cs-avatar data-size="xs" data-color="purple">周</cs-avatar>
+        </div>
+      </div>
+      <div class="kanban-icons">
+        <span class="kanban-icon-item"><i class="cses-git-branch-01"></i> 5</span>
+        <span class="kanban-icon-item"><i class="cses-target-01"></i> 12</span>
+      </div>
+    </cs-kanban-card>
+  </div>
+</div>
+
+<h2>简洁卡片</h2>
+<div class="demo-row">
+  <div class="demo-col">
+    <cs-kanban-card>
+      <div class="kanban-title-row">
+        <span class="kanban-title">CSES_SJ_月度导向板块改版任务</span>
+        <span class="kanban-meta"><img src="../../../assets/icon-kanban-folder.svg" width="12" height="12" alt="项目"> CSES项目 / 设计模块</span>
+      </div>
+      <div class="kanban-footer">
+        <div class="kanban-assignees">
+          <cs-avatar data-size="xs" data-color="blue">张</cs-avatar>
+        </div>
+      </div>
+      <div class="kanban-icons">
+        <span class="kanban-icon-item"><i class="cses-git-branch-01"></i> 1</span>
+        <span class="kanban-icon-item"><i class="cses-target-01"></i> 2</span>
+      </div>
+    </cs-kanban-card>
+  </div>
+</div>
+
+</body>
+</html>

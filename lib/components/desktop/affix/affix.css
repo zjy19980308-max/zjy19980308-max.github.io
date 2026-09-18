@@ -1,0 +1,38 @@
+/*
+ * 固钉组件 (Affix)
+ * 标签：<cs-affix>
+ *
+ * 作用：将元素在滚动到指定位置时固钉在屏幕上（基于 position: sticky）。
+ * 对标 ng-zorro nz-affix。纯 CSS 实现，无需 JS 监听 scroll。
+ *
+ * data 属性：
+ *   data-placement="top"      — 固定在视口顶部（默认）
+ *   data-placement="bottom"   — 固定在视口底部
+ *
+ * CSS 自定义属性：
+ *   --cs-affix-offset    — 与视口边缘的距离（默认 0）
+ *
+ * 注意事项：
+ *   1. position: sticky 要求父级容器有可滚动内容，且父级不能是 overflow: hidden
+ *   2. cs-affix 自身宽度由内容决定，需要全宽时给内部元素加 width: 100%
+ *   3. 固钉激活后样式不变，需要"固钉时阴影/背景变化"请用 IntersectionObserver + class
+ */
+
+cs-affix {
+  display: block;
+  position: sticky;
+  z-index: 100;
+}
+
+/* ========== 顶部固钉（默认） ========== */
+cs-affix,
+cs-affix[data-placement="top"] {
+  top: var(--cs-affix-offset, 0);
+  bottom: auto;
+}
+
+/* ========== 底部固钉 ========== */
+cs-affix[data-placement="bottom"] {
+  bottom: var(--cs-affix-offset, 0);
+  top: auto;
+}

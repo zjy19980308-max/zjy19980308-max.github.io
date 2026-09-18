@@ -1,0 +1,135 @@
+/*
+ * 二维码组件 (QR Code)
+ * 标签：<cs-qr-code>
+ *
+ * 作用：二维码展示容器，提供边框、内边距、图标叠层、底部说明文字。
+ * 真实二维码图像由父级业务通过 <img src> 或 <canvas> 注入；本组件只负责包装样式。
+ * 对标 ng-zorro nz-qrcode。
+ *
+ * data 属性：
+ *   data-size="sm"     — 96x96 紧凑
+ *   data-size="md"     — 128x128 标准（默认）
+ *   data-size="lg"     — 200x200 大
+ *   data-bordered      — 显示边框（默认有边框）
+ *   data-status="active"     — 正常态（默认）
+ *   data-status="loading"    — 加载中（半透明）
+ *   data-status="expired"    — 已过期（覆盖刷新提示）
+ *
+ * 子元素：
+ *   .qr-code-image     — 二维码图像容器（放 <img> 或 <canvas>）
+ *   .qr-code-logo      — 中心 logo（叠在二维码中央）
+ *   .qr-code-overlay   — 状态覆盖层（loading / expired）
+ *   .qr-code-caption   — 底部说明文字
+ */
+
+cs-qr-code {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  vertical-align: top;
+}
+
+/* ========== 图像容器 ========== */
+cs-qr-code .qr-code-image {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--qr-size);
+  height: var(--qr-size);
+  padding: var(--space-sm);
+  box-sizing: border-box;
+  background: var(--cs-color-white);
+  border-radius: var(--radius-lg);
+}
+
+/* 默认尺寸 md */
+cs-qr-code,
+cs-qr-code[data-size="md"] {
+  --qr-size: 128px;
+}
+
+cs-qr-code[data-size="sm"] {
+  --qr-size: 96px;
+}
+
+cs-qr-code[data-size="lg"] {
+  --qr-size: 200px;
+}
+
+/* 边框（默认有） */
+cs-qr-code .qr-code-image,
+cs-qr-code[data-bordered] .qr-code-image {
+  border: var(--line-width) solid var(--cs-color-border);
+}
+
+/* ========== 二维码图像 ========== */
+cs-qr-code .qr-code-image > img,
+cs-qr-code .qr-code-image > canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+}
+
+/* ========== 中心 logo ========== */
+cs-qr-code .qr-code-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24%;
+  height: 24%;
+  padding: var(--space-2xs);
+  background: var(--cs-color-white);
+  border-radius: var(--radius);
+  box-sizing: border-box;
+  box-shadow: var(--cs-shadow-card);
+}
+
+cs-qr-code .qr-code-logo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+/* ========== 状态覆盖层 ========== */
+cs-qr-code .qr-code-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--cs-color-text-light);
+  font: var(--typo-cn-12-regular);
+  border-radius: inherit;
+}
+
+cs-qr-code .qr-code-overlay i {
+  font-size: var(--cs-sem-size-icon-xl);
+  color: var(--cs-color-text-light2);
+}
+
+cs-qr-code:not([data-status="loading"]):not([data-status="expired"]) .qr-code-overlay {
+  display: none;
+}
+
+cs-qr-code[data-status="expired"] .qr-code-overlay {
+  color: var(--cs-sem-text-error);
+}
+
+cs-qr-code[data-status="expired"] .qr-code-overlay i {
+  color: var(--cs-sem-text-error);
+}
+
+/* ========== 底部说明 ========== */
+cs-qr-code .qr-code-caption {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light);
+  text-align: center;
+}

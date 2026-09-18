@@ -1,0 +1,166 @@
+/*
+ * 提及输入 (Mention)
+ * 标签：<cs-mention>
+ *
+ * 作用：输入框 focus 时弹出候选列表（@用户、#话题），用于富文本输入的提及/标签选择。
+ * 对标 ng-zorro Mention。由 mention.js 监听 focus / blur 控制弹窗。
+ *
+ * data 属性：
+ *   data-size="sm" / "md"(默认) / "lg"
+ *   data-placement="bottom"(默认) / "top"
+ *   data-open   — 展开态（mention.js 切换）
+ *   data-disabled
+ *
+ * 子元素：
+ *   .mention-input        — 输入框（<input>）
+ *   .mention-dropdown     — 候选下拉
+ *   .mention-option       — 候选项（<button>）
+ *   .mention-option-avatar
+ *   .mention-option-label
+ *   .mention-option-meta  — 次要描述
+ */
+
+/* ========== 容器 ========== */
+cs-mention {
+  position: relative;
+  display: inline-block;
+  width: calc(var(--spacing-160) * 1.5);
+}
+
+/* ========== 输入框 ========== */
+cs-mention .mention-input {
+  width: 100%;
+  height: var(--cs-sem-size-interactive-sm);
+  padding: 0 var(--space-sm);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-bg);
+  color: var(--cs-color-text);
+  font: var(--typo-cn-14-regular);
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+cs-mention[data-size="sm"] .mention-input {
+  height: var(--cs-sem-size-interactive-xs);
+  padding: 0 var(--space-xs);
+  font: var(--typo-cn-12-regular);
+}
+
+cs-mention[data-size="lg"] .mention-input {
+  height: var(--cs-sem-size-interactive-md);
+  padding: 0 var(--space-md);
+}
+
+cs-mention .mention-input::placeholder {
+  color: var(--cs-color-text-light2);
+}
+
+cs-mention .mention-input:hover {
+  border-color: var(--cs-color-primary);
+}
+
+cs-mention .mention-input:focus,
+cs-mention[data-open] .mention-input {
+  border-color: var(--cs-color-primary);
+}
+
+cs-mention[data-disabled] .mention-input {
+  background: var(--cs-color-bg-disabled);
+  color: var(--cs-color-text-light2);
+  cursor: not-allowed;
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* ========== 候选下拉 ========== */
+cs-mention .mention-dropdown {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  padding: var(--space-2xs) 0;
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--cs-shadow-card);
+  box-sizing: border-box;
+  max-height: calc(var(--spacing-160) * 1.5);
+  overflow-y: auto;
+}
+
+cs-mention[data-open] .mention-dropdown {
+  display: block;
+}
+
+/* bottom（默认） */
+cs-mention .mention-dropdown,
+cs-mention[data-placement="bottom"] .mention-dropdown {
+  top: calc(100% + var(--space-2xs));
+}
+
+cs-mention[data-placement="top"] .mention-dropdown {
+  bottom: calc(100% + var(--space-2xs));
+  top: auto;
+}
+
+/* ========== 候选项 ========== */
+cs-mention .mention-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+  height: var(--cs-sem-size-interactive-md);
+  padding: 0 var(--space-sm);
+  background: transparent;
+  border: 0;
+  color: var(--cs-color-text);
+  font: var(--typo-cn-14-regular);
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.15s ease;
+}
+
+cs-mention .mention-option:hover,
+cs-mention .mention-option[data-active] {
+  background: var(--cs-color-bg-light);
+}
+
+cs-mention .mention-option-avatar {
+  flex-shrink: 0;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  border-radius: 999px;
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: var(--typo-cn-12-regular);
+}
+
+cs-mention .mention-option-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--cs-color-text);
+}
+
+cs-mention .mention-option-meta {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+}
+
+/* ========== 空态 ========== */
+cs-mention .mention-empty {
+  display: block;
+  padding: var(--space-sm) var(--space-md);
+  text-align: center;
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}

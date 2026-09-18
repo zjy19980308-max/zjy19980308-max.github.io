@@ -1,5 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head>
-<meta name="robots" content="noindex,nofollow,noarchive,nosnippet"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>文档 · 编辑</title>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>文档 · 编辑</title>
 <style>
 :root{--ink:#333;--ink3:#999;--line:#e6e6e6;--cs-primary:#4857e2;--font:"PingFang SC","Noto Sans SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif}
 *{box-sizing:border-box}html,body{margin:0;background:#f5f5f7;color:var(--ink);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased}body{display:inline-block;vertical-align:top;min-width:0}
@@ -48,5 +47,5 @@ document.querySelectorAll('.meta .r span').forEach(function(s){s.addEventListene
 var cur=document.getElementById('cur'),pts=[[120,210],[640,420],[300,560],[720,760],[180,880]],pi=0;setInterval(function(){pi=(pi+1)%pts.length;cur.style.left=pts[pi][0]+'px';cur.style.top=pts[pi][1]+'px';},2200);
 var tt;function say(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on');},1400);}
 </script>
-<script src="../guide.js?v=e78bebb1"></script>
+<script src="../guide.js"></script>
 </body></html>

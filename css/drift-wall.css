@@ -1,0 +1,47 @@
+/* 从 v1.1 assets/drift-wall.css 复制（v1.1 原件不动），底色换成 v7 浅底。维护：网站交互调整。 */
+/* ── 截图墙 · drift-wall.js 的样式（移植 React Bits DriftWall.css，前缀改成 .dw）──
+   变量全部由 JS 按 data-dw 写到宿主上；这里的默认值只是没 JS 时的兜底。
+   宿主自己要有高度 —— 墙的复制份数是按容器高算的。 */
+.dw{
+  position:relative;width:100%;height:clamp(420px,56vh,640px);overflow:hidden;
+  perspective:var(--dw-perspective,1200px);perspective-origin:50% 50%;
+  --dw-tile-w:280px;--dw-tile-h:188px;--dw-gap:18px;--dw-radius:14px;--dw-lift:64px;
+  --dw-dim:.55;--dw-gray:0;--dw-overlay:#060010;--dw-edge:40%;
+  border-radius:16px;background:var(--bg);
+  -webkit-mask-image:radial-gradient(ellipse 92% 94% at 50% 48%,#000 var(--dw-edge),transparent 100%),
+                     linear-gradient(to top,#000 var(--dw-edge),transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:radial-gradient(ellipse 92% 94% at 50% 48%,#000 var(--dw-edge),transparent 100%),
+             linear-gradient(to top,#000 var(--dw-edge),transparent 100%);
+  mask-composite:intersect;
+}
+/* 还没被 JS 接管时：宿主里那串 <a><img> 别裸奔 */
+.dw:not(:has(.dw__plane))>a{display:none}
+
+.dw__plane{position:absolute;top:50%;left:50%;display:flex;flex-direction:row;transform-style:preserve-3d;
+  transform-origin:50% 50%;will-change:transform}
+.dw__col{position:relative;width:calc(var(--dw-tile-w) + var(--dw-gap));transform-style:preserve-3d}
+.dw__track{display:flex;flex-direction:column;will-change:transform;transform-style:preserve-3d}
+.dw__tile{position:relative;display:block;cursor:zoom-in;width:100%;height:calc(var(--dw-tile-h) + var(--dw-gap));flex:0 0 auto;
+  outline:none;transform-style:preserve-3d;color:inherit;text-decoration:none}
+.dw__inner{position:absolute;inset:calc(var(--dw-gap) / 2);display:block;border-radius:var(--dw-radius);overflow:hidden;
+  background:#e9e9e9;opacity:var(--dw-dim);transform:translateZ(0);pointer-events:none;
+  transition:transform .42s cubic-bezier(.22,1,.36,1),opacity .42s cubic-bezier(.22,1,.36,1),box-shadow .42s cubic-bezier(.22,1,.36,1)}
+/* 整页完整显示：不同比例的页面在同一个框里 contain，宁可留边也不切页 */
+.dw__tile img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;
+  filter:grayscale(var(--dw-gray)) saturate(1);transition:filter .42s cubic-bezier(.22,1,.36,1);
+  user-select:none;-webkit-user-drag:none}
+.dw__overlay{position:absolute;inset:0;background:var(--dw-overlay);opacity:.05;pointer-events:none;
+  transition:opacity .42s cubic-bezier(.22,1,.36,1)}
+.dw__tile.is-active .dw__inner,.dw__tile:focus-visible .dw__inner{opacity:1;transform:translateZ(var(--dw-lift));
+  box-shadow:0 24px 60px -18px rgba(2,32,22,.35)}
+.dw__tile.is-active img,.dw__tile:focus-visible img{filter:grayscale(0) saturate(1.05)}
+.dw__tile.is-active .dw__overlay,.dw__tile:focus-visible .dw__overlay{opacity:0}
+.dw__tile:focus-visible .dw__inner{box-shadow:0 24px 60px -18px rgba(2,32,22,.35),0 0 0 2px rgba(255,255,255,.9)}
+
+.dw-lead{font-size:14px;font-weight:300;line-height:1.9;color:var(--fg-3);max-width:70ch;margin:0 0 var(--sp-block)}
+.dw-lead b{color:var(--fg-2);font-weight:500}
+.dw-hint{margin-top:12px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-4)}
+
+@media(max-width:860px){.dw{height:clamp(320px,48vh,460px)}}
+@media(prefers-reduced-motion:reduce){.dw__plane,.dw__track{will-change:auto}}

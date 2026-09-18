@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-popconfirm 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="popconfirm.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; min-height: 200px; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 96px; flex-shrink: 0; }
+    .tip { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-top: 8px; padding: 8px 12px; background: #f9f9f9; border-radius: 4px; }
+    .demo-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      height: 32px; padding: 0 12px;
+      border: 1px solid var(--cs-color-border); border-radius: 4px;
+      background: var(--cs-color-white); color: var(--cs-color-text);
+      font: var(--typo-cn-14-regular); cursor: pointer;
+    }
+    .demo-btn:hover { border-color: var(--cs-color-primary); color: var(--cs-color-primary); }
+    .demo-btn-danger { color: var(--cs-sem-text-error); }
+    .demo-btn-danger:hover { border-color: var(--cs-sem-text-error); color: var(--cs-sem-text-error); }
+  </style>
+</head>
+<body>
+
+<!-- 1. 默认（警告色） -->
+<div class="section">
+  <div class="section-title">基础用法 Basic</div>
+  <div class="section-subtitle">点击触发器 → 弹出确认框 → 点击 取消/确定 关闭</div>
+  <div class="row">
+    <span class="row-label">默认</span>
+    <cs-popconfirm>
+      <button class="popconfirm-trigger demo-btn" type="button">归档任务</button>
+      <div class="popconfirm-panel">
+        <div class="popconfirm-header">
+          <i class="popconfirm-icon cses-jingshi"></i>
+          <span class="popconfirm-message">确定要归档该任务吗？</span>
+        </div>
+        <div class="popconfirm-actions">
+          <button class="popconfirm-btn" type="button">取消</button>
+          <button class="popconfirm-btn" data-variant="primary" type="button">确定</button>
+        </div>
+      </div>
+    </cs-popconfirm>
+  </div>
+  <div class="tip">交互验证：① 点击 → 展开 ② 再点 → 关闭 ③ 点外部 → 关闭 ④ ESC → 关闭 ⑤ 点按钮 → 关闭</div>
+</div>
+
+<!-- 2. 危险操作 -->
+<div class="section">
+  <div class="section-title">危险操作 Danger</div>
+  <div class="section-subtitle">data-color="danger" — 红色图标 + 红色主按钮</div>
+  <div class="row">
+    <span class="row-label">删除</span>
+    <cs-popconfirm data-color="danger">
+      <button class="popconfirm-trigger demo-btn demo-btn-danger" type="button">
+        <i class="cses-shanchu"></i>
+        <span>删除</span>
+      </button>
+      <div class="popconfirm-panel">
+        <div class="popconfirm-header">
+          <i class="popconfirm-icon cses-jingshi"></i>
+          <span class="popconfirm-message">删除后不可恢复，确定删除？</span>
+        </div>
+        <div class="popconfirm-actions">
+          <button class="popconfirm-btn" type="button">取消</button>
+          <button class="popconfirm-btn" data-variant="primary" type="button">删除</button>
+        </div>
+      </div>
+    </cs-popconfirm>
+  </div>
+</div>
+
+<!-- 3. 弹出位置 -->
+<div class="section">
+  <div class="section-title">弹出位置 Placement</div>
+  <div class="section-subtitle">data-placement="top | bottom | left | right"</div>
+  <div class="row">
+    <cs-popconfirm data-placement="top">
+      <button class="popconfirm-trigger demo-btn" type="button">Top</button>
+      <div class="popconfirm-panel">
+        <div class="popconfirm-header">
+          <i class="popconfirm-icon cses-jingshi"></i>
+          <span class="popconfirm-message">确认此操作？</span>
+        </div>
+        <div class="popconfirm-actions">
+          <button class="popconfirm-btn" type="button">取消</button>
+          <button class="popconfirm-btn" data-variant="primary" type="button">确定</button>
+        </div>
+      </div>
+    </cs-popconfirm>
+    <cs-popconfirm data-placement="bottom">
+      <button class="popconfirm-trigger demo-btn" type="button">Bottom</button>
+      <div class="popconfirm-panel">
+        <div class="popconfirm-header">
+          <i class="popconfirm-icon cses-jingshi"></i>
+          <span class="popconfirm-message">确认此操作？</span>
+        </div>
+        <div class="popconfirm-actions">
+          <button class="popconfirm-btn" type="button">取消</button>
+          <button class="popconfirm-btn" data-variant="primary" type="button">确定</button>
+        </div>
+      </div>
+    </cs-popconfirm>
+    <cs-popconfirm data-placement="left">
+      <button class="popconfirm-trigger demo-btn" type="button">Left</button>
+      <div class="popconfirm-panel">
+        <div class="popconfirm-header">
+          <i class="popconfirm-icon cses-jingshi"></i>
+          <span class="popconfirm-message">确认此操作？</span>
+        </div>
+        <div class="popconfirm-actions">
+          <button class="popconfirm-btn" type="button">取消</button>
+          <button class="popconfirm-btn" data-variant="primary" type="button">确定</button>
+        </div>
+      </div>
+    </cs-popconfirm>
+    <cs-popconfirm data-placement="right">
+      <button class="popconfirm-trigger demo-btn" type="button">Right</button>
+      <div class="popconfirm-panel">
+        <div class="popconfirm-header">
+          <i class="popconfirm-icon cses-jingshi"></i>
+          <span class="popconfirm-message">确认此操作？</span>
+        </div>
+        <div class="popconfirm-actions">
+          <button class="popconfirm-btn" type="button">取消</button>
+          <button class="popconfirm-btn" data-variant="primary" type="button">确定</button>
+        </div>
+      </div>
+    </cs-popconfirm>
+  </div>
+</div>
+
+<script src="popconfirm.js"></script>
+</body>
+</html>

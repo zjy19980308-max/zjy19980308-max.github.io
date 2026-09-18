@@ -1,0 +1,107 @@
+cs-vote-publish-config {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  background: var(--cs-color-white);
+}
+
+cs-vote-publish-config .vpc-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+cs-vote-publish-config .vpc-title {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+}
+
+cs-vote-publish-config .vpc-desc {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-vote-publish-config .vpc-grid {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+cs-vote-publish-config .vpc-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius);
+  background: var(--cs-color-bg-light);
+}
+
+cs-vote-publish-config .vpc-label {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light);
+}
+
+cs-vote-publish-config .vpc-control {
+  font: var(--typo-cn-12-medium);
+  color: var(--cs-color-text);
+}
+
+cs-vote-publish-config .vpc-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3xs);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-vote-publish-config .vpc-summary {
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius);
+  background: var(--cs-color-bg-hover);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light);
+}
+
+cs-vote-publish-config .vpc-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-xs);
+}
+
+cs-vote-publish-config .vpc-button {
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-xs);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-white);
+  color: var(--cs-color-text-light);
+  font: var(--typo-cn-12-medium);
+  cursor: pointer;
+}
+
+cs-vote-publish-config .vpc-button[data-variant="primary"] {
+  border-color: var(--cs-color-primary);
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+}
+
+cs-vote-publish-config .vpc-button[data-variant="primary"]:hover {
+  background: var(--cs-color-primary-hover);
+}
+
+cs-vote-publish-config[data-mode="multiple"] .vpc-control[data-role="mode"]::after {
+  content: "（可多选）";
+  color: var(--cs-color-text-light2);
+}
+
+cs-vote-publish-config[data-anonymous] .vpc-summary::before {
+  content: "匿名投票已开启 · ";
+}
+
+cs-vote-publish-config[data-locked] {
+  opacity: var(--cs-opacity-disabled);
+  pointer-events: none;
+}

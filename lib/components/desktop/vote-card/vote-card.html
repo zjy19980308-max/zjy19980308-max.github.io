@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-vote-card 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="vote-card.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+    .demo-box { width: 320px; }
+  </style>
+</head>
+<body>
+
+<!-- 单选投票（进行中） -->
+<div class="section">
+  <div class="section-title">单选投票（进行中）</div>
+  <div class="section-subtitle">默认模式，单选按钮</div>
+
+  <div class="row">
+    <span class="row-label">单选</span>
+    <div class="demo-box">
+      <cs-vote-card>
+        <span class="vote-title">本周五团建去哪里？</span>
+        <div class="vote-options">
+          <div class="vote-option">
+            <div class="vote-option-row">
+              <input type="radio" name="vote-single" class="vote-option-input">
+              <span class="vote-option-label">密室逃脱</span>
+            </div>
+          </div>
+          <div class="vote-option">
+            <div class="vote-option-row">
+              <input type="radio" name="vote-single" class="vote-option-input">
+              <span class="vote-option-label">户外烧烤</span>
+            </div>
+          </div>
+          <div class="vote-option">
+            <div class="vote-option-row">
+              <input type="radio" name="vote-single" class="vote-option-input">
+              <span class="vote-option-label">KTV</span>
+            </div>
+          </div>
+        </div>
+        <div class="vote-footer">
+          <span class="vote-meta">12人参与 · 还剩18min12s</span>
+          <div class="vote-actions">
+            <button class="vote-btn" data-variant="primary">投票</button>
+          </div>
+        </div>
+      </cs-vote-card>
+    </div>
+  </div>
+</div>
+
+<!-- 多选投票（进行中） -->
+<div class="section">
+  <div class="section-title">多选投票（进行中）</div>
+  <div class="section-subtitle">data-multiple：复选框模式</div>
+
+  <div class="row">
+    <span class="row-label">多选</span>
+    <div class="demo-box">
+      <cs-vote-card data-multiple>
+        <span class="vote-title">下次聚餐想吃什么？（可多选）</span>
+        <div class="vote-options">
+          <div class="vote-option">
+            <div class="vote-option-row">
+              <input type="checkbox" class="vote-option-input">
+              <span class="vote-option-label">火锅</span>
+            </div>
+          </div>
+          <div class="vote-option">
+            <div class="vote-option-row">
+              <input type="checkbox" class="vote-option-input">
+              <span class="vote-option-label">日料</span>
+            </div>
+          </div>
+          <div class="vote-option">
+            <div class="vote-option-row">
+              <input type="checkbox" class="vote-option-input">
+              <span class="vote-option-label">西餐</span>
+            </div>
+          </div>
+          <div class="vote-option">
+            <div class="vote-option-row">
+              <input type="checkbox" class="vote-option-input">
+              <span class="vote-option-label">烤肉</span>
+            </div>
+          </div>
+        </div>
+        <div class="vote-footer">
+          <span class="vote-meta">8人参与 · 还剩2h30min</span>
+          <div class="vote-actions">
+            <button class="vote-btn" data-variant="primary">投票</button>
+          </div>
+        </div>
+      </cs-vote-card>
+    </div>
+  </div>
+</div>
+
+<!-- 投票结果（已结束） -->
+<div class="section">
+  <div class="section-title">投票结果（已结束）</div>
+  <div class="section-subtitle">data-closed：显示结果模式，隐藏投票控件</div>
+
+  <div class="row">
+    <span class="row-label">已结束</span>
+    <div class="demo-box">
+      <cs-vote-card data-closed>
+        <span class="vote-title">本周五团建去哪里？</span>
+        <div class="vote-options">
+          <div class="vote-option">
+            <div class="vote-option-row">
+              <input type="radio" class="vote-option-input">
+              <span class="vote-option-label">密室逃脱</span>
+              <span class="vote-option-count">5票 42%</span>
+            </div>
+            <div class="vote-option-bar">
+              <div class="vote-option-bar-fill" style="width: 42%;"></div>
+            </div>
+          </div>
+          <div class="vote-option">
+            <div class="vote-option-row">
+              <input type="radio" class="vote-option-input">
+              <span class="vote-option-label">户外烧烤</span>
+              <span class="vote-option-count">4票 33%</span>
+            </div>
+            <div class="vote-option-bar">
+              <div class="vote-option-bar-fill" style="width: 33%;"></div>
+            </div>
+          </div>
+          <div class="vote-option">
+            <div class="vote-option-row">
+              <input type="radio" class="vote-option-input">
+              <span class="vote-option-label">KTV</span>
+              <span class="vote-option-count">3票 25%</span>
+            </div>
+            <div class="vote-option-bar">
+              <div class="vote-option-bar-fill" style="width: 25%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="vote-footer">
+          <span class="vote-meta">12人参与 · 已结束</span>
+          <div class="vote-actions">
+            <button class="vote-btn">结束投票</button>
+          </div>
+        </div>
+      </cs-vote-card>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

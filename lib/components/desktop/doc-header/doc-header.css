@@ -1,0 +1,184 @@
+/* ==========================================================
+   cs-doc-header — 文档头部块（表情/封面 + 标题 + 元数据 + 输入提示）
+
+   data 属性：
+     data-show-actions — 强制显示顶部小按钮组（不依赖 hover）
+     data-empty-title  — 空标题占位态（标题区显示 "请输入文档标题" 占位）
+   ========================================================== */
+
+cs-doc-header {
+  display: block;
+  width: 100%;
+  padding-top: var(--spacing-24);
+  padding-bottom: var(--space-md);
+}
+
+/* ---- 顶部小按钮组（hover 才显示） ---- */
+.dh-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  height: var(--spacing-24);
+  margin-bottom: var(--space-sm);
+  opacity: 0;
+  transition: opacity var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+cs-doc-header:hover .dh-actions,
+cs-doc-header[data-show-actions] .dh-actions {
+  opacity: 1;
+}
+
+.dh-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  height: var(--spacing-24);
+  padding: 0 var(--space-xs);
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light);
+  cursor: pointer;
+  transition:
+    background var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.dh-action:hover {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text);
+}
+
+.dh-action-icon {
+  font-size: var(--cs-sem-size-icon-sm);
+}
+
+.dh-action-label {
+  white-space: nowrap;
+}
+
+/* ---- 大标题 ---- */
+.dh-title {
+  margin: 0 0 var(--space-md);
+  font-family: "PingFang SC", sans-serif;
+  font-size: var(--font-size-32);
+  line-height: var(--line-height-40);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cs-color-text);
+  outline: none;
+}
+
+.dh-title:empty::before {
+  content: "请输入文档标题";
+  color: var(--cs-color-text-light2);
+  font-weight: var(--font-weight-regular);
+}
+
+cs-doc-header[data-empty-title] .dh-title::before {
+  content: "请输入文档标题";
+  color: var(--cs-color-text-light2);
+  font-weight: var(--font-weight-regular);
+}
+
+/* ---- 元数据行 ---- */
+.dh-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  margin-bottom: var(--space-md);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+.dh-meta-author {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+.dh-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  border-radius: var(--radius-pill);
+  background: var(--cs-color-primary);
+  color: var(--cs-color-text-inverse);
+  font: var(--typo-cn-12-medium);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.dh-author-name {
+  color: var(--cs-color-text);
+  font-weight: var(--font-weight-medium);
+  margin-right: var(--space-3xs);
+}
+
+.dh-author-role {
+  color: var(--cs-color-text-light2);
+}
+
+.dh-meta-time {
+  color: var(--cs-color-text-light2);
+}
+
+.dh-meta-stats {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  margin-left: auto;
+  color: var(--cs-color-text-light2);
+}
+
+.dh-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  cursor: pointer;
+  transition: color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.dh-stat:hover {
+  color: var(--cs-color-text);
+}
+
+.dh-stat-icon {
+  font-size: var(--cs-sem-size-icon-sm);
+}
+
+/* ---- 输入提示行 ---- */
+.dh-hint {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) 0;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light2);
+  cursor: text;
+}
+
+.dh-hint-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  border-radius: var(--radius);
+  font-size: var(--cs-sem-size-icon-sm);
+  color: var(--cs-color-text-light2);
+  background: transparent;
+  transition: background var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.dh-hint:hover .dh-hint-icon {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text);
+}
+
+.dh-hint-text {
+  flex: 1;
+}

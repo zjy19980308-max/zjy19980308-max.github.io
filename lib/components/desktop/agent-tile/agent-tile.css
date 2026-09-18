@@ -1,0 +1,86 @@
+/* ============================================================
+ * cs-agent-tile — Agent 状态磁贴（状态矩阵单元）
+ * 自有 / 接入 / 自定义 三色边
+ *
+ * data 属性：
+ *   data-source:
+ *     - self                自有（默认深紫色头像）
+ *     - anthropic           Anthropic（橙）
+ *     - openai              OpenAI（黑/绿）
+ *     - google              Google（蓝）
+ *     - coze                Coze（紫橙）
+ *     - custom              自定义（灰）
+ *   data-status:
+ *     - online              在线（绿点静态）
+ *     - working             工作中（绿点 + 1.4s 脉冲动画）
+ *     - idle                空闲（灰点）
+ *     - needs               待处理（红点）
+ *     - offline             离线（灰点）
+ *   data-agent-id:
+ *     - 字符串              用于点击弹 cs-agent-detail-panel（锚点 ID）
+ * ============================================================ */
+
+cs-agent-tile {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px 6px 6px;
+  border-radius: var(--cs-radius-ws-pill);
+  background: var(--cs-color-ws-bg-card);
+  border: 1px solid var(--cs-color-ws-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: var(--cs-fs-ws-caption);
+  position: relative;
+}
+cs-agent-tile:hover {
+  border-color: var(--cs-color-ws-primary);
+  transform: translateY(-1px);
+  box-shadow: var(--cs-shadow-ws-card-hover);
+}
+
+cs-agent-tile .agent-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-white);
+  flex-shrink: 0;
+  background: var(--cs-color-agent-self);
+}
+
+cs-agent-tile[data-source="self"]      .agent-avatar { background: var(--cs-color-agent-self); }
+cs-agent-tile[data-source="anthropic"] .agent-avatar { background: var(--cs-color-agent-anthropic); }
+cs-agent-tile[data-source="openai"]    .agent-avatar { background: var(--cs-color-agent-openai); }
+cs-agent-tile[data-source="google"]    .agent-avatar { background: var(--cs-color-agent-google); }
+cs-agent-tile[data-source="coze"]      .agent-avatar { background: var(--cs-color-agent-coze); }
+cs-agent-tile[data-source="custom"]    .agent-avatar { background: var(--cs-color-agent-custom); }
+
+cs-agent-tile .agent-name {
+  color: var(--cs-color-ws-text-regular);
+  font-weight: 500;
+}
+
+cs-agent-tile .agent-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--cs-color-ws-white);
+  box-sizing: content-box;
+}
+cs-agent-tile[data-status="online"]  .agent-dot { background: var(--cs-color-ws-success); }
+cs-agent-tile[data-status="working"] .agent-dot { background: var(--cs-color-ws-success); animation: ws-pulse 1.4s ease-in-out infinite; }
+cs-agent-tile[data-status="idle"]    .agent-dot { background: var(--cs-color-ws-text-placeholder); }
+cs-agent-tile[data-status="needs"]   .agent-dot { background: var(--cs-color-ws-danger); }
+cs-agent-tile[data-status="offline"] .agent-dot { background: var(--cs-color-ws-text-placeholder); }
+
+@keyframes ws-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}

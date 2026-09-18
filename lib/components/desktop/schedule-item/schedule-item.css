@@ -1,0 +1,90 @@
+/*
+ * 日程条目组件 (Schedule Item)
+ * 标签：<cs-schedule-item>
+ *
+ * data 属性：
+ *   data-color="primary|success|warning|danger"  — 左侧色条颜色
+ *
+ * 子元素结构：
+ *   .schedule-bar     — 左侧竖色条
+ *   .schedule-content — 右侧内容区
+ *     .schedule-time    — 时间段
+ *     .schedule-title   — 日程标题
+ *     .schedule-meta    — 底部元信息区
+ */
+
+/* ========== 基础布局 ========== */
+cs-schedule-item {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+cs-schedule-item:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 左侧色条 ========== */
+cs-schedule-item .schedule-bar {
+  width: var(--border-width-3);
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: var(--cs-color-primary);
+}
+
+/* ========== 内容区 ========== */
+cs-schedule-item .schedule-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  min-width: 0;
+  flex: 1;
+}
+
+cs-schedule-item .schedule-time {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-schedule-item .schedule-title {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+cs-schedule-item .schedule-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-2xs);
+}
+
+/* ========== 颜色变体 ========== */
+
+/* primary（默认） */
+cs-schedule-item .schedule-bar,
+cs-schedule-item[data-color="primary"] .schedule-bar {
+  background: var(--cs-color-primary);
+}
+
+/* success */
+cs-schedule-item[data-color="success"] .schedule-bar {
+  background: var(--cs-sem-status-success);
+}
+
+/* warning */
+cs-schedule-item[data-color="warning"] .schedule-bar {
+  background: var(--cs-sem-status-warning);
+}
+
+/* danger */
+cs-schedule-item[data-color="danger"] .schedule-bar {
+  background: var(--cs-sem-status-error);
+}

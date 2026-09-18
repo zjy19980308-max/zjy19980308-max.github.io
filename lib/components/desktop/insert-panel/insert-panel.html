@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-insert-panel 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="insert-panel.css">
+  <style>
+    body { margin: 0; padding: 32px; background: var(--cs-color-bg-light); min-height: 100vh; }
+    .preview-stage {
+      display: flex;
+      justify-content: flex-end;
+      align-items: stretch;
+      width: 100%;
+      max-width: 1200px;
+      height: 720px;
+      margin: 0 auto;
+      background: var(--cs-color-bg);
+      border-radius: var(--radius-xxl);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      overflow: hidden;
+      position: relative;
+    }
+    .stage-content {
+      flex: 1;
+      padding: 32px;
+      color: var(--cs-color-text-light2);
+      font: var(--typo-cn-14-regular);
+    }
+    .stage-content h2 {
+      font-size: 24px;
+      color: var(--cs-color-text);
+      margin: 0 0 16px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="screenshot-target">
+
+  <div class="preview-stage">
+    <div class="stage-content">
+      <h2>主内容区</h2>
+      <p>右侧抽屉演示「插入」面板（data-open）。</p>
+    </div>
+
+    <cs-insert-panel data-open>
+      <header class="ip-header">
+        <h3 class="ip-title">插入</h3>
+        <button class="ip-close" aria-label="关闭">
+          <i class="cses-guanbi"></i>
+        </button>
+      </header>
+
+      <div class="ip-body">
+
+        <section class="ip-section">
+          <h4 class="ip-section-title">基础</h4>
+          <div class="ip-grid">
+            <button class="ip-item"><i class="ip-item-icon cses-biaoti"></i><span class="ip-item-label">H1</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-biaoti"></i><span class="ip-item-label">H2</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-biaoti"></i><span class="ip-item-label">H3</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-biaoti"></i><span class="ip-item-label">H4</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-fanhuiyuanwen"></i><span class="ip-item-label">引用</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-daimakuai"></i><span class="ip-item-label">代码块</span></button>
+          </div>
+        </section>
+
+        <section class="ip-section">
+          <h4 class="ip-section-title">列表</h4>
+          <div class="ip-grid">
+            <button class="ip-item"><i class="ip-item-icon cses-tasklist"></i><span class="ip-item-label">代办列表</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-unordered"></i><span class="ip-item-label">无序列表</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-ordered_list"></i><span class="ip-item-label">编号列表</span></button>
+          </div>
+        </section>
+
+        <section class="ip-section">
+          <h4 class="ip-section-title">常用</h4>
+          <div class="ip-grid">
+            <button class="ip-item"><i class="ip-item-icon cses-marker"></i><span class="ip-item-label">高亮块</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-link"></i><span class="ip-item-label">同步块</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-fengexian"></i><span class="ip-item-label">分割线</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-fengexian"></i><span class="ip-item-label">分页符</span></button>
+
+            <button class="ip-item"><i class="ip-item-icon cses-task"></i><span class="ip-item-label">任务</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-huiyi"></i><span class="ip-item-label">会议</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-yuedudaoxiang"></i><span class="ip-item-label">导向</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-ren"></i><span class="ip-item-label">人员</span></button>
+
+            <button class="ip-item"><i class="ip-item-icon cses-tupian"></i><span class="ip-item-label">图片</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-wenjian"></i><span class="ip-item-label">文档</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-table"></i><span class="ip-item-label">表格</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-fujian"></i><span class="ip-item-label">附件</span></button>
+
+            <button class="ip-item"><i class="ip-item-icon cses-shipin"></i><span class="ip-item-label">视频</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-bofang"></i><span class="ip-item-label">音频</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-tubiao"></i><span class="ip-item-label">图表</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-link"></i><span class="ip-item-label">链接</span></button>
+
+            <button class="ip-item"><i class="ip-item-icon cses-daimahuitu"></i><span class="ip-item-label">代码绘图</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-fenlan"></i><span class="ip-item-label">分栏</span></button>
+          </div>
+        </section>
+
+        <section class="ip-section">
+          <h4 class="ip-section-title">内嵌网页</h4>
+          <div class="ip-grid">
+            <button class="ip-item"><i class="ip-item-icon cses-link"></i><span class="ip-item-label">Figma</span></button>
+            <button class="ip-item"><i class="ip-item-icon cses-link"></i><span class="ip-item-label">掘金</span></button>
+          </div>
+        </section>
+
+      </div>
+    </cs-insert-panel>
+  </div>
+
+</div>
+
+</body>
+</html>

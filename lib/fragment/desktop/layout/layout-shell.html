@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-layout 主框架 — Figma 12:2344 1:1 还原</title>
+
+  <!-- 全局样式（顺序锁死 · LESSONS § 1.1） -->
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+
+  <!-- 布局容器 CSS -->
+  <link rel="stylesheet" href="layout.css">
+  <link rel="stylesheet" href="../tab-bar/tab-bar.css">
+  <link rel="stylesheet" href="../sidebar/sidebar.css">
+  <link rel="stylesheet" href="../navbar/navbar.css">
+  <link rel="stylesheet" href="../content-header/content-header.css">
+  <link rel="stylesheet" href="../filter-bar/filter-bar.css">
+  <link rel="stylesheet" href="../space-switcher/space-switcher.css">
+  <link rel="stylesheet" href="../drawer/drawer.css">
+  <link rel="stylesheet" href="../modal/modal.css">
+
+  <style>
+    body { margin: 0; padding: 0; overflow: hidden; height: 100vh; }
+  </style>
+</head>
+<body>
+
+<cs-layout>
+
+  <!-- ============== Tab Bar (顶栏) · h:56 · bg:--cs-color-bg-app-dark ============== -->
+  <cs-tabbar class="tabbar">
+
+    <!-- 左槽：mac 3 圆点 + 搜索 + tabs -->
+    <div class="slot-left">
+
+      <!-- 三圆点（mac 窗口控件） -->
+      <div class="slot-buttons">
+        <cs-window-control>
+          <span class="ctrl-close"></span>
+          <span class="ctrl-minimize"></span>
+          <span class="ctrl-maximize"></span>
+        </cs-window-control>
+      </div>
+
+      <!-- 搜索框（深底之上） -->
+      <div class="slot-search">
+        <cs-search-input data-variant="dark-on-dark">
+          <input type="text" placeholder="搜索" />
+          <i class="cses-sousuo"></i>
+        </cs-search-input>
+      </div>
+
+      <!-- Tab 列表 -->
+      <div class="slot-tabs">
+        <cs-tab data-active>
+          <span class="tab-label">会议</span>
+          <i class="tab-close cses-guanbi"></i>
+        </cs-tab>
+        <cs-tab>
+          <span class="tab-label">成果导向</span>
+          <i class="tab-close cses-guanbi"></i>
+        </cs-tab>
+      </div>
+
+    </div>
+
+    <!-- 中间分隔线（1×44 竖线 · CSS 实现） -->
+    <div class="slot-divider"></div>
+
+    <!-- 右槽：通知 + 头像组 -->
+    <div class="slot-actions">
+
+      <!-- 通知铃铛 + 红点 -->
+      <span class="tabbar-notify-wrap">
+        <i class="cses-tongzhi tabbar-notify-icon"></i>
+        <span class="tabbar-notify-badge">2</span>
+      </span>
+
+      <!-- 头像 + 呼吸装饰圈（Figma 真意：1 头像 + 2 层呼吸光环 · 业务页可改 img src） -->
+      <div class="avatar-pulse" data-online>
+        <span class="avatar-pulse-ring avatar-pulse-ring--outer"></span>
+        <span class="avatar-pulse-ring avatar-pulse-ring--mid"></span>
+        <img class="avatar-pulse-img" src="../../../assets/avatar/avatar-rectangle-1020.png" alt="头像" />
+      </div>
+
+    </div>
+
+  </cs-tabbar>
+
+  <!-- ============== Body (主体) · flex flex-1 · bg:--cs-color-bg-app-dark · pb-8 ============== -->
+  <div class="body">
+
+    <!-- ----- 一级导航 sidebar · W:97 ----- -->
+    <cs-sidebar class="sidebar">
+
+      <!-- 文件夹 logo · 42×42 · radius 8 -->
+      <div class="logo">
+        <i class="cses-folder-logo"></i>
+      </div>
+
+      <!-- 9 个 nav-item -->
+      <div class="nav">
+        <a class="nav-item" data-key="workbench" href="javascript:;">
+          <i class="nav-icon cses-gongzuotai1"></i>
+          <span class="nav-label">工作台</span>
+        </a>
+        <a class="nav-item" data-key="msg" href="javascript:;">
+          <i class="nav-icon cses-xiaoxi-tongzhi"></i>
+          <span class="nav-label">消息</span>
+        </a>
+        <a class="nav-item" data-key="project" href="javascript:;">
+          <i class="nav-icon cses-xiangmuguanli"></i>
+          <span class="nav-label">项目管理</span>
+        </a>
+        <a class="nav-item" data-key="meeting" href="javascript:;">
+          <i class="nav-icon cses-huiyi"></i>
+          <span class="nav-label">会议</span>
+        </a>
+        <a class="nav-item" data-key="doc" href="javascript:;">
+          <i class="nav-icon cses-wendangku"></i>
+          <span class="nav-label">文档库</span>
+        </a>
+        <a class="nav-item" data-key="form" href="javascript:;">
+          <i class="nav-icon cses-biaodan"></i>
+          <span class="nav-label">表单</span>
+        </a>
+        <a class="nav-item" data-key="schedule" href="javascript:;">
+          <i class="nav-icon cses-richeng"></i>
+          <span class="nav-label">日程</span>
+        </a>
+        <a class="nav-item" data-key="hr" href="javascript:;">
+          <i class="nav-icon cses-zhinengrenshi"></i>
+          <span class="nav-label">智能人事</span>
+        </a>
+      </div>
+
+    </cs-sidebar>
+
+    <!-- ----- content-wrapper · radius 8 · overflow hidden ----- -->
+    <div class="content-wrapper">
+
+      <!-- 二级 sidebar (cs-navbar) · W:232 · 业务页填 inner -->
+      <cs-navbar class="navbar-container">
+        <div class="inner">
+          <div class="slot-header"></div>
+          <div class="slot-action"></div>
+          <div class="slot-nav"></div>
+          <div class="slot-bottom"></div>
+        </div>
+      </cs-navbar>
+
+      <!-- 主内容区 -->
+      <main class="main-content">
+
+        <!-- 内容区头部 · h:64 -->
+        <cs-content-header>
+          <div class="slot-left"></div>
+          <div class="slot-right"></div>
+        </cs-content-header>
+
+        <!-- 筛选区（按需，业务可省略） -->
+        <cs-filter-bar>
+          <div class="filter-left"></div>
+          <div class="filter-right"></div>
+        </cs-filter-bar>
+
+        <!-- 内容主体（业务页填） -->
+        <div class="content-body"></div>
+
+        <!-- 底部（可选，h:18） -->
+        <div class="content-bottom"></div>
+
+      </main>
+
+    </div>
+
+    <!-- ----- 空间切换栏 cs-space-switcher · W:65 · 与 ../space-switcher/space-switcher.html 同步 ----- -->
+    <cs-space-switcher class="right-sidebar">
+      <div class="inner">
+
+        <div class="slot-tools">
+
+          <!-- 顶部 4 工具组（Figma 真意：embed PNG · 保留多色 · 不走字体单色） -->
+          <div class="tool-group">
+            <a class="tool-item" href="javascript:;">
+              <img class="tool-icon" src="../../../assets/space-switcher-tools/tool-magic-wand.png" alt="魔棒" />
+            </a>
+            <a class="tool-item" href="javascript:;">
+              <img class="tool-icon" src="../../../assets/space-switcher-tools/tool-bookmark-filled.png" alt="书签" />
+            </a>
+            <a class="tool-item" href="javascript:;">
+              <img class="tool-icon" src="../../../assets/space-switcher-tools/tool-ai-assistant.png" alt="AI 助手" />
+            </a>
+            <a class="tool-item" href="javascript:;">
+              <img class="tool-icon" src="../../../assets/space-switcher-tools/tool-social-grid.png" alt="社交" />
+            </a>
+          </div>
+
+          <!-- 顶部分割线 -->
+          <div class="divider"></div>
+
+          <!-- 空间块组 -->
+          <div class="tool-group spaces-group">
+            <div class="space-card" data-active>
+              <i class="cses-wenjian"></i>
+              <span class="space-label">我的空间</span>
+            </div>
+            <div class="space-card">
+              <i class="cses-wenjian"></i>
+              <span class="space-label">自定义空间1</span>
+            </div>
+            <a class="add-btn" href="javascript:;">
+              <i class="cses-add"></i>
+            </a>
+            <div class="divider"></div>
+            <div class="space-card is-trash">
+              <i class="cses-huishouzhan"></i>
+              <span class="space-label">回收站</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 底部客服 -->
+        <div class="slot-bottom">
+          <div class="customer-service">
+            <img class="customer-service-icon" src="../../../assets/space-switcher-tools/customer-service.png" alt="客服" />
+            <span class="notify-badge"></span>
+          </div>
+        </div>
+
+      </div>
+    </cs-space-switcher>
+
+  </div>
+
+</cs-layout>
+
+</body>
+</html>

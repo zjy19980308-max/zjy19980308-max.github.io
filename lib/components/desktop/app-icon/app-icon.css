@@ -1,0 +1,82 @@
+/*
+ * 企业应用图标组件 (App Icon)
+ * 标签：<cs-app-icon>
+ *
+ * data 属性：
+ *   data-color="blue|orange|green|purple|red|sky|pink|cyan"  — 图标背景色
+ *
+ * 子元素结构：
+ *   .app-icon-box    — 方形图标容器
+ *   .app-icon-label  — 应用名称
+ */
+
+/* ========== 基础 ========== */
+cs-app-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 72px;
+  cursor: pointer;
+}
+
+cs-app-icon:hover .app-icon-box {
+  transform: scale(1.06);
+}
+
+/* ========== 图标容器 ========== */
+cs-app-icon .app-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+  border-radius: var(--radius-xl);
+  font-size: var(--cs-sem-size-icon-xl);
+  color: var(--cs-color-white);
+  transition: transform var(--cs-transition-fast);
+}
+
+/* ========== 标签 ========== */
+cs-app-icon .app-icon-label {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ========== 颜色变体 ========== */
+cs-app-icon[data-color="blue"] .app-icon-box {
+  background: var(--cs-color-primary);
+}
+
+cs-app-icon[data-color="orange"] .app-icon-box {
+  background: var(--color-orange-500);
+}
+
+cs-app-icon[data-color="green"] .app-icon-box {
+  background: var(--color-green-500);
+}
+
+cs-app-icon[data-color="purple"] .app-icon-box {
+  background: var(--color-purple-500);
+}
+
+cs-app-icon[data-color="red"] .app-icon-box {
+  background: var(--color-red-500);
+}
+
+cs-app-icon[data-color="sky"] .app-icon-box {
+  background: var(--color-sky-500);
+}
+
+cs-app-icon[data-color="pink"] .app-icon-box {
+  background: var(--color-pink-500);
+}
+
+cs-app-icon[data-color="cyan"] .app-icon-box {
+  background: var(--color-cyan-6);
+}

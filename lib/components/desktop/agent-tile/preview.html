@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-agent-tile preview</title>
+  <link rel="stylesheet" href="../../../../css/base.css">
+  <link rel="stylesheet" href="../../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="../../../css/workspace.css">
+  <link rel="stylesheet" href="agent-tile.css">
+  <style>body{padding:24px;background:#F5F6FA;font-family:PingFang SC;display:flex;flex-wrap:wrap;gap:12px;}</style>
+</head>
+<body>
+  <cs-agent-tile data-source="self" data-status="online"><span class="agent-avatar">文</span><span class="agent-name">文档助手</span><span class="agent-dot"></span></cs-agent-tile>
+  <cs-agent-tile data-source="self" data-status="working"><span class="agent-avatar">任</span><span class="agent-name">任务助手</span><span class="agent-dot"></span></cs-agent-tile>
+  <cs-agent-tile data-source="self" data-status="idle"><span class="agent-avatar">会</span><span class="agent-name">会议秘书</span><span class="agent-dot"></span></cs-agent-tile>
+  <cs-agent-tile data-source="anthropic" data-status="working"><span class="agent-avatar">A</span><span class="agent-name">Claude</span><span class="agent-dot"></span></cs-agent-tile>
+  <cs-agent-tile data-source="openai" data-status="idle"><span class="agent-avatar">G</span><span class="agent-name">GPT-5</span><span class="agent-dot"></span></cs-agent-tile>
+  <cs-agent-tile data-source="google" data-status="idle"><span class="agent-avatar">⭐</span><span class="agent-name">Gemini</span><span class="agent-dot"></span></cs-agent-tile>
+  <cs-agent-tile data-source="coze" data-status="needs"><span class="agent-avatar">销</span><span class="agent-name">销售助手</span><span class="agent-dot"></span></cs-agent-tile>
+  <cs-agent-tile data-source="custom" data-status="idle"><span class="agent-avatar">译</span><span class="agent-name">翻译Agent</span><span class="agent-dot"></span></cs-agent-tile>
+</body>
+</html>

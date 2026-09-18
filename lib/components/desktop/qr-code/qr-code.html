@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-qr-code 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="qr-code.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<!-- 1. 尺寸 -->
+<div class="section">
+  <div class="section-title">尺寸 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg" — 96 / 128 / 200</div>
+
+  <div class="row">
+    <cs-qr-code data-size="sm">
+      <div class="qr-code-image">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://cses.com" alt="QR">
+      </div>
+      <div class="qr-code-caption">sm 96</div>
+    </cs-qr-code>
+
+    <cs-qr-code>
+      <div class="qr-code-image">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://cses.com" alt="QR">
+      </div>
+      <div class="qr-code-caption">md 128</div>
+    </cs-qr-code>
+
+    <cs-qr-code data-size="lg">
+      <div class="qr-code-image">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://cses.com" alt="QR">
+      </div>
+      <div class="qr-code-caption">lg 200</div>
+    </cs-qr-code>
+  </div>
+</div>
+
+<!-- 2. 中心 logo -->
+<div class="section">
+  <div class="section-title">中心 Logo</div>
+  <div class="section-subtitle">在二维码中央叠一个 logo（带白底圆角）</div>
+
+  <div class="row">
+    <cs-qr-code data-size="lg">
+      <div class="qr-code-image">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https://cses.com" alt="QR">
+        <div class="qr-code-logo">
+          <img src="https://api.dicebear.com/7.x/shapes/svg?seed=cses" alt="">
+        </div>
+      </div>
+      <div class="qr-code-caption">扫码查看详情</div>
+    </cs-qr-code>
+  </div>
+</div>
+
+<!-- 3. 加载中状态 -->
+<div class="section">
+  <div class="section-title">加载中 Loading</div>
+  <div class="section-subtitle">data-status="loading" — 半透明覆盖 + 提示</div>
+
+  <div class="row">
+    <cs-qr-code data-status="loading">
+      <div class="qr-code-image">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=loading" alt="QR">
+        <div class="qr-code-overlay">
+          <i class="cses-shijian"></i>
+          <span>加载中...</span>
+        </div>
+      </div>
+      <div class="qr-code-caption">正在生成二维码</div>
+    </cs-qr-code>
+  </div>
+</div>
+
+<!-- 4. 已过期状态 -->
+<div class="section">
+  <div class="section-title">已过期 Expired</div>
+  <div class="section-subtitle">data-status="expired" — 红色提示 + 刷新引导</div>
+
+  <div class="row">
+    <cs-qr-code data-status="expired">
+      <div class="qr-code-image">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=expired" alt="QR">
+        <div class="qr-code-overlay">
+          <i class="cses-cuowu"></i>
+          <span>二维码已过期</span>
+        </div>
+      </div>
+      <div class="qr-code-caption">点击刷新</div>
+    </cs-qr-code>
+  </div>
+</div>
+
+</body>
+</html>

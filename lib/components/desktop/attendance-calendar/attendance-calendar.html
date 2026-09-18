@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-attendance-calendar 考勤日历 - 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="attendance-calendar.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); font-family: var(--font-family-cn); }
+    h2 { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin: 24px 0 12px; }
+  </style>
+</head>
+<body>
+  <h1 style="font: var(--typo-cn-20-medium); color: var(--cs-color-text); margin-bottom: 24px;">cs-attendance-calendar 考勤日历</h1>
+
+  <h2>2026年03月</h2>
+  <cs-attendance-calendar>
+    <div class="cal-header">
+      <span class="cal-nav"><i class="cses-houtui"></i></span>
+      <span class="cal-month">2026年03月</span>
+      <span class="cal-nav"><i class="cses-qianjin"></i></span>
+      <div class="cal-summary">
+        <span class="cal-summary-item" data-type="normal">出勤 18天</span>
+        <span class="cal-summary-item" data-type="late">迟到 2次</span>
+        <span class="cal-summary-item" data-type="leave">请假 1天</span>
+        <span class="cal-summary-item" data-type="overtime">加班 3天</span>
+        <span class="cal-summary-item" data-type="absent">缺勤 0天</span>
+      </div>
+    </div>
+    <div class="cal-weekdays">
+      <span class="cal-weekday">一</span>
+      <span class="cal-weekday">二</span>
+      <span class="cal-weekday">三</span>
+      <span class="cal-weekday">四</span>
+      <span class="cal-weekday">五</span>
+      <span class="cal-weekday">六</span>
+      <span class="cal-weekday">日</span>
+    </div>
+    <div class="cal-grid">
+      <!-- 第1周：2月23-3月1 -->
+      <div class="cal-day" data-other-month><span class="cal-day-number">23</span></div>
+      <div class="cal-day" data-other-month><span class="cal-day-number">24</span></div>
+      <div class="cal-day" data-other-month><span class="cal-day-number">25</span></div>
+      <div class="cal-day" data-other-month><span class="cal-day-number">26</span></div>
+      <div class="cal-day" data-other-month><span class="cal-day-number">27</span></div>
+      <div class="cal-day" data-other-month data-weekend><span class="cal-day-number">28</span></div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">1</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+
+      <!-- 第2周：3月2-8 -->
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">2</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="late">
+        <span class="cal-day-number">3</span>
+        <span class="cal-day-status">迟到</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">4</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">5</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">6</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-weekend><span class="cal-day-number">7</span></div>
+      <div class="cal-day" data-weekend><span class="cal-day-number">8</span></div>
+
+      <!-- 第3周：3月9-15 -->
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">9</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">10</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">11</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="leave">
+        <span class="cal-day-number">12</span>
+        <span class="cal-day-status">请假</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">13</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-weekend><span class="cal-day-number">14</span></div>
+      <div class="cal-day" data-weekend><span class="cal-day-number">15</span></div>
+
+      <!-- 第4周：3月16-22 -->
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">16</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">17</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="overtime">
+        <span class="cal-day-number">18</span>
+        <span class="cal-day-status">加班</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">19</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="late">
+        <span class="cal-day-number">20</span>
+        <span class="cal-day-status">迟到</span>
+      </div>
+      <div class="cal-day" data-weekend data-status="overtime">
+        <span class="cal-day-number">21</span>
+        <span class="cal-day-status">加班</span>
+      </div>
+      <div class="cal-day" data-weekend><span class="cal-day-number">22</span></div>
+
+      <!-- 第5周：3月23-29 -->
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">23</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">24</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">25</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">26</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">27</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-weekend data-status="overtime">
+        <span class="cal-day-number">28</span>
+        <span class="cal-day-status">加班</span>
+      </div>
+      <div class="cal-day" data-weekend><span class="cal-day-number">29</span></div>
+
+      <!-- 第6周：3月30-4月5 -->
+      <div class="cal-day" data-today data-status="normal">
+        <span class="cal-day-number">30</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-status="normal">
+        <span class="cal-day-number">31</span>
+        <span class="cal-day-status">正常</span>
+      </div>
+      <div class="cal-day" data-other-month><span class="cal-day-number">1</span></div>
+      <div class="cal-day" data-other-month><span class="cal-day-number">2</span></div>
+      <div class="cal-day" data-other-month><span class="cal-day-number">3</span></div>
+      <div class="cal-day" data-other-month data-weekend><span class="cal-day-number">4</span></div>
+      <div class="cal-day" data-other-month data-weekend><span class="cal-day-number">5</span></div>
+    </div>
+  </cs-attendance-calendar>
+</body>
+</html>

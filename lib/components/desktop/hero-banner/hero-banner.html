@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-hero-banner 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../css/workspace.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="hero-banner.css">
+  <style>
+    body { padding: 32px; background: #F5F6FA; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- 1. 默认态 - 完整 hero -->
+<div class="section">
+  <div class="section-title">默认态 Default</div>
+  <div class="section-subtitle">深紫渐变 + 3D 装饰 + 4 快捷入口（v2 §13.1：唯一 L-主锚点）</div>
+
+  <cs-hero-banner>
+    <div class="hero-content">
+      <div class="hero-greeting">早上好，Alex 👋</div>
+      <div class="hero-summary">
+        4 月 28 日 周二 · 你有 <b>3 个待办</b>、<b>2 个会议</b>，AI 已替你完成 <b>12 项</b>
+      </div>
+    </div>
+    <div class="hero-shortcuts">
+      <button class="hero-shortcut" data-action="daily-checkin"><i class="cses-renwu"></i>每日签到</button>
+      <button class="hero-shortcut" data-action="create-task"><i class="cses-add"></i>创建任务</button>
+      <button class="hero-shortcut" data-action="quick-meeting"><i class="cses-rili"></i>快速会议</button>
+      <button class="hero-shortcut" data-action="create-doc"><i class="cses-document"></i>创建文档</button>
+    </div>
+    <div class="hero-illustration">🚀</div>
+  </cs-hero-banner>
+</div>
+
+<!-- 2. 简化态 - 仅文案，无快捷入口 -->
+<div class="section">
+  <div class="section-title">简化态 Minimal</div>
+  <div class="section-subtitle">仅文案 + 装饰，用于内嵌型 hero</div>
+
+  <cs-hero-banner>
+    <div class="hero-content">
+      <div class="hero-greeting">下午好，Alex</div>
+      <div class="hero-summary">
+        今日已完成 <b>5 项任务</b>，还有 <b>1 个评审会</b> 等你
+      </div>
+    </div>
+    <div class="hero-illustration">✨</div>
+  </cs-hero-banner>
+</div>
+
+<!-- 3. 无装饰态 - 仅文案 + 快捷入口 -->
+<div class="section">
+  <div class="section-title">无装饰态 No Illustration</div>
+  <div class="section-subtitle">移除 hero-illustration，文案区可占满宽度</div>
+
+  <cs-hero-banner>
+    <div class="hero-content" style="max-width: 100%;">
+      <div class="hero-greeting">欢迎回来 👋</div>
+      <div class="hero-summary">
+        AI 已为你梳理 <b>今日重点</b>，建议从 <b>《Q1 产品规划》</b> 开始
+      </div>
+    </div>
+    <div class="hero-shortcuts">
+      <button class="hero-shortcut" data-action="ai-recommend"><i class="cses-aite"></i>查看 AI 推荐</button>
+      <button class="hero-shortcut" data-action="view-tasks"><i class="cses-renwu"></i>查看待办</button>
+    </div>
+  </cs-hero-banner>
+</div>
+
+</body>
+</html>

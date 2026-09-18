@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cs-doc-search-panel</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="./doc-search-panel.css">
+  <style>
+    body {
+      margin: 0;
+      padding: var(--cs-sem-spacing-layout-gutter);
+      background: var(--cs-sem-bg-secondary);
+      font: var(--cs-typo-body-medium);
+    }
+
+    .preview-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cs-sem-spacing-content-stack);
+      max-width: var(--cs-sem-size-content-lg);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-stack">
+    <cs-doc-search-panel>
+      <div class="search-box">
+        <i class="search-icon cses-placeholder"></i>
+        <input class="search-field" type="search" placeholder="搜索文档、知识库、更新记录">
+        <button class="search-action" type="button">搜索</button>
+      </div>
+      <div class="search-meta">支持标题、摘要与分类关键词检索</div>
+    </cs-doc-search-panel>
+
+    <cs-doc-search-panel data-state="focus">
+      <div class="search-box">
+        <i class="search-icon cses-placeholder"></i>
+        <input class="search-field" type="search" value="Design Agent 执行流程">
+        <button class="search-action" type="button">搜索</button>
+      </div>
+      <div class="search-meta">聚焦态示例</div>
+    </cs-doc-search-panel>
+  </div>
+</body>
+</html>

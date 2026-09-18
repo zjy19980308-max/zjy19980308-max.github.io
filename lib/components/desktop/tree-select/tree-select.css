@@ -1,0 +1,244 @@
+/*
+ * 树形选择 (TreeSelect)
+ * 标签：<cs-tree-select>
+ *
+ * 作用：点击触发器后弹出树形面板，任意层级节点均可选；适合分类、组织架构选择。
+ * 对标 ng-zorro TreeSelect。由 tree-select.js 接管 toggle 与节点展开/折叠。
+ *
+ * data 属性：
+ *   data-size="sm" / "md"(默认) / "lg"
+ *   data-placement="bottom-left"(默认) / "bottom-right" / "top-left" / "top-right"
+ *   data-open      — 展开态
+ *   data-disabled
+ *
+ * 子元素：
+ *   .ts-trigger          — 触发器
+ *   .ts-trigger-label
+ *   .ts-trigger-arrow
+ *   .ts-panel            — 弹出面板
+ *   .ts-tree             — 树容器
+ *   .ts-node             — 树节点（行）
+ *   .ts-node-toggle      — 展开/折叠箭头
+ *   .ts-node-label
+ *   .ts-children         — 子节点列表
+ */
+
+cs-tree-select {
+  position: relative;
+  display: inline-block;
+}
+
+/* ========== 触发器 ========== */
+cs-tree-select .ts-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  height: var(--cs-sem-size-interactive-sm);
+  min-width: calc(var(--spacing-160) * 1.2);
+  padding: 0 var(--space-sm);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-bg);
+  color: var(--cs-color-text);
+  font: var(--typo-cn-14-regular);
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+cs-tree-select[data-size="sm"] .ts-trigger {
+  height: var(--cs-sem-size-interactive-xs);
+  padding: 0 var(--space-xs);
+  font: var(--typo-cn-12-regular);
+}
+
+cs-tree-select[data-size="lg"] .ts-trigger {
+  height: var(--cs-sem-size-interactive-md);
+  padding: 0 var(--space-md);
+}
+
+cs-tree-select .ts-trigger:hover,
+cs-tree-select[data-open] .ts-trigger {
+  border-color: var(--cs-color-primary);
+}
+
+cs-tree-select[data-disabled] .ts-trigger {
+  background: var(--cs-color-bg-disabled);
+  color: var(--cs-color-text-light2);
+  cursor: not-allowed;
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+cs-tree-select .ts-trigger-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+cs-tree-select .ts-trigger-label[data-placeholder] {
+  color: var(--cs-color-text-light2);
+}
+
+cs-tree-select .ts-trigger-arrow {
+  font-size: var(--font-size-xs);
+  color: var(--cs-color-text-light2);
+  transition: transform 0.2s ease;
+}
+
+cs-tree-select[data-open] .ts-trigger-arrow {
+  transform: rotate(180deg);
+  color: var(--cs-color-primary);
+}
+
+/* ========== 面板 ========== */
+cs-tree-select .ts-panel {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  min-width: calc(var(--spacing-160) * 1.5);
+  max-height: calc(var(--spacing-160) * 1.8);
+  padding: var(--space-2xs) 0;
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--cs-shadow-card);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+cs-tree-select[data-open] .ts-panel {
+  display: block;
+}
+
+cs-tree-select .ts-panel,
+cs-tree-select[data-placement="bottom-left"] .ts-panel {
+  top: calc(100% + var(--space-2xs));
+  left: 0;
+}
+
+cs-tree-select[data-placement="bottom-right"] .ts-panel {
+  top: calc(100% + var(--space-2xs));
+  right: 0;
+  left: auto;
+}
+
+cs-tree-select[data-placement="top-left"] .ts-panel {
+  bottom: calc(100% + var(--space-2xs));
+  left: 0;
+  top: auto;
+}
+
+cs-tree-select[data-placement="top-right"] .ts-panel {
+  bottom: calc(100% + var(--space-2xs));
+  right: 0;
+  left: auto;
+  top: auto;
+}
+
+/* ========== 树容器 ========== */
+cs-tree-select .ts-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+cs-tree-select .ts-children {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--space-md);
+  display: none;
+}
+
+cs-tree-select .ts-node[data-expanded] > .ts-children {
+  display: block;
+}
+
+/* ========== 节点 ========== */
+cs-tree-select .ts-node-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  height: var(--cs-sem-size-interactive-sm);
+  padding: 0 var(--space-sm);
+  cursor: pointer;
+  color: var(--cs-color-text);
+  font: var(--typo-cn-14-regular);
+  transition: background-color 0.15s ease;
+  box-sizing: border-box;
+}
+
+cs-tree-select .ts-node-row:hover {
+  background: var(--cs-color-bg-light);
+}
+
+cs-tree-select .ts-node[data-active] > .ts-node-row {
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-primary);
+}
+
+cs-tree-select .ts-node[data-disabled] > .ts-node-row {
+  color: var(--cs-color-text-light2);
+  cursor: not-allowed;
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+cs-tree-select .ts-node-toggle {
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--cs-color-text-light2);
+  font-size: var(--font-size-xs);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+cs-tree-select .ts-node[data-expanded] > .ts-node-row > .ts-node-toggle {
+  transform: rotate(90deg);
+  color: var(--cs-color-text);
+}
+
+/* 叶子节点占位 */
+cs-tree-select .ts-node-toggle[data-leaf] {
+  visibility: hidden;
+}
+
+cs-tree-select .ts-node-icon {
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cs-color-text-light2);
+  font-size: var(--font-size-md);
+  flex-shrink: 0;
+}
+
+cs-tree-select .ts-node[data-active] > .ts-node-row > .ts-node-icon {
+  color: var(--cs-color-primary);
+}
+
+cs-tree-select .ts-node-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ========== 空态 ========== */
+cs-tree-select .ts-empty {
+  display: block;
+  padding: var(--space-sm) var(--space-md);
+  text-align: center;
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}

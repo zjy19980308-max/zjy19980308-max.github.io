@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>流程管理 · 流程中台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{max-width:none}
+  /* Hero（owner：截图二放在流程管理页最上方） */
+  .hero{position:relative;border:1px solid var(--line);border-radius:16px;background:linear-gradient(90deg,#f2f3f7 0%,#fff 52%,#f4f5f8 100%);overflow:hidden;padding:34px 48px;margin-bottom:20px}
+  .hero__orb{position:absolute;top:50%;transform:translateY(-50%);width:132px;height:132px;border-radius:50%;
+    background:radial-gradient(circle at 34% 30%,#fff 0%,#eceef5 38%,#dcdfeb 72%,#ccd1e1 100%);box-shadow:0 16px 34px -20px rgba(15,23,42,.18)}
+  .hero__orb--l{left:24px}
+  .hero__orb--r{right:24px;width:140px;height:140px}
+  .hero__c{position:relative;z-index:1;max-width:620px;margin:0 auto;text-align:center}
+  .hero__c h2{font-size:26px;font-weight:800;letter-spacing:-.01em;line-height:1.35}
+  .hero__c p{font-size:13px;color:var(--ink-2);margin-top:8px}
+  .hero__box{display:flex;align-items:center;gap:12px;background:var(--panel);border:1.5px solid var(--line);border-radius:99px;padding:10px 10px 10px 16px;margin-top:18px;transition:border-color .16s,box-shadow .16s}
+  .hero__box:focus-within{border-color:#8f99cf;box-shadow:0 0 0 4px rgba(77,88,189,.08)}
+  .hero__box svg{width:18px;height:18px;color:var(--ink-3);flex:0 0 18px}
+  .hero__box input{flex:1;border:0;outline:0;font:inherit;font-size:14px;background:transparent;min-width:0}
+  .hero__box input::placeholder{color:var(--ink-3)}
+  .hero__go{width:26px;height:26px;border-radius:99px;border:0;background:#4857e2;color:#fff;display:grid;place-items:center;cursor:pointer;flex:0 0 26px;transition:transform .12s,background .15s}
+  .hero__go:hover{background:#393ed7}
+  .hero__go:active{transform:scale(.92)}
+  .hero__go svg{width:14px;height:14px;color:#fff}
+  /* 推荐 */
+  .reco{border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(180deg,#fafbff 0%,#fff 62%);box-shadow:var(--sd);margin-bottom:16px;overflow:hidden}
+  .reco__h{display:flex;align-items:center;gap:8px;padding:14px 16px 4px}
+  .reco__h b{font-size:14px;font-weight:700}
+  .reco__h .right{margin-left:auto;font-size:11.5px;color:var(--ink-3)}
+  /* 表格 */
+  .gtbl{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+  .gtbl th{text-align:left;font-weight:600;color:var(--ink-3);font-size:11px;padding:9px 16px;background:var(--surf);border-bottom:1px solid var(--line);white-space:nowrap}
+  .gtbl td{padding:11px 16px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+  .gtbl tr:last-child td{border-bottom:0}
+  .gtbl tbody tr:hover{background:#fcfdff}
+  .fw{display:flex;align-items:center;gap:10px;min-width:0}
+  .fw i{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:0 0 26px;font-style:normal}
+  .fw i svg{width:14px;height:14px;color:currentColor}
+  .fw b{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+  .fw b:hover{color:var(--pri)}
+  .ops{display:flex;gap:14px;white-space:nowrap}
+  .c-scope{width:21%}.c-upd{width:15%}.c-ver{width:15%}.c-st{width:13%}.c-op{width:16%}
+  .hint{margin-top:22px;font-size:12px;color:var(--ink-3);display:flex;align-items:flex-start;gap:7px;line-height:1.7}
+  .hint svg{width:13px;height:13px;flex:0 0 13px;margin-top:3px}
+  @media (max-width:1180px){.c-scope,.c-upd{width:auto}}
+  @media (max-width:980px){
+    .gtbl,.gtbl tbody,.gtbl tr,.gtbl td{display:block;width:auto}
+    .gtbl thead{display:none}
+    .gtbl tr{padding:12px 16px;border-bottom:1px solid var(--line-2)}
+    .gtbl td{border:0;padding:3px 0}
+    .gtbl td::before{content:attr(data-l);display:inline-block;min-width:66px;font-size:11px;color:var(--ink-3)}
+    .gtbl td.c-name::before{display:none}
+  }
+  @media (max-width:820px){.hero{padding:26px 18px}.hero__orb{display:none}.hero__c h2{font-size:21px}}
+</style>
+</head>
+<body data-nav="flows" data-title="流程管理">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div class="page">
+
+      <section class="hero">
+        <div class="hero__orb hero__orb--l" aria-hidden="true"></div>
+        <div class="hero__orb hero__orb--r" aria-hidden="true"></div>
+        <div class="hero__c">
+          <h2>用一句话，搭一条能上线的流程</h2>
+          <p>说清规则就行，其余的交给体检、人工确认和回退兜住。</p>
+          <form class="hero__box" id="ask" action="chat.html">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7.2" cy="7.2" r="4.4"/><path d="M10.6 10.6 14 14"/></svg>
+            <input name="q" autocomplete="off" placeholder="比如：采购付款超过 10 万需要 CFO 审批">
+            <button class="hero__go" type="submit" aria-label="开始描述"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5"/></svg></button>
+          </form>
+        </div>
+      </section>
+
+      <div class="pagehead">
+        <h2>流程管理</h2>
+        <span class="sub">6 条流程 · 2 条未发布 · 分组只管归置，不影响谁能看见</span>
+        <span class="right">
+          <button class="btn" type="button" id="newGroup">＋ 新建流程分组</button>
+          <a class="btn btn--p" href="builder.html?new=1">＋ 新建流程</a>
+        </span>
+      </div>
+
+      <div class="sbar">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7.2" cy="7.2" r="4.4"/><path d="M10.6 10.6 14 14"/></svg>
+        <input id="q" autocomplete="off" placeholder="请输入流程名称、负责人…">
+        <span class="gm" id="gmTop">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.8"/><path d="M8 5.4v5.2M5.4 8h5.2"/></svg>
+          分组管理
+        </span>
+      </div>
+
+      <section class="reco" id="reco">
+        <div class="reco__h"><b>为您推荐</b><span class="right">可一键添加以下流程</span></div>
+        <div class="tiles" id="recoList"></div>
+      </section>
+
+      <div id="body"></div>
+
+      <p class="hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 7.4v3.4M8 5.2h.01" stroke-linecap="round"/></svg>
+        <span>「未发布」是还没上线的草稿，只有这一页看得到，前台发起申请时不会出现。<br>
+        已上线的流程不能直接改：任何修改都会生成新版本草稿，线上版本在新版本发布前保持不变。</span></p>
+
+    </div>
+  </div>
+</div>
+
+<div class="vmenu" id="vmenu"></div>
+
+<div class="modal" id="del">
+  <div class="modal__h"><h3>删除草稿</h3><button class="x" type="button" data-close="del">✕</button></div>
+  <div class="modal__b">确定删除「<b id="delName"></b>」？草稿删掉就没了，已上线的版本快照不受影响。</div>
+  <div class="modal__f"><button class="btn" type="button" data-close="del">再想想</button><button class="btn btn--danger" type="button" id="delOk">删除</button></div>
+</div>
+
+<div class="modal" id="ng" style="width:min(660px,94vw)">
+  <div class="modal__h"><h3>分组管理</h3><button class="x" type="button" data-close>✕</button></div>
+  <div class="modal__b">
+    <p style="font-size:12.5px;color:var(--ink-2);margin-bottom:12px">分组只用来把流程归置整齐，不决定谁能看见、谁能发起 —— 可见范围在每条流程上单独设置。拖动左侧手柄可调整顺序。</p>
+    <div class="grps" id="grps"></div>
+    <button class="gsec__add" type="button" id="ngAdd" style="border:1px dashed var(--line);border-radius:10px;margin-top:10px;width:100%"><i>＋</i>新建分组</button>
+  </div>
+  <div class="modal__f"><button class="btn btn--p" type="button" data-close>完成</button></div>
+</div>
+
+<script src="ui.js"></script>
+<script>
+(function () {
+  /* ── 流程管理（Figma 1:15210 / 1:15305 的表单管理）。分组只用来规划归置；未发布 = 草稿，置顶且只在这一页可见。 ── */
+  var G = {
+    money: '<path d="M8 3.6v8.8"/><path d="M5.6 5.4h3.6a1.7 1.7 0 0 1 0 3.4H6.8a1.7 1.7 0 0 0 0 3.4h3.6"/>',
+    doc:   '<path d="M4.5 2.5h5l3 3v8h-8z"/><path d="M9.5 2.5v3h3"/>',
+    plane: '<path d="M2.6 8.6 13.4 3.2 8.8 13.4l-1.5-3.6z"/>',
+    card:  '<rect x="2.4" y="4" width="11.2" height="8" rx="1.4"/><path d="M2.4 6.8h11.2"/>',
+    user:  '<circle cx="8" cy="5.5" r="2.5"/><path d="M3.2 13.2c.6-2.3 2.5-3.5 4.8-3.5s4.2 1.2 4.8 3.5"/>',
+    users: '<circle cx="6.2" cy="5.6" r="2.2"/><path d="M2.2 13c.5-2 2.1-3.1 4-3.1s3.5 1.1 4 3.1"/><path d="M10.6 4.1a2.2 2.2 0 0 1 0 4.3M11.4 9.9c1.4.3 2.3 1.4 2.6 3.1"/>',
+    stamp: '<path d="M4.4 9.4V7a3.6 3.6 0 1 1 7.2 0v2.4"/><rect x="2.8" y="9.4" width="10.4" height="3.8" rx="1.2"/>',
+    shield:'<path d="M8 2 13.2 4v4c0 2.9-2.2 4.8-5.2 5.8C5 12.8 2.8 10.9 2.8 8V4z"/><path d="M6 7.9 7.4 9.3 10.2 6.4"/>',
+    box:   '<path d="M8 2.2 13.4 5v6L8 13.8 2.6 11V5z"/><path d="M2.6 5 8 7.8 13.4 5M8 7.8v6"/>',
+    back:  '<path d="M3.2 8a4.8 4.8 0 1 1 1.5 3.5"/><path d="M2.4 4.6v3.2h3.2"/>',
+    chart: '<path d="M2.8 13.2h10.4"/><rect x="4" y="7.6" width="2.2" height="4"/><rect x="7.4" y="4.6" width="2.2" height="7"/><rect x="10.8" y="9.2" width="2.2" height="2.4"/>'
+  };
+  function tint(c) { return 'rgba(' + parseInt(c.slice(1,3),16) + ',' + parseInt(c.slice(3,5),16) + ',' + parseInt(c.slice(5,7),16) + ',.2)'; }
+  function ico(k, c) { return '<i style="background:' + tint(c) + ';color:' + c + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + (G[k] || G.doc) + '</svg></i>'; }
+
+  /* f = {n 名称, c 色, g 图标, scope 可见范围, up 最后更新, v 当前版本, hist 历史版本, on 开启, href 去哪} */
+  var GROUPS = [
+    { name: '未发布', draft: true, note: '草稿，前台看不到',
+      rows: [
+        { n: '客户退款审批', c: '#ef4444', g: 'back', scope: '全部可见', up: '2026-09-15 17:40', href: 'check.html', why: '体检 2 项未通过' },
+        { n: '员工离职回收', c: '#22c55e', g: 'users', scope: '全部可见', up: '2026-09-16 09:12', href: 'chat.html', why: '对话生成中' }
+      ] },
+    { name: '财务管理', rows: [
+        { n: '供应商付款审批', c: '#4857e2', g: 'money', scope: '全部可见', up: '2026-09-15 16:20', v: 'v4', hist: ['v3', 'v2', 'v1'], on: 1, href: 'builder.html', tag: ['1 条异常', 'risk'] },
+        { n: '差旅报销', c: '#3b82f6', g: 'plane', scope: '全部可见', up: '2026-08-02 11:05', v: 'v2', hist: ['v1'], on: 1, href: 'builder.html' },
+        { n: '开票申请', c: '#0ea5e9', g: 'card', scope: '销售部、财务部 可见', up: '2026-07-20 14:32', v: 'v1', hist: [], on: 1, href: 'builder.html' },
+        { n: '费用报销', c: '#f97316', g: 'doc', scope: '全部可见', up: '2026-09-13 10:00', v: 'v7', hist: ['v6', 'v5'], on: 0, href: 'versions.html', tag: ['已暂停', ''] }
+      ] },
+    { name: '人事管理', rows: [
+        { n: '员工入职权限开通', c: '#f59e0b', g: 'user', scope: '全部可见', up: '2026-06-10 09:40', v: 'v5', hist: ['v4', 'v3'], on: 1, href: 'builder.html' },
+        { n: '调岗调薪', c: '#fb7185', g: 'chart', scope: 'HR、部门负责人 可见', up: '2026-05-18 15:22', v: 'v2', hist: ['v1'], on: 1, href: 'builder.html' },
+        { n: '招聘需求', c: '#22c55e', g: 'users', scope: '全部可见', up: '2026-04-01 13:08', v: 'v1', hist: [], on: 1, href: 'builder.html' }
+      ] },
+    { name: '法务管理', rows: [
+        { n: '合同用印申请', c: '#6366f1', g: 'stamp', scope: '全部可见', up: '2026-08-21 17:02', v: 'v2', hist: ['v1'], on: 1, href: 'builder.html' },
+        { n: '对外发文审批', c: '#ef4444', g: 'doc', scope: '市场部、法务部 可见', up: '2026-07-05 10:48', v: 'v1', hist: [], on: 1, href: 'builder.html', tag: ['含不可逆', 'risk'] }
+      ] },
+    { name: '采购管理', rows: [
+        { n: '采购申请', c: '#4857e2', g: 'box', scope: '全部可见', up: '2026-08-30 09:15', v: 'v2', hist: ['v1'], on: 1, href: 'builder.html' },
+        { n: '供应商准入', c: '#0ea5e9', g: 'shield', scope: '采购部、财务部 可见', up: '2026-06-28 16:31', v: 'v1', hist: [], on: 1, href: 'builder.html' }
+      ] }
+  ];
+
+  var RECO = [
+    ['预付款申请', '#4857e2', 'money', '财务管理'], ['合同续签', '#0ea5e9', 'doc', '法务管理'],
+    ['固定资产报废', '#f97316', 'box', '采购管理'], ['实习生转正', '#fb7185', 'users', '人事管理'],
+    ['证照借用', '#22c55e', 'shield', '法务管理'], ['对账确认', '#e08a1e', 'chart', '财务管理'],
+    ['供应商黑名单申诉', '#9c5449', 'shield', '采购管理']
+  ];
+
+  var kw = '';
+  var body = document.getElementById('body');
+
+  function recoPaint() {
+    document.getElementById('recoList').innerHTML = RECO.map(function (t, i) {
+      return '<button class="tile" type="button" data-add="' + i + '">' + ico(t[2], t[1])
+        + '<div><b>' + t[0] + '</b><span>加到「' + t[3] + '」</span></div></button>';
+    }).join('');
+  }
+  recoPaint();
+
+  function hit(r, gname) { if (!kw) return true; return (r.n + gname + (r.scope || '')).toLowerCase().indexOf(kw) >= 0; }
+
+  function rowHtml(r, gi, ri, draft) {
+    var h = '<tr data-gi="' + gi + '" data-ri="' + ri + '">'
+      + '<td class="c-name"><div class="fw">' + ico(r.g, r.c) + '<b data-go="' + r.href + '">' + r.n + '</b>'
+      + (r.tag ? '<span class="tag' + (r.tag[1] ? ' tag--' + r.tag[1] : '') + '">' + r.tag[0] + '</span>' : '') + '</div></td>'
+      + '<td class="c-scope" data-l="可见范围">' + r.scope + ' <span class="lnk" data-scope>修改</span></td>'
+      + '<td class="c-upd" data-l="最后更新"><span class="dim">' + r.up + '</span></td>';
+    if (draft) {
+      h += '<td class="c-ver" data-l="状态"><span class="dim">' + (r.why || '') + '</span></td>'
+        + '<td class="c-st" data-l="发布"><span class="swrap"><span>未发布</span><button class="sw" type="button" data-pub></button></span></td>'
+        + '<td class="c-op" data-l="操作"><div class="ops"><span class="lnk" data-go="builder.html">编辑</span><span class="lnk" data-exp>导出</span><span class="lnk lnk--mute" data-del>删除</span></div></td>';
+    } else {
+      h += '<td class="c-ver" data-l="当前版本"><span class="vpick" data-ver>流程版本 <span class="rev rev--a">' + r.v + '</span>'
+        + '<svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 6.5 8 10.5 12 6.5"/></svg></span></td>'
+        + '<td class="c-st" data-l="流程状态"><span class="swrap"><span data-lab>' + (r.on ? '开启' : '停用') + '</span><button class="sw' + (r.on ? ' on' : '') + '" type="button" data-on></button></span></td>'
+        + '<td class="c-op" data-l="操作"><div class="ops"><span class="lnk" data-go="runs.html">查看运行</span><span class="lnk" data-go="versions.html">版本</span><span class="lnk lnk--mute" data-more>更多</span></div></td>';
+    }
+    return h + '</tr>';
+  }
+
+  function paint() {
+    var h = '', any = 0;
+    GROUPS.forEach(function (g, gi) {
+      var rows = g.rows.filter(function (r) { return hit(r, g.name); });
+      if (!rows.length && (kw || g.rows.length)) return;   /* 搜索时空组不显示；本来就空的新分组要显示 */
+      any += rows.length || 1;
+      h += '<section class="gsec' + (g.off ? ' fold' : '') + '" data-g="' + gi + '"><div class="gsec__h">'
+        + '<svg class="cv" data-fold viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5 8 10.5 12 6.5"/></svg>'
+        + '<b data-fold>' + g.name + '</b><em>' + rows.length + (g.note ? ' · ' + g.note : '') + '</em>'
+        + '<span class="right">'
+        + '<a data-toast="排序：按最后更新 / 按名称 / 手动拖拽，只改这一组的显示顺序">'
+        + '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3v10M2.6 11.1 4.5 13l1.9-1.9M11.5 13V3M9.6 4.9 11.5 3l1.9 1.9"/></svg>排序</a>'
+        + '<a data-grps>'
+        + '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="5.8"/><path d="M8 5.4v5.2M5.4 8h5.2"/></svg>分组管理</a>'
+        + '</span></div><div class="gsec__b"><table class="gtbl"><thead><tr>'
+        + '<th class="c-name">流程</th><th class="c-scope">可见范围</th><th class="c-upd">最后更新</th>'
+        + (g.draft ? '<th class="c-ver">为什么没发</th><th class="c-st">表单状态</th>' : '<th class="c-ver">当前版本</th><th class="c-st">流程状态</th>')
+        + '<th class="c-op">操作</th></tr></thead><tbody>'
+        + (rows.length ? rows.map(function (r) { return rowHtml(r, gi, g.rows.indexOf(r), g.draft); }).join('')
+                       : '<tr><td colspan="6" style="color:var(--ink-3);text-align:center;padding:22px">这一组还没有流程</td></tr>')
+        + '</tbody></table></div>'
+        + (g.draft ? '' : '<div class="gsec__add" data-new="' + g.name + '"><i>＋</i>在「' + g.name + '」里新建流程</div>')
+        + '</section>';
+    });
+    if (!any) h = '<div class="empty">没有匹配「' + kw + '」的流程。</div>';
+    body.innerHTML = h;
+  }
+  paint();
+
+  /* 搜索 */
+  document.getElementById('q').addEventListener('input', function () {
+    kw = this.value.trim().toLowerCase();
+    document.getElementById('reco').hidden = !!kw;
+    paint();
+  });
+  /* 一句话搭流程 */
+  document.getElementById('ask').addEventListener('submit', function (e) {
+    e.preventDefault(); var v = this.q.value.trim();
+    location.href = 'chat.html' + (v ? '?q=' + encodeURIComponent(v) : '');
+  });
+  /* 一键添加推荐 */
+  document.getElementById('recoList').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-add]'); if (!b) return;
+    var t = RECO[+b.dataset.add];
+    AG.toast('已把「' + t[0] + '」加到「' + t[3] + '」· 还是草稿，体检通过才会上线');
+    b.disabled = true; b.style.opacity = '.45'; b.querySelector('span').textContent = '已加入 · 在「未发布」里';
+  });
+
+  /* 版本下拉 */
+  var vmenu = document.getElementById('vmenu'), vrow = null;
+  function closeV() { vmenu.classList.remove('on'); vrow = null; }
+  document.addEventListener('click', function (e) { if (!e.target.closest('#vmenu') && !e.target.closest('[data-ver]')) closeV(); });
+
+  body.addEventListener('click', function (e) {
+    var tr = e.target.closest('tr'), g, r;
+    if (tr) { g = GROUPS[+tr.dataset.gi]; r = g.rows[+tr.dataset.ri]; }
+
+    var f = e.target.closest('[data-fold]');
+    if (f) { f.closest('.gsec').classList.toggle('fold'); return; }
+
+    var go = e.target.closest('[data-go]');
+    if (go) { location.href = go.dataset.go; return; }
+
+    if (e.target.closest('[data-scope]')) {
+      AG.toast('可见范围：谁能在前台发起这张单。改完立即生效，不用重新发布'); return;
+    }
+    if (e.target.closest('[data-exp]')) { AG.toast('已导出「' + r.n + '」的流程定义（JSON），可在别的组织里导入'); return; }
+    if (e.target.closest('[data-more]')) { AG.toast('更多：复制一份 / 移到别的分组 / 暂停 / 导出定义'); return; }
+
+    if (e.target.closest('[data-del]')) {
+      AG.open(document.getElementById('del'));
+      document.getElementById('delName').textContent = r.n;
+      document.getElementById('delOk').onclick = function () {
+        g.rows.splice(g.rows.indexOf(r), 1); AG.close(); paint();
+        AG.toast('已删除草稿「' + r.n + '」');
+      };
+      return;
+    }
+
+    var pub = e.target.closest('[data-pub]');
+    if (pub) {
+      AG.toast('「' + r.n + '」要先过上线前体检才能发布');
+      setTimeout(function () { location.href = 'check.html'; }, 700);
+      return;
+    }
+
+    var sw = e.target.closest('[data-on]');
+    if (sw) {
+      r.on = r.on ? 0 : 1;
+      sw.classList.toggle('on', !!r.on);
+      tr.querySelector('[data-lab]').textContent = r.on ? '开启' : '停用';
+      AG.toast(r.on ? '「' + r.n + '」已开启，前台可以发起' : '「' + r.n + '」已停用，进行中的运行继续跑完，不再接新单');
+      return;
+    }
+
+    var v = e.target.closest('[data-ver]');
+    if (v) {
+      vrow = { el: v, r: r };
+      vmenu.innerHTML = '<div class="lab">当前版本</div>'
+        + '<button class="on" data-v="' + r.v + '">流程版本 <span class="rev rev--a">' + r.v + '</span>'
+        + '<svg class="tick" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8.4 6.4 11.8 13 4.6"/></svg></button>'
+        + (r.hist.length ? '<div class="lab">历史版本</div>' + r.hist.map(function (x) {
+            return '<button data-v="' + x + '">流程版本 <span class="rev rev--a">' + x + '</span></button>';
+          }).join('') : '');
+      var b = v.getBoundingClientRect();
+      vmenu.classList.add('on');
+      vmenu.style.top = (b.bottom + window.scrollY + 4) + 'px';
+      vmenu.style.left = Math.min(b.left + window.scrollX, window.innerWidth - 170) + 'px';
+      return;
+    }
+  });
+
+  vmenu.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-v]'); if (!b || !vrow) return;
+    var to = b.dataset.v, r = vrow.r;
+    if (to === r.v) { closeV(); return; }
+    closeV();
+    AG.toast('把「' + r.n + '」切回 ' + to + ' 属于回退，要走一次负责人确认');
+    setTimeout(function () { location.href = 'versions.html'; }, 700);
+  });
+
+  body.addEventListener('click', function (e) {
+    var n = e.target.closest('[data-new]'); if (!n) return;
+    location.href = 'builder.html?new=1&g=' + encodeURIComponent(n.dataset.new);
+  });
+
+  /* ── 分组管理（Figma 1:60359）：拖排序 / 改名 / 删除 / 显隐。分组只管归置，不改可见范围 ── */
+  var grps = document.getElementById('grps'), dragI = -1;
+  var ICO = {
+    edit: '<path d="M11.4 2.6a1.7 1.7 0 0 1 2.4 2.4L6.2 12.6l-3.2.8.8-3.2z"/>',
+    del: '<path d="M3.4 4.6h9.2M6.4 4.6V3.4h3.2v1.2M4.6 4.6l.6 8.2h5.6l.6-8.2"/>'
+  };
+  function grpPaint() {
+    grps.innerHTML = GROUPS.map(function (g, i) {
+      var lock = !!g.draft;
+      return '<div class="grp' + (lock ? ' grp--lock' : '') + '" data-i="' + i + '"' + (lock ? '' : ' draggable="true"') + '>'
+        + '<span class="grp__h">⠿</span>'
+        + '<div class="grp__c"><b>' + g.name + '</b><span>'
+        + (lock ? '系统分组 · 只有这一页看得到，不能改名和删除' : (g.rows.length + ' 条流程 · ' + (g.note || '全体可见；全体可分享'))) + '</span></div>'
+        + (lock ? '' : '<div class="grp__a">'
+          + '<button type="button" data-ren title="改名"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + ICO.edit + '</svg></button>'
+          + '<button type="button" class="del" data-rm title="删除"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + ICO.del + '</svg></button>'
+          + '<button type="button" class="sw' + (g.off ? '' : ' on') + '" data-vis title="在流程管理里显示"></button>'
+          + '</div>')
+        + '</div>';
+    }).join('');
+  }
+  function openGrps(addNew) {
+    grpPaint(); AG.open(document.getElementById('ng'));
+    if (addNew) setTimeout(function () { document.getElementById('ngAdd').click(); }, 80);
+  }
+  document.getElementById('newGroup').addEventListener('click', function () { openGrps(true); });
+  document.getElementById('gmTop').addEventListener('click', function () { openGrps(false); });
+  body.addEventListener('click', function (e) { if (e.target.closest('[data-grps]')) openGrps(false); });
+
+  document.getElementById('ngAdd').addEventListener('click', function () {
+    GROUPS.push({ name: '新分组', rows: [], note: '全体可见；全体可分享' });
+    grpPaint(); paint();
+    var row = grps.lastElementChild;
+    row.scrollIntoView({ block: 'nearest' });
+    rename(row, true);
+  });
+  function rename(row, isNew) {
+    var i = +row.dataset.i, c = row.querySelector('.grp__c b'), old = GROUPS[i].name;
+    var inp = document.createElement('input');
+    inp.value = isNew ? '' : old; inp.placeholder = '分组名称'; inp.maxLength = 16;
+    c.replaceWith(inp); inp.focus(); inp.select();
+    function done(ok) {
+      var v = inp.value.trim();
+      if (ok && v && !GROUPS.some(function (g, k) { return k !== i && g.name === v; })) GROUPS[i].name = v;
+      else if (ok && v) AG.toast('已经有一个叫「' + v + '」的分组了');
+      else if (isNew && !v) GROUPS.splice(i, 1);
+      grpPaint(); paint();
+    }
+    inp.addEventListener('blur', function () { done(true); });
+    inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); inp.blur(); }
+      if (e.key === 'Escape') { inp.value = isNew ? '' : old; inp.blur(); }
+    });
+  }
+  grps.addEventListener('click', function (e) {
+    var row = e.target.closest('.grp'); if (!row) return;
+    var i = +row.dataset.i, g = GROUPS[i];
+    if (e.target.closest('[data-ren]')) { rename(row); return; }
+    if (e.target.closest('[data-rm]')) {
+      if (g.rows.length) { AG.toast('「' + g.name + '」里还有 ' + g.rows.length + ' 条流程，先挪走再删'); return; }
+      GROUPS.splice(i, 1); grpPaint(); paint(); AG.toast('已删除分组「' + g.name + '」');
+      return;
+    }
+    if (e.target.closest('[data-vis]')) {
+      g.off = !g.off; grpPaint(); paint();
+      AG.toast(g.off ? '「' + g.name + '」已收起，流程还在，只是列表里不展开' : '「' + g.name + '」已显示');
+      return;
+    }
+  });
+  grps.addEventListener('dragstart', function (e) {
+    var row = e.target.closest('.grp'); if (!row) return;
+    dragI = +row.dataset.i; row.classList.add('drag'); e.dataTransfer.effectAllowed = 'move';
+  });
+  grps.addEventListener('dragover', function (e) {
+    var row = e.target.closest('.grp'); if (!row || dragI < 0 || GROUPS[+row.dataset.i].draft) return;
+    e.preventDefault();
+    [].forEach.call(grps.children, function (x) { x.classList.toggle('over', x === row); });
+  });
+  grps.addEventListener('drop', function (e) {
+    var row = e.target.closest('.grp'); if (!row || dragI < 0) return;
+    e.preventDefault();
+    var to = +row.dataset.i; if (to === dragI || GROUPS[to].draft) { grpPaint(); return; }
+    var m = GROUPS.splice(dragI, 1)[0]; GROUPS.splice(to, 0, m);
+    dragI = -1; grpPaint(); paint(); AG.toast('顺序已保存');
+  });
+  grps.addEventListener('dragend', function () { dragI = -1; grpPaint(); });
+
+})();
+</script>
+
+</body>
+</html>

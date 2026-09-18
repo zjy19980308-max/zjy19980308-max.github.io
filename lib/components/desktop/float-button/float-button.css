@@ -1,0 +1,131 @@
+/*
+ * 悬浮按钮组件 (Float Button / FAB)
+ * 标签：<cs-float-button>
+ *
+ * 作用：固定在视口角落（默认右下）的浮动操作按钮，承载页面级主操作。
+ * 对标 ng-zorro nz-float-button / Material FAB。
+ *
+ * data 属性：
+ *   data-shape="circle"     — 圆形（默认）
+ *   data-shape="square"     — 圆角方形
+ *   data-variant="primary"  — 主色填充（默认）
+ *   data-variant="default"  — 白底描边
+ *   data-placement="bottom-right"  — 右下角（默认）
+ *   data-placement="bottom-left"   — 左下角
+ *   data-placement="top-right"     — 右上角
+ *   data-placement="top-left"      — 左上角
+ *   data-size="md"     — 48x48（默认）
+ *   data-size="lg"     — 56x56
+ *
+ * 子元素：
+ *   .float-button-icon   — 图标（必填）
+ *   .float-button-label  — 文字标签（可选，hover 时显示）
+ *
+ * 用法：直接放在 <body> 末尾，position: fixed 自动定位。
+ */
+
+cs-float-button {
+  position: fixed;
+  z-index: 1100;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  width: var(--cs-sem-size-interactive-lg);
+  height: var(--cs-sem-size-interactive-lg);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+  font: var(--typo-cn-14-regular);
+  cursor: pointer;
+  box-shadow: var(--cs-shadow-card);
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+/* ========== 位置 ========== */
+cs-float-button,
+cs-float-button[data-placement="bottom-right"] {
+  right: var(--spacing-32);
+  bottom: var(--spacing-32);
+  left: auto;
+  top: auto;
+}
+
+cs-float-button[data-placement="bottom-left"] {
+  left: var(--spacing-32);
+  bottom: var(--spacing-32);
+  right: auto;
+  top: auto;
+}
+
+cs-float-button[data-placement="top-right"] {
+  right: var(--spacing-32);
+  top: var(--spacing-32);
+  left: auto;
+  bottom: auto;
+}
+
+cs-float-button[data-placement="top-left"] {
+  left: var(--spacing-32);
+  top: var(--spacing-32);
+  right: auto;
+  bottom: auto;
+}
+
+/* ========== 尺寸 ========== */
+cs-float-button[data-size="lg"] {
+  width: var(--cs-sem-size-interactive-xl);
+  height: var(--cs-sem-size-interactive-xl);
+}
+
+/* ========== 形状 ========== */
+cs-float-button[data-shape="square"] {
+  border-radius: var(--radius-lg);
+}
+
+/* ========== 变体 ========== */
+cs-float-button[data-variant="default"] {
+  background: var(--cs-color-white);
+  color: var(--cs-color-text);
+  border: var(--line-width) solid var(--cs-color-border);
+}
+
+/* ========== 交互 ========== */
+cs-float-button:hover {
+  background: var(--cs-color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.12);
+}
+
+cs-float-button[data-variant="default"]:hover {
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+}
+
+cs-float-button:active {
+  transform: translateY(0);
+}
+
+/* ========== 子元素 ========== */
+cs-float-button .float-button-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--cs-sem-size-icon-xl);
+  line-height: 1;
+}
+
+cs-float-button .float-button-label {
+  font: var(--typo-cn-14-regular);
+  white-space: nowrap;
+}
+
+/* 带文字时变为药丸形 */
+cs-float-button:has(.float-button-label) {
+  width: auto;
+  padding: 0 var(--space-md);
+}

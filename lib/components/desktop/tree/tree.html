@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-tree 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="tree.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo { max-width: 360px; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-title">基础树 Default</div>
+  <div class="section-subtitle">点击节点展开 / 折叠（基于 details 原生）</div>
+  <cs-tree class="demo">
+    <details class="tree-node" open>
+      <summary class="tree-node-summary">
+        <i class="tree-node-icon cses-xiala"></i>
+        <span class="tree-node-label">根目录</span>
+      </summary>
+      <div class="tree-node-children">
+        <details class="tree-node" open>
+          <summary class="tree-node-summary">
+            <i class="tree-node-icon cses-xiala"></i>
+            <span class="tree-node-label">设计系统</span>
+            <span class="tree-node-extra">12</span>
+          </summary>
+          <div class="tree-node-children">
+            <div class="tree-node" data-selected>
+              <div class="tree-node-summary">
+                <i class="tree-node-icon cses-xiala"></i>
+                <span class="tree-node-label">组件库 (已选中)</span>
+              </div>
+            </div>
+            <div class="tree-node">
+              <div class="tree-node-summary">
+                <i class="tree-node-icon cses-xiala"></i>
+                <span class="tree-node-label">设计令牌</span>
+              </div>
+            </div>
+            <div class="tree-node">
+              <div class="tree-node-summary">
+                <i class="tree-node-icon cses-xiala"></i>
+                <span class="tree-node-label">图标库</span>
+              </div>
+            </div>
+          </div>
+        </details>
+        <details class="tree-node">
+          <summary class="tree-node-summary">
+            <i class="tree-node-icon cses-xiala"></i>
+            <span class="tree-node-label">业务模块</span>
+            <span class="tree-node-extra">8</span>
+          </summary>
+          <div class="tree-node-children">
+            <div class="tree-node">
+              <div class="tree-node-summary">
+                <i class="tree-node-icon cses-xiala"></i>
+                <span class="tree-node-label">会议</span>
+              </div>
+            </div>
+            <div class="tree-node">
+              <div class="tree-node-summary">
+                <i class="tree-node-icon cses-xiala"></i>
+                <span class="tree-node-label">文档</span>
+              </div>
+            </div>
+            <div class="tree-node" data-disabled>
+              <div class="tree-node-summary">
+                <i class="tree-node-icon cses-xiala"></i>
+                <span class="tree-node-label">审批 (禁用)</span>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </details>
+  </cs-tree>
+</div>
+
+<div class="section">
+  <div class="section-title">显示连线 Show Line</div>
+  <div class="section-subtitle">data-show-line — 子节点带虚线连接</div>
+  <cs-tree data-show-line class="demo">
+    <details class="tree-node" open>
+      <summary class="tree-node-summary">
+        <i class="tree-node-icon cses-xiala"></i>
+        <span class="tree-node-label">项目 A</span>
+      </summary>
+      <div class="tree-node-children">
+        <details class="tree-node" open>
+          <summary class="tree-node-summary">
+            <i class="tree-node-icon cses-xiala"></i>
+            <span class="tree-node-label">阶段一</span>
+          </summary>
+          <div class="tree-node-children">
+            <div class="tree-node"><div class="tree-node-summary"><i class="tree-node-icon cses-xiala"></i><span class="tree-node-label">需求分析</span></div></div>
+            <div class="tree-node"><div class="tree-node-summary"><i class="tree-node-icon cses-xiala"></i><span class="tree-node-label">原型设计</span></div></div>
+          </div>
+        </details>
+        <details class="tree-node">
+          <summary class="tree-node-summary">
+            <i class="tree-node-icon cses-xiala"></i>
+            <span class="tree-node-label">阶段二</span>
+          </summary>
+          <div class="tree-node-children">
+            <div class="tree-node"><div class="tree-node-summary"><i class="tree-node-icon cses-xiala"></i><span class="tree-node-label">开发</span></div></div>
+          </div>
+        </details>
+      </div>
+    </details>
+  </cs-tree>
+</div>
+
+<div class="section">
+  <div class="section-title">尺寸 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg"</div>
+  <cs-tree data-size="sm" class="demo">
+    <div class="tree-node"><div class="tree-node-summary"><i class="tree-node-icon cses-xiala"></i><span class="tree-node-label">sm 紧凑节点</span></div></div>
+    <div class="tree-node"><div class="tree-node-summary"><i class="tree-node-icon cses-xiala"></i><span class="tree-node-label">sm 紧凑节点</span></div></div>
+  </cs-tree>
+</div>
+
+</body>
+</html>

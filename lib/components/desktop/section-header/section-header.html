@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-section-header 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../css/workspace.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="section-header.css">
+  <style>
+    body { padding: 32px; background: #F5F6FA; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .stack > * + * { margin-top: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- 1. 主色（默认）-->
+<div class="section">
+  <div class="section-title">默认 primary（主色色条）</div>
+  <div class="section-subtitle">配合"全部 >"L3 文字按钮，符合 v2 §16.2 模块入口规范</div>
+
+  <cs-section-header data-color="primary">
+    <span class="sh-left">
+      <span class="sh-bar"></span>
+      <span class="sh-title">智能待办</span>
+      <span class="sh-count">(8)</span>
+    </span>
+    <a class="sh-right" href="#" data-action="view-all">全部 <i class="cses-right"></i></a>
+  </cs-section-header>
+</div>
+
+<!-- 2. 多色变体 -->
+<div class="section">
+  <div class="section-title">7 种语义色变体</div>
+  <div class="section-subtitle">primary / warning / danger / success / info / cyan / orange — 仅"色条"用语义色，标题保持 #1A1B2E</div>
+
+  <div class="stack">
+    <cs-section-header data-color="primary">
+      <span class="sh-left"><span class="sh-bar"></span><span class="sh-title">协同动态</span></span>
+      <a class="sh-right">查看更多 <i class="cses-right"></i></a>
+    </cs-section-header>
+
+    <cs-section-header data-color="warning">
+      <span class="sh-left"><span class="sh-bar"></span><span class="sh-title">即将到期</span><span class="sh-count">(3)</span></span>
+      <a class="sh-right">全部 <i class="cses-right"></i></a>
+    </cs-section-header>
+
+    <cs-section-header data-color="danger">
+      <span class="sh-left"><span class="sh-bar"></span><span class="sh-title">逾期任务</span><span class="sh-count">(2)</span></span>
+      <a class="sh-right">立即处理 <i class="cses-right"></i></a>
+    </cs-section-header>
+
+    <cs-section-header data-color="success">
+      <span class="sh-left"><span class="sh-bar"></span><span class="sh-title">本周已完成</span></span>
+      <a class="sh-right">查看记录 <i class="cses-right"></i></a>
+    </cs-section-header>
+
+    <cs-section-header data-color="info">
+      <span class="sh-left"><span class="sh-bar"></span><span class="sh-title">数据看板</span></span>
+      <a class="sh-right">展开 <i class="cses-right"></i></a>
+    </cs-section-header>
+
+    <cs-section-header data-color="cyan">
+      <span class="sh-left"><span class="sh-bar"></span><span class="sh-title">最近文档</span></span>
+      <a class="sh-right">+ 新建</a>
+    </cs-section-header>
+
+    <cs-section-header data-color="orange">
+      <span class="sh-left"><span class="sh-bar"></span><span class="sh-title">权益与活动</span></span>
+      <a class="sh-right">了解更多 <i class="cses-right"></i></a>
+    </cs-section-header>
+  </div>
+</div>
+
+<!-- 3. 仅标题（无右侧入口） -->
+<div class="section">
+  <div class="section-title">仅标题 Title only</div>
+  <div class="section-subtitle">不带"全部 >"，用于纯展示型模块</div>
+
+  <cs-section-header data-color="primary">
+    <span class="sh-left">
+      <span class="sh-bar"></span>
+      <span class="sh-title">今日核心 KPI</span>
+    </span>
+  </cs-section-header>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!--
+  cs-calendar-grid 周视图日历网格 demo
+  7 列 × 24 行 · 5-8 个会议块铺在网格上
+  会议块定位公式：
+    grid-row-start: calc(startHour + 1)
+    grid-row-end:   calc(endHour + 1)
+    grid-column:    day_idx + 1   (周一=1 ... 周日=7)
+-->
+<cs-calendar-grid>
+  <!-- 顶部 7 列日期头 -->
+  <div class="cg-header">
+    <div class="cg-time-spacer"></div>
+    <div class="cg-day-cell">
+      <span class="cg-day-name">周一</span>
+      <span class="cg-day-num">4</span>
+    </div>
+    <div class="cg-day-cell">
+      <span class="cg-day-name">周二</span>
+      <span class="cg-day-num">5</span>
+    </div>
+    <div class="cg-day-cell" data-today>
+      <span class="cg-day-name">周三</span>
+      <span class="cg-day-num">6</span>
+    </div>
+    <div class="cg-day-cell">
+      <span class="cg-day-name">周四</span>
+      <span class="cg-day-num">7</span>
+    </div>
+    <div class="cg-day-cell">
+      <span class="cg-day-name">周五</span>
+      <span class="cg-day-num">8</span>
+    </div>
+    <div class="cg-day-cell">
+      <span class="cg-day-name">周六</span>
+      <span class="cg-day-num">9</span>
+    </div>
+    <div class="cg-day-cell">
+      <span class="cg-day-name">周日</span>
+      <span class="cg-day-num">10</span>
+    </div>
+  </div>
+
+  <!-- 主网格 -->
+  <div class="cg-body">
+    <!-- 左列时间标签：00:00 ~ 23:00 -->
+    <div class="cg-time-col">
+      <span class="cg-time-label">00:00</span>
+      <span class="cg-time-label">01:00</span>
+      <span class="cg-time-label">02:00</span>
+      <span class="cg-time-label">03:00</span>
+      <span class="cg-time-label">04:00</span>
+      <span class="cg-time-label">05:00</span>
+      <span class="cg-time-label">06:00</span>
+      <span class="cg-time-label">07:00</span>
+      <span class="cg-time-label">08:00</span>
+      <span class="cg-time-label">09:00</span>
+      <span class="cg-time-label">10:00</span>
+      <span class="cg-time-label">11:00</span>
+      <span class="cg-time-label">12:00</span>
+      <span class="cg-time-label">13:00</span>
+      <span class="cg-time-label">14:00</span>
+      <span class="cg-time-label">15:00</span>
+      <span class="cg-time-label">16:00</span>
+      <span class="cg-time-label">17:00</span>
+      <span class="cg-time-label">18:00</span>
+      <span class="cg-time-label">19:00</span>
+      <span class="cg-time-label">20:00</span>
+      <span class="cg-time-label">21:00</span>
+      <span class="cg-time-label">22:00</span>
+      <span class="cg-time-label">23:00</span>
+    </div>
+
+    <!-- 7 列 × 24 行网格 + 会议块 -->
+    <div class="cg-grid">
+      <!-- 168 个 cell 背景（7 × 24，由 CSS grid auto-flow 自动铺满） -->
+      <!-- 简化：先放会议块，cell 由调用方在 CSS 中通过 ::before 网格背景实现也可。
+           这里显式渲染若干 cell 占位，确保 grid 行高生效（grid-template-rows: repeat(24, 48px) 已固定行高，因此 cell 可省略） -->
+
+      <!-- 会议块 1：周一 09:00-10:00 「项目周会」普通蓝 -->
+      <div class="cg-event"
+           data-status="default"
+           data-day="1" data-start="9" data-end="10"
+           style="grid-column: 1; grid-row: 10 / 11;">
+        <span class="cg-event-title">项目周会</span>
+        <span class="cg-event-time">09:00 - 10:00</span>
+        <span class="cg-event-avatars">
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+        </span>
+        <div class="cg-popover">
+          <span class="cg-event-title">项目周会</span>
+          <span class="cg-event-time">周一 09:00 - 10:00</span>
+          <span class="cg-event-time">议程：上周回顾 / 本周规划 / 风险同步</span>
+        </div>
+      </div>
+
+      <!-- 会议块 2：周二 14:00-15:30 「Q4 OKR 复盘」重要紫 -->
+      <div class="cg-event"
+           data-status="important"
+           data-day="2" data-start="14" data-end="16"
+           style="grid-column: 2; grid-row: 15 / 17;">
+        <span class="cg-event-title">Q4 OKR 复盘</span>
+        <span class="cg-event-time">14:00 - 15:30</span>
+        <span class="cg-event-avatars">
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+        </span>
+        <div class="cg-popover">
+          <span class="cg-event-title">Q4 OKR 复盘</span>
+          <span class="cg-event-time">周二 14:00 - 15:30</span>
+          <span class="cg-event-time">议程：Q4 目标对齐 + 跨部门同步</span>
+        </div>
+      </div>
+
+      <!-- 会议块 3：周三 10:00-11:00 普通蓝 -->
+      <div class="cg-event"
+           data-status="default"
+           data-day="3" data-start="10" data-end="11"
+           style="grid-column: 3; grid-row: 11 / 12;">
+        <span class="cg-event-title">需求评审</span>
+        <span class="cg-event-time">10:00 - 11:00</span>
+        <span class="cg-event-avatars">
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+        </span>
+        <div class="cg-popover">
+          <span class="cg-event-title">需求评审</span>
+          <span class="cg-event-time">周三 10:00 - 11:00</span>
+          <span class="cg-event-time">议程：v3 新需求评审</span>
+        </div>
+      </div>
+
+      <!-- 会议块 4：周三 16:00-17:00 普通蓝 -->
+      <div class="cg-event"
+           data-status="default"
+           data-day="3" data-start="16" data-end="17"
+           style="grid-column: 3; grid-row: 17 / 18;">
+        <span class="cg-event-title">技术分享会</span>
+        <span class="cg-event-time">16:00 - 17:00</span>
+        <span class="cg-event-avatars">
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+        </span>
+        <div class="cg-popover">
+          <span class="cg-event-title">技术分享会</span>
+          <span class="cg-event-time">周三 16:00 - 17:00</span>
+          <span class="cg-event-time">主题：流式架构实践</span>
+        </div>
+      </div>
+
+      <!-- 会议块 5：周四 11:00-12:00 「客户演示」已结束灰 -->
+      <div class="cg-event"
+           data-status="ended"
+           data-day="4" data-start="11" data-end="12"
+           style="grid-column: 4; grid-row: 12 / 13;">
+        <span class="cg-event-title">客户演示</span>
+        <span class="cg-event-time">11:00 - 12:00</span>
+        <span class="cg-event-avatars">
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+        </span>
+        <div class="cg-popover">
+          <span class="cg-event-title">客户演示（已结束）</span>
+          <span class="cg-event-time">周四 11:00 - 12:00</span>
+          <span class="cg-event-time">参会：A 客户 + 销售 + 产品</span>
+        </div>
+      </div>
+
+      <!-- 会议块 6：周五 15:00-16:00 「设计评审」普通蓝 -->
+      <div class="cg-event"
+           data-status="default"
+           data-day="5" data-start="15" data-end="16"
+           style="grid-column: 5; grid-row: 16 / 17;">
+        <span class="cg-event-title">设计评审</span>
+        <span class="cg-event-time">15:00 - 16:00</span>
+        <span class="cg-event-avatars">
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+        </span>
+        <div class="cg-popover">
+          <span class="cg-event-title">设计评审</span>
+          <span class="cg-event-time">周五 15:00 - 16:00</span>
+          <span class="cg-event-time">议程：v3 视觉稿评审</span>
+        </div>
+      </div>
+
+      <!-- 会议块 7：周一 13:00-14:00 重要紫（额外） -->
+      <div class="cg-event"
+           data-status="important"
+           data-day="1" data-start="13" data-end="14"
+           style="grid-column: 1; grid-row: 14 / 15;">
+        <span class="cg-event-title">高管同步</span>
+        <span class="cg-event-time">13:00 - 14:00</span>
+        <span class="cg-event-avatars">
+          <i class="cses-touxiang"></i>
+          <i class="cses-touxiang"></i>
+        </span>
+        <div class="cg-popover">
+          <span class="cg-event-title">高管同步</span>
+          <span class="cg-event-time">周一 13:00 - 14:00</span>
+          <span class="cg-event-time">议程：季度战略对齐</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</cs-calendar-grid>

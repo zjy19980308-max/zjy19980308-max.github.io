@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>上线前体检 · 流程中台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{max-width:1480px;margin:0 auto}
+  .flow{display:grid;grid-template-columns:minmax(0,1fr) 296px;gap:16px;align-items:start}
+  @media (max-width:1100px){.flow{grid-template-columns:1fr}.mini{position:static}}
+  .stepbar{display:flex;align-items:center;gap:10px;padding:11px 15px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);margin-bottom:14px;box-shadow:var(--sd)}
+  .stepbar .arw{color:var(--ink-3)}
+  .steps i.now{color:#4857e2}
+  .res{margin-bottom:14px}
+  .res__n{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--r);border:1px solid var(--risk-line);background:var(--risk-soft)}
+  .res__n b{font-size:14px;color:var(--risk)}
+  .res__n .st{margin-left:auto;font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+  .res__n.ok{border-color:#CBE5D7;background:var(--ok-soft)}
+  .res__n.ok b{color:var(--ok)}
+  .grp{margin-bottom:16px}
+  .grp__t{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--ink-2);margin-bottom:9px}
+  .ck{border:1px solid var(--line);border-left:3px solid var(--risk);border-radius:var(--r);background:var(--panel);padding:14px 16px;margin-bottom:10px;box-shadow:var(--sd);transition:opacity .3s,border-color .3s}
+  .ck--warn{border-left-color:var(--warn)}
+  .ck--ok{border-left-color:var(--ok)}
+  .ck__t{display:flex;align-items:center;gap:8px}
+  .ck__t b{font-size:13px;font-weight:600}
+  .ck__loc{margin-left:auto;font-size:11.5px;color:var(--ink-3)}
+  .ck__row{display:grid;grid-template-columns:70px 1fr;gap:5px 12px;font-size:12.5px;margin-top:10px}
+  .ck__row dt{color:var(--ink-3)}
+  .ck__row dd{margin:0}
+  .ck__a{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .ck__src{font-size:11.5px;color:var(--ink-3);margin-left:auto}
+  .ck__src a{color:var(--acc-ink);text-decoration:underline;text-underline-offset:2px}
+  .ck.is-fixed{border-left-color:var(--ok)}
+  .ck.is-fixed .ck__a .btn--acc{display:none}
+  .fold{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--sd)}
+  .fold__h{display:flex;align-items:center;gap:8px;padding:12px 15px;cursor:pointer;font-size:12.5px}
+  .fold__h .dim{margin-left:auto;font-size:11.5px}
+  .fold__b{display:none;border-top:1px solid var(--line-2);padding:4px 15px 12px}
+  .fold.is-open .fold__b{display:block}
+  .fold__i{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:12.5px;color:var(--ink-2);border-bottom:1px solid var(--line-2)}
+  .fold__i:last-child{border:0}
+  .fold__i svg{width:13px;height:13px;color:var(--ok);flex:0 0 13px}
+  .mini{position:sticky;top:70px}
+  .mini__c{padding:12px 13px}
+  .mn{border:1px solid var(--line);border-radius:7px;padding:6px 9px;font-size:11.5px;margin-bottom:6px;position:relative;transition:border-color .2s,background .2s;cursor:default}
+  .mn.bad,.mn.warn{cursor:pointer}
+  .mn.bad:hover,.mn.warn:hover{filter:brightness(.97)}
+  .mn.bad{border-color:var(--risk-line);background:var(--risk-soft);color:var(--risk);font-weight:600}
+  .mn.warn{border-color:var(--warn-line);background:var(--warn-soft);color:var(--warn);font-weight:600}
+  .mn.ind{margin-left:16px}
+  .mn.fixed{border-color:#CBE5D7;background:var(--ok-soft);color:var(--ok)}
+  .mn__l{position:absolute;left:-1px;top:50%;width:3px;height:14px;transform:translateY(-50%);border-radius:2px}
+  .foot{position:sticky;bottom:14px;margin-top:20px;display:flex;justify-content:center}
+  .foot__c{background:#fff;border-radius:16px;box-shadow:0 -1px 10px rgba(0,0,0,.1);padding:12px 20px;display:inline-flex;align-items:center;gap:40px;max-width:100%}
+  .foot .dim{font-size:13px}
+  .foot .right{display:flex;gap:16px}
+</style>
+</head>
+<body data-nav="check" data-title="上线前体检" data-back="builder.html" data-back-text="返回配置" data-flow="供应商付款审批" data-ver="v4" data-state="体检未通过" data-state-tone="risk">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div id="topActions"><button class="btn btn--s" id="again">重新体检</button></div>
+    <div class="page">
+
+      <div class="stepbar">
+        <div class="steps">
+          <i class="done">✓ 配置</i><span class="arw">→</span><i class="now">体检</i><span class="arw">→</span><i>审阅</i><span class="arw">→</span><i>发布</i>
+        </div>
+        <span class="dim" style="margin-left:auto;font-size:11.5px">体检期间草稿锁定，改完要重新体检</span>
+      </div>
+
+      <div class="res">
+        <div class="res__n" id="banner">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="width:17px;height:17px;color:var(--risk)"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.4M8 10.6h.01"/></svg>
+          <b id="bannerT">3 项需要处理，修复后才能提交审阅</b>
+          <span class="st" id="bannerS">共 18 项 · 通过 15 · 阻断 2 · 需确认 1</span>
+        </div>
+      </div>
+
+      <div class="flow">
+        <div>
+          <div class="grp">
+            <div class="grp__t"><span class="tag tag--risk">阻断</span><span id="c-block">2 项</span><span class="dim" style="font-weight:400">阻断项不能豁免，必须改</span></div>
+
+            <div class="ck" id="ck1" data-node="n4">
+              <div class="ck__t"><b>条件分档存在未定义的边界值</b><span class="ck__loc">节点 4 · 金额判断</span></div>
+              <dl class="ck__row">
+                <dt>发现</dt><dd>金额正好 <b>100,000</b> 时归属不明：可能同时命中「&lt; 10 万」和「10–50 万」两档。</dd>
+                <dt>为什么重要</dt><dd>边界金额的付款会走错审批人，或者两档都不命中导致运行停滞。</dd>
+                <dt>建议</dt><dd>把 <b>100,000</b> 归入「10–50 万」档（上一档改为 &lt; 100,000）。</dd>
+              </dl>
+              <div class="ck__a">
+                <button class="btn btn--acc btn--s" data-fix="ck1">一键应用建议</button>
+                <a class="btn btn--s" href="builder.html">去配置里改</a>
+                <span class="ck__src">来自复盘 · <a href="rules.html">2026-08 付款停滞事件</a></span>
+              </div>
+            </div>
+
+            <div class="ck" id="ck2" data-node="n5b">
+              <div class="ck__t"><b>审批人没有代理人</b><span class="ck__loc">节点 5b · 财务总监审批</span></div>
+              <dl class="ck__row">
+                <dt>发现</dt><dd>陈立 9 月 14–21 日出差，这期间 10 万以上的付款没有人能审批。</dd>
+                <dt>为什么重要</dt><dd>上一版就是这个原因，一笔付款卡了 26 小时才被发现。</dd>
+                <dt>建议</dt><dd>代理人设为 <b>刘恒（副总监）</b>，审批超过 24 小时自动转交。</dd>
+              </dl>
+              <div class="ck__a">
+                <button class="btn btn--acc btn--s" data-fix="ck2">一键应用建议</button>
+                <a class="btn btn--s" href="builder.html">去配置里改</a>
+                <span class="ck__src">来自异常 · <a href="exceptions.html">PAY-0039</a></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grp">
+            <div class="grp__t"><span class="tag tag--warn">需确认</span><span id="c-warn">1 项</span><span class="dim" style="font-weight:400">可以豁免，但要写理由并留名</span></div>
+            <div class="ck ck--warn" id="ck3" data-node="n2">
+              <div class="ck__t"><b>新增节点尚未经过人工确认</b><span class="ck__loc">节点 2 · 供应商黑名单校验</span></div>
+              <dl class="ck__row">
+                <dt>发现</dt><dd>这个节点是 Agent 建议加进来的，还没有人确认过要不要留。</dd>
+                <dt>为什么重要</dt><dd>Agent 加的节点会改变流程走向，上线前必须由人点头。</dd>
+              </dl>
+              <div class="ck__a">
+                <button class="btn btn--acc btn--s" data-fix="ck3">确认保留</button>
+                <button class="btn btn--s" data-toast="删除后这条检查会消失，但 Agent 建议的理由会留在记录里">删除节点</button>
+                <button class="btn btn--s btn--ghost" data-open="#waive">豁免</button>
+                <span class="ck__src">检查项 <a href="rules.html">CK-14</a></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="fold" id="fold">
+            <div class="fold__h"><span class="tag tag--ok">已通过</span><b>15 项</b><span class="dim">展开看看查了什么</span></div>
+            <div class="fold__b" id="passed"></div>
+          </div>
+
+          <div class="foot"><div class="foot__c">
+            <span class="dim" id="footHint">还有 3 项待处理</span>
+            <div class="right"><a class="btn" href="builder.html">返回配置</a><button class="obtn obtn--yes" id="submit" disabled>提交审阅</button></div>
+          </div></div>
+        </div>
+
+        <aside class="mini card">
+          <div class="card__h"><h3>问题在哪</h3><span class="sub">点左边条目会高亮</span></div>
+          <div class="card__b mini__c" id="mini"></div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="waive">
+  <div class="modal__h"><h3>豁免这一项</h3></div>
+  <div class="modal__b">
+    <p class="dim" style="font-size:12.5px;margin-bottom:12px">豁免只对本次上线生效，会记在版本记录里，写明是谁豁免的。</p>
+    <label class="field"><span>豁免理由（必填）</span><textarea class="inp" placeholder="例如：黑名单校验已在测试环境验证过，本次先上线观察一周。"></textarea></label>
+    <div class="rowline" style="border:0"><span style="color:var(--ink-3);width:74px">豁免人</span><b>周宁 · 流程管理员</b></div>
+  </div>
+  <div class="modal__f"><span class="dim" style="font-size:11.5px">阻断项不能豁免</span><div class="right"><button class="btn" data-close>取消</button><button class="btn btn--p" data-close data-toast="已豁免 · 记在 v4 版本记录里">确认豁免</button></div></div>
+</div>
+
+<script src="ui.js"></script>
+<script>
+(function () {
+  var NODES = [
+    ['1 提交付款申请', ''], ['2 供应商黑名单校验', 'warn'], ['3 发票与合同三单匹配', ''], ['4 金额判断', 'bad'],
+    ['5a 采购经理审批', 'ind'], ['5b 财务总监审批', 'bad ind'], ['5c CFO 审批', 'ind'],
+    ['6 生成付款指令', ''], ['7 付款前人工确认', ''], ['8 执行付款', ''], ['9 通知供应商', '']
+  ];
+  var MAP = { n4: 3, n5b: 5, n2: 1 };
+  document.getElementById('mini').innerHTML = NODES.map(function (n, i) { return '<div class="mn ' + n[1] + '" data-i="' + i + '">' + n[0] + '</div>'; }).join('');
+
+  var PASSED = ['不可逆节点前有人工确认', '所有审批节点都设置了超时', '超时后的处理方式已定义', '通知模板里没有空变量', '没有孤立节点', '没有环路',
+    '每个条件节点都有默认分支', '不可逆节点未开启自动重试', '执行者都是在职员工', '角色取人规则能取到人', '触发条件唯一',
+    '退回路径可达发起人', '金额字段有单位', '外部接口都配了失败处理', '流程名在本企业内唯一'];
+  document.getElementById('passed').innerHTML = PASSED.map(function (t) {
+    return '<div class="fold__i"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.4 6.4 11.8 13 4.6"/></svg>' + t + '</div>';
+  }).join('');
+  document.querySelector('.fold__h').addEventListener('click', function () { document.getElementById('fold').classList.toggle('is-open'); });
+
+  var left = 3;
+  function refresh() {
+    var b = document.getElementById('banner'), t = document.getElementById('bannerT'), s = document.getElementById('bannerS');
+    if (left > 0) {
+      t.textContent = left + ' 项需要处理，修复后才能提交审阅';
+      s.textContent = '共 18 项 · 通过 ' + (18 - left) + ' · 待处理 ' + left;
+      document.getElementById('footHint').textContent = '还有 ' + left + ' 项待处理';
+      document.getElementById('submit').disabled = true;
+    } else {
+      b.classList.add('ok'); b.querySelector('svg').style.color = 'var(--ok)';
+      t.textContent = '全部 18 项通过';
+      s.textContent = '共 18 项 · 通过 18 · 待处理 0';
+      document.getElementById('footHint').textContent = '可以提交给流程负责人审阅了';
+      document.getElementById('submit').disabled = false;
+      var tag = document.querySelector('#top .tag--risk'); if (tag) { tag.className = 'tag tag--ok'; tag.textContent = '体检通过'; }
+    }
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-fix]'); if (!b) return;
+    var card = document.getElementById(b.dataset.fix);
+    if (card.classList.contains('is-fixed')) return;
+    card.classList.add('is-fixed'); card.classList.remove('ck--warn');
+    card.querySelector('.ck__t b').innerHTML += ' <span class="tag tag--ok" style="margin-left:6px">已修复</span>';
+    var mn = document.querySelectorAll('.mn')[MAP[card.dataset.node]];
+    if (mn) { mn.className = mn.className.replace(/bad|warn/, 'fixed'); }
+    b.textContent = '已应用 · 撤销'; b.className = 'btn btn--s';
+    left--; refresh(); AG.toast('已应用建议，这一项重新检查已通过');
+  });
+  document.getElementById('again').addEventListener('click', function () { AG.toast('已重新体检 · 结果与上次一致', 'ok'); });
+  document.getElementById('submit').addEventListener('click', function () { location.href = 'review.html'; });
+  document.querySelector('#mini').addEventListener('click', function (e) {
+    var m = e.target.closest('.mn'); if (!m) return;
+    var id = Object.keys(MAP).filter(function (k) { return MAP[k] === +m.dataset.i; })[0];
+    var card = document.querySelector('.ck[data-node="' + id + '"]');
+    if (card) { card.scrollIntoView({ block: 'center', behavior: 'smooth' }); card.animate([{ boxShadow: '0 0 0 4px rgba(19,111,99,.16)' }, { boxShadow: '0 0 0 0 rgba(19,111,99,0)' }], { duration: 900 }); }
+  });
+  refresh();
+})();
+</script>
+</body>
+</html>

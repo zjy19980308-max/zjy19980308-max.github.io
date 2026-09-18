@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-ai-suggestion-bar 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../css/workspace.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="ai-suggestion-bar.css">
+  <style>
+    body { padding: 32px; background: #F5F6FA; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- 1. first-recommend 剧本 -->
+<div class="section">
+  <div class="section-title">剧本：first-recommend（今日第一推荐）</div>
+  <div class="section-subtitle">v2 §13.2/§17.2：白底 + 主色左色条，按钮全部降级（无 L1 紫填充）</div>
+
+  <cs-ai-suggestion-bar data-scenario="first-recommend" data-page="1/4">
+    <span class="ai-avatar">🤖</span>
+    <div class="ai-content">
+      <div class="ai-label"><span class="ai-tag">⭐ AI 推荐</span>今日第一推荐</div>
+      <div class="ai-message">
+        你今天最该先做 <b>《Q1 产品规划修订》</b>，因为它阻塞了 15:00 的产品评审会。
+      </div>
+    </div>
+    <div class="ai-actions">
+      <button class="ai-action-btn" data-variant="primary" data-action="start-task">立即开始</button>
+      <button class="ai-action-btn" data-variant="secondary" data-action="reschedule">改时间</button>
+      <button class="ai-action-btn" data-variant="text" data-action="snooze">稍后再说</button>
+    </div>
+    <span class="ai-pager">
+      <i class="cses-arrow" data-action="prev-suggestion"></i>
+      1/4
+      <i class="cses-right" data-action="next-suggestion"></i>
+    </span>
+  </cs-ai-suggestion-bar>
+</div>
+
+<!-- 2. meeting-prepare 剧本 -->
+<div class="section">
+  <div class="section-title">剧本：meeting-prepare（会议准备提醒）</div>
+  <div class="section-subtitle">仅 2 个 action（primary/text），不带翻页器</div>
+
+  <cs-ai-suggestion-bar data-scenario="meeting-prepare" data-page="2/4">
+    <span class="ai-avatar">📅</span>
+    <div class="ai-content">
+      <div class="ai-label"><span class="ai-tag">⏰ 会议准备</span>15 分钟后开会</div>
+      <div class="ai-message">
+        <b>15:00 产品评审会</b>，AI 已生成会议要点 + 参会人议程，要看一眼吗？
+      </div>
+    </div>
+    <div class="ai-actions">
+      <button class="ai-action-btn" data-variant="primary" data-action="view-brief">查看简报</button>
+      <button class="ai-action-btn" data-variant="text" data-action="snooze">忽略</button>
+    </div>
+  </cs-ai-suggestion-bar>
+</div>
+
+<!-- 3. delay-warning 剧本 -->
+<div class="section">
+  <div class="section-title">剧本：delay-warning（拖延预警）</div>
+  <div class="section-subtitle">语义提示 + 单 action</div>
+
+  <cs-ai-suggestion-bar data-scenario="delay-warning" data-page="3/4">
+    <span class="ai-avatar">⚠️</span>
+    <div class="ai-content">
+      <div class="ai-label"><span class="ai-tag">🚨 拖延预警</span>这件事拖了 3 天了</div>
+      <div class="ai-message">
+        <b>《用户研究报告》</b> 截止还有 <b>4h</b>，需要我帮你拆解成 5 步吗？
+      </div>
+    </div>
+    <div class="ai-actions">
+      <button class="ai-action-btn" data-variant="primary" data-action="ai-decompose">让 AI 拆解</button>
+      <button class="ai-action-btn" data-variant="secondary" data-action="extend-deadline">延期</button>
+    </div>
+  </cs-ai-suggestion-bar>
+</div>
+
+</body>
+</html>

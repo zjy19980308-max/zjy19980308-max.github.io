@@ -1,0 +1,72 @@
+/*
+ * 仪表盘卡片组件 (Widget Card)
+ * 标签：<cs-widget-card>
+ *
+ * data 属性：
+ *   data-size="sm|md|lg"  — 高度预设
+ *
+ * 子元素结构：
+ *   .widget-header  — 标题栏
+ *     .widget-title — 标题文字
+ *     .widget-extra — 右侧操作区
+ *   .widget-tabs    — 内嵌标签页
+ *   .widget-body    — 内容区
+ */
+
+/* ========== 卡片基础 ========== */
+cs-widget-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--cs-color-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 6px 36px 5px rgba(0, 0, 0, 0.04);
+  padding: var(--spacing-20);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ========== 标题栏 ========== */
+cs-widget-card .widget-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+  flex-shrink: 0;
+}
+
+cs-widget-card .widget-title {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+}
+
+cs-widget-card .widget-extra {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* ========== 内嵌标签页 ========== */
+cs-widget-card .widget-tabs {
+  margin-bottom: var(--space-sm);
+  flex-shrink: 0;
+}
+
+/* ========== 内容区 ========== */
+cs-widget-card .widget-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* ========== 尺寸预设 ========== */
+cs-widget-card[data-size="sm"] {
+  min-height: 200px;
+}
+
+cs-widget-card[data-size="md"] {
+  min-height: 300px;
+}
+
+cs-widget-card[data-size="lg"] {
+  min-height: 400px;
+}

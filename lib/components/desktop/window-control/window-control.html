@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-window-control 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="window-control.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+    .dark-bg { background: var(--cs-color-bg-app-dark); padding: 16px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <div class="section-title">窗口控制 Window Control</div>
+  <div class="section-subtitle">两个控制点：关闭（珊瑚红 #ff6e5c）、最大化（绿 #61c654）— 对应 Figma 客户端_关闭 / 客户端_放大</div>
+
+  <div class="row">
+    <span class="row-label">亮色背景</span>
+    <cs-window-control>
+      <span class="ctrl-close"><i class="ctrl-icon cses-guanbi"></i></span>
+      <span class="ctrl-maximize"><i class="ctrl-icon cses-fangda"></i></span>
+    </cs-window-control>
+  </div>
+
+  <div class="row">
+    <span class="row-label">暗色背景</span>
+    <div class="dark-bg">
+      <cs-window-control>
+        <span class="ctrl-close"><i class="ctrl-icon cses-guanbi"></i></span>
+        <span class="ctrl-maximize"><i class="ctrl-icon cses-fangda"></i></span>
+      </cs-window-control>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="data:,">
+<title>弹性滑块 · 交互小案例 — 张竞元</title>
+<!-- 实验场 · 交互小案例「弹性滑块」。维护：网站交互调整。
+     owner 给了 ElasticSlider（motion/react）做参照，这里搬成原生 JS + GSAP。
+     讲的那件事：拖到头还想拖的时候，别给一堵硬墙，给回弹。
+     溢出量不是线性的，走 sigmoid 衰减（decay）：越使劲增量越小，封顶 50px——
+     手感像在拉一根皮筋，而不是撞到底。轨道跟着横向拉长、纵向压扁，拉伸原点在对侧，
+     两端的图标被顶出去并轻轻放大；松手用 elastic 弹回去。
+     ?v=1 出片模式：自己演一遍「拖过头 → 回弹」。 -->
+<style>
+  @font-face{font-family:'CaseSC';font-weight:400;font-display:swap;src:url(../assets/fonts/NotoSansSC-400-subset.woff2) format('woff2')}
+  :root{--ink:#f1eee7;--ground:#0c0c0d;--dim:rgba(241,238,231,.42);--bar:rgba(241,238,231,.24);--fill:#f1eee7}
+  html,body{margin:0;height:100%;background:var(--ground);overflow:hidden;font-family:CaseSC,system-ui,sans-serif;color:var(--ink)}
+  .wrap{height:100%;display:flex;flex-direction:column}
+  .cap{padding:20px 24px 0}
+  .cap b{display:block;font-size:15px;font-weight:400;letter-spacing:.06em}
+  .cap i{display:block;font-style:normal;font-size:11px;opacity:.45;letter-spacing:.14em;margin-top:3px}
+  .stage{flex:1;display:grid;place-items:center}
+  .box{display:flex;flex-direction:column;align-items:center;gap:14px;width:min(74%,420px)}
+  .val{font-size:12px;letter-spacing:.14em;color:var(--dim);font-variant-numeric:tabular-nums}
+  .row{display:flex;width:100%;align-items:center;justify-content:center;gap:16px;touch-action:none;user-select:none;-webkit-user-select:none}
+  .ico{width:22px;height:22px;flex:0 0 22px;color:var(--dim);will-change:transform}
+  .ico svg{width:100%;height:100%;display:block}
+  .root{position:relative;display:flex;flex:1;align-items:center;padding:16px 0;cursor:grab}
+  .root:active{cursor:grabbing}
+  .trackw{display:flex;flex-grow:1;will-change:transform}
+  .track{position:relative;height:6px;flex-grow:1;overflow:hidden;border-radius:999px;background:var(--bar)}
+  .fill{position:absolute;left:0;top:0;height:100%;background:var(--fill);border-radius:999px}
+  .hint{padding:0 24px 20px;text-align:center;font-size:12.5px;color:var(--dim);letter-spacing:.04em}
+  body.vid .hint{opacity:.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="cap"><b>弹性滑块</b><i>ELASTIC SLIDER</i></div>
+  <div class="stage">
+    <div class="box">
+      <div class="val" id="val">50</div>
+      <div class="row" id="row">
+        <span class="ico" id="icoL"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 9v6h4l5 4V5L9 9H5zm11.5 3a3.5 3.5 0 0 0-2-3.16v6.31A3.5 3.5 0 0 0 16.5 12z"/></svg></span>
+        <div class="root" id="root"><div class="trackw" id="trackw"><div class="track"><i class="fill" id="fill"></i></div></div></div>
+        <span class="ico" id="icoR"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 4V5L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4.03v8.05A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg></span>
+      </div>
+    </div>
+  </div>
+  <div class="hint">拖到头还想拖：给回弹，不给硬墙</div>
+</div>
+<script src="../js/vendor/gsap.min.js"></script>
+<script>
+(function () {
+  'use strict';
+  var gsap = window.gsap, MAX = 50;
+  var VIDEO = /[?&]v=1/.test(location.search);
+  if (VIDEO) document.body.className = 'vid';
+  var root = document.getElementById('root'), trackw = document.getElementById('trackw');
+  var fill = document.getElementById('fill'), val = document.getElementById('val');
+  var icoL = document.getElementById('icoL'), icoR = document.getElementById('icoR');
+
+  var S = { v: 50, over: 0, side: 'mid', scale: 1 };
+  function decay(x, max) {                       /* sigmoid：越使劲增量越小，封顶 max */
+    if (!max) return 0;
+    var e = x / max;
+    return (2 * (1 / (1 + Math.exp(-e)) - .5)) * max;
+  }
+  function render() {
+    var r = root.getBoundingClientRect(), w = r.width || 1;
+    fill.style.width = S.v + '%';
+    val.textContent = Math.round(S.v);
+    var sx = 1 + S.over / w, sy = 1 - (S.over / MAX) * .2;
+    trackw.style.transformOrigin = S.side === 'left' ? 'right center' : 'left center';
+    trackw.style.transform = 'scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ')';
+    var h = 6 + (S.scale - 1) / .2 * 6;
+    trackw.querySelector('.track').style.height = h.toFixed(2) + 'px';
+    icoL.style.transform = 'translateX(' + (S.side === 'left' ? -S.over : 0).toFixed(1) + 'px) scale(' + (S.side === 'left' ? 1 + S.over / MAX * .4 : 1).toFixed(3) + ')';
+    icoR.style.transform = 'translateX(' + (S.side === 'right' ? S.over : 0).toFixed(1) + 'px) scale(' + (S.side === 'right' ? 1 + S.over / MAX * .4 : 1).toFixed(3) + ')';
+  }
+  render();
+
+  function moveTo(cx) {
+    var r = root.getBoundingClientRect();
+    S.v = Math.max(0, Math.min(100, (cx - r.left) / r.width * 100));
+    if (cx < r.left) { S.side = 'left'; S.over = decay(r.left - cx, MAX); }
+    else if (cx > r.right) { S.side = 'right'; S.over = decay(cx - r.right, MAX); }
+    else { S.side = 'mid'; S.over = 0; }
+    render();
+  }
+  function release() {
+    gsap.to(S, { over: 0, duration: .55, ease: 'elastic.out(1, .5)', onUpdate: render, onComplete: function () { S.side = 'mid'; render(); } });
+  }
+  if (!VIDEO) {
+    var down = false;
+    root.addEventListener('pointerdown', function (e) { down = true; root.setPointerCapture(e.pointerId); moveTo(e.clientX); });
+    addEventListener('pointermove', function (e) { if (down) moveTo(e.clientX); });
+    addEventListener('pointerup', function () { if (down) { down = false; release(); } });
+    addEventListener('pointercancel', function () { if (down) { down = false; release(); } });
+    var rowEl = document.getElementById('row');
+    rowEl.addEventListener('pointerenter', function () { gsap.to(S, { scale: 1.2, duration: .25, onUpdate: render }); });
+    rowEl.addEventListener('pointerleave', function () { gsap.to(S, { scale: 1, duration: .25, onUpdate: render }); });
+  } else {
+    /* 出片：拖到右头外 → 回弹 → 拖到左头外 → 回弹，循环 */
+    var r0 = root.getBoundingClientRect();
+    S.scale = 1.2; render();
+    function demo() {
+      var r = root.getBoundingClientRect(), t = { x: r.left + r.width * .5 };
+      var tl = gsap.timeline({ onUpdate: function () { moveTo(t.x); }, repeat: -1, repeatDelay: .35 });
+      tl.to(t, { x: r.right + 78, duration: 1.5, ease: 'power2.inOut' })
+        .to(t, { x: r.right, duration: .55, ease: 'elastic.out(1,.5)' })
+        .to(t, { x: r.left - 78, duration: 1.7, ease: 'power2.inOut' }, '+=.25')
+        .to(t, { x: r.left, duration: .55, ease: 'elastic.out(1,.5)' })
+        .to(t, { x: r.left + r.width * .5, duration: 1.1, ease: 'power2.inOut' }, '+=.25');
+    }
+    /* 离线出片：必须把 root 从 ticker 上「摘下来」。
+       gsap.ticker.sleep() 拦不住——一创建新 tween GSAP 会自动 wake，时间线会在录制开始前自己跑掉一截；
+       而且 updateRoot 用的是绝对时间，得以「时间线创建那一刻的 root 时间」为基准，否则等于倒带。 */
+    gsap.ticker.remove(gsap.updateRoot);
+    var base = gsap.globalTimeline.time();
+    demo();
+    var vt = 0;
+    window.__case = { cycle: function () { return 6.25; }, step: function (dt) { vt += dt; gsap.updateRoot(base + vt); }, ready: function () { return true; } };
+  }
+  addEventListener('resize', render);
+  if (!window.__case) window.__case = { state: function () { return Math.round(S.v) + ' over=' + S.over.toFixed(1) + ' ' + S.side; } };
+})();
+</script>
+</body>
+</html>

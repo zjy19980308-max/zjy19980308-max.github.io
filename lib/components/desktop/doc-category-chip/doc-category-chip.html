@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cs-doc-category-chip</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="./doc-category-chip.css">
+  <style>
+    body {
+      margin: 0;
+      padding: var(--cs-sem-spacing-layout-gutter);
+      background: var(--cs-sem-bg-secondary);
+      font: var(--cs-typo-body-medium);
+    }
+
+    .preview-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--cs-sem-spacing-content-inline);
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-row">
+    <cs-doc-category-chip data-active>
+      <i class="chip-icon cses-placeholder"></i>
+      <span class="chip-label">设计规范</span>
+      <span class="chip-count">12</span>
+    </cs-doc-category-chip>
+    <cs-doc-category-chip>
+      <i class="chip-icon cses-placeholder"></i>
+      <span class="chip-label">组件契约</span>
+      <span class="chip-count">8</span>
+    </cs-doc-category-chip>
+    <cs-doc-category-chip>
+      <i class="chip-icon cses-placeholder"></i>
+      <span class="chip-label">流程文档</span>
+      <span class="chip-count">5</span>
+    </cs-doc-category-chip>
+  </div>
+</body>
+</html>

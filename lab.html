@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<title>实验场 — 张竞元</title>
+<script>/* 从别的页切过来：先把遮罩铺满，避免闪出页面（transition.js） */try{var t=+sessionStorage.getItem('v7-pt');if(t&&Date.now()-t<10000)document.documentElement.classList.add('pt-arriving')}catch(e){}</script>
+<link rel="stylesheet" href="css/fonts-noto.css?v=53">
+<link rel="stylesheet" href="css/gradual-blur.css?v=31">
+<link rel="stylesheet" href="css/style.css?v=88">
+</head>
+<body class="page--lab">
+<!-- 实验场：结构照原站 leoparpeix.com/playground（PlaygroundView = HeroBlock → ContentBlock → Footer(yellow)，整页黄底 #f6e016）；
+     蜜蜂换成自建的 3D 低面数小老虎（js/tiger3d.js），不配台词。文字在 copy.js 的 V7.lab，渲染在 js/lab.js。 -->
+<div class="pageTransition" id="pageTransition" aria-hidden="true"></div>
+
+<header class="navbarBlock visible is-instant" id="nav">
+  <div class="gridWrapper hasPadding navbarBlock__left">
+    <h1 class="left__title"><a class="mainButton" href="index.html" data-pt id="navName"></a></h1>
+    <h3 class="left__infos" id="navRole"></h3>
+  </div>
+  <div class="gridWrapper hasPadding navbarBlock__right"><nav class="right__links" id="navLinks"></nav></div>
+</header>
+
+<canvas class="labTiger" id="labTiger" aria-hidden="true"></canvas>
+
+<main class="page lab" id="top">
+  <section class="labHero" id="labHero">
+    <div class="labHero__inner" id="labHeroInner">
+      <p class="labHero__text" id="labText"></p>
+      <div class="beeBlock labHero__titles">
+        <div class="beeBlock__container" id="labBox">
+          <div class="container__titles--default" id="labTitlesA"></div>
+          <div class="container__titles--reveal" id="labTitlesB"></div>
+        </div>
+        <span class="indication textComponent"><span class="textComponent__content" id="labHint"></span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="labContent" id="labContent">
+    <div class="labContent__zone labContent__zone--top" aria-hidden="true"></div>
+    <div id="labRows"></div>
+    <div class="labContent__zone labContent__zone--bottom" aria-hidden="true"></div>
+  </section>
+
+  <section class="labFooter" id="labFooter">
+    <div class="beeBlock labFooter__titles">
+      <div class="beeBlock__container" id="labFootBox">
+        <div class="container__titles--default" id="labFootA"></div>
+        <div class="container__titles--reveal" id="labFootB"></div>
+      </div>
+    </div>
+    <div class="gridWrapper hasPadding labFooter__bottom">
+      <p class="bottom__left" id="labFootLeft"></p>
+      <div class="bottom__links" id="labFootLinks"></div>
+      <p class="bottom__right" id="labFootCopy"></p>
+    </div>
+  </section>
+</main>
+
+<script src="js/vendor/gsap.min.js"></script>
+<script src="js/vendor/lenis.min.js"></script>
+<script src="js/vendor/three.bundle.js"></script>
+<script src="js/logo-path.js?v=31"></script>
+<script src="js/logo3d.js?v=31"></script>
+<script src="js/copy.js?v=51"></script>
+<script src="js/nav-theme.js?v=19"></script>
+<script src="js/depth.js?v=30"></script>
+<script src="js/fx-config.js?v=34"></script>
+<script src="js/transition.js?v=32"></script>
+<script src="js/tiger3d.js?v=35"></script>
+<script src="js/lab.js?v=39"></script>
+<script src="js/cursor-fx.js?v=34"></script>
+<script src="js/gradual-blur.js?v=31"></script>
+<script>
+(function () { if (!window.GradualBlur) return; var MOB = matchMedia('(max-width:760px)').matches;
+  GradualBlur.mount(null, { preset: 'page-header', zIndex: -97, height: MOB ? '2.5rem' : '4.5rem', strength: MOB ? .75 : 1.25, curve: 'ease-out' }); })();
+</script>
+</body>
+</html>

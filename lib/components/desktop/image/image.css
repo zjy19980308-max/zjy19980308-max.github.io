@@ -1,0 +1,111 @@
+/*
+ * 图片包装组件 (Image)
+ * 标签：<cs-image>
+ *
+ * 作用：图片包装容器，统一边框/圆角/加载失败兜底，避免裸 <img> 拉伸/掉链。
+ * 对标 ng-zorro nz-image。
+ *
+ * data 属性：
+ *   data-size="sm"     — 80x80 缩略图
+ *   data-size="md"     — 160x120 中等
+ *   data-size="lg"     — 240x180 大
+ *   data-size="full"   — 100%（默认，跟随父容器）
+ *   data-shape="square"     — 直角（默认）
+ *   data-shape="rounded"    — 圆角 8px
+ *   data-shape="circle"     — 圆形
+ *   data-bordered           — 有边框
+ *
+ * 子元素：
+ *   <img>              — 真实图片
+ *   .image-fallback    — 加载失败/无图兜底（图标 + 文字）
+ *   .image-caption     — 底部标题（可选）
+ */
+
+cs-image {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  background: var(--cs-color-bg-light);
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+cs-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ========== 尺寸变体 ========== */
+cs-image[data-size="sm"] {
+  width: var(--spacing-80);
+  height: var(--spacing-80);
+}
+
+cs-image[data-size="md"] {
+  width: var(--spacing-160);
+  height: var(--spacing-120);
+}
+
+cs-image[data-size="lg"] {
+  width: var(--spacing-200);
+  height: var(--spacing-160);
+}
+
+cs-image[data-size="full"],
+cs-image:not([data-size]) {
+  width: 100%;
+  height: auto;
+}
+
+/* ========== 形状变体 ========== */
+cs-image,
+cs-image[data-shape="square"] {
+  border-radius: 0;
+}
+
+cs-image[data-shape="rounded"] {
+  border-radius: var(--radius-lg);
+}
+
+cs-image[data-shape="circle"] {
+  border-radius: var(--radius-full);
+}
+
+/* ========== 边框 ========== */
+cs-image[data-bordered] {
+  border: var(--line-width) solid var(--cs-color-border);
+}
+
+/* ========== 加载失败兜底 ========== */
+cs-image .image-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-text-light2);
+  font: var(--typo-cn-12-regular);
+}
+
+cs-image .image-fallback i {
+  font-size: var(--cs-sem-size-icon-xl);
+  line-height: 1;
+}
+
+/* ========== 底部标题 ========== */
+cs-image .image-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: var(--space-2xs) var(--space-xs);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--cs-color-white);
+  font: var(--typo-cn-12-regular);
+  text-align: center;
+}

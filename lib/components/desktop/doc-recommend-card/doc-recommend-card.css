@@ -1,0 +1,53 @@
+cs-doc-recommend-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-sem-spacing-content-inline);
+  min-height: 100%;
+  padding: var(--cs-sem-spacing-comp-padding-xl);
+  border: var(--border-width) solid var(--cs-sem-border-secondary);
+  border-radius: var(--radius-xxl);
+  background: var(--cs-sem-bg-primary);
+  box-shadow: var(--cs-shadow-card);
+}
+
+cs-doc-recommend-card[data-variant="feature"] {
+  border-color: var(--cs-sem-border-strong);
+}
+
+cs-doc-recommend-card .card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+cs-doc-recommend-card .card-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cs-sem-size-interactive-xs);
+  padding: 0 var(--cs-sem-spacing-comp-padding-md);
+  border-radius: var(--radius-pill);
+  background: var(--cs-sem-bg-secondary);
+  font: var(--cs-typo-body-medium);
+  color: var(--cs-sem-text-brand);
+}
+
+cs-doc-recommend-card .card-title {
+  font: var(--cs-typo-title-extra-large);
+  color: var(--cs-sem-text-primary);
+}
+
+cs-doc-recommend-card .card-summary {
+  font: var(--cs-typo-body-medium);
+  color: var(--cs-sem-text-secondary);
+}
+
+cs-doc-recommend-card .card-meta {
+  font: var(--cs-typo-body-medium);
+  color: var(--cs-sem-text-tertiary);
+}
+
+cs-doc-recommend-card .card-action {
+  margin-top: auto;
+  font: var(--cs-typo-body-medium);
+  color: var(--cs-sem-text-brand);
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-float-button 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="float-button.css">
+  <style>
+    body { padding: 32px 32px 200px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; min-height: 1200px; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .preview-stage { position: relative; height: 240px; background: var(--cs-color-bg-light); border-radius: 8px; overflow: hidden; }
+    .preview-stage cs-float-button { position: absolute !important; }
+    .demo-row { display: flex; gap: 24px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<!-- 1. 默认 FAB -->
+<div class="section">
+  <div class="section-title">默认右下角 FAB</div>
+  <div class="section-subtitle">页面右下角主操作按钮（页面级，position: fixed）</div>
+
+  <p style="font: var(--typo-cn-14-regular); color: var(--cs-color-text-light);">
+    向页面右下角看 →
+    <br>这是一个真实的 FAB，固定在视口右下角。
+  </p>
+</div>
+
+<!-- 真实页面级 FAB -->
+<cs-float-button title="新建">
+  <i class="float-button-icon cses-tianjia"></i>
+</cs-float-button>
+
+<!-- 2. 形状变体 -->
+<div class="section">
+  <div class="section-title">形状变体</div>
+  <div class="section-subtitle">data-shape="circle | square"</div>
+
+  <div class="preview-stage">
+    <cs-float-button data-shape="circle" data-placement="bottom-left" style="left: 24px; bottom: 24px;">
+      <i class="float-button-icon cses-tianjia"></i>
+    </cs-float-button>
+
+    <cs-float-button data-shape="square" data-placement="bottom-right" style="right: 24px; bottom: 24px;">
+      <i class="float-button-icon cses-edit"></i>
+    </cs-float-button>
+  </div>
+</div>
+
+<!-- 3. 变体 -->
+<div class="section">
+  <div class="section-title">填充变体</div>
+  <div class="section-subtitle">data-variant="primary | default"</div>
+
+  <div class="preview-stage">
+    <cs-float-button data-variant="primary" data-placement="bottom-left" style="left: 24px; bottom: 24px;">
+      <i class="float-button-icon cses-tianjia"></i>
+    </cs-float-button>
+
+    <cs-float-button data-variant="default" data-placement="bottom-right" style="right: 24px; bottom: 24px;">
+      <i class="float-button-icon cses-shanchu"></i>
+    </cs-float-button>
+  </div>
+</div>
+
+<!-- 4. 带文字（药丸 FAB） -->
+<div class="section">
+  <div class="section-title">带文字 Extended FAB</div>
+  <div class="section-subtitle">含 .float-button-label 时自动变成药丸形</div>
+
+  <div class="preview-stage">
+    <cs-float-button data-placement="bottom-right" style="right: 24px; bottom: 24px;">
+      <i class="float-button-icon cses-tianjia"></i>
+      <span class="float-button-label">新建任务</span>
+    </cs-float-button>
+  </div>
+</div>
+
+<!-- 5. 大尺寸 -->
+<div class="section">
+  <div class="section-title">大尺寸 Large</div>
+  <div class="section-subtitle">data-size="lg" — 56x56</div>
+
+  <div class="preview-stage">
+    <cs-float-button data-size="lg" data-placement="bottom-right" style="right: 24px; bottom: 24px;">
+      <i class="float-button-icon cses-tianjia"></i>
+    </cs-float-button>
+  </div>
+</div>
+
+</body>
+</html>

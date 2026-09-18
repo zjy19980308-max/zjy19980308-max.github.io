@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>容器预览 — sidebar</title>
+
+  <!-- 基础样式（本项目内路径） -->
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+
+  <!-- 本 fragment 自身 css（自包含） -->
+  <link rel="stylesheet" href="sidebar.css">
+
+  <style>
+    body { margin: 24px; background: var(--cs-color-bg-app-dark); min-height: 100vh; display: flex; }
+    .label { position: fixed; top: 4px; left: 24px; font-size: 11px; color: var(--cs-color-text-light2); font-family: var(--font-family-cn); }
+  </style>
+</head>
+<body>
+  <div class="label">sidebar 预览 — 自包含模式</div>
+
+  <cs-sidebar class="sidebar">
+
+    <!-- Logo · 字体图标版（cses-folder-logo） -->
+    <div class="logo">
+      <i class="cses-folder-logo"></i>
+    </div>
+
+    <!-- 9 个 nav-item -->
+    <div class="nav">
+      <a class="nav-item" data-key="workbench" data-active href="javascript:;">
+        <i class="nav-icon cses-gongzuotai1"></i>
+        <span class="nav-label">工作台</span>
+      </a>
+      <a class="nav-item" data-key="msg" href="javascript:;">
+        <i class="nav-icon cses-xiaoxi-tongzhi"></i>
+        <span class="nav-label">消息</span>
+      </a>
+      <a class="nav-item" data-key="project" href="javascript:;">
+        <i class="nav-icon cses-xiangmuguanli"></i>
+        <span class="nav-label">项目管理</span>
+      </a>
+      <a class="nav-item" data-key="meeting" href="javascript:;">
+        <i class="nav-icon cses-huiyi"></i>
+        <span class="nav-label">会议</span>
+      </a>
+      <a class="nav-item" data-key="doc" href="javascript:;">
+        <i class="nav-icon cses-wendangku"></i>
+        <span class="nav-label">文档库</span>
+      </a>
+      <a class="nav-item" data-key="form" href="javascript:;">
+        <i class="nav-icon cses-biaodan"></i>
+        <span class="nav-label">表单</span>
+      </a>
+      <a class="nav-item" data-key="schedule" href="javascript:;">
+        <i class="nav-icon cses-richeng"></i>
+        <span class="nav-label">日程</span>
+      </a>
+      <a class="nav-item" data-key="hr" href="javascript:;">
+        <i class="nav-icon cses-zhinengrenshi"></i>
+        <span class="nav-label">智能人事</span>
+      </a>
+    </div>
+
+  </cs-sidebar>
+</body>
+</html>

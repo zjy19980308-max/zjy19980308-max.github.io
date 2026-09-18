@@ -1,0 +1,164 @@
+/*
+ * 时间轴组件 (Timeline)
+ * 标签：<cs-timeline>
+ *
+ * 作用：纵向时间轴容器，承载多个时间节点。
+ * 对标 ng-zorro Timeline / antd Timeline。
+ *
+ * data 属性：
+ *   data-mode="left"      — 节点 + 内容都在右侧（默认）
+ *   data-mode="right"     — 节点 + 内容都在左侧
+ *   data-mode="alternate" — 内容左右交替
+ *   data-reverse          — 倒序
+ *
+ * 子元素：
+ *   .timeline-item    — 单个节点
+ *   .timeline-dot     — 节点圆点（可放图标）
+ *   .timeline-line    — 节点之间的连线（自动生成）
+ *   .timeline-content — 节点内容
+ *   .timeline-time    — 时间文字
+ *   .timeline-title   — 标题
+ *   .timeline-desc    — 描述
+ *
+ * timeline-item 状态：
+ *   data-color="primary|success|warning|danger|info|default"
+ *   data-pending — 待办（虚线连接 + 灰色）
+ */
+
+cs-timeline {
+  display: block;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+cs-timeline .timeline-item {
+  position: relative;
+  padding-left: var(--spacing-24);
+  padding-bottom: var(--spacing-20);
+  list-style: none;
+}
+
+cs-timeline .timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+/* ========== 圆点 ========== */
+cs-timeline .timeline-dot {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: var(--space-sm);
+  height: var(--space-sm);
+  border-radius: 50%;
+  background: var(--cs-color-white);
+  border: 2px solid var(--cs-color-primary);
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+cs-timeline .timeline-dot i {
+  display: none;
+}
+
+/* 图标节点（含子 i 时，圆点变方框装下图标） */
+cs-timeline .timeline-dot:has(i) {
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  border: 0;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  top: 2px;
+}
+
+cs-timeline .timeline-dot:has(i) i {
+  display: inline-flex;
+  font-size: var(--cs-sem-size-icon-md);
+  color: var(--cs-color-primary);
+}
+
+/* ========== 连线 ========== */
+cs-timeline .timeline-item::before {
+  content: "";
+  position: absolute;
+  top: var(--space-md);
+  left: 5px;
+  width: 2px;
+  height: calc(100% - var(--space-md));
+  background: var(--cs-color-border);
+}
+
+cs-timeline .timeline-item:last-child::before {
+  display: none;
+}
+
+/* 待办：虚线 */
+cs-timeline .timeline-item[data-pending]::before {
+  background: transparent;
+  border-left: 2px dashed var(--cs-color-border);
+  width: 0;
+}
+
+cs-timeline .timeline-item[data-pending] .timeline-dot {
+  border-color: var(--cs-color-text-light2);
+}
+
+/* ========== 内容 ========== */
+cs-timeline .timeline-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+cs-timeline .timeline-time {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-timeline .timeline-title {
+  font: var(--typo-cn-14-regular);
+  font-weight: 500;
+  color: var(--cs-color-text);
+}
+
+cs-timeline .timeline-desc {
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+}
+
+/* ========== 节点颜色 ========== */
+cs-timeline .timeline-item[data-color="primary"] .timeline-dot {
+  border-color: var(--cs-color-primary);
+}
+cs-timeline .timeline-item[data-color="success"] .timeline-dot {
+  border-color: var(--color-green-500);
+}
+cs-timeline .timeline-item[data-color="success"] .timeline-dot:has(i) i {
+  color: var(--color-green-500);
+}
+cs-timeline .timeline-item[data-color="warning"] .timeline-dot {
+  border-color: var(--color-orange-500);
+}
+cs-timeline .timeline-item[data-color="warning"] .timeline-dot:has(i) i {
+  color: var(--color-orange-500);
+}
+cs-timeline .timeline-item[data-color="danger"] .timeline-dot {
+  border-color: var(--cs-sem-text-error);
+}
+cs-timeline .timeline-item[data-color="danger"] .timeline-dot:has(i) i {
+  color: var(--cs-sem-text-error);
+}
+cs-timeline .timeline-item[data-color="info"] .timeline-dot {
+  border-color: var(--color-blue-300);
+}
+cs-timeline .timeline-item[data-color="default"] .timeline-dot {
+  border-color: var(--cs-color-text-light2);
+}
+
+/* ========== 倒序 ========== */
+cs-timeline[data-reverse] {
+  display: flex;
+  flex-direction: column-reverse;
+}

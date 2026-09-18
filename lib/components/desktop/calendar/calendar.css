@@ -1,0 +1,210 @@
+/*
+ * 日历组件 (Calendar)
+ * 标签：<cs-calendar>
+ *
+ * 作用：通用月视图日历，展示某一月份并标记某些日期。
+ * 对标 ng-zorro Calendar / antd Calendar。
+ *
+ * data 属性：
+ *   data-mode="month"  — 月视图（默认）
+ *   data-mode="year"   — 年视图（12 月份格）
+ *   data-size="sm|md|lg"
+ *   data-fullscreen    — 撑满布局，单元格内可放事件
+ *
+ * 子元素：
+ *   .calendar-header   — 顶部头部
+ *   .calendar-title    — 标题（年月）
+ *   .calendar-nav      — 翻页按钮组
+ *   .calendar-nav-btn  — 单个翻页按钮
+ *   .calendar-grid     — 日期网格
+ *   .calendar-weekdays — 星期表头
+ *   .calendar-weekday  — 单个星期单元
+ *   .calendar-days     — 日期容器
+ *   .calendar-day      — 单个日期
+ *   .calendar-day-num  — 日期数字
+ *   .calendar-day-content — 日期内容（fullscreen 模式下展示事件）
+ *
+ * calendar-day 状态：
+ *   data-other-month — 非本月
+ *   data-today       — 今天
+ *   data-selected    — 选中
+ *   data-disabled    — 禁用
+ *   data-marked      — 有事件标记
+ */
+
+cs-calendar {
+  display: block;
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-sizing: border-box;
+}
+
+/* ========== Header ========== */
+cs-calendar .calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+cs-calendar .calendar-title {
+  font: var(--typo-cn-16-medium);
+  color: var(--cs-color-text);
+}
+
+cs-calendar .calendar-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+cs-calendar .calendar-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-interactive-xs);
+  height: var(--cs-sem-size-interactive-xs);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-white);
+  color: var(--cs-color-text-light);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+cs-calendar .calendar-nav-btn:hover {
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-primary);
+}
+
+/* ========== 星期表头 ========== */
+cs-calendar .calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: var(--space-2xs);
+}
+
+cs-calendar .calendar-weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--cs-sem-size-interactive-sm);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 日期网格 ========== */
+cs-calendar .calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-2xs);
+}
+
+cs-calendar .calendar-day {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--cs-sem-size-interactive-md);
+  border-radius: var(--radius);
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  box-sizing: border-box;
+}
+
+cs-calendar .calendar-day:hover {
+  background: var(--cs-color-bg-light);
+}
+
+cs-calendar .calendar-day-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 非本月 */
+cs-calendar .calendar-day[data-other-month] {
+  color: var(--cs-color-text-light2);
+}
+
+/* 今天 */
+cs-calendar .calendar-day[data-today] {
+  background: var(--cs-color-bg-light);
+  font-weight: 500;
+  color: var(--cs-color-primary);
+}
+
+/* 选中 */
+cs-calendar .calendar-day[data-selected] {
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+}
+
+cs-calendar .calendar-day[data-selected]:hover {
+  background: var(--cs-color-primary);
+}
+
+/* 禁用 */
+cs-calendar .calendar-day[data-disabled] {
+  color: var(--cs-color-text-light2);
+  cursor: not-allowed;
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* 标记点 */
+cs-calendar .calendar-day[data-marked]::after {
+  content: "";
+  position: absolute;
+  bottom: var(--space-2xs);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--cs-color-primary);
+}
+
+cs-calendar .calendar-day[data-selected][data-marked]::after {
+  background: var(--cs-color-white);
+}
+
+/* ========== fullscreen 模式 ========== */
+cs-calendar[data-fullscreen] .calendar-day {
+  height: 80px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: var(--space-2xs) var(--space-xs);
+  border: var(--line-width) solid var(--cs-color-border);
+}
+
+cs-calendar[data-fullscreen] .calendar-day-num {
+  justify-content: flex-end;
+}
+
+cs-calendar[data-fullscreen] .calendar-day-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: var(--space-2xs);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light);
+  overflow: hidden;
+}
+
+/* ========== 尺寸 ========== */
+cs-calendar[data-size="sm"] .calendar-day {
+  height: var(--cs-sem-size-interactive-sm);
+  font: var(--typo-cn-12-regular);
+}
+
+cs-calendar[data-size="lg"] .calendar-day {
+  height: var(--cs-sem-size-interactive-lg, 48px);
+  font: var(--typo-cn-14-regular);
+}

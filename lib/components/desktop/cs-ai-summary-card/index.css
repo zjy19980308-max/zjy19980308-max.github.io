@@ -1,0 +1,171 @@
+/* cs-ai-summary-card · AI 复盘评语卡 · 商务蓝品牌带 + 势能徽标 */
+
+.cs-ai-summary-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--cs-color-bg-card);
+  border: 1px solid var(--color-blue-200);
+  border-radius: 12px;
+  padding: 20px 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--cs-shadow-card);
+}
+
+.cs-ai-summary-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--cs-color-primary), var(--color-blue-300));
+}
+
+.cs-ai-summary-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cs-ai-summary-card__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cs-color-primary);
+  letter-spacing: 0.02em;
+}
+
+.cs-ai-summary-card__brand-icon {
+  font-size: 16px;
+}
+
+.cs-ai-summary-card__trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cs-ai-summary-card__trend--up {
+  background: color-mix(in srgb, var(--cs-color-success) 8%, transparent);
+  color: var(--cs-color-success);
+}
+
+.cs-ai-summary-card__trend--flat {
+  background: var(--color-gray-100);
+  color: var(--color-gray-600);
+}
+
+.cs-ai-summary-card__trend--down {
+  background: color-mix(in srgb, var(--cs-color-warning) 8%, transparent);
+  color: var(--cs-color-warning);
+}
+
+.cs-ai-summary-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cs-ai-summary-card__lead {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-gray-900);
+}
+
+.cs-ai-summary-card__highlight {
+  color: var(--cs-color-primary);
+  font-weight: 600;
+}
+
+.cs-ai-summary-card__para {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-gray-600);
+}
+
+.cs-ai-summary-card__anchors {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px dashed var(--color-gray-100);
+}
+
+.cs-ai-summary-card__anchor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-gray-700);
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.cs-ai-summary-card__anchor:hover {
+  background: var(--color-blue-50);
+}
+
+.cs-ai-summary-card__anchor-icon {
+  color: var(--cs-color-primary);
+  font-size: 12px;
+}
+
+.cs-ai-summary-card__anchor-label { flex: 1; }
+.cs-ai-summary-card__anchor-impact {
+  font-weight: 600;
+  color: var(--cs-color-success);
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-ai-summary-card__footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-gray-100);
+}
+
+.cs-ai-summary-card__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--color-gray-600);
+  background: transparent;
+  border: 1px solid var(--color-gray-200);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.cs-ai-summary-card__action:hover {
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-primary);
+}
+
+.cs-ai-summary-card__action--primary {
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+  border-color: var(--cs-color-primary);
+}
+
+.cs-ai-summary-card__action--primary:hover {
+  background: var(--cs-color-primary-hover);
+  color: var(--cs-color-white);
+}

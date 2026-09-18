@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-leaderboard 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../tag/tag.css">
+  <link rel="stylesheet" href="../avatar/avatar.css">
+  <link rel="stylesheet" href="leaderboard.css">
+</head>
+<body>
+
+<!-- 主模板：5 行典型学员学习榜单 -->
+<cs-leaderboard>
+  <div class="leaderboard-wrapper">
+
+    <!-- 第 1 名 · 金 · warning -->
+    <div class="leaderboard-row" data-rank="1">
+      <div class="leaderboard-rank">
+        <cs-tag data-color="warning" data-shape="round"><span class="tag-label">1</span></cs-tag>
+      </div>
+      <div class="leaderboard-avatar">
+        <cs-avatar data-size="sm" data-color="orange"><span class="avatar-text">张</span></cs-avatar>
+      </div>
+      <span class="leaderboard-name">张明远</span>
+      <span class="leaderboard-hours">42.5<span class="leaderboard-hours-unit">h</span></span>
+      <div class="leaderboard-trend">
+        <cs-tag data-variant="text" data-color="success"><i class="cses-paixushang"></i><span class="tag-label">+5</span></cs-tag>
+      </div>
+    </div>
+
+    <!-- 第 2 名 · 银 · info -->
+    <div class="leaderboard-row" data-rank="2">
+      <div class="leaderboard-rank">
+        <cs-tag data-color="info" data-shape="round"><span class="tag-label">2</span></cs-tag>
+      </div>
+      <div class="leaderboard-avatar">
+        <cs-avatar data-size="sm" data-color="blue"><span class="avatar-text">李</span></cs-avatar>
+      </div>
+      <span class="leaderboard-name">李思涵</span>
+      <span class="leaderboard-hours">38.0<span class="leaderboard-hours-unit">h</span></span>
+      <div class="leaderboard-trend">
+        <cs-tag data-variant="text" data-color="success"><i class="cses-paixushang"></i><span class="tag-label">+3</span></cs-tag>
+      </div>
+    </div>
+
+    <!-- 第 3 名 · 铜 · default 灰 -->
+    <div class="leaderboard-row" data-rank="3">
+      <div class="leaderboard-rank">
+        <cs-tag data-color="default" data-shape="round"><span class="tag-label">3</span></cs-tag>
+      </div>
+      <div class="leaderboard-avatar">
+        <cs-avatar data-size="sm" data-color="green"><span class="avatar-text">王</span></cs-avatar>
+      </div>
+      <span class="leaderboard-name">王晓彤</span>
+      <span class="leaderboard-hours">35.5<span class="leaderboard-hours-unit">h</span></span>
+      <div class="leaderboard-trend">
+        <cs-tag data-variant="text" data-color="danger"><i class="cses-paixuxia"></i><span class="tag-label">-1</span></cs-tag>
+      </div>
+    </div>
+
+    <!-- 第 4 名 · 普通 -->
+    <div class="leaderboard-row" data-rank="4">
+      <div class="leaderboard-rank">
+        <cs-tag data-variant="text" data-color="default"><span class="tag-label">4</span></cs-tag>
+      </div>
+      <div class="leaderboard-avatar">
+        <cs-avatar data-size="sm" data-color="purple"><span class="avatar-text">刘</span></cs-avatar>
+      </div>
+      <span class="leaderboard-name">刘子涵</span>
+      <span class="leaderboard-hours">30.0<span class="leaderboard-hours-unit">h</span></span>
+      <div class="leaderboard-trend">
+        <cs-tag data-variant="text" data-color="success"><i class="cses-paixushang"></i><span class="tag-label">+2</span></cs-tag>
+      </div>
+    </div>
+
+    <!-- 第 5 名 · 普通 -->
+    <div class="leaderboard-row" data-rank="5">
+      <div class="leaderboard-rank">
+        <cs-tag data-variant="text" data-color="default"><span class="tag-label">5</span></cs-tag>
+      </div>
+      <div class="leaderboard-avatar">
+        <cs-avatar data-size="sm" data-color="pink"><span class="avatar-text">陈</span></cs-avatar>
+      </div>
+      <span class="leaderboard-name">陈雨桐</span>
+      <span class="leaderboard-hours">28.5<span class="leaderboard-hours-unit">h</span></span>
+      <div class="leaderboard-trend">
+        <cs-tag data-variant="text" data-color="danger"><i class="cses-paixuxia"></i><span class="tag-label">-2</span></cs-tag>
+      </div>
+    </div>
+
+  </div>
+</cs-leaderboard>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+/*
+ * 缩略图组件 (Thumbnail)
+ * 标签：<cs-thumbnail>
+ * 数据来源：
+ *   旧设计规范 d9kycxUY4aY265OHlImwdr 节点 4:21211「文件」
+ *   文档库 rlrdc7MpDwzRcpLIWkMZgs（文档卡片封面）
+ *
+ * Figma 实测：
+ *   文件图标: 24x24 COMPONENT_SET「文件」，10 个文件类型变体
+ *   图片预览: RECT/ELLIPSE 带 IMAGE fill
+ *
+ * data 属性：
+ *   data-type="image"      — 图片预览（默认）
+ *   data-type="file-icon"  — 文件类型图标
+ *   data-filetype="pdf"    — 文件类型着色
+ *   data-size="sm"         — 24px
+ *   data-size="md"         — 32px（默认）
+ *   data-size="lg"         — 48px
+ */
+
+/* ========== 基础样式 ========== */
+cs-thumbnail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  /* 默认 md 32x32 */
+  width: var(--spacing-32);
+  height: var(--spacing-32);
+}
+
+/* ========== 图片变体 ========== */
+cs-thumbnail[data-type="image"] {
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+cs-thumbnail[data-type="image"] img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ========== 文件图标变体 ========== */
+cs-thumbnail[data-type="file-icon"] {
+  border-radius: 0;
+}
+
+cs-thumbnail[data-type="file-icon"] i {
+  font-size: var(--spacing-32);
+  line-height: 1;
+}
+
+/* ========== 文件类型着色 ========== */
+/* Figma: 每种文件类型有专属颜色 */
+cs-thumbnail[data-filetype="pdf"] i { color: var(--cs-color-filetype-pdf); }
+cs-thumbnail[data-filetype="word"] i,
+cs-thumbnail[data-filetype="doc"] i { color: var(--cs-color-filetype-word); }
+cs-thumbnail[data-filetype="excel"] i,
+cs-thumbnail[data-filetype="sheet"] i { color: var(--cs-color-filetype-excel); }
+cs-thumbnail[data-filetype="ppt"] i { color: var(--cs-color-filetype-ppt); }
+cs-thumbnail[data-filetype="image"] i { color: var(--cs-color-filetype-image); }
+cs-thumbnail[data-filetype="video"] i { color: var(--cs-color-filetype-video); }
+cs-thumbnail[data-filetype="audio"] i { color: var(--cs-color-filetype-audio); }
+cs-thumbnail[data-filetype="text"] i,
+cs-thumbnail[data-filetype="txt"] i { color: var(--cs-color-filetype-text); }
+cs-thumbnail[data-filetype="zip"] i { color: var(--cs-color-filetype-zip); }
+cs-thumbnail[data-filetype="unknown"] i { color: var(--cs-color-filetype-unknown); }
+cs-thumbnail[data-filetype="mindmap"] i { color: var(--cs-color-filetype-mindmap); }
+
+/* ========== 尺寸 ========== */
+cs-thumbnail[data-size="sm"] {
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+}
+
+cs-thumbnail[data-size="sm"][data-type="file-icon"] i {
+  font-size: var(--spacing-24);
+}
+
+/* md 是默认 */
+
+cs-thumbnail[data-size="lg"] {
+  width: var(--spacing-48);
+  height: var(--spacing-48);
+}
+
+cs-thumbnail[data-size="lg"][data-type="file-icon"] i {
+  font-size: var(--spacing-48);
+}

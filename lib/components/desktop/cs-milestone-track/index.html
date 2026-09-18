@@ -1,0 +1,51 @@
+<!-- cs-milestone-track · Milestone 视图横向时间轴 · 季度刻度 + 里程碑节点彩色编码 -->
+<cs-milestone-track class="cs-milestone-track" data-scale="week" data-quarter="Q2-2026">
+  <header class="cs-milestone-track__header">
+    <div class="cs-milestone-track__title">
+      <i class="cses-richeng cs-milestone-track__title-icon"></i>
+      <span>Q2 2026 · 里程碑全景</span>
+    </div>
+    <div class="cs-milestone-track__actions">
+      <button class="cs-milestone-track__scale-btn" data-active="true" type="button">周</button>
+      <button class="cs-milestone-track__scale-btn" type="button">月</button>
+    </div>
+  </header>
+  <div class="cs-milestone-track__axis" role="img" aria-label="季度刻度时间轴">
+    <div class="cs-milestone-track__ticks">
+      <span class="cs-milestone-track__tick">W14</span>
+      <span class="cs-milestone-track__tick">W15</span>
+      <span class="cs-milestone-track__tick">W16</span>
+      <span class="cs-milestone-track__tick">W17</span>
+      <span class="cs-milestone-track__tick">W18</span>
+      <span class="cs-milestone-track__tick">W19</span>
+      <span class="cs-milestone-track__tick cs-milestone-track__tick--current">W20</span>
+      <span class="cs-milestone-track__tick">W21</span>
+      <span class="cs-milestone-track__tick">W22</span>
+      <span class="cs-milestone-track__tick">W23</span>
+      <span class="cs-milestone-track__tick">W24</span>
+      <span class="cs-milestone-track__tick">W25</span>
+    </div>
+    <div class="cs-milestone-track__rail">
+      <!-- 节点：达成绿 / 进行中蓝 / 延期橙 -->
+      <span class="cs-milestone-track__node cs-milestone-track__node--success" style="left:6%" title="MVP 上线 · 已达成"></span>
+      <span class="cs-milestone-track__node cs-milestone-track__node--success" style="left:14%" title="灰度发布 · 已达成"></span>
+      <span class="cs-milestone-track__node cs-milestone-track__node--progress" style="left:22%" title="A/B 测试 · 进行中"></span>
+      <span class="cs-milestone-track__node cs-milestone-track__node--danger" style="left:30%" title="性能优化 · 延期 4 天"></span>
+      <span class="cs-milestone-track__node cs-milestone-track__node--success" style="left:38%" title="安全审计 · 已达成"></span>
+      <span class="cs-milestone-track__node cs-milestone-track__node--progress" style="left:46%" title="跨端联调 · 进行中"></span>
+      <span class="cs-milestone-track__node cs-milestone-track__node--danger" style="left:50%" title="支付集成 · 延期 7 天"></span>
+      <span class="cs-milestone-track__node cs-milestone-track__node--success" style="left:55%" title="客户验收 · 已达成"></span>
+      <span class="cs-milestone-track__node cs-milestone-track__node--progress" style="left:64%" title="V2 立项 · 进行中"></span>
+      <span class="cs-milestone-track__node cs-milestone-track__node--progress" style="left:72%" title="路演彩排 · 进行中"></span>
+      <span class="cs-milestone-track__node cs-milestone-track__node--success" style="left:80%" title="Q2 复盘会 · 已达成"></span>
+      <!-- 异常聚集区高亮 -->
+      <span class="cs-milestone-track__hotspot" style="left:30%; width:24%" aria-label="W17-W19 延期聚集区"></span>
+    </div>
+  </div>
+  <footer class="cs-milestone-track__footer">
+    <span class="cs-milestone-track__stat"><span class="cs-milestone-track__stat-dot cs-milestone-track__stat-dot--success"></span>达成 6</span>
+    <span class="cs-milestone-track__stat"><span class="cs-milestone-track__stat-dot cs-milestone-track__stat-dot--progress"></span>进行中 4</span>
+    <span class="cs-milestone-track__stat"><span class="cs-milestone-track__stat-dot cs-milestone-track__stat-dot--danger"></span>延期 2</span>
+    <span class="cs-milestone-track__hotspot-note">⚠ W17-W19 延期聚集</span>
+  </footer>
+</cs-milestone-track>

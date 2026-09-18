@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-overtime-row 加班记录行 - 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../../../components/desktop/avatar/avatar.css">
+  <link rel="stylesheet" href="../../../components/desktop/checkbox/checkbox.css">
+  <link rel="stylesheet" href="../../../components/desktop/tag/tag.css">
+  <link rel="stylesheet" href="../../../components/desktop/status-badge/status-badge.css">
+  <link rel="stylesheet" href="overtime-row.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); font-family: var(--font-family-cn); }
+    h2 { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin: 24px 0 12px; }
+    .preview-container { background: var(--cs-color-bg); border-radius: var(--radius-lg); border: var(--line-width) solid var(--cs-color-border); overflow: hidden; }
+  </style>
+</head>
+<body>
+  <h1 style="font: var(--typo-cn-20-medium); color: var(--cs-color-text); margin-bottom: 24px;">cs-overtime-row 加班记录行</h1>
+
+  <h2>各种加班类型与审批状态</h2>
+  <div class="preview-container">
+    <!-- 工作日加班 - 已批准 -->
+    <cs-overtime-row>
+      <span class="ot-checkbox">
+        <cs-checkbox>
+          <span class="checkbox-inner">
+            <i class="checkbox-icon cses-check_arrow"></i>
+          </span>
+        </cs-checkbox>
+      </span>
+      <span class="ot-employee">
+        <cs-avatar data-size="sm">王</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">王芳</span>
+          <span class="employee-dept">研发部</span>
+        </span>
+      </span>
+      <span class="ot-date">03月28日</span>
+      <span class="ot-time">18:00 - 21:00</span>
+      <span class="ot-duration">3小时</span>
+      <span class="ot-type">
+        <cs-tag data-color="default" data-size="sm">工作日</cs-tag>
+      </span>
+      <span class="ot-reason">紧急修复线上问题</span>
+      <span class="ot-status">
+        <cs-status-badge data-status="approved">已批准</cs-status-badge>
+      </span>
+      <span class="ot-actions">
+        <i class="cses-edit" title="编辑"></i>
+        <i class="cses-shanchu" title="删除"></i>
+      </span>
+    </cs-overtime-row>
+
+    <!-- 休息日加班 - 待审批 -->
+    <cs-overtime-row>
+      <span class="ot-checkbox">
+        <cs-checkbox>
+          <span class="checkbox-inner">
+            <i class="checkbox-icon cses-check_arrow"></i>
+          </span>
+        </cs-checkbox>
+      </span>
+      <span class="ot-employee">
+        <cs-avatar data-size="sm" data-color="green">李</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">李华</span>
+          <span class="employee-dept">技术部</span>
+        </span>
+      </span>
+      <span class="ot-date">03月29日</span>
+      <span class="ot-time">09:00 - 18:00</span>
+      <span class="ot-duration">8小时</span>
+      <span class="ot-type">
+        <cs-tag data-color="primary" data-size="sm">休息日</cs-tag>
+      </span>
+      <span class="ot-reason">项目上线准备</span>
+      <span class="ot-status">
+        <cs-status-badge data-status="pending">待审批</cs-status-badge>
+      </span>
+      <span class="ot-actions">
+        <i class="cses-edit" title="编辑"></i>
+        <i class="cses-shanchu" title="删除"></i>
+      </span>
+    </cs-overtime-row>
+
+    <!-- 节假日加班 - 已驳回 -->
+    <cs-overtime-row>
+      <span class="ot-checkbox">
+        <cs-checkbox>
+          <span class="checkbox-inner">
+            <i class="checkbox-icon cses-check_arrow"></i>
+          </span>
+        </cs-checkbox>
+      </span>
+      <span class="ot-employee">
+        <cs-avatar data-size="sm" data-color="orange">张</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">张明</span>
+          <span class="employee-dept">产品部</span>
+        </span>
+      </span>
+      <span class="ot-date">04月05日</span>
+      <span class="ot-time">10:00 - 17:00</span>
+      <span class="ot-duration">6小时</span>
+      <span class="ot-type">
+        <cs-tag data-color="warning" data-size="sm">节假日</cs-tag>
+      </span>
+      <span class="ot-reason">清明节值班</span>
+      <span class="ot-status">
+        <cs-status-badge data-status="rejected">已驳回</cs-status-badge>
+      </span>
+    </cs-overtime-row>
+  </div>
+</body>
+</html>

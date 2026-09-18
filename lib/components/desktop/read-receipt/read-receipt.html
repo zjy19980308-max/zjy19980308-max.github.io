@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-read-receipt 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="read-receipt.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+    .demo-box { width: 300px; }
+  </style>
+</head>
+<body>
+
+<!-- 已读 Tab 激活 -->
+<div class="section">
+  <div class="section-title">已读 Tab 激活</div>
+  <div class="section-subtitle">显示已读人员列表</div>
+
+  <div class="row">
+    <span class="row-label">已读列表</span>
+    <div class="demo-box">
+      <cs-read-receipt>
+        <div class="receipt-header">
+          <span class="receipt-tab" data-active>已读 <span class="receipt-tab-count">(5)</span></span>
+          <span class="receipt-tab">未读 <span class="receipt-tab-count">(2)</span></span>
+        </div>
+        <div class="receipt-list">
+          <div class="receipt-item">
+            <span class="receipt-avatar">张</span>
+            <span class="receipt-name">张三</span>
+            <span class="receipt-time">10:23</span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">李</span>
+            <span class="receipt-name">李四</span>
+            <span class="receipt-time">10:25</span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">王</span>
+            <span class="receipt-name">王五</span>
+            <span class="receipt-time">10:30</span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">赵</span>
+            <span class="receipt-name">赵六</span>
+            <span class="receipt-time">10:45</span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">钱</span>
+            <span class="receipt-name">钱七</span>
+            <span class="receipt-time">11:02</span>
+          </div>
+        </div>
+      </cs-read-receipt>
+    </div>
+  </div>
+</div>
+
+<!-- 未读 Tab 激活 -->
+<div class="section">
+  <div class="section-title">未读 Tab 激活</div>
+  <div class="section-subtitle">显示未读人员列表</div>
+
+  <div class="row">
+    <span class="row-label">未读列表</span>
+    <div class="demo-box">
+      <cs-read-receipt>
+        <div class="receipt-header">
+          <span class="receipt-tab">已读 <span class="receipt-tab-count">(5)</span></span>
+          <span class="receipt-tab" data-active>未读 <span class="receipt-tab-count">(2)</span></span>
+        </div>
+        <div class="receipt-list">
+          <div class="receipt-item">
+            <span class="receipt-avatar">孙</span>
+            <span class="receipt-name">孙八</span>
+            <span class="receipt-time"></span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">周</span>
+            <span class="receipt-name">周九</span>
+            <span class="receipt-time"></span>
+          </div>
+        </div>
+      </cs-read-receipt>
+    </div>
+  </div>
+</div>
+
+<!-- 全部已读 -->
+<div class="section">
+  <div class="section-title">全部已读</div>
+  <div class="section-subtitle">未读计数为 0</div>
+
+  <div class="row">
+    <span class="row-label">全部已读</span>
+    <div class="demo-box">
+      <cs-read-receipt>
+        <div class="receipt-header">
+          <span class="receipt-tab" data-active>已读 <span class="receipt-tab-count">(7)</span></span>
+          <span class="receipt-tab">未读 <span class="receipt-tab-count">(0)</span></span>
+        </div>
+        <div class="receipt-list">
+          <div class="receipt-item">
+            <span class="receipt-avatar">张</span>
+            <span class="receipt-name">张三</span>
+            <span class="receipt-time">10:23</span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">李</span>
+            <span class="receipt-name">李四</span>
+            <span class="receipt-time">10:25</span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">王</span>
+            <span class="receipt-name">王五</span>
+            <span class="receipt-time">10:30</span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">赵</span>
+            <span class="receipt-name">赵六</span>
+            <span class="receipt-time">10:45</span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">钱</span>
+            <span class="receipt-name">钱七</span>
+            <span class="receipt-time">11:02</span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">孙</span>
+            <span class="receipt-name">孙八</span>
+            <span class="receipt-time">11:10</span>
+          </div>
+          <div class="receipt-item">
+            <span class="receipt-avatar">周</span>
+            <span class="receipt-name">周九</span>
+            <span class="receipt-time">11:15</span>
+          </div>
+        </div>
+      </cs-read-receipt>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+/*
+ * 审批列表项组件 (Approval Item)
+ * 标签：<cs-approval-item>
+ *
+ * data 属性：
+ *   data-status="pending|approved|rejected|cc" — 审批状态
+ *
+ * 子元素结构：
+ *   .approval-icon    — 左侧图标/头像
+ *   .approval-content — 文字区
+ *     .approval-title — 标题
+ *     .approval-desc  — 描述
+ *   .approval-time    — 时间
+ */
+
+/* ========== 基础 ========== */
+cs-approval-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--spacing-10) 0;
+  border-bottom: var(--line-width) solid var(--cs-sem-border-secondary);
+  cursor: pointer;
+}
+
+cs-approval-item:last-child {
+  border-bottom: none;
+}
+
+cs-approval-item:hover {
+  background: var(--cs-color-bg-hover);
+  margin-left: calc(var(--space-xs) * -1);
+  margin-right: calc(var(--space-xs) * -1);
+  padding-left: var(--space-xs);
+  padding-right: var(--space-xs);
+  border-radius: var(--radius);
+}
+
+/* ========== 图标容器 ========== */
+cs-approval-item .approval-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-32);
+  height: var(--spacing-32);
+  border-radius: var(--radius-full);
+  background: var(--color-blue-50);
+  color: var(--cs-color-primary);
+  font-size: var(--font-size-lg);
+  flex-shrink: 0;
+}
+
+/* ========== 文字区 ========== */
+cs-approval-item .approval-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+cs-approval-item .approval-title {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+cs-approval-item .approval-desc {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========== 时间 ========== */
+cs-approval-item .approval-time {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+/* ========== 状态变体 ========== */
+cs-approval-item[data-status="pending"] .approval-icon {
+  background: var(--color-blue-50);
+  color: var(--cs-color-primary);
+}
+
+cs-approval-item[data-status="approved"] .approval-icon {
+  background: var(--cs-sem-bg-success);
+  color: var(--cs-sem-status-success);
+}
+
+cs-approval-item[data-status="rejected"] .approval-icon {
+  background: var(--cs-sem-bg-error);
+  color: var(--cs-sem-status-error);
+}
+
+cs-approval-item[data-status="cc"] .approval-icon {
+  background: var(--cs-sem-bg-warning);
+  color: var(--cs-sem-status-warning);
+}

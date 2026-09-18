@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-outline-panel 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="outline-panel.css">
+  <style>
+    body { margin: 0; padding: 32px; background: var(--cs-color-bg-light); min-height: 100vh; }
+    .preview-stage {
+      display: flex;
+      justify-content: flex-end;
+      align-items: stretch;
+      width: 100%;
+      max-width: 1200px;
+      height: 720px;
+      margin: 0 auto;
+      background: var(--cs-color-bg);
+      border-radius: var(--radius-xxl);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      overflow: hidden;
+      position: relative;
+    }
+    .stage-content {
+      flex: 1;
+      padding: 32px;
+      color: var(--cs-color-text-light2);
+      font: var(--typo-cn-14-regular);
+    }
+    .stage-content h2 {
+      font-size: 24px;
+      color: var(--cs-color-text);
+      margin: 0 0 16px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="screenshot-target">
+
+  <div class="preview-stage">
+    <div class="stage-content">
+      <h2>主内容区</h2>
+      <p>右侧抽屉演示「目录」面板（data-open）。</p>
+    </div>
+
+    <cs-outline-panel data-open>
+      <header class="op-header">
+        <h3 class="op-title">目录</h3>
+        <button class="op-collapse" aria-label="收起">
+          <i class="cses-right"></i>
+        </button>
+      </header>
+
+      <div class="op-tabs">
+        <button class="op-tab" data-active>列表</button>
+        <button class="op-tab">卡片</button>
+        <button class="op-tab">附件</button>
+        <button class="op-tab">搜索</button>
+      </div>
+
+      <div class="op-body">
+        <ul class="op-tree">
+          <li class="op-node" data-level="1" data-expanded data-active>
+            <div class="op-node-row">
+              <i class="op-node-toggle cses-arrow"></i>
+              <span class="op-node-label">第一章 概述</span>
+            </div>
+            <ul class="op-children">
+              <li class="op-node" data-level="2">
+                <div class="op-node-row">
+                  <span class="op-node-label">1.1 背景</span>
+                </div>
+              </li>
+              <li class="op-node" data-level="2">
+                <div class="op-node-row">
+                  <span class="op-node-label">1.2 目标</span>
+                </div>
+              </li>
+              <li class="op-node" data-level="2">
+                <div class="op-node-row">
+                  <span class="op-node-label">1.3 范围</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li class="op-node" data-level="1" data-expanded>
+            <div class="op-node-row">
+              <i class="op-node-toggle cses-arrow"></i>
+              <span class="op-node-label">第二章 方案</span>
+            </div>
+            <ul class="op-children">
+              <li class="op-node" data-level="2" data-expanded>
+                <div class="op-node-row">
+                  <i class="op-node-toggle cses-arrow"></i>
+                  <span class="op-node-label">2.1 总体设计</span>
+                </div>
+                <ul class="op-children">
+                  <li class="op-node" data-level="3">
+                    <div class="op-node-row">
+                      <span class="op-node-label">2.1.1 架构图</span>
+                    </div>
+                  </li>
+                  <li class="op-node" data-level="3">
+                    <div class="op-node-row">
+                      <span class="op-node-label">2.1.2 模块划分</span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+              <li class="op-node" data-level="2">
+                <div class="op-node-row">
+                  <span class="op-node-label">2.2 详细设计</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+
+          <li class="op-node" data-level="1">
+            <div class="op-node-row">
+              <i class="op-node-toggle cses-right"></i>
+              <span class="op-node-label">第三章 实施计划</span>
+            </div>
+          </li>
+
+          <li class="op-node" data-level="1">
+            <div class="op-node-row">
+              <i class="op-node-toggle cses-right"></i>
+              <span class="op-node-label">第四章 风险评估</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </cs-outline-panel>
+  </div>
+
+</div>
+
+</body>
+</html>

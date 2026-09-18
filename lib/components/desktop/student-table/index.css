@@ -1,0 +1,259 @@
+/* task_id: 学员看板（老师版）-2026-05-21-1430 · component: cs-student-table · PLAN-008 */
+.cs-student-table {
+  background: var(--cs-color-white);
+  border: 1px solid var(--cs-color-border);
+  border-radius: 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--cs-shadow-card);
+  overflow: hidden;
+}
+.cs-student-table__group {
+  border-bottom: 1px solid var(--cs-color-border);
+}
+.cs-student-table__group:last-of-type { border-bottom: 0; }
+.cs-student-table__group-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--cs-color-bg-hover);
+  border-bottom: 1px solid var(--cs-color-border);
+}
+.cs-student-table__group[data-group="catch-up"] .cs-student-table__group-head {
+  background: linear-gradient(90deg, var(--cs-color-orange-50), var(--cs-color-bg-hover));}
+.cs-student-table__group[data-group="chase"] .cs-student-table__group-head {
+  background: linear-gradient(90deg, var(--cs-color-selected), var(--cs-color-bg-hover));}
+.cs-student-table__group-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cs-color-text-primary);
+}
+.cs-student-table__group[data-group="catch-up"] .cs-student-table__group-title i {
+  color: var(--cs-color-warning);
+}
+.cs-student-table__group[data-group="chase"] .cs-student-table__group-title i {
+  color: var(--cs-color-primary);
+}
+.cs-student-table__group-count {
+  background: var(--cs-color-bg-lighter);
+  color: var(--cs-color-text-secondary);
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.cs-student-table__group-count--warn {
+  background: var(--cs-color-warning);
+  color: var(--cs-color-white);
+}
+.cs-student-table__group-hint {
+  font-size: 11px;
+  color: var(--cs-color-text-secondary);
+  flex: 1;
+}
+.cs-student-table__group-toggle {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--cs-color-text-tertiary);
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+.cs-student-table__group-toggle:hover {
+  background: var(--cs-color-white);
+  color: var(--cs-color-text-primary);
+}
+.cs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.cs-table__head {
+  background: var(--cs-color-white);
+}
+.cs-table__th {
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 500;
+  color: var(--cs-color-text-secondary);
+  border-bottom: 1px solid var(--cs-color-border);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.cs-table__th--check { width: 36px; }
+.cs-table__th--name { min-width: 140px; }
+.cs-table__th--num { text-align: right; width: 88px; }
+.cs-table__th--actions { width: 160px; text-align: right; }
+.cs-table__row {
+  transition: background 0.15s ease;
+  cursor: pointer;
+}
+.cs-table__row:hover {
+  background: var(--cs-color-bg-hover);
+}
+.cs-table__row[data-state="bad"] {
+  background: linear-gradient(90deg, var(--cs-color-red-50) 0%, transparent 30%);
+}
+.cs-table__row[data-state="bad"]:hover {
+  background: var(--cs-color-red-50);
+}
+.cs-table__td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--cs-color-border);
+  vertical-align: middle;
+  color: var(--cs-color-text-primary);
+}
+.cs-table__row:last-child .cs-table__td { border-bottom: 0; }
+.cs-table__td--num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--cs-color-text-secondary);
+}
+.cs-table__td--actions {
+  text-align: right;
+  white-space: nowrap;
+}
+.cs-table__avatar {
+  display: inline-flex;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cs-color-primary), var(--cs-color-primary-hover));  color: var(--cs-color-white);
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+.cs-table__name {
+  font-weight: 500;
+  color: var(--cs-color-text-primary);
+}
+.cs-table__time {
+  font-size: 12px;
+  color: var(--cs-color-text-secondary);
+}
+.cs-table__btn {
+  appearance: none;
+  border: 1px solid var(--cs-color-border);
+  background: var(--cs-color-white);
+  color: var(--cs-color-text-secondary);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 4px;
+  transition: all 0.15s ease;
+  font-weight: 500;
+}
+.cs-table__btn:hover {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text-primary);
+}
+.cs-table__btn--primary {
+  background: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-white);
+}
+.cs-table__btn--primary:hover {
+  background: var(--cs-color-primary-hover);
+  border-color: var(--cs-color-primary-hover);
+  color: var(--cs-color-white);
+}
+.cs-table__btn i { font-size: 12px; }
+.cs-checkbox {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+.cs-checkbox input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.cs-checkbox__box {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--cs-color-border);
+  border-radius: 4px;
+  background: var(--cs-color-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  position: relative;
+}
+.cs-checkbox:hover .cs-checkbox__box {
+  border-color: var(--cs-color-primary);
+}
+.cs-checkbox input:checked + .cs-checkbox__box {
+  background: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+}
+.cs-checkbox input:checked + .cs-checkbox__box::after {
+  content: '';
+  width: 4px;
+  height: 8px;
+  border: solid var(--cs-color-white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.cs-student-table__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--cs-color-bg-hover);
+}
+.cs-student-table__total {
+  font-size: 12px;
+  color: var(--cs-color-text-secondary);
+}
+.cs-pagination {
+  display: inline-flex;
+  gap: 4px;
+}
+.cs-pagination__btn {
+  appearance: none;
+  border: 1px solid var(--cs-color-border);
+  background: var(--cs-color-white);
+  color: var(--cs-color-text-secondary);
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+.cs-pagination__btn:hover:not(:disabled) {
+  background: var(--cs-color-bg-hover);
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-primary);
+}
+.cs-pagination__btn[data-active="true"] {
+  background: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-white);
+}
+.cs-pagination__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

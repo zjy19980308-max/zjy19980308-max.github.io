@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>版本与回退 · 流程中台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{max-width:1480px;margin:0 auto}
+  .two{display:grid;grid-template-columns:286px minmax(0,1fr);gap:16px;align-items:start}
+  @media (max-width:980px){.two{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+  .tlw{padding:14px 12px}
+  .vi{display:flex;gap:11px;padding:2px 0;cursor:pointer}
+  .vi__g{width:12px;flex:0 0 12px;display:flex;flex-direction:column;align-items:center}
+  .vi__d{width:9px;height:9px;border-radius:50%;background:var(--line);border:2px solid var(--panel);box-shadow:0 0 0 1.5px var(--line);margin-top:5px}
+  .vi__l{flex:1;width:1.5px;background:var(--line);margin:3px 0}
+  .vi:last-child .vi__l{display:none}
+  .vi__c{flex:1;padding:4px 9px 15px;border-radius:7px;transition:background .14s}
+  .vi:hover .vi__c{background:var(--panel-2)}
+  .vi.is-on .vi__c{background:var(--acc-soft)}
+  .vi.is-on .vi__d{background:#4857e2;box-shadow:0 0 0 1.5px #4857e2}
+  .vi.live .vi__d{background:#4857e2;box-shadow:0 0 0 1.5px #4857e2}
+  .vi__t{display:flex;align-items:center;gap:7px}
+  .vi__t b{font-size:12.5px;font-weight:600;font-family:var(--mono)}
+  .vi__m{font-size:11.5px;color:var(--ink-3);margin-top:3px;line-height:1.55}
+  .vi.roll .vi__d{background:#e08a1e;box-shadow:0 0 0 1.5px #e08a1e}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:4px}
+  .stat1{border:1px solid var(--line);border-radius:var(--r-s);padding:10px 12px;background:var(--panel-2)}
+  .stat1 span{display:block;font-size:11px;color:var(--ink-3);margin-bottom:3px}
+  .stat1 b{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+  .chg{font-size:12.5px;line-height:1.9}
+  .chg i{font-style:normal;display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--acc);margin-right:7px;vertical-align:middle}
+  .stepdot{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink-3);margin-bottom:14px}
+  .stepdot b{color:var(--ink)}
+  .rv{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--sd);margin-top:14px}
+  .rv__s{padding:13px 16px;border-bottom:1px solid var(--line-2)}
+  .rv__s:last-child{border:0}
+  .rv__s h4{font-size:11.5px;color:var(--ink-3);font-weight:500;margin-bottom:6px}
+  .rv__s p{font-size:12.5px;line-height:1.75}
+</style>
+</head>
+<body data-nav="versions" data-title="版本与回退" data-back="flows.html" data-flow="供应商付款审批" data-ver="线上 v4" data-state="已上线" data-state-tone="ok">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div id="topActions"><a class="btn btn--s" href="runs.html">看运行</a></div>
+    <div class="page">
+      <div id="rollbanner"></div>
+      <div class="two">
+        <div class="card">
+          <div class="card__h"><h3>版本</h3><span class="sub">快照不可删除</span></div>
+          <div class="card__b card__b--flush tlw" id="tl"></div>
+        </div>
+        <div id="detail"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="rb">
+  <div class="modal__h"><h3 id="rbT">回退到 v3</h3><span class="steps" style="margin-left:auto" id="rbS"></span></div>
+  <div class="modal__b" id="rbB"></div>
+  <div class="modal__f"><span class="dim" style="font-size:11.5px" id="rbN">回退本身也是一次发布，会记入版本时间线</span><div class="right"><button class="btn" data-close>取消</button><button class="btn btn--p" id="rbGo">下一步</button></div></div>
+</div>
+
+<script src="ui.js"></script>
+<script>
+(function () {
+  var V = [
+    { v: 'v4', state: 'live', date: '9 月 15 日', by: '周宁 提交 · 陈立 批准', note: '3 处改动：黑名单校验、10 万分档、代理人', runs: '上线 1 天 · 运行 23 次', chg: ['新增「供应商黑名单校验」节点', '金额分档 5 万 → 10 万', '财务总监审批设置代理人 刘恒'], perf: ['23', '95.7%', '1', '4 小时 12 分'] },
+    { v: 'v3', state: 'snap', date: '8 月 2 日', by: '周宁 提交 · 陈立 批准', note: '运行 1,204 次 · 转人工 9 次', runs: '在线 44 天', chg: ['把付款前人工确认的确认人改为应付会计', '通知模板补充采购单号'], perf: ['1,204', '99.2%', '9', '5 小时 48 分'] },
+    { v: 'v2', state: 'snap', date: '6 月 10 日', by: '周宁 提交 · 陈立 批准', note: '运行 892 次', runs: '在线 53 天', chg: ['新增 CFO 审批档'], perf: ['892', '98.9%', '14', '6 小时 30 分'] },
+    { v: 'v1', state: 'snap', date: '4 月 1 日', by: '周宁 提交 · 陈立 批准', note: '首次上线', runs: '在线 70 天', chg: ['首次上线'], perf: ['640', '97.5%', '21', '7 小时 02 分'] }
+  ];
+  var rolled = false, cur = 1;
+  function tl() {
+    document.getElementById('tl').innerHTML = (rolled ? '<div class="vi roll" data-i="-1"><div class="vi__g"><div class="vi__d"></div><div class="vi__l"></div></div><div class="vi__c"><div class="vi__t"><b>回退</b><span class="tag tag--warn">9 月 16 日</span></div><div class="vi__m">从 v4 回退到 v3 · 周宁 · 原因见复盘</div></div></div>' : '')
+      + V.map(function (x, i) {
+      return '<div class="vi ' + (x.state === 'live' && !rolled ? 'live ' : '') + (i === cur ? 'is-on' : '') + '" data-i="' + i + '">'
+        + '<div class="vi__g"><div class="vi__d"></div><div class="vi__l"></div></div>'
+        + '<div class="vi__c"><div class="vi__t"><b>' + x.v + '</b>'
+        + (x.state === 'live' && !rolled ? '<span class="tag tag--ok">线上</span>' : (rolled && x.v === 'v3' ? '<span class="tag tag--ok">线上</span>' : '<span class="tag">快照</span>'))
+        + '<span class="dim" style="font-size:11px;margin-left:auto">' + x.date + '</span></div>'
+        + '<div class="vi__m">' + x.by + '<br>' + x.note + '</div></div></div>';
+    }).join('');
+  }
+  function detail() {
+    var x = V[cur], isLive = (rolled ? x.v === 'v3' : x.state === 'live');
+    document.getElementById('detail').innerHTML = '<div class="card"><div class="card__h"><h3>' + x.v + '</h3>'
+      + (isLive ? '<span class="tag tag--ok"><i class="dot"></i>当前线上</span>' : '<span class="tag">快照</span>')
+      + '<div class="right">' + (isLive ? '<span class="dim" style="font-size:11.5px">线上版本不能回退到自己</span>' : '<button class="btn btn--s" data-toast="打开差异视图：新增绿、修改黄、删除红划线">与线上版本对比</button><button class="btn btn--danger btn--s" id="rbOpen">回退到此版本</button>') + '</div></div>'
+      + '<div class="card__b">'
+      + '<dl class="kv"><dt>发布时间</dt><dd>' + x.date + ' · ' + x.runs + '</dd><dt>提交 / 批准</dt><dd>' + x.by + '</dd><dt>体检</dt><dd>18 项全部通过</dd></dl>'
+      + '<div class="sep"></div><div class="h-sec">这一版改了什么</div><div class="chg">' + x.chg.map(function (c) { return '<div><i></i>' + c + '</div>'; }).join('') + '</div>'
+      + '<div class="sep"></div><div class="h-sec">在线期间表现</div><div class="stats">'
+      + '<div class="stat1"><span>运行次数</span><b>' + x.perf[0] + '</b></div>'
+      + '<div class="stat1"><span>成功率</span><b>' + x.perf[1] + '</b></div>'
+      + '<div class="stat1"><span>转人工</span><b>' + x.perf[2] + '</b></div>'
+      + '<div class="stat1"><span>平均耗时</span><b style="font-size:13px">' + x.perf[3] + '</b></div></div>'
+      + '</div></div>'
+      + (rolled && x.v === 'v3' ? review() : '');
+    var b = document.getElementById('rbOpen'); if (b) b.addEventListener('click', function () { step = 0; rb(); AG.open(document.getElementById('rb')); });
+  }
+  function review() {
+    return '<div class="rv"><div class="rv__s" style="display:flex;align-items:center;gap:8px"><b style="font-size:13px">复盘</b><span class="agentic">✦ Agent 整理，人可改</span><span class="tag tag--warn" style="margin-left:auto">待完成</span></div>'
+      + '<div class="rv__s"><h4>发生了什么</h4><p>9 月 15 日 14:20 v4 上线。16 日 09:10 发现一笔向黑名单供应商的付款没有被拦下，运行到了「采购经理审批」。09:40 回退到 v3。</p></div>'
+      + '<div class="rv__s"><h4>根本原因</h4><p>黑名单库每日凌晨同步，白天新增的黑名单供应商当天拦不住。校验节点读的是同步后的副本，不是实时数据。</p></div>'
+      + '<div class="rv__s"><h4>影响范围</h4><p>涉及 1 条运行、¥24,600，<b>停在审批阶段，没有执行付款</b>，未发生不可逆操作。</p></div>'
+      + '<div class="rv__s"><h4>转化为检查项</h4><p>依赖外部数据源的校验节点，必须声明数据更新频率；更新频率低于每小时的，要加人工复核。</p>'
+      + '<div style="display:flex;gap:8px;margin-top:10px"><a class="btn btn--acc btn--s" href="rules.html">加入检查项库</a><span class="dim" style="font-size:11.5px;align-self:center">加入后状态为「待审批」，由陈立批准生效</span></div></div>'
+      + '<div class="rv__s"><h4>负责人 · 完成时间</h4><p>周宁 · 9 月 18 日前</p></div></div>';
+  }
+
+  var step = 0;
+  function rb() {
+    var S = ['影响确认', '填写原因', '确认回退'];
+    document.getElementById('rbS').innerHTML = S.map(function (s, i) { return '<i class="' + (i < step ? 'done' : i === step ? 'now' : '') + '">' + (i < step ? '✓ ' : '') + s + '</i>' + (i < 2 ? '<span>→</span>' : ''); }).join('');
+    var b = document.getElementById('rbB');
+    if (step === 0) {
+      b.innerHTML = '<div class="banner" style="margin-bottom:14px"><span>回退后，<b>新发起的付款按 v3 执行</b>：5–10 万的付款会重新需要财务总监审批；黑名单校验将被移除。</span></div>'
+        + '<div class="h-sec">进行中的 5 条运行</div><div data-optgroup>'
+        + '<div class="opt is-on"><b>继续按 v4 完成（推荐）</b><p>已经跑起来的付款不换规则。</p></div>'
+        + '<div class="opt" style="margin-top:8px"><b>立即终止</b><p>不推荐：这 5 笔要重新发起。</p></div></div>'
+        + '<div class="banner banner--risk" style="margin-top:14px"><span><b>v4 期间已执行付款 23 笔，回退不会撤回已付款项。</b>不可逆的动作一旦执行，回退也救不回来。</span></div>';
+      document.getElementById('rbGo').textContent = '下一步';
+    } else if (step === 1) {
+      b.innerHTML = '<div class="h-sec">原因分类</div><div data-optgroup>'
+        + '<div class="opt is-on"><b>规则错误</b><p>这一版的规则本身写错了。</p></div>'
+        + '<div class="opt" style="margin-top:8px"><b>配置遗漏</b><p>规则对，但有一处没配全。</p></div>'
+        + '<div class="opt" style="margin-top:8px"><b>外部变化</b><p>依赖的系统或数据变了。</p></div></div>'
+        + '<label class="field" style="margin-top:14px"><span>描述（必填）</span><textarea class="inp" id="rbWhy" placeholder="黑名单校验读的是每日同步的副本，当天新增的黑名单拦不住。"></textarea></label>';
+      document.getElementById('rbGo').textContent = '下一步';
+    } else {
+      b.innerHTML = '<dl class="kv" style="font-size:13px"><dt>从</dt><dd>v4（线上）</dd><dt>回退到</dt><dd><b>v3</b>（8 月 2 日快照）</dd><dt>进行中的运行</dt><dd>继续按 v4 完成</dd><dt>原因</dt><dd>规则错误 · 外部数据源同步延迟</dd><dt>确认人</dt><dd>陈立 · 流程负责人</dd></dl>'
+        + '<div class="banner banner--ok" style="margin-top:14px"><span>回退不需要重新体检：v3 当时已经通过过 18 项检查。回退完成后会自动生成一张复盘卡。</span></div>';
+      document.getElementById('rbGo').textContent = '确认回退';
+    }
+  }
+  document.getElementById('rbGo').addEventListener('click', function () {
+    if (step === 1) { var w = document.getElementById('rbWhy'); if (!w.value.trim()) { w.focus(); return AG.toast('回退必须写原因，会进复盘卡', 'warn'); } }
+    if (step < 2) { step++; return rb(); }
+    AG.close(); rolled = true; cur = 1; tl(); detail();
+    document.getElementById('rollbanner').innerHTML = '<div class="banner banner--ok" style="margin-bottom:14px"><span><b>已回退到 v3</b> · v4 已存为快照 · 复盘卡已生成，等你补充</span></div>';
+    var t = document.querySelector('#top .tag--ok'); if (t) t.textContent = '已回退 · 线上 v3';
+    AG.toast('已回退到 v3 · v4 已存为快照');
+  });
+  document.getElementById('tl').addEventListener('click', function (e) {
+    var v = e.target.closest('.vi'); if (!v || v.dataset.i === '-1') return;
+    cur = +v.dataset.i; tl(); detail();
+  });
+  tl(); detail();
+})();
+</script>
+</body>
+</html>

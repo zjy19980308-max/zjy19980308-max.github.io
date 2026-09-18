@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>工作台 · 流程中台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{max-width:none}
+  .stat{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:22px}
+  .s{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--sd);padding:14px 16px}
+  .s b{display:block;font-size:22px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .s span{display:block;font-size:11.5px;color:var(--ink-3);margin-top:3px}
+  .s em{font-style:normal;font-size:11px;font-weight:600;margin-left:6px}
+  .s--warn b{color:var(--warn)} .s--risk b{color:var(--risk)}
+  .todo{display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+  .t{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:14px 16px;box-shadow:var(--sd);transition:border-color .16s}
+  .t:hover{border-color:#8f99cf}
+  .t__i{width:34px;height:34px;border-radius:var(--r-m);display:grid;place-items:center;flex:0 0 34px;background:var(--surf);border:1px solid var(--line-2);color:var(--ink-2)}
+  .t__i svg{width:16px;height:16px}
+  .t--risk .t__i{background:var(--risk-soft);border-color:var(--risk-line);color:var(--risk)}
+  .t--warn .t__i{background:var(--warn-soft);border-color:var(--warn-line);color:var(--warn)}
+  .t > div:nth-child(2){flex:1;min-width:0}
+  .t b{display:block;font-size:13.5px;font-weight:600}
+  .t span{font-size:12px;color:var(--ink-2)}
+  .t .right{margin-left:auto;display:flex;align-items:center;gap:10px;flex:0 0 auto}
+  .t .ago{font-size:11.5px;color:var(--ink-3)}
+  .two{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+  .runs{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);box-shadow:var(--sd);overflow:hidden}
+  .rrow{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line-2)}
+  .rrow:last-child{border:0}
+  .rrow:hover{background:var(--surf)}
+  .rrow b{font-size:13px;font-weight:600}
+  .rrow .m{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+  .rrow .right{margin-left:auto;display:flex;align-items:center;gap:10px;flex:0 0 auto}
+  .prog{display:flex;align-items:center;gap:4px;margin-top:6px}
+  .prog i{width:20px;height:3px;border-radius:2px;background:var(--line);display:block}
+  .prog i.on{background:#4857e2}
+  .prog i.now{background:var(--warn)}
+  .side-card{margin-bottom:16px}
+  .rule{display:flex;gap:9px;font-size:12.5px;line-height:1.65;padding:9px 0;border-bottom:1px solid var(--line-2)}
+  .rule:last-child{border:0}
+  .rule i{font-style:normal;flex:0 0 18px;height:18px;border-radius:5px;background:var(--surf);border:1px solid var(--line);display:grid;place-items:center;font-size:9px;font-weight:700;color:var(--ink-3);margin-top:1px}
+  @media (max-width:1240px){.stat{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  @media (max-width:1100px){.two{grid-template-columns:1fr}}
+  @media (max-width:860px){.stat{grid-template-columns:repeat(2,minmax(0,1fr))}.t{flex-wrap:wrap}.t .right{width:100%;margin-left:46px;justify-content:flex-start}}
+  @media (max-width:560px){.stat{grid-template-columns:1fr}.t .right{margin-left:0}}
+</style>
+</head>
+<body data-nav="home" data-title="工作台">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div class="page">
+
+      <div class="pagehead">
+        <h2>下午好，周宁</h2>
+        <span class="sub">9 月 16 日 · 6 条流程在管，今天有 2 件事要你拍板。</span>
+        <span class="right"><a class="lnk" href="flows.html">去流程管理 →</a></span>
+      </div>
+
+      <div class="h-sec">今天的运行状态</div>
+      <div class="stat">
+        <div class="s"><b>18</b><span>今日运行次数</span></div>
+        <div class="s"><b>5</b><span>进行中</span></div>
+        <div class="s s--warn"><b>2</b><span>等待人工确认</span></div>
+        <div class="s s--risk"><b>1</b><span>转人工 · 超时未处理</span></div>
+        <div class="s"><b>6<em class="dim">小时 20 分</em></b><span>平均耗时</span></div>
+      </div>
+
+      <div class="h-sec">需要你处理</div>
+      <div class="todo">
+        <a class="t t--risk" href="exceptions.html">
+          <div class="t__i"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.4 14 13H2z"/><path d="M8 6.4v3M8 11.1h.01"/></svg></div>
+          <div><b>供应商付款审批 · PAY-20260915-0039 停在「财务总监审批」</b><span>陈立 9 月 14–21 出差，v3 这一道没配代理人，单子走不动</span></div>
+          <div class="right"><span class="tag tag--risk">超时</span><span class="ago">已等 26 小时</span><span class="btn btn--s">去处理</span></div>
+        </a>
+        <a class="t t--warn" href="check.html">
+          <div class="t__i"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.8 13.5 4v4.1c0 3-2.3 5-5.5 6.1-3.2-1.1-5.5-3.1-5.5-6.1V4z"/><path d="M5.8 8.1 7.3 9.6l3-3.2"/></svg></div>
+          <div><b>客户退款审批 · 上线前体检 2 项未通过</b><span>退款节点后面没有人工确认；审批节点没设超时处理</span></div>
+          <div class="right"><span class="tag tag--warn">不能上线</span><span class="ago">昨天提交</span><span class="btn btn--s">去修复</span></div>
+        </a>
+        <a class="t" href="rules.html">
+          <div class="t__i"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 2.5h9v11h-9z"/><path d="M5.8 5.8h4.4M5.8 8.4h4.4M5.8 11h2.4"/></svg></div>
+          <div><b>2 条由复盘生成的检查项等你批</b><span>CK-19 外部数据源需声明更新频率 · CK-20 同一母子公司主体视为匹配</span></div>
+          <div class="right"><span class="tag">待审批</span><span class="ago">9 月 16 日</span><span class="btn btn--s">去审</span></div>
+        </a>
+      </div>
+
+      <div class="two">
+        <div>
+          <div class="sechead"><h2>正在跑的运行</h2><a class="more" href="runs.html">查看全部运行</a></div>
+          <div class="runs">
+            <a class="rrow" href="runs.html">
+              <div><b>PAY-20260915-0042 · 华东物流 ¥38,000</b><div class="m">供应商付款审批 v3 · 09:02 发起 · 停在「付款前人工确认」</div>
+                <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="now"></i><i></i><i></i></div></div>
+              <div class="right"><span class="rev rev--c">C</span><span class="tag tag--warn">等待人工</span></div>
+            </a>
+            <a class="rrow" href="exceptions.html">
+              <div><b>PAY-20260915-0039 · 锐格科技 ¥120,000</b><div class="m">供应商付款审批 v3 · 昨天 08:10 发起 · 停在「财务总监审批」</div>
+                <div class="prog"><i class="on"></i><i class="on"></i><i class="on"></i><i class="now"></i><i></i><i></i><i></i></div></div>
+              <div class="right"><span class="tag tag--risk">超时 26 小时</span></div>
+            </a>
+            <a class="rrow" href="runs.html">
+              <div><b>HR-20260916-0007 · 新同事 3 人入职</b><div class="m">员工入职权限开通 v5 · 今天 08:30 发起 · 正在开通门禁</div>
+                <div class="prog"><i class="on"></i><i class="on"></i><i class="now"></i><i></i></div></div>
+              <div class="right"><span class="tag tag--acc">Agent 执行中</span></div>
+            </a>
+            <a class="rrow" href="runs.html">
+              <div><b>SEAL-20260916-0021 · 采购框架协议用印</b><div class="m">合同用印申请 v2 · 今天 10:05 发起 · 法务已签</div>
+                <div class="prog"><i class="on"></i><i class="on"></i><i class="now"></i><i></i><i></i></div></div>
+              <div class="right"><span class="tag">流转中</span></div>
+            </a>
+          </div>
+        </div>
+
+        <aside>
+          <div class="card side-card"><div class="card__h"><h3>最近一次发布</h3></div>
+            <div class="card__b" style="font-size:12.5px;line-height:1.8;color:var(--ink-2)">
+              <b style="color:var(--ink)">供应商付款审批 v4</b><br>
+              9 月 15 日 16:20 · 周宁提交 · 陈立批准<br>
+              3 处改动 · 体检 18 项全过<br>
+              <a class="lnk" href="versions.html" style="display:inline-block;margin-top:8px">看版本与回退</a>
+            </div>
+          </div>
+          <div class="card side-card"><div class="card__h"><h3>Agent 的边界</h3></div>
+            <div class="card__b" style="padding:6px 16px 12px">
+              <div class="rule"><i>A</i><div>只查不改的事，Agent 全自动做完并给结论</div></div>
+              <div class="rule"><i>B</i><div>能撤回的动作自动执行，全程留痕</div></div>
+              <div class="rule"><i style="border-color:var(--risk-line);background:var(--risk-soft);color:var(--risk)">C</i><div>付款、对外发送这类撤不回来的，必须人工点</div></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script src="ui.js"></script>
+</body>
+</html>

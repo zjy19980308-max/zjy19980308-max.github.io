@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-chat-header 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="chat-header.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo-container { border: 1px solid var(--cs-color-border); border-radius: 8px; overflow: hidden; max-width: 600px; }
+  </style>
+</head>
+<body>
+
+<!-- 基础用法 -->
+<div class="section">
+  <div class="section-title">基础聊天头部</div>
+  <div class="section-subtitle">标题 + 操作按钮组</div>
+
+  <div class="demo-container">
+    <cs-chat-header>
+      <span class="header-title">张三</span>
+      <div class="header-actions">
+        <button class="header-action"><i class="cses-search"></i></button>
+        <button class="header-action"><i class="cses-dianhua"></i></button>
+        <button class="header-action"><i class="cses-aite"></i></button>
+        <button class="header-action"><i class="cses-settings"></i></button>
+      </div>
+    </cs-chat-header>
+  </div>
+</div>
+
+<!-- 群聊 -->
+<div class="section">
+  <div class="section-title">群聊头部</div>
+  <div class="section-subtitle">群名称 + 操作按钮</div>
+
+  <div class="demo-container">
+    <cs-chat-header>
+      <span class="header-title">产品设计讨论群 (12)</span>
+      <div class="header-actions">
+        <button class="header-action"><i class="cses-search"></i></button>
+        <button class="header-action"><i class="cses-dianhua"></i></button>
+        <button class="header-action"><i class="cses-aite"></i></button>
+        <button class="header-action"><i class="cses-settings"></i></button>
+      </div>
+    </cs-chat-header>
+  </div>
+</div>
+
+<!-- 少量按钮 -->
+<div class="section">
+  <div class="section-title">简洁版（少量按钮）</div>
+  <div class="section-subtitle">仅搜索和设置</div>
+
+  <div class="demo-container">
+    <cs-chat-header>
+      <span class="header-title">李四</span>
+      <div class="header-actions">
+        <button class="header-action"><i class="cses-search"></i></button>
+        <button class="header-action"><i class="cses-more"></i></button>
+      </div>
+    </cs-chat-header>
+  </div>
+</div>
+
+<!-- 长标题 -->
+<div class="section">
+  <div class="section-title">长标题（溢出省略）</div>
+
+  <div class="demo-container" style="max-width: 400px;">
+    <cs-chat-header>
+      <span class="header-title">CSES项目组第三季度产品规划讨论群（含市场、研发、设计）</span>
+      <div class="header-actions">
+        <button class="header-action"><i class="cses-search"></i></button>
+        <button class="header-action"><i class="cses-dianhua"></i></button>
+        <button class="header-action"><i class="cses-aite"></i></button>
+        <button class="header-action"><i class="cses-settings"></i></button>
+      </div>
+    </cs-chat-header>
+  </div>
+</div>
+
+</body>
+</html>

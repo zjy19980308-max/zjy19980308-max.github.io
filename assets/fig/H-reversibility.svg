@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<style>
+  .bg{fill:#083D2A}
+  .t{fill:#EED6C8;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .m{fill:#8FB3A0;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mb{fill:#EED6C8;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .d{fill:#EED6C8;font-family:'Instrument Serif',Georgia,serif}
+  .a{fill:#DAAB00}
+  .am{fill:#DAAB00;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mu{fill:#8FB3A0;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .ln{stroke:#EED6C8;fill:none}
+  .ln2{stroke:#EED6C8;fill:none;opacity:.35}
+  .la{stroke:#DAAB00;fill:none}
+  .ds{stroke:#8FB3A0;fill:none;stroke-dasharray:6 6}
+  .box{fill:none;stroke:#EED6C8;stroke-opacity:.55}
+  .boxa{fill:#DAAB00;fill-opacity:.12;stroke:#DAAB00}
+  .fill{fill:#EED6C8;fill-opacity:.06;stroke:#EED6C8;stroke-opacity:.35}
+  .hatch{fill:url(#hz);stroke:#EED6C8;stroke-opacity:.35}
+  .pill{fill:none;stroke:#EED6C8;stroke-opacity:.6}
+</style>
+<defs>
+  <pattern id="hz" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#EED6C8" stroke-opacity=".22" stroke-width="1"/>
+  </pattern>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#EED6C8"/>
+  </marker>
+  <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#DAAB00"/>
+  </marker>
+  <marker id="arm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#8FB3A0"/>
+  </marker>
+</defs>
+<rect class="bg" width="1600" height="900"/><text x="90" y="96" class="d" font-size="48" text-anchor="start" font-weight="400" >八条边界，一条判据</text><text x="90" y="132" class="mu" font-size="18" text-anchor="start" font-weight="400" >可逆性，不是重要性 · 只读错了重跑就行，写错了要人擦屁股</text><text x="1510" y="80" class="m" font-size="13" text-anchor="end" font-weight="400" >FIG H · REVERSIBILITY</text><rect x="90" y="230" width="640" height="500" rx="10" class="box"/><rect x="870" y="230" width="640" height="500" rx="10" class="boxa"/><text x="120" y="272" class="m" font-size="12" text-anchor="start" font-weight="400" >REVERSIBLE · 可逆</text><text x="120" y="312" class="t" font-size="34" text-anchor="start" font-weight="500" >全自动</text><text x="900" y="272" class="am" font-size="12" text-anchor="start" font-weight="400" >IRREVERSIBLE · 不可逆</text><text x="900" y="312" class="t" font-size="34" text-anchor="start" font-weight="500" >必须过人</text><circle cx="136" cy="374" r="15" fill="#083D2A" stroke="#EED6C8" stroke-opacity=".6"/><text x="136" y="379" class="mb" font-size="11" text-anchor="middle" font-weight="400" >03</text><text x="166" y="380" class="t" font-size="17" text-anchor="start" font-weight="400" >只读诊断：查日志、跑分析</text><circle cx="136" cy="444" r="15" fill="#083D2A" stroke="#EED6C8" stroke-opacity=".6"/><text x="136" y="449" class="mb" font-size="11" text-anchor="middle" font-weight="400" >04</text><text x="166" y="450" class="t" font-size="17" text-anchor="start" font-weight="400" >验收优先看自动化测试</text><circle cx="136" cy="514" r="15" fill="#083D2A" stroke="#EED6C8" stroke-opacity=".6"/><text x="136" y="519" class="mb" font-size="11" text-anchor="middle" font-weight="400" >07</text><text x="166" y="520" class="t" font-size="17" text-anchor="start" font-weight="400" >关键节点直推，全过程留在任务动态</text><circle cx="136" cy="584" r="15" fill="#083D2A" stroke="#EED6C8" stroke-opacity=".6"/><text x="136" y="589" class="mb" font-size="11" text-anchor="middle" font-weight="400" >05</text><text x="166" y="590" class="t" font-size="17" text-anchor="start" font-weight="400" >卡住超时自动转人工，时长可配</text><circle cx="916" cy="374" r="15" fill="#DAAB00"/><text x="916" y="379" class="mb" font-size="11" text-anchor="middle" font-weight="400" >01</text><text x="946" y="380" class="t" font-size="17" text-anchor="start" font-weight="400" >建任务进池：只有 P0/P1，同类 24h 一次</text><circle cx="916" cy="444" r="15" fill="#DAAB00"/><text x="916" y="449" class="mb" font-size="11" text-anchor="middle" font-weight="400" >03</text><text x="946" y="450" class="t" font-size="17" text-anchor="start" font-weight="400" >改代码：必须人确认</text><circle cx="916" cy="514" r="15" fill="#DAAB00"/><text x="916" y="519" class="mb" font-size="11" text-anchor="middle" font-weight="400" >02</text><text x="946" y="520" class="t" font-size="17" text-anchor="start" font-weight="400" >分给模块负责人，无主进池等认领</text><circle cx="916" cy="584" r="15" fill="#DAAB00"/><text x="916" y="589" class="mb" font-size="11" text-anchor="middle" font-weight="400" >06</text><text x="946" y="590" class="t" font-size="17" text-anchor="start" font-weight="400" >关闭误报必须填原因，反哺阈值</text><circle cx="916" cy="654" r="15" fill="#DAAB00"/><text x="916" y="659" class="mb" font-size="11" text-anchor="middle" font-weight="400" >08</text><text x="946" y="660" class="t" font-size="17" text-anchor="start" font-weight="400" >业务状态永远由人改</text><rect x="796" y="230" width="8" height="500" fill="#DAAB00"/><rect x="780" y="460" width="40" height="40" transform="rotate(45 800 480)" fill="#083D2A" stroke="#DAAB00" stroke-width="2"/><text x="800" y="780" class="am" font-size="12" text-anchor="middle" font-weight="400" >GATE · 人确认过才越过这条线</text><text x="800" y="808" class="mu" font-size="13" text-anchor="middle" font-weight="400" >无覆盖退回人工 · AI 不判自己合格 · agent 只推自己的状态</text></svg>

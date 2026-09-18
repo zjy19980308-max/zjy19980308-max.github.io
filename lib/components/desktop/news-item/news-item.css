@@ -1,0 +1,85 @@
+/*
+ * 新闻列表项组件 (News Item)
+ * 标签：<cs-news-item>
+ *
+ * data 属性：
+ *   data-featured — 头条样式
+ *
+ * 子元素结构：
+ *   .news-thumb   — 缩略图
+ *   .news-content — 文字区
+ *     .news-title — 标题
+ *     .news-meta  — 元信息
+ *       .news-source — 来源
+ *       .news-date   — 日期
+ */
+
+/* ========== 基础 ========== */
+cs-news-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: var(--line-width) solid var(--cs-sem-border-secondary);
+  cursor: pointer;
+}
+
+cs-news-item:last-child {
+  border-bottom: none;
+}
+
+cs-news-item:hover .news-title {
+  color: var(--cs-color-primary);
+}
+
+/* ========== 缩略图 ========== */
+cs-news-item .news-thumb {
+  width: 80px;
+  height: 56px;
+  border-radius: var(--radius);
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--cs-color-bg-light);
+}
+
+/* ========== 文字区 ========== */
+cs-news-item .news-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex: 1;
+  min-width: 0;
+}
+
+/* ========== 标题 ========== */
+cs-news-item .news-title {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.15s ease;
+}
+
+/* ========== 元信息 ========== */
+cs-news-item .news-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-news-item .news-source {
+  color: var(--cs-color-text-light2);
+}
+
+cs-news-item .news-date {
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 头条变体 ========== */
+cs-news-item[data-featured] .news-title {
+  font: var(--typo-cn-16-medium);
+}

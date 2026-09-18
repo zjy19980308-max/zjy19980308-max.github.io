@@ -1,0 +1,57 @@
+/*
+ * 水印组件 (Watermark)
+ * 标签：<cs-watermark>
+ *
+ * 作用：在内容区背景上平铺重复的文字水印，用于防截图泄露/版权标记。
+ * 对标 ng-zorro nz-watermark。纯 CSS 实现，水印文字通过 CSS data: URI SVG 背景叠加。
+ *
+ * 用法：把 cs-watermark 作为内容区的外层容器，子内容直接放在里面。
+ *
+ * data 属性：
+ *   data-density="loose"      — 稀疏（240 间距）
+ *   data-density="normal"     — 标准（160 间距，默认）
+ *   data-density="dense"      — 密集（120 间距）
+ *
+ * CSS 自定义属性（页面可覆盖）：
+ *   --cs-watermark-text   — 水印文字（通过 ::before 文字 + transform 实现，下面用 SVG 方式）
+ *   --cs-watermark-color  — 水印颜色（默认 rgba(0,0,0,0.06)）
+ *
+ * 实现说明：
+ *   使用 background-image: url(data:image/svg+xml...) 将文字编码进 SVG，然后 background-repeat 平铺。
+ *   SVG 文字内容写死为 "Confidential"，业务覆盖时请用页面级 CSS 重写整个 background-image 属性。
+ */
+
+cs-watermark {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: var(--spacing-200);
+  box-sizing: border-box;
+}
+
+/* ========== 水印背景层 ========== */
+cs-watermark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><text x='10' y='80' font-family='PingFang SC, sans-serif' font-size='14' fill='rgba(0,0,0,0.06)' transform='rotate(-22 80 80)'>Confidential</text></svg>");
+  background-repeat: repeat;
+  background-position: 0 0;
+}
+
+/* 密度变体 */
+cs-watermark[data-density="loose"]::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><text x='20' y='120' font-family='PingFang SC, sans-serif' font-size='14' fill='rgba(0,0,0,0.06)' transform='rotate(-22 120 120)'>Confidential</text></svg>");
+}
+
+cs-watermark[data-density="dense"]::before {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><text x='8' y='60' font-family='PingFang SC, sans-serif' font-size='12' fill='rgba(0,0,0,0.06)' transform='rotate(-22 60 60)'>Confidential</text></svg>");
+}
+
+/* ========== 内容层 ========== */
+cs-watermark > * {
+  position: relative;
+  z-index: 2;
+}

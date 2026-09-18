@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>容器预览 — navbar</title>
+
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="navbar.css">
+
+  <style>
+    body { margin: 24px; background: var(--cs-color-bg-app-dark); min-height: 100vh; display: flex; }
+    .label { position: fixed; top: 4px; left: 24px; font-size: 11px; color: var(--cs-color-text-light2); font-family: var(--font-family-cn); }
+    /* 容器内用一些占位文字让 slot 可见 */
+    .slot-header, .slot-action, .slot-sub, .slot-admin, .slot-bottom {
+      padding: var(--space-xs);
+      font-size: 12px;
+      color: var(--cs-color-text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="label">navbar 预览 — 自包含模式</div>
+
+  <cs-navbar class="navbar-container">
+    <div class="inner">
+      <div class="slot-header">① 标题区</div>
+      <div class="slot-action">② 操作按钮区</div>
+      <div class="slot-nav">
+        <!-- 业务页填导航项 -->
+      </div>
+      <div class="slot-sub">④ 副菜单区</div>
+      <div class="slot-admin">⑤ 后台管理</div>
+      <div class="slot-bottom">⑥ 存储空间</div>
+    </div>
+  </cs-navbar>
+</body>
+</html>

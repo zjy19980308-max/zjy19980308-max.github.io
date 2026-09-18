@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-doc-breadcrumb-bar 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="doc-breadcrumb-bar.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .section { background: var(--cs-color-bg); border-radius: var(--radius-lg); margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+    .section-title { padding: 16px 24px 0; font: var(--typo-cn-14-medium); color: var(--cs-color-text-light); }
+  </style>
+</head>
+<body>
+
+<div id="screenshot-target">
+
+  <div class="section">
+    <div class="section-title">默认（已保存到云端）</div>
+    <cs-doc-breadcrumb-bar data-saved>
+      <div class="dbb-left">
+        <a class="dbb-crumb" href="#">
+          <i class="dbb-crumb-icon cses-shouye"></i>
+        </a>
+        <i class="dbb-sep cses-right"></i>
+        <span class="dbb-crumb">…</span>
+        <i class="dbb-sep cses-right"></i>
+        <a class="dbb-crumb" href="#">
+          <span>文档库布局需求</span>
+          <i class="dbb-crumb-caret cses-arrow"></i>
+        </a>
+        <i class="dbb-sep cses-right"></i>
+        <span class="dbb-current">
+          文档库改版方案
+          <i class="dbb-crumb-caret cses-arrow"></i>
+        </span>
+        <i class="dbb-collect cses-collect"></i>
+        <span class="dbb-saved">
+          <i class="dbb-saved-icon cses-cloud"></i>
+          已保存到云端
+        </span>
+      </div>
+      <div class="dbb-right">
+        <button class="dbb-action" data-variant="primary">
+          <i class="dbb-action-icon cses-fenxiang"></i>
+          <span class="dbb-action-label">分享</span>
+        </button>
+        <button class="dbb-action" data-variant="secondary">
+          <i class="dbb-action-icon cses-edit"></i>
+          <span class="dbb-action-label">编辑</span>
+          <i class="dbb-action-caret cses-arrow"></i>
+        </button>
+        <button class="dbb-action" data-variant="secondary">
+          <i class="dbb-action-icon cses-demonstration"></i>
+          <span class="dbb-action-label">演示</span>
+        </button>
+        <button class="dbb-action" data-variant="icon">
+          <i class="dbb-action-icon cses-gengduo"></i>
+        </button>
+      </div>
+    </cs-doc-breadcrumb-bar>
+  </div>
+
+  <div class="section">
+    <div class="section-title">未保存（无 data-saved）</div>
+    <cs-doc-breadcrumb-bar>
+      <div class="dbb-left">
+        <a class="dbb-crumb" href="#">
+          <i class="dbb-crumb-icon cses-shouye"></i>
+        </a>
+        <i class="dbb-sep cses-right"></i>
+        <span class="dbb-current">
+          未命名文档
+          <i class="dbb-crumb-caret cses-arrow"></i>
+        </span>
+        <i class="dbb-collect cses-collect"></i>
+      </div>
+      <div class="dbb-right">
+        <button class="dbb-action" data-variant="primary">
+          <i class="dbb-action-icon cses-fenxiang"></i>
+          <span class="dbb-action-label">分享</span>
+        </button>
+        <button class="dbb-action" data-variant="icon">
+          <i class="dbb-action-icon cses-gengduo"></i>
+        </button>
+      </div>
+    </cs-doc-breadcrumb-bar>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+/* ============================================================
+ * cs-ai-suggestion-bar — AI 主动建议条（Hero 下方常驻）
+ * REQ-002 / REQ-021：6 时段触发 + 反打扰
+ *
+ * data 属性：
+ *   data-scenario:
+ *     - first-recommend     今日第一推荐
+ *     - meeting-prepare     会议准备提醒
+ *     - delay-warning       拖延预警
+ *     - cross-coordination  跨人协同
+ *     - time-block          时间块建议
+ *     - daily-review        日终复盘
+ *   data-collapsed:
+ *     - true / false        "稍后再说"折叠态（true 时 display:none）
+ *   data-page:
+ *     - "1/4" "2/4" ...     当前/总页字符串（在 .ai-pager 中显示）
+ *
+ * 子元素 data 属性：
+ *   .ai-action-btn[data-variant]:
+ *     - primary             v2 已降级为 L2 主色边框（白底 + 主色字 + 主色边框）
+ *     - secondary           L3 ghost（透明底 + 主色字）
+ *     - text                L3 / L5 灰文字按钮
+ *   .ai-action-btn[data-action]:
+ *     - start-task / reschedule / snooze / view-brief / ai-decompose / extend-deadline
+ *   .ai-pager i[data-action]:
+ *     - prev-suggestion / next-suggestion
+ * ============================================================ */
+
+/* v2 升级（2026-04-28 §13.2 / §17.2）：从紫填充背景降级为白底 + 主色左色条 */
+cs-ai-suggestion-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--cs-space-ws-md);
+  width: 100%;
+  min-height: 64px;
+  padding: var(--cs-space-ws-md) var(--cs-space-ws-lg);
+  background: var(--cs-color-ws-bg-card);             /* v2：白底 */
+  border-left: 4px solid var(--cs-color-ws-primary);  /* 主色左色条作为 L-次锚点 */
+  border-radius: var(--cs-radius-ws-md);
+  box-shadow: var(--cs-shadow-ws-card);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+cs-ai-suggestion-bar[data-collapsed="true"] {
+  display: none;
+}
+
+/* AI 头像（呼吸光晕） */
+cs-ai-suggestion-bar .ai-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--cs-gradient-hero);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cs-color-ws-white);
+  font-size: var(--cs-fs-ws-h2);
+  position: relative;
+  animation: ai-breathe 2.4s ease-in-out infinite;
+}
+@keyframes ai-breathe {
+  0%, 100% { box-shadow: 0 0 0 0 var(--cs-color-ws-pulse-in); }
+  50%      { box-shadow: 0 0 0 8px var(--cs-color-ws-pulse-out); }
+}
+
+cs-ai-suggestion-bar .ai-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+cs-ai-suggestion-bar .ai-label {
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+}
+/* v2：tag 紫填充 → 浅紫底主色字（不再形成"双紫块"） */
+cs-ai-suggestion-bar .ai-label .ai-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1px 6px;
+  background: var(--cs-color-ws-primary-bg);
+  color: var(--cs-color-ws-primary);
+  font-size: var(--cs-fs-ws-tag);
+  font-weight: 600;
+  border-radius: var(--cs-radius-ws-xs);
+  margin-right: 4px;
+}
+cs-ai-suggestion-bar .ai-message {
+  font-size: var(--cs-fs-ws-body);
+  color: var(--cs-color-ws-text-primary);
+  line-height: 22px;
+}
+cs-ai-suggestion-bar .ai-message b {
+  color: var(--cs-color-ws-primary);
+  font-weight: 600;
+}
+
+cs-ai-suggestion-bar .ai-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+cs-ai-suggestion-bar .ai-action-btn {
+  padding: 6px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--cs-radius-ws-sm);
+  font-size: var(--cs-fs-ws-caption);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+/* v2 升级（§16）：AI 主动建议条按钮全部降级
+ * primary（原 L1 紫填充）→ L2 主色边框（白底 + 主色字 + 主色边框）
+ * secondary → L3 ghost（无底色，主色字）
+ * text → L3 / L5 灰文字按钮
+ * 整条全屏不允许出现 L1 主色填充 */
+cs-ai-suggestion-bar .ai-action-btn[data-variant="primary"] {
+  background: var(--cs-color-ws-white);
+  color: var(--cs-color-ws-primary);
+  border-color: var(--cs-color-ws-primary);
+  font-weight: 600;
+}
+cs-ai-suggestion-bar .ai-action-btn[data-variant="primary"]:hover {
+  background: var(--cs-color-ws-primary-bg);
+  color: var(--cs-color-ws-primary-active);
+  border-color: var(--cs-color-ws-primary-active);
+}
+cs-ai-suggestion-bar .ai-action-btn[data-variant="secondary"] {
+  background: transparent;
+  color: var(--cs-color-ws-primary);
+  border-color: transparent;
+}
+cs-ai-suggestion-bar .ai-action-btn[data-variant="secondary"]:hover {
+  background: var(--cs-color-ws-primary-bg);
+}
+cs-ai-suggestion-bar .ai-action-btn[data-variant="text"] {
+  background: transparent;
+  color: var(--cs-color-ws-text-secondary);
+}
+cs-ai-suggestion-bar .ai-action-btn[data-variant="text"]:hover {
+  color: var(--cs-color-ws-primary);
+  background: var(--cs-color-ws-bg-subtle);
+}
+
+/* 翻页器 */
+cs-ai-suggestion-bar .ai-pager {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+  margin-left: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--cs-color-ws-border);
+}
+cs-ai-suggestion-bar .ai-pager i {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--cs-radius-ws-xs);
+  transition: all 0.15s ease;
+}
+cs-ai-suggestion-bar .ai-pager i:hover {
+  background: var(--cs-color-ws-bg-subtle);
+  color: var(--cs-color-ws-primary);
+}

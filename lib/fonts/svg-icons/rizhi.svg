@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+  <!-- Notebook with lines -->
+  <path d="M5 2c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2H5zm0 2h14v16H5V4z"/>
+  <!-- Spine/binding -->
+  <rect x="4" y="4" width="1" height="16" opacity="0.3"/>
+  <!-- Lines representing content -->
+  <rect x="8" y="7" width="9" height="1.2" rx="0.6"/>
+  <rect x="8" y="10" width="9" height="1.2" rx="0.6"/>
+  <rect x="8" y="13" width="6" height="1.2" rx="0.6"/>
+  <rect x="8" y="16" width="7" height="1.2" rx="0.6"/>
+</svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<style>
+  .bg{fill:#083D2A}
+  .t{fill:#EED6C8;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .m{fill:#8FB3A0;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mb{fill:#EED6C8;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .d{fill:#EED6C8;font-family:'Instrument Serif',Georgia,serif}
+  .a{fill:#DAAB00}
+  .am{fill:#DAAB00;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mu{fill:#8FB3A0;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .ln{stroke:#EED6C8;fill:none}
+  .ln2{stroke:#EED6C8;fill:none;opacity:.35}
+  .la{stroke:#DAAB00;fill:none}
+  .ds{stroke:#8FB3A0;fill:none;stroke-dasharray:6 6}
+  .box{fill:none;stroke:#EED6C8;stroke-opacity:.55}
+  .boxa{fill:#DAAB00;fill-opacity:.12;stroke:#DAAB00}
+  .fill{fill:#EED6C8;fill-opacity:.06;stroke:#EED6C8;stroke-opacity:.35}
+  .hatch{fill:url(#hz);stroke:#EED6C8;stroke-opacity:.35}
+  .pill{fill:none;stroke:#EED6C8;stroke-opacity:.6}
+</style>
+<defs>
+  <pattern id="hz" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#EED6C8" stroke-opacity=".22" stroke-width="1"/>
+  </pattern>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#EED6C8"/>
+  </marker>
+  <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#DAAB00"/>
+  </marker>
+  <marker id="arm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#8FB3A0"/>
+  </marker>
+</defs>
+<rect class="bg" width="1600" height="900"/><text x="90" y="96" class="d" font-size="48" text-anchor="start" font-weight="400" >AI 在会议的什么时候出现</text><text x="90" y="132" class="mu" font-size="18" text-anchor="start" font-weight="400" >同一条会议时间轴 · 三类做法 · 虚线 = 产物还要再搬一次家</text><text x="1510" y="80" class="m" font-size="13" text-anchor="end" font-weight="400" >FIG D · WHEN AI SHOWS UP</text><text x="380" y="236" class="t" font-size="18" text-anchor="middle" font-weight="500" >会前</text><text x="380" y="256" class="m" font-size="11" text-anchor="middle" font-weight="400" >BEFORE</text><line x1="380" y1="272" x2="380" y2="760" class="ln2" stroke-dasharray="2 6"/><text x="760" y="236" class="t" font-size="18" text-anchor="middle" font-weight="500" >会中</text><text x="760" y="256" class="m" font-size="11" text-anchor="middle" font-weight="400" >IN MEETING</text><line x1="760" y1="272" x2="760" y2="760" class="ln2" stroke-dasharray="2 6"/><text x="1140" y="236" class="t" font-size="18" text-anchor="middle" font-weight="500" >会后</text><text x="1140" y="256" class="m" font-size="11" text-anchor="middle" font-weight="400" >AFTER</text><line x1="1140" y1="272" x2="1140" y2="760" class="ln2" stroke-dasharray="2 6"/><text x="90" y="336" class="t" font-size="22" text-anchor="start" font-weight="500" >腾讯会议 · 飞书 · 钉钉</text><text x="90" y="360" class="m" font-size="12" text-anchor="start" font-weight="400" >会后型</text><line x1="380" y1="350" x2="1140" y2="350" class="ln2"/><circle cx="1140" cy="350" r="9" fill="#DAAB00"/><text x="1140" y="328" class="am" font-size="12" text-anchor="middle" font-weight="400" >AI 介入</text><rect x="1162" y="368" width="81.19999999999999" height="30" rx="6" class="box"/><text x="1202.6" y="388.04" class="t" font-size="14" text-anchor="middle" font-weight="400" >一份纪要</text><line x1="1249.2" y1="383" x2="1294" y2="383" class="ds" marker-end="url(#arm)"/><rect x="1300" y="368" width="107.8" height="30" rx="6" class="box"/><text x="1353.9" y="388.04" class="mu" font-size="14" text-anchor="middle" font-weight="400" >人工转成任务</text><text x="1510" y="356" class="mu" font-size="13" text-anchor="end" font-weight="400" >会中整段没有产物</text><text x="90" y="506" class="t" font-size="22" text-anchor="start" font-weight="500" >Tana</text><text x="90" y="530" class="m" font-size="12" text-anchor="start" font-weight="400" >会中型</text><line x1="380" y1="520" x2="1140" y2="520" class="ln2"/><circle cx="760" cy="520" r="9" fill="#DAAB00"/><text x="760" y="498" class="am" font-size="12" text-anchor="middle" font-weight="400" >AI 介入</text><rect x="782" y="538" width="54.599999999999994" height="30" rx="6" class="box"/><text x="809.3" y="558.04" class="t" font-size="14" text-anchor="middle" font-weight="400" >笔记</text><line x1="842.6" y1="553" x2="1294" y2="553" class="ds" marker-end="url(#arm)"/><rect x="1300" y="538" width="240.79999999999998" height="30" rx="6" class="box"/><text x="1420.4" y="558.04" class="mu" font-size="14" text-anchor="middle" font-weight="400" >任务 / 文档 / 审批各在别处</text><text x="1510" y="526" class="mu" font-size="13" text-anchor="end" font-weight="400" >解决了时机，没解决去处</text><text x="90" y="676" class="t" font-size="22" text-anchor="start" font-weight="500" >NOTA</text><text x="90" y="700" class="m" font-size="12" text-anchor="start" font-weight="400" >会中 + 全业务</text><line x1="380" y1="690" x2="1140" y2="690" class="ln2"/><circle cx="760" cy="690" r="9" fill="#DAAB00"/><text x="760" y="668" class="am" font-size="12" text-anchor="middle" font-weight="400" >AI 介入</text><rect x="782" y="708" width="187.6" height="30" rx="6" class="boxa"/><text x="875.8" y="728.04" class="t" font-size="14" text-anchor="middle" font-weight="400" >任务 / 文档 / KR</text><line x1="975.6" y1="723" x2="1134" y2="723" class="la" marker-end="url(#ara)"/><rect x="1140" y="708" width="81.19999999999999" height="30" rx="6" class="boxa"/><text x="1180.6" y="728.04" class="t" font-size="14" text-anchor="middle" font-weight="400" >本人确认</text><text x="1510" y="696" class="a" font-size="13" text-anchor="end" font-weight="400" >产物不出平台</text></svg>

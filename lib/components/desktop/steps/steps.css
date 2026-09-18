@@ -1,0 +1,182 @@
+/*
+ * 步骤条组件 (Steps)
+ * 标签：<cs-steps>
+ *
+ * 作用：水平展示多步骤流转状态。用于工单、订单、流程等线性阶段推进。
+ * 对标 antd Steps / ng-zorro Steps。
+ *
+ * data 属性（容器）：
+ *   data-direction="horizontal"(默认) | "vertical"
+ *   data-size="sm" | "md"(默认)
+ *
+ * data 属性（item）：
+ *   data-status="done" | "active" | "pending" | "closed"
+ *     done    — 已完成（实心主色圆 + check 图标）
+ *     active  — 当前进行中（实心主色圆 + 数字 + 高亮 + 动效）
+ *     pending — 未开始（空心灰圆 + 数字）
+ *     closed  — 已关闭（实心灰圆 + 关闭图标 · 终止态）
+ *
+ * 子元素：
+ *   .cs-steps__item   — 单个步骤
+ *   .cs-steps__icon   — 圆形节点（含数字或图标）
+ *   .cs-steps__label  — 步骤名
+ *   .cs-steps__desc   — 描述
+ *   .cs-steps__line   — 步骤间连线（自动渲染 · 通过 ::after）
+ */
+
+cs-steps {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  gap: 0;
+  font-family: "PingFang SC", sans-serif;
+}
+
+cs-steps .cs-steps__item {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  min-width: 0;
+}
+
+cs-steps .cs-steps__item:last-child {
+  flex: 0 0 auto;
+}
+
+/* ========== 圆形节点 ========== */
+cs-steps .cs-steps__icon {
+  position: relative;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cs-color-bg);
+  border: 2px solid var(--cs-color-border);
+  color: var(--cs-color-text-light2);
+  font: var(--typo-cn-14-medium);
+  flex-shrink: 0;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+cs-steps .cs-steps__icon i {
+  font-size: 16px;
+  font-style: normal;
+}
+
+/* ========== 连线（item::after 跨到下一节点） ========== */
+cs-steps .cs-steps__item::after {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: calc(50% + 20px);
+  right: calc(-50% + 20px);
+  height: 2px;
+  background: var(--cs-color-border);
+  z-index: 0;
+}
+
+cs-steps .cs-steps__item:last-child::after {
+  display: none;
+}
+
+/* ========== 文案 ========== */
+cs-steps .cs-steps__label {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text-light);
+  text-align: center;
+  line-height: 22px;
+}
+
+cs-steps .cs-steps__desc {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  text-align: center;
+  line-height: 20px;
+}
+
+/* ========== 状态：done（已完成） ========== */
+cs-steps .cs-steps__item[data-status="done"] .cs-steps__icon {
+  background: var(--cs-color-success);
+  border-color: var(--cs-color-success);
+  color: var(--cs-color-bg);
+}
+
+cs-steps .cs-steps__item[data-status="done"] .cs-steps__label {
+  color: var(--cs-color-text);
+}
+
+cs-steps .cs-steps__item[data-status="done"]::after {
+  background: var(--cs-color-success);
+}
+
+/* ========== 状态：active（进行中） ========== */
+cs-steps .cs-steps__item[data-status="active"] .cs-steps__icon {
+  background: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-bg);
+  box-shadow: 0 0 0 4px var(--cs-color-primary-a2);
+  animation: cs-steps-pulse 2s ease-in-out infinite;
+}
+
+cs-steps .cs-steps__item[data-status="active"] .cs-steps__label {
+  color: var(--cs-color-primary);
+  font-weight: 500;
+}
+
+@keyframes cs-steps-pulse {
+  0%, 100% { box-shadow: 0 0 0 4px var(--cs-color-primary-a2); }
+  50%      { box-shadow: 0 0 0 6px var(--cs-color-primary-a2); }
+}
+
+/* ========== 状态：pending（未开始） ========== */
+cs-steps .cs-steps__item[data-status="pending"] .cs-steps__icon {
+  background: var(--cs-color-bg);
+  border-color: var(--cs-color-border);
+  color: var(--cs-color-text-light2);
+}
+
+cs-steps .cs-steps__item[data-status="pending"]::after {
+  background: var(--cs-color-border);
+  border-top: 2px dashed var(--cs-color-border);
+  background: transparent;
+  height: 0;
+}
+
+/* ========== 状态：closed（已关闭 · 终止态） ========== */
+cs-steps .cs-steps__item[data-status="closed"] .cs-steps__icon {
+  background: var(--cs-color-text-light2);
+  border-color: var(--cs-color-text-light2);
+  color: var(--cs-color-bg);
+}
+
+cs-steps .cs-steps__item[data-status="closed"] .cs-steps__label {
+  color: var(--cs-color-text-light);
+}
+
+cs-steps .cs-steps__item[data-status="closed"]::after {
+  background: var(--cs-color-text-light2);
+}
+
+/* ========== 尺寸 sm ========== */
+cs-steps[data-size="sm"] .cs-steps__icon {
+  width: 24px;
+  height: 24px;
+  font: var(--typo-cn-12-regular);
+}
+
+cs-steps[data-size="sm"] .cs-steps__item::after {
+  top: 11px;
+  left: calc(50% + 16px);
+  right: calc(-50% + 16px);
+}
+
+cs-steps[data-size="sm"] .cs-steps__icon i {
+  font-size: 12px;
+}

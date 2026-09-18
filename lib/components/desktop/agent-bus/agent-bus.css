@@ -1,0 +1,287 @@
+/* ============================================================
+ * cs-agent-bus — AI 工作总线（多源 Agent Hub）
+ * REQ-004 / REQ-023 / REQ-024 / REQ-025 / REQ-027
+ *
+ * data 属性（容器自身无 data 属性，所有 data 在子元素上）：
+ *
+ * 子元素 data 属性：
+ *   .bus-tab[data-tab]:
+ *     - all / self / external / custom / needs   筛选维度
+ *   .bus-tab[data-active]:
+ *     - true / false                             激活态（v2 已降级为浅紫底主色字）
+ *   .needs-row[data-need-id]:
+ *     - 字符串                                   待处理项 ID
+ *   .needs-btn[data-variant]:
+ *     - primary             v2 降级为 L2 主色边框（白底 + 主色字 + 主色边框）
+ *     - (无)                默认浅灰描边
+ *   .needs-btn[data-action]:
+ *     - approve / reject / view / config / 自定义动作 ID
+ *   .needs-btn[data-need]:
+ *     - 字符串              对应 .needs-row[data-need-id]
+ *   .flow-row[data-source]:
+ *     - self / anthropic / openai / google / coze / chain   来源色（与 cs-agent-tile 同源）
+ *   .flow-row[data-agent-id]:
+ *     - 字符串              对应 cs-agent-detail-panel 锚点
+ *   .flow-row[data-chain]:
+ *     - true                hover 时显示 .flow-chain-tip 链路提示
+ *   .matrix-add[data-action]:
+ *     - add-agent           添加新 Agent 入口
+ * ============================================================ */
+
+cs-agent-bus {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--cs-color-ws-bg-card);
+  border-radius: var(--cs-radius-ws-md);
+  box-shadow: var(--cs-shadow-ws-card);
+  padding: var(--cs-space-ws-xl);
+  overflow: hidden;
+}
+
+/* 头部 */
+cs-agent-bus .bus-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--cs-space-ws-md);
+}
+cs-agent-bus .bus-head .bus-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--cs-fs-ws-h2);
+  font-weight: 600;
+  color: var(--cs-color-ws-text-primary);
+}
+cs-agent-bus .bus-head .bus-title i { font-size: var(--cs-fs-ws-h2); color: var(--cs-color-ws-primary); }
+cs-agent-bus .bus-head .bus-stat {
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+}
+
+/* Tabs */
+cs-agent-bus .bus-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: var(--cs-space-ws-md);
+  border-bottom: 1px solid var(--cs-color-ws-border);
+  padding-bottom: var(--cs-space-ws-sm);
+}
+cs-agent-bus .bus-tab {
+  padding: 4px 10px;
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--cs-radius-ws-pill);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+cs-agent-bus .bus-tab:hover { color: var(--cs-color-ws-text-regular); background: var(--cs-color-ws-bg-subtle); }
+/* v2 升级（§16）：active tab 紫填充 → 浅紫底主色字（避免与 hero 形成"双紫块"） */
+cs-agent-bus .bus-tab[data-active="true"] {
+  background: var(--cs-color-ws-primary-bg);
+  color: var(--cs-color-ws-primary);
+  font-weight: 600;
+}
+cs-agent-bus .bus-tab[data-tab="needs"] {
+  color: var(--cs-color-ws-danger);
+  font-weight: 500;
+}
+cs-agent-bus .bus-tab[data-tab="needs"][data-active="true"] {
+  background: var(--cs-color-ws-danger-bg);
+  color: var(--cs-color-ws-danger);
+  font-weight: 600;
+}
+cs-agent-bus .bus-tab .badge-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cs-color-ws-danger);
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+/* "待你处理" 队列 */
+cs-agent-bus .bus-needs {
+  background: var(--cs-color-ws-danger-bg);
+  border-left: 3px solid var(--cs-color-ws-danger);
+  border-radius: var(--cs-radius-ws-sm);
+  padding: var(--cs-space-ws-md);
+  margin-bottom: var(--cs-space-ws-md);
+}
+cs-agent-bus .bus-needs-title {
+  font-size: var(--cs-fs-ws-caption);
+  font-weight: 600;
+  color: var(--cs-color-ws-danger);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+cs-agent-bus .needs-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  font-size: var(--cs-fs-ws-body);
+  color: var(--cs-color-ws-text-regular);
+  border-bottom: 1px dashed var(--cs-color-ws-divider-soft);
+}
+cs-agent-bus .needs-row:last-child { border-bottom: none; }
+cs-agent-bus .needs-row .needs-source {
+  display: inline-block;
+  font-size: var(--cs-fs-ws-tag);
+  padding: 1px 6px;
+  border-radius: var(--cs-radius-ws-xs);
+  background: var(--cs-color-ws-overlay-light-85);
+  color: var(--cs-color-ws-text-secondary);
+  flex-shrink: 0;
+}
+cs-agent-bus .needs-row .needs-text { flex: 1; min-width: 0; }
+cs-agent-bus .needs-row .needs-actions { flex-shrink: 0; display: inline-flex; gap: 4px; }
+cs-agent-bus .needs-btn {
+  padding: 3px 10px;
+  font-size: var(--cs-fs-ws-tag);
+  border: 1px solid var(--cs-color-ws-border);
+  border-radius: var(--cs-radius-ws-xs);
+  background: var(--cs-color-ws-white);
+  color: var(--cs-color-ws-text-regular);
+  cursor: pointer;
+  font-family: inherit;
+}
+/* v2 升级（§16.3 #5）：列表行内操作必须最弱
+ * primary（原 L1 紫填充）→ L2 主色边框（白底 + 主色字 + 主色边框） */
+cs-agent-bus .needs-btn[data-variant="primary"] {
+  background: var(--cs-color-ws-white);
+  color: var(--cs-color-ws-primary);
+  border-color: var(--cs-color-ws-primary);
+  font-weight: 600;
+}
+cs-agent-bus .needs-btn:hover {
+  background: var(--cs-color-ws-primary-bg);
+  color: var(--cs-color-ws-primary);
+  border-color: var(--cs-color-ws-primary);
+}
+
+/* 战绩聚合 */
+cs-agent-bus .bus-achievements {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: var(--cs-space-ws-md);
+}
+cs-agent-bus .achievement-cell {
+  background: var(--cs-color-ws-bg-subtle);
+  border-radius: var(--cs-radius-ws-sm);
+  padding: 12px;
+  text-align: center;
+}
+cs-agent-bus .achievement-num {
+  display: block;
+  font-size: var(--cs-fs-ws-h1);
+  font-weight: 700;
+  color: var(--cs-color-ws-text-primary);
+  font-family: "Nunito Sans", "PingFang SC", sans-serif;
+}
+cs-agent-bus .achievement-label {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+}
+
+/* 实时工作流 */
+cs-agent-bus .bus-flow {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin-bottom: var(--cs-space-ws-md);
+}
+cs-agent-bus .flow-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 4px;
+  border-bottom: 1px solid var(--cs-color-ws-border);
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-regular);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+cs-agent-bus .flow-row:hover { background: var(--cs-color-ws-bg-subtle); }
+cs-agent-bus .flow-row:last-child { border-bottom: none; }
+cs-agent-bus .flow-source {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: var(--cs-fs-ws-tag);
+  border-radius: var(--cs-radius-ws-xs);
+  flex-shrink: 0;
+  font-weight: 500;
+}
+cs-agent-bus .flow-row[data-source="self"]      .flow-source { background: var(--cs-color-ws-self-soft); color: var(--cs-color-agent-self); }
+cs-agent-bus .flow-row[data-source="anthropic"] .flow-source { background: var(--cs-color-ws-anthropic-soft); color: var(--cs-color-agent-anthropic); }
+cs-agent-bus .flow-row[data-source="openai"]    .flow-source { background: var(--cs-color-ws-openai-soft); color: var(--cs-color-agent-openai); }
+cs-agent-bus .flow-row[data-source="google"]    .flow-source { background: var(--cs-color-ws-google-soft); color: var(--cs-color-agent-google); }
+cs-agent-bus .flow-row[data-source="coze"]      .flow-source { background: var(--cs-color-ws-orange-soft); color: var(--cs-color-agent-coze); }
+cs-agent-bus .flow-row[data-source="chain"]     .flow-source { background: linear-gradient(90deg, var(--cs-color-agent-self), var(--cs-color-ws-orange)); color: var(--cs-color-ws-white); }
+cs-agent-bus .flow-name { color: var(--cs-color-ws-text-regular); width: 80px; flex-shrink: 0; }
+cs-agent-bus .flow-time { color: var(--cs-color-ws-text-secondary); width: 60px; flex-shrink: 0; }
+cs-agent-bus .flow-action { flex: 1; min-width: 0; color: var(--cs-color-ws-text-regular); }
+cs-agent-bus .flow-arrow { color: var(--cs-color-ws-text-placeholder); flex-shrink: 0; font-size: var(--cs-fs-ws-caption); }
+
+/* hover 链路提示 */
+cs-agent-bus .flow-row[data-chain] { position: relative; }
+cs-agent-bus .flow-row[data-chain]:hover .flow-chain-tip {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: var(--cs-color-ws-text-primary);
+  color: var(--cs-color-ws-white);
+  padding: 10px 12px;
+  border-radius: var(--cs-radius-ws-sm);
+  font-size: var(--cs-fs-ws-caption);
+  box-shadow: var(--cs-shadow-ws-pop);
+  white-space: nowrap;
+}
+cs-agent-bus .flow-chain-tip { display: none; }
+
+/* Agent 状态矩阵 */
+cs-agent-bus .bus-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: var(--cs-space-ws-sm);
+  border-top: 1px solid var(--cs-color-ws-border);
+}
+cs-agent-bus .matrix-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+cs-agent-bus .matrix-label {
+  display: inline-block;
+  width: 60px;
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+  flex-shrink: 0;
+}
+cs-agent-bus .matrix-add {
+  margin-left: auto;
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-primary);
+  cursor: pointer;
+  background: none;
+  border: 1px dashed var(--cs-color-ws-primary);
+  padding: 4px 10px;
+  border-radius: var(--cs-radius-ws-pill);
+  font-family: inherit;
+}
+cs-agent-bus .matrix-add:hover { background: var(--cs-color-ws-primary-bg); }

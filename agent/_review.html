@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>逐页验收 · AI Workflow Agent</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  body{background:#f7f8fb}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 24px 140px}
+  h1{font-size:22px;font-weight:800;letter-spacing:-.01em}
+  .lead{font-size:13px;color:var(--ink-2);line-height:1.8;margin:8px 0 20px}
+  .lead b{color:var(--ink)}
+  .bar{position:sticky;top:0;z-index:20;background:rgba(247,248,251,.92);backdrop-filter:blur(8px);padding:12px 0;margin-bottom:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+  .cnt{display:flex;gap:14px;font-size:12.5px;color:var(--ink-2);margin-left:auto;flex-wrap:wrap}
+  .cnt b{font-variant-numeric:tabular-nums}
+  .cnt .ok{color:var(--ok)} .cnt .no{color:var(--risk)}
+  .grp{font-size:13px;font-weight:700;color:var(--ink-2);margin:26px 0 10px}
+  .it{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--sd);transition:border-color .15s}
+  .it.ok{border-color:#cfe0d6}
+  .it.no{border-color:var(--risk-line);background:#fffdfc}
+  .it__h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .it__n{font-family:var(--mono);font-size:11px;color:var(--ink-3);width:30px;flex:0 0 30px}
+  .it__t{font-size:13.5px;font-weight:600}
+  .it__w{font-size:12px;color:var(--ink-3);flex:1 1 100%;margin:5px 0 0 40px;line-height:1.7}
+  .it__a{margin-left:auto;display:flex;align-items:center;gap:8px;flex:0 0 auto}
+  .vb{border:1px solid var(--line);background:#fff;border-radius:6px;padding:5px 12px;font-size:12.5px;cursor:pointer;color:var(--ink-2);transition:all .14s}
+  .vb:hover{border-color:#cbd5e1}
+  .vb.on--ok{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:600}
+  .vb.on--no{border-color:var(--risk);background:var(--risk-soft);color:var(--risk);font-weight:600}
+  .it textarea{width:100%;margin:10px 0 0 40px;max-width:calc(100% - 40px);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font:inherit;font-size:12.5px;line-height:1.7;resize:vertical;min-height:58px;outline:0;display:none;background:#fff}
+  .it textarea:focus{border-color:var(--pri-l);box-shadow:0 0 0 3px rgba(72,87,226,.1)}
+  .it.open textarea{display:block}
+  .addn{font-size:12px;color:var(--pri);cursor:pointer}
+  .addn:hover{text-decoration:underline;text-underline-offset:3px}
+  .foot{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:14px 24px;display:flex;align-items:center;gap:12px}
+  .foot .in{max-width:1080px;margin:0 auto;width:100%;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .foot .msg{font-size:12.5px;color:var(--ink-3)}
+  .foot .right{margin-left:auto;display:flex;gap:10px}
+  .out{max-width:1080px;margin:0 auto;width:100%}
+  .out textarea{width:100%;height:180px;border:1px solid var(--line);border-radius:10px;padding:12px;font-family:var(--mono);font-size:11.5px;line-height:1.7;margin-top:10px}
+  @media (max-width:720px){.it__a{margin-left:0;width:100%}.it__w,.it textarea{margin-left:0;max-width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>逐页验收</h1>
+  <p class="lead">
+    每一页、每一个状态都单独一条（点了 1 才出现 2 的，也算两条）。<br>
+    看完点 <b>通过</b> 或 <b>不通过</b>，要改的地方写在意见里。全部看完点右下角 <b>完成并导出意见</b> —— 会往「下载」文件夹存一个
+    <b>验收意见.txt</b>，同时复制到剪贴板。我直接读那个文件，你不用一条条发给我。<br>
+    <span class="dim">勾选和意见存在本机浏览器里，关掉页面也不会丢。</span>
+  </p>
+
+  <div class="bar">
+    <div class="tabs" id="filt">
+      <button class="is-on" data-f="all">全部</button>
+      <button data-f="todo">还没看</button>
+      <button data-f="no">不通过</button>
+      <button data-f="ok">已通过</button>
+    </div>
+    <div class="cnt" id="cnt"></div>
+  </div>
+
+  <div id="list"></div>
+</div>
+
+<div class="foot">
+  <div class="in">
+    <span class="msg" id="msg">还没开始</span>
+    <span class="right">
+      <button class="btn" type="button" id="clr">清空重来</button>
+      <button class="btn" type="button" id="copy">只复制意见</button>
+      <button class="btn btn--p" type="button" id="done">完成并导出意见</button>
+    </span>
+  </div>
+</div>
+
+<div class="scrim" data-close></div>
+<div class="modal" id="outm" style="width:min(760px,94vw)">
+  <div class="modal__h"><h3>验收意见</h3><button class="x" type="button" data-close>✕</button></div>
+  <div class="modal__b">
+    <p style="font-size:12.5px;color:var(--ink-2)">已经存到「下载」文件夹的 <b>验收意见.txt</b>，也复制到剪贴板了。下面是全文，确认一下有没有漏的。</p>
+    <div class="out"><textarea id="outt" readonly></textarea></div>
+  </div>
+  <div class="modal__f"><button class="btn" type="button" data-close>关掉</button><button class="btn btn--p" type="button" id="copy2">再复制一次</button></div>
+</div>
+
+<script src="ui.js"></script>
+<script>
+(function () {
+  'use strict';
+  /* 每一页 + 每一个状态各一条。href 直接跳到那个状态。 */
+  var G = [
+    ['前台 · 审批工作台', [
+      ['f01', '工作台', '等你处理三条、发起一张单、我发起的进度条', 'workbench.html'],
+      ['f02', '发起申请 · 默认（审批与工单）', '上边三大类、为您推荐、分组往下排；不该有「未发布」', 'apply.html'],
+      ['f03', '发起申请 · 切到「工作流」', '分组换成采购与付款 / 人事流程 / 法务与合规', 'apply.html'],
+      ['f04', '发起申请 · 切到「智能洞察」', '分组换成运行分析 / 风险体检', 'apply.html'],
+      ['f05', '发起申请 · 搜索', '输「报销」，只剩相关的单子', 'apply.html'],
+      ['f06', '发起申请 · 折叠分组', '点分组标题收起，图标背景是浅色的', 'apply.html'],
+      ['f07', '发起申请 · 只看我常用的', '只留「为您推荐」那一块', 'apply.html'],
+      ['f08', '填表 · 默认', '表头跟着选的单据变，Agent 带出的字段有标记', 'form.html?t=%E4%BB%98%E6%AC%BE%E7%94%B3%E8%AF%B7'],
+      ['f09', '填表 · 金额改成 600000', '大写实时变、审批链重算、跳过的档位变灰', 'form.html?t=%E4%BB%98%E6%AC%BE%E7%94%B3%E8%AF%B7'],
+      ['f10', '填表 · 供应商选恒通机电', '黑名单提示出现', 'form.html?t=%E4%BB%98%E6%AC%BE%E7%94%B3%E8%AF%B7'],
+      ['f11', '填表 · 提交前自检', '四条检查逐条给结论', 'form.html?t=%E4%BB%98%E6%AC%BE%E7%94%B3%E8%AF%B7'],
+      ['f12', '待我处理 · 列表', '三张卡，含不可逆的那张有标记', 'approvals.html'],
+      ['f13', '待我处理 · 卡片悬浮', '按钮悬浮才出现，卡片高度不变，下方有白到透明的渐变', 'approvals.html'],
+      ['f14', '审批详情 · 锚点滚动', '顶上三个锚点，往下滚自己高亮', 'approvals.html'],
+      ['f15', '审批详情 · 审批记录', '等了多久、用时多久、谁抄送给谁', 'approvals.html'],
+      ['f16', '审批详情 · 步进器 ⋯', '当前步前后各两步，未定分支折成 ⋯，悬浮列出分支', 'approvals.html'],
+      ['f17', '审批详情 · 完整流程图', '点步进器打开整张图', 'approvals.html'],
+      ['f18', '底部操作条', '浮起的圆角条，不撑满，两组按钮间距 40px', 'approvals.html'],
+      ['f19', '通过弹窗', '推荐回复可以点，确认后自动跳下一张', 'approvals.html'],
+      ['f20', '拒绝弹窗', '必须写理由才能提交', 'approvals.html'],
+      ['f21', '抄送弹窗', '选人、写一句话', 'approvals.html'],
+      ['f22', '办理人节点 · 去填写', '点按钮跳到要填的位置', 'approvals.html'],
+      ['f23', '已处理的', '', 'approvals.html?tab=done'],
+      ['f24', '我发起的', '', 'approvals.html?tab=mine'],
+      ['f25', '抄送我的', '', 'approvals.html?tab=cc'],
+      ['f26', '跨组织审批', '外部单位的单子长什么样', 'approvals.html?tab=cross'],
+      ['f27', '搭建', '一句话入口 + 三张卡 + 最近对话', 'build.html'],
+      ['f28', '模板库 · 工作流', '三个板块的页签叫「模板」', 'templates.html'],
+      ['f29', '模板库 · 智能洞察', '', 'templates.html'],
+      ['f30', '模板库 · 审批与工单', '', 'templates.html'],
+      ['f31', '模板库 · 模板详情弹窗', '点任意一张卡', 'templates.html'],
+      ['f32', '模板库 · 新建流程弹窗', '类别 / 对内对外 / 名称 / 分组 / 图标', 'templates.html']
+    ]],
+    ['后台 · 流程中台', [
+      ['b01', '工作台（后台首页）', '今天的运行状态、需要你处理、正在跑的运行', 'home.html'],
+      ['b02', '流程管理 · 默认', 'Banner 在最上方；「未发布」置顶且只有这一页看得到', 'flows.html'],
+      ['b03', '流程管理 · 为您推荐', '一键添加，加完提示进了「未发布」', 'flows.html'],
+      ['b04', '流程管理 · 折叠分组', '', 'flows.html'],
+      ['b05', '流程管理 · 切当前版本', '下拉分「当前版本 / 历史版本」，选历史 = 回退', 'flows.html'],
+      ['b06', '流程管理 · 停用开关', '停用的说明要说清进行中的单子怎么办', 'flows.html'],
+      ['b07', '流程管理 · 删除草稿', '二次确认', 'flows.html'],
+      ['b08', '流程管理 · 分组管理', '拖手柄换顺序、改名、删除、显隐', 'flows.html'],
+      ['b09', '流程管理 · 搜索', '推荐块收起，只剩命中的', 'flows.html'],
+      ['b10', '描述对话 · 开场', '四个快捷入口', 'chat.html'],
+      ['b11', '描述对话 · 三轮追问', '追问在输入框上方，不在正文里', 'chat.html'],
+      ['b12', '描述对话 · 生成草稿', '右侧规则清单', 'chat.html'],
+      ['b13', '流程配置 1 · 基础信息', '三选一 / 对内对外 / 名称 / 分组 / 图标', 'builder.html?step=1'],
+      ['b14', '基础信息 · 换类别', '分组跟着换成那一类下面的', 'builder.html?step=1'],
+      ['b15', '流程配置 2 · 表单设计', '左控件库、中表单、右属性，都是悬浮窗', 'builder.html?step=2'],
+      ['b16', '表单设计 · 点字段', '右边按控件类型给不同的属性分节', 'builder.html?step=2'],
+      ['b17', '表单设计 · 加控件', '点击或拖拽均可添加', 'builder.html?step=2'],
+      ['b18', '表单设计 · 收起助手 / 属性', '收起后有悬浮按钮能再展开，画布自动补位', 'builder.html?step=2'],
+      ['b19', '流程配置 3 · 画布', '左 AI、右节点配置，都是悬浮窗', 'builder.html?step=3'],
+      ['b20', '画布 · 连线 ⊕ 加节点', '菜单九项、两个分组标题', 'builder.html?step=3'],
+      ['b21', '画布 · 节点配置四个页签', '基本 / 风险与可逆 / 验证 / 依据', 'builder.html?step=3'],
+      ['b22', '画布 · 自动化', '模板库 → 两栏配置', 'builder.html?step=3'],
+      ['b22b', '画布 · 节点末尾固定的自动化位', '每个节点最后都有一条，点进去给这个节点挂自动化', 'builder.html?step=3'],
+      ['b22c', '画布 · 用一句话改节点', '「超时改成 12 小时」这种，改完告诉你动了哪里；听不懂会反问', 'builder.html?step=3'],
+      ['b23', '流程配置 4 · 更多设置', '整条流程的开关，1234 步走到最后一步', 'builder.html?step=4'],
+      ['b24', '测试（预演）', '只走逻辑，不会真付款', 'builder.html?step=3'],
+      ['b25', '上线前体检', '3 项没过就上不了线', 'check.html'],
+      ['b26', '体检 · 一键应用建议', '横幅与右侧的迷你流程图同步更新', 'check.html'],
+      ['b27', '变更审阅', '流程图对比 / 逐条对比', 'review.html'],
+      ['b28', '审阅 · 确认发布', '驳回要写意见', 'review.html'],
+      ['b29', '运行监控', '事件流：谁做的、产出什么、可逆等级', 'runs.html'],
+      ['b30', '运行 · 展开三单匹配', '', 'runs.html'],
+      ['b31', '异常处理', '证据和处理方式一次给全', 'exceptions.html'],
+      ['b32', '异常 · 四种处理方式', '必须写依据', 'exceptions.html'],
+      ['b33', '版本与回退', '时间线 + 版本详情', 'versions.html'],
+      ['b34', '回退三步弹窗', '影响确认 → 填原因 → 确认回退', 'versions.html'],
+      ['b35', '复盘 → 加入检查项库', '', 'versions.html'],
+      ['b36', '检查项库', '每条都写清从哪次事故来的', 'rules.html'],
+      ['b37', '检查项库 · 详情抽屉', '点行打开', 'rules.html']
+    ]],
+    ['整体', [
+      ['g01', '整合页', '路线能一步步点通，页卡里的交互都对得上', '_index.html'],
+      ['g02', '头像与身份', '哪儿都不出现头像，左下角也没有人员', 'home.html'],
+      ['g03', '自适应', '1440 / 1200 / 1024 三个宽度都不横向滚', 'flows.html'],
+      ['g04', '中文标点', '全角标点，没有半角逗号句号', 'apply.html'],
+      ['g05', '作品集项目页', '七个页面点开能直接操作，不是截图；末尾有平台关系图', '../project.html?p=agent']
+    ]]
+  ];
+
+  var KEY = 'ag_review_v2', S = {};
+  try { S = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { S = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+
+  var ALL = G.reduce(function (a, g) { return a.concat(g[1]); }, []);
+  var filt = 'all', list = document.getElementById('list');
+
+  function st(id) { return S[id] || { v: '', note: '' }; }
+  function show(it) {
+    var v = st(it[0]).v;
+    return filt === 'all' || (filt === 'todo' && !v) || (filt === 'no' && v === 'no') || (filt === 'ok' && v === 'ok');
+  }
+  function paint() {
+    var h = '', n = 0;
+    G.forEach(function (g) {
+      var rows = g[1].filter(show);
+      if (!rows.length) return;
+      h += '<div class="grp">' + g[0] + ' <span class="dim" style="font-weight:400">' + rows.length + ' 条</span></div>';
+      rows.forEach(function (it) {
+        var s = st(it[0]); n++;
+        h += '<div class="it ' + (s.v || '') + (s.note || s.v === 'no' ? ' open' : '') + '" data-id="' + it[0] + '">'
+          + '<div class="it__h"><span class="it__n">' + it[0] + '</span><span class="it__t">' + it[1] + '</span>'
+          + '<span class="it__a">'
+          + '<a class="btn btn--s" href="' + it[3] + '" target="_blank" rel="noopener">打开</a>'
+          + '<button class="vb' + (s.v === 'ok' ? ' on--ok' : '') + '" type="button" data-v="ok">通过</button>'
+          + '<button class="vb' + (s.v === 'no' ? ' on--no' : '') + '" type="button" data-v="no">不通过</button>'
+          + '<span class="addn" data-note>' + (s.note ? '意见 ✎' : '＋ 意见') + '</span>'
+          + '</span>'
+          + (it[2] ? '<div class="it__w">' + it[2] + '</div>' : '')
+          + '</div>'
+          + '<textarea placeholder="要改成什么样？写清楚就行，我照着改。">' + (s.note || '') + '</textarea>'
+          + '</div>';
+      });
+    });
+    list.innerHTML = h || '<div class="empty">这个筛选下没有条目。</div>';
+    counts();
+  }
+  function counts() {
+    var ok = 0, no = 0, note = 0;
+    ALL.forEach(function (it) { var s = st(it[0]); if (s.v === 'ok') ok++; if (s.v === 'no') no++; if (s.note) note++; });
+    document.getElementById('cnt').innerHTML =
+      '<span>共 <b>' + ALL.length + '</b> 条</span>'
+      + '<span class="ok">通过 <b>' + ok + '</b></span>'
+      + '<span class="no">不通过 <b>' + no + '</b></span>'
+      + '<span>还没看 <b>' + (ALL.length - ok - no) + '</b></span>'
+      + '<span>有意见 <b>' + note + '</b></span>';
+    document.getElementById('msg').textContent = (ok + no) === 0 ? '还没开始'
+      : (ok + no) < ALL.length ? '看了 ' + (ok + no) + ' / ' + ALL.length + '，还剩 ' + (ALL.length - ok - no) + ' 条'
+      : '全部看完了 · ' + no + ' 条不通过 · ' + note + ' 条有意见';
+  }
+  paint();
+
+  list.addEventListener('click', function (e) {
+    var it = e.target.closest('.it'); if (!it) return;
+    var id = it.dataset.id, s = st(id);
+    var v = e.target.closest('[data-v]');
+    if (v) {
+      s.v = s.v === v.dataset.v ? '' : v.dataset.v; S[id] = s; save(); paint(); return;
+    }
+    if (e.target.closest('[data-note]')) {
+      it.classList.toggle('open');
+      if (it.classList.contains('open')) it.querySelector('textarea').focus();
+      return;
+    }
+  });
+  list.addEventListener('input', function (e) {
+    if (e.target.tagName !== 'TEXTAREA') return;
+    var id = e.target.closest('.it').dataset.id, s = st(id);
+    s.note = e.target.value; S[id] = s; save(); counts();
+  });
+  document.getElementById('filt').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-f]'); if (!b) return;
+    filt = b.dataset.f;
+    [].forEach.call(this.querySelectorAll('button'), function (x) { x.classList.toggle('is-on', x === b); });
+    paint();
+  });
+
+  function build() {
+    var L = ['AI Workflow Agent · 逐页验收意见', '导出时间：' + new Date().toLocaleString('zh-CN'), ''];
+    var ok = 0, no = 0;
+    G.forEach(function (g) {
+      var rows = g[1].filter(function (it) { var s = st(it[0]); return s.v || s.note; });
+      if (!rows.length) return;
+      L.push('【' + g[0] + '】');
+      rows.forEach(function (it) {
+        var s = st(it[0]);
+        if (s.v === 'ok') ok++; if (s.v === 'no') no++;
+        L.push('  ' + it[0] + ' ' + it[1] + '  —— ' + (s.v === 'ok' ? '通过' : s.v === 'no' ? '不通过' : '没给结论') + '  [' + it[3] + ']');
+        if (s.note) L.push('      意见：' + s.note.replace(/\n/g, '\n            '));
+      });
+      L.push('');
+    });
+    L.splice(2, 0, '结果：通过 ' + ok + ' · 不通过 ' + no + ' · 未看 ' + (ALL.length - ok - no) + ' · 共 ' + ALL.length);
+    var todo = ALL.filter(function (it) { return st(it[0]).note; });
+    if (todo.length) {
+      L.push('════ 要改的（按顺序）════');
+      todo.forEach(function (it, i) { L.push((i + 1) + '. [' + it[0] + '] ' + it[1] + ' → ' + st(it[0]).note.replace(/\n/g, ' ')); });
+    }
+    return L.join('\n');
+  }
+  function copyText(t) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t).catch(function () { fallback(t); });
+    fallback(t);
+    function fallback(x) {
+      var a = document.createElement('textarea'); a.value = x; document.body.appendChild(a); a.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      a.remove();
+    }
+  }
+  document.getElementById('done').addEventListener('click', function () {
+    var t = build();
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([t], { type: 'text/plain;charset=utf-8' }));
+    a.download = '验收意见.txt';
+    document.body.appendChild(a); a.click(); a.remove();
+    copyText(t);
+    document.getElementById('outt').value = t;
+    AG.open(document.getElementById('outm'));
+  });
+  document.getElementById('copy').addEventListener('click', function () { copyText(build()); AG.toast('意见已复制到剪贴板'); });
+  document.getElementById('copy2').addEventListener('click', function () { copyText(build()); AG.toast('又复制了一次'); });
+  document.getElementById('clr').addEventListener('click', function () {
+    if (!confirm('清空所有勾选和意见？')) return;
+    S = {}; save(); paint(); AG.toast('已清空');
+  });
+})();
+</script>
+</body>
+</html>

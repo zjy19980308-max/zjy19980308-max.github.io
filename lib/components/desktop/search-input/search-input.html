@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-search-input 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="search-input.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+    .gray-bg { background: #f5f5f5; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+
+<!-- 白色变体（默认） -->
+<div class="section">
+  <div class="section-title">白色变体（默认）</div>
+  <div class="section-subtitle">data-variant="white" 或不设置，白色背景 + #e6e6e6 边框</div>
+
+  <div class="row">
+    <span class="row-label">默认</span>
+    <cs-search-input>
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" placeholder="搜索">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+
+  <div class="row">
+    <span class="row-label">有内容</span>
+    <cs-search-input data-has-value>
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" value="搜索内容">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+
+  <div class="row">
+    <span class="row-label">聚焦</span>
+    <cs-search-input>
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" placeholder="点击输入框查看聚焦态">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+
+  <div class="row">
+    <span class="row-label">错误</span>
+    <cs-search-input data-error data-has-value>
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" value="格式错误">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+</div>
+
+<!-- 灰色变体 -->
+<div class="section">
+  <div class="section-title">灰色变体</div>
+  <div class="section-subtitle">data-variant="gray"，灰色背景 + 透明边框</div>
+
+  <div class="row">
+    <span class="row-label">默认</span>
+    <cs-search-input data-variant="gray">
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" placeholder="搜索">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+
+  <div class="row">
+    <span class="row-label">有内容</span>
+    <cs-search-input data-variant="gray" data-has-value>
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" value="搜索内容">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+
+  <div class="row">
+    <span class="row-label">错误</span>
+    <cs-search-input data-variant="gray" data-error data-has-value>
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" value="格式错误">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+</div>
+
+<!-- 尺寸 -->
+<div class="section">
+  <div class="section-title">尺寸</div>
+  <div class="section-subtitle">data-size="sm" / 默认md / data-size="lg"</div>
+
+  <div class="row">
+    <span class="row-label">sm 28px</span>
+    <cs-search-input data-size="sm">
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" placeholder="小尺寸搜索">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+
+  <div class="row">
+    <span class="row-label">md 32px</span>
+    <cs-search-input>
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" placeholder="中尺寸搜索（默认）">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+
+  <div class="row">
+    <span class="row-label">lg 36px</span>
+    <cs-search-input data-size="lg">
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" placeholder="大尺寸搜索">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+</div>
+
+<!-- 业务场景示例 -->
+<div class="section">
+  <div class="section-title">业务场景示例</div>
+
+  <div class="row">
+    <span class="row-label">任务搜索</span>
+    <cs-search-input>
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" placeholder="搜索任务">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+
+  <div class="row">
+    <span class="row-label">侧边栏搜索</span>
+    <cs-search-input data-variant="gray" data-size="sm">
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" placeholder="快速搜索">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+
+  <div class="row">
+    <span class="row-label">带值+清除</span>
+    <cs-search-input data-has-value>
+      <i class="search-icon cses-sousuo"></i>
+      <input class="search-field" type="text" value="项目文档">
+      <i class="search-clear cses-guanbi"></i>
+    </cs-search-input>
+  </div>
+</div>
+
+</body>
+</html>

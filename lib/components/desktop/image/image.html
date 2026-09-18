@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-image 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="image.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 96px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- 1. 尺寸 -->
+<div class="section">
+  <div class="section-title">尺寸 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg" — 80x80 / 160x120 / 200x160</div>
+
+  <div class="row">
+    <span class="row-label">sm</span>
+    <cs-image data-size="sm" data-bordered>
+      <img src="https://picsum.photos/200/200?random=1" alt="">
+    </cs-image>
+
+    <span class="row-label" style="margin-left:24px;">md</span>
+    <cs-image data-size="md" data-bordered>
+      <img src="https://picsum.photos/300/300?random=2" alt="">
+    </cs-image>
+
+    <span class="row-label" style="margin-left:24px;">lg</span>
+    <cs-image data-size="lg" data-bordered>
+      <img src="https://picsum.photos/400/400?random=3" alt="">
+    </cs-image>
+  </div>
+</div>
+
+<!-- 2. 形状 -->
+<div class="section">
+  <div class="section-title">形状 Shape</div>
+  <div class="section-subtitle">data-shape="square | rounded | circle"</div>
+
+  <div class="row">
+    <span class="row-label">square</span>
+    <cs-image data-size="sm" data-bordered>
+      <img src="https://picsum.photos/200/200?random=11" alt="">
+    </cs-image>
+
+    <span class="row-label" style="margin-left:24px;">rounded</span>
+    <cs-image data-size="sm" data-shape="rounded" data-bordered>
+      <img src="https://picsum.photos/200/200?random=12" alt="">
+    </cs-image>
+
+    <span class="row-label" style="margin-left:24px;">circle</span>
+    <cs-image data-size="sm" data-shape="circle" data-bordered>
+      <img src="https://picsum.photos/200/200?random=13" alt="">
+    </cs-image>
+  </div>
+</div>
+
+<!-- 3. 加载失败兜底 -->
+<div class="section">
+  <div class="section-title">加载失败兜底 Fallback</div>
+  <div class="section-subtitle">无图或加载失败时显示占位图标 + 文字</div>
+
+  <div class="row">
+    <span class="row-label">无图</span>
+    <cs-image data-size="sm" data-shape="rounded" data-bordered>
+      <div class="image-fallback">
+        <i class="cses-tupian"></i>
+        <span>暂无图片</span>
+      </div>
+    </cs-image>
+
+    <span class="row-label" style="margin-left:24px;">加载失败</span>
+    <cs-image data-size="md" data-shape="rounded" data-bordered>
+      <div class="image-fallback">
+        <i class="cses-cuowu"></i>
+        <span>加载失败</span>
+      </div>
+    </cs-image>
+  </div>
+</div>
+
+<!-- 4. 带标题 -->
+<div class="section">
+  <div class="section-title">带标题 With Caption</div>
+  <div class="section-subtitle">底部叠半透明黑底标题</div>
+
+  <div class="row">
+    <cs-image data-size="md" data-shape="rounded" data-bordered>
+      <img src="https://picsum.photos/400/300?random=21" alt="">
+      <div class="image-caption">山间秋色</div>
+    </cs-image>
+
+    <cs-image data-size="md" data-shape="rounded" data-bordered>
+      <img src="https://picsum.photos/400/300?random=22" alt="">
+      <div class="image-caption">湖光剪影</div>
+    </cs-image>
+  </div>
+</div>
+
+<!-- 5. 跟随父容器 full -->
+<div class="section" style="max-width: 480px;">
+  <div class="section-title">跟随父容器 Full</div>
+  <div class="section-subtitle">默认宽度 100%，高度由图片比例决定</div>
+
+  <cs-image data-shape="rounded" data-bordered>
+    <img src="https://picsum.photos/800/300?random=31" alt="">
+  </cs-image>
+</div>
+
+</body>
+</html>

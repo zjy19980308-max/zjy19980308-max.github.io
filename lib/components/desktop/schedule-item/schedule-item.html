@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-schedule-item 日程条目</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="schedule-item.css">
+  <link rel="stylesheet" href="../avatar/avatar.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    h2 { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin: 24px 0 12px; }
+    .demo-list { max-width: 400px; display: flex; flex-direction: column; gap: 4px; background: var(--cs-color-bg); border-radius: var(--radius-lg); padding: var(--space-sm); }
+  </style>
+</head>
+<body>
+
+<h2>默认（Primary）</h2>
+<div class="demo-list">
+  <cs-schedule-item data-color="primary">
+    <span class="schedule-bar"></span>
+    <div class="schedule-content">
+      <span class="schedule-time">09:00 - 10:00</span>
+      <span class="schedule-title">产品需求评审会</span>
+      <div class="schedule-meta"></div>
+    </div>
+  </cs-schedule-item>
+
+  <cs-schedule-item data-color="success">
+    <span class="schedule-bar"></span>
+    <div class="schedule-content">
+      <span class="schedule-time">10:30 - 11:30</span>
+      <span class="schedule-title">团队周会</span>
+      <div class="schedule-meta"></div>
+    </div>
+  </cs-schedule-item>
+
+  <cs-schedule-item data-color="warning">
+    <span class="schedule-bar"></span>
+    <div class="schedule-content">
+      <span class="schedule-time">14:00 - 15:00</span>
+      <span class="schedule-title">客户方案汇报</span>
+      <div class="schedule-meta"></div>
+    </div>
+  </cs-schedule-item>
+</div>
+
+<h2>颜色变体</h2>
+<div class="demo-list">
+  <cs-schedule-item data-color="primary">
+    <span class="schedule-bar"></span>
+    <div class="schedule-content">
+      <span class="schedule-time">09:00 - 10:00</span>
+      <span class="schedule-title">Primary 色条</span>
+    </div>
+  </cs-schedule-item>
+  <cs-schedule-item data-color="success">
+    <span class="schedule-bar"></span>
+    <div class="schedule-content">
+      <span class="schedule-time">10:00 - 11:00</span>
+      <span class="schedule-title">Success 色条</span>
+    </div>
+  </cs-schedule-item>
+  <cs-schedule-item data-color="warning">
+    <span class="schedule-bar"></span>
+    <div class="schedule-content">
+      <span class="schedule-time">11:00 - 12:00</span>
+      <span class="schedule-title">Warning 色条</span>
+    </div>
+  </cs-schedule-item>
+  <cs-schedule-item data-color="danger">
+    <span class="schedule-bar"></span>
+    <div class="schedule-content">
+      <span class="schedule-time">14:00 - 15:00</span>
+      <span class="schedule-title">Danger 色条</span>
+    </div>
+  </cs-schedule-item>
+</div>
+
+</body>
+</html>

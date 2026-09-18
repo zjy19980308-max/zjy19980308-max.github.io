@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-result 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../button/button.css">
+  <link rel="stylesheet" href="result.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo-stage { background: #fafafa; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 成功 ========== -->
+<div class="section">
+  <div class="section-title">成功 Success</div>
+  <div class="section-subtitle">data-status="success"</div>
+  <div class="demo-stage">
+    <cs-result data-status="success">
+      <i class="result-icon cses-check-circle"></i>
+      <div class="result-title">提交成功</div>
+      <div class="result-subtitle">您的请假申请已成功提交，预计 1 个工作日内完成审批，请耐心等待。</div>
+      <div class="result-extra">
+        <cs-button data-variant="primary"><span class="btn-text">返回首页</span></cs-button>
+        <cs-button data-variant="secondary"><span class="btn-text">查看详情</span></cs-button>
+      </div>
+    </cs-result>
+  </div>
+</div>
+
+<!-- ========== 2. 警告 ========== -->
+<div class="section">
+  <div class="section-title">警告 Warning</div>
+  <div class="section-subtitle">data-status="warning" — 操作未完全成功的提示</div>
+  <div class="demo-stage">
+    <cs-result data-status="warning">
+      <i class="result-icon cses-exclamation-circle"></i>
+      <div class="result-title">部分内容未保存</div>
+      <div class="result-subtitle">网络波动导致 2 个字段保存失败，建议检查后重试。</div>
+      <div class="result-extra">
+        <cs-button data-variant="primary"><span class="btn-text">重新保存</span></cs-button>
+        <cs-button data-variant="secondary"><span class="btn-text">忽略</span></cs-button>
+      </div>
+    </cs-result>
+  </div>
+</div>
+
+<!-- ========== 3. 错误 + 详情 ========== -->
+<div class="section">
+  <div class="section-title">错误 + 详情 Danger with Content</div>
+  <div class="section-subtitle">data-status="danger" + .result-content 提供详情</div>
+  <div class="demo-stage">
+    <cs-result data-status="danger">
+      <i class="result-icon cses-close-circle"></i>
+      <div class="result-title">提交失败</div>
+      <div class="result-subtitle">您所提交的内容存在如下问题，请修改后重新提交：</div>
+      <div class="result-extra">
+        <cs-button data-variant="primary"><span class="btn-text">立即修改</span></cs-button>
+      </div>
+      <div class="result-content">
+        · 申请人姓名不能为空<br>
+        · 请假天数必须为正整数<br>
+        · 开始日期不能晚于结束日期
+      </div>
+    </cs-result>
+  </div>
+</div>
+
+<!-- ========== 4. 信息 ========== -->
+<div class="section">
+  <div class="section-title">信息 Info</div>
+  <div class="section-subtitle">data-status="info" — 中性结果</div>
+  <div class="demo-stage">
+    <cs-result data-status="info">
+      <i class="result-icon cses-info-circle"></i>
+      <div class="result-title">页面正在建设中</div>
+      <div class="result-subtitle">该功能即将上线，敬请期待。</div>
+      <div class="result-extra">
+        <cs-button data-variant="primary"><span class="btn-text">返回</span></cs-button>
+      </div>
+    </cs-result>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSES 移动端组件库</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; }
+    iframe { display: block; width: 100%; height: 100%; border: 0; }
+  </style>
+</head>
+<body>
+  <iframe src="../index.html" title="CSES 移动端组件库"></iframe>
+  <script>
+    var iframe = document.querySelector('iframe');
+    iframe.addEventListener('load', function () {
+      try {
+        var tab = iframe.contentDocument.querySelector('.func-tab[data-scope="mobile"]');
+        if (tab) tab.click();
+      } catch (e) {}
+    });
+  </script>
+</body>
+</html>

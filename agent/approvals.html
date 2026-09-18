@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>审批中心 · 流程智能体</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{padding:0;max-width:none;display:flex;position:relative;flex:1;min-height:0}
+  /* 左：待办列表（Figma 稿的审批列表） */
+  .lst{width:344px;flex:0 0 344px;border-right:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column}
+  .lst__h{padding:14px 16px 0}
+  .lst__f{display:flex;gap:8px;padding:12px 16px}
+  .lst__f .mini{flex:1;display:inline-flex;align-items:center;gap:5px;justify-content:center;height:28px;border:1px solid var(--line);border-radius:var(--r-s);font-size:12px;color:var(--ink-2);background:var(--panel);cursor:pointer}
+  .lst__f .mini:hover{background:var(--surf)}
+  .lst__l{flex:1;overflow:auto;padding:0 12px 16px}
+  /* 审批卡片 */
+  .ap{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:14px;margin-bottom:10px;cursor:pointer;transition:border-color .16s,box-shadow .16s}
+  .ap:hover{border-color:#cbd5e1}
+  .ap.is-on{border-color:#8f99cf;box-shadow:0 0 0 3px rgba(77,88,189,.08)}
+  .ap__t{display:flex;align-items:flex-start;gap:8px}
+  .ap__t b{font-size:13.5px;font-weight:600;line-height:1.5}
+  .ap__t i{width:6px;height:6px;border-radius:50%;background:#dd4439;flex:0 0 6px;margin-top:6px}
+  .ap__t span{margin-left:auto;font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+  .ap__d{font-size:12.5px;color:var(--ink-2);margin-top:7px;line-height:1.6}
+  .ap__ai{display:flex;gap:7px;align-items:flex-start;margin-top:10px;padding:8px 10px;border-radius:var(--r-s);background:var(--surf);font-size:12px;color:var(--ink-2);line-height:1.55}
+  .ap__ai b{font-weight:600;color:var(--ink)}
+  .ap__ai svg{width:14px;height:14px;flex:0 0 14px;color:#4857e2;margin-top:2px}
+  /* owner 2026-09-16：「悬浮才出现，悬浮之后卡片高度不变，从下方有个白色到全透明的渐变，遮挡下方文案」 */
+  .ap__btns{position:absolute;left:0;right:0;bottom:0;display:flex;gap:8px;padding:30px 14px 14px;
+    background:linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.86) 34%,#fff 62%);
+    opacity:0;transform:translateY(5px);pointer-events:none;
+    transition:opacity .18s ease,transform .24s cubic-bezier(.23,1,.32,1)}
+  .ap:hover .ap__btns,.ap:focus-within .ap__btns{opacity:1;transform:none;pointer-events:auto}
+  .ap__btns .btn{flex:1}
+  /* owner 2026-09-16：不同列表看到的信息不一样（Figma 1078:13751 / 1078:13775）——
+     待办露 Agent 结论，抄送露最新动静，已处理露审批人与理由，我发起的露走到哪一步。 */
+  .ap__upd{margin-top:9px;font-size:12px;line-height:1.6;color:#4857e2}
+  .ap__upd b{font-weight:600}
+  .ap__upd em{font-style:normal;color:var(--ink-3)}
+  .ap__hr{height:1px;background:var(--line-2);margin:11px -14px 0}
+  .ap__ap{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12px;color:var(--ink-2)}
+  .ap__ap .who{width:20px;height:20px;border-radius:50%;flex:0 0 20px;background:var(--pri-100);color:#4857e2;font-size:10px;font-weight:700;display:grid;place-items:center}
+  .ap__ap .lab{color:var(--ink-3);flex:0 0 auto}
+  .ap__ap b{font-weight:600;color:var(--ink)}
+  .ap__ap .dept{color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .ap__ap .r{margin-left:auto;flex:0 0 auto}
+  .ap__rsn{margin-top:7px;font-size:12px;color:var(--ink-2);line-height:1.6}
+  .ap__rsn span{color:var(--ink-3)}
+  .lst__tip{font-size:11.5px;color:var(--ink-3);line-height:1.65;padding:0 16px 10px}
+  .lst__tip b{color:var(--ink-2);font-weight:600}
+  /* 右：审批详情 */
+  .det{flex:1;min-width:0;overflow:auto;padding:24px 28px 96px;position:relative}
+  .det__hd{display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--ink-3)}
+  .det__hd .right{margin-left:auto;display:flex;gap:6px}
+  .det__hd .lnk{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--ink-2);cursor:pointer}
+  .det__hd .lnk:hover{color:#4857e2}
+  .det__hd .lnk svg{width:13px;height:13px}
+  .det h2{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:10px 0 8px}
+  .det__sub{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink-2);flex-wrap:wrap}
+  .who{display:inline-flex;align-items:center;gap:6px}
+  .ava{width:20px;height:20px;border-radius:50%;background:var(--pri-100);color:#4857e2;font-size:10px;font-weight:700;display:grid;place-items:center;flex:0 0 20px}
+  .ava--g{background:#e9efec;color:#4f7a62}
+  .ava--a{background:#f2ece2;color:#8a6a3c}
+  /* Agent 分析条 */
+  .ai{display:flex;gap:11px;align-items:flex-start;margin:16px 0 20px;padding:13px 15px;border:1px solid var(--pri-200);border-radius:var(--r);background:var(--pri-50)}
+  .ai__i{width:22px;height:22px;border-radius:6px;background:#fff;border:1px solid var(--pri-200);display:grid;place-items:center;color:#4857e2;flex:0 0 22px}
+  .ai__i svg{width:13px;height:13px}
+  .ai b{font-size:12.5px;font-weight:700;color:#404a99;display:block;margin-bottom:3px}
+  .ai p{font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+  .ai p em{font-style:normal;font-weight:600;color:var(--ink)}
+  .ai .go{margin-left:auto;align-self:center;font-size:12px;color:#4857e2;white-space:nowrap;cursor:pointer}
+  /* 顶部只是锚点，三段内容平铺，滚动时自己高亮 */
+  /* 粘顶的锚点栏要盖住容器左右内边距，否则滚动时内容从两侧漏出来 */
+  .anchors{position:sticky;top:-24px;z-index:12;display:flex;gap:24px;border-bottom:1px solid var(--line);margin:0 -28px 22px;padding:0 28px;background:var(--panel)}
+  .anchors button{border:0;background:none;padding:12px 0;font-size:13.5px;color:var(--ink-3);cursor:pointer;border-bottom:2px solid transparent}
+  .anchors button.is-on{color:var(--ink);font-weight:600;border-bottom-color:#4857e2}
+  .big{font-size:19px;font-weight:700;letter-spacing:-.01em;margin:0 0 16px}
+  .sec{scroll-margin-top:52px;padding-bottom:34px}
+  .mx{display:flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+  .mx div{flex:1;padding:12px 16px;border-right:1px solid var(--line-2)}
+  .mx div:last-child{border-right:0}
+  .mx span{display:block;font-size:11.5px;color:var(--ink-3);margin-bottom:4px}
+  .mx b{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+  .mx b.warn{color:var(--warn)}
+  .cc{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2);margin-bottom:18px;flex-wrap:wrap}
+  .cc svg{width:13px;height:13px;color:var(--ink-3)}
+  .cc .ava{width:18px;height:18px;font-size:9px;flex:0 0 18px}
+  .stp{position:relative;display:flex;align-items:flex-start;padding:10px 0 20px;cursor:pointer;border:1px solid transparent;border-radius:var(--r);transition:background .15s,border-color .15s}
+  .stp:hover{background:var(--surf);border-color:var(--line)}
+  .stp__more{position:absolute;right:10px;top:-4px;font-size:12px;color:var(--ink-3)}
+  .stp:hover .stp__more{color:#4857e2}
+  .sp{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;text-align:center;min-width:0}
+  .sp::before{content:'';position:absolute;top:8px;left:-50%;width:100%;height:2px;background:var(--line)}
+  .sp:first-child::before{display:none}
+  .sp.done::before,.sp.now::before{background:#4857e2}   /* owner：步进器可以用高饱和 */
+  .sp i{width:18px;height:18px;border-radius:50%;background:var(--panel);border:2px solid var(--line);position:relative;z-index:1;display:grid;place-items:center;font-style:normal;font-size:10px;color:var(--ink-3)}
+  .sp.done i{background:#4857e2;border-color:#4857e2}
+  .sp.now i{background:#fff;border-color:#e08a1e;box-shadow:0 0 0 3px rgba(224,138,30,.2)}
+  .sp.ell i{border-style:dashed;letter-spacing:1px}
+  .sp b{font-size:12.5px;font-weight:600;max-width:130px}
+  .sp span{font-size:11px;color:var(--ink-3);max-width:140px;line-height:1.5}
+  .sp.todo b{color:var(--ink-3);font-weight:500}
+  .sp.ell:hover i{border-color:#4857e2;color:#4857e2}
+  .tip{position:absolute;left:50%;top:34px;transform:translateX(-50%) translateY(4px);width:250px;background:var(--ink);color:#fff;border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.75;text-align:left;opacity:0;pointer-events:none;transition:opacity .16s,transform .2s;z-index:20}
+  .sp.ell:hover .tip{opacity:1;transform:translateX(-50%)}
+  .tip b{display:block;font-size:11px;color:rgba(255,255,255,.6);font-weight:500;margin-bottom:5px;max-width:none}
+  .fl__n{display:flex;gap:12px;align-items:flex-start;padding:9px 0}
+  .fl__d{width:14px;flex:0 0 14px;display:flex;flex-direction:column;align-items:center;align-self:stretch}
+  .fl__d i{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);background:var(--panel);flex:0 0 12px;margin-top:4px}
+  .fl__d s{flex:1;width:2px;background:var(--line);text-decoration:none;min-height:14px}
+  .fl__n:last-child .fl__d s{display:none}
+  .fl__n.done .fl__d i{background:#4857e2;border-color:#4857e2}
+  .fl__n.done .fl__d s{background:#4857e2}
+  .fl__n.now .fl__d i{border-color:#e08a1e;box-shadow:0 0 0 3px rgba(224,138,30,.2)}
+  .fl__t{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+  .fl__m{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+  .fl__br{margin-top:6px;padding-left:12px;border-left:2px dashed var(--line);font-size:12px;color:var(--ink-2);line-height:1.9}
+  /* 表单区块（Figma 的审批详情） */
+  .fsec{margin-bottom:26px}
+  .fsec__t{font-size:15px;font-weight:700;margin-bottom:14px}
+  .ftabs{display:flex;gap:8px;margin-bottom:16px}
+  .ftabs button{height:28px;padding:0 12px;border-radius:var(--r-s);border:1px solid var(--line);background:var(--panel);font-size:12px;color:var(--ink-2);cursor:pointer}
+  .ftabs button.is-on{background:var(--pri-50);border-color:var(--pri-200);color:#404a99;font-weight:600}
+  .frow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 48px}
+  .fi{display:flex;gap:16px;padding:11px 0;border-bottom:1px solid var(--line-2);font-size:13px;align-items:flex-start}
+  .fi > span{width:76px;flex:0 0 76px;color:var(--ink-3)}
+  .fi > div{flex:1;min-width:0}
+  .fi--full{grid-column:1/-1}
+  .hf{margin-bottom:12px}
+  .hf label{display:block;font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+  .hf label em{font-style:normal;color:#dd4439;margin-right:3px}
+  /* 同意 / 拒绝 / 抄送 弹窗（Figma 1105-12798 · 1105-10603 · 1170-58602） */
+  .dlg__ta{width:100%;min-height:132px;border:1px solid var(--line);border-radius:var(--r-m);padding:12px 14px;font:inherit;font-size:13px;resize:vertical;outline:0}
+  .dlg__ta:focus{border-color:#8f99cf;box-shadow:0 0 0 3px rgba(72,87,226,.08)}
+  .dlg__tools{display:flex;gap:18px;margin:10px 0 16px;font-size:12.5px;color:var(--ink-2)}
+  .dlg__tools span{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+  .dlg__tools span:hover{color:#4857e2}
+  .dlg__tools svg{width:14px;height:14px}
+  .dlg__q{font-size:12px;color:var(--ink-3);margin-bottom:8px}
+  .dlg__chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .dlg__chips button{border:1px solid var(--line);background:var(--surf);border-radius:var(--r-s);padding:6px 11px;font-size:12.5px;color:var(--ink-2);cursor:pointer}
+  .dlg__chips button:hover{border-color:#8f99cf;color:#4857e2;background:var(--pri-50)}
+  .dlg__ck{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2)}
+  .dlg__ck input{width:15px;height:15px;accent-color:#4857e2}
+  .dlg__f{display:block;font-size:12.5px;color:var(--ink-2);margin-bottom:6px}
+  .fi b{font-weight:600}
+  .chipline{display:flex;flex-direction:column;gap:9px}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px}
+  .chip .ava{width:18px;height:18px;font-size:9px;flex:0 0 18px}
+  .chip s{text-decoration:none;color:var(--ink-2)}
+  .chip .tag{height:19px;font-size:10.5px}
+  /* 三单对照 */
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+  .ff{border:1px solid var(--line);border-radius:var(--r-m);padding:11px 12px;background:var(--panel)}
+  .ff b{display:block;font-size:11px;color:var(--ink-3);font-weight:600;margin-bottom:7px}
+  .ff div{font-size:12.5px;padding:3px 0}
+  .ff .ok{color:var(--ok);font-weight:600}
+  .att{display:flex;gap:10px;flex-wrap:wrap}
+  .att a{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:var(--r-m);padding:9px 12px;font-size:12.5px;background:var(--panel)}
+  .att a:hover{border-color:#8f99cf}
+  .att svg{width:14px;height:14px;color:var(--ink-3)}
+  /* 审批记录：横向步骤 + 时间线 */
+  .flowbar{display:flex;align-items:flex-start;padding:4px 0 22px}
+  .fb{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;text-align:center}
+  .fb::before{content:'';position:absolute;top:7px;left:-50%;width:100%;height:2px;background:var(--line)}
+  .fb:first-child::before{display:none}
+  .fb.done::before{background:#9aa4cf}
+  .fb i{width:16px;height:16px;border-radius:50%;background:var(--panel);border:2px solid var(--line);display:block;position:relative;z-index:1}
+  .fb.done i{background:#4857e2;border-color:#4857e2}
+  .fb.now i{background:#fff;border-color:#8a6a3c;box-shadow:0 0 0 3px rgba(138,106,60,.16)}
+  .fb b{font-size:12px;font-weight:600}
+  .fb span{font-size:11px;color:var(--ink-3)}
+  .rec{display:flex;gap:11px;padding:12px 0;border-bottom:1px solid var(--line-2)}
+  .rec:last-child{border:0}
+  .rec .ava{width:28px;height:28px;font-size:11px;flex:0 0 28px}
+  .rec__b{flex:1;min-width:0}
+  .rec__t{display:flex;align-items:center;gap:8px;font-size:13px}
+  .rec__t b{font-weight:600}
+  .rec__t small{color:var(--ink-3);font-size:11.5px}
+  .rec__t time{margin-left:auto;color:var(--ink-3);font-size:11.5px;white-space:nowrap}
+  .rec__m{font-size:12.5px;color:var(--ink-2);margin-top:4px;line-height:1.6}
+  .rec__m u{text-decoration:none;color:var(--ok);font-weight:600}
+  .rec__m s{text-decoration:none;color:var(--risk);font-weight:600}
+  /* 关联运行 */
+  /* 关联任务卡片（Figma 847:7691）：折叠箭头 + 标题 + 标签，第二行是创建人 / 负责人 / 起止时间 */
+  .tk{border-bottom:1px solid var(--line-2);padding:14px 2px}
+  .tk:last-child{border-bottom:0}
+  .tk__t{display:flex;align-items:center;gap:8px;cursor:pointer}
+  .tk__t i{font-style:normal;color:var(--ink-3);font-size:11px;transition:transform .2s}
+  .tk.open .tk__t i{transform:rotate(90deg)}
+  .tk__t b{font-size:13.5px;font-weight:600}
+  .tk__t .tag{height:20px;font-size:11px}
+  .tk__t .st{margin-left:auto}
+  .tk__m{display:flex;gap:34px;margin:8px 0 0 18px;font-size:12px;color:var(--ink-3);flex-wrap:wrap}
+  .tk__m b{color:var(--ink-2);font-weight:400}
+  .tk__d{display:none;margin:10px 0 0 18px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-s);background:var(--surf);font-size:12.5px;line-height:1.8;color:var(--ink-2)}
+  .tk.open .tk__d{display:block}
+  .link{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:var(--r-m);padding:12px 14px;margin-bottom:8px;background:var(--panel)}
+  .link b{font-size:13px;font-weight:600}
+  .link .m{font-size:11.5px;color:var(--ink-3);margin-top:3px}
+  .link .tag{margin-left:auto}
+  /* 底部操作条 */
+  .actbar{left:344px}   /* 详情区才有操作条，别压到左边列表 */
+  
+
+  @media (max-width:1180px){.lst{width:288px;flex:0 0 288px}.actbar{left:288px}}
+  @media (max-width:900px){.lst{display:none}.actbar{left:0}}
+</style>
+</head>
+<body data-app="front" data-nav="approve" data-title="待我处理">
+<script>(function(){var m=(location.search.match(/tab=(\w+)/)||[])[1];var k={done:'done',mine:'mine',cc:'cc'}[m];if(k){document.body.dataset.nav=k;document.body.dataset.title={done:'已处理的',mine:'我发起的',cc:'抄送我的'}[m];}})();</script>
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div id="topLeft"><span class="ptitle" id="lstT">待我处理</span></div>
+    <div id="topActions"><button class="btn btn--ai" type="button" id="aiBtn">AI 分析</button></div>
+    <div class="page">
+
+      <aside class="lst">
+        <div class="lst__f">
+          <button class="mini" data-toast="按状态筛：待处理 / 已通过 / 已驳回 / 已撤回">全部状态 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" style="width:11px;height:11px"><path d="M4 6.5 8 10.5 12 6.5"/></svg></button>
+          <button class="mini" data-toast="按单据类型筛：付款 / 用印 / 入职 / 报销">全部类型 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" style="width:11px;height:11px"><path d="M4 6.5 8 10.5 12 6.5"/></svg></button>
+          <button class="mini" data-toast="按时间筛：今天 / 近 7 天 / 近 30 天">全部时间 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" style="width:11px;height:11px"><path d="M4 6.5 8 10.5 12 6.5"/></svg></button>
+        </div>
+        <p class="lst__tip" id="lstTip"></p>
+        <div class="lst__l" id="list"></div>
+      </aside>
+
+      <section class="det" id="det"></section>
+      <div class="actbar" id="bar"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="dlg" style="width:min(540px,92vw)">
+  <div class="modal__h"><h3 id="dlgT">确认同意</h3><button class="x" data-close>✕</button></div>
+  <div class="modal__b" id="dlgB"></div>
+  <div class="modal__f"><div class="right"><button class="btn" data-close>取消</button><button class="btn btn--p" id="dlgGo">提交</button></div></div>
+</div>
+
+<div class="modal" id="flowModal">
+  <div class="modal__h"><h3>完整流程图</h3><span class="tag mono">供应商付款审批 v3</span><button class="x" data-close>✕</button></div>
+  <div class="modal__b" id="flowBody"></div>
+  <div class="modal__f"><span class="dim" style="font-size:11.5px">灰掉的是本单不会走的分支</span><div class="right"><button class="btn" data-close>关闭</button></div></div>
+</div>
+
+<script src="ui.js"></script>
+<script>
+(function () {
+  var TABS = {
+    todo: { label: '待我处理', n: 3, empty: '待处理的都完成了。' },
+    done: { label: '我已处理', empty: '最近 30 天你处理过 12 张单。' },
+    mine: { label: '我发起的', empty: '你还没发起过单子。' },
+    cc: { label: '抄送我的', empty: '没有抄送给你的单子。' },
+    cross: { label: '跨组织审批', n: 1, empty: '没有跨组织的单子。' }
+  };
+  var AP = [
+    { id: 'PAY-20260915-0042', who: '孙悦', ini: '孙', t: '孙悦 提交的 付款申请', time: '09:02',
+      d: '华东物流有限公司 · ¥38,000 · 采购单 PO-7781，请于 9 月 18 日前付款。',
+      ai: ['建议通过', '三单匹配一致，金额命中「5 万以下」档，供应商不在黑名单。'], tone: 'ok', cur: 1 },
+    { id: 'PAY-20260915-0041', who: '孙悦', ini: '孙', t: '孙悦 提交的 付款申请', time: '08:40',
+      d: '华东物流（上海）有限公司 · ¥86,500 · 采购单 PO-7802。',
+      ai: ['先看证据', '发票抬头与合同主体不一致，Agent 无法确认是否同一供应商，已转人工。'], tone: 'warn' },
+    { id: 'TSK-20260915-0031', who: '林珊', ini: '林', t: '林珊 提交的 出差申请 · 待你填写', time: '09:20', handle: 1,
+      d: '上海客户走访 3 天 · 需要你作为办理人补一张《客户意向表》，填完这张单才能继续。',
+      ai: ['要你填表', '这一步是办理节点，不是审批：你要补的信息 Agent 补不了，得你填。'], tone: 'warn' },
+    { id: 'SEA-20260915-0077', who: '林珊', ini: '林', t: '林珊 提交的 用印申请', time: '昨天 14:20',
+      d: '采购框架协议 · 法务 + 行政双签 · 用印日期 9 月 16 日。',
+      ai: ['建议通过', '合同模板与法务备案版本一致，无修改条款。'], tone: 'ok' }
+  ];
+  var DONE = [
+    { id: 'PAY-20260914-0038', t: '孙悦 提交的 付款申请', time: '昨天 09:10', d: '锐格科技 · ¥6,800 · 你已通过，款项已付。',
+      ai: ['已通过', '你于 9 月 14 日 09:26 通过，付款 09:40 执行完成。'], done: 1,
+      by: ['孙', '孙悦', '应付会计 · 财务运营部'], res: ['已同意', 'ok'], why: '三单一致，供应商无异常，同意付款。' },
+    { id: 'ONB-20260913-0108', t: '人事 提交的 入职开通', time: '9 月 13 日', d: '新员工 周珂 · 账号与门禁已开通。',
+      ai: ['已通过', '全部为可撤销动作，Agent 自动执行。'], done: 1,
+      by: ['孙', '孙悦', '应付会计 · 财务运营部'], res: ['已同意', 'ok'], why: '岗位与权限模板一致，按标准开通。' }
+  ];
+  var MINE = [
+    { id: 'PAY-20260915-0042', t: '我发起的 付款申请', time: '09:02', d: '华东物流 · ¥38,000 · 走到第 4 步，等你做付款前确认。',
+      ai: ['进行中', '当前节点：付款前人工确认。下一步是不可逆的执行付款。'], mine: 1,
+      at: ['付款前人工确认', '等待 孙悦 · 已等 1 小时 12 分'], upd: ['最新修改', '付款金额由 ¥36,000 改为 ¥38,000'] },
+    { id: 'PAY-20260915-0041', t: '我发起的 付款申请', time: '08:40', d: '华东物流（上海）· ¥86,500 · 停在第 3 步。',
+      ai: ['转人工中', '发票抬头与合同主体不一致，已转人工，等处理人决定。'], mine: 1,
+      at: ['三单匹配', '已转人工 · 等高远处理'], upd: ['最新补充', '你补传了《主体关系说明》'] }
+  ];
+  var CC = [
+    { id: 'PAY-20260915-0039', t: '抄送：恒通机电 付款申请', time: '昨天', d: '¥152,000 · 财务总监审批超时 26 小时，已转异常。',
+      ai: ['只读', '抄送给你知会，你不需要处理。'], cc: 1,
+      cmt: ['最新评论', '周宁', '陈立出差，我先按代理人规则往下推。'], upd: ['最新修改', '审批人由 陈立 改为 代理人 刘恒'] }
+  ];
+  /* 跨组织审批：单子要在两家公司之间走，双方各出一位审批人，数据只交换必要字段 */
+  var CROSS = [
+    { id: 'XPAY-20260915-0006', t: '华东物流（子公司）提交的 对账确认', time: '10:05', cross: 1,
+      d: '明远集团 ↔ 华东物流有限公司 · 8 月运输费对账 ¥1,284,600 · 双方财务各确认一次。',
+      ai: ['两边都要签', '我方明细与对方账单差 ¥0，可确认；对方审批人：华东物流 财务 郑敏。'], tone: 'acc',
+      orgs: ['明远集团', '华东物流有限公司'],
+      by: ['郑', '郑敏', '财务 · 华东物流有限公司'], res: ['对方待确认', 'warn'] }
+  ];
+  var SETS = { todo: AP, done: DONE, mine: MINE, cc: CC, cross: CROSS };
+  /* 同一张单在五个列表里露出来的信息不一样，卡片上直接说清楚这一条露的是什么 */
+  var TIP = {
+    todo: '这一列的卡片露的是 <b>Agent 的结论</b> —— 你在这儿只需要判断能不能批。',
+    done: '这一列的卡片露的是 <b>谁批的、结论是什么、理由写了什么</b>，方便回头查。',
+    mine: '这一列的卡片露的是 <b>走到哪一步、谁在处理、最近改了什么</b>。',
+    cc: '这一列的卡片露的是 <b>最新评论和最新修改</b> —— 抄送只是知会，你不用处理。',
+    cross: '这一列的卡片会多露一行 <b>对方单位的审批人和他那边的进度</b>。'
+  };
+  var curTab = (location.search.match(/[?&]tab=(\w+)/) || [])[1];
+  if (!SETS[curTab]) curTab = 'todo';
+  /* 左侧二级导航跟着当前这一类高亮（外壳是 DOMContentLoaded 才渲染的，这里先把 data-nav 改掉） */
+  document.body.dataset.nav = { todo: 'approve', done: 'done', mine: 'mine', cc: 'cc', cross: 'cross' }[curTab] || 'approve';
+  /* 同一张单，在不同列表里露出来的信息不一样（Figma 1078:13751 / 1078:13775）：
+     待办要的是「能不能批」，抄送要的是「有没有新动静」，已处理要的是「谁批的、为什么」，我发起的要的是「走到哪了」。 */
+  function extra(a) {
+    var h = '';
+    if (a.at) h += '<div class="ap__upd"><b>当前在：' + a.at[0] + '</b><em> · ' + a.at[1] + '</em></div>';
+    if (a.cmt) h += '<div class="ap__upd"><b>' + a.cmt[0] + '：' + a.cmt[1] + '</b><em> ' + a.cmt[2] + '</em></div>';
+    if (a.upd) h += '<div class="ap__upd">' + a.upd[0] + '：<em>' + a.upd[1] + '</em></div>';
+    if (a.by) {
+      h += '<div class="ap__hr"></div><div class="ap__ap"><span class="lab">' + (a.cross ? '对方审批人' : '审批人') + '</span>'
+        + '<span class="who">' + a.by[0] + '</span><b>' + a.by[1] + '</b><span class="dept">' + a.by[2] + '</span>'
+        + (a.res ? '<span class="tag tag--' + a.res[1] + ' r">' + a.res[0] + '</span>' : '') + '</div>';
+      if (a.why) h += '<div class="ap__rsn"><span>通过理由：</span>' + a.why + '</div>';
+    }
+    return h;
+  }
+  function card(a, i) {
+    return '<div class="ap' + (i === 0 ? ' is-on' : '') + '" data-i="' + i + '">'
+      + '<div class="ap__t"><i></i><b>' + a.t + '</b><span>' + a.time + '</span></div>'
+      + '<div class="ap__d">' + a.d + '</div>'
+      + (a.done || a.cc ? '' : '<div class="ap__ai">' + AG.svg('spark', 1.4) + '<div><b>Agent ' + a.ai[0] + '：</b>' + a.ai[1] + '</div></div>')
+      + extra(a)
+      + (a.done || a.mine || a.cc ? ''
+         : a.handle
+           /* owner：办理节点不是审批，悬浮出来的按钮就该是「去填写表单」 */
+           ? '<div class="ap__btns"><button class="btn btn--s" type="button" data-act="no">退回</button><button class="btn btn--p btn--s" type="button" data-act="fill">去填写表单</button></div>'
+           : '<div class="ap__btns"><button class="btn btn--s" type="button" data-act="no">驳回</button><button class="btn btn--p btn--s" type="button" data-act="yes">通过</button></div>')
+      + '</div>';
+  }
+  /* owner 2026-09-16：这几个不在页面里切了，左侧导航点哪个就是哪个 */
+  function paintTabs() {
+    var lt = document.getElementById('lstT'); if (lt) lt.innerHTML = TABS[curTab].label + (TABS[curTab].n ? ' <em>' + TABS[curTab].n + '</em>' : '');
+    document.title = TABS[curTab].label + ' · 审批工作台';
+    var tp = document.getElementById('lstTip'); if (tp) tp.innerHTML = TIP[curTab] || '';
+  }
+  function paintList() {
+    var arr = SETS[curTab];
+    document.getElementById('list').innerHTML = arr.length ? arr.map(card).join('')
+      : '<div class="empty">' + TABS[curTab].empty + '</div>';
+    if (arr.length) detail(arr[0]); else { document.getElementById('det').innerHTML = '<div class="empty">' + TABS[curTab].empty + '</div>'; document.getElementById('bar').innerHTML = ''; }
+  }
+  /* 右上角 AI 分析：对当前这张单做一次整体判断，结论落在详情页顶部那条 Agent 卡上 */
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('#aiBtn')) return;
+    if (!cur_) return AG.toast('先选一张单');
+    AG.toast('已分析 ' + cur_.id + '：' + cur_.ai[1]);
+    var ai = document.querySelector('.ai'); if (ai) ai.animate([{ boxShadow: '0 0 0 4px rgba(72,87,226,.18)' }, { boxShadow: '0 0 0 0 rgba(72,87,226,0)' }], { duration: 900 });
+  });
+
+  var STEPS = [['提交申请', '孙悦 · 09:02', 'done'], ['三单匹配', 'Agent · 09:03', 'done'], ['采购经理审批', '高远 · 10:15 同意', 'done'], ['付款前人工确认', '等待 孙悦', 'now'], ['执行付款', '需人工确认后执行', '']];
+  var REC = [
+    ['高', 'ava', '高远', '采购经理', '<u>同意</u> · 「已核对到货，发票信息无误」', '9 月 15 日 10:15', '1 小时 12 分'],
+    ['A', 'ava--g', 'Agent', '三单匹配', '发票、合同、验收单金额一致，<u>校验通过</u>', '9 月 15 日 09:03', '22 秒'],
+    ['A', 'ava--g', 'Agent', '黑名单校验', '供应商不在黑名单，<u>校验通过</u>', '9 月 15 日 09:03', '8 秒'],
+    ['孙', 'ava--a', '孙悦', '应付会计', '提交付款申请，抄送 财务运营部 / 采购部', '9 月 15 日 09:02', '']
+  ];
+
+  /* ── 流程：完整节点表；unsure 的节点在步进器里折成 ⋯，悬浮看有哪些分支 ── */
+  var FLOW = [
+    { k: '提交申请', m: '孙悦 · 09:02', st: 'done' },
+    { k: '黑名单校验', m: 'Agent · 09:03 通过', st: 'done' },
+    { k: '三单匹配', m: 'Agent · 09:03 一致', st: 'done' },
+    { k: '金额判断', m: '¥38,000 → 命中 10 万以下档', st: 'done',
+      br: ['金额 < 10 万 → 采购经理审批', '10 万 ≤ 金额 ≤ 50 万 → 加财务总监', '金额 > 50 万 → 加 CFO'] },
+    { k: '采购经理审批', m: '高远 · 10:15 同意 · 用时 1 小时 12 分', st: 'done' },
+    { k: '付款前人工确认', m: '等待 孙悦 · 已等 1 小时 12 分', st: 'now' },
+    { k: '执行付款', m: '需人工确认后执行', st: 'todo', rev: 'C' },
+    { k: '通知供应商', m: '对外发送付款回执', st: 'todo', rev: 'C' }
+  ];
+  var FLOW2 = [
+    { k: '提交申请', m: '孙悦 · 08:40', st: 'done' },
+    { k: '黑名单校验', m: 'Agent · 08:40 通过', st: 'done' },
+    { k: '三单匹配', m: '抬头不一致 · 已转人工', st: 'now' },
+    { k: '金额判断', m: '还没跑，走哪条要看金额', st: 'todo', unsure: 1,
+      br: ['金额 < 10 万 → 采购经理审批', '10 万 ≤ 金额 ≤ 50 万 → 加财务总监（本单 ¥86,500 走这条）', '金额 > 50 万 → 加 CFO'] },
+    { k: '采购经理审批', m: '高远', st: 'todo', inBranch: 1 },
+    { k: '财务总监审批', m: '陈立 · 出差中', st: 'todo', inBranch: 1 },
+    { k: 'CFO 审批', m: '仅 50 万以上', st: 'todo', inBranch: 1 },
+    { k: '生成付款指令', m: '可撤销', st: 'todo' },
+    { k: '付款前人工确认', m: '孙悦', st: 'todo' },
+    { k: '执行付款', m: '不可逆', st: 'todo', rev: 'C' }
+  ];
+  /* 关联任务：和这张单真实相关的三件事 */
+  var TASKS = [
+    ['孙悦–高远 到货核对', '', 'Agent', '高远', '已完成', 'ok', '9 月 12 日–9 月 12 日',
+     '采购单 PO-7781 到货后由采购经理核对数量与型号，核对结果回写到验收单，本次无差异。'],
+    ['供应商资质年审', '周期', '周宁', '采购部', '进行中', 'acc', '9 月 1 日–9 月 30 日',
+     '每年一次的供应商资质复核。年审未过的供应商会进黑名单，付款流程第 2 步会直接拦下。'],
+    ['付款凭证归档', '', '系统', '孙悦', '未开始', '', '付款完成后 3 个工作日内',
+     '执行付款后自动建的任务：把回单和发票归到财务档案，逾期会提醒。']
+  ];
+  var cur_ = null;
+  function flowOf(a) { return a && a.id === 'PAY-20260915-0041' ? FLOW2 : FLOW; }
+  function metrics(a) {
+    var two = a.id === 'PAY-20260915-0041';
+    return '<div class="mx">'
+      + '<div><span>当前节点已等待</span><b class="warn">' + (two ? '40 分钟' : '1 小时 12 分') + '</b></div>'
+      + '<div><span>全程已用时</span><b>' + (two ? '1 小时 04 分' : '1 小时 14 分') + '</b></div>'
+      + '<div><span>已走完</span><b>' + (two ? '3 / 10' : '5 / 8') + ' 步</b></div>'
+      + '<div><span>同类单平均耗时</span><b>5 小时 48 分</b></div></div>';
+  }
+  /* 当前步骤前两步 + 后两步；后面遇到未定分支折成一个 ⋯，再接下一个确定节点 */
+  function windowOf(f) {
+    var i = 0; for (var k = 0; k < f.length; k++) if (f[k].st === 'now') i = k;
+    var out = f.slice(Math.max(0, i - 2), i + 1), j = i + 1, added = 0;
+    while (j < f.length && added < 2) {
+      var n = f[j];
+      if (n.unsure) {
+        out.push({ ell: 1, br: n.br });
+        while (j < f.length && (f[j].unsure || f[j].inBranch)) j++;
+        added++;
+      } else { out.push(n); j++; added++; }
+    }
+    return out;
+  }
+  function stepper(a) {
+    return '<div class="stp" data-flow><span class="stp__more">点开看完整流程图 →</span>'
+      + windowOf(flowOf(a)).map(function (n) {
+          if (n.ell) return '<div class="sp ell todo"><i>⋯</i><b>分支未定</b><span>金额判断之后才知道走哪条</span>'
+            + '<div class="tip"><b>这里有 ' + n.br.length + ' 条分支</b>' + n.br.map(function (x) { return '· ' + x; }).join('<br>') + '</div></div>';
+          return '<div class="sp ' + n.st + '"><i></i><b>' + n.k + (n.rev ? ' <span class="rev rev--c">C</span>' : '') + '</b><span>' + n.m + '</span></div>';
+        }).join('') + '</div>';
+  }
+  function showFlow(a) {
+    document.getElementById('flowBody').innerHTML = flowOf(a).map(function (n) {
+      return '<div class="fl__n ' + n.st + '"' + (n.inBranch ? ' style="opacity:.5"' : '') + '><div class="fl__d"><i></i><s></s></div><div>'
+        + '<div class="fl__t">' + n.k + (n.rev ? '<span class="rev rev--c">C</span>' : '') + (n.st === 'now' ? '<span class="tag tag--warn">当前</span>' : '') + (n.unsure ? '<span class="tag">条件分支</span>' : '') + '</div>'
+        + '<div class="fl__m">' + n.m + '</div>'
+        + (n.br ? '<div class="fl__br">' + n.br.map(function (x) { return '· ' + x; }).join('<br>') + '</div>' : '')
+        + '</div></div>';
+    }).join('');
+    AG.open(document.getElementById('flowModal'));
+  }
+  /* 同意 / 拒绝 / 抄送：都要留一句话，常用意见做成一键填 */
+  var QUICK = {
+    yes: ['同意', '确认', '情况属实', '已审核', '通过', '已核实', '可以'],
+    no: ['信息不全', '时间冲突，建议调整', '工作未完成', '额度不足', '补充材料'],
+    cc: []
+  };
+  function openDlg(kind, onOk) {
+    var T = { yes: '确认同意', no: '确认拒绝', cc: '抄送' }[kind];
+    document.getElementById('dlgT').textContent = T;
+    var tools = '<div class="dlg__tools"><span>' + AG.svg('review', 1.5) + '照片</span><span>' + AG.svg('arr', 1.5) + '附件</span></div>';
+    var body = kind === 'cc'
+      ? '<label class="dlg__f">抄送人</label><input class="inp" placeholder="请选择抄送人员" style="margin-bottom:14px">'
+        + '<label class="dlg__f">审批意见</label><textarea class="dlg__ta" id="dlgTxt" placeholder="请输入"></textarea>' + tools
+      : '<textarea class="dlg__ta" id="dlgTxt" placeholder="请输入"></textarea>' + tools
+        + '<div class="dlg__q">推荐回复</div><div class="dlg__chips">'
+        + QUICK[kind].map(function (t) { return '<button type="button" data-quick="' + t + '">' + t + '</button>'; }).join('')
+        + '</div><label class="dlg__ck"><input type="checkbox" checked>审批意见通过聊天转发给 ' + (cur_ && cur_.who ? cur_.who : '发起人') + '</label>';
+    document.getElementById('dlgB').innerHTML = body;
+    var go = document.getElementById('dlgGo');
+    go.textContent = kind === 'cc' ? '抄送' : '提交';
+    go.className = 'btn btn--p';
+    document.getElementById('dlgB').onclick = function (e) {
+      var q = e.target.closest('[data-quick]'); if (!q) return;
+      var t = document.getElementById('dlgTxt');
+      t.value = t.value ? t.value + '，' + q.dataset.quick : q.dataset.quick;
+    };
+    go.onclick = function () {
+      var t = document.getElementById('dlgTxt');
+      if (kind === 'no' && !t.value.trim()) { t.focus(); return AG.toast('拒绝要写理由，会原样退回给发起人'); }
+      AG.close(); onOk(t.value.trim());
+    };
+    AG.open(document.getElementById('dlg'));
+  }
+
+  function bindAnchors() {
+    var det = document.getElementById('det'), nav = document.getElementById('anchors');
+    if (!det || !nav) return;
+    nav.onclick = function (e) {
+      var b = e.target.closest('[data-go]'); if (!b) return;
+      det.scrollTo({ top: document.getElementById(b.dataset.go).offsetTop - 52, behavior: 'smooth' });
+    };
+    det.onscroll = function () {
+      var y = det.scrollTop + 90, ids = ['sec-form', 'sec-rec', 'sec-link'], now = ids[0];
+      ids.forEach(function (id) { var el = document.getElementById(id); if (el && el.offsetTop <= y) now = id; });
+      [].forEach.call(nav.querySelectorAll('[data-go]'), function (b) { b.classList.toggle('is-on', b.dataset.go === now); });
+    };
+    var stp = det.querySelector('[data-flow]');
+    if (stp) stp.onclick = function () { showFlow(cur_); };
+  }
+  function detail(a) {
+    cur_ = a;
+    document.getElementById('det').innerHTML =
+      '<div class="det__hd"><span>审批单号：' + a.id + '</span>'
+      + '<div class="right"><span class="lnk" data-toast="链接已复制，发给谁都能直接打开这张单">' + AG.svg('arr', 1.5) + '复制链接</span>'
+      + '<span class="lnk" data-toast="打印：会带上审批记录和附件清单">打印</span>'
+      + '<span class="lnk" data-toast="转发给同事，对方能看到全过程但不能替你审">转发</span></div></div>'
+      + '<h2>' + a.t + '</h2>'
+      + '<div class="det__sub">' + (a.cross ? '<span class="tag tag--acc">跨组织</span><span>' + a.orgs[0] + ' ↔ ' + a.orgs[1] + '</span><span class="dim">·</span>' : '')
+      + '<span>提交于 9 月 15 日 ' + a.time + '</span><span class="dim">·</span>'
+      + '<span>上一节点</span><span class="who"><span class="ava">高</span>高远</span><span class="tag tag--ok">已同意</span>'
+      + '<span class="dim">·</span><span>本单为 <b>供应商付款审批 v3</b> 的第 4 步</span></div>'
+
+      + '<div class="ai"><div class="ai__i">' + AG.svg('spark', 1.4) + '</div>'
+      + '<div><b>Agent ' + a.ai[0] + '</b><p>' + a.ai[1]
+      + ' 下一步「执行付款」是<em>不可逆</em>动作，通过之后仍然要有人做付款前确认，Agent 不会自动执行。</p></div>'
+      + '<span class="go">查看判断过程 →</span></div>'
+
+      + '<nav class="anchors" id="anchors"><button class="is-on" data-go="sec-form">审批详情</button><button data-go="sec-rec">审批记录</button><button data-go="sec-link">关联任务</button></nav>'
+
+      + '<section class="sec" id="sec-form"><h3 class="big">' + (a.handle ? '办理详情' : '审批详情') + '</h3>'
+      + '<div class="ftabs" id="ftabs">' + ['付款申请表', '发票信息', '合同信息', '验收单'].map(function (t, i) { return '<button class="' + (i ? '' : 'is-on') + '" data-f="' + i + '">' + t + '</button>'; }).join('') + '</div>'
+      + '<div id="fbody">'
+      + '<div class="fsec"><div class="fsec__t">付款信息</div><div class="frow">'
+      + fi('供应商', '华东物流有限公司') + fi('付款金额', '<b>¥38,000.00</b>')
+      + fi('采购单', 'PO-7781') + fi('合同编号', 'HT-2026-0288')
+      + fi('付款方式', '银企直连 · 对公转账') + fi('期望到账', '2026 年 9 月 18 日前')
+      + fi('收款账户', '招商银行 6228 **** 4417')
+      + fi('付款事由', '2026 年 8 月华东区干线运输费用，已验收。', 1)
+      + '</div></div>'
+      + '<div class="fsec"><div class="fsec__t">三单匹配</div>'
+      + '<div class="three">'
+      + '<div class="ff"><b>发票</b><div>华东物流有限公司</div><div>¥38,000.00</div><div class="ok">✓ 与合同一致</div></div>'
+      + '<div class="ff"><b>合同</b><div>华东物流有限公司</div><div>¥38,000.00</div><div class="ok">✓ 与验收单一致</div></div>'
+      + '<div class="ff"><b>验收单</b><div>PO-7781</div><div>¥38,000.00</div><div class="ok">✓ 已验收</div></div>'
+      + '</div></div>'
+      + '<div class="fsec"><div class="fsec__t">经办与知会</div><div class="frow">'
+      + '<div class="fi fi--full"><span>经办人</span><div class="chipline">'
+      + '<span class="chip"><span class="ava ava--a">孙</span>孙悦<s>应付会计 · 发起并复核</s><span class="tag tag--acc">本单发起人</span></span>'
+      + '<span class="chip"><span class="ava">高</span>高远<s>采购经理 · 已审批</s><span class="tag tag--ok">已同意</span></span>'
+      + '<span class="chip"><span class="ava ava--g">陈</span>陈立<s>财务总监 · 本档无需审批</s><span class="tag">跳过</span></span>'
+      + '</div></div>'
+      + fi('抄送', '财务运营部 · 采购部', 1)
+      + '</div></div>'
+      + '</div><div class="fsec"><div class="fsec__t">附件</div><div class="att">'
+      + att('增值税专用发票.pdf', '1.2 MB') + att('运输服务合同.pdf', '860 KB') + att('验收单-PO-7781.jpg', '420 KB')
+      + '</div></div>'
+      + (a.handle ? handleForm() : '')
+      + '</section>'
+
+      + '<section class="sec" id="sec-rec"><h3 class="big">审批记录</h3>'
+      + metrics(a) + stepper(a)
+      + '<div class="cc">' + AG.svg('arr', 1.5) + '<span class="ava ava--a">孙</span><b>孙悦</b> 抄送给 <span class="ava">财</span>财务运营部 · <span class="ava">采</span>采购部'
+      + '<span class="dim" style="margin-left:auto">抄送只知会，不占审批环节</span></div>'
+      + REC.map(function (r) {
+          return '<div class="rec"><span class="ava ' + (r[1] === 'ava' ? '' : r[1]) + '">' + r[0] + '</span><div class="rec__b">'
+            + '<div class="rec__t"><b>' + r[2] + '</b><small>' + r[3] + '</small><time>' + r[5] + '</time></div>'
+            + '<div class="rec__m">' + r[4] + (r[6] ? ' <span class="dim">· 用时 ' + r[6] + '</span>' : '') + '</div></div></div>';
+        }).join('')
+      + '<p class="dim" style="font-size:11.5px;margin-top:12px">审批记录与运行事件流是同一份数据，不可删除、不可编辑。</p>'
+      + '</section>'
+
+      + '<section class="sec" id="sec-link"><h3 class="big">关联任务</h3>'
+      + '<div class="card" style="margin-bottom:18px"><div class="card__b" style="padding:2px 16px">'
+      + TASKS.map(function (t) {
+          return '<div class="tk"><div class="tk__t"><i>▸</i><b>' + t[0] + '</b>'
+            + (t[1] ? '<span class="tag tag--acc">' + t[1] + '</span>' : '')
+            + '<span class="st tag tag--' + t[5] + '">' + t[4] + '</span></div>'
+            + '<div class="tk__m"><span>创建人：<b>' + t[2] + '</b></span><span>负责人：<b>' + t[3] + '</b></span><span>起止时间：<b>' + t[6] + '</b></span></div>'
+            + '<div class="tk__d">' + t[7] + '</div></div>';
+        }).join('') + '</div></div>'
+      + '<div class="h-sec">关联单据与运行</div>'
+      + '<div class="link"><div><b>PAY-20260915-0042</b><div class="m">供应商付款审批 v3 · 当前停在「付款前人工确认」</div></div><span class="tag tag--warn">等待人工</span><a class="btn btn--s" href="runs.html" style="margin-left:10px">看事件流</a></div>'
+      + '<div class="link"><div><b>PO-7781 采购单</b><div class="m">采购系统 · 9 月 12 日验收完成</div></div><span class="tag tag--ok">已验收</span></div>'
+      + '<div class="link"><div><b>CK-07 边界值检查</b><div class="m">本单金额 ¥38,000，未触发边界争议</div></div><span class="tag">已通过</span></div>'
+      + '</section>';
+    bindAnchors();
+    [].forEach.call(document.querySelectorAll('.tk__t'), function (h) {
+      h.onclick = function () { h.parentNode.classList.toggle('open'); };
+    });
+    var FB = {
+      1: '<div class="fsec"><div class="fsec__t">发票信息</div><div class="frow">' + fi('发票代码', '0440 2025 3001') + fi('发票号码', '18842306') + fi('开票日期', '2026-09-10') + fi('税额', '¥3,238.53') + fi('抬头', '华东物流有限公司') + fi('税号', '91310000MA1FL***') + '</div></div>',
+      2: '<div class="fsec"><div class="fsec__t">合同信息</div><div class="frow">' + fi('合同编号', 'HT-2026-0288') + fi('签署日期', '2026-01-08') + fi('合同金额', '¥1,200,000.00') + fi('已付', '¥862,000.00') + fi('付款条款', '月结 30 天') + fi('约定账户', '招商银行 6228 **** 4417') + '</div></div>',
+      3: '<div class="fsec"><div class="fsec__t">验收单</div><div class="frow">' + fi('验收单号', 'PO-7781') + fi('验收日期', '2026-09-12') + fi('验收人', '高远') + fi('结论', '合格') + '</div></div>'
+    };
+    var ft = document.getElementById('ftabs'), fb = document.getElementById('fbody');
+    if (ft) {
+      var raw = fb.innerHTML;
+      ft.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-f]'); if (!b) return;
+        [].forEach.call(ft.querySelectorAll('button'), function (x) { x.classList.toggle('is-on', x === b); });
+        fb.innerHTML = b.dataset.f === '0' ? raw : FB[b.dataset.f];
+      });
+    }
+
+    if (a.done || a.cc) {
+      document.getElementById('bar').innerHTML = '<div class="actbar__c"><div class="tools"><span class="tool" data-toast="该单据已归档，审批记录与附件仍可查阅，不可修改">' + AG.svg('review', 1.5) + '查看记录</span></div>'
+        + '<div class="acts"><a class="obtn obtn--yes" href="runs.html">查看运行</a></div></div>';
+      return;
+    }
+    if (a.handle) {
+      document.getElementById('bar').innerHTML = '<div class="actbar__c"><div class="tools">'
+        + '<span class="tool" data-toast="委托给同事代填，责任仍在你身上">' + AG.svg('arr', 1.5) + '委托</span>'
+        + '<span class="tool" data-toast="加签：再拉一个人一起填">' + AG.svg('approve', 1.5) + '加签</span>'
+        + '<span class="tool" data-toast="已创建群聊，单据链接已同步至群内">' + AG.svg('chat', 1.5) + '发起群聊</span>'
+        + '<span class="tool" data-toast="退回发起人补充信息">' + AG.svg('back', 1.5) + '退回</span></div>'
+        + '<div class="acts"><button class="obtn obtn--no" data-toast="拒绝要写理由，会退回发起人">拒绝</button>'
+        + '<button class="obtn obtn--yes" id="goFill">去填写表单</button></div></div>';
+      document.getElementById('goFill').addEventListener('click', function () {
+        var sec = document.getElementById('handleSec');
+        if (!sec) return;
+        document.getElementById('det').scrollTo({ top: sec.offsetTop - 60, behavior: 'smooth' });
+        setTimeout(function () {
+          var reqs = [].slice.call(document.querySelectorAll('#handleSec [data-req]'));
+          var empty = reqs.filter(function (x) { return !x.value.trim(); });
+          if (empty.length) { empty[0].focus(); AG.toast('还有 ' + empty.length + ' 个必填项没填'); this2 = 1; }
+          else { AG.toast('已提交 · 这张单继续往下走'); }
+        }, 420);
+        this.textContent = '提交';
+      });
+      return;
+    }
+    if (a.cross) {
+      document.getElementById('bar').innerHTML = '<div class="actbar__c"><div class="tools">'
+        + '<span class="tool" data-toast="对方看到的只有对账口径和金额，不含我方内部审批记录">' + AG.svg('review', 1.5) + '看对方能看到什么</span>'
+        + '<span class="tool" data-toast="有异议会退回对方，双方各自留痕">' + AG.svg('back', 1.5) + '提出异议</span></div>'
+        + '<div class="acts"><button class="obtn obtn--no" data-toast="已提出异议 · 对方财务会收到通知">有异议</button>'
+        + '<button class="obtn obtn--yes" data-toast="我方已确认 · 等对方财务郑敏确认后本单完成">确认对账</button></div></div>';
+      return;
+    }
+    if (a.mine) {
+      document.getElementById('bar').innerHTML = '<div class="actbar__c"><div class="tools"><span class="tool">' + AG.svg('chat', 1.5) + '催办</span><span class="tool">' + AG.svg('back', 1.5) + '撤回</span></div>'
+        + '<div class="acts"><a class="obtn obtn--yes" href="runs.html">查看进度</a></div></div>';
+      return;
+    }
+    document.getElementById('bar').innerHTML =
+      '<div class="actbar__c"><div class="tools">'
+      + '<span class="tool" data-toast="已创建群聊，单据链接已同步至群内">' + AG.svg('chat', 1.5) + '发起群聊</span>'
+      + '<span class="tool" data-toast="批注只给同事看，不影响审批结论，但会留在记录里">' + AG.svg('review', 1.5) + '添加批注</span>'
+      + '<span class="tool" data-toast="驳回要写理由，会退回给发起人">' + AG.svg('back', 1.5) + '驳回</span>'
+      + '<span class="tool" data-cc>' + AG.svg('cc', 1.5) + '抄送</span>'
+      + '<span class="tool" data-toast="基于这张单建任务，负责人默认是发起人">' + AG.svg('approve', 1.5) + '创建任务</span>'
+      + '<span class="tool" data-toast="更多：打印、导出 PDF、查看操作日志">··· 更多</span>'
+      + '</div><div class="acts"><button class="obtn obtn--no" id="no">拒绝</button><button class="obtn obtn--yes" id="yes">通过</button></div></div>';
+    document.getElementById('yes').addEventListener('click', function () {
+      openDlg('yes', function (txt) { handle(a, true, txt); });
+    });
+    document.getElementById('no').addEventListener('click', function () {
+      openDlg('no', function (txt) { handle(a, false, txt); });
+    });
+  }
+  /* 办理节点要填的那张表（Figma 1:67987）：必填项标红星，没填完不能提交 */
+  function handleForm() {
+    var F = [['客户需求', 1, '请填写，例如：希望三季度上线的模块与预算范围'], ['客户预算', 1, '请填写金额区间'],
+      ['成本估算', 0, '差旅与人力成本，选填'], ['后续动作', 0, '例如：两周内出方案']];
+    return '<div class="fsec" id="handleSec"><div class="fsec__t">客户意向表 <span class="tag tag--warn">待你填写</span></div>'
+      + F.map(function (f) {
+          return '<div class="hf"><label>' + (f[1] ? '<em>*</em>' : '') + f[0] + '</label>'
+            + '<input class="inp" placeholder="' + f[2] + '"' + (f[1] ? ' data-req' : '') + '></div>';
+        }).join('')
+      + '<p class="note">这张表是「出差申请」流程第 3 步定义的：办理人填完，单子才会继续往下走。</p></div>';
+  }
+  function fi(k, v, full) { return '<div class="fi' + (full ? ' fi--full' : '') + '"><span>' + k + '</span><div>' + v + '</div></div>'; }
+  function att(n, s) {
+    return '<a href="#" onclick="return false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2.5h5l3 3v8h-8z"/><path d="M9.5 2.5v3h3"/></svg><span>' + n + '<br><span class="dim" style="font-size:11px">' + s + '</span></span></a>';
+  }
+  paintTabs(); paintList();   /* 必须放在 STEPS / REC / detail 定义之后 */
+  /* 处理掉一张：从待办里移走，计数减一，自动跳到下一张——点得下去才叫串起来 */
+  function handle(a, ok, txt) {
+    var i = AP.indexOf(a); if (i < 0) return;
+    AP.splice(i, 1); a.done = 1; a.note = txt || ''; DONE.unshift(a);
+    TABS.todo.n = AP.length;
+    var nb = document.querySelector('.nav__i.is-on .nav__b'); if (nb) { if (AP.length) nb.textContent = AP.length; else nb.remove(); }
+    paintTabs(); paintList();
+    AG.toast((ok ? '已通过' : '已拒绝') + (txt ? '：「' + txt + '」' : '') + (ok ? ' · 执行付款仍需人工确认' : ' · 已退回发起人'));
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-cc]')) openDlg('cc', function (txt) { AG.toast('已抄送' + (txt ? '并附言：「' + txt + '」' : '') + ' · 对方只读，不占审批环节'); });
+  });
+  document.getElementById('list').addEventListener('click', function (e) {
+    var act = e.target.closest('[data-act]');
+    if (act) {
+      var c = act.closest('.ap'), a = SETS[curTab][+c.dataset.i];
+      if (act.dataset.act === 'fill') {   /* 办理节点：直接选中这张单，滚到要填的那张表 */
+        [].forEach.call(this.querySelectorAll('.ap'), function (x) { x.classList.toggle('is-on', x === c); });
+        detail(a);
+        setTimeout(function () {
+          var sec = document.getElementById('handleSec');
+          if (sec) { document.getElementById('det').scrollTo({ top: sec.offsetTop - 60, behavior: 'smooth' }); }
+          var f = document.querySelector('#handleSec [data-req]'); if (f) f.focus();
+          AG.toast('这一步是办理，不是审批：把《客户意向表》填完，单子才继续往下走');
+        }, 80);
+        return;
+      }
+      openDlg(act.dataset.act === 'yes' ? 'yes' : 'no', function (txt) { handle(a, act.dataset.act === 'yes', txt); });
+      return;
+    }
+    var c = e.target.closest('.ap'); if (!c) return;
+    [].forEach.call(this.querySelectorAll('.ap'), function (x) { x.classList.toggle('is-on', x === c); });
+    detail(SETS[curTab][+c.dataset.i]);
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-d]'); if (!b) return;
+    [].forEach.call(document.querySelectorAll('[data-d]'), function (x) { x.classList.toggle('is-on', x === b); });
+    [].forEach.call(document.querySelectorAll('[data-dp]'), function (p) { p.hidden = p.dataset.dp !== b.dataset.d; });
+  });
+})();
+</script>
+</body>
+</html>

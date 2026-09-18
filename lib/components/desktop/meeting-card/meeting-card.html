@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-meeting-card 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="meeting-card.css">
+  <link rel="stylesheet" href="../button/button.css">
+  <link rel="stylesheet" href="../status-badge/status-badge.css">
+  <link rel="stylesheet" href="../avatar/avatar.css">
+  <link rel="stylesheet" href="../tag/tag.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo-list { max-width: 600px; border: 1px solid var(--cs-color-border); border-radius: 8px; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+<!-- 默认会议卡片 -->
+<div class="section">
+  <div class="section-title">默认会议卡片</div>
+  <div class="section-subtitle">会议列表中的单条会议信息</div>
+
+  <div class="demo-list">
+    <cs-meeting-card>
+      <div class="meeting-time">
+        <span class="time-start">09:00</span>
+        <span class="time-duration">1小时</span>
+      </div>
+      <div class="meeting-content">
+        <span class="meeting-title">产品需求评审会议</span>
+        <span class="meeting-meta">会议室 A301 · 张三主持</span>
+        <div class="meeting-attendees">
+          <cs-avatar data-size="sm">李</cs-avatar>
+          <cs-avatar data-size="sm">王</cs-avatar>
+          <cs-avatar data-size="sm">赵</cs-avatar>
+        </div>
+      </div>
+      <div class="meeting-actions">
+        <cs-status-badge data-status="not-started">
+          <span class="status-dot"></span>
+          <span class="status-text">未开始</span>
+        </cs-status-badge>
+        <span class="meeting-type">普通会议</span>
+      </div>
+    </cs-meeting-card>
+
+    <cs-meeting-card data-active>
+      <div class="meeting-time">
+        <span class="time-start">10:30</span>
+        <span class="time-duration">45分钟</span>
+      </div>
+      <div class="meeting-content">
+        <span class="meeting-title">设计团队周会</span>
+        <span class="meeting-meta">线上会议 · 李四主持</span>
+        <div class="meeting-attendees">
+          <cs-avatar data-size="sm">张</cs-avatar>
+          <cs-avatar data-size="sm">刘</cs-avatar>
+        </div>
+      </div>
+      <div class="meeting-actions">
+        <cs-status-badge data-status="in-progress">
+          <span class="status-dot"></span>
+          <span class="status-text">进行中</span>
+        </cs-status-badge>
+        <cs-button data-size="sm"><span class="btn-label">加入</span></cs-button>
+      </div>
+    </cs-meeting-card>
+
+    <cs-meeting-card>
+      <div class="meeting-time">
+        <span class="time-start">14:00</span>
+        <span class="time-duration">2小时</span>
+      </div>
+      <div class="meeting-content">
+        <span class="meeting-title">Q1 季度复盘与头脑风暴</span>
+        <span class="meeting-meta">会议室 B201 · 王五主持</span>
+        <div class="meeting-attendees">
+          <cs-avatar data-size="sm">陈</cs-avatar>
+          <cs-avatar data-size="sm">周</cs-avatar>
+          <cs-avatar data-size="sm">吴</cs-avatar>
+          <cs-avatar data-size="sm">郑</cs-avatar>
+        </div>
+      </div>
+      <div class="meeting-actions">
+        <cs-status-badge data-status="not-started">
+          <span class="status-dot"></span>
+          <span class="status-text">未开始</span>
+        </cs-status-badge>
+        <span class="meeting-type">头脑风暴</span>
+      </div>
+    </cs-meeting-card>
+  </div>
+</div>
+
+<!-- 已结束状态 -->
+<div class="section">
+  <div class="section-title">已结束会议</div>
+  <div class="section-subtitle">data-past</div>
+
+  <div class="demo-list">
+    <cs-meeting-card data-past>
+      <div class="meeting-time">
+        <span class="time-start">08:00</span>
+        <span class="time-duration">30分钟</span>
+      </div>
+      <div class="meeting-content">
+        <span class="meeting-title">晨会站会</span>
+        <span class="meeting-meta">线上会议 · 张三主持</span>
+      </div>
+      <div class="meeting-actions">
+        <cs-status-badge data-status="completed">
+          <span class="status-dot"></span>
+          <span class="status-text">已结束</span>
+        </cs-status-badge>
+      </div>
+    </cs-meeting-card>
+  </div>
+</div>
+
+</body>
+</html>

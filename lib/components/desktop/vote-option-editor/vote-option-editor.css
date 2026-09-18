@@ -1,0 +1,114 @@
+cs-vote-option-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  background: var(--cs-color-white);
+}
+
+cs-vote-option-editor .voe-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+cs-vote-option-editor .voe-title {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+}
+
+cs-vote-option-editor .voe-hint {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-vote-option-editor .voe-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+cs-vote-option-editor .voe-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-2xs) var(--space-xs);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-bg-light);
+}
+
+cs-vote-option-editor .voe-drag {
+  color: var(--cs-color-text-light2);
+  cursor: move;
+}
+
+cs-vote-option-editor .voe-input-wrap {
+  flex: 1;
+}
+
+cs-vote-option-editor .voe-input {
+  width: var(--cs-sem-size-content-full, 100%);
+  border: none;
+  background: transparent;
+  outline: none;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+}
+
+cs-vote-option-editor .voe-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--cs-color-text-light2);
+  cursor: pointer;
+}
+
+cs-vote-option-editor .voe-remove:hover {
+  color: var(--cs-color-danger);
+}
+
+cs-vote-option-editor .voe-meta {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-vote-option-editor .voe-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  min-height: var(--control-height-sm);
+  border: var(--line-width) dashed var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-text-light);
+  font: var(--typo-cn-12-medium);
+  cursor: pointer;
+}
+
+cs-vote-option-editor .voe-add:hover {
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-primary);
+}
+
+cs-vote-option-editor[data-density="compact"] .voe-item {
+  padding-top: var(--space-3xs);
+  padding-bottom: var(--space-3xs);
+}
+
+cs-vote-option-editor[data-disabled] {
+  opacity: var(--cs-opacity-disabled);
+  pointer-events: none;
+}
+
+cs-vote-option-editor[data-maxed] .voe-add {
+  cursor: not-allowed;
+  color: var(--cs-color-text-light2);
+  border-color: var(--cs-color-border);
+}

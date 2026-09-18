@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cs-doc-recent-update-list</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../doc-update-item/doc-update-item.css">
+  <link rel="stylesheet" href="./doc-recent-update-list.css">
+  <style>
+    body {
+      margin: 0;
+      padding: var(--cs-sem-spacing-layout-gutter);
+      background: var(--cs-sem-bg-secondary);
+      font: var(--cs-typo-body-medium);
+    }
+
+    .preview-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cs-sem-spacing-content-stack);
+      max-width: var(--cs-sem-size-content-lg);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-stack">
+    <cs-doc-recent-update-list data-density="comfortable">
+      <div class="update-header">最近更新</div>
+      <div class="update-stack">
+        <cs-doc-update-item>
+          <div class="update-copy">
+            <div class="update-title">Design Agent 执行流程</div>
+            <div class="update-meta">今天 14:30 · 流程文档</div>
+            <div class="update-summary">补充 Phase 2 并行派发说明。</div>
+          </div>
+        </cs-doc-update-item>
+        <cs-doc-update-item data-state="highlight">
+          <div class="update-copy">
+            <div class="update-title">组件契约规范</div>
+            <div class="update-meta">今天 10:20 · 组件文档</div>
+            <div class="update-summary">新增 class 与 data 属性校验规则。</div>
+          </div>
+        </cs-doc-update-item>
+      </div>
+    </cs-doc-recent-update-list>
+
+    <cs-doc-recent-update-list data-density="compact">
+      <div class="update-header">紧凑模式</div>
+      <div class="update-stack">
+        <cs-doc-update-item>
+          <div class="update-copy">
+            <div class="update-title">文档库首页计划</div>
+            <div class="update-meta">昨天 18:00 · 计划文档</div>
+            <div class="update-summary">明确首页四个核心区块与资源依赖边界。</div>
+          </div>
+        </cs-doc-update-item>
+      </div>
+    </cs-doc-recent-update-list>
+  </div>
+</body>
+</html>

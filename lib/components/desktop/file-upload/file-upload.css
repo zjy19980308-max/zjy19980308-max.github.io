@@ -1,0 +1,141 @@
+/*
+ * 文件上传项组件 (File Upload)
+ * 标签：<cs-file-upload>
+ * 数据来源：旧设计规范 文件页 Component 223
+ *
+ * Figma 实测：
+ *   尺寸: 278×75（宽度弹性）
+ *   布局: flex row，垂直居中
+ *   缩略图: 40×40 文件图标
+ *   信息区: flex:1，两行（文件名 + 大小）
+ *   关闭按钮: 16px
+ *
+ * Figma → 变量映射：
+ *   border 1px #e5e5e5 → var(--cs-color-border)
+ *   radius 12px       → var(--radius-lg)
+ *   padding 8px       → var(--space-xs)
+ *   gap 10px          → var(--spacing-10)
+ *   14px/400 文件名   → var(--typo-cn-14-regular)
+ *   12px/400 大小     → var(--typo-cn-12-regular)
+ *   文件名色          → var(--cs-color-text)
+ *   大小色            → var(--cs-color-text-light2)
+ *   缩略图 40px       → var(--spacing-40)
+ *
+ * data 属性：
+ *   data-status="default"    — 默认状态
+ *   data-status="uploading"  — 上传中（显示进度条）
+ *   data-status="done"       — 完成（显示勾选图标）
+ *   data-status="error"      — 出错（红色边框，显示重试图标）
+ */
+
+/* ========== 基础容器 ========== */
+cs-file-upload {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-10);
+  padding: var(--spacing-6) var(--space-xs);
+  border: var(--border-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  box-sizing: border-box;
+}
+
+/* ========== 缩略图区域 ========== */
+cs-file-upload .upload-icon {
+  flex-shrink: 0;
+  width: var(--spacing-40);
+  height: var(--spacing-40);
+}
+
+/* ========== 信息区域 ========== */
+cs-file-upload .upload-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: var(--spacing-2);
+}
+
+/* 文件名 */
+cs-file-upload .upload-name {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 文件大小 */
+cs-file-upload .upload-size {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 操作按钮区域 ========== */
+cs-file-upload .upload-close {
+  flex-shrink: 0;
+}
+
+/* ========== 进度条（上传中） ========== */
+cs-file-upload .upload-progress {
+  display: none;
+  width: 100%;
+}
+
+/* ========== 状态：默认 ========== */
+/* 默认状态无额外样式 */
+
+/* ========== 状态：上传中 ========== */
+cs-file-upload[data-status="uploading"] .upload-progress {
+  display: block;
+}
+
+/* ========== 状态：完成 ========== */
+cs-file-upload[data-status="done"] {
+  border-color: var(--cs-color-border);
+}
+
+cs-file-upload[data-status="done"] .upload-done-icon {
+  color: var(--cs-color-success);
+  font-size: var(--cs-sem-size-icon-md);
+  flex-shrink: 0;
+}
+
+/* 完成时隐藏关闭按钮，显示勾选图标 */
+cs-file-upload[data-status="done"] .upload-close {
+  display: none;
+}
+
+/* ========== 状态：错误 ========== */
+cs-file-upload[data-status="error"] {
+  border-color: var(--cs-color-error);
+}
+
+cs-file-upload[data-status="error"] .upload-retry-icon {
+  color: var(--cs-color-error);
+  font-size: var(--cs-sem-size-icon-md);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* 错误时隐藏关闭按钮，显示重试图标 */
+cs-file-upload[data-status="error"] .upload-close {
+  display: none;
+}
+
+/* ========== 默认隐藏状态专属元素 ========== */
+cs-file-upload .upload-done-icon {
+  display: none;
+}
+
+cs-file-upload .upload-retry-icon {
+  display: none;
+}
+
+cs-file-upload[data-status="done"] .upload-done-icon {
+  display: inline-flex;
+}
+
+cs-file-upload[data-status="error"] .upload-retry-icon {
+  display: inline-flex;
+}

@@ -1,0 +1,136 @@
+/*
+ * 评论组件 (Comment)
+ * 标签：<cs-comment>
+ *
+ * 作用：展示一条用户评论，包含头像、作者、时间、正文和操作区。
+ * 对标 ng-zorro Comment（已废弃，但语义结构沿用）。
+ *
+ * data 属性：
+ *   data-size="sm"   — 紧凑评论（头像 24px，正文 13px）
+ *   data-size="md"   — 标准评论（头像 32px，正文 14px，默认）
+ *   data-nested      — 嵌套回复评论（左侧细线缩进）
+ *
+ * 子元素：
+ *   .comment-avatar    — 头像区（放 <img> 或 <cs-avatar>）
+ *   .comment-body      — 正文区（作者+时间+内容+操作）
+ *   .comment-header    — 头部（作者 + 时间）
+ *   .comment-author    — 作者名
+ *   .comment-time      — 发表时间
+ *   .comment-content   — 正文
+ *   .comment-actions   — 操作区（点赞、回复等）
+ *   .comment-action    — 操作按钮
+ */
+
+cs-comment {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-sm) 0;
+  box-sizing: border-box;
+}
+
+/* ========== 头像 ========== */
+cs-comment .comment-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-interactive-sm);
+  height: var(--cs-sem-size-interactive-sm);
+  border-radius: var(--radius-pill);
+  background: var(--cs-color-bg-light);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+cs-comment .comment-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+cs-comment[data-size="sm"] .comment-avatar {
+  width: var(--cs-sem-size-interactive-xs);
+  height: var(--cs-sem-size-interactive-xs);
+}
+
+/* ========== 正文区 ========== */
+cs-comment .comment-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+/* ========== 头部 ========== */
+cs-comment .comment-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+cs-comment .comment-author {
+  font: var(--typo-cn-14-regular);
+  font-weight: 500;
+  color: var(--cs-color-text);
+}
+
+cs-comment .comment-time {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-comment[data-size="sm"] .comment-author {
+  font: var(--typo-cn-13-regular);
+  font-weight: 500;
+}
+
+/* ========== 正文 ========== */
+cs-comment .comment-content {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  word-break: break-word;
+}
+
+cs-comment[data-size="sm"] .comment-content {
+  font: var(--typo-cn-13-regular);
+}
+
+/* ========== 操作区 ========== */
+cs-comment .comment-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-2xs);
+}
+
+cs-comment .comment-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cs-color-text-light2);
+  font: var(--typo-cn-12-regular);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+cs-comment .comment-action:hover {
+  color: var(--cs-color-primary);
+}
+
+cs-comment .comment-action i {
+  font-size: var(--cs-sem-size-icon-sm);
+  line-height: 1;
+}
+
+/* ========== 嵌套回复 ========== */
+cs-comment[data-nested] {
+  margin-left: var(--spacing-32);
+  padding-left: var(--space-md);
+  border-left: var(--line-width) solid var(--cs-color-border);
+}

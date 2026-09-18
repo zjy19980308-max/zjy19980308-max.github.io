@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<style>
+  .bg{fill:#083D2A}
+  .t{fill:#EED6C8;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .m{fill:#8FB3A0;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mb{fill:#EED6C8;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .d{fill:#EED6C8;font-family:'Instrument Serif',Georgia,serif}
+  .a{fill:#DAAB00}
+  .am{fill:#DAAB00;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mu{fill:#8FB3A0;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .ln{stroke:#EED6C8;fill:none}
+  .ln2{stroke:#EED6C8;fill:none;opacity:.35}
+  .la{stroke:#DAAB00;fill:none}
+  .ds{stroke:#8FB3A0;fill:none;stroke-dasharray:6 6}
+  .box{fill:none;stroke:#EED6C8;stroke-opacity:.55}
+  .boxa{fill:#DAAB00;fill-opacity:.12;stroke:#DAAB00}
+  .fill{fill:#EED6C8;fill-opacity:.06;stroke:#EED6C8;stroke-opacity:.35}
+  .hatch{fill:url(#hz);stroke:#EED6C8;stroke-opacity:.35}
+  .pill{fill:none;stroke:#EED6C8;stroke-opacity:.6}
+</style>
+<defs>
+  <pattern id="hz" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#EED6C8" stroke-opacity=".22" stroke-width="1"/>
+  </pattern>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#EED6C8"/>
+  </marker>
+  <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#DAAB00"/>
+  </marker>
+  <marker id="arm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#8FB3A0"/>
+  </marker>
+</defs>
+<rect class="bg" width="1600" height="900"/><text x="90" y="96" class="d" font-size="48" text-anchor="start" font-weight="400" >发言到任务，一条链路不出平台</text><text x="90" y="132" class="mu" font-size="18" text-anchor="start" font-weight="400" >会中生成 · 会后只剩本人确认 · 中间没有第二个系统</text><text x="1510" y="80" class="m" font-size="13" text-anchor="end" font-weight="400" >FIG E · SPEECH TO TASK</text><path d="M90 330 L250 330 L266 370 L250 410 L90 410 L90 370z" class="box"/><text x="182.0" y="366" class="t" font-size="17" text-anchor="middle" font-weight="500" >有人发言</text><text x="182.0" y="390" class="m" font-size="10" text-anchor="middle" font-weight="400" >SPEAK</text><text x="182.0" y="314" class="m" font-size="12" text-anchor="middle" font-weight="400" >人</text><path d="M288 330 L448 330 L464 370 L448 410 L288 410 L304 370z" class="boxa"/><text x="380.0" y="366" class="t" font-size="17" text-anchor="middle" font-weight="500" >转写分段</text><text x="380.0" y="390" class="m" font-size="10" text-anchor="middle" font-weight="400" >TRANSCRIBE</text><text x="380.0" y="314" class="am" font-size="12" text-anchor="middle" font-weight="400" >AI</text><path d="M486 330 L646 330 L662 370 L646 410 L486 410 L502 370z" class="boxa"/><text x="578.0" y="366" class="t" font-size="17" text-anchor="middle" font-weight="500" >识别行动项</text><text x="578.0" y="390" class="m" font-size="10" text-anchor="middle" font-weight="400" >DETECT</text><text x="578.0" y="314" class="am" font-size="12" text-anchor="middle" font-weight="400" >AI</text><path d="M684 330 L844 330 L860 370 L844 410 L684 410 L700 370z" class="boxa"/><text x="776.0" y="366" class="t" font-size="17" text-anchor="middle" font-weight="500" >判定归属</text><text x="776.0" y="390" class="m" font-size="10" text-anchor="middle" font-weight="400" >ASSIGN</text><text x="776.0" y="314" class="am" font-size="12" text-anchor="middle" font-weight="400" >AI</text><path d="M882 330 L1042 330 L1058 370 L1042 410 L882 410 L898 370z" class="boxa"/><text x="974.0" y="366" class="t" font-size="17" text-anchor="middle" font-weight="500" >生成任务框架</text><text x="974.0" y="390" class="m" font-size="10" text-anchor="middle" font-weight="400" >DRAFT</text><text x="974.0" y="314" class="am" font-size="12" text-anchor="middle" font-weight="400" >AI</text><path d="M1080 330 L1240 330 L1256 370 L1240 410 L1080 410 L1096 370z" class="box"/><text x="1172.0" y="366" class="t" font-size="17" text-anchor="middle" font-weight="500" >本人确认</text><text x="1172.0" y="390" class="m" font-size="10" text-anchor="middle" font-weight="400" >CONFIRM</text><text x="1172.0" y="314" class="m" font-size="12" text-anchor="middle" font-weight="400" >人</text><path d="M1278 330 L1438 330 L1454 370 L1438 410 L1278 410 L1294 370z" class="fill"/><text x="1370.0" y="366" class="t" font-size="17" text-anchor="middle" font-weight="500" >进任务列表</text><text x="1370.0" y="390" class="m" font-size="10" text-anchor="middle" font-weight="400" >SHIP</text><text x="1370.0" y="314" class="m" font-size="12" text-anchor="middle" font-weight="400" >系统</text><text x="376.0" y="448" class="mu" font-size="13" text-anchor="middle" font-weight="400" >按声纹分发言人</text><text x="772.0" y="448" class="mu" font-size="13" text-anchor="middle" font-weight="400" >依据：岗位 · 部门 · 近期任务 · 相关文档</text><rect x="586.0" y="464" width="86" height="26" rx="6" class="box"/><text x="629.0" y="481.32" class="t" font-size="12" text-anchor="middle" font-weight="400" >个人</text><rect x="680.0" y="464" width="86" height="26" rx="6" class="box"/><text x="723.0" y="481.32" class="t" font-size="12" text-anchor="middle" font-weight="400" >部门</text><rect x="774.0" y="464" width="86" height="26" rx="6" class="box"/><text x="817.0" y="481.32" class="t" font-size="12" text-anchor="middle" font-weight="400" >全体参会</text><rect x="868.0" y="464" width="86" height="26" rx="6" class="box"/><text x="911.0" y="481.32" class="t" font-size="12" text-anchor="middle" font-weight="400" >全公司</text><text x="1168.0" y="448" class="mu" font-size="13" text-anchor="middle" font-weight="400" >确认前不生效</text><text x="1366.0" y="448" class="mu" font-size="13" text-anchor="middle" font-weight="400" >终点在「计划实施」</text><line x1="90" y1="620" x2="1510" y2="620" class="ln2"/><text x="90" y="660" class="m" font-size="12" text-anchor="start" font-weight="400" >AI BOUNDARIES · 链路上 AI 的三条边界</text><circle cx="96" cy="706" r="5" fill="#DAAB00"/><text x="112" y="712" class="t" font-size="20" text-anchor="start" font-weight="500" >按需召唤</text><text x="112" y="740" class="mu" font-size="13" text-anchor="start" font-weight="400" >不常驻 · 被叫到才占一格成员位</text><circle cx="576" cy="706" r="5" fill="#DAAB00"/><text x="592" y="712" class="t" font-size="20" text-anchor="start" font-weight="500" >悬浮不遮人</text><text x="592" y="740" class="mu" font-size="13" text-anchor="start" font-weight="400" >提示指向位置，不弹窗</text><circle cx="1056" cy="706" r="5" fill="#DAAB00"/><text x="1072" y="712" class="t" font-size="20" text-anchor="start" font-weight="500" >发言时不插嘴</text><text x="1072" y="740" class="mu" font-size="13" text-anchor="start" font-weight="400" >AI 推进事项，不替人做决定</text></svg>

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
   <meta charset="UTF-8">
   <title>cs-avatar 组件预览</title>
-  <link rel="stylesheet" href="../../../css/base.css?v=98d0f0e0">
+  <link rel="stylesheet" href="../../../css/base.css">
   <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
-  <link rel="stylesheet" href="avatar.css?v=5eb0eb5d">
+  <link rel="stylesheet" href="avatar.css">
   <style>
     body { padding: 32px; background: #f5f5f5; }
     .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
@@ -26,20 +25,20 @@
 
   <div class="row">
     <span class="row-label">尺寸</span>
-    <cs-avatar data-size="xs"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxOTEsMTc2LDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
-    <cs-avatar data-size="sm"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxNTMsMTkxLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
-    <cs-avatar><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTkxLDE0OCkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
-    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTgyLDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
-    <cs-avatar data-size="xl"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTMwLDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="xs"><img src="https://i.pravatar.cc/40?img=1" alt=""></cs-avatar>
+    <cs-avatar data-size="sm"><img src="https://i.pravatar.cc/48?img=2" alt=""></cs-avatar>
+    <cs-avatar><img src="https://i.pravatar.cc/64?img=3" alt=""></cs-avatar>
+    <cs-avatar data-size="lg"><img src="https://i.pravatar.cc/80?img=4" alt=""></cs-avatar>
+    <cs-avatar data-size="xl"><img src="https://i.pravatar.cc/96?img=5" alt=""></cs-avatar>
   </div>
 
   <div class="row">
     <span class="row-label">方形</span>
-    <cs-avatar data-size="xs" data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxNzEsMTI1LDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
-    <cs-avatar data-size="sm" data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxOTEsMTI1LDE1OSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
-    <cs-avatar data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxOTEsMTQyLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
-    <cs-avatar data-size="lg" data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxODcsMTkxLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
-    <cs-avatar data-size="xl" data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMzYsMTkxLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="xs" data-shape="square"><img src="https://i.pravatar.cc/40?img=6" alt=""></cs-avatar>
+    <cs-avatar data-size="sm" data-shape="square"><img src="https://i.pravatar.cc/48?img=7" alt=""></cs-avatar>
+    <cs-avatar data-shape="square"><img src="https://i.pravatar.cc/64?img=8" alt=""></cs-avatar>
+    <cs-avatar data-size="lg" data-shape="square"><img src="https://i.pravatar.cc/80?img=9" alt=""></cs-avatar>
+    <cs-avatar data-size="xl" data-shape="square"><img src="https://i.pravatar.cc/96?img=10" alt=""></cs-avatar>
   </div>
 </div>
 
@@ -91,16 +90,16 @@
 
   <div class="row">
     <span class="row-label">状态</span>
-    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTkxLDE2NSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-online></span></cs-avatar>
-    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTY0LDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-busy></span></cs-avatar>
-    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMzcsMTI1LDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-away></span></cs-avatar>
-    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxODgsMTI1LDE5MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-offline></span></cs-avatar>
+    <cs-avatar data-size="lg"><img src="https://i.pravatar.cc/80?img=11" alt=""><span class="avatar-status" data-online></span></cs-avatar>
+    <cs-avatar data-size="lg"><img src="https://i.pravatar.cc/80?img=12" alt=""><span class="avatar-status" data-busy></span></cs-avatar>
+    <cs-avatar data-size="lg"><img src="https://i.pravatar.cc/80?img=13" alt=""><span class="avatar-status" data-away></span></cs-avatar>
+    <cs-avatar data-size="lg"><img src="https://i.pravatar.cc/80?img=14" alt=""><span class="avatar-status" data-offline></span></cs-avatar>
   </div>
 
   <div class="row">
     <span class="row-label">小尺寸</span>
-    <cs-avatar data-size="sm"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxOTEsMTI1LDE0MSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-online></span></cs-avatar>
-    <cs-avatar><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxOTEsMTYwLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""><span class="avatar-status" data-online></span></cs-avatar>
+    <cs-avatar data-size="sm"><img src="https://i.pravatar.cc/48?img=15" alt=""><span class="avatar-status" data-online></span></cs-avatar>
+    <cs-avatar><img src="https://i.pravatar.cc/64?img=16" alt=""><span class="avatar-status" data-online></span></cs-avatar>
   </div>
 </div>
 
@@ -108,10 +107,10 @@
 <div class="section">
   <div class="section-title">深色背景</div>
   <div class="dark-bg">
-    <cs-avatar data-size="lg"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxNzAsMTkxLDEyNSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="lg"><img src="https://i.pravatar.cc/80?img=17" alt=""></cs-avatar>
     <cs-avatar data-size="lg" data-color="blue"><span class="avatar-text">张</span></cs-avatar>
     <cs-avatar data-size="lg"><i class="avatar-icon cses-aite"></i></cs-avatar>
-    <cs-avatar data-size="lg" data-shape="square"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgdmlld0JveD0iMCAwIDQwIDQwIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9InJnYigxMjUsMTkxLDEzMSkiLz48Y2lyY2xlIGN4PSIyMCIgY3k9IjE1LjUiIHI9IjYuMiIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIuOTIiLz48cGF0aCBkPSJNNi41IDQwYzAtNy41IDYtMTMgMTMuNS0xM1MzMy41IDMyLjUgMzMuNSA0MHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjkyIi8+PC9zdmc+" alt=""></cs-avatar>
+    <cs-avatar data-size="lg" data-shape="square"><img src="https://i.pravatar.cc/80?img=18" alt=""></cs-avatar>
   </div>
 </div>
 

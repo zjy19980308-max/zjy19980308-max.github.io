@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-date-separator 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="date-separator.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+<!-- 完整日期 -->
+<div class="section">
+  <div class="section-title">完整日期格式</div>
+  <div class="section-subtitle">年月日格式的日期分隔</div>
+
+  <cs-date-separator>
+    <span class="separator-line"></span>
+    <span class="separator-text">2023年11月12日</span>
+    <span class="separator-line"></span>
+  </cs-date-separator>
+
+  <cs-date-separator>
+    <span class="separator-line"></span>
+    <span class="separator-text">2024年1月5日</span>
+    <span class="separator-line"></span>
+  </cs-date-separator>
+</div>
+
+<!-- 相对日期 -->
+<div class="section">
+  <div class="section-title">相对日期格式</div>
+  <div class="section-subtitle">今天、昨天等相对描述</div>
+
+  <cs-date-separator>
+    <span class="separator-line"></span>
+    <span class="separator-text">今天</span>
+    <span class="separator-line"></span>
+  </cs-date-separator>
+
+  <cs-date-separator>
+    <span class="separator-line"></span>
+    <span class="separator-text">昨天</span>
+    <span class="separator-line"></span>
+  </cs-date-separator>
+</div>
+
+<!-- 星期格式 -->
+<div class="section">
+  <div class="section-title">星期格式</div>
+  <div class="section-subtitle">带星期的日期显示</div>
+
+  <cs-date-separator>
+    <span class="separator-line"></span>
+    <span class="separator-text">11月10日 星期五</span>
+    <span class="separator-line"></span>
+  </cs-date-separator>
+</div>
+
+<!-- 在消息上下文中 -->
+<div class="section">
+  <div class="section-title">消息上下文示例</div>
+  <div class="section-subtitle">模拟在消息列表中的显示效果</div>
+
+  <div style="padding: var(--space-sm) var(--space-md); font: var(--typo-cn-14-regular); color: var(--cs-color-text);">
+    这是昨天的一条消息
+  </div>
+
+  <cs-date-separator>
+    <span class="separator-line"></span>
+    <span class="separator-text">今天</span>
+    <span class="separator-line"></span>
+  </cs-date-separator>
+
+  <div style="padding: var(--space-sm) var(--space-md); font: var(--typo-cn-14-regular); color: var(--cs-color-text);">
+    这是今天的第一条消息
+  </div>
+</div>
+
+</body>
+</html>

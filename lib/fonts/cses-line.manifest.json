@@ -1,0 +1,5712 @@
+{
+ "family": "CSES-Line",
+ "prefix": "cses-line-",
+ "count": 815,
+ "icons": [
+  {
+   "name": "stop-circle-contained",
+   "class": "cses-line-stop-circle-contained",
+   "codepoint": 57344,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "activity",
+   "class": "cses-line-activity",
+   "codepoint": 57345,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "add-square-01",
+   "class": "cses-line-add-square-01",
+   "codepoint": 57346,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "add-square-02",
+   "class": "cses-line-add-square-02",
+   "codepoint": 57347,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "add-square-03",
+   "class": "cses-line-add-square-03",
+   "codepoint": 57348,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "add-square-04",
+   "class": "cses-line-add-square-04",
+   "codepoint": 57349,
+   "category": "通用|General",
+   "kind": "fill"
+  },
+  {
+   "name": "alarm-01",
+   "class": "cses-line-alarm-01",
+   "codepoint": 57350,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "alarm-02",
+   "class": "cses-line-alarm-02",
+   "codepoint": 57351,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "alarm-03",
+   "class": "cses-line-alarm-03",
+   "codepoint": 57352,
+   "category": "时间|Time",
+   "kind": "fill"
+  },
+  {
+   "name": "alarm-04",
+   "class": "cses-line-alarm-04",
+   "codepoint": 57353,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "alarm-05",
+   "class": "cses-line-alarm-05",
+   "codepoint": 57354,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "alarm-06",
+   "class": "cses-line-alarm-06",
+   "codepoint": 57355,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "alarm-check",
+   "class": "cses-line-alarm-check",
+   "codepoint": 57356,
+   "category": "时间|Time",
+   "kind": "fill"
+  },
+  {
+   "name": "alarm-minus",
+   "class": "cses-line-alarm-minus",
+   "codepoint": 57357,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "alarm-off",
+   "class": "cses-line-alarm-off",
+   "codepoint": 57358,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "alarm-plus",
+   "class": "cses-line-alarm-plus",
+   "codepoint": 57359,
+   "category": "时间|Time",
+   "kind": "fill"
+  },
+  {
+   "name": "alert-circle",
+   "class": "cses-line-alert-circle",
+   "codepoint": 57360,
+   "category": "提醒|Alerts",
+   "kind": "line"
+  },
+  {
+   "name": "alert-square",
+   "class": "cses-line-alert-square",
+   "codepoint": 57361,
+   "category": "提醒|Alerts",
+   "kind": "line"
+  },
+  {
+   "name": "alert-triangle",
+   "class": "cses-line-alert-triangle",
+   "codepoint": 57362,
+   "category": "提醒|Alerts",
+   "kind": "line"
+  },
+  {
+   "name": "align-center",
+   "class": "cses-line-align-center",
+   "codepoint": 57363,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "align-down-01",
+   "class": "cses-line-align-down-01",
+   "codepoint": 57364,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-down-02",
+   "class": "cses-line-align-down-02",
+   "codepoint": 57365,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-horizontal-center-01",
+   "class": "cses-line-align-horizontal-center-01",
+   "codepoint": 57366,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-horizontal-center-02",
+   "class": "cses-line-align-horizontal-center-02",
+   "codepoint": 57367,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-horizontal-center-03",
+   "class": "cses-line-align-horizontal-center-03",
+   "codepoint": 57368,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-justify",
+   "class": "cses-line-align-justify",
+   "codepoint": 57369,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "align-left-01",
+   "class": "cses-line-align-left-01",
+   "codepoint": 57370,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-left-02",
+   "class": "cses-line-align-left-02",
+   "codepoint": 57371,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-left",
+   "class": "cses-line-align-left",
+   "codepoint": 57372,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "align-right-01",
+   "class": "cses-line-align-right-01",
+   "codepoint": 57373,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-right-02",
+   "class": "cses-line-align-right-02",
+   "codepoint": 57374,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-right",
+   "class": "cses-line-align-right",
+   "codepoint": 57375,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "align-up-01",
+   "class": "cses-line-align-up-01",
+   "codepoint": 57376,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-up-02",
+   "class": "cses-line-align-up-02",
+   "codepoint": 57377,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-vertical-center-01",
+   "class": "cses-line-align-vertical-center-01",
+   "codepoint": 57378,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-vertical-center-02",
+   "class": "cses-line-align-vertical-center-02",
+   "codepoint": 57379,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "align-vertical-center-03",
+   "class": "cses-line-align-vertical-center-03",
+   "codepoint": 57380,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "annotation-alert",
+   "class": "cses-line-annotation-alert",
+   "codepoint": 57381,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "annotation-check",
+   "class": "cses-line-annotation-check",
+   "codepoint": 57382,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "annotation-information",
+   "class": "cses-line-annotation-information",
+   "codepoint": 57383,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "annotation-plus",
+   "class": "cses-line-annotation-plus",
+   "codepoint": 57384,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "annotation-typing",
+   "class": "cses-line-annotation-typing",
+   "codepoint": 57385,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "annotation-x",
+   "class": "cses-line-annotation-x",
+   "codepoint": 57386,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "annotation",
+   "class": "cses-line-annotation",
+   "codepoint": 57387,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-curve-left-down",
+   "class": "cses-line-arrow-curve-left-down",
+   "codepoint": 57388,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-curve-left-right",
+   "class": "cses-line-arrow-curve-left-right",
+   "codepoint": 57389,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-curve-left-up",
+   "class": "cses-line-arrow-curve-left-up",
+   "codepoint": 57390,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-curve-right-up",
+   "class": "cses-line-arrow-curve-right-up",
+   "codepoint": 57391,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-curve-up-left",
+   "class": "cses-line-arrow-curve-up-left",
+   "codepoint": 57392,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-curve-up-right",
+   "class": "cses-line-arrow-curve-up-right",
+   "codepoint": 57393,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-down-contained-01",
+   "class": "cses-line-arrow-down-contained-01",
+   "codepoint": 57394,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-down-contained-02",
+   "class": "cses-line-arrow-down-contained-02",
+   "codepoint": 57395,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-down-left-contained",
+   "class": "cses-line-arrow-down-left-contained",
+   "codepoint": 57396,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-down-left-sm",
+   "class": "cses-line-arrow-down-left-sm",
+   "codepoint": 57397,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-down-left-square-contained",
+   "class": "cses-line-arrow-down-left-square-contained",
+   "codepoint": 57398,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-down-left",
+   "class": "cses-line-arrow-down-left",
+   "codepoint": 57399,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-down-right-contained",
+   "class": "cses-line-arrow-down-right-contained",
+   "codepoint": 57400,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-down-right-sm",
+   "class": "cses-line-arrow-down-right-sm",
+   "codepoint": 57401,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-down-right-square-contained",
+   "class": "cses-line-arrow-down-right-square-contained",
+   "codepoint": 57402,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-down-right",
+   "class": "cses-line-arrow-down-right",
+   "codepoint": 57403,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-down-square-contained",
+   "class": "cses-line-arrow-down-square-contained",
+   "codepoint": 57404,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-expand-01",
+   "class": "cses-line-arrow-expand-01",
+   "codepoint": 57405,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-expand-02",
+   "class": "cses-line-arrow-expand-02",
+   "codepoint": 57406,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-expand-03",
+   "class": "cses-line-arrow-expand-03",
+   "codepoint": 57407,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-expand-04",
+   "class": "cses-line-arrow-expand-04",
+   "codepoint": 57408,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-left-contained-01",
+   "class": "cses-line-arrow-left-contained-01",
+   "codepoint": 57409,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-left-contained-02",
+   "class": "cses-line-arrow-left-contained-02",
+   "codepoint": 57410,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-left-sm",
+   "class": "cses-line-arrow-left-sm",
+   "codepoint": 57411,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-left-square-contained",
+   "class": "cses-line-arrow-left-square-contained",
+   "codepoint": 57412,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-left",
+   "class": "cses-line-arrow-left",
+   "codepoint": 57413,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-refresh-01",
+   "class": "cses-line-arrow-refresh-01",
+   "codepoint": 57414,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-refresh-02",
+   "class": "cses-line-arrow-refresh-02",
+   "codepoint": 57415,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-refresh-03",
+   "class": "cses-line-arrow-refresh-03",
+   "codepoint": 57416,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-refresh-04",
+   "class": "cses-line-arrow-refresh-04",
+   "codepoint": 57417,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-refresh-05",
+   "class": "cses-line-arrow-refresh-05",
+   "codepoint": 57418,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-refresh-06",
+   "class": "cses-line-arrow-refresh-06",
+   "codepoint": 57419,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-right-contained-01",
+   "class": "cses-line-arrow-right-contained-01",
+   "codepoint": 57420,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-right-contained-02",
+   "class": "cses-line-arrow-right-contained-02",
+   "codepoint": 57421,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-right-sm",
+   "class": "cses-line-arrow-right-sm",
+   "codepoint": 57422,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-right-square-contained",
+   "class": "cses-line-arrow-right-square-contained",
+   "codepoint": 57423,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-right",
+   "class": "cses-line-arrow-right",
+   "codepoint": 57424,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-rotate-left-01",
+   "class": "cses-line-arrow-rotate-left-01",
+   "codepoint": 57425,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-rotate-left-02",
+   "class": "cses-line-arrow-rotate-left-02",
+   "codepoint": 57426,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-rotate-right-01",
+   "class": "cses-line-arrow-rotate-right-01",
+   "codepoint": 57427,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-rotate-right-02",
+   "class": "cses-line-arrow-rotate-right-02",
+   "codepoint": 57428,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-switch-horizontal",
+   "class": "cses-line-arrow-switch-horizontal",
+   "codepoint": 57429,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-up-contained-01",
+   "class": "cses-line-arrow-up-contained-01",
+   "codepoint": 57430,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-up-contained-02",
+   "class": "cses-line-arrow-up-contained-02",
+   "codepoint": 57431,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-up-left-contained",
+   "class": "cses-line-arrow-up-left-contained",
+   "codepoint": 57432,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-up-left-sm",
+   "class": "cses-line-arrow-up-left-sm",
+   "codepoint": 57433,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-up-left-square-contained",
+   "class": "cses-line-arrow-up-left-square-contained",
+   "codepoint": 57434,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-up-left",
+   "class": "cses-line-arrow-up-left",
+   "codepoint": 57435,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-up-right-contained",
+   "class": "cses-line-arrow-up-right-contained",
+   "codepoint": 57436,
+   "category": "箭头|Arrows",
+   "kind": "fill"
+  },
+  {
+   "name": "arrow-up-right-sm",
+   "class": "cses-line-arrow-up-right-sm",
+   "codepoint": 57437,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-up-right-square-contained",
+   "class": "cses-line-arrow-up-right-square-contained",
+   "codepoint": 57438,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-up-right",
+   "class": "cses-line-arrow-up-right",
+   "codepoint": 57439,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-up-sm",
+   "class": "cses-line-arrow-up-sm",
+   "codepoint": 57440,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-up-square-contained",
+   "class": "cses-line-arrow-up-square-contained",
+   "codepoint": 57441,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "arrow-up",
+   "class": "cses-line-arrow-up",
+   "codepoint": 57442,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "atom",
+   "class": "cses-line-atom",
+   "codepoint": 57443,
+   "category": "教育|Education",
+   "kind": "line"
+  },
+  {
+   "name": "attatchment-01",
+   "class": "cses-line-attatchment-01",
+   "codepoint": 57444,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "attatchment-02",
+   "class": "cses-line-attatchment-02",
+   "codepoint": 57445,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "audio-settings-01",
+   "class": "cses-line-audio-settings-01",
+   "codepoint": 57446,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "audio-settings-02",
+   "class": "cses-line-audio-settings-02",
+   "codepoint": 57447,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "bag-01",
+   "class": "cses-line-bag-01",
+   "codepoint": 57448,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bag-02",
+   "class": "cses-line-bag-02",
+   "codepoint": 57449,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bag-03",
+   "class": "cses-line-bag-03",
+   "codepoint": 57450,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bag-04",
+   "class": "cses-line-bag-04",
+   "codepoint": 57451,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bag-05",
+   "class": "cses-line-bag-05",
+   "codepoint": 57452,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bank-note-01",
+   "class": "cses-line-bank-note-01",
+   "codepoint": 57453,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bank-note-02",
+   "class": "cses-line-bank-note-02",
+   "codepoint": 57454,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bank-note-03",
+   "class": "cses-line-bank-note-03",
+   "codepoint": 57455,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bank-note-04",
+   "class": "cses-line-bank-note-04",
+   "codepoint": 57456,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bank-note-05",
+   "class": "cses-line-bank-note-05",
+   "codepoint": 57457,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bank-note-06",
+   "class": "cses-line-bank-note-06",
+   "codepoint": 57458,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bank",
+   "class": "cses-line-bank",
+   "codepoint": 57459,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-01",
+   "class": "cses-line-bar-chart-01",
+   "codepoint": 57460,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-02",
+   "class": "cses-line-bar-chart-02",
+   "codepoint": 57461,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-03",
+   "class": "cses-line-bar-chart-03",
+   "codepoint": 57462,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-04",
+   "class": "cses-line-bar-chart-04",
+   "codepoint": 57463,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-05",
+   "class": "cses-line-bar-chart-05",
+   "codepoint": 57464,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-square-01",
+   "class": "cses-line-bar-chart-square-01",
+   "codepoint": 57465,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-square-02",
+   "class": "cses-line-bar-chart-square-02",
+   "codepoint": 57466,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-square-03",
+   "class": "cses-line-bar-chart-square-03",
+   "codepoint": 57467,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-square-down-01",
+   "class": "cses-line-bar-chart-square-down-01",
+   "codepoint": 57468,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-square-down-02",
+   "class": "cses-line-bar-chart-square-down-02",
+   "codepoint": 57469,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-chart-square-up-01",
+   "class": "cses-line-bar-chart-square-up-01",
+   "codepoint": 57470,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-group-01",
+   "class": "cses-line-bar-group-01",
+   "codepoint": 57471,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-group-02",
+   "class": "cses-line-bar-group-02",
+   "codepoint": 57472,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "bar-group-03",
+   "class": "cses-line-bar-group-03",
+   "codepoint": 57473,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "battery-01",
+   "class": "cses-line-battery-01",
+   "codepoint": 57474,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "battery-02",
+   "class": "cses-line-battery-02",
+   "codepoint": 57475,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "battery-03",
+   "class": "cses-line-battery-03",
+   "codepoint": 57476,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "battery-04",
+   "class": "cses-line-battery-04",
+   "codepoint": 57477,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "battery-empty",
+   "class": "cses-line-battery-empty",
+   "codepoint": 57478,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "battery-fill-01",
+   "class": "cses-line-battery-fill-01",
+   "codepoint": 57479,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "battery-fill-02",
+   "class": "cses-line-battery-fill-02",
+   "codepoint": 57480,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "battery-fill-04",
+   "class": "cses-line-battery-fill-04",
+   "codepoint": 57481,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "bell-01",
+   "class": "cses-line-bell-01",
+   "codepoint": 57482,
+   "category": "提醒|Alerts",
+   "kind": "fill"
+  },
+  {
+   "name": "bell-02",
+   "class": "cses-line-bell-02",
+   "codepoint": 57483,
+   "category": "提醒|Alerts",
+   "kind": "line"
+  },
+  {
+   "name": "bell-03",
+   "class": "cses-line-bell-03",
+   "codepoint": 57484,
+   "category": "提醒|Alerts",
+   "kind": "fill"
+  },
+  {
+   "name": "bell-04",
+   "class": "cses-line-bell-04",
+   "codepoint": 57485,
+   "category": "提醒|Alerts",
+   "kind": "fill"
+  },
+  {
+   "name": "bell-off-01",
+   "class": "cses-line-bell-off-01",
+   "codepoint": 57486,
+   "category": "提醒|Alerts",
+   "kind": "line"
+  },
+  {
+   "name": "bell-off-02",
+   "class": "cses-line-bell-off-02",
+   "codepoint": 57487,
+   "category": "提醒|Alerts",
+   "kind": "line"
+  },
+  {
+   "name": "bell-ringing-01",
+   "class": "cses-line-bell-ringing-01",
+   "codepoint": 57488,
+   "category": "提醒|Alerts",
+   "kind": "fill"
+  },
+  {
+   "name": "bell-ringing-02",
+   "class": "cses-line-bell-ringing-02",
+   "codepoint": 57489,
+   "category": "提醒|Alerts",
+   "kind": "fill"
+  },
+  {
+   "name": "bell-ringing-03",
+   "class": "cses-line-bell-ringing-03",
+   "codepoint": 57490,
+   "category": "提醒|Alerts",
+   "kind": "fill"
+  },
+  {
+   "name": "bell-ringing-04",
+   "class": "cses-line-bell-ringing-04",
+   "codepoint": 57491,
+   "category": "提醒|Alerts",
+   "kind": "fill"
+  },
+  {
+   "name": "bezier-01",
+   "class": "cses-line-bezier-01",
+   "codepoint": 57492,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "bezier-02",
+   "class": "cses-line-bezier-02",
+   "codepoint": 57493,
+   "category": "编辑器|Editor",
+   "kind": "fill"
+  },
+  {
+   "name": "bluetooth-01",
+   "class": "cses-line-bluetooth-01",
+   "codepoint": 57494,
+   "category": "媒体|Media",
+   "kind": "fill"
+  },
+  {
+   "name": "bluetooth-02",
+   "class": "cses-line-bluetooth-02",
+   "codepoint": 57495,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "bold-01",
+   "class": "cses-line-bold-01",
+   "codepoint": 57496,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "bold-02",
+   "class": "cses-line-bold-02",
+   "codepoint": 57497,
+   "category": "编辑器|Editor",
+   "kind": "fill"
+  },
+  {
+   "name": "book-01",
+   "class": "cses-line-book-01",
+   "codepoint": 57498,
+   "category": "教育|Education",
+   "kind": "line"
+  },
+  {
+   "name": "book-02",
+   "class": "cses-line-book-02",
+   "codepoint": 57499,
+   "category": "教育|Education",
+   "kind": "line"
+  },
+  {
+   "name": "book-03",
+   "class": "cses-line-book-03",
+   "codepoint": 57500,
+   "category": "教育|Education",
+   "kind": "line"
+  },
+  {
+   "name": "book-04",
+   "class": "cses-line-book-04",
+   "codepoint": 57501,
+   "category": "教育|Education",
+   "kind": "line"
+  },
+  {
+   "name": "book-05",
+   "class": "cses-line-book-05",
+   "codepoint": 57502,
+   "category": "教育|Education",
+   "kind": "line"
+  },
+  {
+   "name": "book-06",
+   "class": "cses-line-book-06",
+   "codepoint": 57503,
+   "category": "教育|Education",
+   "kind": "line"
+  },
+  {
+   "name": "box",
+   "class": "cses-line-box",
+   "codepoint": 57504,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "brackets-x",
+   "class": "cses-line-brackets-x",
+   "codepoint": 57505,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "brackets-check",
+   "class": "cses-line-brackets-check",
+   "codepoint": 57506,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "brackets-minus",
+   "class": "cses-line-brackets-minus",
+   "codepoint": 57507,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "brackets-plus",
+   "class": "cses-line-brackets-plus",
+   "codepoint": 57508,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "brackets-slash",
+   "class": "cses-line-brackets-slash",
+   "codepoint": 57509,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "brackets-typing",
+   "class": "cses-line-brackets-typing",
+   "codepoint": 57510,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "brackets",
+   "class": "cses-line-brackets",
+   "codepoint": 57511,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "browser-code",
+   "class": "cses-line-browser-code",
+   "codepoint": 57512,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "browser",
+   "class": "cses-line-browser",
+   "codepoint": 57513,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "calculator-01",
+   "class": "cses-line-calculator-01",
+   "codepoint": 57514,
+   "category": "教育|Education",
+   "kind": "line"
+  },
+  {
+   "name": "calculator-02",
+   "class": "cses-line-calculator-02",
+   "codepoint": 57515,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "calendar-01",
+   "class": "cses-line-calendar-01",
+   "codepoint": 57516,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "calendar-02",
+   "class": "cses-line-calendar-02",
+   "codepoint": 57517,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "calendar-03",
+   "class": "cses-line-calendar-03",
+   "codepoint": 57518,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "calendar-04",
+   "class": "cses-line-calendar-04",
+   "codepoint": 57519,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "calendar-check",
+   "class": "cses-line-calendar-check",
+   "codepoint": 57520,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "calendar-minus",
+   "class": "cses-line-calendar-minus",
+   "codepoint": 57521,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "calendar-number",
+   "class": "cses-line-calendar-number",
+   "codepoint": 57522,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "calendar-plus",
+   "class": "cses-line-calendar-plus",
+   "codepoint": 57523,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "camera-01",
+   "class": "cses-line-camera-01",
+   "codepoint": 57524,
+   "category": "图片|Images",
+   "kind": "fill"
+  },
+  {
+   "name": "camera-02",
+   "class": "cses-line-camera-02",
+   "codepoint": 57525,
+   "category": "图片|Images",
+   "kind": "fill"
+  },
+  {
+   "name": "camera-lens",
+   "class": "cses-line-camera-lens",
+   "codepoint": 57526,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "camera-off",
+   "class": "cses-line-camera-off",
+   "codepoint": 57527,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "cancel-left",
+   "class": "cses-line-cancel-left",
+   "codepoint": 57528,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "cancel-right",
+   "class": "cses-line-cancel-right",
+   "codepoint": 57529,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "card-01",
+   "class": "cses-line-card-01",
+   "codepoint": 57530,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "card-02",
+   "class": "cses-line-card-02",
+   "codepoint": 57531,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "card-add",
+   "class": "cses-line-card-add",
+   "codepoint": 57532,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "card-check",
+   "class": "cses-line-card-check",
+   "codepoint": 57533,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "card-down",
+   "class": "cses-line-card-down",
+   "codepoint": 57534,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "card-edit",
+   "class": "cses-line-card-edit",
+   "codepoint": 57535,
+   "category": "财务|Finance",
+   "kind": "fill"
+  },
+  {
+   "name": "card-lock",
+   "class": "cses-line-card-lock",
+   "codepoint": 57536,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "card-minus",
+   "class": "cses-line-card-minus",
+   "codepoint": 57537,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "card-number",
+   "class": "cses-line-card-number",
+   "codepoint": 57538,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "card-shield",
+   "class": "cses-line-card-shield",
+   "codepoint": 57539,
+   "category": "财务|Finance",
+   "kind": "fill"
+  },
+  {
+   "name": "card-up",
+   "class": "cses-line-card-up",
+   "codepoint": 57540,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "card-x",
+   "class": "cses-line-card-x",
+   "codepoint": 57541,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "cart",
+   "class": "cses-line-cart",
+   "codepoint": 57542,
+   "category": "财务|Finance",
+   "kind": "fill"
+  },
+  {
+   "name": "center",
+   "class": "cses-line-center",
+   "codepoint": 57543,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "chart-breakout-circle",
+   "class": "cses-line-chart-breakout-circle",
+   "codepoint": 57544,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "chart-breakout-square",
+   "class": "cses-line-chart-breakout-square",
+   "codepoint": 57545,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "check-broken",
+   "class": "cses-line-check-broken",
+   "codepoint": 57546,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "check-contained",
+   "class": "cses-line-check-contained",
+   "codepoint": 57547,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "check-square-broken",
+   "class": "cses-line-check-square-broken",
+   "codepoint": 57548,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "check-square-contained",
+   "class": "cses-line-check-square-contained",
+   "codepoint": 57549,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "chevron-double-down",
+   "class": "cses-line-chevron-double-down",
+   "codepoint": 57550,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "chevron-double-left",
+   "class": "cses-line-chevron-double-left",
+   "codepoint": 57551,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "chevron-double-right",
+   "class": "cses-line-chevron-double-right",
+   "codepoint": 57552,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "chevron-double-up",
+   "class": "cses-line-chevron-double-up",
+   "codepoint": 57553,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "chevron-down",
+   "class": "cses-line-chevron-down",
+   "codepoint": 57554,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "chevron-left",
+   "class": "cses-line-chevron-left",
+   "codepoint": 57555,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "chevron-right",
+   "class": "cses-line-chevron-right",
+   "codepoint": 57556,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "chevron-up",
+   "class": "cses-line-chevron-up",
+   "codepoint": 57557,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "chromecast",
+   "class": "cses-line-chromecast",
+   "codepoint": 57558,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "circle",
+   "class": "cses-line-circle",
+   "codepoint": 57559,
+   "category": "形状|Shapes",
+   "kind": "line"
+  },
+  {
+   "name": "clock-01",
+   "class": "cses-line-clock-01",
+   "codepoint": 57560,
+   "category": "时间|Time",
+   "kind": "fill"
+  },
+  {
+   "name": "clock-backward",
+   "class": "cses-line-clock-backward",
+   "codepoint": 57561,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "clock-check",
+   "class": "cses-line-clock-check",
+   "codepoint": 57562,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "clock-forward",
+   "class": "cses-line-clock-forward",
+   "codepoint": 57563,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "clock-plus",
+   "class": "cses-line-clock-plus",
+   "codepoint": 57564,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "cloud-01",
+   "class": "cses-line-cloud-01",
+   "codepoint": 57565,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "cloud-02",
+   "class": "cses-line-cloud-02",
+   "codepoint": 57566,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "cloud-03",
+   "class": "cses-line-cloud-03",
+   "codepoint": 57567,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "cloud-04",
+   "class": "cses-line-cloud-04",
+   "codepoint": 57568,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "cloud-lightning",
+   "class": "cses-line-cloud-lightning",
+   "codepoint": 57569,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "cloud-rain",
+   "class": "cses-line-cloud-rain",
+   "codepoint": 57570,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "cloud-snow",
+   "class": "cses-line-cloud-snow",
+   "codepoint": 57571,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "cloud-sun",
+   "class": "cses-line-cloud-sun",
+   "codepoint": 57572,
+   "category": "天气|Weather",
+   "kind": "fill"
+  },
+  {
+   "name": "code-01",
+   "class": "cses-line-code-01",
+   "codepoint": 57573,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "code-02",
+   "class": "cses-line-code-02",
+   "codepoint": 57574,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "code-03",
+   "class": "cses-line-code-03",
+   "codepoint": 57575,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "code-04",
+   "class": "cses-line-code-04",
+   "codepoint": 57576,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "coin-broken",
+   "class": "cses-line-coin-broken",
+   "codepoint": 57577,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "coin-hand",
+   "class": "cses-line-coin-hand",
+   "codepoint": 57578,
+   "category": "财务|Finance",
+   "kind": "fill"
+  },
+  {
+   "name": "coin-number",
+   "class": "cses-line-coin-number",
+   "codepoint": 57579,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "coin-unbroken",
+   "class": "cses-line-coin-unbroken",
+   "codepoint": 57580,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "coins-rotate",
+   "class": "cses-line-coins-rotate",
+   "codepoint": 57581,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "coins",
+   "class": "cses-line-coins",
+   "codepoint": 57582,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "color-picker",
+   "class": "cses-line-color-picker",
+   "codepoint": 57583,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "color-swatch-01",
+   "class": "cses-line-color-swatch-01",
+   "codepoint": 57584,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "color-swatch-02",
+   "class": "cses-line-color-swatch-02",
+   "codepoint": 57585,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "colors-01",
+   "class": "cses-line-colors-01",
+   "codepoint": 57586,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "colors-02",
+   "class": "cses-line-colors-02",
+   "codepoint": 57587,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "column-horizontal-01",
+   "class": "cses-line-column-horizontal-01",
+   "codepoint": 57588,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "column-horizontal-02",
+   "class": "cses-line-column-horizontal-02",
+   "codepoint": 57589,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "column-horizontal-03",
+   "class": "cses-line-column-horizontal-03",
+   "codepoint": 57590,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "column-vertical-01",
+   "class": "cses-line-column-vertical-01",
+   "codepoint": 57591,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "column-vertical-02",
+   "class": "cses-line-column-vertical-02",
+   "codepoint": 57592,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "column-vertical-03",
+   "class": "cses-line-column-vertical-03",
+   "codepoint": 57593,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "compare",
+   "class": "cses-line-compare",
+   "codepoint": 57594,
+   "category": "通用|General",
+   "kind": "fill"
+  },
+  {
+   "name": "compass",
+   "class": "cses-line-compass",
+   "codepoint": 57595,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "computer",
+   "class": "cses-line-computer",
+   "codepoint": 57596,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "contrast",
+   "class": "cses-line-contrast",
+   "codepoint": 57597,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "crop-01",
+   "class": "cses-line-crop-01",
+   "codepoint": 57598,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "crop-02",
+   "class": "cses-line-crop-02",
+   "codepoint": 57599,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "currency-bath",
+   "class": "cses-line-currency-bath",
+   "codepoint": 57600,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-bitcoin",
+   "class": "cses-line-currency-bitcoin",
+   "codepoint": 57601,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-cent",
+   "class": "cses-line-currency-cent",
+   "codepoint": 57602,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-coin-bath",
+   "class": "cses-line-currency-coin-bath",
+   "codepoint": 57603,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-coin-bitcoin",
+   "class": "cses-line-currency-coin-bitcoin",
+   "codepoint": 57604,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-coin-cent",
+   "class": "cses-line-currency-coin-cent",
+   "codepoint": 57605,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-coin-dollar",
+   "class": "cses-line-currency-coin-dollar",
+   "codepoint": 57606,
+   "category": "财务|Finance",
+   "kind": "fill"
+  },
+  {
+   "name": "currency-coin-euro",
+   "class": "cses-line-currency-coin-euro",
+   "codepoint": 57607,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-coin-pound",
+   "class": "cses-line-currency-coin-pound",
+   "codepoint": 57608,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-coin-rubel",
+   "class": "cses-line-currency-coin-rubel",
+   "codepoint": 57609,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-coin-rupee",
+   "class": "cses-line-currency-coin-rupee",
+   "codepoint": 57610,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-coin-yen",
+   "class": "cses-line-currency-coin-yen",
+   "codepoint": 57611,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-dollar",
+   "class": "cses-line-currency-dollar",
+   "codepoint": 57612,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-euro",
+   "class": "cses-line-currency-euro",
+   "codepoint": 57613,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-pound",
+   "class": "cses-line-currency-pound",
+   "codepoint": 57614,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-rubel",
+   "class": "cses-line-currency-rubel",
+   "codepoint": 57615,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-rupee",
+   "class": "cses-line-currency-rupee",
+   "codepoint": 57616,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "currency-yen",
+   "class": "cses-line-currency-yen",
+   "codepoint": 57617,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "cursor-01",
+   "class": "cses-line-cursor-01",
+   "codepoint": 57618,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "cursor-02",
+   "class": "cses-line-cursor-02",
+   "codepoint": 57619,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "cursor-03",
+   "class": "cses-line-cursor-03",
+   "codepoint": 57620,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "cursor-04",
+   "class": "cses-line-cursor-04",
+   "codepoint": 57621,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "cursor-05",
+   "class": "cses-line-cursor-05",
+   "codepoint": 57622,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "cursor-06",
+   "class": "cses-line-cursor-06",
+   "codepoint": 57623,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "dash",
+   "class": "cses-line-dash",
+   "codepoint": 57624,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "data-01",
+   "class": "cses-line-data-01",
+   "codepoint": 57625,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "data-02",
+   "class": "cses-line-data-02",
+   "codepoint": 57626,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "data-03",
+   "class": "cses-line-data-03",
+   "codepoint": 57627,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "data-04",
+   "class": "cses-line-data-04",
+   "codepoint": 57628,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "delete",
+   "class": "cses-line-delete",
+   "codepoint": 57629,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "delivery",
+   "class": "cses-line-delivery",
+   "codepoint": 57630,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "diamond",
+   "class": "cses-line-diamond",
+   "codepoint": 58158,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "disc",
+   "class": "cses-line-disc",
+   "codepoint": 57631,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "discount-circle",
+   "class": "cses-line-discount-circle",
+   "codepoint": 57632,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "discount-square",
+   "class": "cses-line-discount-square",
+   "codepoint": 57633,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "discount-star-01",
+   "class": "cses-line-discount-star-01",
+   "codepoint": 57634,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "discount-star-02",
+   "class": "cses-line-discount-star-02",
+   "codepoint": 57635,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "discount-star-03",
+   "class": "cses-line-discount-star-03",
+   "codepoint": 57636,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "divider",
+   "class": "cses-line-divider",
+   "codepoint": 57637,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "dot-horizontal",
+   "class": "cses-line-dot-horizontal",
+   "codepoint": 57638,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "dot-vertical",
+   "class": "cses-line-dot-vertical",
+   "codepoint": 57639,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "down-arrow-sm",
+   "class": "cses-line-down-arrow-sm",
+   "codepoint": 57640,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "down-arrow",
+   "class": "cses-line-down-arrow",
+   "codepoint": 57641,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "download-01",
+   "class": "cses-line-download-01",
+   "codepoint": 57642,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "download-02",
+   "class": "cses-line-download-02",
+   "codepoint": 57643,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "download",
+   "class": "cses-line-download",
+   "codepoint": 57644,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "drop",
+   "class": "cses-line-drop",
+   "codepoint": 57645,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "edit-01",
+   "class": "cses-line-edit-01",
+   "codepoint": 57646,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "edit-02",
+   "class": "cses-line-edit-02",
+   "codepoint": 57647,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "edit-03",
+   "class": "cses-line-edit-03",
+   "codepoint": 57648,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "edit-04",
+   "class": "cses-line-edit-04",
+   "codepoint": 57649,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "edit-contained",
+   "class": "cses-line-edit-contained",
+   "codepoint": 57650,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "email",
+   "class": "cses-line-email",
+   "codepoint": 57651,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "embed",
+   "class": "cses-line-embed",
+   "codepoint": 57652,
+   "category": "通用|General",
+   "kind": "fill"
+  },
+  {
+   "name": "equals-not",
+   "class": "cses-line-equals-not",
+   "codepoint": 57653,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "equals",
+   "class": "cses-line-equals",
+   "codepoint": 57654,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "eraser-01",
+   "class": "cses-line-eraser-01",
+   "codepoint": 57655,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "eraser-02",
+   "class": "cses-line-eraser-02",
+   "codepoint": 57656,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "expand-02",
+   "class": "cses-line-expand-02",
+   "codepoint": 57657,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "expand",
+   "class": "cses-line-expand",
+   "codepoint": 57658,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "eye-closed",
+   "class": "cses-line-eye-closed",
+   "codepoint": 57659,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "eye-open",
+   "class": "cses-line-eye-open",
+   "codepoint": 57660,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "face-id-01",
+   "class": "cses-line-face-id-01",
+   "codepoint": 57661,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "face-id-02",
+   "class": "cses-line-face-id-02",
+   "codepoint": 57662,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "fast-backward",
+   "class": "cses-line-fast-backward",
+   "codepoint": 57663,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "fast-forward",
+   "class": "cses-line-fast-forward",
+   "codepoint": 57664,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "favourite",
+   "class": "cses-line-favourite",
+   "codepoint": 57665,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "feather-01",
+   "class": "cses-line-feather-01",
+   "codepoint": 57666,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "feather-02",
+   "class": "cses-line-feather-02",
+   "codepoint": 57667,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "file-01",
+   "class": "cses-line-file-01",
+   "codepoint": 57668,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-02",
+   "class": "cses-line-file-02",
+   "codepoint": 57669,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-03",
+   "class": "cses-line-file-03",
+   "codepoint": 57670,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-04",
+   "class": "cses-line-file-04",
+   "codepoint": 57671,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-05",
+   "class": "cses-line-file-05",
+   "codepoint": 57672,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-06",
+   "class": "cses-line-file-06",
+   "codepoint": 57673,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-attach-01",
+   "class": "cses-line-file-attach-01",
+   "codepoint": 57674,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-attach-02",
+   "class": "cses-line-file-attach-02",
+   "codepoint": 57675,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-attach-03",
+   "class": "cses-line-file-attach-03",
+   "codepoint": 57676,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-branch",
+   "class": "cses-line-file-branch",
+   "codepoint": 57677,
+   "category": "文件|Files",
+   "kind": "fill"
+  },
+  {
+   "name": "file-check-01",
+   "class": "cses-line-file-check-01",
+   "codepoint": 57678,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-check-02",
+   "class": "cses-line-file-check-02",
+   "codepoint": 57679,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-code",
+   "class": "cses-line-file-code",
+   "codepoint": 57680,
+   "category": "开发|Development",
+   "kind": "fill"
+  },
+  {
+   "name": "file-down-01",
+   "class": "cses-line-file-down-01",
+   "codepoint": 57681,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-down-02",
+   "class": "cses-line-file-down-02",
+   "codepoint": 57682,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-edit-01",
+   "class": "cses-line-file-edit-01",
+   "codepoint": 57683,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-edit-02",
+   "class": "cses-line-file-edit-02",
+   "codepoint": 57684,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-eye-01",
+   "class": "cses-line-file-eye-01",
+   "codepoint": 57685,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-eye-02",
+   "class": "cses-line-file-eye-02",
+   "codepoint": 57686,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-lock-01",
+   "class": "cses-line-file-lock-01",
+   "codepoint": 57687,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "file-lock-02",
+   "class": "cses-line-file-lock-02",
+   "codepoint": 57688,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "file-lock-03",
+   "class": "cses-line-file-lock-03",
+   "codepoint": 57689,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "file-minus-01",
+   "class": "cses-line-file-minus-01",
+   "codepoint": 57690,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-minus-02",
+   "class": "cses-line-file-minus-02",
+   "codepoint": 57691,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-multiple",
+   "class": "cses-line-file-multiple",
+   "codepoint": 57692,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-none",
+   "class": "cses-line-file-none",
+   "codepoint": 57693,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-plus-01",
+   "class": "cses-line-file-plus-01",
+   "codepoint": 57694,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-plus-02",
+   "class": "cses-line-file-plus-02",
+   "codepoint": 57695,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-question-01",
+   "class": "cses-line-file-question-01",
+   "codepoint": 57696,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-question-02",
+   "class": "cses-line-file-question-02",
+   "codepoint": 57697,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-return-01",
+   "class": "cses-line-file-return-01",
+   "codepoint": 57698,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-return-02",
+   "class": "cses-line-file-return-02",
+   "codepoint": 57699,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-search-01",
+   "class": "cses-line-file-search-01",
+   "codepoint": 57700,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-search-02",
+   "class": "cses-line-file-search-02",
+   "codepoint": 57701,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-shield-01",
+   "class": "cses-line-file-shield-01",
+   "codepoint": 57702,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "file-shield-02",
+   "class": "cses-line-file-shield-02",
+   "codepoint": 57703,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "file-shield-03",
+   "class": "cses-line-file-shield-03",
+   "codepoint": 57704,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "file-shred",
+   "class": "cses-line-file-shred",
+   "codepoint": 57705,
+   "category": "文件|Files",
+   "kind": "fill"
+  },
+  {
+   "name": "file-up-01",
+   "class": "cses-line-file-up-01",
+   "codepoint": 57706,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-up-02",
+   "class": "cses-line-file-up-02",
+   "codepoint": 57707,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file-x-02",
+   "class": "cses-line-file-x-02",
+   "codepoint": 57708,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "file",
+   "class": "cses-line-file",
+   "codepoint": 57709,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "filter",
+   "class": "cses-line-filter",
+   "codepoint": 57710,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "fingerpint-01",
+   "class": "cses-line-fingerpint-01",
+   "codepoint": 57711,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "fingerpint-02",
+   "class": "cses-line-fingerpint-02",
+   "codepoint": 57712,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "flame-01",
+   "class": "cses-line-flame-01",
+   "codepoint": 57713,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "flash-off",
+   "class": "cses-line-flash-off",
+   "codepoint": 57714,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "flash-on",
+   "class": "cses-line-flash-on",
+   "codepoint": 57715,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "flex-align-bottom-01",
+   "class": "cses-line-flex-align-bottom-01",
+   "codepoint": 57716,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "flex-align-center-01",
+   "class": "cses-line-flex-align-center-01",
+   "codepoint": 57717,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "flex-align-left-01",
+   "class": "cses-line-flex-align-left-01",
+   "codepoint": 57718,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "flex-align-right-01",
+   "class": "cses-line-flex-align-right-01",
+   "codepoint": 57719,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "flex-align-spaced-01",
+   "class": "cses-line-flex-align-spaced-01",
+   "codepoint": 57720,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "flex-align-top-01",
+   "class": "cses-line-flex-align-top-01",
+   "codepoint": 57721,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "flex-columns",
+   "class": "cses-line-flex-columns",
+   "codepoint": 57722,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "flex-rows",
+   "class": "cses-line-flex-rows",
+   "codepoint": 57723,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "flip-01",
+   "class": "cses-line-flip-01",
+   "codepoint": 57724,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "flip-02",
+   "class": "cses-line-flip-02",
+   "codepoint": 57725,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "flip-left",
+   "class": "cses-line-flip-left",
+   "codepoint": 57726,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "flip-right",
+   "class": "cses-line-flip-right",
+   "codepoint": 57727,
+   "category": "箭头|Arrows",
+   "kind": "line"
+  },
+  {
+   "name": "folder-code",
+   "class": "cses-line-folder-code",
+   "codepoint": 57728,
+   "category": "开发|Development",
+   "kind": "fill"
+  },
+  {
+   "name": "folder-down-01",
+   "class": "cses-line-folder-down-01",
+   "codepoint": 57729,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-down-02",
+   "class": "cses-line-folder-down-02",
+   "codepoint": 57730,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-minus-01",
+   "class": "cses-line-folder-minus-01",
+   "codepoint": 57731,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-open-01",
+   "class": "cses-line-folder-open-01",
+   "codepoint": 57732,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-open-02",
+   "class": "cses-line-folder-open-02",
+   "codepoint": 57733,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-open-03",
+   "class": "cses-line-folder-open-03",
+   "codepoint": 57734,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-plus-01",
+   "class": "cses-line-folder-plus-01",
+   "codepoint": 57735,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-plus-02",
+   "class": "cses-line-folder-plus-02",
+   "codepoint": 57736,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-search-01",
+   "class": "cses-line-folder-search-01",
+   "codepoint": 57737,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-search-02",
+   "class": "cses-line-folder-search-02",
+   "codepoint": 57738,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-shield",
+   "class": "cses-line-folder-shield",
+   "codepoint": 57739,
+   "category": "安全|Security",
+   "kind": "fill"
+  },
+  {
+   "name": "folder-up-01",
+   "class": "cses-line-folder-up-01",
+   "codepoint": 57740,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-up-02",
+   "class": "cses-line-folder-up-02",
+   "codepoint": 57741,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-x-01",
+   "class": "cses-line-folder-x-01",
+   "codepoint": 57742,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder-x-02",
+   "class": "cses-line-folder-x-02",
+   "codepoint": 57743,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "folder",
+   "class": "cses-line-folder",
+   "codepoint": 57744,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "gear",
+   "class": "cses-line-gear",
+   "codepoint": 57745,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "gift-01",
+   "class": "cses-line-gift-01",
+   "codepoint": 57746,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "gift-02",
+   "class": "cses-line-gift-02",
+   "codepoint": 57747,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "git-branch-01",
+   "class": "cses-line-git-branch-01",
+   "codepoint": 57748,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "git-branch-02",
+   "class": "cses-line-git-branch-02",
+   "codepoint": 57749,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "git-branch-03",
+   "class": "cses-line-git-branch-03",
+   "codepoint": 57750,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "git-branch-04",
+   "class": "cses-line-git-branch-04",
+   "codepoint": 57751,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "git-branch-05",
+   "class": "cses-line-git-branch-05",
+   "codepoint": 57752,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "glasses-01",
+   "class": "cses-line-glasses-01",
+   "codepoint": 57753,
+   "category": "图表|Charts",
+   "kind": "fill"
+  },
+  {
+   "name": "glasses-02",
+   "class": "cses-line-glasses-02",
+   "codepoint": 57754,
+   "category": "图表|Charts",
+   "kind": "fill"
+  },
+  {
+   "name": "globe-01",
+   "class": "cses-line-globe-01",
+   "codepoint": 57755,
+   "category": "出行与位置|Travel & Location",
+   "kind": "fill"
+  },
+  {
+   "name": "globe-02",
+   "class": "cses-line-globe-02",
+   "codepoint": 57756,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "globe-03",
+   "class": "cses-line-globe-03",
+   "codepoint": 57757,
+   "category": "出行与位置|Travel & Location",
+   "kind": "fill"
+  },
+  {
+   "name": "globe-04",
+   "class": "cses-line-globe-04",
+   "codepoint": 57758,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "globe-05",
+   "class": "cses-line-globe-05",
+   "codepoint": 57759,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "globe",
+   "class": "cses-line-globe",
+   "codepoint": 57760,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "graduation-cap-01",
+   "class": "cses-line-graduation-cap-01",
+   "codepoint": 57761,
+   "category": "教育|Education",
+   "kind": "line"
+  },
+  {
+   "name": "graduation-cap-02",
+   "class": "cses-line-graduation-cap-02",
+   "codepoint": 57762,
+   "category": "教育|Education",
+   "kind": "fill"
+  },
+  {
+   "name": "grid-01",
+   "class": "cses-line-grid-01",
+   "codepoint": 57763,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "grid-02",
+   "class": "cses-line-grid-02",
+   "codepoint": 57764,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "grid-03",
+   "class": "cses-line-grid-03",
+   "codepoint": 57765,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "grid-04-filled",
+   "class": "cses-line-grid-04-filled",
+   "codepoint": 57766,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "hash-01",
+   "class": "cses-line-hash-01",
+   "codepoint": 57767,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "hash-02",
+   "class": "cses-line-hash-02",
+   "codepoint": 57768,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "header-01",
+   "class": "cses-line-header-01",
+   "codepoint": 57769,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "header-02",
+   "class": "cses-line-header-02",
+   "codepoint": 57770,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "headphones",
+   "class": "cses-line-headphones",
+   "codepoint": 57771,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "help-circle-contained",
+   "class": "cses-line-help-circle-contained",
+   "codepoint": 57772,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "help-square-contained",
+   "class": "cses-line-help-square-contained",
+   "codepoint": 57773,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "help",
+   "class": "cses-line-help",
+   "codepoint": 57774,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "hexagon",
+   "class": "cses-line-hexagon",
+   "codepoint": 57775,
+   "category": "形状|Shapes",
+   "kind": "line"
+  },
+  {
+   "name": "home-01",
+   "class": "cses-line-home-01",
+   "codepoint": 57776,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "home-02",
+   "class": "cses-line-home-02",
+   "codepoint": 57777,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "home-03",
+   "class": "cses-line-home-03",
+   "codepoint": 57778,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "home-04",
+   "class": "cses-line-home-04",
+   "codepoint": 57779,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "home-05",
+   "class": "cses-line-home-05",
+   "codepoint": 57780,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "horizontal-chart-01",
+   "class": "cses-line-horizontal-chart-01",
+   "codepoint": 57781,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "horizontal-chart-02",
+   "class": "cses-line-horizontal-chart-02",
+   "codepoint": 57782,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "horizontal-chart-03",
+   "class": "cses-line-horizontal-chart-03",
+   "codepoint": 57783,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "hourglass-01",
+   "class": "cses-line-hourglass-01",
+   "codepoint": 57784,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "hourglass-02",
+   "class": "cses-line-hourglass-02",
+   "codepoint": 57785,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "hourglass-03",
+   "class": "cses-line-hourglass-03",
+   "codepoint": 57786,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "image-01",
+   "class": "cses-line-image-01",
+   "codepoint": 57787,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image-02",
+   "class": "cses-line-image-02",
+   "codepoint": 57788,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image-03",
+   "class": "cses-line-image-03",
+   "codepoint": 57789,
+   "category": "图片|Images",
+   "kind": "fill"
+  },
+  {
+   "name": "image-04",
+   "class": "cses-line-image-04",
+   "codepoint": 57790,
+   "category": "图片|Images",
+   "kind": "fill"
+  },
+  {
+   "name": "image-add",
+   "class": "cses-line-image-add",
+   "codepoint": 57791,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image-avatar",
+   "class": "cses-line-image-avatar",
+   "codepoint": 57792,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image-check",
+   "class": "cses-line-image-check",
+   "codepoint": 57793,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image-down",
+   "class": "cses-line-image-down",
+   "codepoint": 57794,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image-focus",
+   "class": "cses-line-image-focus",
+   "codepoint": 57795,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image-indent-left",
+   "class": "cses-line-image-indent-left",
+   "codepoint": 57796,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "image-indent-right",
+   "class": "cses-line-image-indent-right",
+   "codepoint": 57797,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "image-minus",
+   "class": "cses-line-image-minus",
+   "codepoint": 57798,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image-no-borders",
+   "class": "cses-line-image-no-borders",
+   "codepoint": 57799,
+   "category": "图片|Images",
+   "kind": "fill"
+  },
+  {
+   "name": "image-question",
+   "class": "cses-line-image-question",
+   "codepoint": 57800,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image-up",
+   "class": "cses-line-image-up",
+   "codepoint": 57801,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image-x",
+   "class": "cses-line-image-x",
+   "codepoint": 57802,
+   "category": "图片|Images",
+   "kind": "line"
+  },
+  {
+   "name": "image",
+   "class": "cses-line-image",
+   "codepoint": 57803,
+   "category": "通用|General",
+   "kind": "fill"
+  },
+  {
+   "name": "inbox-01",
+   "class": "cses-line-inbox-01",
+   "codepoint": 57804,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "inbox-02",
+   "class": "cses-line-inbox-02",
+   "codepoint": 57805,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "indent-decrease",
+   "class": "cses-line-indent-decrease",
+   "codepoint": 57806,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "indent-increase",
+   "class": "cses-line-indent-increase",
+   "codepoint": 57807,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "indent-left",
+   "class": "cses-line-indent-left",
+   "codepoint": 57808,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "indent-right",
+   "class": "cses-line-indent-right",
+   "codepoint": 57809,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "info-square-02-contained-filled",
+   "class": "cses-line-info-square-02-contained-filled",
+   "codepoint": 57810,
+   "category": "通用|General",
+   "kind": "fill"
+  },
+  {
+   "name": "information-circle-contained",
+   "class": "cses-line-information-circle-contained",
+   "codepoint": 57811,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "intersect",
+   "class": "cses-line-intersect",
+   "codepoint": 57812,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "iphone-02",
+   "class": "cses-line-iphone-02",
+   "codepoint": 57813,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "italics-01",
+   "class": "cses-line-italics-01",
+   "codepoint": 57814,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "italics-02",
+   "class": "cses-line-italics-02",
+   "codepoint": 57815,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "key-01",
+   "class": "cses-line-key-01",
+   "codepoint": 57816,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "key-02",
+   "class": "cses-line-key-02",
+   "codepoint": 57817,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "keyboard",
+   "class": "cses-line-keyboard",
+   "codepoint": 57818,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "laptop-01",
+   "class": "cses-line-laptop-01",
+   "codepoint": 57819,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "laptop-02",
+   "class": "cses-line-laptop-02",
+   "codepoint": 57820,
+   "category": "媒体|Media",
+   "kind": "fill"
+  },
+  {
+   "name": "layers-01",
+   "class": "cses-line-layers-01",
+   "codepoint": 57821,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layers-02",
+   "class": "cses-line-layers-02",
+   "codepoint": 57822,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layers-03",
+   "class": "cses-line-layers-03",
+   "codepoint": 57823,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layers-04",
+   "class": "cses-line-layers-04",
+   "codepoint": 57824,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layers-05",
+   "class": "cses-line-layers-05",
+   "codepoint": 57825,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layout-01",
+   "class": "cses-line-layout-01",
+   "codepoint": 57826,
+   "category": "布局|Layout",
+   "kind": "fill"
+  },
+  {
+   "name": "layout-02",
+   "class": "cses-line-layout-02",
+   "codepoint": 57827,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layout-03",
+   "class": "cses-line-layout-03",
+   "codepoint": 57828,
+   "category": "布局|Layout",
+   "kind": "fill"
+  },
+  {
+   "name": "layout-04",
+   "class": "cses-line-layout-04",
+   "codepoint": 57829,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layout-bottom",
+   "class": "cses-line-layout-bottom",
+   "codepoint": 57830,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layout-grid-01",
+   "class": "cses-line-layout-grid-01",
+   "codepoint": 57831,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layout-left",
+   "class": "cses-line-layout-left",
+   "codepoint": 57832,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layout-right",
+   "class": "cses-line-layout-right",
+   "codepoint": 57833,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layout-scale",
+   "class": "cses-line-layout-scale",
+   "codepoint": 57834,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "layout-top",
+   "class": "cses-line-layout-top",
+   "codepoint": 57835,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "letter-spacing-01",
+   "class": "cses-line-letter-spacing-01",
+   "codepoint": 57836,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "letter-spacing-02",
+   "class": "cses-line-letter-spacing-02",
+   "codepoint": 57837,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "letter-spacing-03",
+   "class": "cses-line-letter-spacing-03",
+   "codepoint": 57838,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "lightbulb-01",
+   "class": "cses-line-lightbulb-01",
+   "codepoint": 57839,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "lightbulb-02",
+   "class": "cses-line-lightbulb-02",
+   "codepoint": 57840,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "lightbulb-03",
+   "class": "cses-line-lightbulb-03",
+   "codepoint": 57841,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "lightning-01",
+   "class": "cses-line-lightning-01",
+   "codepoint": 57842,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "lightning-02",
+   "class": "cses-line-lightning-02",
+   "codepoint": 57843,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "lightning-circle-contained",
+   "class": "cses-line-lightning-circle-contained",
+   "codepoint": 57844,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "lightning-filled",
+   "class": "cses-line-lightning-filled",
+   "codepoint": 57845,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "lightning-square-contained",
+   "class": "cses-line-lightning-square-contained",
+   "codepoint": 57846,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "line-chart-down-01",
+   "class": "cses-line-line-chart-down-01",
+   "codepoint": 57847,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "line-chart-down-02",
+   "class": "cses-line-line-chart-down-02",
+   "codepoint": 57848,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "line-chart-up-01",
+   "class": "cses-line-line-chart-up-01",
+   "codepoint": 57849,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "line-chart-up-02",
+   "class": "cses-line-line-chart-up-02",
+   "codepoint": 57850,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "line-height",
+   "class": "cses-line-line-height",
+   "codepoint": 57851,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "link-angled",
+   "class": "cses-line-link-angled",
+   "codepoint": 57852,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "link-broken",
+   "class": "cses-line-link-broken",
+   "codepoint": 57853,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "link-external",
+   "class": "cses-line-link-external",
+   "codepoint": 57854,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "link",
+   "class": "cses-line-link",
+   "codepoint": 57855,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "list-numbers",
+   "class": "cses-line-list-numbers",
+   "codepoint": 57856,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "list",
+   "class": "cses-line-list",
+   "codepoint": 57857,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "loader-01",
+   "class": "cses-line-loader-01",
+   "codepoint": 57858,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "loader-02",
+   "class": "cses-line-loader-02",
+   "codepoint": 57859,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "lock-01",
+   "class": "cses-line-lock-01",
+   "codepoint": 57860,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "lock-02",
+   "class": "cses-line-lock-02",
+   "codepoint": 57861,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "lock-03",
+   "class": "cses-line-lock-03",
+   "codepoint": 57862,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "lock-04",
+   "class": "cses-line-lock-04",
+   "codepoint": 57863,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "lock-open-01",
+   "class": "cses-line-lock-open-01",
+   "codepoint": 57864,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "lock-open-02",
+   "class": "cses-line-lock-open-02",
+   "codepoint": 57865,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "lock-open-03",
+   "class": "cses-line-lock-open-03",
+   "codepoint": 57866,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "lock-open-04",
+   "class": "cses-line-lock-open-04",
+   "codepoint": 57867,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "logout-01",
+   "class": "cses-line-logout-01",
+   "codepoint": 57868,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "logout-02",
+   "class": "cses-line-logout-02",
+   "codepoint": 57869,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "logout-03",
+   "class": "cses-line-logout-03",
+   "codepoint": 57870,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "logout-04",
+   "class": "cses-line-logout-04",
+   "codepoint": 57871,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "luggage-01",
+   "class": "cses-line-luggage-01",
+   "codepoint": 57872,
+   "category": "出行与位置|Travel & Location",
+   "kind": "fill"
+  },
+  {
+   "name": "luggage-02",
+   "class": "cses-line-luggage-02",
+   "codepoint": 57873,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "luggage-03",
+   "class": "cses-line-luggage-03",
+   "codepoint": 57874,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "luggage-04",
+   "class": "cses-line-luggage-04",
+   "codepoint": 57875,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "mail-01",
+   "class": "cses-line-mail-01",
+   "codepoint": 57876,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "mail-02",
+   "class": "cses-line-mail-02",
+   "codepoint": 57877,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "mail-03",
+   "class": "cses-line-mail-03",
+   "codepoint": 57878,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "mail-04",
+   "class": "cses-line-mail-04",
+   "codepoint": 57879,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "mail-05",
+   "class": "cses-line-mail-05",
+   "codepoint": 57880,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "map-01",
+   "class": "cses-line-map-01",
+   "codepoint": 57881,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "map-02",
+   "class": "cses-line-map-02",
+   "codepoint": 57882,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "map-03",
+   "class": "cses-line-map-03",
+   "codepoint": 57883,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "map-04",
+   "class": "cses-line-map-04",
+   "codepoint": 57884,
+   "category": "出行与位置|Travel & Location",
+   "kind": "fill"
+  },
+  {
+   "name": "marker-01",
+   "class": "cses-line-marker-01",
+   "codepoint": 57885,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "marker-02",
+   "class": "cses-line-marker-02",
+   "codepoint": 57886,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "marker-03",
+   "class": "cses-line-marker-03",
+   "codepoint": 57887,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "marker-04",
+   "class": "cses-line-marker-04",
+   "codepoint": 57888,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "marker-05",
+   "class": "cses-line-marker-05",
+   "codepoint": 57889,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "marker-06",
+   "class": "cses-line-marker-06",
+   "codepoint": 57890,
+   "category": "出行与位置|Travel & Location",
+   "kind": "fill"
+  },
+  {
+   "name": "maximise-01",
+   "class": "cses-line-maximise-01",
+   "codepoint": 57891,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "maximise-02",
+   "class": "cses-line-maximise-02",
+   "codepoint": 57892,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "media-strip-01",
+   "class": "cses-line-media-strip-01",
+   "codepoint": 57893,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "media-strip-02",
+   "class": "cses-line-media-strip-02",
+   "codepoint": 57894,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "menu-01",
+   "class": "cses-line-menu-01",
+   "codepoint": 57895,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "menu-02",
+   "class": "cses-line-menu-02",
+   "codepoint": 57896,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "menu-03",
+   "class": "cses-line-menu-03",
+   "codepoint": 57897,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "menu-04",
+   "class": "cses-line-menu-04",
+   "codepoint": 57898,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "menu-05",
+   "class": "cses-line-menu-05",
+   "codepoint": 57899,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "message-alert-circle",
+   "class": "cses-line-message-alert-circle",
+   "codepoint": 57900,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-alert-plus",
+   "class": "cses-line-message-alert-plus",
+   "codepoint": 57901,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-chat-01",
+   "class": "cses-line-message-chat-01",
+   "codepoint": 57902,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-circle",
+   "class": "cses-line-message-circle",
+   "codepoint": 57903,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-notify-circle",
+   "class": "cses-line-message-notify-circle",
+   "codepoint": 57904,
+   "category": "沟通|Communication",
+   "kind": "fill"
+  },
+  {
+   "name": "message-notify-square",
+   "class": "cses-line-message-notify-square",
+   "codepoint": 57905,
+   "category": "沟通|Communication",
+   "kind": "fill"
+  },
+  {
+   "name": "message-square--alert",
+   "class": "cses-line-message-square--alert",
+   "codepoint": 57906,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-square-information",
+   "class": "cses-line-message-square-information",
+   "codepoint": 57907,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-square-plus",
+   "class": "cses-line-message-square-plus",
+   "codepoint": 57908,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-square-typing",
+   "class": "cses-line-message-square-typing",
+   "codepoint": 57909,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-square-x",
+   "class": "cses-line-message-square-x",
+   "codepoint": 57910,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-square",
+   "class": "cses-line-message-square",
+   "codepoint": 57911,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-text-01",
+   "class": "cses-line-message-text-01",
+   "codepoint": 57912,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-text-02",
+   "class": "cses-line-message-text-02",
+   "codepoint": 57913,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-typing",
+   "class": "cses-line-message-typing",
+   "codepoint": 57914,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "message-x",
+   "class": "cses-line-message-x",
+   "codepoint": 57915,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "microphone-01",
+   "class": "cses-line-microphone-01",
+   "codepoint": 57916,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "microphone-02",
+   "class": "cses-line-microphone-02",
+   "codepoint": 57917,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "microphone-off-01",
+   "class": "cses-line-microphone-off-01",
+   "codepoint": 57918,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "microphone-off-02",
+   "class": "cses-line-microphone-off-02",
+   "codepoint": 57919,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "minimise-01",
+   "class": "cses-line-minimise-01",
+   "codepoint": 57920,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "minimise-02",
+   "class": "cses-line-minimise-02",
+   "codepoint": 57921,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "minus-circle-contained",
+   "class": "cses-line-minus-circle-contained",
+   "codepoint": 57922,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "minus-square-contained",
+   "class": "cses-line-minus-square-contained",
+   "codepoint": 57923,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "moon-01",
+   "class": "cses-line-moon-01",
+   "codepoint": 57924,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "moon-02",
+   "class": "cses-line-moon-02",
+   "codepoint": 57925,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "mouse",
+   "class": "cses-line-mouse",
+   "codepoint": 57926,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "move",
+   "class": "cses-line-move",
+   "codepoint": 57927,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "note-01",
+   "class": "cses-line-note-01",
+   "codepoint": 57928,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "note-02",
+   "class": "cses-line-note-02",
+   "codepoint": 57929,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "notification-box",
+   "class": "cses-line-notification-box",
+   "codepoint": 57930,
+   "category": "提醒|Alerts",
+   "kind": "line"
+  },
+  {
+   "name": "notification-bubble",
+   "class": "cses-line-notification-bubble",
+   "codepoint": 57931,
+   "category": "提醒|Alerts",
+   "kind": "line"
+  },
+  {
+   "name": "notification-square-01",
+   "class": "cses-line-notification-square-01",
+   "codepoint": 57932,
+   "category": "提醒|Alerts",
+   "kind": "line"
+  },
+  {
+   "name": "notification-square-02",
+   "class": "cses-line-notification-square-02",
+   "codepoint": 57933,
+   "category": "提醒|Alerts",
+   "kind": "line"
+  },
+  {
+   "name": "octagon",
+   "class": "cses-line-octagon",
+   "codepoint": 57934,
+   "category": "形状|Shapes",
+   "kind": "line"
+  },
+  {
+   "name": "overlap",
+   "class": "cses-line-overlap",
+   "codepoint": 57935,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "package-01",
+   "class": "cses-line-package-01",
+   "codepoint": 57936,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "package-02",
+   "class": "cses-line-package-02",
+   "codepoint": 57937,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "package-check",
+   "class": "cses-line-package-check",
+   "codepoint": 57938,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "package-minus",
+   "class": "cses-line-package-minus",
+   "codepoint": 57939,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "package-plus",
+   "class": "cses-line-package-plus",
+   "codepoint": 57940,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "package-x",
+   "class": "cses-line-package-x",
+   "codepoint": 57941,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "paint-bucket-01",
+   "class": "cses-line-paint-bucket-01",
+   "codepoint": 57942,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "paint-bucket-02",
+   "class": "cses-line-paint-bucket-02",
+   "codepoint": 57943,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "palette",
+   "class": "cses-line-palette",
+   "codepoint": 57944,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "paperclip-01",
+   "class": "cses-line-paperclip-01",
+   "codepoint": 57945,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "paperclip-02",
+   "class": "cses-line-paperclip-02",
+   "codepoint": 57946,
+   "category": "文件|Files",
+   "kind": "line"
+  },
+  {
+   "name": "paperclip",
+   "class": "cses-line-paperclip",
+   "codepoint": 57947,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "passport",
+   "class": "cses-line-passport",
+   "codepoint": 57948,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "password-01",
+   "class": "cses-line-password-01",
+   "codepoint": 57949,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "password-02",
+   "class": "cses-line-password-02",
+   "codepoint": 57950,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "pause-01",
+   "class": "cses-line-pause-01",
+   "codepoint": 57951,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "pause-02",
+   "class": "cses-line-pause-02",
+   "codepoint": 57952,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "pause-03",
+   "class": "cses-line-pause-03",
+   "codepoint": 57953,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "pen-tool-01",
+   "class": "cses-line-pen-tool-01",
+   "codepoint": 57954,
+   "category": "编辑器|Editor",
+   "kind": "fill"
+  },
+  {
+   "name": "pen-tool-02",
+   "class": "cses-line-pen-tool-02",
+   "codepoint": 57955,
+   "category": "编辑器|Editor",
+   "kind": "fill"
+  },
+  {
+   "name": "pen-tool-03",
+   "class": "cses-line-pen-tool-03",
+   "codepoint": 57956,
+   "category": "编辑器|Editor",
+   "kind": "fill"
+  },
+  {
+   "name": "pen-tool-04",
+   "class": "cses-line-pen-tool-04",
+   "codepoint": 57957,
+   "category": "编辑器|Editor",
+   "kind": "fill"
+  },
+  {
+   "name": "pencil-01",
+   "class": "cses-line-pencil-01",
+   "codepoint": 57958,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "pencil-02",
+   "class": "cses-line-pencil-02",
+   "codepoint": 57959,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "pencil-03",
+   "class": "cses-line-pencil-03",
+   "codepoint": 57960,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "pentagon",
+   "class": "cses-line-pentagon",
+   "codepoint": 57961,
+   "category": "形状|Shapes",
+   "kind": "line"
+  },
+  {
+   "name": "percent-01",
+   "class": "cses-line-percent-01",
+   "codepoint": 57962,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "percent-02",
+   "class": "cses-line-percent-02",
+   "codepoint": 57963,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "percent-03",
+   "class": "cses-line-percent-03",
+   "codepoint": 57964,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "perspective",
+   "class": "cses-line-perspective",
+   "codepoint": 57965,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "phone-call-01",
+   "class": "cses-line-phone-call-01",
+   "codepoint": 57966,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "phone-call-02",
+   "class": "cses-line-phone-call-02",
+   "codepoint": 57967,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "phone-down",
+   "class": "cses-line-phone-down",
+   "codepoint": 57968,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "phone-incoming-01",
+   "class": "cses-line-phone-incoming-01",
+   "codepoint": 57969,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "phone-incoming-02",
+   "class": "cses-line-phone-incoming-02",
+   "codepoint": 57970,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "phone-off",
+   "class": "cses-line-phone-off",
+   "codepoint": 57971,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "phone-outgoing-01",
+   "class": "cses-line-phone-outgoing-01",
+   "codepoint": 57972,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "phone-outgoing-02",
+   "class": "cses-line-phone-outgoing-02",
+   "codepoint": 57973,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "phone-up",
+   "class": "cses-line-phone-up",
+   "codepoint": 57974,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "phone-x",
+   "class": "cses-line-phone-x",
+   "codepoint": 57975,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "phone",
+   "class": "cses-line-phone",
+   "codepoint": 57976,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "pie-chart-01",
+   "class": "cses-line-pie-chart-01",
+   "codepoint": 57977,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "pie-chart-02",
+   "class": "cses-line-pie-chart-02",
+   "codepoint": 57978,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "pie-chart-03",
+   "class": "cses-line-pie-chart-03",
+   "codepoint": 57979,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "plane",
+   "class": "cses-line-plane",
+   "codepoint": 57980,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "play-01",
+   "class": "cses-line-play-01",
+   "codepoint": 57981,
+   "category": "媒体|Media",
+   "kind": "fill"
+  },
+  {
+   "name": "play-02",
+   "class": "cses-line-play-02",
+   "codepoint": 57982,
+   "category": "媒体|Media",
+   "kind": "fill"
+  },
+  {
+   "name": "play-03",
+   "class": "cses-line-play-03",
+   "codepoint": 57983,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "plus-01",
+   "class": "cses-line-plus-01",
+   "codepoint": 57984,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "plus-02",
+   "class": "cses-line-plus-02",
+   "codepoint": 57985,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "plus-03",
+   "class": "cses-line-plus-03",
+   "codepoint": 57986,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "pointer-01",
+   "class": "cses-line-pointer-01",
+   "codepoint": 57987,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "pointer-02",
+   "class": "cses-line-pointer-02",
+   "codepoint": 57988,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "power",
+   "class": "cses-line-power",
+   "codepoint": 57989,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "presentation-01",
+   "class": "cses-line-presentation-01",
+   "codepoint": 57990,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "presentation-02",
+   "class": "cses-line-presentation-02",
+   "codepoint": 57991,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "presentation-03",
+   "class": "cses-line-presentation-03",
+   "codepoint": 57992,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "progress",
+   "class": "cses-line-progress",
+   "codepoint": 57993,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "quote",
+   "class": "cses-line-quote",
+   "codepoint": 57994,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "receipt-lines",
+   "class": "cses-line-receipt-lines",
+   "codepoint": 57995,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "receipt",
+   "class": "cses-line-receipt",
+   "codepoint": 57996,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "refresh-01",
+   "class": "cses-line-refresh-01",
+   "codepoint": 57997,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "rss",
+   "class": "cses-line-rss",
+   "codepoint": 57998,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "ruler",
+   "class": "cses-line-ruler",
+   "codepoint": 57999,
+   "category": "教育|Education",
+   "kind": "line"
+  },
+  {
+   "name": "save-01",
+   "class": "cses-line-save-01",
+   "codepoint": 58000,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "save-02",
+   "class": "cses-line-save-02",
+   "codepoint": 58001,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "scale-01",
+   "class": "cses-line-scale-01",
+   "codepoint": 58002,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "scale-02",
+   "class": "cses-line-scale-02",
+   "codepoint": 58003,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "scale-03",
+   "class": "cses-line-scale-03",
+   "codepoint": 58004,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "scan",
+   "class": "cses-line-scan",
+   "codepoint": 58005,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "search-01",
+   "class": "cses-line-search-01",
+   "codepoint": 58006,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "search-02",
+   "class": "cses-line-search-02",
+   "codepoint": 58007,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "send-01",
+   "class": "cses-line-send-01",
+   "codepoint": 58008,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "send-02",
+   "class": "cses-line-send-02",
+   "codepoint": 58009,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "send-03",
+   "class": "cses-line-send-03",
+   "codepoint": 58010,
+   "category": "沟通|Communication",
+   "kind": "line"
+  },
+  {
+   "name": "server-01",
+   "class": "cses-line-server-01",
+   "codepoint": 58011,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "server-02",
+   "class": "cses-line-server-02",
+   "codepoint": 58012,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "server-03",
+   "class": "cses-line-server-03",
+   "codepoint": 58013,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "server-04",
+   "class": "cses-line-server-04",
+   "codepoint": 58014,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "server-05",
+   "class": "cses-line-server-05",
+   "codepoint": 58015,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "server-06",
+   "class": "cses-line-server-06",
+   "codepoint": 58016,
+   "category": "开发|Development",
+   "kind": "fill"
+  },
+  {
+   "name": "server-down",
+   "class": "cses-line-server-down",
+   "codepoint": 58017,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "server-up",
+   "class": "cses-line-server-up",
+   "codepoint": 58018,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "settings",
+   "class": "cses-line-settings",
+   "codepoint": 58019,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "share",
+   "class": "cses-line-share",
+   "codepoint": 58020,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "shield-01",
+   "class": "cses-line-shield-01",
+   "codepoint": 58021,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "shield-02",
+   "class": "cses-line-shield-02",
+   "codepoint": 58022,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "shield-check",
+   "class": "cses-line-shield-check",
+   "codepoint": 58023,
+   "category": "安全|Security",
+   "kind": "line"
+  },
+  {
+   "name": "shield-plus",
+   "class": "cses-line-shield-plus",
+   "codepoint": 58024,
+   "category": "安全|Security",
+   "kind": "fill"
+  },
+  {
+   "name": "shuffle",
+   "class": "cses-line-shuffle",
+   "codepoint": 58025,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "signal",
+   "class": "cses-line-signal",
+   "codepoint": 58026,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "skew",
+   "class": "cses-line-skew",
+   "codepoint": 58027,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "skip-back",
+   "class": "cses-line-skip-back",
+   "codepoint": 58028,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "skip-forward",
+   "class": "cses-line-skip-forward",
+   "codepoint": 58029,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "smiley-happy-plus",
+   "class": "cses-line-smiley-happy-plus",
+   "codepoint": 58030,
+   "category": "用户|Profiles & Users",
+   "kind": "fill"
+  },
+  {
+   "name": "smiley-happy",
+   "class": "cses-line-smiley-happy",
+   "codepoint": 58031,
+   "category": "用户|Profiles & Users",
+   "kind": "fill"
+  },
+  {
+   "name": "smiley-neutral",
+   "class": "cses-line-smiley-neutral",
+   "codepoint": 58032,
+   "category": "用户|Profiles & Users",
+   "kind": "fill"
+  },
+  {
+   "name": "smiley-sad",
+   "class": "cses-line-smiley-sad",
+   "codepoint": 58033,
+   "category": "用户|Profiles & Users",
+   "kind": "fill"
+  },
+  {
+   "name": "smiley-wink",
+   "class": "cses-line-smiley-wink",
+   "codepoint": 58034,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "snowflake",
+   "class": "cses-line-snowflake",
+   "codepoint": 58035,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "sort-horizontal",
+   "class": "cses-line-sort-horizontal",
+   "codepoint": 58036,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "sort-vertical-01",
+   "class": "cses-line-sort-vertical-01",
+   "codepoint": 58037,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "sort-vertical-02",
+   "class": "cses-line-sort-vertical-02",
+   "codepoint": 58038,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "space-height",
+   "class": "cses-line-space-height",
+   "codepoint": 58039,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "space-horizontal",
+   "class": "cses-line-space-horizontal",
+   "codepoint": 58040,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "space-vertical",
+   "class": "cses-line-space-vertical",
+   "codepoint": 58041,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "space-width",
+   "class": "cses-line-space-width",
+   "codepoint": 58042,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "speaker",
+   "class": "cses-line-speaker",
+   "codepoint": 58043,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "square",
+   "class": "cses-line-square",
+   "codepoint": 58044,
+   "category": "形状|Shapes",
+   "kind": "line"
+  },
+  {
+   "name": "star-01",
+   "class": "cses-line-star-01",
+   "codepoint": 58045,
+   "category": "形状|Shapes",
+   "kind": "line"
+  },
+  {
+   "name": "star-02",
+   "class": "cses-line-star-02",
+   "codepoint": 58046,
+   "category": "形状|Shapes",
+   "kind": "line"
+  },
+  {
+   "name": "stars",
+   "class": "cses-line-stars",
+   "codepoint": 58047,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "stop-01",
+   "class": "cses-line-stop-01",
+   "codepoint": 58048,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "stop-02",
+   "class": "cses-line-stop-02",
+   "codepoint": 58049,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "stopwatch-01",
+   "class": "cses-line-stopwatch-01",
+   "codepoint": 58050,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "stopwatch-02",
+   "class": "cses-line-stopwatch-02",
+   "codepoint": 58051,
+   "category": "时间|Time",
+   "kind": "fill"
+  },
+  {
+   "name": "stopwatch-03",
+   "class": "cses-line-stopwatch-03",
+   "codepoint": 58052,
+   "category": "时间|Time",
+   "kind": "fill"
+  },
+  {
+   "name": "stopwatch-04",
+   "class": "cses-line-stopwatch-04",
+   "codepoint": 58053,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "stopwatch-snooze",
+   "class": "cses-line-stopwatch-snooze",
+   "codepoint": 58054,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "sun-02",
+   "class": "cses-line-sun-02",
+   "codepoint": 58055,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "sun-03",
+   "class": "cses-line-sun-03",
+   "codepoint": 58056,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "sun-down",
+   "class": "cses-line-sun-down",
+   "codepoint": 58057,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "sun-up",
+   "class": "cses-line-sun-up",
+   "codepoint": 58058,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "superscript",
+   "class": "cses-line-superscript",
+   "codepoint": 58059,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "table",
+   "class": "cses-line-table",
+   "codepoint": 58060,
+   "category": "布局|Layout",
+   "kind": "fill"
+  },
+  {
+   "name": "tag",
+   "class": "cses-line-tag",
+   "codepoint": 58061,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "target-01",
+   "class": "cses-line-target-01",
+   "codepoint": 58062,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "target-02",
+   "class": "cses-line-target-02",
+   "codepoint": 58063,
+   "category": "通用|General",
+   "kind": "fill"
+  },
+  {
+   "name": "target-03",
+   "class": "cses-line-target-03",
+   "codepoint": 58064,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "target-04",
+   "class": "cses-line-target-04",
+   "codepoint": 58065,
+   "category": "通用|General",
+   "kind": "fill"
+  },
+  {
+   "name": "temperature-01",
+   "class": "cses-line-temperature-01",
+   "codepoint": 58066,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "temperature-02",
+   "class": "cses-line-temperature-02",
+   "codepoint": 58067,
+   "category": "天气|Weather",
+   "kind": "fill"
+  },
+  {
+   "name": "temperature-03",
+   "class": "cses-line-temperature-03",
+   "codepoint": 58068,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "temperature-04",
+   "class": "cses-line-temperature-04",
+   "codepoint": 58069,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "terminal",
+   "class": "cses-line-terminal",
+   "codepoint": 58070,
+   "category": "开发|Development",
+   "kind": "line"
+  },
+  {
+   "name": "text-input-01",
+   "class": "cses-line-text-input-01",
+   "codepoint": 58071,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "text-input-02",
+   "class": "cses-line-text-input-02",
+   "codepoint": 58072,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "ticket-01",
+   "class": "cses-line-ticket-01",
+   "codepoint": 58073,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "ticket-02",
+   "class": "cses-line-ticket-02",
+   "codepoint": 58074,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "toggle-right",
+   "class": "cses-line-toggle-right",
+   "codepoint": 58075,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "toogle-left",
+   "class": "cses-line-toogle-left",
+   "codepoint": 58076,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "train",
+   "class": "cses-line-train",
+   "codepoint": 58077,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "transform",
+   "class": "cses-line-transform",
+   "codepoint": 58078,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "trash-01",
+   "class": "cses-line-trash-01",
+   "codepoint": 58079,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "trash-02",
+   "class": "cses-line-trash-02",
+   "codepoint": 58080,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "trash-03",
+   "class": "cses-line-trash-03",
+   "codepoint": 58081,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "trash-04",
+   "class": "cses-line-trash-04",
+   "codepoint": 58082,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "trend-down-01",
+   "class": "cses-line-trend-down-01",
+   "codepoint": 58083,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "trend-down-02",
+   "class": "cses-line-trend-down-02",
+   "codepoint": 58084,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "trend-up-01",
+   "class": "cses-line-trend-up-01",
+   "codepoint": 58085,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "trend-up-02",
+   "class": "cses-line-trend-up-02",
+   "codepoint": 58086,
+   "category": "图表|Charts",
+   "kind": "line"
+  },
+  {
+   "name": "triangle",
+   "class": "cses-line-triangle",
+   "codepoint": 58087,
+   "category": "形状|Shapes",
+   "kind": "line"
+  },
+  {
+   "name": "truck",
+   "class": "cses-line-truck",
+   "codepoint": 58088,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "tv",
+   "class": "cses-line-tv",
+   "codepoint": 58089,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "type-01",
+   "class": "cses-line-type-01",
+   "codepoint": 58090,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "type-02",
+   "class": "cses-line-type-02",
+   "codepoint": 58091,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "type-03",
+   "class": "cses-line-type-03",
+   "codepoint": 58092,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "type-strike-01",
+   "class": "cses-line-type-strike-01",
+   "codepoint": 58093,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "type-strike-02",
+   "class": "cses-line-type-strike-02",
+   "codepoint": 58094,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "umbrella-01",
+   "class": "cses-line-umbrella-01",
+   "codepoint": 58095,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "umbrella-02",
+   "class": "cses-line-umbrella-02",
+   "codepoint": 58096,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "umbrella",
+   "class": "cses-line-umbrella",
+   "codepoint": 58097,
+   "category": "出行与位置|Travel & Location",
+   "kind": "line"
+  },
+  {
+   "name": "underline-01",
+   "class": "cses-line-underline-01",
+   "codepoint": 58098,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "underline-02",
+   "class": "cses-line-underline-02",
+   "codepoint": 58099,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  },
+  {
+   "name": "union",
+   "class": "cses-line-union",
+   "codepoint": 58100,
+   "category": "布局|Layout",
+   "kind": "line"
+  },
+  {
+   "name": "upload-01",
+   "class": "cses-line-upload-01",
+   "codepoint": 58101,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "upload-02",
+   "class": "cses-line-upload-02",
+   "codepoint": 58102,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "upload-03",
+   "class": "cses-line-upload-03",
+   "codepoint": 58103,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "upload-04",
+   "class": "cses-line-upload-04",
+   "codepoint": 58104,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-01",
+   "class": "cses-line-user-profile-01",
+   "codepoint": 58105,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-02",
+   "class": "cses-line-user-profile-02",
+   "codepoint": 58106,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-03",
+   "class": "cses-line-user-profile-03",
+   "codepoint": 58107,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-check",
+   "class": "cses-line-user-profile-check",
+   "codepoint": 58108,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-circle",
+   "class": "cses-line-user-profile-circle",
+   "codepoint": 58109,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-down",
+   "class": "cses-line-user-profile-down",
+   "codepoint": 58110,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-left",
+   "class": "cses-line-user-profile-left",
+   "codepoint": 58111,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-minus",
+   "class": "cses-line-user-profile-minus",
+   "codepoint": 58112,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-right",
+   "class": "cses-line-user-profile-right",
+   "codepoint": 58113,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-square",
+   "class": "cses-line-user-profile-square",
+   "codepoint": 58114,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-up",
+   "class": "cses-line-user-profile-up",
+   "codepoint": 58115,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "user-profile-x",
+   "class": "cses-line-user-profile-x",
+   "codepoint": 58116,
+   "category": "用户|Profiles & Users",
+   "kind": "fill"
+  },
+  {
+   "name": "users-profiles-01",
+   "class": "cses-line-users-profiles-01",
+   "codepoint": 58117,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "users-profiles-02",
+   "class": "cses-line-users-profiles-02",
+   "codepoint": 58118,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "users-profiles-03",
+   "class": "cses-line-users-profiles-03",
+   "codepoint": 58119,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "users-profiles-check",
+   "class": "cses-line-users-profiles-check",
+   "codepoint": 58120,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "users-profiles-down",
+   "class": "cses-line-users-profiles-down",
+   "codepoint": 58121,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "users-profiles-left",
+   "class": "cses-line-users-profiles-left",
+   "codepoint": 58122,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "users-profiles-minus",
+   "class": "cses-line-users-profiles-minus",
+   "codepoint": 58123,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "users-profiles-plus",
+   "class": "cses-line-users-profiles-plus",
+   "codepoint": 58124,
+   "category": "用户|Profiles & Users",
+   "kind": "fill"
+  },
+  {
+   "name": "users-profiles-right",
+   "class": "cses-line-users-profiles-right",
+   "codepoint": 58125,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "users-profiles-up",
+   "class": "cses-line-users-profiles-up",
+   "codepoint": 58126,
+   "category": "用户|Profiles & Users",
+   "kind": "line"
+  },
+  {
+   "name": "users-profiles-x",
+   "class": "cses-line-users-profiles-x",
+   "codepoint": 58127,
+   "category": "用户|Profiles & Users",
+   "kind": "fill"
+  },
+  {
+   "name": "variant",
+   "class": "cses-line-variant",
+   "codepoint": 58128,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "video-off",
+   "class": "cses-line-video-off",
+   "codepoint": 58129,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "video-on",
+   "class": "cses-line-video-on",
+   "codepoint": 58130,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "volume-01",
+   "class": "cses-line-volume-01",
+   "codepoint": 58131,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "volume-02",
+   "class": "cses-line-volume-02",
+   "codepoint": 58132,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "volume-03",
+   "class": "cses-line-volume-03",
+   "codepoint": 58133,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "volume-04",
+   "class": "cses-line-volume-04",
+   "codepoint": 58134,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "volume-05",
+   "class": "cses-line-volume-05",
+   "codepoint": 58135,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "volume-06",
+   "class": "cses-line-volume-06",
+   "codepoint": 58136,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "wallert-04",
+   "class": "cses-line-wallert-04",
+   "codepoint": 58137,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "wallet-01",
+   "class": "cses-line-wallet-01",
+   "codepoint": 58138,
+   "category": "财务|Finance",
+   "kind": "fill"
+  },
+  {
+   "name": "wallet-02",
+   "class": "cses-line-wallet-02",
+   "codepoint": 58139,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "wallet-03",
+   "class": "cses-line-wallet-03",
+   "codepoint": 58140,
+   "category": "财务|Finance",
+   "kind": "line"
+  },
+  {
+   "name": "watch-01",
+   "class": "cses-line-watch-01",
+   "codepoint": 58141,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "watch-02",
+   "class": "cses-line-watch-02",
+   "codepoint": 58142,
+   "category": "时间|Time",
+   "kind": "line"
+  },
+  {
+   "name": "waveform",
+   "class": "cses-line-waveform",
+   "codepoint": 58143,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "webcam",
+   "class": "cses-line-webcam",
+   "codepoint": 58144,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "wifi-off",
+   "class": "cses-line-wifi-off",
+   "codepoint": 58145,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "wifi-on",
+   "class": "cses-line-wifi-on",
+   "codepoint": 58146,
+   "category": "媒体|Media",
+   "kind": "line"
+  },
+  {
+   "name": "wind-01",
+   "class": "cses-line-wind-01",
+   "codepoint": 58147,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "wind-02",
+   "class": "cses-line-wind-02",
+   "codepoint": 58148,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "wind-03",
+   "class": "cses-line-wind-03",
+   "codepoint": 58149,
+   "category": "天气|Weather",
+   "kind": "line"
+  },
+  {
+   "name": "x-01",
+   "class": "cses-line-x-01",
+   "codepoint": 58150,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "x-02",
+   "class": "cses-line-x-02",
+   "codepoint": 58151,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "x-03",
+   "class": "cses-line-x-03",
+   "codepoint": 58152,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "x-circle-contained",
+   "class": "cses-line-x-circle-contained",
+   "codepoint": 58153,
+   "category": "通用|General",
+   "kind": "fill"
+  },
+  {
+   "name": "x-square-contained",
+   "class": "cses-line-x-square-contained",
+   "codepoint": 58154,
+   "category": "通用|General",
+   "kind": "line"
+  },
+  {
+   "name": "youtube",
+   "class": "cses-line-youtube",
+   "codepoint": 58155,
+   "category": "媒体|Media",
+   "kind": "fill"
+  },
+  {
+   "name": "zoom-in",
+   "class": "cses-line-zoom-in",
+   "codepoint": 58156,
+   "category": "编辑器|Editor",
+   "kind": "fill"
+  },
+  {
+   "name": "zoom-out",
+   "class": "cses-line-zoom-out",
+   "codepoint": 58157,
+   "category": "编辑器|Editor",
+   "kind": "line"
+  }
+ ]
+}

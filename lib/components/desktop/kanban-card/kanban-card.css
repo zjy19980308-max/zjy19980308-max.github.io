@@ -1,0 +1,127 @@
+/*
+ * 看板卡片组件 (Kanban Card)
+ * 标签：<cs-kanban-card>
+ * 数据来源：Figma u20fmHv0ItyHTSVNC1JJss 节点 1-5969
+ *
+ * 卡片：290x176 bg:#fff r:12 p(16,0,16,0) gap:12
+ *
+ * data 属性：
+ *   data-dragging — 拖拽中
+ *
+ * 子元素结构：
+ *   .kanban-title-row  — 标题行（任务名称）
+ *   .kanban-meta       — 项目/模块信息
+ *   .kanban-tags       — 标签区（紧急等）
+ *   .kanban-icons      — 图标数据区
+ *   .kanban-footer     — 底部（头像组）
+ */
+
+/* ========== 卡片基础 ========== */
+cs-kanban-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: var(--cs-color-white);
+  border-radius: 12px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease;
+}
+
+cs-kanban-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ========== 拖拽状态 ========== */
+cs-kanban-card[data-dragging] {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  opacity: 0.8;
+}
+
+/* ========== 标题行 ========== */
+cs-kanban-card .kanban-title-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+cs-kanban-card .kanban-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  font-family: var(--font-family-cn);
+  word-break: break-all;
+}
+
+cs-kanban-card .kanban-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #999;
+  font-family: var(--font-family-cn);
+}
+
+/* ========== 标签区 ========== */
+cs-kanban-card .kanban-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+cs-kanban-card .kanban-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  font-size: 14px;
+  font-family: var(--font-family-cn);
+}
+
+cs-kanban-card .kanban-tag[data-type="urgent"] {
+  color: #F53F3F;
+}
+
+cs-kanban-card .kanban-tag[data-type="normal"] {
+  color: #333;
+}
+
+/* ========== 图标数据区 ========== */
+cs-kanban-card .kanban-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: #999;
+  padding: 12px 16px 0;
+  margin: 0 -16px;
+}
+
+cs-kanban-card .kanban-icons i {
+  font-size: 14px;
+}
+
+cs-kanban-card .kanban-icon-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ========== 底部（头像组） ========== */
+cs-kanban-card .kanban-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px 12px;
+  margin: 0 -16px;
+  border-bottom: 1px solid var(--cs-color-border-light, #eee);
+}
+
+cs-kanban-card .kanban-assignees {
+  display: flex;
+  align-items: center;
+}
+
+cs-kanban-card .kanban-assignees > cs-avatar + cs-avatar {
+  margin-left: calc(var(--space-2xs) * -1);
+}

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模板库 · 审批工作台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{max-width:none}
+  .crumb{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-3);margin-bottom:18px}
+  .crumb b{color:var(--ink);font-weight:600}
+  .bar{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .search{flex:1;display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;border:1px solid var(--line);border-radius:var(--r-s);background:var(--panel)}
+  .search svg{width:14px;height:14px;color:var(--ink-3);flex:0 0 14px}
+  .search input{flex:1;border:0;outline:0;font:inherit;font-size:13px;background:transparent;min-width:0}
+  .search input::placeholder{color:var(--ink-3)}
+  .filt{width:34px;height:34px;border:1px solid var(--line);border-radius:var(--r-s);background:var(--panel);display:grid;place-items:center;color:var(--ink-2);cursor:pointer}
+  .filt:hover{background:var(--surf)}
+  .filt svg{width:15px;height:15px}
+  .sec{margin-bottom:32px}
+  .sec__h{display:flex;align-items:center;margin-bottom:14px}
+  .sec__h h3{font-size:15px;font-weight:700}
+  .sec__h a{margin-left:auto;font-size:12.5px;color:#4857e2}
+  .sec__h a:hover{text-decoration:underline;text-underline-offset:3px}
+  .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:16px}
+  .tp{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);padding:16px;box-shadow:var(--sd);cursor:pointer;transition:border-color .16s,transform .16s,box-shadow .16s}
+  .tp:hover{border-color:#8f99cf;transform:translateY(-1px);box-shadow:0 2px 4px rgba(0,0,0,.02),0 16px 30px -24px rgba(15,23,42,.45)}
+  .tp__p{height:86px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surf);display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;overflow:hidden}
+  .nd{display:inline-flex;align-items:center;gap:5px;background:var(--panel);border:1px solid var(--line);border-radius:5px;padding:5px 7px;white-space:nowrap;flex:0 0 auto}
+  .nd i{width:15px;height:15px;border-radius:4px;display:grid;place-items:center;flex:0 0 15px}
+  .nd i svg{width:9px;height:9px;color:#fff}
+  .nd b{font-size:9px;font-weight:700}
+  .ln{width:12px;height:1px;background:#cbd5e1;flex:0 0 12px}
+  .tp b.t{display:block;font-size:13.5px;font-weight:700;margin-bottom:10px}
+  .tp__m{display:flex;align-items:center;font-size:11.5px;color:var(--ink-2)}
+  .tp__m span{display:inline-flex;align-items:center;gap:5px}
+  .tp__m span+span{margin-left:auto}
+  .tp__m svg{width:12px;height:12px;opacity:.7}
+  .tm__p{height:150px;border:1px solid var(--line-2);border-radius:var(--r-m);background:var(--surf);display:flex;align-items:flex-end;justify-content:center;gap:9px;padding:20px;margin-bottom:16px}
+  .tm__p i{width:16px;border-radius:3px 3px 0 0;background:#c5cef8;display:block}
+  .tm__p i.on{background:#4857e2}
+  .tm__f{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+  .tm__f div{border:1px solid var(--line);border-radius:var(--r-s);padding:9px 12px}
+  .tm__f span{display:block;font-size:11px;color:var(--ink-3);margin-bottom:4px}
+  .tm__f b{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+  .tm__f b svg{width:13px;height:13px;color:var(--ink-3)}
+  .tm h4{font-size:12px;color:var(--ink-3);font-weight:600;margin-bottom:8px}
+  .tm__ops{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .tm__ops span{border:1px solid var(--line);border-radius:var(--r-s);padding:7px 11px;font-size:12.5px;background:var(--panel)}
+  .tm__ops em{font-style:normal;color:var(--ink-3)}
+  .nfi{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;cursor:pointer;opacity:.45;transition:opacity .15s,transform .15s}
+  .nfi svg{width:16px;height:16px}
+  .nfi.on{opacity:1;transform:scale(1.06)}
+  @media (max-width:1240px){.g{grid-template-columns:repeat(auto-fill,minmax(248px,1fr))}}
+  @media (max-width:820px){.g{grid-template-columns:1fr}.bar{flex-wrap:wrap}.search{order:3;flex-basis:100%}}
+</style>
+</head>
+<body data-app="front" data-nav="tpl" data-title="模板库">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div class="page">
+      <div class="crumb">搭建 <span>/</span> <b id="crumb">工作流</b>
+        <button class="btn btn--p btn--s" id="blank" style="margin-left:auto">＋ 新建流程</button></div>
+
+      <div class="bar">
+        <div class="tabs" id="tabs"><button class="is-on" data-t="flow">工作流</button><button data-t="insight">智能洞察</button><button data-t="approve">审批与工单</button></div>
+        <div class="search"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="7.2" cy="7.2" r="4.4"/><path d="M10.6 10.6 14 14"/></svg><input placeholder="搜索模板"></div>
+        <button class="filt" aria-label="筛选" data-toast="按触发类型、复杂度、是否含不可逆动作筛选"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 4.5h11M4.5 8h7M6.5 11.5h3"/></svg></button>
+      </div>
+
+      <div id="secs"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="tm">
+  <div class="modal__h"><h3 id="tmT">模板</h3><span class="tag tag--acc">模板</span><button class="x" data-close>✕</button></div>
+  <div class="modal__b tm" id="tmB"></div>
+  <div class="modal__f"><span class="dim" style="font-size:11.5px">用模板会生成一份草稿，仍要过体检才能上线</span>
+    <div class="right"><button class="btn" data-toast="预览逻辑：先看这条模板会怎么跑，再决定要不要用">预览逻辑</button><button class="btn btn--p" id="use">使用模板</button></div></div>
+</div>
+
+<script src="ui.js"></script>
+<script>
+(function () {
+  var I = {
+    zap: '<path d="M9 1.5 3.5 9H8l-1 5.5L12.5 7H8z"/>',
+    gear: '<circle cx="8" cy="8" r="2.1"/><path d="M8 2.2v1.4M8 12.4v1.4M13.8 8h-1.4M3.6 8H2.2M12 4l-1 1M5 11l-1 1M12 12l-1-1M5 5 4 4"/>',
+    check: '<path d="M3 8.4 6.4 11.8 13 4.6"/>',
+    lock: '<rect x="3.5" y="7" width="9" height="6.5" rx="1.4"/><path d="M5.8 7V5.2a2.2 2.2 0 0 1 4.4 0V7"/>',
+    clock: '<circle cx="8" cy="8" r="5.8"/><path d="M8 4.8V8l2.2 1.4"/>',
+    app: '<rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/>',
+    doc: '<path d="M4.5 2.5h5l3 3v8h-8z"/>'
+  };
+  function ic(k, bg) { return '<i style="background:' + bg + '"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + I[k] + '</svg></i>'; }
+  function node(k, bg, t, c) { return '<span class="nd"' + (c ? ' style="border-color:var(--risk-line);background:var(--risk-soft)"' : '') + '>' + ic(k, bg) + '<b' + (c ? ' style="color:var(--risk)"' : '') + '>' + t + '</b></span>'; }
+  var A = 'var(--m-amber)', B = 'var(--m-blue)', G = 'var(--m-green)', R = 'var(--m-brick)';
+
+  var DATA = {
+    flow: [
+      ['人力资源相关', [
+        ['员工入职权限开通', [['zap', A, '入职'], ['gear', B, '开通'], ['check', G, '通知']], '飞书 · 门禁系统', '2 分钟', '入职当天自动开通邮箱、门禁与系统账号，开完通知本人和直属主管。'],
+        ['面试反馈收集与汇总', [['zap', A, '面试'], ['gear', B, '收集'], ['check', G, '汇总']], '招聘系统', '5 分钟', '面试结束 2 小时后提醒面试官填反馈，超时催办，汇总后发给 HR。'],
+        ['请假审批通知', [['zap', A, '提交'], ['gear', B, '审批'], ['check', G, '通知']], '企业微信', '1 分钟', '请假单按天数分档审批，通过后同步到考勤和日程。'],
+        ['绩效评审同步到数据库', [['zap', A, '评审'], ['gear', B, '同步'], ['check', G, '归档']], '数据表', '8 分钟', '评审结束把结果写回人事库，留一份不可编辑的归档。']
+      ]],
+      ['财务相关', [
+        ['每月工资发放通知', [['zap', A, '定时'], ['gear', B, '核算'], ['lock', R, '发放', 1]], '薪资系统', '3 分钟', '每月固定日核算并推送工资条，发放动作不可逆，需财务确认。'],
+        ['奖金与提成计算流程', [['zap', A, '提交'], ['gear', B, '计算'], ['check', G, '复核']], '电子表格', '12 分钟', '按业绩表计算提成，两人复核后进入发放流程。'],
+        ['税款扣除核验引擎', [['zap', A, '月结'], ['gear', B, '核验'], ['check', G, '出表']], '税务接口', '15 分钟', '核对个税与专项扣除，异常项单独列出来转人工。'],
+        ['费用报销差异提醒', [['zap', A, '提交'], ['gear', B, '比对'], ['check', G, '提醒']], '报销系统', '4 分钟', '报销金额与发票不一致时先提醒本人，改完再进审批。']
+      ]]
+    ],
+    insight: [
+      ['运行看板', [
+        ['流程健康周报', [['zap', A, '每周'], ['gear', B, '汇总'], ['check', G, '推送']], '运行数据', '2 分钟', '每周一早上把上周各条流程的运行次数、转人工次数、平均耗时汇总成一页，推给流程负责人。'],
+        ['转人工率异常预警', [['zap', A, '每日'], ['gear', B, '比对'], ['check', G, '通知']], '运行数据', '1 分钟', '某条流程的转人工率比上周高出一倍时，提前提醒负责人去看配置。'],
+        ['卡点排行', [['zap', A, '每日'], ['gear', B, '统计'], ['check', G, '出表']], '运行数据', '3 分钟', '按节点统计等待时长，找出最堵的那一步和最常超时的人。'],
+        ['不可逆动作台账', [['zap', A, '实时'], ['gear', B, '记录'], ['check', G, '归档']], '事件流', '1 分钟', '所有 C 级动作单独成册：谁确认的、什么时候执行的、有没有人事后撤销。']
+      ]],
+      ['成本与合规', [
+        ['付款周期分析', [['zap', A, '月结'], ['gear', B, '计算'], ['check', G, '出表']], '财务数据', '6 分钟', '从提交到到账要多久，按供应商、按金额档分别看。'],
+        ['审批耗时对比', [['zap', A, '月结'], ['gear', B, '对比'], ['check', G, '出表']], '运行数据', '4 分钟', '同一条流程改版前后，审批耗时有没有真的降下来。'],
+        ['超时审批清单', [['zap', A, '每日'], ['gear', B, '筛查'], ['check', G, '提醒']], '运行数据', '2 分钟', '列出超过 24 小时没处理的单子和责任人。'],
+        ['规则命中统计', [['zap', A, '月结'], ['gear', B, '统计'], ['check', G, '出表']], '检查项库', '3 分钟', '哪些检查项真的拦下过问题，哪些从来没触发过。']
+      ]]
+    ],
+    approve: [
+      ['付款与采购', [
+        ['供应商付款分级审批', [['zap', A, '发起'], ['gear', B, '分档'], ['lock', R, '付款', 1]], '银企直连', '4 分钟', '按金额分三档审批，付款前必须有人工确认，执行付款不可逆。'],
+        ['采购申请审批', [['zap', A, '申请'], ['gear', B, '比价'], ['check', G, '下单']], '采购系统', '6 分钟', '超过预算的自动加一道部门负责人审批。'],
+        ['合同用印申请', [['zap', A, '提交'], ['gear', B, '双签'], ['check', G, '归档']], '法务库', '3 分钟', '法务与行政双签，用印后留存扫描件。'],
+        ['客户退款审批', [['zap', A, '申请'], ['gear', B, '主管'], ['lock', R, '退回', 1]], '支付网关', '5 分钟', '退款超过 5,000 元加主管审批，原路退回不可撤销。']
+      ]],
+      ['行政与其他', [
+        ['用章与证照借用', [['zap', A, '借用'], ['gear', B, '审批'], ['check', G, '归还']], '行政系统', '2 分钟', '证照借出登记，到期未还自动催办。'],
+        ['员工离职回收', [['zap', A, '离职'], ['gear', B, '回收'], ['check', G, '结算']], '权限中心', '7 分钟', '离职当天回收账号与门禁，设备归还后结算。'],
+        ['对外发文审批', [['zap', A, '拟稿'], ['gear', B, '审核'], ['lock', R, '发布', 1]], '官网 · 公众号', '5 分钟', '对外发布属于不可撤回动作，发布前必须有人确认。'],
+        ['固定资产报废', [['zap', A, '申请'], ['gear', B, '核验'], ['lock', R, '报废', 1]], '资产台账', '9 分钟', '报废后台账不可恢复，需资产管理员二次确认。']
+      ]]
+    ]
+  };
+  var cur = (location.search.match(/tab=(\w+)/) || [])[1];
+  if (['flow', 'insight', 'approve'].indexOf(cur) < 0) cur = 'flow';
+
+  function card(t, i, gi) {
+    return '<div class="tp" data-g="' + gi + '" data-i="' + i + '">'
+      + '<div class="tp__p">' + t[1].map(function (n, k) { return (k ? '<span class="ln"></span>' : '') + node(n[0], n[1], n[2], n[3]); }).join('') + '</div>'
+      + '<b class="t">' + t[0] + '</b>'
+      + '<div class="tp__m"><span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">' + I.app + '</svg>' + t[2] + '</span>'
+      + '<span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + I.clock + '</svg>' + t[3] + '</span></div>'
+      + '</div>';
+  }
+  function paint() {
+    document.getElementById('crumb').textContent = { flow: '工作流', insight: '智能洞察', approve: '审批与工单' }[cur];
+    document.getElementById('secs').innerHTML = DATA[cur].map(function (g, gi) {
+      return '<section class="sec"><div class="sec__h"><h3>' + g[0] + '推荐</h3><a href="#">查看全部' + g[0] + '模板 ›</a></div>'
+        + '<div class="g">' + g[1].map(function (t, i) { return card(t, i, gi); }).join('') + '</div></section>';
+    }).join('');
+    [].forEach.call(document.querySelectorAll('#tabs button'), function (b) { b.classList.toggle('is-on', b.dataset.t === cur); });
+  }
+  paint();
+  document.getElementById('tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return; cur = b.dataset.t; paint();
+  });
+  document.getElementById('secs').addEventListener('click', function (e) {
+    var c = e.target.closest('.tp'); if (!c) return;
+    var t = DATA[cur][+c.dataset.g][1][+c.dataset.i];
+    document.getElementById('tmT').textContent = t[0];
+    var bars = [22, 34, 48, 96, 40, 30, 52], hot = 3;
+    document.getElementById('tmB').innerHTML =
+      '<div class="tm__p">' + bars.map(function (h, i) { return '<i class="' + (i === hot ? 'on' : '') + '" style="height:' + h + '%"></i>'; }).join('') + '</div>'
+      + '<div class="tm__f"><div><span>触发器</span><b><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + I.zap + '</svg>' + t[1][0][2] + '时触发</b></div>'
+      + '<div><span>预计运行时间</span><b>' + t[3] + '</b></div></div>'
+      + '<h4>这条模板会做什么</h4><p style="font-size:12.5px;line-height:1.75;color:var(--ink-2);margin-bottom:16px">' + t[4] + '</p>'
+      + '<h4>操作</h4><div class="tm__ops">' + t[1].map(function (n, i) { return (i ? '<em>›</em>' : '') + '<span>' + n[2] + '</span>'; }).join('') + '</div>'
+      + (t[1].some(function (n) { return n[3]; }) ? '<div class="banner banner--risk" style="margin-top:16px"><span>这条模板里有不可逆动作，用它建出来的流程，上线前必须配好人工确认，否则体检不给过。</span></div>' : '');
+    AG.open(document.getElementById('tm'));
+  });
+  /* owner：点「使用模板」直接进编辑器，类别就是当前这个板块，进去不能改 */
+  document.getElementById('use').addEventListener('click', function () {
+    AG.close(); AG.toast('已用模板生成草稿 · 去配置里核对执行者和可逆等级');
+    var name = document.getElementById('tmT').textContent;
+    setTimeout(function () {
+      location.href = 'builder.html?new=1&kind=' + cur + '&lock=1&name=' + encodeURIComponent(name);
+    }, 900);
+  });
+
+  /* owner：新建流程不弹窗了，直接进编辑器的第 1 步（基础信息） */
+  document.getElementById('blank').addEventListener('click', function () {
+    location.href = 'builder.html?new=1&kind=' + cur;
+  });
+})();
+</script>
+</body>
+</html>

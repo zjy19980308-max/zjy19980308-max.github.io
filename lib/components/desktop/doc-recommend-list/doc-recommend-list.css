@@ -1,0 +1,20 @@
+cs-doc-recommend-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-sem-spacing-content-inline);
+}
+
+cs-doc-recommend-list .recommend-header {
+  font: var(--cs-typo-title-extra-large);
+  color: var(--cs-sem-text-primary);
+}
+
+cs-doc-recommend-list .recommend-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--cs-sem-spacing-content-inline);
+}
+
+cs-doc-recommend-list[data-layout="stack"] .recommend-grid {
+  grid-template-columns: minmax(0, 1fr);
+}

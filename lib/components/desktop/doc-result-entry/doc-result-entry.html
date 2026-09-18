@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cs-doc-result-entry</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="./doc-result-entry.css">
+  <style>
+    body {
+      margin: 0;
+      padding: var(--cs-sem-spacing-layout-gutter);
+      background: var(--cs-sem-bg-secondary);
+      font: var(--cs-typo-body-medium);
+    }
+
+    .preview-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cs-sem-spacing-content-inline);
+      max-width: var(--cs-sem-size-content-md);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-stack">
+    <cs-doc-result-entry>
+      <i class="result-icon cses-placeholder"></i>
+      <div class="result-copy">
+        <div class="result-title">设计规范总览</div>
+        <div class="result-meta">规范 / 设计系统</div>
+      </div>
+    </cs-doc-result-entry>
+
+    <cs-doc-result-entry data-active>
+      <i class="result-icon cses-placeholder"></i>
+      <div class="result-copy">
+        <div class="result-title">组件约定说明</div>
+        <div class="result-meta">组件 / 契约 / CSS</div>
+      </div>
+    </cs-doc-result-entry>
+  </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-vote-publish-config 预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="vote-publish-config.css">
+</head>
+<body>
+  <cs-vote-publish-config data-mode="single">
+    <div class="vpc-header">
+      <span class="vpc-title">发布配置</span>
+      <span class="vpc-desc">发布前请确认规则与有效期</span>
+    </div>
+    <div class="vpc-grid">
+      <div class="vpc-field">
+        <span class="vpc-label">投票模式</span>
+        <div class="vpc-control" data-role="mode">单选</div>
+      </div>
+      <div class="vpc-field">
+        <span class="vpc-label">有效期</span>
+        <div class="vpc-control">2026-04-30 18:00 截止</div>
+      </div>
+      <div class="vpc-field">
+        <span class="vpc-label">匿名投票</span>
+        <div class="vpc-control">关闭</div>
+      </div>
+    </div>
+    <span class="vpc-hint"><i class="cses-tishi"></i>发布后将同步至当前会话。</span>
+    <div class="vpc-summary">预计覆盖 132 位成员。</div>
+    <div class="vpc-actions">
+      <button class="vpc-button" type="button">预览</button>
+      <button class="vpc-button" data-variant="primary" type="button">发布投票</button>
+    </div>
+  </cs-vote-publish-config>
+
+  <cs-vote-publish-config data-mode="multiple" data-anonymous data-locked>
+    <div class="vpc-header">
+      <span class="vpc-title">已锁定配置</span>
+      <span class="vpc-desc">审批中，暂不可修改</span>
+    </div>
+    <div class="vpc-grid">
+      <div class="vpc-field">
+        <span class="vpc-label">投票模式</span>
+        <div class="vpc-control" data-role="mode">多选</div>
+      </div>
+      <div class="vpc-field">
+        <span class="vpc-label">有效期</span>
+        <div class="vpc-control">2026-05-07 20:00 截止</div>
+      </div>
+    </div>
+    <span class="vpc-hint"><i class="cses-tishi"></i>当前配置已锁定。</span>
+    <div class="vpc-summary">预计覆盖 58 位成员。</div>
+    <div class="vpc-actions">
+      <button class="vpc-button" type="button">预览</button>
+      <button class="vpc-button" data-variant="primary" type="button">发布投票</button>
+    </div>
+  </cs-vote-publish-config>
+</body>
+</html>

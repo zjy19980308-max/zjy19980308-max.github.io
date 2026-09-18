@@ -1,0 +1,97 @@
+/* 周视图日历网格 · <cs-calendar-grid>
+ * 会议块定位：grid-row: startHour+1 / endHour+1; grid-column: dayIdx+1 */
+cs-calendar-grid {
+  display: flex; flex-direction: column;
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden; box-sizing: border-box;
+  /* header 约 64px + 24 行 × 48px = 1216px · 强制展开 24 小时全网格 */
+  min-height: 1216px; height: max-content; flex-shrink: 0;
+}
+
+/* 顶部日期头 */
+cs-calendar-grid .cg-header {
+  display: grid;
+  grid-template-columns: 64px repeat(7, 1fr);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  background: var(--cs-color-bg-light);
+}
+cs-calendar-grid .cg-time-spacer { border-right: var(--line-width) solid var(--cs-color-border); }
+cs-calendar-grid .cg-day-cell {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--space-2xs); padding: var(--space-sm) var(--space-xs);
+  border-right: var(--line-width) solid var(--cs-color-border);
+}
+cs-calendar-grid .cg-day-cell:last-child { border-right: none; }
+cs-calendar-grid .cg-day-name { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); }
+cs-calendar-grid .cg-day-num { font: var(--typo-cn-16-medium); color: var(--cs-color-text); }
+cs-calendar-grid .cg-day-cell[data-today] .cg-day-name { color: var(--cs-color-primary); }
+cs-calendar-grid .cg-day-cell[data-today] .cg-day-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: var(--radius-full);
+  background: var(--cs-color-primary); color: var(--cs-color-text-inverse);
+}
+
+/* 主网格 */
+cs-calendar-grid .cg-body { display: grid; grid-template-columns: 64px 1fr; flex: 1 0 auto; min-height: 1152px; }
+cs-calendar-grid .cg-time-col {
+  display: grid; grid-template-rows: repeat(24, 48px);
+  border-right: var(--line-width) solid var(--cs-color-border);
+}
+cs-calendar-grid .cg-time-label {
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: var(--space-2xs);
+  font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2);
+}
+cs-calendar-grid .cg-grid {
+  position: relative; display: grid;
+  grid-template-columns: repeat(7, 1fr); grid-template-rows: repeat(24, 48px);
+  background-image:
+    linear-gradient(to right, var(--cs-color-border) var(--line-width), transparent var(--line-width)),
+    linear-gradient(to bottom, var(--cs-color-border) var(--line-width), transparent var(--line-width));
+  background-size: calc(100% / 7) 48px, 100% 48px;
+}
+
+/* 会议块 */
+cs-calendar-grid .cg-event {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; gap: var(--space-2xs);
+  padding: var(--space-xs) var(--space-sm); margin: 2px;
+  border-radius: var(--radius);
+  border-left: 3px solid var(--cs-color-primary);
+  background: var(--cs-color-primary-a2);
+  cursor: pointer; overflow: hidden;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+cs-calendar-grid .cg-event:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); z-index: 2; }
+cs-calendar-grid .cg-event-title {
+  font: var(--typo-cn-13-medium); color: var(--cs-color-text);
+  white-space: nowrap; text-overflow: ellipsis; overflow: hidden;
+}
+cs-calendar-grid .cg-event-time { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light); }
+cs-calendar-grid .cg-event-avatars { display: inline-flex; align-items: center; margin-top: auto; }
+
+/* 状态：重要 / 已结束 */
+cs-calendar-grid .cg-event[data-status="important"] {
+  border-left-color: var(--cs-sem-func-upvote);
+  background: var(--color-purple-50);
+}
+cs-calendar-grid .cg-event[data-status="ended"] {
+  border-left-color: var(--cs-color-text-light2);
+  background: var(--cs-color-bg-light); opacity: 0.7;
+}
+cs-calendar-grid .cg-event[data-status="ended"] .cg-event-title {
+  color: var(--cs-color-text-light); text-decoration: line-through;
+}
+
+/* Popover */
+cs-calendar-grid .cg-popover {
+  position: absolute; left: calc(100% + var(--space-xs)); top: 0; z-index: 10;
+  display: none; flex-direction: column; gap: var(--space-xs);
+  width: 240px; padding: var(--space-md);
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+}
+cs-calendar-grid .cg-event:hover .cg-popover { display: flex; }

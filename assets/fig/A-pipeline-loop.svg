@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<style>
+  .bg{fill:#083D2A}
+  .t{fill:#EED6C8;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .m{fill:#8FB3A0;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mb{fill:#EED6C8;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .d{fill:#EED6C8;font-family:'Instrument Serif',Georgia,serif}
+  .a{fill:#DAAB00}
+  .am{fill:#DAAB00;font-family:Syne,'Helvetica Neue',Arial,sans-serif;letter-spacing:.18em}
+  .mu{fill:#8FB3A0;font-family:'Noto Sans SC','PingFang SC',sans-serif}
+  .ln{stroke:#EED6C8;fill:none}
+  .ln2{stroke:#EED6C8;fill:none;opacity:.35}
+  .la{stroke:#DAAB00;fill:none}
+  .ds{stroke:#8FB3A0;fill:none;stroke-dasharray:6 6}
+  .box{fill:none;stroke:#EED6C8;stroke-opacity:.55}
+  .boxa{fill:#DAAB00;fill-opacity:.12;stroke:#DAAB00}
+  .fill{fill:#EED6C8;fill-opacity:.06;stroke:#EED6C8;stroke-opacity:.35}
+  .hatch{fill:url(#hz);stroke:#EED6C8;stroke-opacity:.35}
+  .pill{fill:none;stroke:#EED6C8;stroke-opacity:.6}
+</style>
+<defs>
+  <pattern id="hz" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+    <line x1="0" y1="0" x2="0" y2="8" stroke="#EED6C8" stroke-opacity=".22" stroke-width="1"/>
+  </pattern>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#EED6C8"/>
+  </marker>
+  <marker id="ara" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#DAAB00"/>
+  </marker>
+  <marker id="arm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10z" fill="#8FB3A0"/>
+  </marker>
+</defs>
+<rect class="bg" width="1600" height="900"/><text x="90" y="96" class="d" font-size="48" text-anchor="start" font-weight="400" >AI Design Pipeline</text><text x="90" y="132" class="mu" font-size="18" text-anchor="start" font-weight="400" >规矩由程序管的 multi-agent 产线 · 规则我定 · 代码 AI 写 · 我验收</text><text x="1510" y="80" class="m" font-size="13" text-anchor="end" font-weight="400" >FIG A · PIPELINE LOOP</text><circle cx="800" cy="505" r="318" class="ln2" stroke-width="1.5"/><circle cx="800" cy="505" r="238" class="ln" stroke-width="2"/><path d="M562 505 Q800 467 1038 505 Q800 543 562 505z" fill="#000" stroke="#EED6C8" stroke-opacity=".5"/><text x="800" y="393" class="t" font-size="38" text-anchor="middle" font-weight="500" >五道工序</text><text x="800" y="425" class="m" font-size="12" text-anchor="middle" font-weight="400" >PIPELINE · ONE SESSION PER STAGE</text><circle cx="610" cy="463" r="4" fill="#EED6C8"/><line x1="618" y1="463" x2="697" y2="463" class="ln2"/><text x="610" y="451" class="t" font-size="13" text-anchor="middle" font-weight="400" >需求</text><circle cx="705" cy="463" r="4" fill="#EED6C8"/><line x1="713" y1="463" x2="792" y2="463" class="ln2"/><text x="705" y="451" class="t" font-size="13" text-anchor="middle" font-weight="400" >骨架</text><circle cx="800" cy="463" r="4" fill="#EED6C8"/><line x1="808" y1="463" x2="887" y2="463" class="ln2"/><text x="800" y="451" class="t" font-size="13" text-anchor="middle" font-weight="400" >高保真</text><circle cx="895" cy="463" r="4" fill="#EED6C8"/><line x1="903" y1="463" x2="982" y2="463" class="ln2"/><text x="895" y="451" class="t" font-size="13" text-anchor="middle" font-weight="400" >交互</text><circle cx="990" cy="463" r="4" fill="#EED6C8"/><text x="990" y="451" class="t" font-size="13" text-anchor="middle" font-weight="400" >QA</text><text x="800" y="593" class="t" font-size="38" text-anchor="middle" font-weight="500" >设计底座</text><text x="800" y="623" class="m" font-size="12" text-anchor="middle" font-weight="400" >DESIGN FOUNDATION</text><text x="800" y="655" class="mu" font-size="14" text-anchor="middle" font-weight="400" >49 组件 · 440 变量 · 887 图标 · 8 锁死框架</text><text x="800" y="510" class="am" font-size="11" text-anchor="middle" font-weight="400" >GATE · 写入即校验</text><rect x="517.6039215965485" y="339.0" width="14" height="14" transform="rotate(45 524.6039215965485 346.0)" fill="#083D2A" stroke="#DAAB00" stroke-width="2"/><text x="508.6039215965485" y="351.0" class="t" font-size="13" text-anchor="end" font-weight="400" >变量门</text><rect x="793.0" y="180.0" width="14" height="14" transform="rotate(45 800.0 187.0)" fill="#083D2A" stroke="#DAAB00" stroke-width="2"/><text x="816.0" y="192.0" class="t" font-size="13" text-anchor="start" font-weight="400" >图标门</text><rect x="1068.3960784034516" y="339.0" width="14" height="14" transform="rotate(45 1075.3960784034516 346.0)" fill="#083D2A" stroke="#DAAB00" stroke-width="2"/><text x="1091.3960784034516" y="351.0" class="t" font-size="13" text-anchor="start" font-weight="400" >框架门</text><text x="890" y="161" class="m" font-size="12" text-anchor="start" font-weight="400" >GATEKEEPERS · 三个门卫</text><text x="890" y="181" class="mu" font-size="13" text-anchor="start" font-weight="400" >颜色只取变量 · 图标只取字体 · 外框只取框架 · 不合规存不进去</text><circle cx="800" cy="823" r="6" fill="#083D2A" stroke="#EED6C8" stroke-width="2"/><text x="800" y="857" class="m" font-size="12" text-anchor="middle" font-weight="400" >REGRESSION LOOP</text><text x="800" y="879" class="mu" font-size="13" text-anchor="middle" font-weight="400" >每处疏漏 → 一条检查项 · 91 条全量重跑 · 33 次返工登记</text><circle cx="524.6039215965485" cy="664.0" r="4" fill="#EED6C8"/><text x="510.6039215965485" y="692.0" class="m" font-size="11" text-anchor="end" font-weight="400" >QA · 只看不改</text><circle cx="1075.3960784034516" cy="664.0" r="4" fill="#EED6C8"/><text x="1089.3960784034516" y="692.0" class="m" font-size="11" text-anchor="start" font-weight="400" >TWO-SIGN · 机器 + 本人</text><rect x="130.0" y="436.0" width="120" height="34" rx="17.0" class="pill"/><text x="190" y="458" class="mb" font-size="12" text-anchor="middle" font-weight="400" >INPUT</text><text x="190" y="517" class="t" font-size="30" text-anchor="middle" font-weight="500" >一句需求</text><text x="190" y="545" class="m" font-size="12" text-anchor="middle" font-weight="400" >INTENT</text><line x1="270" y1="505" x2="556" y2="505" class="ln2"/><rect x="558.0" y="501.0" width="8" height="8" class="a"/><rect x="1350.0" y="436.0" width="120" height="34" rx="17.0" class="pill"/><text x="1410" y="458" class="mb" font-size="12" text-anchor="middle" font-weight="400" >OUTPUT</text><text x="1410" y="517" class="t" font-size="30" text-anchor="middle" font-weight="500" >可点页面</text><text x="1410" y="545" class="m" font-size="12" text-anchor="middle" font-weight="400" >CLICKABLE HTML · 57 PAGES</text><line x1="1044" y1="505" x2="1330" y2="505" class="ln2"/><rect x="1034.0" y="501.0" width="8" height="8" class="a"/></svg>

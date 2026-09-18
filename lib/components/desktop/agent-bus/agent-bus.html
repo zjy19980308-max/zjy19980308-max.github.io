@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-agent-bus 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../css/workspace.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../agent-tile/agent-tile.css">
+  <link rel="stylesheet" href="agent-bus.css">
+  <style>
+    body { padding: 32px; background: #F5F6FA; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    cs-agent-bus { width: 760px; max-width: 100%; height: 640px; }
+    .compact-bus { height: 420px; }
+  </style>
+</head>
+<body>
+
+<!-- 1. 完整态 - 全部 5 块 -->
+<div class="section">
+  <div class="section-title">完整态 Full（head + tabs + needs + achievements + flow + matrix）</div>
+  <div class="section-subtitle">v2 §17.4：列表行无强色，tag 浅灰底，仅 needs 区用 danger-bg；行内按钮 L2 主色边框（无 L1 紫填充）</div>
+
+  <cs-agent-bus>
+    <div class="bus-head">
+      <span class="bus-title"><i class="cses-aite"></i>AI 工作总线</span>
+      <span class="bus-stat">今日 28 项 · 14 个 Agent 在线</span>
+    </div>
+    <div class="bus-tabs">
+      <button class="bus-tab" data-tab="all" data-active="true">全部 28</button>
+      <button class="bus-tab" data-tab="self">自有 12</button>
+      <button class="bus-tab" data-tab="external">接入 11</button>
+      <button class="bus-tab" data-tab="custom">自定义 5</button>
+      <button class="bus-tab" data-tab="needs"><span class="badge-dot"></span>待你处理 3</button>
+    </div>
+    <div class="bus-needs">
+      <div class="bus-needs-title">🚨 待你处理（3）★ 最高优先级</div>
+      <div class="needs-row" data-need-id="n1">
+        <span class="needs-source">Coze</span>
+        <span class="needs-text">销售助手 需授权访问 CRM 数据</span>
+        <span class="needs-actions">
+          <button class="needs-btn" data-variant="primary" data-action="approve" data-need="n1">允许</button>
+          <button class="needs-btn" data-action="reject" data-need="n1">拒绝</button>
+        </span>
+      </div>
+      <div class="needs-row" data-need-id="n2">
+        <span class="needs-source">Anthropic</span>
+        <span class="needs-text">Claude 等你确认《Q1报告》大纲</span>
+        <span class="needs-actions">
+          <button class="needs-btn" data-variant="primary" data-action="view" data-need="n2">查看</button>
+          <button class="needs-btn" data-action="approve" data-need="n2">确认</button>
+        </span>
+      </div>
+      <div class="needs-row" data-need-id="n3">
+        <span class="needs-source">自定义</span>
+        <span class="needs-text">翻译 Agent 需要 API Key</span>
+        <span class="needs-actions">
+          <button class="needs-btn" data-variant="primary" data-action="config" data-need="n3">配置</button>
+        </span>
+      </div>
+    </div>
+    <div class="bus-achievements">
+      <div class="achievement-cell"><span class="achievement-num">5</span><span class="achievement-label">📄 摘要</span></div>
+      <div class="achievement-cell"><span class="achievement-num">3</span><span class="achievement-label">✅ 分配</span></div>
+      <div class="achievement-cell"><span class="achievement-num">2</span><span class="achievement-label">📋 纪要</span></div>
+      <div class="achievement-cell"><span class="achievement-num">15</span><span class="achievement-label">🌍 翻译</span></div>
+    </div>
+    <div class="bus-flow">
+      <div class="flow-row" data-source="anthropic" data-agent-id="claude">
+        <span class="flow-source">Anthropic</span>
+        <span class="flow-name">Claude</span>
+        <span class="flow-time">2min前</span>
+        <span class="flow-action">完成《Q1 报告》大纲</span>
+        <i class="flow-arrow cses-right"></i>
+      </div>
+      <div class="flow-row" data-source="self" data-agent-id="task-helper">
+        <span class="flow-source">自有</span>
+        <span class="flow-name">任务助手</span>
+        <span class="flow-time">10min前</span>
+        <span class="flow-action">分配 8 个任务</span>
+        <i class="flow-arrow cses-right"></i>
+      </div>
+      <div class="flow-row" data-source="self" data-agent-id="meeting">
+        <span class="flow-source">自有</span>
+        <span class="flow-name">会议秘书</span>
+        <span class="flow-time">12min前</span>
+        <span class="flow-action">生成会议纪要</span>
+        <i class="flow-arrow cses-right"></i>
+      </div>
+      <div class="flow-row" data-source="openai" data-agent-id="gpt5">
+        <span class="flow-source">OpenAI</span>
+        <span class="flow-name">GPT-5</span>
+        <span class="flow-time">15min前</span>
+        <span class="flow-action">优化 3 段产品描述</span>
+        <i class="flow-arrow cses-right"></i>
+      </div>
+      <div class="flow-row" data-source="chain" data-chain="true">
+        <span class="flow-source">跨链</span>
+        <span class="flow-name">3 Agent</span>
+        <span class="flow-time">12min</span>
+        <span class="flow-action">文档→Claude→纪要</span>
+        <i class="flow-arrow cses-right"></i>
+        <div class="flow-chain-tip">链路：文档助手 2min → Claude 7min → 会议秘书 3min</div>
+      </div>
+    </div>
+    <div class="bus-matrix">
+      <div class="matrix-row">
+        <span class="matrix-label">🏢 自有</span>
+        <cs-agent-tile data-source="self" data-status="online"><span class="agent-avatar">文</span><span class="agent-name">文档</span><span class="agent-dot"></span></cs-agent-tile>
+        <cs-agent-tile data-source="self" data-status="working"><span class="agent-avatar">任</span><span class="agent-name">任务</span><span class="agent-dot"></span></cs-agent-tile>
+        <cs-agent-tile data-source="self" data-status="online"><span class="agent-avatar">会</span><span class="agent-name">会议</span><span class="agent-dot"></span></cs-agent-tile>
+      </div>
+      <div class="matrix-row">
+        <span class="matrix-label">🌐 接入</span>
+        <cs-agent-tile data-source="anthropic" data-status="working"><span class="agent-avatar">A</span><span class="agent-name">Claude</span><span class="agent-dot"></span></cs-agent-tile>
+        <cs-agent-tile data-source="openai" data-status="idle"><span class="agent-avatar">G</span><span class="agent-name">GPT-5</span><span class="agent-dot"></span></cs-agent-tile>
+        <cs-agent-tile data-source="coze" data-status="needs"><span class="agent-avatar">C</span><span class="agent-name">Coze</span><span class="agent-dot"></span></cs-agent-tile>
+      </div>
+      <div class="matrix-row">
+        <span class="matrix-label">🔧 自定义</span>
+        <cs-agent-tile data-source="custom" data-status="online"><span class="agent-avatar">销</span><span class="agent-name">销售</span><span class="agent-dot"></span></cs-agent-tile>
+        <button class="matrix-add" data-action="add-agent">+ 接入 Agent</button>
+      </div>
+    </div>
+  </cs-agent-bus>
+</div>
+
+<!-- 2. 紧凑态 - 无 needs（全部 Agent 都不需要处理） -->
+<div class="section">
+  <div class="section-title">紧凑态 Compact（无 needs 区）</div>
+  <div class="section-subtitle">没有 needs 时折叠 needs 区，仅 head + tabs + achievements + flow + matrix</div>
+
+  <cs-agent-bus class="compact-bus">
+    <div class="bus-head">
+      <span class="bus-title"><i class="cses-aite"></i>AI 工作总线</span>
+      <span class="bus-stat">全部 Agent 状态正常</span>
+    </div>
+    <div class="bus-tabs">
+      <button class="bus-tab" data-tab="all" data-active="true">全部 12</button>
+      <button class="bus-tab" data-tab="self">自有 6</button>
+      <button class="bus-tab" data-tab="external">接入 4</button>
+      <button class="bus-tab" data-tab="custom">自定义 2</button>
+    </div>
+    <div class="bus-achievements">
+      <div class="achievement-cell"><span class="achievement-num">2</span><span class="achievement-label">📄 摘要</span></div>
+      <div class="achievement-cell"><span class="achievement-num">1</span><span class="achievement-label">✅ 分配</span></div>
+      <div class="achievement-cell"><span class="achievement-num">0</span><span class="achievement-label">📋 纪要</span></div>
+      <div class="achievement-cell"><span class="achievement-num">4</span><span class="achievement-label">🌍 翻译</span></div>
+    </div>
+    <div class="bus-flow">
+      <div class="flow-row" data-source="self">
+        <span class="flow-source">自有</span>
+        <span class="flow-name">文档助手</span>
+        <span class="flow-time">5min前</span>
+        <span class="flow-action">完成 2 篇文档摘要</span>
+        <i class="flow-arrow cses-right"></i>
+      </div>
+      <div class="flow-row" data-source="google">
+        <span class="flow-source">Google</span>
+        <span class="flow-name">Gemini</span>
+        <span class="flow-time">20min前</span>
+        <span class="flow-action">翻译 4 段技术文档</span>
+        <i class="flow-arrow cses-right"></i>
+      </div>
+    </div>
+    <div class="bus-matrix">
+      <div class="matrix-row">
+        <span class="matrix-label">🏢 自有</span>
+        <cs-agent-tile data-source="self" data-status="online"><span class="agent-avatar">文</span><span class="agent-name">文档</span><span class="agent-dot"></span></cs-agent-tile>
+        <cs-agent-tile data-source="self" data-status="idle"><span class="agent-avatar">任</span><span class="agent-name">任务</span><span class="agent-dot"></span></cs-agent-tile>
+      </div>
+    </div>
+  </cs-agent-bus>
+</div>
+
+</body>
+</html>

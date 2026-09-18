@@ -1,0 +1,147 @@
+/* cs-gantt-chart · 甘特图 · 计划线 vs 实际线 · 偏差橙色高亮 */
+
+.cs-gantt-chart {
+  background: var(--cs-color-bg-card);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.cs-gantt-chart__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.cs-gantt-chart__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.cs-gantt-chart__title-icon {
+  color: var(--cs-color-primary);
+  font-size: 16px;
+}
+
+.cs-gantt-chart__legend {
+  display: inline-flex;
+  gap: 16px;
+}
+
+.cs-gantt-chart__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-gray-600);
+}
+
+.cs-gantt-chart__legend-bar {
+  display: inline-block;
+  width: 16px;
+  height: 6px;
+  border-radius: 3px;
+}
+
+.cs-gantt-chart__legend-bar--plan   { background: var(--color-blue-200); }
+.cs-gantt-chart__legend-bar--actual { background: var(--cs-color-primary); }
+.cs-gantt-chart__legend-bar--delay  { background: var(--cs-color-warning); }
+
+.cs-gantt-chart__scale {
+  display: grid;
+  grid-template-columns: 200px repeat(12, 1fr);
+  font-size: 11px;
+  color: var(--color-gray-500);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-gray-100);
+  font-variant-numeric: tabular-nums;
+}
+
+.cs-gantt-chart__scale > span:first-child { display: none; }
+.cs-gantt-chart__scale > span {
+  text-align: center;
+}
+
+.cs-gantt-chart__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cs-gantt-chart__row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--color-gray-100);
+  align-items: center;
+}
+
+.cs-gantt-chart__row:last-child { border-bottom: 0; }
+
+.cs-gantt-chart__row-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cs-gantt-chart__row-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-gray-900);
+}
+
+.cs-gantt-chart__row-owner {
+  font-size: 11px;
+  color: var(--color-gray-500);
+}
+
+.cs-gantt-chart__row-track {
+  position: relative;
+  height: 24px;
+  background: var(--color-gray-50);
+  border-radius: 4px;
+}
+
+.cs-gantt-chart__bar {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.cs-gantt-chart__bar:hover {
+  transform: translateY(-50%) scaleY(1.2);
+  box-shadow: var(--cs-shadow-card);
+}
+
+.cs-gantt-chart__bar--plan {
+  background: var(--color-blue-200);
+  top: 25%;
+  transform: translateY(0);
+  height: 6px;
+}
+
+.cs-gantt-chart__bar--actual {
+  background: var(--cs-color-primary);
+  top: 55%;
+  transform: translateY(0);
+  height: 8px;
+}
+
+.cs-gantt-chart__bar--delay {
+  background: var(--cs-color-warning);
+  height: 8px;
+  top: 55%;
+  transform: translateY(0);
+  border-radius: 0 3px 3px 0;
+}

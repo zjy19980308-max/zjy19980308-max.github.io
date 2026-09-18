@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-message-bubble 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../avatar/avatar.css">
+  <link rel="stylesheet" href="message-bubble.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .chat-area { display: flex; flex-direction: column; gap: 16px; max-width: 600px; }
+  </style>
+</head>
+<body>
+
+<!-- 接收消息 -->
+<div class="section">
+  <div class="section-title">接收消息（默认）</div>
+  <div class="section-subtitle">data-variant="received" 或省略，左侧灰色气泡</div>
+
+  <div class="chat-area">
+    <cs-message-bubble>
+      <cs-avatar data-size="sm" data-color="blue"><span class="avatar-text">张</span></cs-avatar>
+      <div class="bubble-wrapper">
+        <span class="bubble-name">张三</span>
+        <div class="bubble-body">你好，今天下午的会议准备好了吗？</div>
+        <span class="bubble-time">14:30</span>
+      </div>
+    </cs-message-bubble>
+
+    <cs-message-bubble>
+      <cs-avatar data-size="sm" data-color="green"><span class="avatar-text">李</span></cs-avatar>
+      <div class="bubble-wrapper">
+        <span class="bubble-name">李四</span>
+        <div class="bubble-body">收到，我已经把文档整理好了，稍后发给你看看</div>
+        <span class="bubble-time">14:32</span>
+      </div>
+    </cs-message-bubble>
+  </div>
+</div>
+
+<!-- 发送消息 -->
+<div class="section">
+  <div class="section-title">发送消息</div>
+  <div class="section-subtitle">data-variant="sent"，右侧蓝色气泡</div>
+
+  <div class="chat-area">
+    <cs-message-bubble data-variant="sent">
+      <cs-avatar data-size="sm"><img src="https://i.pravatar.cc/48?img=1" alt=""></cs-avatar>
+      <div class="bubble-wrapper">
+        <div class="bubble-body">好的，辛苦了！</div>
+        <div style="display:flex;align-items:center;gap:var(--space-2xs);justify-content:flex-end;">
+          <span class="bubble-time">14:33</span>
+          <span class="bubble-receipt">已读</span>
+        </div>
+      </div>
+    </cs-message-bubble>
+
+    <cs-message-bubble data-variant="sent">
+      <cs-avatar data-size="sm"><img src="https://i.pravatar.cc/48?img=1" alt=""></cs-avatar>
+      <div class="bubble-wrapper">
+        <div class="bubble-body">顺便帮我把上周的数据报告也带上，一起讨论一下</div>
+        <div style="display:flex;align-items:center;gap:var(--space-2xs);justify-content:flex-end;">
+          <span class="bubble-time">14:34</span>
+          <span class="bubble-receipt">2人未读</span>
+        </div>
+      </div>
+    </cs-message-bubble>
+  </div>
+</div>
+
+<!-- 对话场景 -->
+<div class="section">
+  <div class="section-title">对话场景</div>
+  <div class="section-subtitle">接收与发送交替，hover 显示操作按钮</div>
+
+  <div class="chat-area">
+    <cs-message-bubble>
+      <cs-avatar data-size="sm" data-color="orange"><span class="avatar-text">王</span></cs-avatar>
+      <div class="bubble-wrapper">
+        <span class="bubble-name">王五</span>
+        <div class="bubble-body">下周一的评审时间确认一下，是上午10点还是下午2点？</div>
+        <span class="bubble-time">15:00</span>
+      </div>
+      <div class="bubble-actions">
+        <button class="bubble-action"><i class="cses-fenxiang"></i></button>
+        <button class="bubble-action"><i class="cses-more"></i></button>
+      </div>
+    </cs-message-bubble>
+
+    <cs-message-bubble data-variant="sent">
+      <cs-avatar data-size="sm"><img src="https://i.pravatar.cc/48?img=5" alt=""></cs-avatar>
+      <div class="bubble-wrapper">
+        <div class="bubble-body">下午2点吧，上午有另一个会</div>
+        <div style="display:flex;align-items:center;gap:var(--space-2xs);justify-content:flex-end;">
+          <span class="bubble-time">15:02</span>
+          <span class="bubble-receipt">已读</span>
+        </div>
+      </div>
+      <div class="bubble-actions">
+        <button class="bubble-action"><i class="cses-fenxiang"></i></button>
+        <button class="bubble-action"><i class="cses-more"></i></button>
+      </div>
+    </cs-message-bubble>
+
+    <cs-message-bubble>
+      <cs-avatar data-size="sm" data-color="orange"><span class="avatar-text">王</span></cs-avatar>
+      <div class="bubble-wrapper">
+        <span class="bubble-name">王五</span>
+        <div class="bubble-body">好的，那就定下午2点，我通知其他人</div>
+        <span class="bubble-time">15:03</span>
+      </div>
+      <div class="bubble-actions">
+        <button class="bubble-action"><i class="cses-fenxiang"></i></button>
+        <button class="bubble-action"><i class="cses-more"></i></button>
+      </div>
+    </cs-message-bubble>
+  </div>
+</div>
+
+<!-- 长文本 -->
+<div class="section">
+  <div class="section-title">长文本消息</div>
+  <div class="section-subtitle">气泡 max-width 60%，自动换行</div>
+
+  <div class="chat-area">
+    <cs-message-bubble>
+      <cs-avatar data-size="sm" data-color="purple"><span class="avatar-text">赵</span></cs-avatar>
+      <div class="bubble-wrapper">
+        <span class="bubble-name">赵六</span>
+        <div class="bubble-body">这是一段很长的消息内容，用来测试气泡的最大宽度限制和自动换行效果。当消息内容超过气泡最大宽度时，文字会自动换行显示，确保阅读体验良好。同时气泡的圆角样式在多行文本下也应保持一致。</div>
+        <span class="bubble-time">16:00</span>
+      </div>
+    </cs-message-bubble>
+
+    <cs-message-bubble data-variant="sent">
+      <cs-avatar data-size="sm"><img src="https://i.pravatar.cc/48?img=3" alt=""></cs-avatar>
+      <div class="bubble-wrapper">
+        <div class="bubble-body">收到，这段消息也比较长，用来测试发送气泡在多行文本情况下的显示效果。发送气泡使用主色背景和白色文字，需要确保在长文本下的可读性。</div>
+        <div style="display:flex;align-items:center;gap:var(--space-2xs);justify-content:flex-end;">
+          <span class="bubble-time">16:01</span>
+          <span class="bubble-receipt">已读</span>
+        </div>
+      </div>
+    </cs-message-bubble>
+  </div>
+</div>
+
+</body>
+</html>

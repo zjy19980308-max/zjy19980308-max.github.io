@@ -1019,3 +1019,27 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .ae-bullets li b::after{content:'：';font-weight:400;color:var(--fg-4);margin-left:.05em}
 /* 主体变更那行小字，压在公司名下面 */
 .ae-note{display:block;font-family:var(--font-display);font-size:12px;font-weight:300;color:var(--fg-4);line-height:1.7;margin-top:7px}
+
+/* ═══ v1.1 文案调整版新增组件 ═══ */
+.k-lead{font-size:clamp(17px,1.7vw,22px);font-weight:300;line-height:1.75;color:var(--fg-2)}
+.k-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:var(--sp-block)}
+.k-stats div{background:var(--surface);padding:22px 24px 20px}
+.k-stats b{display:block;font-family:var(--font-display);font-size:clamp(28px,3vw,42px);font-weight:400;line-height:1;letter-spacing:-.01em}
+.k-stats span{display:block;margin-top:10px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;color:var(--fg-4)}
+.k-fig{margin:var(--sp-block) 0 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0b0b0c}
+.k-fig img{display:block;width:100%;height:auto}
+.k-fig .fig-cap{padding:10px 16px 12px;margin-top:0;border-top:1px solid var(--line)}
+.k-fig2{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-block);margin-top:var(--sp-block)}
+.k-fig2 .k-fig{margin-top:0}
+@media(max-width:640px){.k-stats{grid-template-columns:1fr 1fr}.k-fig2{grid-template-columns:1fr}}
+
+/* 章末「下一页」进度线（桌面） */
+.np-wrap{margin-top:var(--sp-section)}
+.np{display:flex;align-items:center;gap:22px;padding:28px 0 56px;font-family:var(--font-display);font-size:19px;color:var(--fg);cursor:pointer;user-select:none;outline:none}
+.np-k{white-space:nowrap}
+.np-line{flex:1;height:2px;background:rgba(255,255,255,.14);position:relative;overflow:hidden;border-radius:2px}
+.np-fill{position:absolute;inset:0;background:#C8FF3D;transform-origin:left;transform:scaleX(var(--p,0));transition:transform .1s linear}
+.np-arrow{font-size:24px;line-height:1;transition:transform .25s}
+.np:hover .np-arrow,.np:focus-visible .np-arrow{transform:translateX(6px)}
+.np-t{font-family:var(--font-mono);font-weight:500;font-size:10px;letter-spacing:.16em;color:var(--fg-4);white-space:nowrap}
+@media(max-width:760px){.np-wrap{display:none}}

@@ -1,0 +1,152 @@
+/*
+ * 筛选器组件 (Filter)
+ * 标签：<cs-filter>
+ *
+ * data 属性：
+ *   data-size="sm"          — 小尺寸 24px
+ *   data-size="md"          — 中尺寸 32px（默认）
+ *   data-size="lg"          — 大尺寸 40px
+ *   data-type="select"      — 单选下拉（默认）
+ *   data-type="date-range"  — 日期区间
+ *   data-type="multi-tag"   — 多标签
+ *   data-active             — 激活态（已选值）
+ *   data-open               — 展开态（focus）
+ *   data-disabled           — 禁用态
+ *
+ * 槽位：
+ *   .filter-label / .filter-control / .filter-value
+ *   .filter-placeholder / .filter-arrow / .filter-clear / .filter-icon
+ */
+
+/* ========== 基础容器 ========== */
+cs-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-6);
+  position: relative;
+  height: var(--cs-sem-size-interactive-sm);
+  padding: 0 var(--space-xs);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light);
+  background: var(--cs-color-bg);
+  cursor: pointer;
+  box-sizing: border-box;
+  max-width: var(--spacing-320);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* ========== 尺寸变体 ========== */
+cs-filter[data-size="sm"] {
+  height: var(--cs-sem-size-interactive-xs);
+  padding: 0 var(--spacing-6);
+  font: var(--typo-cn-12-regular);
+}
+
+cs-filter[data-size="lg"] {
+  height: var(--cs-sem-size-interactive-md);
+  padding: 0 var(--space-sm);
+}
+
+/* ========== 子槽位 ========== */
+cs-filter .filter-label {
+  flex-shrink: 0;
+  color: var(--cs-color-text-light);
+}
+
+cs-filter .filter-label::after {
+  content: "：";
+  color: var(--cs-color-text-light2);
+}
+
+cs-filter .filter-control {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+cs-filter .filter-value {
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+cs-filter .filter-placeholder {
+  color: var(--cs-color-text-light2);
+}
+
+cs-filter .filter-icon,
+cs-filter .filter-arrow,
+cs-filter .filter-clear {
+  flex-shrink: 0;
+  color: var(--cs-color-text-light2);
+  font-size: var(--cs-sem-size-icon-md, 16px);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+cs-filter .filter-clear {
+  display: none;
+  cursor: pointer;
+}
+
+cs-filter .filter-clear:hover {
+  color: var(--cs-color-text-light);
+}
+
+/* ========== hover ========== */
+cs-filter:hover:not([data-disabled]) {
+  border-color: var(--cs-color-text-light2);
+  background: var(--cs-color-bg-hover);
+}
+
+cs-filter:hover:not([data-disabled]) .filter-value {
+  color: var(--cs-color-text);
+}
+
+/* ========== focus / open ========== */
+cs-filter[data-open] {
+  border-color: var(--cs-color-primary);
+  background: var(--cs-color-bg);
+}
+
+cs-filter[data-open] .filter-arrow {
+  transform: rotate(180deg);
+  color: var(--cs-color-primary);
+}
+
+/* ========== active（已选值）========== */
+cs-filter[data-active] {
+  border-color: var(--cs-color-primary);
+  background: var(--cs-color-selected);
+}
+
+cs-filter[data-active] .filter-label,
+cs-filter[data-active] .filter-value,
+cs-filter[data-active] .filter-arrow {
+  color: var(--cs-color-primary);
+}
+
+cs-filter[data-active] .filter-clear {
+  display: inline-block;
+  color: var(--cs-color-primary);
+}
+
+/* ========== disabled ========== */
+cs-filter[data-disabled] {
+  background: var(--cs-color-bg-disabled);
+  color: var(--cs-color-text-light2);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+cs-filter[data-disabled] .filter-value,
+cs-filter[data-disabled] .filter-placeholder,
+cs-filter[data-disabled] .filter-label,
+cs-filter[data-disabled] .filter-arrow {
+  color: var(--cs-color-text-light2);
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cs-doc-library-hero</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="../doc-search-panel/doc-search-panel.css">
+  <link rel="stylesheet" href="./doc-library-hero.css">
+  <style>
+    body {
+      margin: 0;
+      padding: var(--cs-sem-spacing-layout-gutter);
+      background: var(--cs-sem-bg-secondary);
+      font: var(--cs-typo-body-medium);
+    }
+
+    .preview-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cs-sem-spacing-content-stack);
+      max-width: var(--cs-sem-size-content-3xl);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-stack">
+    <cs-doc-library-hero data-variant="default">
+      <div class="hero-copy">
+        <div class="hero-title">文档库</div>
+        <p class="hero-description">统一承载搜索、分类导航、推荐文档与最近更新。</p>
+      </div>
+      <div class="hero-search">
+        <cs-doc-search-panel>
+          <div class="search-box">
+            <i class="search-icon cses-placeholder"></i>
+            <input class="search-field" type="search" placeholder="搜索文档、知识库、更新记录">
+            <button class="search-action" type="button">搜索</button>
+          </div>
+          <div class="search-meta">支持标题、摘要与分类关键词检索</div>
+        </cs-doc-search-panel>
+      </div>
+    </cs-doc-library-hero>
+
+    <cs-doc-library-hero data-variant="compact">
+      <div class="hero-copy">
+        <div class="hero-title">知识首页</div>
+        <p class="hero-description">适合更紧凑的首屏信息编排。</p>
+      </div>
+      <div class="hero-search">
+        <cs-doc-search-panel data-state="focus">
+          <div class="search-box">
+            <i class="search-icon cses-placeholder"></i>
+            <input class="search-field" type="search" value="组件契约">
+            <button class="search-action" type="button">搜索</button>
+          </div>
+          <div class="search-meta">搜索态预览</div>
+        </cs-doc-search-panel>
+      </div>
+    </cs-doc-library-hero>
+  </div>
+</body>
+</html>

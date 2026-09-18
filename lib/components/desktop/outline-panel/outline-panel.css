@@ -1,0 +1,205 @@
+/* ==========================================================
+   cs-outline-panel — 右侧「目录」抽屉（240px）
+
+   data 属性：
+     data-open — 展开抽屉（translateX 0 + 可见）；不开启时收起到屏幕外
+   ========================================================== */
+
+cs-outline-panel {
+  display: flex;
+  flex-direction: column;
+  width: 240px;
+  height: 100%;
+  background: var(--cs-color-bg);
+  border-left: 1px solid var(--cs-color-border);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.08);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform var(--motion-duration-normal) var(--motion-easing-standard),
+    visibility 0s linear var(--motion-duration-normal);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+cs-outline-panel[data-open] {
+  transform: translateX(0);
+  visibility: visible;
+  transition:
+    transform var(--motion-duration-normal) var(--motion-easing-standard),
+    visibility 0s linear 0s;
+}
+
+/* ---- 顶部 header ---- */
+.op-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--spacing-48);
+  padding: 0 var(--space-md);
+  border-bottom: 1px solid var(--cs-color-border);
+  flex-shrink: 0;
+}
+
+.op-title {
+  margin: 0;
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+}
+
+.op-collapse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-24);
+  height: var(--spacing-24);
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--cs-color-text-light);
+  cursor: pointer;
+  transition:
+    background var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.op-collapse:hover {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text);
+}
+
+.op-collapse i {
+  font-size: var(--cs-sem-size-icon-sm);
+}
+
+/* ---- tab 行 ---- */
+.op-tabs {
+  display: flex;
+  align-items: stretch;
+  height: var(--spacing-36);
+  padding: 0 var(--space-md);
+  border-bottom: 1px solid var(--cs-color-border);
+  gap: var(--space-md);
+  flex-shrink: 0;
+}
+
+.op-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 var(--space-3xs);
+  border: none;
+  background: transparent;
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition:
+    color var(--motion-duration-fast) var(--motion-easing-standard),
+    border-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.op-tab:hover {
+  color: var(--cs-color-text);
+}
+
+.op-tab[data-active] {
+  color: var(--cs-color-primary);
+  border-bottom-color: var(--cs-color-primary);
+  font: var(--typo-cn-12-medium);
+}
+
+.op-tab:focus-visible {
+  outline: 2px solid var(--cs-color-primary);
+  outline-offset: -2px;
+}
+
+/* ---- 主体（滚动） ---- */
+.op-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-xs) 0;
+}
+
+/* ---- 目录树 ---- */
+.op-tree,
+.op-children {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.op-children {
+  /* 二级及以上整体缩进 */
+  padding-left: var(--space-md);
+}
+
+.op-node {
+  margin: 0;
+  padding: 0;
+}
+
+.op-node-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  height: var(--spacing-28);
+  padding: 0 var(--space-md);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light);
+  cursor: pointer;
+  border-radius: 0;
+  transition:
+    background var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.op-node-row:hover {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text);
+}
+
+/* 一级节点字重稍重 */
+.op-node[data-level="1"] > .op-node-row {
+  font: var(--typo-cn-13-medium);
+  color: var(--cs-color-text);
+}
+
+/* 激活态 */
+.op-node[data-active] > .op-node-row {
+  background: var(--cs-color-selected);
+  color: var(--cs-color-primary);
+}
+
+/* 折叠箭头 */
+.op-node-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-md);
+  height: var(--space-md);
+  font-size: var(--cs-sem-size-icon-xs);
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+  transition:
+    transform var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.op-node[data-expanded] > .op-node-row > .op-node-toggle {
+  /* 已展开时沿用展开图标，CSS 不强制旋转，HTML 端切换 cses-arrow / cses-right 即可 */
+  color: var(--cs-color-text);
+}
+
+.op-node-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 没有 toggle 时左侧补空（保持文字对齐） */
+.op-node:not(:has(.op-node-toggle)) > .op-node-row {
+  padding-left: calc(var(--space-md) + var(--space-md) + var(--space-2xs));
+}

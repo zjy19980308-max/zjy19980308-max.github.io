@@ -1,0 +1,2611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>CSES 桌面端组件库</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="doc-card/doc-card.css">
+  <link rel="stylesheet" href="doc-list/doc-list.css">
+  <link rel="stylesheet" href="doc-library-hero/doc-library-hero.css">
+  <link rel="stylesheet" href="doc-search-panel/doc-search-panel.css">
+  <link rel="stylesheet" href="doc-search-suggestion-list/doc-search-suggestion-list.css">
+  <link rel="stylesheet" href="doc-result-entry/doc-result-entry.css">
+  <link rel="stylesheet" href="doc-category-nav/doc-category-nav.css">
+  <link rel="stylesheet" href="doc-category-chip/doc-category-chip.css">
+  <link rel="stylesheet" href="doc-recommend-list/doc-recommend-list.css">
+  <link rel="stylesheet" href="doc-recommend-card/doc-recommend-card.css">
+  <link rel="stylesheet" href="doc-recent-update-list/doc-recent-update-list.css">
+  <link rel="stylesheet" href="doc-update-item/doc-update-item.css">
+  <!-- ===== 文档详情子组件（9）===== -->
+  <link rel="stylesheet" href="doc-breadcrumb-bar/doc-breadcrumb-bar.css">
+  <link rel="stylesheet" href="doc-header/doc-header.css">
+  <link rel="stylesheet" href="editor-toolbar/editor-toolbar.css">
+  <link rel="stylesheet" href="block-add/block-add.css">
+  <link rel="stylesheet" href="insert-panel/insert-panel.css">
+  <link rel="stylesheet" href="outline-panel/outline-panel.css">
+  <link rel="stylesheet" href="task-block/task-block.css">
+  <link rel="stylesheet" href="meeting-block/meeting-block.css">
+  <link rel="stylesheet" href="people-block/people-block.css">
+  <!-- ===== AI 工作台（7）===== -->
+  <link rel="stylesheet" href="hero-banner/hero-banner.css">
+  <link rel="stylesheet" href="ai-suggestion-bar/ai-suggestion-bar.css">
+  <link rel="stylesheet" href="section-header/section-header.css">
+  <link rel="stylesheet" href="agent-tile/agent-tile.css">
+  <link rel="stylesheet" href="agent-bus/agent-bus.css">
+  <link rel="stylesheet" href="agent-detail-panel/agent-detail-panel.css">
+  <link rel="stylesheet" href="task-row-smart/task-row-smart.css">
+  <style>
+    /* ===== 全局重置 ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--cs-color-bg-light);
+      font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--cs-color-text);
+      overflow: hidden;
+    }
+
+    /* ===== 顶部栏 ===== */
+    .doc-topbar {
+      height: 56px;
+      background: var(--cs-color-white);
+      border-bottom: 1px solid var(--cs-color-border);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--spacing-24);
+      flex-shrink: 0;
+      gap: var(--space-md);
+    }
+    .doc-topbar-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font: var(--typo-cn-16-medium);
+      color: var(--cs-color-text);
+      font-weight: var(--font-weight-semibold);
+      text-decoration: none;
+    }
+    .doc-topbar-logo-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: var(--cs-color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+    }
+    .doc-topbar-divider {
+      width: 1px;
+      height: 16px;
+      background: var(--cs-color-border);
+    }
+    .doc-topbar-subtitle {
+      font: var(--typo-cn-13-regular);
+      color: var(--cs-color-text-light2);
+    }
+    .doc-topbar-count {
+      margin-left: auto;
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-text-light2);
+      background: var(--cs-color-bg-light);
+      padding: 2px var(--space-xs);
+      border-radius: var(--radius);
+    }
+
+    /* ===== 主体布局 ===== */
+    .doc-layout {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* ===== 左侧导航 ===== */
+    .doc-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--cs-color-white);
+      border-right: 1px solid var(--cs-color-border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .doc-search-wrap {
+      padding: var(--space-xs) var(--space-md);
+      border-bottom: 1px solid var(--cs-color-border);
+      flex-shrink: 0;
+    }
+    .doc-search {
+      width: 100%;
+      height: 32px;
+      border: 1px solid var(--cs-color-border);
+      border-radius: var(--radius-lg);
+      background: var(--cs-color-bg-light);
+      padding: 0 var(--space-xs) 0 32px;
+      font: var(--typo-cn-13-regular);
+      color: var(--cs-color-text);
+      outline: none;
+      transition: border-color 0.2s;
+      position: relative;
+    }
+    .doc-search:focus { border-color: var(--cs-color-primary); background: var(--cs-color-white); }
+    .doc-search-icon {
+      position: absolute;
+      left: calc(var(--space-md) + 10px);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--cs-color-text-light2);
+      font-size: 13px;
+      pointer-events: none;
+    }
+    .doc-search-container { position: relative; }
+    .doc-nav-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: var(--space-md);
+    }
+    .doc-nav-scroll::-webkit-scrollbar { width: 4px; }
+    .doc-nav-scroll::-webkit-scrollbar-thumb {
+      background: var(--cs-color-border);
+      border-radius: 2px;
+    }
+    .doc-nav-group { padding: var(--space-xs) 0 0; border-top: 1px solid var(--cs-color-border); margin-top: 4px; }
+    .doc-nav-group:first-child { border-top: none; margin-top: 0; }
+    .doc-nav-group-label {
+      padding: var(--space-xs) var(--space-md);
+      font: var(--typo-cn-11-regular, 11px/16px "PingFang SC", sans-serif);
+      font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+      color: var(--cs-color-text-light2);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .doc-nav-group-count {
+      font-size: 10px;
+      background: var(--cs-color-bg-light);
+      padding: 1px 5px;
+      border-radius: 8px;
+      color: var(--cs-color-text-light2);
+      font-weight: normal;
+      letter-spacing: 0;
+    }
+    .doc-nav-item {
+      display: flex;
+      align-items: center;
+      padding: 5px var(--space-md);
+      font: var(--typo-cn-13-regular);
+      color: var(--cs-color-text-light);
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: all 0.15s;
+      gap: var(--space-xs);
+      user-select: none;
+    }
+    .doc-nav-item:hover {
+      color: var(--cs-color-text);
+      background: var(--cs-color-bg-hover);
+    }
+    .doc-nav-item.active {
+      background: var(--cs-color-primary-a2, rgba(72, 87, 226, 0.08));
+      color: var(--cs-color-primary);
+      border-left-color: var(--cs-color-primary);
+      font-weight: var(--font-weight-medium);
+    }
+    .doc-nav-item .nav-en {
+      font-size: 12px;
+      font-weight: var(--font-weight-medium);
+    }
+    .doc-nav-item .nav-zh {
+      font-size: 12px;
+      color: var(--cs-color-text-light2);
+    }
+    .doc-nav-item.active .nav-zh { color: var(--cs-color-primary); opacity: 0.7; }
+    .doc-nav-item.hidden { display: none; }
+    .doc-nav-group.hidden { display: none; }
+    .doc-search-empty {
+      padding: var(--space-md);
+      text-align: center;
+      font: var(--typo-cn-13-regular);
+      color: var(--cs-color-text-light2);
+      display: none;
+    }
+
+    /* ===== 右侧内容区 ===== */
+    .doc-content {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== 组件头部 ===== */
+    .comp-header {
+      background: var(--cs-color-white);
+      border-bottom: 1px solid var(--cs-color-border);
+      padding: var(--spacing-20) var(--spacing-24);
+      flex-shrink: 0;
+    }
+    .comp-header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .comp-header-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .comp-title-en {
+      font-size: 22px;
+      font-weight: var(--font-weight-semibold);
+      color: var(--cs-color-text);
+      line-height: 1.3;
+      font-family: "PingFang SC", sans-serif;
+    }
+    .comp-title-tag {
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-text-light2);
+      background: var(--cs-color-bg-light);
+      padding: 2px 8px;
+      border-radius: var(--radius);
+      border: 1px solid var(--cs-color-border);
+      font-family: "SF Mono", "Fira Mono", monospace;
+    }
+    .comp-title-zh {
+      font: var(--typo-cn-14-regular);
+      color: var(--cs-color-text-light2);
+    }
+    .comp-desc {
+      margin-top: 6px;
+      font: var(--typo-cn-13-regular);
+      color: var(--cs-color-text-light);
+      line-height: 1.6;
+    }
+    .comp-header-actions {
+      display: flex;
+      gap: var(--space-xs);
+      flex-shrink: 0;
+    }
+    .comp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border: 1px solid var(--cs-color-border);
+      border-radius: var(--radius-lg);
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-text-light);
+      background: var(--cs-color-white);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .comp-btn:hover {
+      border-color: var(--cs-color-primary);
+      color: var(--cs-color-primary);
+      background: var(--cs-color-primary-a2, rgba(72, 87, 226, 0.06));
+    }
+
+    /* ===== Tabs ===== */
+    .comp-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 var(--spacing-24);
+      background: var(--cs-color-white);
+      border-bottom: 1px solid var(--cs-color-border);
+      flex-shrink: 0;
+    }
+    .comp-tab {
+      padding: var(--space-xs) var(--space-md);
+      font: var(--typo-cn-13-regular);
+      color: var(--cs-color-text-light);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .comp-tab:hover { color: var(--cs-color-text); }
+    .comp-tab.active {
+      color: var(--cs-color-primary);
+      border-bottom-color: var(--cs-color-primary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    /* ===== Tab 面板 ===== */
+    .comp-tab-panels {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+    .comp-tab-panel {
+      display: none;
+      height: 100%;
+      overflow: hidden;
+    }
+    .comp-tab-panel.active { display: flex; flex-direction: column; }
+
+    /* ===== 预览面板 ===== */
+    .preview-toolbar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-xs) var(--spacing-24);
+      background: var(--cs-color-bg-light);
+      border-bottom: 1px solid var(--cs-color-border);
+      flex-shrink: 0;
+    }
+    .preview-toolbar-label {
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-text-light2);
+      margin-right: 4px;
+    }
+    .bg-switch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border: 1px solid var(--cs-color-border);
+      border-radius: var(--radius);
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-text-light);
+      background: var(--cs-color-white);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .bg-switch-btn:hover { border-color: var(--cs-color-text-light2); color: var(--cs-color-text); }
+    .bg-switch-btn.active {
+      border-color: var(--cs-color-primary);
+      color: var(--cs-color-primary);
+      background: var(--cs-color-primary-a2, rgba(72, 87, 226, 0.06));
+    }
+    .bg-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      border: 1px solid rgba(0,0,0,0.1);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .preview-demo-wrap {
+      flex: 1;
+      overflow: auto;
+      position: relative;
+    }
+
+    /* ===== Controls 面板 ===== */
+    .controls-panel {
+      margin: 0 var(--spacing-24) var(--spacing-24);
+      background: var(--cs-color-white);
+      border: 1px solid var(--cs-color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .controls-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--cs-color-border);
+      background: var(--cs-color-bg-light);
+    }
+    .controls-title {
+      font: var(--typo-cn-13-regular);
+      font-weight: var(--font-weight-medium);
+      color: var(--cs-color-text);
+    }
+    .controls-hint {
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-text-light2);
+    }
+    .controls-rows { padding: var(--space-sm) var(--space-md); display: flex; flex-direction: column; gap: var(--space-xs); }
+    .controls-row { display: flex; align-items: center; gap: var(--space-md); }
+    .controls-attr {
+      width: 140px;
+      flex-shrink: 0;
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--cs-color-text-light);
+    }
+    .controls-chips { display: flex; flex-wrap: wrap; gap: var(--space-2xs); }
+    .ctrl-chip {
+      padding: 2px var(--space-xs);
+      font: var(--typo-cn-12-regular);
+      border: 1px solid var(--cs-color-border);
+      border-radius: var(--radius);
+      background: var(--cs-color-white);
+      color: var(--cs-color-text-light);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ctrl-chip:hover { border-color: var(--cs-color-primary); color: var(--cs-color-primary); }
+    .ctrl-chip.active {
+      background: var(--cs-color-primary);
+      border-color: var(--cs-color-primary);
+      color: #fff;
+      font-weight: var(--font-weight-medium);
+    }
+
+    /* ===== preview sandbox ===== */
+    .preview-sandbox {
+      padding: var(--spacing-24);
+      min-height: 200px;
+    }
+    .preview-loading, .preview-fetch-error {
+      padding: var(--spacing-32);
+      text-align: center;
+      font: var(--typo-cn-13-regular);
+      color: var(--cs-color-text-light2);
+    }
+    .preview-fetch-error { color: var(--cs-color-warning); }
+
+    /* ===== 代码面板 ===== */
+    .code-panel {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #1e1e2e;
+    }
+    .code-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-xs) var(--space-md);
+      background: #181825;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+    .code-lang-badge {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      font-family: "SF Mono", "Fira Mono", monospace;
+      letter-spacing: 0.5px;
+    }
+    .code-copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .code-copy-btn:hover {
+      border-color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.8);
+    }
+    .code-copy-btn.copied {
+      border-color: #4ade80;
+      color: #4ade80;
+    }
+    .code-scroll {
+      flex: 1;
+      overflow: auto;
+      padding: var(--space-md) var(--spacing-20);
+    }
+    .code-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .code-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+    .code-block {
+      margin: 0;
+      font-family: "SF Mono", "Fira Mono", "JetBrains Mono", monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #cdd6f4;
+      white-space: pre;
+      tab-size: 2;
+    }
+    /* 语法高亮 token */
+    .hl-tag { color: #89b4fa; }
+    .hl-attr { color: #a6e3a1; }
+    .hl-val { color: #f9e2af; }
+    .hl-comment { color: #6c7086; font-style: italic; }
+    .hl-string { color: #f9e2af; }
+    .hl-text { color: #cdd6f4; }
+
+    .code-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: var(--space-xs);
+    }
+    .code-empty-icon { font-size: 32px; opacity: 0.3; }
+    .code-empty-text { font-size: 13px; color: rgba(255,255,255,0.3); }
+    .code-empty-hint { font-size: 11px; color: rgba(255,255,255,0.2); }
+
+/* ===== 固定导航项（概览 / 更新日志）===== */
+.doc-nav-fixed {
+  padding: var(--space-xs) 0;
+}
+.doc-nav-fixed-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 6px var(--space-md);
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+  user-select: none;
+}
+.doc-nav-fixed-item:hover {
+  color: var(--cs-color-text);
+  background: var(--cs-color-bg-hover);
+}
+.doc-nav-fixed-item.active {
+  background: var(--cs-color-primary-a2, rgba(72, 87, 226, 0.08));
+  color: var(--cs-color-primary);
+  border-left-color: var(--cs-color-primary);
+  font-weight: var(--font-weight-medium);
+}
+.doc-nav-fixed-item i {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* ===== 版本徽章 ===== */
+.nav-version {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--cs-color-text-light2);
+  background: var(--cs-color-bg-light);
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-family: "SF Mono", monospace;
+  flex-shrink: 0;
+}
+.nav-badge-new {
+  margin-left: auto;
+  font-size: 10px;
+  background: var(--cs-color-primary);
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.nav-badge-updated {
+  margin-left: 4px;
+  font-size: 10px;
+  background: var(--cs-sem-color-warning, #f59e0b);
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+/* ===== Overview 总览页 ===== */
+.overview-page {
+  flex: 1;
+  overflow: auto;
+  padding: var(--spacing-24);
+  background: var(--cs-color-bg-light);
+}
+.overview-page::-webkit-scrollbar { width: 6px; }
+.overview-page::-webkit-scrollbar-thumb { background: var(--cs-color-border); border-radius: 3px; }
+.overview-section {
+  margin-bottom: var(--spacing-32, 32px);
+}
+.overview-section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--cs-color-border);
+}
+.overview-section-title {
+  font: var(--typo-cn-14-regular);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cs-color-text);
+}
+.overview-section-count {
+  font-size: 12px;
+  color: var(--cs-color-text-light2);
+  background: var(--cs-color-bg-light);
+  border: 1px solid var(--cs-color-border);
+  padding: 1px 7px;
+  border-radius: 10px;
+}
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.overview-card {
+  background: var(--cs-color-white);
+  border: 1px solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+}
+.overview-card:hover {
+  border-color: var(--cs-color-primary);
+  box-shadow: 0 2px 12px rgba(72, 87, 226, 0.12);
+  transform: translateY(-1px);
+}
+.card-preview-area {
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cs-color-white);
+  border-bottom: 1px solid var(--cs-color-border);
+  padding: 20px var(--space-md);
+  overflow: hidden;
+  pointer-events: none;
+}
+.card-preview-area .preview-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+.card-meta {
+  padding: 10px var(--space-sm);
+}
+.card-title {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+/* doc-card preview 宽度控制 */
+cs-doc-card.preview-doc-card {
+  width: 200px;
+}
+
+/* doc-list preview 宽度控制 */
+cs-doc-list.preview-doc-list {
+  width: 480px;
+}
+.card-name-en {
+  font-size: 13px;
+  font-weight: var(--font-weight-medium);
+  color: var(--cs-color-text);
+  text-transform: capitalize;
+}
+.card-name-zh {
+  font-size: 12px;
+  color: var(--cs-color-text-light2);
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.card-tag-name {
+  font-family: "SF Mono", "Fira Mono", monospace;
+  font-size: 10px;
+  color: var(--cs-color-primary);
+  background: var(--cs-color-primary-a2, rgba(72, 87, 226, 0.06));
+  padding: 1px 5px;
+  border-radius: var(--radius);
+}
+.card-version {
+  font-family: "SF Mono", monospace;
+  font-size: 10px;
+  color: var(--cs-color-text-light2);
+}
+.card-badge-new {
+  font-size: 9px;
+  background: var(--cs-color-primary);
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-weight: var(--font-weight-semibold);
+}
+.card-badge-updated {
+  font-size: 9px;
+  background: var(--cs-sem-color-warning, #f59e0b);
+  color: #fff;
+  padding: 1px 5px;
+  border-radius: 8px;
+}
+.overview-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--spacing-32, 32px);
+  color: var(--cs-color-text-light2);
+  font: var(--typo-cn-13-regular);
+}
+
+/* ===== Changelog 更新日志页 ===== */
+.changelog-page {
+  flex: 1;
+  overflow: auto;
+  padding: var(--spacing-24);
+  background: var(--cs-color-bg-light);
+}
+.changelog-page::-webkit-scrollbar { width: 6px; }
+.changelog-page::-webkit-scrollbar-thumb { background: var(--cs-color-border); border-radius: 3px; }
+.changelog-header {
+  margin-bottom: var(--spacing-24, 24px);
+}
+.changelog-title {
+  font-size: 20px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--cs-color-text);
+  margin-bottom: 6px;
+}
+.changelog-subtitle {
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light2);
+}
+.changelog-group {
+  margin-bottom: var(--spacing-24, 24px);
+}
+.changelog-date {
+  font: var(--typo-cn-13-regular);
+  font-weight: var(--font-weight-semibold);
+  color: var(--cs-color-text);
+  margin-bottom: var(--space-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+.changelog-date::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--cs-color-border);
+}
+.changelog-entries {
+  background: var(--cs-color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--cs-color-border);
+  overflow: hidden;
+}
+.changelog-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: 10px var(--space-md);
+  border-bottom: 1px solid var(--cs-color-bg-light);
+}
+.changelog-entry:last-child { border-bottom: none; }
+.changelog-type {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: var(--radius);
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  flex-shrink: 0;
+  min-width: 36px;
+  justify-content: center;
+}
+.changelog-type.new {
+  background: rgba(72, 87, 226, 0.08);
+  color: var(--cs-color-primary);
+  border: 1px solid rgba(72, 87, 226, 0.15);
+}
+.changelog-type.update {
+  background: rgba(245, 158, 11, 0.08);
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+.changelog-type.fix {
+  background: rgba(16, 185, 129, 0.08);
+  color: #047857;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+.changelog-comp-link {
+  font-family: "SF Mono", monospace;
+  font-size: 12px;
+  color: var(--cs-color-primary);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+}
+.changelog-comp-link:hover { text-decoration: underline; }
+.changelog-note {
+  font: var(--typo-cn-13-regular);
+  color: var(--cs-color-text-light);
+  flex: 1;
+}
+.changelog-ver {
+  font-family: "SF Mono", monospace;
+  font-size: 10px;
+  color: var(--cs-color-text-light2);
+  background: var(--cs-color-bg-light);
+  border: 1px solid var(--cs-color-border);
+  padding: 1px 5px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+    /* ===== API 面板 ===== */
+    .api-panel {
+      flex: 1;
+      overflow: auto;
+      padding: var(--spacing-20) var(--spacing-24);
+      background: var(--cs-color-bg-light);
+    }
+    .api-panel::-webkit-scrollbar { width: 6px; }
+    .api-panel::-webkit-scrollbar-thumb { background: var(--cs-color-border); border-radius: 3px; }
+    .api-section-title {
+      font: var(--typo-cn-14-regular);
+      font-weight: var(--font-weight-semibold);
+      color: var(--cs-color-text);
+      margin: 0 0 var(--space-sm);
+    }
+    .api-table-wrap {
+      background: var(--cs-color-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--cs-color-border);
+      overflow: hidden;
+      margin-bottom: var(--spacing-20);
+    }
+    .api-table {
+      width: 100%;
+      border-collapse: collapse;
+      font: var(--typo-cn-13-regular);
+    }
+    .api-table th {
+      background: var(--cs-color-bg-light);
+      padding: 10px var(--space-md);
+      text-align: left;
+      font-weight: var(--font-weight-medium);
+      color: var(--cs-color-text-light);
+      border-bottom: 1px solid var(--cs-color-border);
+      font-size: 12px;
+    }
+    .api-table td {
+      padding: 10px var(--space-md);
+      border-bottom: 1px solid var(--cs-color-bg-light);
+      color: var(--cs-color-text);
+      font-size: 13px;
+      vertical-align: top;
+    }
+    .api-table tr:last-child td { border-bottom: none; }
+    .api-table tr:hover td { background: var(--cs-color-bg-hover); }
+    .api-attr-name {
+      font-family: "SF Mono", "Fira Mono", monospace;
+      font-size: 12px;
+      color: var(--cs-color-primary);
+      background: var(--cs-color-primary-a2, rgba(72, 87, 226, 0.06));
+      padding: 1px 6px;
+      border-radius: var(--radius);
+      display: inline-block;
+    }
+    .api-type-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: var(--radius);
+      font-size: 11px;
+      background: var(--cs-color-bg-light);
+      color: var(--cs-color-text-light2);
+      border: 1px solid var(--cs-color-border);
+    }
+    .api-vals {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      max-width: 360px;
+    }
+    .api-val-chip {
+      font-family: "SF Mono", "Fira Mono", monospace;
+      font-size: 11px;
+      background: var(--cs-color-bg-light);
+      border: 1px solid var(--cs-color-border);
+      color: var(--cs-color-text-light);
+      padding: 1px 6px;
+      border-radius: var(--radius);
+    }
+    .api-empty {
+      text-align: center;
+      padding: var(--spacing-24);
+      color: var(--cs-color-text-light2);
+      font: var(--typo-cn-13-regular);
+    }
+
+    /* ===== 使用指南面板 ===== */
+    .guide-panel {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--spacing-20) var(--spacing-24);
+      background: var(--cs-color-bg-light);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-20);
+    }
+    .guide-panel::-webkit-scrollbar { width: 6px; }
+    .guide-panel::-webkit-scrollbar-thumb { background: var(--cs-color-border); border-radius: 3px; }
+    .guide-section {
+      background: var(--cs-color-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--cs-color-border);
+      overflow: hidden;
+    }
+    .guide-section-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--cs-color-border);
+      background: var(--cs-color-bg-light);
+    }
+    .guide-section-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .guide-section-icon.usage  { color: var(--cs-color-primary); }
+    .guide-section-icon.notes  { color: var(--cs-color-warning); }
+    .guide-section-icon.related { color: var(--cs-color-success); }
+    .guide-section-title {
+      font: var(--typo-cn-13-regular);
+      font-weight: var(--font-weight-medium);
+      color: var(--cs-color-text);
+    }
+    .guide-list {
+      list-style: none;
+      margin: 0;
+      padding: var(--space-xs) 0;
+    }
+    .guide-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-xs);
+      padding: var(--space-xs) var(--space-md);
+      font: var(--typo-cn-13-regular);
+      color: var(--cs-color-text);
+      line-height: 1.6;
+    }
+    .guide-item::before {
+      content: '·';
+      color: var(--cs-color-text-light2);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .guide-related-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: "SF Mono", "Fira Mono", monospace;
+      font-size: 11px;
+      color: var(--cs-color-primary);
+      background: var(--cs-color-primary-a2, rgba(72,87,226,0.06));
+      border: 1px solid rgba(72,87,226,0.15);
+      padding: 1px 6px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .guide-related-tag:hover { background: rgba(72,87,226,0.12); }
+
+    /* ===== 欢迎页 ===== */
+    .doc-welcome {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: var(--space-md);
+      color: var(--cs-color-text-light2);
+    }
+    .doc-welcome-icon { font-size: 48px; opacity: 0.2; }
+    .doc-welcome-text { font: var(--typo-cn-14-regular); }
+  </style>
+</head>
+<body>
+
+<!-- 顶部栏 -->
+<div class="doc-topbar">
+  <div class="doc-topbar-logo">
+    <div class="doc-topbar-logo-dot">C</div>
+    CSES Design
+  </div>
+  <div class="doc-topbar-divider"></div>
+  <span class="doc-topbar-subtitle">桌面端组件库</span>
+  <span class="doc-topbar-count" id="compTotalCount">78 个组件</span>
+</div>
+
+<!-- 主体 -->
+<div class="doc-layout">
+
+  <!-- 左侧导航 -->
+  <aside class="doc-sidebar">
+    <div class="doc-search-wrap">
+      <div class="doc-search-container">
+        <i class="cses-search doc-search-icon"></i>
+        <input class="doc-search" id="docSearch" type="search" placeholder="搜索组件..." autocomplete="off">
+      </div>
+    </div>
+    <div class="doc-nav-scroll" id="docNavScroll">
+      <div class="doc-nav-fixed">
+        <div class="doc-nav-fixed-item" id="navOverview" onclick="navigate('overview')">
+          <i class="cses-yingyongmoban"></i> 组件总览
+        </div>
+        <div class="doc-nav-fixed-item" id="navChangelog" onclick="navigate('changelog')">
+          <i class="cses-lishi"></i> 更新日志
+        </div>
+      </div>
+      <div class="doc-search-empty" id="searchEmpty">未找到匹配组件</div>
+
+      <div class="doc-nav-group" data-group="原子">
+        <div class="doc-nav-group-label">原子 <span class="doc-nav-group-count">22</span></div>
+        <div class="doc-nav-item" data-name="button" data-zh="按钮"><span class="nav-en">button</span><span class="nav-zh">按钮</span></div>
+        <div class="doc-nav-item" data-name="avatar" data-zh="头像"><span class="nav-en">avatar</span><span class="nav-zh">头像</span></div>
+        <div class="doc-nav-item" data-name="checkbox" data-zh="复选框"><span class="nav-en">checkbox</span><span class="nav-zh">复选框</span></div>
+        <div class="doc-nav-item" data-name="radio" data-zh="单选框"><span class="nav-en">radio</span><span class="nav-zh">单选框</span></div>
+        <div class="doc-nav-item" data-name="switch" data-zh="开关"><span class="nav-en">switch</span><span class="nav-zh">开关</span></div>
+        <div class="doc-nav-item" data-name="input" data-zh="输入框"><span class="nav-en">input</span><span class="nav-zh">输入框</span></div>
+        <div class="doc-nav-item" data-name="textarea" data-zh="多行输入"><span class="nav-en">textarea</span><span class="nav-zh">多行输入</span></div>
+        <div class="doc-nav-item" data-name="select" data-zh="下拉选择"><span class="nav-en">select</span><span class="nav-zh">下拉选择</span></div>
+        <div class="doc-nav-item" data-name="tag" data-zh="标签"><span class="nav-en">tag</span><span class="nav-zh">标签</span></div>
+        <div class="doc-nav-item" data-name="link" data-zh="链接"><span class="nav-en">link</span><span class="nav-zh">链接</span></div>
+        <div class="doc-nav-item" data-name="search-input" data-zh="搜索框"><span class="nav-en">search-input</span><span class="nav-zh">搜索框</span></div>
+      </div>
+
+      <div class="doc-nav-group" data-group="分子">
+        <div class="doc-nav-group-label">分子 <span class="doc-nav-group-count">16</span></div>
+        <div class="doc-nav-item" data-name="breadcrumb" data-zh="面包屑"><span class="nav-en">breadcrumb</span><span class="nav-zh">面包屑</span></div>
+        <div class="doc-nav-item" data-name="status-badge" data-zh="状态标记"><span class="nav-en">status-badge</span><span class="nav-zh">状态标记</span></div>
+        <div class="doc-nav-item" data-name="user-pill" data-zh="用户胶囊"><span class="nav-en">user-pill</span><span class="nav-zh">用户胶囊</span></div>
+        <div class="doc-nav-item" data-name="view-switcher" data-zh="视图切换"><span class="nav-en">view-switcher</span><span class="nav-zh">视图切换</span></div>
+        <div class="doc-nav-item" data-name="tab-nav" data-zh="标签导航"><span class="nav-en">tab-nav</span><span class="nav-zh">标签导航</span></div>
+        <div class="doc-nav-item" data-name="date-separator" data-zh="日期分隔"><span class="nav-en">date-separator</span><span class="nav-zh">日期分隔</span></div>
+        <div class="doc-nav-item" data-name="thumbnail" data-zh="缩略图"><span class="nav-en">thumbnail</span><span class="nav-zh">缩略图</span></div>
+        <div class="doc-nav-item" data-name="dropdown" data-zh="下拉菜单"><span class="nav-en">dropdown</span><span class="nav-zh">下拉菜单</span></div>
+      </div>
+
+      <div class="doc-nav-group" data-group="有机体">
+        <div class="doc-nav-group-label">有机体 <span class="doc-nav-group-count">21</span></div>
+        <div class="doc-nav-item" data-name="file-upload" data-zh="文件上传"><span class="nav-en">file-upload</span><span class="nav-zh">文件上传</span></div>
+      </div>
+
+      <div class="doc-nav-group" data-group="桌面端业务">
+        <div class="doc-nav-group-label">桌面端业务 <span class="doc-nav-group-count">17</span></div>
+        <div class="doc-nav-item" data-name="task-row" data-zh="任务行"><span class="nav-en">task-row</span><span class="nav-zh">任务行</span></div>
+        <div class="doc-nav-item" data-name="kanban-card" data-zh="看板卡片"><span class="nav-en">kanban-card</span><span class="nav-zh">看板卡片</span></div>
+        <div class="doc-nav-item" data-name="kanban-column" data-zh="看板列"><span class="nav-en">kanban-column</span><span class="nav-zh">看板列</span></div>
+        <div class="doc-nav-item" data-name="doc-card" data-zh="文档卡片"><span class="nav-en">doc-card</span><span class="nav-zh">文档卡片</span></div>
+        <div class="doc-nav-item" data-name="doc-list" data-zh="文档列表"><span class="nav-en">doc-list</span><span class="nav-zh">文档列表</span></div>
+        <div class="doc-nav-item" data-name="doc-library-hero" data-zh="文档库头部"><span class="nav-en">doc-library-hero</span><span class="nav-zh">文档库头部</span></div>
+        <div class="doc-nav-item" data-name="doc-search-panel" data-zh="搜索面板"><span class="nav-en">doc-search-panel</span><span class="nav-zh">搜索面板</span></div>
+        <div class="doc-nav-item" data-name="doc-search-suggestion-list" data-zh="搜索建议列表"><span class="nav-en">doc-search-suggestion-list</span><span class="nav-zh">搜索建议列表</span></div>
+        <div class="doc-nav-item" data-name="doc-result-entry" data-zh="搜索结果条目"><span class="nav-en">doc-result-entry</span><span class="nav-zh">搜索结果条目</span></div>
+        <div class="doc-nav-item" data-name="doc-category-nav" data-zh="分类导航"><span class="nav-en">doc-category-nav</span><span class="nav-zh">分类导航</span></div>
+        <div class="doc-nav-item" data-name="doc-category-chip" data-zh="分类标签"><span class="nav-en">doc-category-chip</span><span class="nav-zh">分类标签</span></div>
+        <div class="doc-nav-item" data-name="doc-recommend-list" data-zh="推荐列表"><span class="nav-en">doc-recommend-list</span><span class="nav-zh">推荐列表</span></div>
+        <div class="doc-nav-item" data-name="doc-recommend-card" data-zh="推荐卡片"><span class="nav-en">doc-recommend-card</span><span class="nav-zh">推荐卡片</span></div>
+        <div class="doc-nav-item" data-name="doc-recent-update-list" data-zh="最近更新列表"><span class="nav-en">doc-recent-update-list</span><span class="nav-zh">最近更新列表</span></div>
+        <div class="doc-nav-item" data-name="doc-update-item" data-zh="更新条目"><span class="nav-en">doc-update-item</span><span class="nav-zh">更新条目</span></div>
+        <div class="doc-nav-item" data-name="vote-option-editor" data-zh="投票选项编辑"><span class="nav-en">vote-option-editor</span><span class="nav-zh">投票选项编辑</span><span class="nav-badge-new">NEW</span></div>
+        <div class="doc-nav-item" data-name="vote-publish-config" data-zh="投票发布配置"><span class="nav-en">vote-publish-config</span><span class="nav-zh">投票发布配置</span><span class="nav-badge-new">NEW</span></div>
+      </div>
+
+      <div class="doc-nav-group" data-group="文档详情">
+        <div class="doc-nav-group-label">文档详情 <span class="doc-nav-group-count">9</span></div>
+        <div class="doc-nav-item" data-name="doc-breadcrumb-bar" data-zh="文档面包屑工具栏"><span class="nav-en">doc-breadcrumb-bar</span><span class="nav-zh">面包屑工具栏</span></div>
+        <div class="doc-nav-item" data-name="doc-header" data-zh="文档头部块"><span class="nav-en">doc-header</span><span class="nav-zh">文档头部</span></div>
+        <div class="doc-nav-item" data-name="editor-toolbar" data-zh="编辑工具栏"><span class="nav-en">editor-toolbar</span><span class="nav-zh">编辑工具栏</span></div>
+        <div class="doc-nav-item" data-name="block-add" data-zh="段落插入加号"><span class="nav-en">block-add</span><span class="nav-zh">段落加号</span></div>
+        <div class="doc-nav-item" data-name="insert-panel" data-zh="插入面板"><span class="nav-en">insert-panel</span><span class="nav-zh">插入面板</span></div>
+        <div class="doc-nav-item" data-name="outline-panel" data-zh="目录面板"><span class="nav-en">outline-panel</span><span class="nav-zh">目录面板</span></div>
+        <div class="doc-nav-item" data-name="task-block" data-zh="嵌入任务块"><span class="nav-en">task-block</span><span class="nav-zh">任务块</span></div>
+        <div class="doc-nav-item" data-name="meeting-block" data-zh="嵌入会议块"><span class="nav-en">meeting-block</span><span class="nav-zh">会议块</span></div>
+        <div class="doc-nav-item" data-name="people-block" data-zh="嵌入人员/群名片块"><span class="nav-en">people-block</span><span class="nav-zh">人员/群名片块</span></div>
+      </div>
+
+      <div class="doc-nav-group" data-group="AI 工作台">
+        <div class="doc-nav-group-label">AI 工作台 <span class="doc-nav-group-count">7</span></div>
+        <div class="doc-nav-item" data-name="hero-banner" data-zh="工作台欢迎区"><span class="nav-en">hero-banner</span><span class="nav-zh">欢迎区</span><span class="nav-badge-new">NEW</span></div>
+        <div class="doc-nav-item" data-name="ai-suggestion-bar" data-zh="AI 主动建议条"><span class="nav-en">ai-suggestion-bar</span><span class="nav-zh">AI 建议条</span><span class="nav-badge-new">NEW</span></div>
+        <div class="doc-nav-item" data-name="section-header" data-zh="模块标题"><span class="nav-en">section-header</span><span class="nav-zh">模块标题</span><span class="nav-badge-new">NEW</span></div>
+        <div class="doc-nav-item" data-name="agent-tile" data-zh="Agent 状态磁贴"><span class="nav-en">agent-tile</span><span class="nav-zh">Agent 磁贴</span><span class="nav-badge-new">NEW</span></div>
+        <div class="doc-nav-item" data-name="agent-bus" data-zh="AI 工作总线"><span class="nav-en">agent-bus</span><span class="nav-zh">AI 工作总线</span><span class="nav-badge-new">NEW</span></div>
+        <div class="doc-nav-item" data-name="agent-detail-panel" data-zh="Agent 详情面板"><span class="nav-en">agent-detail-panel</span><span class="nav-zh">Agent 详情面板</span><span class="nav-badge-new">NEW</span></div>
+        <div class="doc-nav-item" data-name="task-row-smart" data-zh="智能待办行"><span class="nav-en">task-row-smart</span><span class="nav-zh">智能待办行</span><span class="nav-badge-new">NEW</span></div>
+      </div>
+
+      <div class="doc-nav-group" data-group="浮层">
+        <div class="doc-nav-group-label">浮层类 <span class="doc-nav-group-count">8</span></div>
+        <div class="doc-nav-item" data-name="tooltip" data-zh="文字提示"><span class="nav-en">tooltip</span><span class="nav-zh">文字提示</span></div>
+        <div class="doc-nav-item" data-name="popover" data-zh="气泡卡片"><span class="nav-en">popover</span><span class="nav-zh">气泡卡片</span></div>
+        <div class="doc-nav-item" data-name="popconfirm" data-zh="气泡确认框"><span class="nav-en">popconfirm</span><span class="nav-zh">气泡确认框</span></div>
+        <div class="doc-nav-item" data-name="mention" data-zh="提及"><span class="nav-en">mention</span><span class="nav-zh">提及</span></div>
+        <div class="doc-nav-item" data-name="auto-complete" data-zh="自动完成"><span class="nav-en">auto-complete</span><span class="nav-zh">自动完成</span></div>
+        <div class="doc-nav-item" data-name="cascader" data-zh="级联选择"><span class="nav-en">cascader</span><span class="nav-zh">级联选择</span></div>
+        <div class="doc-nav-item" data-name="tree-select" data-zh="树选择"><span class="nav-en">tree-select</span><span class="nav-zh">树选择</span></div>
+        <div class="doc-nav-item" data-name="color-picker" data-zh="颜色选择"><span class="nav-en">color-picker</span><span class="nav-zh">颜色选择</span></div>
+      </div>
+
+      <div class="doc-nav-group" data-group="录入">
+        <div class="doc-nav-group-label">录入控件 <span class="doc-nav-group-count">8</span></div>
+        <div class="doc-nav-item" data-name="date-picker" data-zh="日期选择"><span class="nav-en">date-picker</span><span class="nav-zh">日期选择</span></div>
+        <div class="doc-nav-item" data-name="time-picker" data-zh="时间选择"><span class="nav-en">time-picker</span><span class="nav-zh">时间选择</span></div>
+        <div class="doc-nav-item" data-name="slider" data-zh="滑动输入"><span class="nav-en">slider</span><span class="nav-zh">滑动输入</span></div>
+        <div class="doc-nav-item" data-name="input-number" data-zh="数字输入"><span class="nav-en">input-number</span><span class="nav-zh">数字输入</span></div>
+        <div class="doc-nav-item" data-name="transfer" data-zh="穿梭框"><span class="nav-en">transfer</span><span class="nav-zh">穿梭框</span></div>
+        <div class="doc-nav-item" data-name="form-field" data-zh="表单字段"><span class="nav-en">form-field</span><span class="nav-zh">表单字段</span><span class="nav-badge-new">NEW</span></div>
+        <div class="doc-nav-item" data-name="anchor" data-zh="锚点"><span class="nav-en">anchor</span><span class="nav-zh">锚点</span></div>
+        <div class="doc-nav-item" data-name="steps" data-zh="步骤条"><span class="nav-en">steps</span><span class="nav-zh">步骤条</span></div>
+        <div class="doc-nav-item" data-name="splitter" data-zh="分隔面板"><span class="nav-en">splitter</span><span class="nav-zh">分隔面板</span></div>
+      </div>
+
+      <div class="doc-nav-group" data-group="数据展示">
+        <div class="doc-nav-group-label">数据展示 <span class="doc-nav-group-count">10</span></div>
+        <div class="doc-nav-item" data-name="card" data-zh="卡片"><span class="nav-en">card</span><span class="nav-zh">卡片</span></div>
+        <div class="doc-nav-item" data-name="list" data-zh="列表"><span class="nav-en">list</span><span class="nav-zh">列表</span></div>
+        <div class="doc-nav-item" data-name="tree" data-zh="树形控件"><span class="nav-en">tree</span><span class="nav-zh">树形控件</span></div>
+        <div class="doc-nav-item" data-name="table" data-zh="表格"><span class="nav-en">table</span><span class="nav-zh">表格</span></div>
+        <div class="doc-nav-item" data-name="calendar" data-zh="日历"><span class="nav-en">calendar</span><span class="nav-zh">日历</span></div>
+        <div class="doc-nav-item" data-name="statistic" data-zh="统计数值"><span class="nav-en">statistic</span><span class="nav-zh">统计数值</span></div>
+        <div class="doc-nav-item" data-name="badge" data-zh="徽标数"><span class="nav-en">badge</span><span class="nav-zh">徽标数</span></div>
+        <div class="doc-nav-item" data-name="progress" data-zh="进度条"><span class="nav-en">progress</span><span class="nav-zh">进度条</span></div>
+        <div class="doc-nav-item" data-name="timeline" data-zh="时间轴"><span class="nav-en">timeline</span><span class="nav-zh">时间轴</span></div>
+        <div class="doc-nav-item" data-name="descriptions" data-zh="描述列表"><span class="nav-en">descriptions</span><span class="nav-zh">描述列表</span></div>
+      </div>
+
+      <div class="doc-nav-group" data-group="反馈">
+        <div class="doc-nav-group-label">反馈/通知 <span class="doc-nav-group-count">10</span></div>
+        <div class="doc-nav-item" data-name="message" data-zh="全局提示"><span class="nav-en">message</span><span class="nav-zh">全局提示</span></div>
+        <div class="doc-nav-item" data-name="notification" data-zh="通知提醒框"><span class="nav-en">notification</span><span class="nav-zh">通知提醒框</span></div>
+        <div class="doc-nav-item" data-name="alert" data-zh="警告提示"><span class="nav-en">alert</span><span class="nav-zh">警告提示</span></div>
+        <div class="doc-nav-item" data-name="spin" data-zh="加载中"><span class="nav-en">spin</span><span class="nav-zh">加载中</span></div>
+        <div class="doc-nav-item" data-name="skeleton" data-zh="骨架屏"><span class="nav-en">skeleton</span><span class="nav-zh">骨架屏</span></div>
+        <div class="doc-nav-item" data-name="result" data-zh="结果"><span class="nav-en">result</span><span class="nav-zh">结果</span></div>
+        <div class="doc-nav-item" data-name="empty" data-zh="空状态"><span class="nav-en">empty</span><span class="nav-zh">空状态</span></div>
+        <div class="doc-nav-item" data-name="carousel" data-zh="走马灯"><span class="nav-en">carousel</span><span class="nav-zh">走马灯</span></div>
+        <div class="doc-nav-item" data-name="collapse" data-zh="折叠面板"><span class="nav-en">collapse</span><span class="nav-zh">折叠面板</span></div>
+        <div class="doc-nav-item" data-name="divider" data-zh="分割线"><span class="nav-en">divider</span><span class="nav-zh">分割线</span></div>
+      </div>
+
+      <div class="doc-nav-group" data-group="其他">
+        <div class="doc-nav-group-label">其他 <span class="doc-nav-group-count">8</span></div>
+        <div class="doc-nav-item" data-name="comment" data-zh="评论"><span class="nav-en">comment</span><span class="nav-zh">评论</span></div>
+        <div class="doc-nav-item" data-name="image" data-zh="图片"><span class="nav-en">image</span><span class="nav-zh">图片</span></div>
+        <div class="doc-nav-item" data-name="qr-code" data-zh="二维码"><span class="nav-en">qr-code</span><span class="nav-zh">二维码</span></div>
+        <div class="doc-nav-item" data-name="watermark" data-zh="水印"><span class="nav-en">watermark</span><span class="nav-zh">水印</span></div>
+        <div class="doc-nav-item" data-name="float-button" data-zh="悬浮按钮"><span class="nav-en">float-button</span><span class="nav-zh">悬浮按钮</span></div>
+        <div class="doc-nav-item" data-name="typography" data-zh="排版"><span class="nav-en">typography</span><span class="nav-zh">排版</span></div>
+        <div class="doc-nav-item" data-name="affix" data-zh="固钉"><span class="nav-en">affix</span><span class="nav-zh">固钉</span></div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- 右侧内容 -->
+  <main class="doc-content" id="docContent">
+    <div class="doc-welcome">
+      <div class="doc-welcome-icon"><i class="cses-settings" style="font-size:48px;opacity:0.15;"></i></div>
+      <div class="doc-welcome-text">从左侧选择一个组件开始浏览</div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ===================================================
+     组件数据
+  =================================================== */
+  var COMPONENTS = {
+    'button':            { zh: '按钮',       desc: '基础操作按钮，支持多种变体和尺寸',      version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['触发主要操作（提交表单、确认对话框）使用 primary 变体', '次要操作使用 secondary 变体，不与 primary 争夺视觉焦点', '纯文字场景（表格行内操作）使用 text 变体', '只有图标无文字时使用 icon 变体，并配合 tooltip 说明用途', '危险操作（删除、清除）使用 danger 变体，置于操作列表末尾'],
+                           notes: ['同一界面区域内主要按钮（primary）不超过 1 个', '按钮内必须有 .btn-label 子元素，图标用 .btn-icon 包裹', '禁止用按钮替代导航链接；链接跳转场景用 cs-link'],
+                           related: [{ name:'cs-link', why:'内联文本链接，非操作触发' }, { name:'cs-nav-action-btn', why:'导航栏快捷操作图标按钮' }],
+                           preview:'<cs-button><span class="btn-label">按钮</span></cs-button><cs-button data-variant="secondary"><span class="btn-label">次要</span></cs-button>' },
+    'avatar':            { zh: '头像',       desc: '用户头像，支持图片、文字和图标形式',      version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['顶栏登录用户标识（md 尺寸）', '任务行指派人（sm 尺寸）', '评论区发评人（sm/xs 尺寸）', '参与者列表头像组（xs 尺寸，与 cs-avatar-group 配合）'],
+                           notes: ['文字头像只取姓名第一个字，最多 2 个字', '未传入图片时显示文字或图标兜底，不要留空', '尺寸从小到大：xs/sm/md/lg，默认 md'],
+                           related: [{ name:'cs-user-pill', why:'头像+姓名组合展示，需显示名字时用' }],
+                           preview:'<cs-avatar data-color="blue"><span class="avatar-text">张</span></cs-avatar><cs-avatar data-size="sm" data-color="orange"><span class="avatar-text">李</span></cs-avatar><cs-avatar data-size="xs" data-color="green"><span class="avatar-text">王</span></cs-avatar>' },
+    'checkbox':          { zh: '复选框',     desc: '多选控件，支持选中、未选中和半选状态',    version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['任务列表行勾选完成', '表格批量选择（全选/部分选）', '表单多项选择（兴趣偏好、权限勾选等）'],
+                           notes: ['必须包含完整内部结构：.checkbox-inner > i.checkbox-icon.cses-wancheng，禁止空标签', '半选状态通过 data-indeterminate 属性触发，不手动设置样式', '勾选操作应即时响应，需确认时改用弹框'],
+                           related: [{ name:'cs-radio', why:'选项互斥，只能选一个时用' }, { name:'cs-switch', why:'开/关二态，即时生效设置项用' }],
+                           preview:'<cs-checkbox data-checked><span class="checkbox-inner"><i class="checkbox-icon cses-wancheng"></i></span></cs-checkbox>' },
+    'radio':             { zh: '单选框',     desc: '单选控件，用于一组互斥的选项',            version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['表单中一组互斥选项（性别、类型、优先级）', '选项数量 2~5 个时适用，更多选项改用 cs-select'],
+                           notes: ['需完整结构：.radio-inner + .radio-dot + .radio-label', '同组单选框应共用同一 name 属性做语义关联', '选项超过 5 个时改用 cs-select 节省空间'],
+                           related: [{ name:'cs-checkbox', why:'允许多选时用' }, { name:'cs-select', why:'选项超过 5 个时用下拉' }],
+                           preview:'<cs-radio data-checked><span class="radio-inner"><span class="radio-dot"></span></span><span class="radio-label">选项 A</span></cs-radio>' },
+    'switch':            { zh: '开关',       desc: '切换开关，表示两种互斥的状态',            version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['系统设置中的功能开/关（通知、黑暗模式）', '即时生效、不需要确认的二态切换'],
+                           notes: ['需完整结构：.switch-track + .switch-knob', '仅用于即时生效的场景，需要提交确认时改用 cs-checkbox', '尽量配合文字标签说明开关含义，避免歧义'],
+                           related: [{ name:'cs-checkbox', why:'需提交确认、或允许多选时用' }],
+                           preview:'<cs-switch data-checked><div class="switch-track"><div class="switch-knob"></div></div></cs-switch><cs-switch><div class="switch-track"><div class="switch-knob"></div></div></cs-switch>' },
+    'input':             { zh: '输入框',     desc: '单行文本输入框',          version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['表单字段（用户名、邮箱、标题等单行内容）', '编辑态的内联输入（表格行内编辑）'],
+                           notes: ['需包含 input.input-field 子元素', '搜索场景专用 cs-search-input，有搜索图标和清空按钮', '长文本（备注、描述）用 cs-textarea'],
+                           related: [{ name:'cs-textarea', why:'多行长文本输入' }, { name:'cs-search-input', why:'带搜索图标的专用搜索框' }],
+                           preview:'<cs-input style="width:160px;"><input class="input-field" type="text" placeholder="请输入内容"></cs-input>' },
+    'textarea':          { zh: '多行输入',   desc: '多行文本输入区域',                        version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['评论框、任务备注、需求描述等长文本录入场景'],
+                           notes: ['需包含 textarea.textarea-field 子元素', '单行内容用 cs-input；多行才用 cs-textarea'],
+                           related: [{ name:'cs-input', why:'单行文本输入' }],
+                           preview:'<cs-textarea style="width:200px;"><textarea class="textarea-field" placeholder="请输入内容"></textarea></cs-textarea>' },
+    'select':            { zh: '下拉选择',   desc: '下拉选择器，用于从选项列表中选择值',      version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['筛选栏中的单项过滤（状态、优先级、负责人）', '表单中选项超过 5 个的单选场景'],
+                           notes: ['需包含 .select-value 和 .select-arrow 子元素', '选项 2~4 个时考虑用 cs-radio，视觉更直接'],
+                           related: [{ name:'cs-radio', why:'选项少（2~4个）时更直观' }, { name:'cs-segment-control', why:'等宽切换固定选项时用' }],
+                           preview:'<cs-select style="width:140px;"><span class="select-value">选项一</span><i class="select-arrow cses-xiala"></i></cs-select>' },
+    'tag':               { zh: '标签',       desc: '标签组件，用于标注和分类',                version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['内容分类标注（文章分类、技术栈标签）', '可关闭的筛选条件标签（已选过滤项）', '状态的轻量标注（不需要 cs-status-badge 语义色时）'],
+                           notes: ['使用 data-color 控制语义色（primary/success/warning/danger）', '任务行内的"即将过期/已过期"标签使用 .task-tag[data-type]，不是 cs-tag', 'data-closable 属性添加关闭 ×'],
+                           related: [{ name:'cs-status-badge', why:'有固定状态语义（进行中/完成）时用' }],
+                           preview:'<cs-tag><span class="tag-label">标签</span></cs-tag><cs-tag data-color="primary"><span class="tag-label">主要</span></cs-tag>' },
+    'link':              { zh: '链接',       desc: '超链接文字，支持多种颜色语义',            version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['正文中的内联跳转链接', '面包屑路径中的可点击层级'],
+                           notes: ['使用 data-color 控制语义色', '操作触发（删除、打开弹框）用 cs-button[data-variant="text"]，不用 cs-link'],
+                           related: [{ name:'cs-button', why:'触发操作（非跳转）时用 text 变体' }, { name:'cs-breadcrumb', why:'层级路径导航' }],
+                           preview:'<cs-link>链接文字</cs-link>' },
+    'thumbnail':         { zh: '缩略图',     desc: '文件或图片缩略图预览',                    version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['文档列表/卡片中的文件类型图标', '文件上传组件中已选文件的预览图标'],
+                           notes: ['data-type="file-icon" 时需配合 data-filetype 指定文件类型（pdf/word/excel 等）', '图标字体用 .cses-wendang{type} 类'],
+                           related: [{ name:'cs-doc-card', why:'文件完整信息卡片展示' }, { name:'cs-file-upload', why:'上传状态中含缩略图' }],
+                           preview:'<cs-thumbnail data-type="file-icon" data-filetype="pdf" data-size="lg"><i class="cses-wendang"></i></cs-thumbnail><cs-thumbnail data-type="file-icon" data-filetype="word" data-size="lg"><i class="cses-wendang"></i></cs-thumbnail>' },
+    'date-separator':    { zh: '日期分隔',   desc: '聊天时间轴中的日期分割条',               version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['即时消息列表中不同日期之间的分割线（"今天" "昨天" "3月31日"）'],
+                           notes: ['宽度由父容器撑满，不独立定宽', '不在非消息类列表中使用'],
+                           related: [{ name:'cs-chat-item', why:'消息气泡，与日期分隔配合构成消息时间轴' }],
+                           preview:'<cs-date-separator style="width:220px;"><span class="separator-line"></span><span class="separator-text">今天</span><span class="separator-line"></span></cs-date-separator>' },
+    'search-input':      { zh: '搜索框',     desc: '带搜索图标的输入框组合',                  version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['内容区列表搜索（任务搜索、文档搜索）', '导航栏全局搜索'],
+                           notes: ['需包含 .search-icon（图标）和 .search-field（input元素）', '通用表单输入用 cs-input，搜索专用场景才用此组件'],
+                           related: [{ name:'cs-input', why:'通用文本输入，无搜索图标' }],
+                           preview:'<cs-search-input style="width:160px;"><i class="search-icon cses-sousuo"></i><input class="search-field" placeholder="搜索" /></cs-search-input>' },
+    'breadcrumb':        { zh: '面包屑',     desc: '路径导航，显示当前页面层级位置',          version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['内容页顶部显示模块 > 子模块 > 当前页的层级路径', '跨模块返回导航（支持点击父层级跳转）'],
+                           notes: ['最后一项（当前页）添加 data-current 属性，不可点击', '路径超过 4 层时折叠中间项，只显示首尾'],
+                           related: [{ name:'cs-tab-nav', why:'同级页面切换，非层级跳转' }],
+                           preview:'<cs-breadcrumb><span class="breadcrumb-item">首页</span><span class="breadcrumb-separator"><i class="cses-qianjin"></i></span><span class="breadcrumb-item" data-current>当前页</span></cs-breadcrumb>' },
+    'status-badge':      { zh: '状态标记',   desc: '带状态语义的文字徽章',                    version:'1.1', isNew:false, isUpdated:true,
+                           usage: ['任务/审批/流程的状态标注（未开始/进行中/已完成/已逾期）'],
+                           notes: ['使用 data-status 而非 data-color，颜色由状态语义决定', '不用于通用内容分类，通用场景用 cs-tag'],
+                           related: [{ name:'cs-tag', why:'通用内容标注，无固定状态语义' }],
+                           preview:'<cs-status-badge data-status="in-progress">进行中</cs-status-badge><cs-status-badge data-status="completed">已完成</cs-status-badge>' },
+    'user-pill':         { zh: '用户胶囊',   desc: '头像+用户名的组合胶囊控件',               version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['任务指派人展示', '评论区提及用户', '成员参与者列表（需显示姓名时）'],
+                           notes: ['需包含 cs-avatar（sm 尺寸）和 .pill-name 子元素', '仅显示头像不需要名字时直接用 cs-avatar'],
+                           related: [{ name:'cs-avatar', why:'仅展示头像，不需要名字' }],
+                           preview:'<cs-user-pill><cs-avatar data-size="sm" data-color="blue"><span class="avatar-text">张</span></cs-avatar><span class="pill-name">张三</span></cs-user-pill><cs-user-pill><cs-avatar data-size="sm" data-color="orange"><span class="avatar-text">李</span></cs-avatar><span class="pill-name">李四</span></cs-user-pill>' },
+    'view-switcher':     { zh: '视图切换',   desc: '列表/看板/日历等视图切换按钮组',          version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['页面右上角切换同一数据的不同呈现方式（列表/看板/甘特图）'],
+                           notes: ['激活项加 data-active 属性，每次只激活一个', '仅切换视图模式，不用于功能标签页切换'],
+                           related: [{ name:'cs-tab-nav', why:'文字标签页切换' }, { name:'cs-segment-control', why:'等宽文字切换固定选项' }],
+                           preview:'<cs-view-switcher><span class="view-item" data-active><i class="cses-liebiao"></i></span><span class="view-item"><i class="cses-renwuguanli"></i></span></cs-view-switcher>' },
+    'tab-nav':           { zh: '标签导航',   desc: '水平标签页导航',                          version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['内容页的主分区切换（文档 / 任务 / 讨论）', '详情页的多维度信息切换（基本信息 / 活动记录 / 附件）'],
+                           notes: ['激活项加 data-active 属性', '不用于视图模式切换（用 cs-view-switcher）', '不用于等宽固定选项切换（用 cs-segment-control）'],
+                           related: [{ name:'cs-view-switcher', why:'图标视图模式切换' }, { name:'cs-segment-control', why:'等宽紧凑型切换' }],
+                           preview:'<cs-tab-nav><span class="tab-item" data-active>标签一</span><span class="tab-item">标签二</span><span class="tab-item">标签三</span></cs-tab-nav>' },
+    'file-upload':       { zh: '文件上传',   desc: '文件上传拖拽区域',                        version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['表单中的文件附件上传区域', '文件已选状态展示（文件名+大小）'],
+                           notes: ['包含 .upload-icon（cs-thumbnail）+ .upload-info（.upload-name + .upload-size）', '上传中状态通过 data-loading 属性切换'],
+                           related: [{ name:'cs-thumbnail', why:'纯文件图标，不含上传交互' }],
+                           preview:'<cs-file-upload style="width:220px;"><cs-thumbnail class="upload-icon" data-type="file-icon" data-size="lg"><i class="cses-wendang"></i></cs-thumbnail><div class="upload-info"><span class="upload-name">需求文档 v2.pdf</span><span class="upload-size">2.4 MB</span></div></cs-file-upload>' },
+    'task-row':          { zh: '任务行',     desc: '任务列表单行，包含多列信息',              version:'1.0', isNew:false, isUpdated:false,
+                           usage: ['任务管理列表视图中的每一行任务'],
+                           notes: ['task-tag 使用 data-type="warning|danger"，不是通用 data-color', '已完成任务加 data-completed 属性（标题划线+整行变淡）', 'cs-checkbox 必须包含完整内部结构，禁止空标签'],
+                           related: [{ name:'cs-kanban-card', why:'同任务在看板视图中的卡片形态' }],
+                           preview:'<cs-task-row style="width:280px;"><span class="task-checkbox"><cs-checkbox><span class="checkbox-inner"><i class="checkbox-icon cses-wancheng"></i></span></cs-checkbox></span><span class="task-info"><span class="task-title-row"><span class="task-title">完成产品需求文档初稿</span></span></span><span class="task-status"><cs-status-badge data-status="in-progress">进行中</cs-status-badge></span></cs-task-row>' },
+    'kanban-card':       { zh: '看板卡片',   desc: '看板列中的任务卡片',                      version:'1.0', isNew:true,  isUpdated:false,
+                           usage: ['任务管理看板视图中，每列中的单张任务卡片'],
+                           notes: ['包含 .kanban-title-row + .kanban-title + .kanban-meta + .kanban-tags', '紧急标签用 .kanban-tag[data-type="urgent"]'],
+                           related: [{ name:'cs-task-row', why:'同任务在列表视图中的行形态' }, { name:'cs-kanban-column', why:'卡片所在的列容器' }],
+                           preview:'<cs-kanban-card style="width:280px;"><div class="kanban-title-row"><span class="kanban-title">CSES_SJ_月度导向板块改版任务</span><span class="kanban-meta">CSES项目 / 设计模块</span></div><div class="kanban-tags"><span class="kanban-tag" data-type="urgent">紧急</span></div></cs-kanban-card>' },
+    'kanban-column':     { zh: '看板列',     desc: '看板视图中的列容器',                      version:'1.0', isNew:true,  isUpdated:false,
+                           usage: ['看板页面的每个状态列（未开始 / 进行中 / 已完成）'],
+                           notes: ['包含 .column-header（.column-status + .column-count）和 .column-body', '.column-body 内放 cs-kanban-card 列表'],
+                           related: [{ name:'cs-kanban-card', why:'列容器内的任务卡片' }],
+                           preview:'<cs-kanban-column style="width:290px;"><div class="column-header"><span class="column-status">未开始</span><span class="column-count">12</span></div><div class="column-body"><cs-kanban-card><div class="kanban-title-row"><span class="kanban-title">CSES_SJ_月度导向板块改版任务</span><span class="kanban-meta">CSES项目 / 设计模块</span></div></cs-kanban-card></div></cs-kanban-column>' },
+    'dropdown':          { zh: '下拉菜单',   desc: '点击触发的操作菜单，对标 ng-zorro Dropdown，由 dropdown.js 接管 toggle', version:'1.0', isNew:true,  isUpdated:false,
+                           usage: ['行内"更多操作"图标按钮的命令菜单', '账号/用户头像点击展开菜单', '列表筛选与排序的命令集合', '批量操作合集（导出/删除/归档）'],
+                           notes: ['必须引入 dropdown.js，否则 toggle 失效', '触发器与菜单项必须用 <button type="button">', '点击触发器/菜单项/外部/ESC 均可关闭，互斥（同时只一个展开）', 'data-keep-open 让菜单项点击后不自动关闭，用于多选/视图切换', '与 cs-select 区分：select 选值（数据），dropdown 触发命令（操作）'],
+                           related: [{ name:'cs-select', why:'选值的录入控件，dropdown 是命令菜单' }, { name:'cs-button', why:'触发器底层就是 button' }],
+                           preview:'<cs-dropdown data-open><button class="dropdown-trigger" type="button"><span class="dropdown-trigger-label">操作</span><i class="dropdown-trigger-arrow cses-xiala"></i></button><div class="dropdown-menu"><button class="dropdown-item" type="button"><i class="dropdown-item-icon cses-edit"></i><span class="dropdown-item-label">编辑</span></button><button class="dropdown-item" data-color="danger" type="button"><i class="dropdown-item-icon cses-shanchu"></i><span class="dropdown-item-label">删除</span></button></div></cs-dropdown>' },
+
+    // ========== ng-zorro 对齐 — 浮层类（8） ==========
+    'tooltip':           { zh: '文字提示',   desc: '鼠标悬停显示的轻量提示', version:'1.0', isNew:true, isUpdated:false, usage:['图标按钮的语义说明','截断文字的完整内容'], notes:['纯 CSS hover 实现'], related:[{name:'cs-popover',why:'富内容气泡'}], preview:'<cs-tooltip><button class="tooltip-trigger cs-button" data-variant="secondary" type="button">悬停我</button><span class="tooltip-content">这是提示文字</span></cs-tooltip>' },
+    'popover':           { zh: '气泡卡片',   desc: '点击触发的富内容气泡卡片', version:'1.0', isNew:true, isUpdated:false, usage:['操作帮助','快捷表单'], notes:['需 popover.js'], related:[{name:'cs-tooltip',why:'纯文字提示'},{name:'cs-dropdown',why:'命令菜单'}], preview:'<cs-popover data-open><button class="popover-trigger" type="button"><span>查看详情</span><i class="cses-tishi"></i></button><div class="popover-panel"><span class="popover-title">详细信息</span><div class="popover-body">气泡卡片主要内容区</div></div></cs-popover>' },
+    'popconfirm':        { zh: '气泡确认框', desc: '轻量删除确认等气泡', version:'1.0', isNew:true, isUpdated:false, usage:['列表行删除确认','次要操作二次确认'], notes:['需 popconfirm.js'], related:[{name:'fragment/modal',why:'重确认用对话框'}], preview:'<cs-popconfirm data-open><button class="popconfirm-trigger" type="button">归档任务</button><div class="popconfirm-panel"><div class="popconfirm-header"><i class="popconfirm-icon cses-jingshi"></i><span class="popconfirm-message">确定要归档该任务吗？</span></div></div></cs-popconfirm>' },
+    'mention':           { zh: '提及',       desc: '@ 用户输入框', version:'1.0', isNew:true, isUpdated:false, usage:['评论区 @人员','任务指派人'], notes:['需 mention.js'], related:[{name:'cs-auto-complete',why:'自动补全输入'}], preview:'<cs-mention style="width:200px;"><input class="mention-input" type="text" placeholder="输入 @ 提及他人" value="@张三 "></cs-mention>' },
+    'auto-complete':     { zh: '自动完成',   desc: '输入过程弹出候选列表', version:'1.0', isNew:true, isUpdated:false, usage:['搜索框补全','已知选项的模糊输入'], notes:['需 auto-complete.js'], related:[{name:'cs-select',why:'固定选项选择'}], preview:'<cs-auto-complete style="width:200px;"><div class="ac-input-wrap"><input class="ac-input" type="text" value="项目" placeholder="搜索..."></div></cs-auto-complete>' },
+    'cascader':          { zh: '级联选择',   desc: '多级面板的级联选择器', version:'1.0', isNew:true, isUpdated:false, usage:['省市区三级选择','分类树选择'], notes:['需 cascader.js'], related:[{name:'cs-tree-select',why:'树形扁平选择'}], preview:'<cs-cascader><button class="cascader-trigger" type="button"><span class="cascader-trigger-label">浙江 / 杭州 / 西湖区</span><i class="cascader-trigger-arrow cses-xiala"></i></button></cs-cascader>' },
+    'tree-select':       { zh: '树选择',     desc: '弹出树形选择面板', version:'1.0', isNew:true, isUpdated:false, usage:['部门树选择','分类树选择'], notes:['需 tree-select.js'], related:[{name:'cs-cascader',why:'固定级联选择'}], preview:'<cs-tree-select><button class="ts-trigger" type="button"><span class="ts-trigger-label" data-placeholder>请选择部门</span><i class="ts-trigger-arrow cses-xiala"></i></button></cs-tree-select>' },
+    'color-picker':      { zh: '颜色选择',   desc: '点击弹出颜色面板', version:'1.0', isNew:true, isUpdated:false, usage:['主题色设置','文本高亮颜色'], notes:['需 color-picker.js'], related:[], preview:'<cs-color-picker><button class="cp-trigger" type="button"><span class="cp-trigger-swatch" style="background:#4857e2;"></span><span class="cp-trigger-label">#4857E2</span></button></cs-color-picker>' },
+
+    // ========== ng-zorro 对齐 — 录入控件（10） ==========
+    'date-picker':       { zh: '日期选择',   desc: '点击弹出日历面板的日期选择器', version:'1.0', isNew:true, isUpdated:false, usage:['表单日期字段','筛选条件'], notes:['需 date-picker.js'], related:[{name:'cs-time-picker',why:'仅时间'}], preview:'<cs-date-picker><button class="date-picker-trigger" type="button"><span class="date-picker-input" data-placeholder>请选择日期</span><i class="date-picker-icon cses-rili"></i></button></cs-date-picker>' },
+    'time-picker':       { zh: '时间选择',   desc: '点击弹出时分秒列的时间选择器，支持范围模式', version:'1.0', isNew:true, isUpdated:false, usage:['预约时间','营业时段','时间范围筛选'], notes:['需 time-picker.js','data-type="range" 支持时间范围'], related:[{name:'cs-date-picker',why:'日期选择'}], preview:'<cs-time-picker><button class="time-picker-trigger" type="button"><span class="time-picker-input" data-placeholder>请选择时间</span><i class="time-picker-icon cses-time"></i></button></cs-time-picker>' },
+    'slider':            { zh: '滑动输入',   desc: '连续值滑动选择条', version:'1.0', isNew:true, isUpdated:false, usage:['音量/亮度调节','价格区间'], notes:['通过 --cs-slider-value CSS 变量控制位置'], related:[{name:'cs-input-number',why:'精确数值'}],                            preview:'<cs-slider style="--cs-slider-value: 40%; width:180px;"><div class="slider-rail"></div><div class="slider-track"></div><div class="slider-handle"></div></cs-slider>' },
+    'input-number':      { zh: '数字输入',   desc: '带上下步进的数字输入框', version:'1.0', isNew:true, isUpdated:false, usage:['数量输入','年龄输入'], notes:['纯 CSS 展示，步进行为由业务接管'], related:[{name:'cs-input',why:'通用文本'}], preview:'<cs-input-number><input class="input-number-field" type="number" value="10" min="0" max="100"><div class="input-number-controls"><button class="input-number-up" type="button"><i class="cses-paixushang"></i></button><button class="input-number-down" type="button"><i class="cses-paixuxia"></i></button></div></cs-input-number>' },
+    'transfer':          { zh: '穿梭框',     desc: '左右两列双向选择', version:'1.0', isNew:true, isUpdated:false, usage:['权限分配','成员选择'], notes:['纯 CSS 静态展示'], related:[{name:'cs-tree-select',why:'树形选择'}], preview:'<cs-transfer style="transform:scale(0.8); transform-origin:left top;"><div class="transfer-list"><div class="transfer-list-header"><span class="transfer-list-title">候选</span></div><div class="transfer-list-body"><label class="transfer-item"><input type="checkbox"><span class="transfer-item-label">张三</span></label></div></div><div class="transfer-list"><div class="transfer-list-header"><span class="transfer-list-title">已选</span></div><div class="transfer-list-body"></div></div></cs-transfer>' },
+    'form-field':        { zh: '表单字段',   desc: '表单字段组件，标签在左、控件底部下划线44px行高，支持多种控件类型', version:'1.0', isNew:true, isUpdated:false, usage:['任务详情/编辑面板','设置页','数据录入表单'], notes:['支持 cs-input（输入）/ cs-select（下拉/选人）/ cs-date-picker（日期/日期范围）/ cs-time-picker（时间/时间范围）','双列用 .field-row 包裹，各占50%','错误态：红色下划线 + 下方错误图标+文字'], related:[{name:'cs-form-group',why:'垂直标签的表单字段组'}], preview:'<cs-form-field style="width:300px;"><span class="field-label">任务名称</span><div class="field-content"><cs-input><input class="input-field" type="text" placeholder="请输入"></cs-input></div></cs-form-field><cs-form-field style="width:300px;"><span class="field-label">优先级</span><div class="field-content"><cs-select><span class="select-placeholder">请选择</span><i class="select-arrow cses-xiala"></i></cs-select></div></cs-form-field>' },
+    'anchor':            { zh: '锚点',       desc: '章节锚点导航', version:'1.0', isNew:true, isUpdated:false, usage:['长文档目录','文档页右侧索引'], notes:['滚动跟随由页面层接管'], related:[], preview:'<cs-anchor><div class="anchor-list"><a class="anchor-item" data-active href="#a1">章节一</a><a class="anchor-item" href="#a2">章节二</a><a class="anchor-item" data-level="2" href="#a2-1">2.1 小节</a></div></cs-anchor>' },
+    'splitter':          { zh: '分隔面板',   desc: '可拖拽分隔的面板布局', version:'1.0', isNew:true, isUpdated:false, usage:['IDE 左右分栏','编辑 + 预览'], notes:['拖拽行为由页面层接管'], related:[], preview:'<cs-splitter style="height:120px; width:260px;"><div class="splitter-panel">左</div><div class="splitter-bar"></div><div class="splitter-panel">右</div></cs-splitter>' },
+
+    // ========== ng-zorro 对齐 — 数据展示（10） ==========
+    'card':              { zh: '卡片',       desc: '通用卡片容器', version:'1.0', isNew:true, isUpdated:false, usage:['列表卡片','信息分组'], notes:['区别于业务卡片 doc-card/meeting-card'], related:[{name:'cs-doc-card',why:'文档业务卡片'}], preview:'<cs-card style="width:240px;"><div class="card-header"><span class="card-title">卡片标题</span></div><div class="card-body">卡片内容区域</div></cs-card>' },
+    'list':              { zh: '列表',       desc: '通用列表容器', version:'1.0', isNew:true, isUpdated:false, usage:['文章列表','设置项列表'], notes:['区别于业务行组件'], related:[{name:'cs-task-row',why:'任务业务行'}], preview:'<cs-list data-variant="bordered" style="width:220px;"><div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">列表项一</span></span></span></div><div class="list-item"><span class="list-item-meta"><span class="list-item-content"><span class="list-item-title">列表项二</span></span></span></div></cs-list>' },
+    'tree':              { zh: '树形控件',   desc: '通用树形控件（展开/收起）', version:'1.0', isNew:true, isUpdated:false, usage:['文件树','组织架构树'], notes:['区别于 nav-tree（侧栏导航）'], related:[{name:'cs-nav-tree',why:'侧栏导航树'}], preview:'<cs-tree style="width:220px;"><details class="tree-node" open><summary class="tree-node-summary"><i class="tree-node-icon cses-xiala"></i><span class="tree-node-label">根节点</span></summary><div class="tree-node"><div class="tree-node-summary"><span class="tree-node-label">子节点 A</span></div></div><div class="tree-node"><div class="tree-node-summary"><span class="tree-node-label">子节点 B</span></div></div></details></cs-tree>' },
+    'table':             { zh: '表格',       desc: '数据表格（表头+行+斑马线）', version:'1.0', isNew:true, isUpdated:false, usage:['后台数据表格','报表'], notes:['排序交互由业务接管'], related:[{name:'cs-list',why:'非结构化列表'}], preview:'<cs-table style="width:260px;"><div class="table-wrapper"><table><thead><tr><th>姓名</th><th>部门</th></tr></thead><tbody><tr><td>张三</td><td>设计</td></tr><tr><td>李四</td><td>研发</td></tr></tbody></table></div></cs-table>' },
+    'calendar':          { zh: '日历',       desc: '通用月历视图', version:'1.0', isNew:true, isUpdated:false, usage:['排期日历','日程视图'], notes:['区别于 attendance-calendar'], related:[{name:'cs-date-picker',why:'日期选择器'}], preview:'<cs-calendar style="width:260px;"><div class="calendar-header"><span class="calendar-title">2026 年 4 月</span><span class="calendar-nav"><button class="calendar-nav-btn" type="button"><i class="cses-riqizuo"></i></button><button class="calendar-nav-btn" type="button"><i class="cses-riqiyou"></i></button></span></div></cs-calendar>' },
+    'statistic':         { zh: '统计数值',   desc: '大数字 + 前后缀展示', version:'1.0', isNew:true, isUpdated:false, usage:['仪表盘指标','KPI 展示'], notes:['区别于 metric-card'], related:[{name:'cs-metric-card',why:'带卡片外壳'}], preview:'<cs-statistic><span class="statistic-title">活跃用户</span><span class="statistic-value"><span class="statistic-number">128,509</span></span></cs-statistic>' },
+    'badge':             { zh: '徽标数',     desc: '小红点与数字徽章', version:'1.0', isNew:true, isUpdated:false, usage:['消息未读数','购物车数量'], notes:['区别于 status-badge'], related:[{name:'cs-status-badge',why:'状态语义标签'}], preview:'<cs-badge><span class="badge-anchor"><i class="cses-tongzhi icon-anchor"></i></span><span class="badge-indicator">5</span></cs-badge>&nbsp;&nbsp;<cs-badge><span class="badge-anchor"><i class="cses-xiaoxi icon-anchor"></i></span><span class="badge-indicator">99+</span></cs-badge>' },
+    'progress':          { zh: '进度条',     desc: '线形/环形进度', version:'1.0', isNew:true, isUpdated:false, usage:['上传进度','任务完成度'], notes:['支持 line/circle'], related:[{name:'cs-storage-info',why:'存储业务进度'}], preview:'<cs-progress style="--progress: 60; width:180px;"><div class="progress-track"><div class="progress-bar"></div></div><span class="progress-text">60%</span></cs-progress>' },
+    'timeline':          { zh: '时间轴',     desc: '时间轴容器', version:'1.0', isNew:true, isUpdated:false, usage:['操作历史','活动日志'], notes:['用 <li class="timeline-item"> 作为子项'], related:[{name:'cs-timeline-item',why:'单条时间轴项'}], preview:'<cs-timeline style="width:220px;"><li class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content">提交申请</div></li><li class="timeline-item" data-color="success"><span class="timeline-dot"></span><div class="timeline-content">审核通过</div></li></cs-timeline>' },
+    'descriptions':      { zh: '描述列表',   desc: 'label + value 成对的描述', version:'1.0', isNew:true, isUpdated:false, usage:['详情页字段展示','配置信息'], notes:['支持多列布局'], related:[], preview:'<cs-descriptions style="width:260px;"><div class="desc-grid"><div class="desc-item"><span class="desc-label">用户名</span><span class="desc-value">张三</span></div><div class="desc-item"><span class="desc-label">邮箱</span><span class="desc-value">zhang@a.com</span></div></div></cs-descriptions>' },
+
+    // ========== ng-zorro 对齐 — 反馈/通知（10） ==========
+    'message':           { zh: '全局提示',   desc: '顶部浮层轻提示', version:'1.0', isNew:true, isUpdated:false, usage:['操作反馈','保存成功提示'], notes:['纯静态展示，显隐由业务接管'], related:[{name:'cs-notification',why:'通知有标题'}], preview:'<cs-message data-type="success"><i class="message-icon cses-check-circle"></i><span class="message-text">操作成功</span></cs-message>' },
+    'notification':      { zh: '通知提醒框', desc: '右上角通知卡片（标题+内容+关闭）', version:'1.0', isNew:true, isUpdated:false, usage:['系统通知','任务完成推送'], notes:['区别于 cs-notice-item'], related:[{name:'cs-message',why:'无标题轻提示'}], preview:'<cs-notification data-type="success" style="width:280px;"><i class="notification-icon cses-check-circle"></i><div class="notification-body"><div class="notification-title">提交成功</div><div class="notification-desc">您的请假申请已成功提交，等待审批</div></div><button class="notification-close" type="button"><i class="cses-guanbi"></i></button></cs-notification>' },
+    'alert':             { zh: '警告提示',   desc: '4 种语义色的内嵌警告', version:'1.0', isNew:true, isUpdated:false, usage:['页面顶部公告','表单错误提示'], notes:['区别于 cs-banner'], related:[{name:'cs-banner',why:'业务广告横幅'}], preview:'<cs-alert data-type="info" style="width:260px;"><i class="alert-icon cses-info-circle"></i><div class="alert-body"><div class="alert-title">这是一条提示信息</div></div></cs-alert>' },
+    'spin':              { zh: '加载中',     desc: '加载转圈动画', version:'1.0', isNew:true, isUpdated:false, usage:['数据加载','按钮 loading'], notes:['@keyframes 纯 CSS'], related:[{name:'cs-skeleton',why:'结构骨架'}], preview:'<cs-spin data-size="sm"><span class="spin-dot"></span></cs-spin>&nbsp;&nbsp;<cs-spin><span class="spin-dot"></span></cs-spin>&nbsp;&nbsp;<cs-spin data-size="lg"><span class="spin-dot"></span></cs-spin>' },
+    'skeleton':          { zh: '骨架屏',     desc: '内容加载骨架占位', version:'1.0', isNew:true, isUpdated:false, usage:['首屏加载占位','图片加载占位'], notes:['@keyframes 渐变动画'], related:[{name:'cs-spin',why:'转圈加载'}], preview:'<cs-skeleton data-active style="width:260px;"><div class="skeleton-avatar"></div><div class="skeleton-content"><div class="skeleton-title"></div><div class="skeleton-paragraph"><div class="skeleton-line"></div><div class="skeleton-line"></div></div></div></cs-skeleton>' },
+    'result':            { zh: '结果',       desc: '成功/失败/警告结果页', version:'1.0', isNew:true, isUpdated:false, usage:['支付成功页','404 错误页','操作结果反馈'], notes:['与 cs-empty 区分：result 是完成态'], related:[{name:'cs-empty',why:'空状态'}], preview:'<cs-result data-status="success"><i class="result-icon cses-check-circle"></i><div class="result-title">提交成功</div><div class="result-subtitle">您的请假申请已成功提交</div></cs-result>' },
+    'empty':             { zh: '空状态',     desc: '列表/表格无数据兜底', version:'1.0', isNew:true, isUpdated:false, usage:['列表无数据','搜索无结果'], notes:['与 cs-result 区分：empty 是初始态'], related:[{name:'cs-result',why:'完成态结果'}], preview:'<cs-empty><i class="empty-image cses-wendangku"></i><div class="empty-description">暂无数据</div></cs-empty>' },
+    'carousel':          { zh: '走马灯',     desc: '轮播多张卡片/图片', version:'1.0', isNew:true, isUpdated:false, usage:['首页 banner','产品轮播'], notes:['@keyframes 自动切换'], related:[], preview:'<cs-carousel data-count="3" data-autoplay style="width:280px; height:120px;"><div class="carousel-track"><div class="carousel-slide slide-blue">第一张 · 团队协作</div><div class="carousel-slide slide-green">第二张 · 文档共享</div><div class="carousel-slide slide-orange">第三张 · 智能审批</div></div><div class="carousel-dots"><button class="carousel-dot" data-active type="button"></button><button class="carousel-dot" type="button"></button><button class="carousel-dot" type="button"></button></div></cs-carousel>' },
+    'collapse':          { zh: '折叠面板',   desc: '可折叠的内容面板', version:'1.0', isNew:true, isUpdated:false, usage:['FAQ','设置分组'], notes:['用 <details> 原生元素'], related:[], preview:'<cs-collapse style="width:260px;"><details class="collapse-item" open><summary class="collapse-header"><i class="collapse-arrow cses-xiala"></i><span class="collapse-title">基础信息</span></summary><div class="collapse-content">面板内容区域</div></details></cs-collapse>' },
+    'divider':           { zh: '分割线',     desc: '横向/纵向分割线（可带文字）', version:'1.0', isNew:true, isUpdated:false, usage:['区块分隔','菜单项分组'], notes:['轻量纯 CSS'], related:[], preview:'<cs-divider style="width:260px;"><span class="divider-text">分隔文字</span></cs-divider>' },
+
+    // ========== 桌面端业务组件 ==========
+    'doc-card':          { zh: '文档卡片',   desc: '文档库内容卡片，展示文档库内部信息，支持自定义背景色', version:'1.0', isNew:false, isUpdated:true, usage:['文档库首页卡片展示','文档内容预览'], notes:['标题最多两行（14px）','信息栏间距4px','内容区间距20px','支持主题色'], related:[{name:'cs-doc-list',why:'列表视图展示'}], preview:'<cs-doc-card class="preview-doc-card"><h3 class="doc-title">上周末完成的待办事项</h3><div class="doc-info-bar"><span class="info-space"><i class="cses-wendangku"></i> 自定义空间</span><span class="info-action">最后评论于 10 分钟前</span></div><div class="doc-content"><h4 class="content-heading">一、栏目标题示例</h4><p class="content-text">这是正文内容，字号为 8px，行高 1.6。</p></div></cs-doc-card>' },
+    'doc-list':          { zh: '文档列表',   desc: '文档库列表项，使用 PNG 图标展示文档类型', version:'1.0', isNew:true, isUpdated:false, usage:['文档库列表视图','文件列表展示'], notes:['使用 assets/Property 1=xxx.png 图标','支持 Word/Excel/PDF/图片等类型'], related:[{name:'cs-doc-card',why:'卡片视图展示'}], preview:'<cs-doc-list class="preview-doc-list"><div class="doc-icon"><img src="../../assets/Property 1=word.png" alt="Word"></div><div class="doc-body"><div class="doc-title">设计部_文档库设计需求整理</div><div class="doc-meta"><span class="meta-time">3 分钟以前</span><span class="meta-author">何强</span><span class="doc-summary">一位网友在社交平台发布的视频显示...</span></div></div><div class="doc-actions"><button class="doc-more"><i class="cses-gengduo"></i></button></div></cs-doc-list>' },
+    'doc-library-hero':  { zh: '文档库头部', desc: '文档库首页首屏头部，承载标题说明与搜索入口', version:'1.0', isNew:true, isUpdated:false, usage:['文档库首页首屏','搜索入口展示'], notes:['结构固定为 hero-copy + hero-search','搜索区承载 cs-doc-search-panel'], related:[{name:'doc-search-panel',why:'首页搜索输入容器'}], preview:'<cs-doc-library-hero data-variant="default"><div class="hero-copy"><div class="hero-title">文档库</div><p class="hero-description">统一承载搜索、分类导航、推荐文档与最近更新。</p></div><div class="hero-search"><cs-doc-search-panel><div class="search-box"><i class="search-icon cses-placeholder"></i><input class="search-field" type="search" placeholder="搜索文档、知识库、更新记录"><button class="search-action" type="button">搜索</button></div><div class="search-meta">支持标题、摘要与分类关键词检索</div></cs-doc-search-panel></div></cs-doc-library-hero>' },
+    'doc-search-panel':  { zh: '搜索面板',   desc: '搜索输入框与说明文案的组合面板', version:'1.0', isNew:true, isUpdated:false, usage:['首页搜索区','文档检索入口'], notes:['图标统一使用 cses-placeholder','包含 search-box 与 search-meta'], related:[{name:'doc-search-suggestion-list',why:'搜索建议结果展示'}], preview:'<cs-doc-search-panel><div class="search-box"><i class="search-icon cses-placeholder"></i><input class="search-field" type="search" placeholder="搜索文档、知识库、更新记录"><button class="search-action" type="button">搜索</button></div><div class="search-meta">支持标题、摘要与分类关键词检索</div></cs-doc-search-panel>' },
+    'doc-search-suggestion-list': { zh: '搜索建议列表', desc: '承载猜你想找与建议结果列表', version:'1.0', isNew:true, isUpdated:false, usage:['搜索建议面板','默认搜索结果入口'], notes:['内部建议项使用 cs-doc-result-entry','支持 default / empty 状态'], related:[{name:'doc-result-entry',why:'单条结果摘要'}], preview:'<cs-doc-search-suggestion-list data-state="default"><div class="suggestion-header">猜你想找</div><div class="suggestion-items"><cs-doc-result-entry><i class="result-icon cses-placeholder"></i><div class="result-copy"><div class="result-title">设计规范总览</div><div class="result-meta">规范 / 设计系统</div></div></cs-doc-result-entry><cs-doc-result-entry data-active><i class="result-icon cses-placeholder"></i><div class="result-copy"><div class="result-title">组件约定说明</div><div class="result-meta">组件 / 契约 / CSS</div></div></cs-doc-result-entry></div></cs-doc-search-suggestion-list>' },
+    'doc-result-entry':  { zh: '搜索结果条目', desc: '单条搜索结果摘要条目', version:'1.0', isNew:true, isUpdated:false, usage:['搜索结果列表','建议列表高亮'], notes:['结构固定为 result-icon + result-copy','可通过 data-active 标记当前项'], related:[{name:'doc-search-suggestion-list',why:'结果列表容器'}], preview:'<cs-doc-result-entry data-active><i class="result-icon cses-placeholder"></i><div class="result-copy"><div class="result-title">组件约定说明</div><div class="result-meta">组件 / 契约 / CSS</div></div></cs-doc-result-entry>' },
+    'doc-category-nav':  { zh: '分类导航',   desc: '文档库首页分类浏览容器', version:'1.0', isNew:true, isUpdated:false, usage:['首页分类浏览','标签区标题与轨道'], notes:['结构固定为 category-header + category-track','内部项使用 cs-doc-category-chip'], related:[{name:'doc-category-chip',why:'分类项子组件'}], preview:'<cs-doc-category-nav data-variant="pill"><div class="category-header">按分类浏览</div><div class="category-track"><cs-doc-category-chip data-active><i class="chip-icon cses-placeholder"></i><span class="chip-label">设计规范</span><span class="chip-count">12</span></cs-doc-category-chip><cs-doc-category-chip><i class="chip-icon cses-placeholder"></i><span class="chip-label">组件契约</span><span class="chip-count">8</span></cs-doc-category-chip></div></cs-doc-category-nav>' },
+    'doc-category-chip': { zh: '分类标签',   desc: '带图标与数量的分类标签项', version:'1.0', isNew:true, isUpdated:false, usage:['分类浏览','分类筛选反馈'], notes:['结构固定为 chip-icon + chip-label + chip-count','data-active 表示选中态'], related:[{name:'doc-category-nav',why:'分类容器'}], preview:'<cs-doc-category-chip data-active><i class="chip-icon cses-placeholder"></i><span class="chip-label">设计规范</span><span class="chip-count">12</span></cs-doc-category-chip>' },
+    'doc-recommend-list': { zh: '推荐列表',  desc: '推荐文档卡片列表容器', version:'1.0', isNew:true, isUpdated:false, usage:['首页推荐区','继续阅读区'], notes:['结构固定为 recommend-header + recommend-grid','支持 grid / stack 两种布局'], related:[{name:'doc-recommend-card',why:'推荐卡片子组件'}], preview:'<cs-doc-recommend-list data-layout="grid"><div class="recommend-header">推荐文档</div><div class="recommend-grid"><cs-doc-recommend-card data-variant="feature"><div class="card-top"><span class="card-badge">推荐</span></div><div class="card-title">设计系统总览</div><div class="card-summary">覆盖变量、组件、布局与流程的统一入口。</div><div class="card-meta">8 分钟阅读</div><div class="card-action">立即查看</div></cs-doc-recommend-card><cs-doc-recommend-card><div class="card-top"><span class="card-badge">常用</span></div><div class="card-title">组件契约说明</div><div class="card-summary">快速定位 class、data 属性与预览规范。</div><div class="card-meta">5 分钟阅读</div><div class="card-action">加入阅读队列</div></cs-doc-recommend-card></div></cs-doc-recommend-list>' },
+    'doc-recommend-card': { zh: '推荐卡片',  desc: '推荐文档信息卡片', version:'1.0', isNew:true, isUpdated:false, usage:['推荐文档展示','继续阅读入口'], notes:['结构固定为 card-top、card-badge、card-title、card-summary、card-meta、card-action','支持 regular / feature 变体'], related:[{name:'doc-recommend-list',why:'推荐卡片容器'}], preview:'<cs-doc-recommend-card data-variant="feature"><div class="card-top"><span class="card-badge">推荐</span></div><div class="card-title">设计系统总览</div><div class="card-summary">覆盖变量、组件、布局与流程的统一入口。</div><div class="card-meta">8 分钟阅读</div><div class="card-action">立即查看</div></cs-doc-recommend-card>' },
+    'doc-recent-update-list': { zh: '最近更新列表', desc: '最近更新区块容器', version:'1.0', isNew:true, isUpdated:false, usage:['首页最近更新区','更新时间线入口'], notes:['结构固定为 update-header + update-stack','内部项使用 cs-doc-update-item'], related:[{name:'doc-update-item',why:'单条更新项'}], preview:'<cs-doc-recent-update-list data-density="comfortable"><div class="update-header">最近更新</div><div class="update-stack"><cs-doc-update-item><div class="update-copy"><div class="update-title">Design Agent 执行流程</div><div class="update-meta">今天 14:30 · 流程文档</div><div class="update-summary">补充 Phase 2 并行派发说明。</div></div></cs-doc-update-item><cs-doc-update-item data-state="highlight"><div class="update-copy"><div class="update-title">组件契约规范</div><div class="update-meta">今天 10:20 · 组件文档</div><div class="update-summary">新增 class 与 data 属性校验规则。</div></div></cs-doc-update-item></div></cs-doc-recent-update-list>' },
+    'doc-update-item':   { zh: '更新条目',   desc: '最近更新中的单条更新卡片', version:'1.0', isNew:true, isUpdated:false, usage:['最近更新列表','更新高亮展示'], notes:['结构固定为 update-copy + update-title + update-meta + update-summary','支持 default / highlight 状态'], related:[{name:'doc-recent-update-list',why:'更新列表容器'}], preview:'<cs-doc-update-item data-state="highlight"><div class="update-copy"><div class="update-title">组件契约规范</div><div class="update-meta">今天 10:20 · 组件文档</div><div class="update-summary">新增 class 与 data 属性校验规则。</div></div></cs-doc-update-item>' },
+
+    // ========== 文档详情子组件（9）==========
+    'doc-breadcrumb-bar': { zh: '面包屑工具栏', desc: '文档详情顶部面包屑+保存状态+分享/编辑/演示按钮工具条', version:'1.0', isNew:true, isUpdated:false, usage:['文档详情页顶部','文档库 preview 顶栏'], notes:['data-saved 触发"已保存到云端"指示','左侧 .dbb-left 放面包屑路径，右侧 .dbb-right 放操作按钮','区别于通用 cs-breadcrumb，是文档详情专用容器'], related:[{name:'cs-breadcrumb',why:'通用面包屑（无操作区）'},{name:'doc-header',why:'下方接文档头部块'}], preview:'<cs-doc-breadcrumb-bar data-saved style="width:580px;"><div class="dbb-left"><a class="dbb-crumb" href="#"><i class="dbb-crumb-icon cses-shouye"></i></a><i class="dbb-sep cses-right"></i><span class="dbb-current">文档库改版方案<i class="dbb-crumb-caret cses-arrow"></i></span><i class="dbb-collect cses-collect"></i><span class="dbb-saved"><i class="dbb-saved-icon cses-cloud"></i>已保存到云端</span></div><div class="dbb-right"><button class="dbb-action" data-variant="primary"><i class="dbb-action-icon cses-fenxiang"></i><span class="dbb-action-label">分享</span></button><button class="dbb-action" data-variant="secondary"><i class="dbb-action-icon cses-edit"></i><span class="dbb-action-label">编辑</span><i class="dbb-action-caret cses-arrow"></i></button><button class="dbb-action" data-variant="icon"><i class="dbb-action-icon cses-gengduo"></i></button></div></cs-doc-breadcrumb-bar>' },
+    'doc-header':         { zh: '文档头部',     desc: '文档详情主区头部：封面/表情入口 + 标题 + 元信息 + 输入提示行', version:'1.0', isNew:true, isUpdated:false, usage:['文档详情主区顶部','空白文档新建态'], notes:['data-show-actions 显示 hover 快捷按钮（添加表情/封面）','.dh-title 是 contenteditable，元数据行不可编辑','.dh-hint 提示斜杠菜单与 AI 唤起'], related:[{name:'doc-breadcrumb-bar',why:'位于本组件正上方'},{name:'block-add',why:'段落级插入按钮'}], preview:'<cs-doc-header data-show-actions style="width:520px;"><div class="dh-actions"><button class="dh-action"><i class="dh-action-icon cses-biaoqing"></i><span class="dh-action-label">添加表情</span></button><button class="dh-action"><i class="dh-action-icon cses-tupian"></i><span class="dh-action-label">添加封面</span></button></div><h1 class="dh-title">文档库改版方案</h1><div class="dh-meta"><div class="dh-meta-author"><div class="dh-avatar">王</div><span class="dh-author-name">王晨宇</span><span class="dh-author-role">UI 设计/设计部</span></div><span class="dh-meta-time">今日 13:23 创建</span><div class="dh-meta-stats"><span class="dh-stat"><i class="dh-stat-icon cses-dianzan"></i>0</span><span class="dh-stat"><i class="dh-stat-icon cses-pinglun"></i>0</span></div></div><div class="dh-hint"><i class="dh-hint-icon cses-add"></i><span class="dh-hint-text">输入"/"快速插入内容，按"空格"启用 ✨ CSES AI</span></div></cs-doc-header>' },
+    'editor-toolbar':     { zh: '编辑工具栏',   desc: '富文本编辑器工具栏：插入/AI/工具 + 撤销重做 + 字体/字号/标题 + 加粗斜下删 + 列表/缩进/对齐 + 搜索', version:'1.0', isNew:true, isUpdated:false, usage:['文档详情编辑模式顶部','编辑器悬浮工具栏'], notes:['用 .etb-group 分组 + .etb-divider 分隔','.etb-btn[data-variant="accent"] 用于 AI 等强调按钮','按钮交互通过 data-action stub 由外层接管，组件本身不负责行为'], related:[{name:'doc-header',why:'位于本组件下方'},{name:'insert-panel',why:'插入按钮触发右侧抽屉'}], preview:'<cs-editor-toolbar style="max-width:680px;flex-wrap:wrap;"><div class="etb-group"><button class="etb-btn"><i class="etb-btn-icon cses-add"></i><span class="etb-btn-label">插入</span><i class="etb-btn-caret cses-arrow"></i></button><button class="etb-btn" data-variant="accent"><i class="etb-btn-icon cses-brainstorming"></i><span class="etb-btn-label">AI 帮写</span></button></div><span class="etb-divider"></span><div class="etb-group"><button class="etb-btn" title="撤销"><i class="etb-btn-icon cses-chexiao"></i></button><button class="etb-btn" title="重做"><i class="etb-btn-icon cses-huifu"></i></button></div><span class="etb-divider"></span><div class="etb-group"><div class="etb-select"><span class="etb-select-text">默认字体</span><i class="etb-btn-caret cses-arrow"></i></div><div class="etb-select"><span class="etb-select-text">标题1</span><i class="etb-btn-caret cses-arrow"></i></div></div><span class="etb-divider"></span><div class="etb-group"><button class="etb-btn" title="加粗"><i class="etb-btn-icon cses-bold"></i></button><button class="etb-btn"><span class="etb-btn-label" style="font-style:italic;font-weight:500;">I</span></button><button class="etb-btn"><span class="etb-btn-label" style="text-decoration:underline;font-weight:500;">U</span></button><button class="etb-btn" title="删除线"><i class="etb-btn-icon cses-strikethrough"></i></button></div></cs-editor-toolbar>' },
+    'block-add':          { zh: '段落加号',     desc: '段落左侧悬浮 [+]，鼠标悬停整行才显现，点击在该段上方插入新块', version:'1.0', isNew:true, isUpdated:false, usage:['文档段落左侧','长文档编辑器'], notes:['默认 opacity:0，由父行 :hover 控制显隐','data-active 表示常驻显示（演示/激活态）','data-disabled 禁用','需保证父级行高与本组件等高，避免错位'], related:[{name:'editor-toolbar',why:'同一编辑场景的段落级控件'}], preview:'<div style="display:flex;flex-direction:column;gap:8px;width:320px;"><div style="display:flex;align-items:flex-start;gap:4px;padding:6px 0;"><cs-block-add aria-label="插入块"><i class="ba-icon cses-add"></i></cs-block-add><p style="flex:1;font:var(--typo-cn-14-regular);color:var(--cs-color-text);margin:0;line-height:1.6;">悬停整行可看左侧加号。</p></div><div style="display:flex;align-items:flex-start;gap:4px;padding:6px 0;"><cs-block-add data-active aria-label="插入块"><i class="ba-icon cses-add"></i></cs-block-add><p style="flex:1;font:var(--typo-cn-14-regular);color:var(--cs-color-text);margin:0;line-height:1.6;">激活态：常驻显示。</p></div></div>' },
+    'insert-panel':       { zh: '插入面板',     desc: '文档详情右侧"插入"抽屉，分组陈列 H1/H2/列表/任务/会议/图片等可插入块', version:'1.0', isNew:true, isUpdated:false, usage:['文档详情右侧抽屉','点击编辑工具栏插入按钮触发'], notes:['data-open 控制展开收起','.ip-section + .ip-grid 分组陈列；.ip-item data-action 由 interaction.js 接管','与 outline-panel 互斥（同一时间只展开一个）'], related:[{name:'editor-toolbar',why:'触发本面板的入口'},{name:'outline-panel',why:'同一抽屉位置的目录面板'}], preview:'<cs-insert-panel data-open style="position:relative;height:380px;width:280px;"><header class="ip-header"><h3 class="ip-title">插入</h3><button class="ip-close" aria-label="关闭"><i class="cses-guanbi"></i></button></header><div class="ip-body"><section class="ip-section"><h4 class="ip-section-title">基础</h4><div class="ip-grid"><button class="ip-item"><i class="ip-item-icon cses-biaoti"></i><span class="ip-item-label">H1</span></button><button class="ip-item"><i class="ip-item-icon cses-biaoti"></i><span class="ip-item-label">H2</span></button><button class="ip-item"><i class="ip-item-icon cses-fanhuiyuanwen"></i><span class="ip-item-label">引用</span></button><button class="ip-item"><i class="ip-item-icon cses-daimakuai"></i><span class="ip-item-label">代码</span></button></div></section><section class="ip-section"><h4 class="ip-section-title">列表</h4><div class="ip-grid"><button class="ip-item"><i class="ip-item-icon cses-tasklist"></i><span class="ip-item-label">代办</span></button><button class="ip-item"><i class="ip-item-icon cses-unordered"></i><span class="ip-item-label">无序</span></button><button class="ip-item"><i class="ip-item-icon cses-ordered_list"></i><span class="ip-item-label">编号</span></button></div></section></div></cs-insert-panel>' },
+    'outline-panel':      { zh: '目录面板',     desc: '文档详情右侧"目录"抽屉，多级树形导航 + 列表/卡片/附件/搜索 Tabs', version:'1.0', isNew:true, isUpdated:false, usage:['文档详情右侧抽屉','长文档章节导航'], notes:['data-open 控制展开','.op-tree > .op-node[data-level=1|2|3] 三级树','data-active 标当前章节高亮','与 insert-panel 互斥'], related:[{name:'insert-panel',why:'同一抽屉位置的插入面板'},{name:'cs-anchor',why:'通用锚点（无 Tabs）'}], preview:'<cs-outline-panel data-open style="position:relative;height:380px;width:260px;"><header class="op-header"><h3 class="op-title">目录</h3><button class="op-collapse" aria-label="收起"><i class="cses-right"></i></button></header><div class="op-tabs"><button class="op-tab" data-active>列表</button><button class="op-tab">卡片</button><button class="op-tab">附件</button></div><div class="op-body"><ul class="op-tree"><li class="op-node" data-level="1" data-expanded data-active><div class="op-node-row"><i class="op-node-toggle cses-arrow"></i><span class="op-node-label">第一章 概述</span></div><ul class="op-children"><li class="op-node" data-level="2"><div class="op-node-row"><span class="op-node-label">1.1 背景</span></div></li><li class="op-node" data-level="2"><div class="op-node-row"><span class="op-node-label">1.2 目标</span></div></li></ul></li><li class="op-node" data-level="1"><div class="op-node-row"><i class="op-node-toggle cses-right"></i><span class="op-node-label">第二章 方案</span></div></li></ul></div></cs-outline-panel>' },
+    'task-block':         { zh: '任务块',       desc: '文档内嵌的任务卡片块（图标+标题+状态+指派人头像组+日期+操作）', version:'1.0', isNew:true, isUpdated:false, usage:['文档详情正文中嵌入任务','需求文档关联待办'], notes:['data-status="processing|pending|done" 决定左侧状态条颜色','task-avatars 内放 cs-avatar size=xs','data-disabled 表示无访问权限'], related:[{name:'cs-task-row',why:'任务列表行（非嵌入）'},{name:'meeting-block',why:'同场景的会议块'}], preview:'<cs-task-block data-status="processing" style="width:520px;"><div class="task-icon-box"><i class="task-icon cses-task_card_workItem"></i></div><div class="task-body"><span class="task-title">完成文档库 V2 设计稿评审</span><span class="task-status">进行中</span></div><div class="task-actions"><div class="task-avatars"><cs-avatar data-size="xs" data-color="blue"><span class="avatar-text">张</span></cs-avatar><cs-avatar data-size="xs" data-color="purple"><span class="avatar-text">李</span></cs-avatar></div><span class="task-date">04/27</span><i class="task-bell cses-tongzhi"></i><cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button></div></cs-task-block>' },
+    'meeting-block':      { zh: '会议块',       desc: '文档内嵌的会议卡片块（会议图标+标题+时间状态元信息+操作）', version:'1.0', isNew:true, isUpdated:false, usage:['文档详情正文中嵌入会议','纪要文档关联会议'], notes:['data-status="ongoing|upcoming|ended" 控制状态色与文案','meeting-meta 写完整时间区间+状态'], related:[{name:'cs-meeting-card',why:'会议卡片（独立场景）'},{name:'task-block',why:'同场景的任务块'}], preview:'<cs-meeting-block data-status="ongoing" style="width:520px;"><div class="meeting-icon-box"><i class="meeting-icon cses-putonghuiyi"></i></div><div class="meeting-body"><span class="meeting-title">文档库需求对接会</span><span class="meeting-meta">2025/09/09 12:00-12:30 · 进行中</span></div><div class="meeting-actions"><cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button></div></cs-meeting-block>' },
+    'people-block':       { zh: '人员/群名片块', desc: '文档内嵌的人员或群名片块（蓝色描边表示被引用提及）', version:'1.0', isNew:true, isUpdated:false, usage:['文档详情正文中嵌入人员/群','@提及结构化展示'], notes:['data-type="group|person" 区分群名片/个人名片','头像区可放 .people-avatar-text 或 .people-avatar-icon','data-disabled 表示无访问权限'], related:[{name:'cs-user-pill',why:'轻量用户胶囊（无打开按钮）'},{name:'cs-mention',why:'@提及输入态'}], preview:'<cs-people-block data-type="group" style="width:480px;"><div class="people-avatar-box"><span class="people-avatar-text">中</span></div><div class="people-body"><span class="people-name">中企云链@开发团队</span><span class="people-subtitle">群名片</span></div><div class="people-actions"><cs-button data-variant="secondary" data-size="sm"><span class="btn-label">打开</span></cs-button></div></cs-people-block>' },
+
+    // ========== ng-zorro 对齐 — 其他（8） ==========
+    'comment':           { zh: '评论',       desc: '头像+作者+时间+正文+操作', version:'1.0', isNew:true, isUpdated:false, usage:['评论区','问答区'], notes:['头像用 img 或 cs-avatar'], related:[{name:'cs-avatar',why:'用户头像'}], preview:'<cs-comment style="width:280px;"><div class="comment-avatar"><img src="https://i.pravatar.cc/64?img=12" alt=""></div><div class="comment-body"><div class="comment-header"><span class="comment-author">张明</span><span class="comment-time">2 小时前</span></div><div class="comment-text">这是一条评论内容示例</div></div></cs-comment>' },
+    'image':             { zh: '图片',       desc: '图片包装（边框/圆角/加载兜底）', version:'1.0', isNew:true, isUpdated:false, usage:['图文卡片','相册网格'], notes:['与 thumbnail 区分'], related:[{name:'cs-thumbnail',why:'文件类型图标'}], preview:'<cs-image data-size="sm" data-bordered><img src="https://picsum.photos/200/200?random=1" alt=""></cs-image>' },
+    'qr-code':           { zh: '二维码',     desc: '二维码展示容器', version:'1.0', isNew:true, isUpdated:false, usage:['App 下载','分享链接'], notes:['图片来源由业务生成'], related:[], preview:'<cs-qr-code data-size="sm"><div class="qr-code-image"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=CSES" alt="QR"></div></cs-qr-code>' },
+    'watermark':         { zh: '水印',       desc: 'repeat 平铺文字水印', version:'1.0', isNew:true, isUpdated:false, usage:['机密文档','预览防盗图'], notes:['纯 CSS ::before 平铺'], related:[], preview:'<cs-watermark style="width:260px; padding:20px;"><div style="min-height:80px;">受保护内容示例</div></cs-watermark>' },
+    'float-button':      { zh: '悬浮按钮',   desc: '右下角 FAB 悬浮按钮', version:'1.0', isNew:true, isUpdated:false, usage:['新建快捷入口','回到顶部'], notes:['生产用 position:fixed；预览用 relative'], related:[{name:'cs-button',why:'常规按钮'}], preview:'<cs-float-button style="position:relative; right:auto; bottom:auto;"><i class="float-button-icon cses-tianjia"></i></cs-float-button>' },
+    'typography':        { zh: '排版',       desc: '标题/段落/引用/代码排版', version:'1.0', isNew:true, isUpdated:false, usage:['长文档排版','富文本预览'], notes:['遵循 14→16→18→20→24 层级'], related:[], preview:'<cs-typography style="width:260px;"><h3>设计工程化平台</h3><p>目标是把设计稿到生产代码的距离压缩到最短。</p></cs-typography>' },
+    'affix':             { zh: '固钉',       desc: '滚动固定元素（position sticky）', version:'1.0', isNew:true, isUpdated:false, usage:['表头固定','侧边工具栏'], notes:['position: sticky 纯 CSS'], related:[{name:'cs-anchor',why:'锚点导航'}], preview:'<cs-affix><div class="affix-bar">固定在顶部的固钉条</div></cs-affix>' },
+    'vote-option-editor': { zh: '投票选项编辑', desc: '投票选项编辑器，承载选项增删改与排序提示', version:'1.0', isNew:true, isUpdated:false, usage:['发起投票页选项编辑区','模板投票编辑'], notes:['支持 default/compact 密度','data-maxed 控制新增按钮禁用态'], related:[{name:'cs-form-field',why:'组合到表单字段区域'}], preview:'<cs-vote-option-editor style="width:320px;"><div class="voe-header"><span class="voe-title">选项配置</span><span class="voe-hint">最多可添加 10 个选项</span></div><div class="voe-list"><div class="voe-item"><i class="voe-drag cses-liebiao"></i><label class="voe-input-wrap"><input class="voe-input" type="text" value="方案 A"></label><button class="voe-remove" type="button"><i class="cses-shanchu"></i></button></div></div><button class="voe-add" type="button"><i class="cses-tianjia"></i><span>新增选项</span></button></cs-vote-option-editor>' },
+    'vote-publish-config': { zh: '投票发布配置', desc: '投票发布前的规则、有效期与动作区块', version:'1.0', isNew:true, isUpdated:false, usage:['发起投票页发布配置区','投票模板确认区'], notes:['支持 data-mode/data-anonymous/data-locked','底部动作区统一使用 vpc-button'], related:[{name:'cs-date-picker',why:'有效期选择'},{name:'cs-switch',why:'匿名/多选开关'}], preview:'<cs-vote-publish-config style="width:320px;"><div class="vpc-header"><span class="vpc-title">发布配置</span><span class="vpc-desc">发布前请确认规则与有效期</span></div><div class="vpc-grid"><div class="vpc-field"><span class="vpc-label">投票模式</span><div class="vpc-control" data-role="mode">单选</div></div><div class="vpc-field"><span class="vpc-label">有效期</span><div class="vpc-control">2026-04-30 18:00 截止</div></div></div><div class="vpc-actions"><button class="vpc-button" type="button">预览</button><button class="vpc-button" data-variant="primary" type="button">发布投票</button></div></cs-vote-publish-config>' },
+
+    // ========== AI 工作台（7） ==========
+    'hero-banner':         { zh: '欢迎区',         desc: '工作台首页 Hero：深紫渐变背景 + 欢迎语 + 4 快捷入口', version:'1.0', isNew:true, isUpdated:false,
+                             usage:['工作台首页顶部视觉锚点','展示欢迎语 + 今日概览 + 快捷入口'],
+                             notes:['深紫渐变背景由 var(--cs-gradient-hero) 控制','min-height 180px，圆角 16px','右侧装饰区可放 emoji 或 SVG 3D 装饰'],
+                             related:[{name:'cs-ai-suggestion-bar',why:'紧贴 Hero 下方常驻 AI 建议条'},{name:'cs-section-header',why:'下方模块标题'}],
+                             preview:'<cs-hero-banner style="width:520px;"><div class="hero-content"><div class="hero-greeting">早上好，Alex 👋</div><div class="hero-summary">4 月 28 日 周二 · 你有 <b>3 个待办</b>、<b>2 个会议</b>，AI 已替你完成 <b>12 项</b></div></div><div class="hero-illustration">🚀</div></cs-hero-banner>' },
+    'ai-suggestion-bar':   { zh: 'AI 建议条',      desc: 'AI 主动建议常驻条：头像 + 文案 + 一键 action + 翻页器（REQ-002）', version:'1.0', isNew:true, isUpdated:false,
+                             usage:['Hero 下方常驻位','AI 主动说话 + 一键 action 场景'],
+                             notes:['data-scenario 切剧本（first-recommend / meeting-prepare / delay-warning 等）','data-collapsed 折叠态','data-page 翻页器 1/n','左侧 4px 紫色色条 + 浅紫渐变底'],
+                             related:[{name:'cs-hero-banner',why:'位于其上方'},{name:'cs-task-row-smart',why:'AI 推荐落地的智能待办行'}],
+                             preview:'<cs-ai-suggestion-bar data-scenario="first-recommend" data-page="1/4" style="width:520px;"><span class="ai-avatar">🤖</span><div class="ai-content"><div class="ai-label"><span class="ai-tag">⭐ AI 推荐</span>今日第一推荐</div><div class="ai-message">你今天最该先做 <b>《Q1 产品规划修订》</b>，因为它阻塞了 15:00 评审会</div></div><div class="ai-actions"><button class="ai-action-btn" data-variant="primary" data-action="start-task">立即开始</button><button class="ai-action-btn" data-variant="text" data-action="snooze">稍后</button></div></cs-ai-suggestion-bar>' },
+    'section-header':      { zh: '模块标题',       desc: '风格档案 §8.4：3px 色条 + H2 标题 + 右侧"全部 >"', version:'1.0', isNew:true, isUpdated:false,
+                             usage:['工作台各模块标题位','列表/卡片区上方分隔标题'],
+                             notes:['data-color 控制色条颜色（primary/warning/danger/success/info/cyan/orange）','3px × 16px 色条 + 18px/600 标题','右侧 sh-right 可加跳转链接'],
+                             related:[{name:'cs-hero-banner',why:'位于 Hero 之下，作为模块分隔'}],
+                             preview:'<cs-section-header data-color="primary" style="width:320px;"><span class="sh-left"><span class="sh-bar"></span><span class="sh-title">智能待办</span><span class="sh-count">(8)</span></span><a class="sh-right" href="#" data-action="view-all">全部 <i class="cses-arrow-right"></i></a></cs-section-header>' },
+    'agent-tile':          { zh: 'Agent 磁贴',     desc: 'Agent 状态磁贴：头像 + 来源边色 + 状态点（REQ-004/023）', version:'1.0', isNew:true, isUpdated:false,
+                             usage:['cs-agent-bus 状态矩阵单元','Agent 列表/选择器中的视觉单元'],
+                             notes:['data-source 控制边框色（self/anthropic/openai/google/coze/custom）','data-status 控制状态点（online/working 脉冲/idle/needs 红/offline）','data-agent-id 用于点击弹详情面板'],
+                             related:[{name:'cs-agent-bus',why:'Agent 总线容器'},{name:'cs-agent-detail-panel',why:'点击后弹出的详情面板'}],
+                             preview:'<cs-agent-tile data-source="anthropic" data-status="working" data-agent-id="claude"><span class="agent-avatar">A</span><span class="agent-name">Claude</span><span class="agent-dot"></span></cs-agent-tile>' },
+    'agent-bus':           { zh: 'AI 工作总线',    desc: '多源 Agent Hub：Tabs + needs 队列 + 战绩 + 实时流 + 状态矩阵（REQ-004/023/024/025/027）', version:'1.0', isNew:true, isUpdated:false,
+                             usage:['工作台核心模块','统一管理自有/接入/自定义 Agent 的状态与产出'],
+                             notes:['内部包含 cs-agent-tile 子件','needs-row 行点击触发 cs-agent-detail-panel','flow-row hover 显示链路提示'],
+                             related:[{name:'cs-agent-tile',why:'状态矩阵单元'},{name:'cs-agent-detail-panel',why:'点击后弹出的详情面板'}],
+                             preview:'<cs-agent-bus style="width:520px;"><div class="bus-head"><span class="bus-title"><i class="cses-jiqiren"></i>AI 工作总线</span><span class="bus-stat">今日 28 项 · 14 个 Agent 在线</span></div><div class="bus-tabs"><button class="bus-tab" data-tab="all" data-active="true">全部 28</button><button class="bus-tab" data-tab="needs"><span class="badge-dot"></span>待你处理 3</button></div></cs-agent-bus>' },
+    'agent-detail-panel':  { zh: 'Agent 详情面板', desc: '右侧滑出面板：profile / 战绩 / needs / 调用成本（REQ-026）', version:'1.0', isNew:true, isUpdated:false,
+                             usage:['点击 cs-agent-tile 或 needs-row 时滑出','Agent 配置/暂停/移除入口'],
+                             notes:['data-open 控制显隐','data-source 决定边框/头像色','配套 .adp-mask 遮罩'],
+                             related:[{name:'cs-agent-tile',why:'触发面板的入口磁贴'},{name:'cs-agent-bus',why:'承载磁贴的总线'}],
+                             preview:'<cs-agent-detail-panel data-open="true" data-source="anthropic" data-agent-id="claude" style="width:320px; position:relative;"><div class="adp-head"><span class="adp-avatar">A</span><div class="adp-meta"><div class="adp-name">Claude Sonnet 4.6</div><div class="adp-provider">Anthropic <span class="adp-status">工作中</span></div></div><button class="adp-close" data-action="close-agent-panel">×</button></div></cs-agent-detail-panel>' },
+    'task-row-smart':      { zh: '智能待办行',     desc: '7 重智能化待办行：拖延预警 / AI 推荐 / 依赖 / 倒计时（REQ-006/013/014）', version:'1.0', isNew:true, isUpdated:false,
+                             usage:['工作台智能待办列表','AI 排序后的优先级待办行'],
+                             notes:['data-priority 控制色条与排序（overdue 红 / ai-pick 紫 / high 橙 / normal 蓝 / low 灰）','data-completed 完成态加删除线','ts-actions hover 才显示，含 ai-decompose / delegate-to-ai'],
+                             related:[{name:'cs-task-row',why:'普通任务行（无 AI 智能）'},{name:'cs-ai-suggestion-bar',why:'AI 推荐入口落地点'}],
+                             preview:'<cs-task-row-smart data-priority="overdue" data-task-id="t1" style="width:520px;"><span class="ts-priority-bar"></span><span class="ts-checkbox" data-action="toggle-task" data-task="t1"></span><div class="ts-body"><div class="ts-title-row"><span class="ts-title">《Q1 数据分析》</span><span class="ts-tag" data-type="danger">即将逾期</span></div><div class="ts-meta"><span class="ts-deadline"><i class="cses-time"></i> 4h 截止</span><span>👤 张三</span></div></div></cs-task-row-smart>' }
+  };
+
+  /* ===================================================
+     分组定义
+  =================================================== */
+  var GROUPS = [
+    { key: '原子',       label: '原子组件',    names: ['button','avatar','checkbox','radio','switch','input','textarea','select','tag','link','search-input'] },
+    { key: '分子',       label: '分子组件',    names: ['breadcrumb','status-badge','user-pill','view-switcher','tab-nav','date-separator','thumbnail','dropdown'] },
+    { key: '有机体',     label: '有机体',      names: ['file-upload'] },
+    { key: '桌面端业务', label: '桌面端业务',  names: ['task-row','kanban-card','kanban-column','doc-card','doc-list','doc-library-hero','doc-search-panel','doc-search-suggestion-list','doc-result-entry','doc-category-nav','doc-category-chip','doc-recommend-list','doc-recommend-card','doc-recent-update-list','doc-update-item','vote-option-editor','vote-publish-config'] },
+    { key: '文档详情',   label: '文档详情',    names: ['doc-breadcrumb-bar','doc-header','editor-toolbar','block-add','insert-panel','outline-panel','task-block','meeting-block','people-block'] },
+    { key: 'AI 工作台',  label: 'AI 工作台',   names: ['hero-banner','ai-suggestion-bar','section-header','agent-tile','agent-bus','agent-detail-panel','task-row-smart'] },
+    { key: '浮层',       label: '浮层类',      names: ['tooltip','popover','popconfirm','mention','auto-complete','cascader','tree-select','color-picker'] },
+    { key: '录入',       label: '录入控件',    names: ['date-picker','time-picker','slider','input-number','transfer','form-field','anchor','splitter'] },
+    { key: '数据展示',   label: '数据展示',    names: ['card','list','tree','table','calendar','statistic','badge','progress','timeline','descriptions'] },
+    { key: '反馈',       label: '反馈/通知',   names: ['message','notification','alert','spin','skeleton','result','empty','carousel','collapse','divider'] },
+    { key: '其他',       label: '其他',        names: ['comment','image','qr-code','watermark','float-button','typography','affix'] },
+  ];
+
+  /* ===================================================
+     更新日志数据
+  =================================================== */
+  var CHANGELOG = [
+    {
+      date: '2026-04-28',
+      entries: [
+        { type: 'new', comp: 'doc-breadcrumb-bar', note: '新增文档面包屑工具栏（顶部路径 + 保存状态 + 分享/编辑/演示按钮）', version: '1.0' },
+        { type: 'new', comp: 'doc-header',         note: '新增文档头部块（封面/表情入口 + 标题 + 元信息 + 输入提示）',   version: '1.0' },
+        { type: 'new', comp: 'editor-toolbar',     note: '新增编辑器工具栏（插入/AI/工具 + 撤销重做 + 字体字号 + 加粗斜下删 + 列表/缩进/对齐 + 搜索）', version: '1.0' },
+        { type: 'new', comp: 'block-add',          note: '新增段落级悬浮加号（默认隐藏，行 hover 才显现，点击在段上方插入新块）', version: '1.0' },
+        { type: 'new', comp: 'insert-panel',       note: '新增右侧"插入"抽屉（基础/列表/常用/内嵌网页 4 段分组陈列可插入块）', version: '1.0' },
+        { type: 'new', comp: 'outline-panel',      note: '新增右侧"目录"抽屉（多级树形章节导航 + 列表/卡片/附件/搜索 Tabs）', version: '1.0' },
+        { type: 'new', comp: 'task-block',         note: '新增文档内嵌任务块（图标+标题+状态+指派人头像组+日期+操作）', version: '1.0' },
+        { type: 'new', comp: 'meeting-block',      note: '新增文档内嵌会议块（会议图标+标题+时间状态元信息+操作）',     version: '1.0' },
+        { type: 'new', comp: 'people-block',       note: '新增文档内嵌人员/群名片块（蓝色描边表示被引用提及）',         version: '1.0' }
+      ]
+    },
+    {
+      date: '2026-04-21',
+      entries: [
+        { type: 'new', comp: 'doc-library-hero',        note: '新增文档库首页头部组件，承载标题说明与搜索入口', version: '1.0' },
+        { type: 'new', comp: 'doc-search-panel',        note: '新增文档库首页搜索面板组件', version: '1.0' },
+        { type: 'new', comp: 'doc-search-suggestion-list', note: '新增文档库首页搜索建议列表组件', version: '1.0' },
+        { type: 'new', comp: 'doc-result-entry',        note: '新增文档库首页搜索结果条目组件', version: '1.0' },
+        { type: 'new', comp: 'doc-category-nav',        note: '新增文档库首页分类导航组件', version: '1.0' },
+        { type: 'new', comp: 'doc-category-chip',       note: '新增文档库首页分类标签组件', version: '1.0' },
+        { type: 'new', comp: 'doc-recommend-list',      note: '新增文档库首页推荐列表组件', version: '1.0' },
+        { type: 'new', comp: 'doc-recommend-card',      note: '新增文档库首页推荐卡片组件', version: '1.0' },
+        { type: 'new', comp: 'doc-recent-update-list',  note: '新增文档库首页最近更新列表组件', version: '1.0' },
+        { type: 'new', comp: 'doc-update-item',         note: '新增文档库首页最近更新条目组件', version: '1.0' }
+      ]
+    },
+    {
+      date: '2026-04-15',
+      entries: [
+        { type: 'new',    comp: 'form-field',  note: '新增表单字段组件：标签在左、控件底部下划线44px，支持输入/下拉/选人/日期/时间/日期范围/时间范围/双列/错误态', version: '1.0' },
+        { type: 'remove', comp: 'form',        note: '删除 cs-form 组件，功能由 cs-form-field 替代', version: '-' },
+        { type: 'remove', comp: 'doc-outline', note: '删除 cs-doc-outline 组件', version: '-' },
+        { type: 'remove', comp: 'slash-menu',  note: '删除 cs-slash-menu 组件', version: '-' },
+        { type: 'remove', comp: 'member-row',  note: '删除 cs-member-row 组件', version: '-' },
+        { type: 'remove', comp: 'hash-code',   note: '删除 cs-hash-code 组件', version: '-' },
+        { type: 'remove', comp: 'steps',       note: '删除 cs-steps 组件', version: '-' },
+        { type: 'remove', comp: 'form-group',  note: '删除 cs-form-group 组件', version: '-' }
+      ]
+    },
+    {
+      date: '2026-04-08',
+      entries: [
+        { type: 'new',    comp: 'dropdown',            note: '新增下拉菜单组件（对标 ng-zorro Dropdown），由 dropdown.js 接管 toggle；含 6 向弹出位置、尺寸变体、菜单项变体（图标/快捷键/分组/分割线/危险/选中/禁用）', version: '1.0' },
+        { type: 'new',    comp: 'tooltip',             note: '纯 CSS hover 文字提示', version: '1.0' },
+        { type: 'new',    comp: 'popover',             note: '点击触发的富内容气泡卡片（popover.js）', version: '1.0' },
+        { type: 'new',    comp: 'popconfirm',          note: '轻量删除确认气泡（popconfirm.js）', version: '1.0' },
+        { type: 'new',    comp: 'mention',             note: '@ 用户输入框（mention.js）', version: '1.0' },
+        { type: 'new',    comp: 'auto-complete',       note: '输入自动补全（auto-complete.js）', version: '1.0' },
+        { type: 'new',    comp: 'cascader',            note: '级联选择（cascader.js）', version: '1.0' },
+        { type: 'new',    comp: 'tree-select',         note: '树形选择（tree-select.js）', version: '1.0' },
+        { type: 'new',    comp: 'color-picker',        note: '颜色选择器（color-picker.js）', version: '1.0' },
+        { type: 'new',    comp: 'date-picker',         note: '日期选择器（date-picker.js）', version: '1.0' },
+        { type: 'new',    comp: 'time-picker',         note: '时间选择器（time-picker.js）', version: '1.0' },
+        { type: 'new',    comp: 'slider',              note: '滑动输入条', version: '1.0' },
+        { type: 'new',    comp: 'input-number',        note: '数字输入框', version: '1.0' },
+        { type: 'new',    comp: 'transfer',            note: '穿梭框', version: '1.0' },
+        { type: 'new',    comp: 'form',                note: '表单容器（vertical/horizontal/inline）', version: '1.0' },
+        { type: 'new',    comp: 'anchor',              note: '锚点导航', version: '1.0' },
+        { type: 'new',    comp: 'steps',               note: '步骤条（横向/纵向）', version: '1.0' },
+        { type: 'new',    comp: 'splitter',            note: '分隔面板', version: '1.0' },
+        { type: 'new',    comp: 'card',                note: '通用卡片容器', version: '1.0' },
+        { type: 'new',    comp: 'list',                note: '通用列表容器', version: '1.0' },
+        { type: 'new',    comp: 'tree',                note: '通用树形控件', version: '1.0' },
+        { type: 'new',    comp: 'table',               note: '数据表格', version: '1.0' },
+        { type: 'new',    comp: 'calendar',            note: '通用月历视图', version: '1.0' },
+        { type: 'new',    comp: 'statistic',           note: '统计数值展示', version: '1.0' },
+        { type: 'new',    comp: 'badge',               note: '徽标数（小红点/数字）', version: '1.0' },
+        { type: 'new',    comp: 'progress',            note: '进度条（线形/环形）', version: '1.0' },
+        { type: 'new',    comp: 'timeline',            note: '时间轴容器', version: '1.0' },
+        { type: 'new',    comp: 'descriptions',        note: '描述列表', version: '1.0' },
+        { type: 'new',    comp: 'message',             note: '顶部浮层轻提示', version: '1.0' },
+        { type: 'new',    comp: 'notification',        note: '右上角通知卡片', version: '1.0' },
+        { type: 'new',    comp: 'alert',               note: '4 种语义色警告提示', version: '1.0' },
+        { type: 'new',    comp: 'spin',                note: '加载转圈', version: '1.0' },
+        { type: 'new',    comp: 'skeleton',            note: '骨架屏', version: '1.0' },
+        { type: 'new',    comp: 'result',              note: '结果页（成功/失败/警告）', version: '1.0' },
+        { type: 'new',    comp: 'empty',               note: '空状态', version: '1.0' },
+        { type: 'new',    comp: 'carousel',            note: '走马灯轮播', version: '1.0' },
+        { type: 'new',    comp: 'collapse',            note: '折叠面板（<details> 原生）', version: '1.0' },
+        { type: 'new',    comp: 'divider',             note: '分割线（横向/纵向/带文字）', version: '1.0' },
+        { type: 'new',    comp: 'comment',             note: '评论块', version: '1.0' },
+        { type: 'new',    comp: 'image',               note: '图片包装', version: '1.0' },
+        { type: 'new',    comp: 'qr-code',             note: '二维码展示容器', version: '1.0' },
+        { type: 'new',    comp: 'watermark',           note: '文字水印', version: '1.0' },
+        { type: 'new',    comp: 'float-button',        note: '悬浮按钮（FAB）', version: '1.0' },
+        { type: 'new',    comp: 'typography',          note: '标题/段落/引用/代码排版', version: '1.0' },
+        { type: 'new',    comp: 'hash-code',           note: '哈希码字符串', version: '1.0' },
+        { type: 'new',    comp: 'affix',               note: '固钉（position sticky）', version: '1.0' }
+      ]
+    },
+    {
+      date: '2026-04-16',
+      entries: [
+        { type: 'new',    comp: 'doc-list',            note: '新增文档列表组件，使用字体图标展示文档类型（Word/Excel/PDF/图片）', version: '1.0' },
+        { type: 'update', comp: 'doc-card',            note: '更新为带封面图的文档库首页卡片样式', version: '1.1' },
+        { type: 'update', comp: 'cses-icons',          note: '新增文档类型图标：doc-word/doc-excel/doc-pdf/doc-image/doc-default', version: '1.1' }
+      ]
+    },
+    {
+      date: '2026-04-02',
+      entries: [
+        { type: 'new',    comp: 'doc-card',            note: '新增文档卡片组件，支持 list/grid 两种视图变体', version: '1.0' }
+      ]
+    },
+    {
+      date: '2026-03-31',
+      entries: [
+        { type: 'new',    comp: 'kanban-card',        note: '新增看板卡片组件',         version: '1.0' },
+        { type: 'new',    comp: 'kanban-column',       note: '新增看板列容器组件',       version: '1.0' },
+        { type: 'update', comp: 'status-badge',        note: '新增更多语义色变体',       version: '1.1' }
+      ]
+    },
+    {
+      date: '2026-03-15',
+      entries: [
+        { type: 'new',    comp: 'button',       note: '基础按钮组件首发',     version: '1.0' },
+        { type: 'new',    comp: 'avatar',       note: '头像组件首发',         version: '1.0' },
+        { type: 'new',    comp: 'checkbox',     note: '复选框组件首发',       version: '1.0' },
+        { type: 'new',    comp: 'radio',        note: '单选框组件首发',       version: '1.0' },
+        { type: 'new',    comp: 'switch',       note: '开关组件首发',         version: '1.0' },
+        { type: 'new',    comp: 'input',        note: '输入框组件首发',       version: '1.0' },
+        { type: 'new',    comp: 'tag',          note: '标签组件首发',         version: '1.0' },
+        { type: 'new',    comp: 'status-badge', note: '状态标记组件首发',     version: '1.0' }
+      ]
+    }
+  ];
+
+  /* ===================================================
+     状态
+  =================================================== */
+  var currentComp = null;
+  var currentView = null; // 'overview' | 'changelog' | comp name
+  var currentTab = 'preview';
+  var previewBg = 'white';
+  var fetchedCss = {};
+  var fetchedHtml = {};
+
+  /* ===================================================
+     DOM 引用
+  =================================================== */
+  var docContent = document.getElementById('docContent');
+  var docSearch = document.getElementById('docSearch');
+  var searchEmpty = document.getElementById('searchEmpty');
+  var navItems = document.querySelectorAll('.doc-nav-item');
+  var navGroups = document.querySelectorAll('.doc-nav-group');
+
+  /* ===================================================
+     导航点击
+  =================================================== */
+  navItems.forEach(function (item) {
+    item.addEventListener('click', function () {
+      var name = this.getAttribute('data-name');
+      navigate(name);
+    });
+  });
+
+  // 动态注入版本徽章（仅非当前版本才显示版本号）
+  var LIBRARY_VERSION = '1.0';
+  navItems.forEach(function(item) {
+    var name = item.getAttribute('data-name');
+    var info = COMPONENTS[name];
+    if (!info) return;
+    if (info.isNew) {
+      var badge = document.createElement('span');
+      badge.className = 'nav-badge-new';
+      badge.textContent = 'NEW';
+      item.appendChild(badge);
+    } else if (info.isUpdated) {
+      var uBadge = document.createElement('span');
+      uBadge.className = 'nav-badge-updated';
+      uBadge.textContent = '更新';
+      item.appendChild(uBadge);
+    } else if (info.version && info.version !== LIBRARY_VERSION) {
+      var vLabel = document.createElement('span');
+      vLabel.className = 'nav-version';
+      vLabel.textContent = 'v' + info.version;
+      item.appendChild(vLabel);
+    }
+  });
+
+  function navigate(target) {
+    if (currentView === target) return;
+    currentView = target;
+
+    // 清除所有高亮
+    navItems.forEach(function (i) { i.classList.remove('active'); });
+    var overviewBtn = document.getElementById('navOverview');
+    var changelogBtn = document.getElementById('navChangelog');
+    if (overviewBtn) overviewBtn.classList.remove('active');
+    if (changelogBtn) changelogBtn.classList.remove('active');
+
+    if (target === 'overview') {
+      if (overviewBtn) overviewBtn.classList.add('active');
+      location.hash = 'overview';
+      renderOverview();
+    } else if (target === 'changelog') {
+      if (changelogBtn) changelogBtn.classList.add('active');
+      location.hash = 'changelog';
+      renderChangelog();
+    } else {
+      // 组件详情
+      currentComp = target;
+      currentTab = 'preview';
+      var navTarget = document.querySelector('.doc-nav-item[data-name="' + target + '"]');
+      if (navTarget) {
+        navTarget.classList.add('active');
+        navTarget.scrollIntoView({ block: 'nearest' });
+      }
+      location.hash = target;
+      renderCompPage(target);
+    }
+  }
+
+  function selectComp(name) { navigate(name); }
+
+  // 暴露给全局，供 onclick 属性调用
+  window.navigate = navigate;
+
+  /* ===================================================
+     渲染：组件总览页
+  =================================================== */
+  function renderOverview() {
+    var q = (docSearch.value || '').trim().toLowerCase();
+
+    var html = '<div class="overview-page" id="overviewPage">';
+
+    // 统计过滤后的数量
+    var totalVisible = 0;
+
+    GROUPS.forEach(function(group) {
+      var filtered = group.names.filter(function(name) {
+        var info = COMPONENTS[name];
+        if (!info) return false;
+        if (!q) return true;
+        return name.toLowerCase().indexOf(q) >= 0 ||
+               info.zh.indexOf(q) >= 0 ||
+               (info.desc && info.desc.indexOf(q) >= 0);
+      });
+
+      if (filtered.length === 0) return;
+      totalVisible += filtered.length;
+
+      html += '<div class="overview-section" id="section-' + group.key + '">';
+      html += '<div class="overview-section-header">';
+      html += '<span class="overview-section-title">' + group.label + '</span>';
+      html += '<span class="overview-section-count">' + filtered.length + '</span>';
+      html += '</div>';
+      html += '<div class="overview-grid">';
+
+      filtered.forEach(function(name) {
+        var info = COMPONENTS[name] || { zh: name, desc: '', version: '1.0', isNew: false, isUpdated: false, preview: '' };
+        var displayName = name.replace(/-/g, ' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+
+        html += '<div class="overview-card" onclick="navigate(\'' + name + '\')" title="' + info.desc + '">';
+        html += '<div class="card-preview-area">';
+        html += '<div class="preview-inner">' + (info.preview || '<i class="cses-settings" style="font-size:24px;opacity:0.2;"></i>') + '</div>';
+        html += '</div>';
+        html += '<div class="card-meta">';
+        html += '<div class="card-title"><span class="card-name-en">' + displayName + '</span><span class="card-name-zh">' + info.zh + '</span></div>';
+        html += '<div class="card-footer">';
+        html += '<span class="card-tag-name">cs-' + name + '</span>';
+        if (info.version && info.version !== LIBRARY_VERSION) {
+          html += '<span class="card-version">v' + info.version + '</span>';
+        }
+        if (info.isNew) html += '<span class="card-badge-new">NEW</span>';
+        else if (info.isUpdated) html += '<span class="card-badge-updated">更新</span>';
+        html += '</div>';
+        html += '</div>';
+        html += '</div>';
+      });
+
+      html += '</div></div>'; // end grid + section
+    });
+
+    if (totalVisible === 0) {
+      html += '<div class="overview-empty">未找到匹配的组件</div>';
+    }
+
+    html += '</div>'; // end overview-page
+
+    docContent.innerHTML = html;
+
+    // 注入组件预览所需的 CSS（各组件 CSS 已通过 base.css + 单独文件加载，这里用默认样式兜底）
+    injectPreviewCssForOverview();
+  }
+
+  function injectPreviewCssForOverview() {
+    // 一次性加载所有组件 CSS，确保总览卡片预览正常显示
+    if (document.getElementById('injected-all-css-ov')) return;
+    Object.keys(COMPONENTS).forEach(function(n) {
+      if (!document.querySelector('link[data-comp-css="' + n + '"]')) {
+        var lk = document.createElement('link');
+        lk.rel = 'stylesheet';
+        lk.setAttribute('data-comp-css', n);
+        lk.href = n + '/' + n + '.css';
+        document.head.appendChild(lk);
+      }
+    });
+    var marker = document.createElement('span');
+    marker.id = 'injected-all-css-ov';
+    marker.style.display = 'none';
+    document.head.appendChild(marker);
+  }
+
+  /* ===================================================
+     渲染：更新日志页
+  =================================================== */
+  function renderChangelog() {
+    var typeLabel = { new: '新增', update: '更新', fix: '修复' };
+    var html = '<div class="changelog-page">';
+    html += '<div class="changelog-header">';
+    html += '<div class="changelog-title">更新日志</div>';
+    html += '<div class="changelog-subtitle">记录各组件的版本变更历史，与 pending/ 目录版本对应</div>';
+    html += '</div>';
+
+    CHANGELOG.forEach(function(group) {
+      html += '<div class="changelog-group">';
+      html += '<div class="changelog-date">' + group.date + '</div>';
+      html += '<div class="changelog-entries">';
+      group.entries.forEach(function(entry) {
+        var info = COMPONENTS[entry.comp] || { zh: entry.comp };
+        html += '<div class="changelog-entry">';
+        html += '<span class="changelog-type ' + entry.type + '">' + (typeLabel[entry.type] || entry.type) + '</span>';
+        html += '<span class="changelog-comp-link" onclick="navigate(\'' + entry.comp + '\')">' + entry.comp + ' · ' + info.zh + '</span>';
+        html += '<span class="changelog-note">' + entry.note + '</span>';
+        html += '<span class="changelog-ver">v' + entry.version + '</span>';
+        html += '</div>';
+      });
+      html += '</div></div>';
+    });
+
+    html += '</div>';
+    docContent.innerHTML = html;
+  }
+
+  /* ===================================================
+     渲染组件文档页
+  =================================================== */
+  function renderCompPage(name) {
+    var info = COMPONENTS[name] || { zh: name, desc: '' };
+
+    docContent.innerHTML = [
+      '<div class="comp-header">',
+      '  <div class="comp-header-top">',
+      '    <div>',
+      '      <div class="comp-header-title-row">',
+      '        <span class="comp-title-en">' + name + '</span>',
+      '        <span class="comp-title-tag">cs-' + name + '</span>',
+      '        <span class="comp-title-zh">' + info.zh + '</span>',
+      '      </div>',
+      '      <div class="comp-desc">' + info.desc + '</div>',
+      '    </div>',
+      '    <div class="comp-header-actions">',
+      '      <a class="comp-btn" href="' + name + '/' + name + '.html" target="_blank">',
+      '        <i class="cses-external_link" style="font-size:12px;"></i> 新标签页打开',
+      '      </a>',
+      '    </div>',
+      '  </div>',
+      '</div>',
+      '<div class="comp-tabs" id="compTabs">',
+      '  <div class="comp-tab active" data-tab="preview">预览</div>',
+      '  <div class="comp-tab" data-tab="code">代码</div>',
+      '  <div class="comp-tab" data-tab="api">API</div>',
+      '  <div class="comp-tab" data-tab="guide">使用指南</div>',
+      '</div>',
+      '<div class="comp-tab-panels" id="compPanels">',
+      '  <div class="comp-tab-panel active" id="panelPreview">',
+      '    <div class="preview-toolbar" id="previewToolbar">',
+      '      <span class="preview-toolbar-label">背景</span>',
+      '      <button class="bg-switch-btn active" data-bg="white">',
+      '        <span class="bg-swatch" style="background:#ffffff;"></span> 白色',
+      '      </button>',
+      '      <button class="bg-switch-btn" data-bg="light">',
+      '        <span class="bg-swatch" style="background:#f5f5f5;"></span> 浅灰',
+      '      </button>',
+      '      <button class="bg-switch-btn" data-bg="dark">',
+      '        <span class="bg-swatch" style="background:#2c2a3a;"></span> 深色',
+      '      </button>',
+      '    </div>',
+      '    <div class="preview-demo-wrap" id="previewDemoWrap">',
+      '      <div id="previewSandbox" class="preview-sandbox"></div>',
+      '      <div id="controlsPanel" class="controls-panel" style="display:none;"></div>',
+      '    </div>',
+      '  </div>',
+      '  <div class="comp-tab-panel" id="panelCode">',
+      '    <div class="code-panel">',
+      '      <div class="code-toolbar">',
+      '        <span class="code-lang-badge">HTML · ' + name + '.html · body 内容</span>',
+      '        <button class="code-copy-btn" id="copyCodeBtn"><i class="cses-copy" style="font-size:11px;"></i> 复制</button>',
+      '      </div>',
+      '      <div class="code-scroll"><pre class="code-block" id="codeBlock"><span class="hl-comment">// 正在加载...</span></pre></div>',
+      '    </div>',
+      '  </div>',
+      '  <div class="comp-tab-panel" id="panelApi">',
+      '    <div class="api-panel" id="apiPanel"><div class="api-empty">正在加载...</div></div>',
+      '  </div>',
+      '  <div class="comp-tab-panel" id="panelGuide">',
+      '    <div class="guide-panel" id="guidePanel"></div>',
+      '  </div>',
+      '</div>'
+    ].join('\n');
+
+    // 绑定 Tab 切换
+    document.getElementById('compTabs').querySelectorAll('.comp-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        switchTab(this.getAttribute('data-tab'));
+      });
+    });
+
+    // 绑定背景切换
+    document.getElementById('previewToolbar').querySelectorAll('.bg-switch-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        switchBg(this.getAttribute('data-bg'));
+      });
+    });
+
+    // 恢复当前背景
+    switchBg(previewBg, true);
+
+    // 异步加载代码和 API，并 inline 渲染预览
+    loadHtml(name);
+    loadCss(name);
+    loadPreviewInline(name);
+    renderGuide(name);
+  }
+
+  /* ===================================================
+     Tab 切换
+  =================================================== */
+  function switchTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.comp-tab').forEach(function (t) {
+      t.classList.toggle('active', t.getAttribute('data-tab') === tab);
+    });
+    document.querySelectorAll('.comp-tab-panel').forEach(function (p) {
+      p.classList.remove('active');
+    });
+    var panelMap = { preview: 'panelPreview', code: 'panelCode', api: 'panelApi', guide: 'panelGuide' };
+    var panel = document.getElementById(panelMap[tab]);
+    if (panel) panel.classList.add('active');
+  }
+
+  /* ===================================================
+     背景切换
+  =================================================== */
+  var bgColors = { white: '#ffffff', light: '#f5f5f5', dark: '#2c2a3a' };
+  function switchBg(bg, silent) {
+    previewBg = bg;
+    var color = bgColors[bg] || '#ffffff';
+    var wrap = document.getElementById('previewDemoWrap');
+    var sandbox = document.getElementById('previewSandbox');
+    if (wrap) wrap.style.background = color;
+    // sandbox 必须显式覆盖：组件 .html 的 body { background: ... } 会被 scopeCss
+    // 改写到 #previewSandbox 选择器并赢过 wrap 的背景。inline style 权重高于
+    // 注入的 scoped 规则，能保证 bg 切换始终生效。
+    if (sandbox) sandbox.style.background = color;
+    if (!silent) {
+      document.querySelectorAll('.bg-switch-btn').forEach(function (btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-bg') === bg);
+      });
+    }
+  }
+
+  /* ===================================================
+     inline 预览：loadPreviewInline / scopeCss / addInteractions / renderControls
+  =================================================== */
+  function loadPreviewInline(name) {
+    var sandbox = document.getElementById('previewSandbox');
+    if (!sandbox) return;
+    sandbox.innerHTML = '<div class="preview-loading">加载中...</div>';
+
+    // 注入组件 CSS（动态 link 标签）
+    var oldLink = document.getElementById('injected-comp-css');
+    if (oldLink) oldLink.remove();
+    var link = document.createElement('link');
+    link.id = 'injected-comp-css';
+    link.rel = 'stylesheet';
+    link.href = name + '/' + name + '.css';
+    document.head.appendChild(link);
+
+    // fetch HTML，提取 body 内容，注入 sandbox
+    fetch(name + '/' + name + '.html')
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+        if (!bodyMatch) return;
+        var bodyContent = bodyMatch[1];
+
+        // 提取 <style>：先从 <head> 再从 <body>（组件 HTML 的样式通常在 head）
+        var scopedStyles = '';
+        var headMatch = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
+        if (headMatch) {
+          // 注入依赖的外部 <link> CSS（如 context-menu 依赖 menu-item.css）
+          headMatch[1].replace(/<link[^>]+rel=["']stylesheet["'][^>]*>/gi, function(tag) {
+            var hrefMatch = tag.match(/href=["']([^"']+)["']/i);
+            if (!hrefMatch) return;
+            var href = hrefMatch[1];
+            if (href.indexOf('base.css') >= 0 || href.indexOf('cses-icons.css') >= 0) return;
+            if (href === name + '.css') return;
+            var depId = 'injected-dep-' + href.replace(/[^a-z0-9]/gi, '-');
+            if (!document.getElementById(depId)) {
+              var depLink = document.createElement('link');
+              depLink.id = depId;
+              depLink.rel = 'stylesheet';
+              depLink.href = name + '/' + href;
+              document.head.appendChild(depLink);
+            }
+          });
+          headMatch[1].replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, function(_, css) {
+            scopedStyles += scopeCss(css, '#previewSandbox');
+          });
+        }
+        bodyContent = bodyContent.replace(/<style[^>]*>([\s\S]*?)<\/style>/gi, function(_, css) {
+          scopedStyles += scopeCss(css, '#previewSandbox');
+          return '';
+        });
+
+        // 注入 scoped style
+        var oldStyle = document.getElementById('injected-demo-style');
+        if (oldStyle) oldStyle.remove();
+        if (scopedStyles) {
+          var st = document.createElement('style');
+          st.id = 'injected-demo-style';
+          st.textContent = scopedStyles;
+          document.head.appendChild(st);
+        }
+
+        sandbox.innerHTML = bodyContent;
+        addInteractions(sandbox);
+
+        // innerHTML 不会执行 <script> 标签，必须手动解析原始 HTML 中的 script src，
+        // 动态 createElement 注入 head 才会执行组件 JS（如 dropdown.js）
+        // 去重：已加载过的 src 不再注入，避免重复绑定全局事件
+        (function injectComponentScripts() {
+          var scriptRegex = /<script\b[^>]*\bsrc=["']([^"']+)["'][^>]*><\/script>/gi;
+          var seen = {};
+          var match;
+          while ((match = scriptRegex.exec(html)) !== null) {
+            var src = match[1];
+            // 跳过绝对 URL（cdn、外链）和已全局加载的
+            if (/^(https?:)?\/\//.test(src)) continue;
+            // 跳过 live-server 注入的 reload 脚本（type=text/javascript inline）
+            var fullSrc = name + '/' + src;
+            if (seen[fullSrc]) continue;
+            seen[fullSrc] = true;
+            // 同 src 已存在 → 跳过（防止重复绑定 document 级事件）
+            if (document.querySelector('script[data-comp-src="' + fullSrc + '"]')) continue;
+            var s = document.createElement('script');
+            s.src = fullSrc;
+            s.setAttribute('data-comp-src', fullSrc);
+            s.async = false;
+            document.body.appendChild(s);
+          }
+        })();
+
+        // 如果 CSS 已加载，渲染 Controls；否则等 loadCss 完成后会调用
+        if (fetchedCss[name] !== undefined && fetchedCss[name] !== null) {
+          renderControls(name, parseDataAttrs(fetchedCss[name]));
+        }
+      })
+      .catch(function() {
+        sandbox.innerHTML = '<div class="preview-fetch-error">需要通过本地服务器访问（如 node scripts/req-server.mjs）</div>';
+      });
+  }
+
+  function scopeCss(css, scope) {
+    // 移除注释
+    css = css.replace(/\/\*[\s\S]*?\*\//g, '');
+    // 将 body 选择器替换为 scope
+    css = css.replace(/\bbody\b/g, scope);
+    // 对其他选择器添加 scope 前缀（跳过 @规则 和已含 scope 的）
+    css = css.replace(/([^{}@]+)\{/g, function(match, sel) {
+      if (sel.trim().charAt(0) === '@') return match;
+      if (sel.includes(scope)) return match;
+      var scoped = sel.split(',').map(function(s) {
+        s = s.trim();
+        if (!s) return s;
+        // cs-* 选择器不需要 scope（已是组件级）
+        if (/^cs-/.test(s)) return s;
+        return scope + ' ' + s;
+      }).join(', ');
+      return scoped + ' {';
+    });
+    return css;
+  }
+
+  function addInteractions(container) {
+    // cs-checkbox：点击切换 data-checked
+    container.querySelectorAll('cs-checkbox').forEach(function(el) {
+      if (el.hasAttribute('data-disabled')) return;
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', function() {
+        this.toggleAttribute('data-checked');
+      });
+    });
+
+    // cs-switch：点击切换 data-checked
+    container.querySelectorAll('cs-switch').forEach(function(el) {
+      if (el.hasAttribute('data-disabled')) return;
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', function() {
+        this.toggleAttribute('data-checked');
+      });
+    });
+
+    // cs-radio：点击设为选中，同组其他取消
+    container.querySelectorAll('cs-radio').forEach(function(el) {
+      if (el.hasAttribute('data-disabled')) return;
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', function() {
+        var group = (this.closest('.row') || this.closest('.section') || container)
+                      .querySelectorAll('cs-radio');
+        group.forEach(function(r) { r.removeAttribute('data-checked'); });
+        this.setAttribute('data-checked', '');
+      });
+    });
+
+
+    // cs-segment-control 内部 item：互斥激活
+    container.querySelectorAll('cs-segment-control').forEach(function(seg) {
+      var items = seg.querySelectorAll('.segment-item, [class*="item"]');
+      items.forEach(function(item) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', function() {
+          items.forEach(function(i) { i.removeAttribute('data-active'); });
+          this.setAttribute('data-active', '');
+        });
+      });
+    });
+
+    // cs-tab-nav 内部 item：互斥激活
+    container.querySelectorAll('cs-tab-nav').forEach(function(nav) {
+      var items = nav.querySelectorAll('.tab-item, [class*="tab-item"]');
+      items.forEach(function(item) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', function() {
+          items.forEach(function(i) { i.removeAttribute('data-active'); });
+          this.setAttribute('data-active', '');
+        });
+      });
+    });
+
+    // cs-nav-item：互斥激活
+    var navItemEls = container.querySelectorAll('cs-nav-item');
+    navItemEls.forEach(function(el) {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', function() {
+        navItemEls.forEach(function(i) { i.removeAttribute('data-active'); });
+        this.setAttribute('data-active', '');
+      });
+    });
+
+    // cs-view-switcher 内部 item：互斥激活
+    container.querySelectorAll('cs-view-switcher').forEach(function(sw) {
+      var items = sw.querySelectorAll('[class*="item"], [class*="btn"]');
+      items.forEach(function(item) {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', function() {
+          items.forEach(function(i) { i.removeAttribute('data-active'); });
+          this.setAttribute('data-active', '');
+        });
+      });
+    });
+
+
+
+    // cs-menu-item data-active 互斥激活
+    container.querySelectorAll('cs-menu-item').forEach(function(el) {
+      el.style.cursor = 'pointer';
+      el.addEventListener('click', function() {
+        container.querySelectorAll('cs-menu-item').forEach(function(i) { i.removeAttribute('data-active'); });
+        this.setAttribute('data-active', '');
+      });
+    });
+  }
+
+  function renderControls(name, attrs) {
+    var panel = document.getElementById('controlsPanel');
+    if (!panel) return;
+    if (!attrs || attrs.length === 0) { panel.style.display = 'none'; return; }
+
+    var html = '<div class="controls-header"><span class="controls-title">Controls</span><span class="controls-hint">实时调整属性</span></div>';
+    html += '<div class="controls-rows">';
+
+    attrs.forEach(function(attr) {
+      html += '<div class="controls-row">';
+      html += '<span class="controls-attr">' + attr.name + '</span>';
+      html += '<div class="controls-chips">';
+
+      if (attr.type === 'boolean') {
+        html += '<button class="ctrl-chip ctrl-bool" data-attr="' + attr.name + '" data-bool="true">开启</button>';
+        html += '<button class="ctrl-chip ctrl-bool active" data-attr="' + attr.name + '" data-bool="false">关闭</button>';
+      } else {
+        attr.values.forEach(function(v, i) {
+          html += '<button class="ctrl-chip' + (i === 0 ? ' active' : '') + '" data-attr="' + attr.name + '" data-val="' + v + '">' + v + '</button>';
+        });
+      }
+
+      html += '</div></div>';
+    });
+
+    html += '</div>';
+    panel.innerHTML = html;
+    panel.style.display = 'block';
+
+    // 绑定控制事件
+    panel.querySelectorAll('.ctrl-chip').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var attrName = this.getAttribute('data-attr');
+        var val = this.getAttribute('data-val');
+        var isBool = this.getAttribute('data-bool') !== null;
+        var sandbox = document.getElementById('previewSandbox');
+        var targetEl = sandbox ? sandbox.querySelector('cs-' + name) : null;
+        if (!targetEl) return;
+
+        // 同组 chip 取消 active
+        panel.querySelectorAll('.ctrl-chip[data-attr="' + attrName + '"]').forEach(function(c) {
+          c.classList.remove('active');
+        });
+        this.classList.add('active');
+
+        // 更新目标元素属性
+        if (isBool) {
+          var boolVal = this.getAttribute('data-bool') === 'true';
+          var bareAttr = attrName.replace(/^data-/, '');
+          if (boolVal) {
+            targetEl.setAttribute(bareAttr, '');
+          } else {
+            targetEl.removeAttribute(bareAttr);
+            targetEl.removeAttribute(attrName);
+          }
+        } else {
+          targetEl.setAttribute(attrName, val);
+        }
+      });
+    });
+  }
+
+  /* ===================================================
+     fetch HTML 内容 → 代码面板
+  =================================================== */
+  function loadHtml(name) {
+    var url = name + '/' + name + '.html';
+    if (fetchedHtml[name] !== undefined) {
+      renderCode(name, fetchedHtml[name]);
+      return;
+    }
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      })
+      .then(function (html) {
+        fetchedHtml[name] = html;
+        renderCode(name, html);
+      })
+      .catch(function (e) {
+        fetchedHtml[name] = null;
+        renderCodeError(name, e);
+      });
+  }
+
+  function extractBody(html) {
+    var m = html.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+    if (m) return m[1].trim();
+    return html.trim();
+  }
+
+  function renderCode(name, html) {
+    if (currentComp !== name) return;
+    var block = document.getElementById('codeBlock');
+    var copyBtn = document.getElementById('copyCodeBtn');
+    if (!block) return;
+    var body = extractBody(html);
+    block.innerHTML = highlight(body);
+    if (copyBtn) {
+      copyBtn.onclick = function () {
+        copyText(body, copyBtn);
+      };
+    }
+  }
+
+  function renderCodeError(name, err) {
+    if (currentComp !== name) return;
+    var block = document.getElementById('codeBlock');
+    if (!block) return;
+    block.innerHTML = [
+      '<div class="code-empty">',
+      '  <div class="code-empty-icon"><i class="cses-tishi" style="font-size:32px;opacity:0.3;color:#f9e2af;"></i></div>',
+      '  <div class="code-empty-text">无法加载文件内容</div>',
+      '  <div class="code-empty-hint">在 file:// 协议下 fetch 受限，请用本地服务器（如 npx serve）打开</div>',
+      '</div>'
+    ].join('');
+  }
+
+  /* ===================================================
+     fetch CSS 内容 → API 面板
+  =================================================== */
+  function loadCss(name) {
+    var url = name + '/' + name + '.css';
+    if (fetchedCss[name] !== undefined) {
+      renderApi(name, fetchedCss[name]);
+      return;
+    }
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      })
+      .then(function (css) {
+        fetchedCss[name] = css;
+        renderApi(name, css);
+      })
+      .catch(function (e) {
+        fetchedCss[name] = null;
+        renderApiError(name);
+      });
+  }
+
+  /* ===================================================
+     解析 CSS 注释中的 data 属性
+  =================================================== */
+  function parseDataAttrs(css) {
+    // 逐行扫描，支持中英文格式，兼容注释内嵌套 */ 的 CSS 文件
+    var lines = css.split('\n');
+    var attrs = {};
+    var inDataSection = false;
+
+    for (var i = 0; i < lines.length; i++) {
+      var clean = lines[i].replace(/^\s*\*\s?/, '').trim();
+
+      // 检测 data 属性段落开始（中文：data 属性： / 英文：data attributes:）
+      if (/^data\s*(?:属性|attributes?)\s*[：:]/i.test(clean)) {
+        inDataSection = true;
+        continue;
+      }
+
+      if (!inDataSection) continue;
+
+      // 段落结束：空行或注释结束
+      if (!clean || clean === '*/' || clean === '/') break;
+
+      // data-attr="val" — desc（枚举值）
+      var mVal = clean.match(/^(data-[\w-]+)="([^"]*)"(?:\s*[—\-–]\s*(.*))?$/);
+      if (mVal) {
+        var an = mVal[1], val = mVal[2], desc = (mVal[3] || '').trim();
+        if (!attrs[an]) attrs[an] = { desc: desc, values: [], type: 'enum' };
+        if (val) attrs[an].values.push(val);
+        if (!attrs[an].desc && desc) attrs[an].desc = desc;
+        continue;
+      }
+
+      // data-attr — desc（布尔值，无引号）
+      var mBool = clean.match(/^(data-[\w-]+)(?:\s*[—\-–]\s*(.*))?$/);
+      if (mBool) {
+        var an2 = mBool[1], desc2 = (mBool[2] || '').trim();
+        if (!attrs[an2]) attrs[an2] = { desc: desc2, values: [], type: 'boolean' };
+        if (!attrs[an2].desc && desc2) attrs[an2].desc = desc2;
+        continue;
+      }
+
+      // 非 data- 开头的行，结束段落
+      if (!clean.startsWith('data-')) break;
+    }
+
+    return Object.keys(attrs).map(function(k) {
+      return { name: k, desc: attrs[k].desc, values: attrs[k].values, type: attrs[k].values.length > 0 ? 'enum' : 'boolean' };
+    });
+  }
+
+  function renderApi(name, css) {
+    if (currentComp !== name) return;
+    var panel = document.getElementById('apiPanel');
+    if (!panel) return;
+
+    var attrs = parseDataAttrs(css);
+
+    // 如果 sandbox 已渲染（预览先加载完），补充渲染 Controls
+    var sandbox = document.getElementById('previewSandbox');
+    if (sandbox && sandbox.children.length > 0 && !sandbox.querySelector('.preview-loading')) {
+      renderControls(name, attrs);
+    }
+
+    if (!attrs || attrs.length === 0) {
+      panel.innerHTML = '<div class="api-empty">此组件无可调节的 data-* 属性。</div>';
+      return;
+    }
+
+    var rows = attrs.map(function (attr) {
+      var vals = attr.values.length > 0
+        ? '<div class="api-vals">' + attr.values.map(function (v) { return '<span class="api-val-chip">"' + v + '"</span>'; }).join('') + '</div>'
+        : '<span style="color:var(--cs-color-text-light2);font-size:12px;">—</span>';
+      var typeBadge = attr.type === 'boolean'
+        ? '<span class="api-type-badge">boolean</span>'
+        : '<span class="api-type-badge">string</span>';
+      return [
+        '<tr>',
+        '  <td><span class="api-attr-name">' + attr.name + '</span></td>',
+        '  <td>' + (attr.desc || '—') + '</td>',
+        '  <td>' + vals + '</td>',
+        '  <td>' + typeBadge + '</td>',
+        '</tr>'
+      ].join('');
+    }).join('');
+
+    panel.innerHTML = [
+      '<div class="api-section-title">data 属性</div>',
+      '<div class="api-table-wrap">',
+      '  <table class="api-table">',
+      '    <thead><tr>',
+      '      <th>属性</th><th>说明</th><th>可选值</th><th>类型</th>',
+      '    </tr></thead>',
+      '    <tbody>' + rows + '</tbody>',
+      '  </table>',
+      '</div>'
+    ].join('');
+  }
+
+  function renderApiError(name) {
+    if (currentComp !== name) return;
+    var panel = document.getElementById('apiPanel');
+    if (panel) panel.innerHTML = '<div class="api-empty">无法加载 CSS 文件，请通过本地服务器访问。</div>';
+  }
+
+  /* ===================================================
+     使用指南面板
+  =================================================== */
+  function renderGuide(name) {
+    var panel = document.getElementById('guidePanel');
+    if (!panel) return;
+    var info = COMPONENTS[name];
+    if (!info) { panel.innerHTML = '<div class="api-empty">暂无使用指南。</div>'; return; }
+
+    var html = '';
+
+    // 使用场景
+    if (info.usage && info.usage.length) {
+      html += '<div class="guide-section">';
+      html += '<div class="guide-section-header"><i class="guide-section-icon usage cses-play"></i><span class="guide-section-title">使用场景</span></div>';
+      html += '<ul class="guide-list">';
+      info.usage.forEach(function(u) {
+        html += '<li class="guide-item">' + u + '</li>';
+      });
+      html += '</ul></div>';
+    }
+
+    // 注意事项
+    if (info.notes && info.notes.length) {
+      html += '<div class="guide-section">';
+      html += '<div class="guide-section-header"><i class="guide-section-icon notes cses-tishi"></i><span class="guide-section-title">注意事项</span></div>';
+      html += '<ul class="guide-list">';
+      info.notes.forEach(function(n) {
+        html += '<li class="guide-item">' + n + '</li>';
+      });
+      html += '</ul></div>';
+    }
+
+    // 相关组件
+    if (info.related && info.related.length) {
+      html += '<div class="guide-section">';
+      html += '<div class="guide-section-header"><i class="guide-section-icon related cses-link"></i><span class="guide-section-title">相关组件</span></div>';
+      html += '<ul class="guide-list">';
+      info.related.forEach(function(r) {
+        html += '<li class="guide-item"><a class="guide-related-tag" onclick="navigate(\'' + r.name + '\');return false;" href="#' + r.name + '">cs-' + r.name + '</a>&nbsp;' + r.why + '</li>';
+      });
+      html += '</ul></div>';
+    }
+
+    if (!html) { panel.innerHTML = '<div class="api-empty">暂无使用指南。</div>'; return; }
+    panel.innerHTML = html;
+  }
+
+  /* ===================================================
+     语法高亮（正则实现，Catppuccin Mocha 配色）
+  =================================================== */
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function highlight(code) {
+    var escaped = escapeHtml(code);
+    // 按顺序替换，避免重叠。使用占位符策略：先提取，替换后还原
+    var tokens = [];
+    var idx = 0;
+
+    function placeholder(html) {
+      var key = '\x00TOKEN' + (idx++) + '\x00';
+      tokens.push({ key: key, html: html });
+      return key;
+    }
+
+    // HTML 注释
+    escaped = escaped.replace(/&lt;!--[\s\S]*?--&gt;/g, function (m) {
+      return placeholder('<span class="hl-comment">' + m + '</span>');
+    });
+
+    // 标签名（开始/结束）
+    escaped = escaped.replace(/(&lt;\/?)([a-zA-Z][\w-]*)(\s|&gt;)/g, function (m, slash, tag, after) {
+      return placeholder('<span class="hl-tag">' + escapeHtml(slash) + '</span><span class="hl-tag">' + tag + '</span>') + after;
+    });
+
+    // 属性名（=前，或单独属性）
+    escaped = escaped.replace(/\s([\w-]+)(=&quot;|=(?!&quot;)|\s|&gt;)/g, function (m, attr, after) {
+      return ' ' + placeholder('<span class="hl-attr">' + attr + '</span>') + after;
+    });
+
+    // 属性值 "..."
+    escaped = escaped.replace(/=(&quot;)(.*?)(\1)/g, function (m, q1, val, q2) {
+      return '=' + placeholder('<span class="hl-val">&quot;' + val + '&quot;</span>');
+    });
+
+    // 还原
+    tokens.forEach(function (t) {
+      escaped = escaped.split(t.key).join(t.html);
+    });
+
+    return escaped;
+  }
+
+  /* ===================================================
+     复制到剪贴板
+  =================================================== */
+  function copyText(text, btn) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { flashCopied(btn); });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); flashCopied(btn); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  }
+
+  function flashCopied(btn) {
+    btn.classList.add('copied');
+    btn.textContent = '已复制';
+    setTimeout(function () {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<i class="cses-copy" style="font-size:11px;"></i> 复制';
+    }, 2000);
+  }
+
+  /* ===================================================
+     搜索过滤
+  =================================================== */
+  docSearch.addEventListener('input', function () {
+    var q = this.value.trim().toLowerCase();
+    var anyVisible = false;
+
+    navGroups.forEach(function (group) {
+      var items = group.querySelectorAll('.doc-nav-item');
+      var groupVisible = false;
+      items.forEach(function (item) {
+        var en = item.getAttribute('data-name') || '';
+        var zh = item.getAttribute('data-zh') || '';
+        var match = !q || en.indexOf(q) >= 0 || zh.indexOf(q) >= 0;
+        item.classList.toggle('hidden', !match);
+        if (match) { groupVisible = true; anyVisible = true; }
+      });
+      group.classList.toggle('hidden', !groupVisible);
+    });
+
+    searchEmpty.style.display = anyVisible ? 'none' : 'block';
+
+    // 如果当前是总览页，同步刷新卡片过滤
+    if (currentView === 'overview') {
+      renderOverview();
+    }
+  });
+
+  /* ===================================================
+     A1 修复：计数动态化（topbar 总数 + 各分组计数）
+     —— 替代历史硬编码 "78 个组件" 与 sidebar group-count 写死值
+  =================================================== */
+  (function syncCounts() {
+    // 1) topbar 总数 = 实际入 GROUPS 的 names 总数（去重）
+    var allNames = {};
+    GROUPS.forEach(function (g) { g.names.forEach(function (n) { allNames[n] = 1; }); });
+    var totalCount = Object.keys(allNames).length;
+    var totalEl = document.getElementById('compTotalCount');
+    if (totalEl) totalEl.textContent = totalCount + ' 个组件';
+
+    // 2) 各分组计数 = GROUPS[i].names.length
+    var groupByKey = {};
+    GROUPS.forEach(function (g) { groupByKey[g.key] = g.names.length; });
+    document.querySelectorAll('.doc-nav-group').forEach(function (groupEl) {
+      var key = groupEl.getAttribute('data-group');
+      var n = groupByKey[key];
+      if (typeof n !== 'number') return;
+      var countEl = groupEl.querySelector('.doc-nav-group-count');
+      if (countEl) countEl.textContent = n;
+    });
+  })();
+
+  /* ===================================================
+     hash 路由
+  =================================================== */
+  function initFromHash() {
+    var hash = location.hash.replace('#', '').trim();
+    if (!hash || hash === 'overview') {
+      navigate('overview');
+    } else if (hash === 'changelog') {
+      navigate('changelog');
+    } else if (COMPONENTS[hash]) {
+      navigate(hash);
+    } else {
+      navigate('overview');
+    }
+  }
+
+  window.addEventListener('hashchange', function() {
+    var hash = location.hash.replace('#', '').trim();
+    if (hash !== currentView) {
+      currentView = null; // 允许重新渲染
+      if (!hash || hash === 'overview') {
+        navigate('overview');
+      } else if (hash === 'changelog') {
+        navigate('changelog');
+      } else if (COMPONENTS[hash]) {
+        navigate(hash);
+      }
+    }
+  });
+
+  initFromHash();
+
+})();
+</script>
+
+</body>
+</html>

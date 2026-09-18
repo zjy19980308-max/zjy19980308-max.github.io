@@ -1,0 +1,143 @@
+/* cs-trend-chart · CSS-only 趋势图（无 SVG · 红线 4）· 全 var(--cs-*)（红线 3） */
+
+.cs-trend-chart {
+  display: flex;
+  flex-direction: column;
+  background: var(--cs-color-bg-card);
+  border: 1px solid var(--color-gray-200);
+  border-radius: 12px;
+  padding: 20px 24px;
+  gap: 16px;
+}
+
+.cs-trend-chart__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cs-trend-chart__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-gray-900);
+}
+
+.cs-trend-chart__legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 16px;
+}
+
+.cs-trend-chart__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-gray-600);
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.cs-trend-chart__legend-item:hover { opacity: 0.7; }
+
+.cs-trend-chart__legend-dot {
+  width: 12px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.cs-trend-chart__legend-dot--done  { background: var(--cs-color-primary); }
+.cs-trend-chart__legend-dot--start { background: var(--color-blue-300); }
+.cs-trend-chart__legend-dot--delay { background: var(--cs-color-warning); }
+
+.cs-trend-chart__canvas {
+  position: relative;
+  height: 200px;
+  background: var(--color-gray-50);
+  border-radius: 6px;
+  padding: 0 8px;
+}
+
+.cs-trend-chart__grid {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 0;
+  pointer-events: none;
+}
+
+.cs-trend-chart__grid-line {
+  height: 1px;
+  background: var(--color-gray-200);
+}
+
+.cs-trend-chart__series {
+  position: absolute;
+  inset: 0;
+}
+
+.cs-trend-chart__series .cs-trend-chart__point {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  border: 2px solid var(--cs-color-bg-card);
+  z-index: 2;
+}
+
+/* 折线段：用 ::before 在 point 上画一段到下一个 point */
+.cs-trend-chart__series--done .cs-trend-chart__point {
+  background: var(--cs-color-primary);
+}
+.cs-trend-chart__series--done-prev .cs-trend-chart__point {
+  background: var(--color-blue-200);
+  opacity: 0.6;
+}
+.cs-trend-chart__series--start .cs-trend-chart__point {
+  background: var(--color-blue-300);
+}
+.cs-trend-chart__series--delay .cs-trend-chart__point {
+  background: var(--cs-color-warning);
+}
+
+.cs-trend-chart__markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cs-trend-chart__marker {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  background: var(--cs-color-bg-card);
+  border: 2px solid var(--cs-color-primary);
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 200ms ease;
+  z-index: 3;
+}
+
+.cs-trend-chart__marker:hover {
+  transform: translate(-50%, 50%) scale(1.5);
+}
+
+.cs-trend-chart__x-labels {
+  list-style: none;
+  margin: 0;
+  padding: 0 8px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--color-gray-500);
+  font-variant-numeric: tabular-nums;
+}

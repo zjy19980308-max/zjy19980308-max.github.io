@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="data:,">
+<title>弧形画廊 · 交互小案例 — 张竞元</title>
+<!-- 实验场 · 交互小案例 01「弧形画廊」。维护：网站交互调整。
+     owner 给了 CircularGallery（ogl）的实现做参照，这里用站里已经有的 three 重写，不再多引一个库。
+     数值照参照：相机 fov 45 / z 20；卡片 700×900（按屏高 /1500 缩）；间距 2；
+     弧度 R=(H²+B²)/2B，沿弧下沉并跟着转；顶点波动 z=(sin(x·4+t)·1.5+cos(y·2+t)·1.5)·(0.1+速度·0.5)；
+     片元用 roundedBoxSDF 切圆角 + cover 比例校正；滚动 lerp ease .05，松手吸附到最近一张。
+     素材用 owner 自己的 18 张视觉作品，不用占位图。
+     ?v=1 出片模式：只放 6 张、匀速走、不接输入，一圈正好回到原位，录出来的视频能无缝循环。 -->
+<style>
+  @font-face{font-family:'CaseSC';font-weight:400;font-display:swap;src:url(../assets/fonts/NotoSansSC-400-subset.woff2) format('woff2')}
+  html,body{margin:0;height:100%;background:#0c0c0d;overflow:hidden}
+  #gl{display:block;width:100%;height:100%;cursor:grab;touch-action:pan-y}
+  #gl:active{cursor:grabbing}
+  .hint{position:fixed;left:0;right:0;bottom:18px;text-align:center;color:rgba(241,238,231,.42);font:14px/1.4 CaseSC,system-ui,sans-serif;pointer-events:none;letter-spacing:.08em}
+  .cap{position:fixed;left:22px;top:20px;color:#f1eee7;font:400 14px/1.5 CaseSC,system-ui,sans-serif;letter-spacing:.06em}
+  .cap i{display:block;font-style:normal;font-size:11.5px;opacity:.45;letter-spacing:.14em;margin-top:3px}
+  body.vid .hint,body.vid .cap{display:none}
+</style>
+<script>/* file:// 下 WebGL 取本地图片纹理会被当跨源拒掉（卡片全黑）。只有这种情况才加载内联纹理表。 */
+if (location.protocol === 'file:') document.write('<scr' + 'ipt src="tex.js?v=2"><\/scr' + 'ipt>');</script>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div class="cap">弧形画廊<i>CIRCULAR GALLERY</i></div>
+<div class="hint">拖动 · 滚轮 · 左右方向键</div>
+<script src="../js/vendor/three.bundle.js"></script>
+<script>
+(function () {
+  'use strict';
+  /* file:// 用内联纹理（lab/tex.js），http 用原图——两边都能看 */
+  function tex(n) { return (location.protocol === 'file:' && window.V7TEX && V7TEX[n]) || ('../assets/lab/cards/' + n); }
+  var T = window.THREE, cvs = document.getElementById('gl');
+  var VIDEO = /[?&]v=1/.test(location.search);
+  if (VIDEO) document.body.className = 'vid';
+
+  /* 图统一用 assets/lab/cards 的 28 张黑白风景（owner 2026-09-18 指定：交互案例都用这一套素材） */
+  var ALL = [];
+  for (var ci = 1; ci <= 28; ci++) { var nn = ('0' + ci).slice(-2);
+    ALL.push({ src: tex('card-' + nn + '.jpg'), text: '示例 ' + nn, desc: '黑白摄影' }); }
+  /* 出片只用 6 张：走满一圈正好回到原位，视频首尾接得上 */
+  var ITEMS = VIDEO ? [ALL[0], ALL[7], ALL[13], ALL[2], ALL[9], ALL[15]] : ALL;
+
+  var BEND = 3, RADIUS = .05, EASE = .05, SPEED = 2;
+  var renderer = new T.WebGLRenderer({ canvas: cvs, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x0c0c0d, 1);
+  var scene = new T.Scene(), cam = new T.PerspectiveCamera(45, 1, .1, 100); cam.position.z = 20;
+  var geo = new T.PlaneGeometry(1, 1, 100, 50);
+  var screen = { w: 1, h: 1 }, view = { w: 1, h: 1 };
+  var scroll = { current: 0, target: 0, last: 0 };
+
+  var VERT = [
+    'uniform float uTime; uniform float uSpeed; varying vec2 vUv;',
+    'void main(){ vUv = uv; vec3 p = position;',
+    '  p.z = (sin(p.x * 4.0 + uTime) * 1.5 + cos(p.y * 2.0 + uTime) * 1.5) * (0.1 + uSpeed * 0.5);',
+    '  gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0); }'
+  ].join('\n');
+  var FRAG = [
+    'precision highp float;',
+    'uniform vec2 uImageSizes; uniform vec2 uPlaneSizes; uniform sampler2D tMap; uniform float uRadius; varying vec2 vUv;',
+    'float sdf(vec2 p, vec2 b, float r){ vec2 d = abs(p) - b; return length(max(d, vec2(0.0))) + min(max(d.x, d.y), 0.0) - r; }',
+    'void main(){',
+    '  vec2 ratio = vec2(min((uPlaneSizes.x / uPlaneSizes.y) / (uImageSizes.x / uImageSizes.y), 1.0),',
+    '                    min((uPlaneSizes.y / uPlaneSizes.x) / (uImageSizes.y / uImageSizes.x), 1.0));',
+    '  vec2 uv = vec2(vUv.x * ratio.x + (1.0 - ratio.x) * 0.5, vUv.y * ratio.y + (1.0 - ratio.y) * 0.5);',
+    '  vec4 c = texture2D(tMap, uv);',
+    '  float d = sdf(vUv - 0.5, vec2(0.5 - uRadius), uRadius);',
+    '  float a = 1.0 - smoothstep(-0.002, 0.002, d);',
+    '  gl_FragColor = vec4(c.rgb, a); }'
+  ].join('\n');
+
+  function textTex(text) {
+    var c = document.createElement('canvas'), g = c.getContext('2d'), F = '400 34px CaseSC, sans-serif';
+    g.font = F; var w = Math.ceil(g.measureText(text).width) + 24, h = 58;
+    c.width = w; c.height = h; g.font = F; g.fillStyle = '#f1eee7'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.letterSpacing && (g.letterSpacing = '2px');
+    g.fillText(text, w / 2, h / 2);
+    var t = new T.CanvasTexture(c); t.generateMipmaps = false; t.minFilter = T.LinearFilter; t.colorSpace = T.SRGBColorSpace;
+    return { tex: t, w: w, h: h };
+  }
+
+  var medias = ITEMS.concat(ITEMS).map(function (d, i, arr) {
+    var mat = new T.ShaderMaterial({
+      vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthTest: false, depthWrite: false,
+      uniforms: { tMap: { value: new T.Texture() }, uPlaneSizes: { value: new T.Vector2() }, uImageSizes: { value: new T.Vector2(1, 1) }, uSpeed: { value: 0 }, uTime: { value: Math.random() * 100 }, uRadius: { value: RADIUS } }
+    });
+    var mesh = new T.Mesh(geo, mat); mesh.renderOrder = 1; scene.add(mesh);
+    var im = new Image();
+    im.onload = function () {
+      var tex = new T.Texture(im); tex.colorSpace = T.SRGBColorSpace; tex.needsUpdate = true;
+      tex.minFilter = T.LinearMipmapLinearFilter; tex.generateMipmaps = true;
+      mat.uniforms.tMap.value = tex; mat.uniforms.uImageSizes.value.set(im.naturalWidth, im.naturalHeight);
+      rec.ar = im.naturalWidth / im.naturalHeight; resize();   /* owner：不许裁图 → 卡片按这张图自己的比例定宽 */
+    };
+    var tt = textTex(d.text);
+    var label = new T.Mesh(new T.PlaneGeometry(1, 1), new T.MeshBasicMaterial({ map: tt.tex, transparent: true, depthTest: false }));
+    label.renderOrder = 2; mesh.add(label);
+    var rec = { mesh: mesh, mat: mat, label: label, ttAr: tt.w / tt.h, ar: .78, index: i, len: arr.length, extra: 0, x: 0, w: 0, wTotal: 0 };
+    im.src = d.src;
+    return rec;
+  });
+
+  function resize() {
+    screen.w = innerWidth; screen.h = innerHeight;
+    renderer.setSize(screen.w, screen.h, false);
+    cam.aspect = screen.w / screen.h; cam.updateProjectionMatrix();
+    var fov = cam.fov * Math.PI / 180;
+    view.h = 2 * Math.tan(fov / 2) * cam.position.z; view.w = view.h * cam.aspect;
+    var k = screen.h / 1500, PAD = 2;
+    var sy = view.h * (900 * k) / screen.h;                  /* 高度统一：一排看起来才齐 */
+    var acc = 0;
+    medias.forEach(function (m) {
+      var sx = sy * m.ar;                                    /* 宽度各按各的比例，不裁切 */
+      m.mesh.scale.set(sx, sy, 1);
+      m.mat.uniforms.uPlaneSizes.value.set(sx, sy);
+      var lh = .15, lw = lh * m.ttAr;                        /* 标题相对卡片高度的 15%，用卡片本地坐标 */
+      m.label.scale.set(lw * sy / sx, lh, 1);
+      m.label.position.set(0, -.5 - lh * .5 - .05, .01);
+      m.w = sx + PAD;
+      m.x = acc + m.w / 2; acc += m.w;
+      m.extra = 0;          /* 重排了就把循环补偿清零，否则新旧位置混在一起，卡片会叠在一块 */
+    });
+    var total = acc;
+    medias.forEach(function (m) { m.wTotal = total; });
+    LAP = total / 2;                                         /* 素材复制了两份，一圈 = 一半 */
+    STOPS = medias.slice(0, medias.length / 2).map(function (m) { return m.x; });
+  }
+  var LAP = 1, STOPS = [0];
+
+  function frame(dt) {
+    scroll.current += (scroll.target - scroll.current) * (1 - Math.pow(1 - EASE, dt * 60));
+    var dir = scroll.current > scroll.last ? 'right' : 'left';
+    var H = view.w / 2, B = Math.abs(BEND), R = (H * H + B * B) / (2 * B);
+    medias.forEach(function (m) {
+      m.mesh.position.x = m.x - scroll.current - m.extra;
+      var x = m.mesh.position.x, ex = Math.min(Math.abs(x), H);
+      var arc = R - Math.sqrt(Math.max(0, R * R - ex * ex));
+      m.mesh.position.y = -arc;
+      m.mesh.rotation.z = -Math.sign(x) * Math.asin(ex / R);
+      var sp = scroll.current - scroll.last;
+      m.mat.uniforms.uTime.value += dt * 2.4;
+      m.mat.uniforms.uSpeed.value = sp;
+      var half = m.mesh.scale.x / 2, vo = view.w / 2;
+      if (dir === 'right' && x + half < -vo) m.extra -= m.wTotal;
+      if (dir === 'left' && x - half > vo) m.extra += m.wTotal;
+    });
+    scroll.last = scroll.current;
+    renderer.render(scene, cam);
+  }
+
+  /* ── 输入（出片模式不接） ── */
+  var checkT = null;
+  function snap() {
+    var q = ((scroll.target % LAP) + LAP) % LAP, best = 0, bd = 1e9;
+    STOPS.concat([LAP + STOPS[0]]).forEach(function (sx) { var d = Math.abs(sx - q); if (d < bd) { bd = d; best = sx; } });
+    scroll.target += best - q;
+  }
+  if (!VIDEO) {
+    var down = false, startX = 0, startPos = 0;
+    addEventListener('pointerdown', function (e) { down = true; startX = e.clientX; startPos = scroll.target; });
+    addEventListener('pointermove', function (e) { if (down) scroll.target = startPos + (startX - e.clientX) * SPEED * .025; });
+    addEventListener('pointerup', function () { if (down) { down = false; snap(); } });
+    addEventListener('pointercancel', function () { down = false; });
+    addEventListener('wheel', function (e) {
+      e.preventDefault();
+      scroll.target += (((e.deltaY || e.detail) > 0) ? SPEED : -SPEED) * .2;
+      clearTimeout(checkT); checkT = setTimeout(snap, 200);
+    }, { passive: false });
+    addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); scroll.target += SPEED * 5; clearTimeout(checkT); checkT = setTimeout(snap, 200); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); scroll.target -= SPEED * 5; clearTimeout(checkT); checkT = setTimeout(snap, 200); }
+    });
+  }
+
+  addEventListener('resize', resize);
+  resize();
+
+  var last = performance.now();
+  function loop(now) {
+    requestAnimationFrame(loop);
+    if (VIDEO) return;
+    var dt = Math.min(.05, (now - last) / 1000); last = now;
+    frame(dt);
+  }
+  requestAnimationFrame(loop);
+
+  /* 出片：外部定步推进；一圈 = 一份素材的总宽，走完正好回到原位 */
+  window.__case = {
+    lap: function () { return LAP; },
+    speed: 3.2,
+    step: function (dt) { scroll.target += this.speed * dt; scroll.current = scroll.target; frame(dt); },
+    ready: function () { return medias.every(function (m) { return m.mat.uniforms.uImageSizes.value.x > 1; }); }
+  };
+})();
+</script>
+</body>
+</html>

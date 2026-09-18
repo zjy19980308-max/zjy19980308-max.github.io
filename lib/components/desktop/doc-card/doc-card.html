@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-doc-card 文档库内容卡片</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="doc-card.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px;
+      background: var(--cs-color-bg-light);
+      font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--cs-color-text);
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 8px;
+    }
+
+    .section {
+      margin-bottom: 32px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      color: var(--cs-color-text-light);
+      margin-bottom: 16px;
+    }
+
+    /* 网格布局 */
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      max-width: 800px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="section">
+    <h2>cs-doc-card 文档库内容卡片</h2>
+    <div class="section-title">默认样式（白色背景）</div>
+    <div class="demo-grid">
+
+      <!-- 基础示例 -->
+      <cs-doc-card>
+        <h3 class="doc-title">上周末完成的待办事项</h3>
+        <div class="doc-info-bar">
+          <span class="info-space"><i class="cses-wendangku"></i> 自定义空间</span>
+          <span class="info-action">最后评论于 10 分钟前</span>
+        </div>
+        <div class="doc-content">
+          <h4 class="content-heading">一、栏目标题示例</h4>
+          <p class="content-text">这是正文内容，字号为 8px，行高 1.6，段落之间间距 8px。</p>
+          <h4 class="content-heading">二、下一栏目</h4>
+          <p class="content-text">栏目标题与正文间距 12px，栏目之间间距 16px。</p>
+        </div>
+      </cs-doc-card>
+
+      <!-- 长标题截断测试 -->
+      <cs-doc-card>
+        <h3 class="doc-title">这是一份标题非常长的文档，用来测试两行截断效果是否正常工作，超出两行的内容应该显示省略号</h3>
+        <div class="doc-info-bar">
+          <span class="info-space"><i class="cses-wendangku"></i> 产品部空间</span>
+          <span class="info-action">最后编辑于 2 小时前</span>
+        </div>
+        <div class="doc-content">
+          <p class="content-text">文档内容摘要展示区域，从文档库原封不动提取内容，仅缩小字号。</p>
+        </div>
+      </cs-doc-card>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">主题色支持</div>
+    <div class="demo-grid">
+
+      <!-- 绿色主题 -->
+      <cs-doc-card data-theme="green">
+        <h3 class="doc-title">绿色主题卡片</h3>
+        <div class="doc-info-bar">
+          <span class="info-space"><i class="cses-wendangku"></i> 设计空间</span>
+          <span class="info-action">最后编辑于昨天</span>
+        </div>
+        <div class="doc-content">
+          <h4 class="content-heading">一、设计规范</h4>
+          <p class="content-text">卡片支持自定义背景色，通过 data-theme 属性设置。</p>
+        </div>
+      </cs-doc-card>
+
+      <!-- 蓝色主题 -->
+      <cs-doc-card data-theme="blue">
+        <h3 class="doc-title">蓝色主题卡片</h3>
+        <div class="doc-info-bar">
+          <span class="info-space"><i class="cses-wendangku"></i> 技术空间</span>
+          <span class="info-action">最后评论于 3 天前</span>
+        </div>
+        <div class="doc-content">
+          <h4 class="content-heading">一、技术架构</h4>
+          <p class="content-text">系统采用微服务架构设计，前端使用 Web Components。</p>
+        </div>
+      </cs-doc-card>
+
+      <!-- 紫色主题 -->
+      <cs-doc-card data-theme="purple">
+        <h3 class="doc-title">紫色主题卡片</h3>
+        <div class="doc-info-bar">
+          <span class="info-space"><i class="cses-wendangku"></i> 运营空间</span>
+          <span class="info-action">最后编辑于 1 周前</span>
+        </div>
+        <div class="doc-content">
+          <h4 class="content-heading">一、运营数据</h4>
+          <p class="content-text">本月活跃用户增长 15%，付费转化率提升 8%。</p>
+        </div>
+      </cs-doc-card>
+
+      <!-- 黄色主题 -->
+      <cs-doc-card data-theme="yellow">
+        <h3 class="doc-title">黄色主题卡片</h3>
+        <div class="doc-info-bar">
+          <span class="info-space"><i class="cses-wendangku"></i> 营销空间</span>
+          <span class="info-action">最后编辑于 2 周前</span>
+        </div>
+        <div class="doc-content">
+          <h4 class="content-heading">一、营销计划</h4>
+          <p class="content-text">Q2 季度营销活动规划，包含线上线下推广方案。</p>
+        </div>
+      </cs-doc-card>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">提示</div>
+    <p style="color: var(--cs-color-text-light); font-size: 14px;">
+      文档列表样式请查看 <a href="../doc-list/doc-list.html" style="color: var(--cs-color-primary);">doc-list 组件</a>
+    </p>
+  </div>
+
+</body>
+</html>

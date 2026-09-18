@@ -1,0 +1,196 @@
+/* task_id: 学员看板（老师版）-2026-05-21-1430 · component: cs-filter-bar · PLAN-007 */
+.cs-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--cs-color-white);
+  border: 1px solid var(--cs-color-border);
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+.cs-filter-bar__left,
+.cs-filter-bar__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cs-filter-chips {
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.cs-filter-chip {
+  appearance: none;
+  border: 1px solid var(--cs-color-border);
+  background: var(--cs-color-white);
+  color: var(--cs-color-text-secondary);
+  padding: 5px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  font-weight: 500;
+}
+.cs-filter-chip:hover {
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-primary);
+}
+.cs-filter-chip[data-active="true"] {
+  background: var(--cs-color-primary);
+  border-color: var(--cs-color-primary);
+  color: var(--cs-color-white);
+}
+.cs-filter-chip__count {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text-secondary);
+}
+.cs-filter-chip[data-active="true"] .cs-filter-chip__count {
+  background: var(--cs-color-border-on-dark);
+  color: var(--cs-color-white);
+}
+.cs-filter-chip__count--ok {
+  background: var(--cs-color-green-50);
+  color: var(--cs-color-success);
+}
+.cs-filter-chip__count--warn {
+  background: var(--cs-color-orange-50);
+  color: var(--cs-color-warning);
+}
+.cs-filter-chip__count--danger {
+  background: var(--cs-color-red-50);
+  color: var(--cs-color-error);
+}
+.cs-filter-chip--warn { border-color: var(--cs-color-orange-200); }
+.cs-filter-chip--danger { border-color: var(--cs-color-red-200); }
+
+.cs-segmented {
+  display: inline-flex;
+  background: var(--cs-color-bg-hover);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+}
+.cs-segmented__item {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--cs-color-text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-weight: 500;
+}
+.cs-segmented__item:hover { color: var(--cs-color-text-primary); }
+.cs-segmented__item[data-active="true"] {
+  background: var(--cs-color-white);
+  color: var(--cs-color-primary);
+  box-shadow: var(--cs-shadow-card);
+}
+.cs-segmented__item i { font-size: 12px; }
+
+.cs-search-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 10px;
+  background: var(--cs-color-bg-hover);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  width: 240px;
+}
+.cs-search-input:focus-within {
+  background: var(--cs-color-white);
+  border-color: var(--cs-color-primary);
+  box-shadow: 0 0 0 3px var(--cs-color-selected);
+}
+.cs-search-input__icon {
+  color: var(--cs-color-text-tertiary);
+  font-size: 14px;
+}
+.cs-search-input__field {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  outline: 0;
+  font-size: 13px;
+  color: var(--cs-color-text-primary);
+}
+.cs-search-input__field::placeholder { color: var(--cs-color-text-tertiary); }
+.cs-search-input__shortcut {
+  font-size: 11px;
+  color: var(--cs-color-text-tertiary);
+  background: var(--cs-color-white);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--cs-color-border);
+  font-family: var(--cs-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+}
+
+.cs-btn-batch {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+  overflow: hidden;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+.cs-btn-batch[data-disabled="true"] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.cs-btn-batch__main {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0 12px;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.cs-btn-batch__main:hover { background: var(--cs-color-primary-hover); }
+.cs-btn-batch__main strong {
+  font-weight: 700;
+  font-size: 13px;
+}
+.cs-btn-batch__divider {
+  width: 1px;
+  background: var(--cs-color-border-on-dark);
+  height: 60%;
+}
+.cs-btn-batch__menu {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0 12px;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.cs-btn-batch__menu:hover { background: var(--cs-color-primary-hover); }
+.cs-btn-batch__menu i { font-size: 10px; }

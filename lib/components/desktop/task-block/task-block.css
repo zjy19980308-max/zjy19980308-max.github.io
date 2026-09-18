@@ -1,0 +1,121 @@
+/* =====================================================
+   cs-task-block — 嵌入文档的任务卡片块
+   高 56px / 圆角 8 / 1px 边框 / 白底
+
+   data 属性：
+     data-status="processing" — 进行中（紫色状态文字）
+     data-status="pending"    — 待处理（橙色状态文字）
+     data-status="done"       — 已完成（淡灰状态文字）
+     data-disabled            — 禁用态（透明度降低 + 拒绝点击，用于无访问权限）
+   ===================================================== */
+
+cs-task-block {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  height: 56px;
+  padding: 0 var(--space-sm);
+  background: var(--cs-color-bg);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--cs-transition-fast);
+  box-sizing: border-box;
+}
+
+cs-task-block:hover {
+  border-color: var(--cs-color-primary);
+}
+
+cs-task-block[data-disabled] {
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* ---- 左侧图标盒 ---- */
+cs-task-block .task-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-lg);
+  background: var(--cs-color-primary-a2);
+}
+
+cs-task-block .task-icon {
+  font-size: var(--cs-sem-size-icon-xl);
+  color: var(--cs-color-primary);
+}
+
+/* ---- 中部内容区 ---- */
+cs-task-block .task-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+  flex: 1;
+  min-width: 0;
+}
+
+cs-task-block .task-title {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+cs-task-block .task-status {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* 状态变体 */
+cs-task-block[data-status="processing"] .task-status {
+  color: var(--cs-color-primary);
+}
+
+cs-task-block[data-status="done"] .task-status {
+  color: var(--cs-color-text-light2);
+}
+
+cs-task-block[data-status="pending"] .task-status {
+  color: var(--cs-color-warning);
+}
+
+/* ---- 右侧操作区 ---- */
+cs-task-block .task-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+cs-task-block .task-avatars {
+  display: inline-flex;
+  align-items: center;
+}
+
+cs-task-block .task-avatars cs-avatar {
+  margin-left: calc(-1 * var(--space-2xs));
+  border: var(--spacing-2) solid var(--cs-color-bg);
+}
+
+cs-task-block .task-avatars cs-avatar:first-child {
+  margin-left: 0;
+}
+
+cs-task-block .task-date {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+cs-task-block .task-bell {
+  font-size: var(--cs-sem-size-icon-md);
+  color: var(--cs-color-text-light2);
+  cursor: pointer;
+}
+
+cs-task-block .task-bell:hover {
+  color: var(--cs-color-primary);
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-doc-list 文档库列表项</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="doc-list.css">
+  <style>
+    body {
+      padding: 32px;
+      background: var(--cs-color-bg-light);
+    }
+    h2 {
+      font: var(--typo-cn-16-medium);
+      color: var(--cs-color-text);
+      margin: 0 0 16px;
+    }
+    .demo-wrap {
+      background: var(--cs-color-bg);
+      border: 1px solid var(--cs-color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      max-width: 720px;
+    }
+    cs-doc-list + cs-doc-list {
+      border-top: 1px solid var(--cs-color-border);
+    }
+  </style>
+</head>
+<body>
+
+<h2>文档库列表（使用字体图标）</h2>
+<div class="demo-wrap">
+
+  <cs-doc-list>
+    <div class="doc-icon">
+      <img src="../../../assets/Property 1=word.png" alt="Word">
+    </div>
+    <div class="doc-body">
+      <div class="doc-title">设计部_文档库设计需求整理</div>
+      <div class="doc-meta">
+        <span class="meta-time">3 分钟以前</span>
+        <span class="meta-author">何强</span>
+        <span class="doc-summary">一位网友在社交平台发布的视频显示，烟台火车站二楼西进站口的平台上出现狂风暴雨...</span>
+      </div>
+    </div>
+    <div class="doc-actions">
+      <button class="doc-more"><i class="cses-gengduo"></i></button>
+    </div>
+  </cs-doc-list>
+
+  <cs-doc-list>
+    <div class="doc-icon">
+      <img src="../../../assets/Property 1=excel.png" alt="Excel">
+    </div>
+    <div class="doc-body">
+      <div class="doc-title">CSES 2026 年度设计规范手册</div>
+      <div class="doc-meta">
+        <span class="meta-time">昨天</span>
+        <span class="meta-author">李四</span>
+        <span class="doc-summary">本文档详细说明了 CSES 设计系统的所有规范和标准，包括颜色、字体、间距等...</span>
+      </div>
+    </div>
+    <div class="doc-actions">
+      <button class="doc-more"><i class="cses-gengduo"></i></button>
+    </div>
+  </cs-doc-list>
+
+  <cs-doc-list>
+    <div class="doc-icon">
+      <img src="../../../assets/Property 1=PDF.png" alt="PDF">
+    </div>
+    <div class="doc-body">
+      <div class="doc-title">Q1 季度 OKR 追踪表</div>
+      <div class="doc-meta">
+        <span class="meta-time">3 天前</span>
+        <span class="meta-author">王五</span>
+        <span class="doc-summary">第一季度目标与关键结果追踪，包含各团队完成进度和下周计划...</span>
+      </div>
+    </div>
+    <div class="doc-actions">
+      <button class="doc-more"><i class="cses-gengduo"></i></button>
+    </div>
+  </cs-doc-list>
+
+  <cs-doc-list>
+    <div class="doc-icon">
+      <img src="../../../assets/Property 1=图片.png" alt="图片">
+    </div>
+    <div class="doc-body">
+      <div class="doc-title">首页 Banner 设计稿</div>
+      <div class="doc-meta">
+        <span class="meta-time">上周</span>
+        <span class="meta-author">设计组</span>
+        <span class="doc-summary">包含多个尺寸的首页 Banner 设计稿和切图资源...</span>
+      </div>
+    </div>
+    <div class="doc-actions">
+      <button class="doc-more"><i class="cses-gengduo"></i></button>
+    </div>
+  </cs-doc-list>
+
+  <cs-doc-list>
+    <div class="doc-icon">
+      <img src="../../../assets/Property 1=pptx.png" alt="PPT">
+    </div>
+    <div class="doc-body">
+      <div class="doc-title">产品发布会演示文稿</div>
+      <div class="doc-meta">
+        <span class="meta-time">2 小时前</span>
+        <span class="meta-author">产品部</span>
+        <span class="doc-summary">2026 春季产品发布会演示文稿，包含产品亮点和市场策略...</span>
+      </div>
+    </div>
+    <div class="doc-actions">
+      <button class="doc-more"><i class="cses-gengduo"></i></button>
+    </div>
+  </cs-doc-list>
+
+  <cs-doc-list>
+    <div class="doc-icon">
+      <img src="../../../assets/Property 1=文档.png" alt="文档">
+    </div>
+    <div class="doc-body">
+      <div class="doc-title">技术架构设计文档</div>
+      <div class="doc-meta">
+        <span class="meta-time">10 分钟前</span>
+        <span class="meta-author">李工</span>
+        <span class="doc-summary">系统采用微服务架构，前端使用 Web Components 技术栈...</span>
+      </div>
+    </div>
+    <div class="doc-actions">
+      <button class="doc-more"><i class="cses-gengduo"></i></button>
+    </div>
+  </cs-doc-list>
+
+</div>
+
+</body>
+</html>

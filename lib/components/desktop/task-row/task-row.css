@@ -1,0 +1,284 @@
+/*
+ * 任务行组件 (Task Row) — 两行布局
+ * 标签：<cs-task-row>
+ * 数据来源：Figma node 27:12567 任务管理列表视图
+ *
+ * data 属性：
+ *   data-completed             — 已完成态（标题划线、整行变淡）
+ *
+ * 子元素结构：
+ *   .task-checkbox             — 复选框列（固定 40px）
+ *   .task-info                 — 任务信息区（flex:1, 两行布局）
+ *     .task-title-row          — 第一行：标题 + 状态标签 + 操作按钮
+ *       .task-title            — 任务名称（14px，溢出省略）
+ *       .task-tag              — 即将过期 / 已过期 标签
+ *       .task-actions          — hover 操作图标
+ *     .task-activity           — 第二行：头像 + 活动描述
+ *       .activity-avatars      — 小头像组
+ *       .activity-text         — 活动描述文字
+ *   .task-status               — 状态徽标列（80px）
+ *   .task-priority             — 优先级列（80px）
+ *   .task-date                 — 日期列（120px each）
+ *   .task-space                — 空间/项目列（140px）
+ */
+
+/* ========== 行基础样式 ========== */
+cs-task-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: var(--spacing-64);
+  padding: var(--space-xs) var(--space-md);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  box-sizing: border-box;
+  transition: background 0.15s ease;
+  position: relative;
+}
+
+/* ========== 悬停态 ========== */
+cs-task-row:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 复选框列 ========== */
+cs-task-row .task-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--spacing-40);
+}
+
+/* ========== 任务信息区（两行布局） ========== */
+cs-task-row .task-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding-right: var(--space-xs);
+}
+
+/* --- 第一行：标题行 --- */
+cs-task-row .task-title-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-width: 0;
+}
+
+cs-task-row .task-title {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+/* --- 状态标签（即将过期 / 已过期） --- */
+cs-task-row .task-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: var(--spacing-24); /* Figma: 23px, closest var */
+  padding: 0 var(--spacing-10);
+  border-radius: var(--radius);
+  font: var(--typo-cn-12-regular);
+  white-space: nowrap;
+}
+
+/* Figma: 即将过期 — bg #ffefe0 → closest: --cs-sem-bg-warning */
+cs-task-row .task-tag[data-type="warning"] {
+  background: var(--cs-sem-bg-warning);
+  color: var(--cs-color-warning);
+}
+
+/* Figma: 已过期 — bg #ffebeb → closest: --cs-sem-bg-error */
+cs-task-row .task-tag[data-type="danger"] {
+  background: var(--cs-sem-bg-error);
+  color: var(--cs-color-error);
+}
+
+/* --- 操作图标（hover 显示） --- */
+cs-task-row .task-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin-left: auto;
+  flex-shrink: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+cs-task-row .task-actions i {
+  font-size: var(--font-size-md);
+  color: var(--cs-color-text-light2);
+  cursor: pointer;
+  padding: var(--spacing-2);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+cs-task-row .task-actions i:hover {
+  color: var(--cs-color-text);
+  background: var(--cs-color-bg-hover);
+}
+
+cs-task-row:hover .task-actions {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* --- 第二行：活动信息 --- */
+cs-task-row .task-activity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-width: 0;
+}
+
+cs-task-row .activity-avatars {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+cs-task-row .activity-avatars cs-avatar {
+  width: var(--spacing-20);
+  height: var(--spacing-20);
+  font-size: var(--font-size-xs);
+}
+
+cs-task-row .activity-text {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+/* ========== 状态列 ========== */
+cs-task-row .task-status {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: var(--spacing-80);
+}
+
+/* --- 内联状态药丸 --- */
+cs-task-row .task-status-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--spacing-24);
+  min-width: var(--spacing-48);
+  padding: var(--spacing-2) var(--space-xs);
+  border-radius: var(--radius-xl);
+  font: var(--typo-cn-14-regular);
+  white-space: nowrap;
+}
+
+cs-task-row .task-status-pill[data-status="in-progress"] {
+  background: var(--cs-color-primary-disabled);
+  color: var(--cs-color-primary);
+}
+
+cs-task-row .task-status-pill[data-status="not-started"] {
+  background: var(--cs-color-border);
+  color: var(--cs-color-text);
+}
+
+cs-task-row .task-status-pill[data-status="completed"] {
+  background: var(--cs-sem-bg-success);
+  color: var(--cs-color-success);
+}
+
+/* ========== 优先级列 ========== */
+cs-task-row .task-priority {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  flex-shrink: 0;
+  width: var(--spacing-80);
+  font: var(--typo-cn-14-regular);
+}
+
+cs-task-row .task-priority i {
+  font-size: var(--font-size-md);
+}
+
+/* 优先级颜色变体 */
+/* Figma: 紧急 — red #f53f3f */
+cs-task-row .task-priority[data-level="urgent"] {
+  color: var(--cs-color-error);
+}
+
+/* Figma: 重要 — orange #ff7d00 */
+cs-task-row .task-priority[data-level="important"] {
+  color: var(--cs-color-warning);
+}
+
+/* Figma: 普通/一般 — gray #999 */
+cs-task-row .task-priority[data-level="normal"] {
+  color: var(--cs-color-text-light2);
+}
+
+/* Figma: 较低 — lighter gray #c9c9c9 */
+cs-task-row .task-priority[data-level="low"] {
+  color: var(--cs-color-icon-muted);
+}
+
+/* ========== 日期列 ========== */
+cs-task-row .task-date {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  flex-shrink: 0;
+  width: var(--spacing-120);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========== 空间/项目列 ========== */
+cs-task-row .task-space {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+  width: calc(var(--spacing-120) + var(--spacing-20)); /* Figma: 140px, no exact variable */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========== 已完成态 ========== */
+cs-task-row[data-completed] .task-title {
+  text-decoration: line-through;
+  color: var(--cs-color-text-light2);
+}
+
+cs-task-row[data-completed] .task-activity {
+  opacity: 0.5;
+}
+
+cs-task-row[data-completed] .task-status {
+  opacity: 0.5;
+}
+
+cs-task-row[data-completed] .task-priority {
+  opacity: 0.5;
+}
+
+cs-task-row[data-completed] .task-date {
+  opacity: 0.5;
+}
+
+cs-task-row[data-completed] .task-space {
+  opacity: 0.5;
+}

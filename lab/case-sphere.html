@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="data:,">
+<title>球面菜单 · 交互小案例 — 张竞元</title>
+<!-- 实验场 · 交互小案例「球面菜单」。维护：网站交互调整。
+     owner 给了 InfiniteMenu（原生 WebGL2 + gl-matrix）做参照，这里用站里已有的 three 重写，不再引 gl-matrix。
+     结构照参照：二十面体细分一次、球面化（42 个顶点），每个顶点摆一张正对外侧的圆片；
+     拖动转整个球，松手吸附到「离镜头最近」的那一片，正对镜头的那张最亮最大、越往边上越淡。
+     拖的时候相机往后退一点（参照里 cameraTargetZ += 旋转速度×80），松手再回来——转得越猛退得越远。
+     素材用 assets/lab/cards 的 28 张黑白风景。?v=1 出片模式：自己慢慢转，不接输入。 -->
+<style>
+  @font-face{font-family:'CaseSC';font-weight:400;font-display:swap;src:url(../assets/fonts/NotoSansSC-400-subset.woff2) format('woff2')}
+  html,body{margin:0;height:100%;background:#0c0c0d;overflow:hidden;font-family:CaseSC,system-ui,sans-serif}
+  #gl{display:block;width:100%;height:100%;cursor:grab;touch-action:none}
+  #gl:active{cursor:grabbing}
+  .cap{position:fixed;left:22px;top:20px;color:#f1eee7}
+  .cap b{display:block;font-size:15px;font-weight:400;letter-spacing:.06em}
+  .cap i{display:block;font-style:normal;font-size:11px;opacity:.45;letter-spacing:.14em;margin-top:3px}
+  /* 版式照 reactbits InfiniteMenu 实测：.face-title 贴左 4%、.face-description 贴右，两者都在垂直中线上；
+     跳转是个 60px 的圆，底色 #5227FF。名字在左、说明在右，不再挤在下方一行。 */
+  .face{position:fixed;top:50%;transform:translateY(-50%);color:#f1eee7;transition:opacity .3s ease;text-shadow:0 2px 14px rgba(0,0,0,.6);pointer-events:none}
+  .face--title{left:4%;max-width:30vw;font-size:clamp(20px,4.2vw,42px);line-height:1.18;letter-spacing:.04em}
+  .face--desc{right:4%;max-width:15vw;text-align:right;font-size:clamp(12px,1.5vw,18px);line-height:1.65;opacity:.8}
+  .act{position:fixed;left:50%;bottom:15%;transform:translateX(-50%);width:60px;height:60px;border-radius:50%;
+       background:#5227ff;color:#fff;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center;
+       text-decoration:none;transition:opacity .3s ease,transform .22s cubic-bezier(.23,1,.32,1)}
+  .act:hover{transform:translateX(-50%) scale(1.07)}
+  .act:active{transform:translateX(-50%) scale(.97)}
+  .face.off{opacity:0}
+  .act.off{opacity:0;pointer-events:none}
+  @media (max-width:700px){
+    /* 窄屏文字回到下方，会压在圆片上；owner 的作品有白底的，白字就读不出来了。
+       底部垫一层渐变把那块压暗，文字浮在上面。宽屏文字在圆外，不需要这层。 */
+    body::after{content:'';position:fixed;left:0;right:0;bottom:0;height:200px;pointer-events:none;z-index:1;
+      background:linear-gradient(to top,rgba(12,12,13,.94),rgba(12,12,13,.78) 42%,transparent)}
+    .face,.act{z-index:2}
+    .face{top:auto;transform:none;text-align:center;max-width:none;left:0;right:0}
+    .face--title{bottom:138px;font-size:20px}
+    .face--desc{bottom:114px;font-size:12px;text-align:center}
+    .act{width:48px;height:48px;font-size:21px;bottom:54px}
+  }
+  .hint{position:fixed;left:0;right:0;bottom:22px;text-align:center;color:rgba(241,238,231,.4);font-size:12.5px;letter-spacing:.08em}
+  body.vid .hint{display:none}
+</style>
+<script>/* file:// 下 WebGL 取本地图片纹理会被当跨源拒掉（卡片全黑）。只有这种情况才加载内联纹理表。 */
+if (location.protocol === 'file:') document.write('<scr' + 'ipt src="tex.js?v=2"><\/scr' + 'ipt>');</script>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div class="cap"><b>球面菜单</b><i>SPHERE MENU</i></div>
+<div class="face face--title" id="fTitle"></div>
+<div class="face face--desc" id="fDesc"></div>
+<a class="act" id="fGo" href="../index.html#work" aria-label="去看这一组作品">↗</a>
+<div class="hint">拖动转动 · 松手吸附到正面那一张</div>
+<script src="../js/vendor/three.bundle.js"></script>
+<script>
+(function () {
+  'use strict';
+  /* file:// 用内联纹理（lab/tex.js），http 用原图——两边都能看 */
+  function tex(n) { return (location.protocol === 'file:' && window.V7TEX && V7TEX[n]) || ('../assets/lab/cards/' + n); }
+  var T = window.THREE, cvs = document.getElementById('gl');
+  var titleEl = document.getElementById('fTitle'), descEl = document.getElementById('fDesc'), goEl = document.getElementById('fGo');
+  function setFace(it) { titleEl.textContent = it.text; descEl.textContent = it.desc; }
+  function faceOff(b) { titleEl.classList.toggle('off', b); descEl.classList.toggle('off', b); goEl.classList.toggle('off', b); }
+  var VIDEO = /[?&]v=1/.test(location.search);
+  if (VIDEO) document.body.className = 'vid';
+
+  /* 图统一用 assets/lab/cards 的 28 张黑白风景（owner 2026-09-18 指定：交互案例都用这一套素材） */
+  var ITEMS = [];
+  for (var ci = 1; ci <= 28; ci++) { var nn = ('0' + ci).slice(-2);
+    ITEMS.push({ src: tex('card-' + nn + '.jpg'), text: '示例 ' + nn, desc: '黑白摄影' }); }
+
+  /* 参数按实际打开 reactbits.dev/components/infinite-menu?scale=0.8 量出来的比例反推：
+     静止时正面那一张占预览区高度约 90%、其余看不见；转动时圆片拉成蛋形、同屏三四张各占 50–70%。
+     我之前为了「看得见整个球」把镜头拉远、圆片缩小（正面只有 44%），
+     等于把这个组件最核心的对比关系砍掉了——它本来就不是「看整个球」，是「正面一张顶到脸上」。 */
+  /* 42 个球面点，实测相邻间距 1.093 —— 片半径超过 0.547 必定重叠。
+     留 15% 缝取 0.465，再把相机拉到 3.32 让正面那张占 85% 视高。 */
+  var R = 2, DISC = 0.465, CAMZ = 3.32, FOV = 45;
+  var renderer = new T.WebGLRenderer({ canvas: cvs, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x0c0c0d, 1);
+  var scene = new T.Scene(), cam = new T.PerspectiveCamera(45, 1, .1, 40);
+  var group = new T.Group(); scene.add(group);
+
+  /* 二十面体细分一次 → 球面化：42 个顶点，就是 42 个位置 */
+  var ico = new T.IcosahedronGeometry(R, 1);
+  var pos = ico.getAttribute('position'), seen = {}, verts = [];
+  for (var i = 0; i < pos.count; i++) {
+    var v = new T.Vector3().fromBufferAttribute(pos, i).normalize().multiplyScalar(R);
+    var k = v.x.toFixed(3) + ',' + v.y.toFixed(3) + ',' + v.z.toFixed(3);
+    if (seen[k]) continue; seen[k] = 1; verts.push(v);
+  }
+
+  /* 参照 InfiniteMenu 的顶点着色器：圆片沿旋转方向被拉伸（转得越快拉得越长），
+     再把所有顶点投影回球壳——这两件事合起来才是那个「形变感」。
+     之前用的是普通材质的平面圆片，等于把最关键的一段省了，所以生硬。 */
+  var VERT = [
+    'uniform vec4 uRAV;',                      /* xyz 旋转轴，w 旋转速度 */
+    'varying vec2 vUv; varying float vAlpha;',
+    'void main(){',
+    '  vUv = uv;',
+    '  vec4 wp = modelMatrix * vec4(position, 1.0);',
+    '  vec3 centerPos = (modelMatrix * vec4(0.0, 0.0, 0.0, 1.0)).xyz;',
+    '  float radius = length(centerPos);',
+    '  if (length(position) > 0.0001) {',      /* 圆心那个顶点不拉 */
+    '    float rv = min(0.42, uRAV.w * 21.0);',   /* 实测 rv≈0.01，×95 ≈ 0.95，接近圆片半径——拉伸才看得出来 */
+    '    vec3 stretchDir = normalize(cross(centerPos, uRAV.xyz));',
+    '    vec3 rel = normalize(wp.xyz - centerPos);',
+    '    float k = dot(stretchDir, rel);',
+    '    float inv = min(0.0, abs(k) - 1.0);',
+    '    k = rv * sign(k) * abs(inv * inv * inv + 1.0);',
+    '    wp.xyz += stretchDir * k;',
+    '  }',
+    '  wp.xyz = radius * normalize(wp.xyz);',  /* 贴回球壳 */
+    '  gl_Position = projectionMatrix * viewMatrix * wp;',
+    '  vAlpha = smoothstep(0.1, 0.9, normalize(wp.xyz).z) * 0.9 + 0.1;',
+    '}'
+  ].join('\n');
+  var FRAG = [
+    'precision highp float;',
+    'uniform sampler2D tMap; uniform float uReady;',
+    'varying vec2 vUv; varying float vAlpha;',
+    'void main(){',
+    '  vec4 c = texture2D(tMap, vUv);',
+    '  vec3 col = mix(vec3(0.08), c.rgb, uReady);',
+    /* owner 的作品里不少是黑底，落在 #0c0c0d 的底上就没有边界了，正面那张也看不出被聚焦。
+       沿 uv 半径描一圈细边——uv 不随顶点拉伸而变，所以形变时这圈边也跟着拉成蛋形。 */
+    '  float rr = length(vUv - 0.5) * 2.0;',
+    '  col = mix(col, vec3(1.0), smoothstep(0.955, 0.995, rr) * (0.10 + 0.34 * vAlpha));',
+    '  gl_FragColor = vec4(col, vAlpha);',
+    '}'
+  ].join('\n');
+  var RAV = new T.Vector4(1, 0, 0, 0);
+  var geo = new T.CircleGeometry(1, 64), discs = [];
+  verts.forEach(function (v, idx) {
+    var it = ITEMS[idx % ITEMS.length];
+    var mat = new T.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, transparent: true, depthWrite: false, depthTest: false,
+      uniforms: { tMap: { value: new T.Texture() }, uReady: { value: 0 }, uRAV: { value: RAV } } });
+    var m = new T.Mesh(geo, mat);
+    m.position.copy(v);
+    m.lookAt(v.clone().multiplyScalar(2));      /* 正对外侧 */
+    m.scale.setScalar(DISC);
+    group.add(m);
+    var im = new Image();
+    im.onload = function () {
+      var tex = new T.Texture(im); tex.colorSpace = T.SRGBColorSpace;
+      tex.minFilter = T.LinearMipmapLinearFilter; tex.generateMipmaps = true; tex.needsUpdate = true;
+      /* 圆片是正方形，图不是 → 用 repeat/offset 做居中裁切，别把图压扁 */
+      var a = im.naturalWidth / im.naturalHeight;
+      if (a > 1) { tex.repeat.set(1 / a, 1); tex.offset.set((1 - 1 / a) / 2, 0); }
+      else { tex.repeat.set(1, a); tex.offset.set(0, (1 - a) / 2); }
+      mat.uniforms.tMap.value = tex; mat.uniforms.uReady.value = 1; mat.needsUpdate = true;
+    };
+    im.src = it.src;
+    discs.push({ mesh: m, mat: mat, v: v, it: it });
+  });
+
+  function resize() {
+    var w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false);
+    cam.aspect = w / h;
+    /* 竖屏不再按「整个球不被切」放宽视角——那样正面那张会被摊薄到 55%。
+       改成按「正面那张刚好占满画面宽度」反解：横屏仍是 45°，越窄才越放宽，且只放宽到够用为止。 */
+    var need = Math.atan(DISC / ((CAMZ - R) * cam.aspect)) * 360 / Math.PI;
+    cam.fov = Math.max(FOV, need);
+    cam.updateProjectionMatrix();
+  }
+  cam.position.set(0, 0, CAMZ);
+  resize(); addEventListener('resize', resize);
+
+  /* ── 拖动：按指针位移绕垂直于位移方向的轴转 ── */
+  var down = false, lx = 0, ly = 0, vel = new T.Vector3(), spin = 0, camZ = CAMZ, active = -1, snapQ = null;
+  var tmpQ = new T.Quaternion(), axis = new T.Vector3();
+  var lastQ = new T.Quaternion(), dQ = new T.Quaternion(), rvSmooth = 0, FORCE = null;
+  function rotateBy(dx, dy) {
+    var len = Math.hypot(dx, dy); if (len < .0001) return;
+    /* 拖的方向 = 球滚的方向：向下拖，正面那张要往下走 */
+    axis.set(dy, dx, 0).normalize();
+    tmpQ.setFromAxisAngle(axis, len * .006);
+    group.quaternion.premultiply(tmpQ);
+    spin = Math.min(.25, spin * .6 + len * .004);
+  }
+  function feedShader(dt) {
+    dQ.copy(lastQ).invert().premultiply(group.quaternion);   /* 本帧转了多少 */
+    lastQ.copy(group.quaternion);
+    var w = Math.max(-1, Math.min(1, dQ.w)), rad = 2 * Math.acos(w), sn = Math.sin(rad / 2);
+    if (sn > 1e-6) RAV.set(dQ.x / sn, dQ.y / sn, dQ.z / sn, 0);
+    var rv = rad / (Math.PI * 2) / Math.max(dt, .001) / 60;   /* 归一到「每帧转几圈」，跟参照一个量纲 */
+    rvSmooth += (rv - rvSmooth) * Math.min(1, dt * 30);
+    RAV.w = FORCE != null ? FORCE : rvSmooth * 1.1;
+  }
+  if (!VIDEO) {
+    cvs.addEventListener('pointerdown', function (e) { down = true; lx = e.clientX; ly = e.clientY; snapQ = null; cvs.setPointerCapture(e.pointerId); });
+    addEventListener('pointermove', function (e) { if (!down) return; rotateBy(e.clientX - lx, e.clientY - ly); vel.set(e.clientX - lx, e.clientY - ly, 0); lx = e.clientX; ly = e.clientY; });
+    addEventListener('pointerup', function () { down = false; });
+    addEventListener('pointercancel', function () { down = false; });
+  }
+
+  function frontIndex() {                        /* 离镜头最近 = 世界坐标 z 最大 */
+    var best = -1, bz = -1e9, w = new T.Vector3();
+    discs.forEach(function (d, i) { w.copy(d.v).applyQuaternion(group.quaternion); if (w.z > bz) { bz = w.z; best = i; } });
+    return best;
+  }
+  function makeSnap() {
+    var i = frontIndex(), w = new T.Vector3().copy(discs[i].v).applyQuaternion(group.quaternion).normalize();
+    var q = new T.Quaternion().setFromUnitVectors(w, new T.Vector3(0, 0, 1));
+    snapQ = q.multiply(group.quaternion.clone());
+    return i;
+  }
+
+  /* 出片：绕一根固定的斜轴匀速转，转满 2π 正好回到起点，视频首尾无缝 */
+  /* 出片模式的转法：一圈 12s，但速度按 1+0.97cos(3·2πu) 起伏——
+     一圈里三次「冲起来又几乎停住」。角度首尾都是整圈、速度首尾都在波峰，所以照样无缝循环。
+     匀速转是看不出形变的：形变量由瞬时角速度决定，得有快慢才看得见。 */
+  /* 绕 y 轴转，0°/90°/180°/270° 这四个角上都正好有一张片正对镜头（实测偏离 0.000），
+     所以把四个停顿点摆在这四个角上——停住时看到的就是「吸附到正中的那一张」，和真拖一把松手是同一个样子。
+     u=0 与 u=1 都落在停顿点且姿态相同，首尾接得上。 */
+  var VAXIS = new T.Vector3(0, 1, 0), VDUR = 12, vt = 0, VK = 4, VA = .97, vspin = 1;
+  var last = performance.now();
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (VIDEO) return;                           /* 出片时不自己跑，由 __case.step 推 */
+    var dt = Math.min(.05, (now - last) / 1000); last = now;
+    tick(dt);
+  }
+  function tick(dt) {
+    if (VIDEO) {
+      vt += dt; var u = vt / VDUR, ph = Math.PI * 2 * VK * u;
+      group.quaternion.setFromAxisAngle(VAXIS, Math.PI * 2 * (u - VA * Math.sin(ph) / (Math.PI * 2 * VK)));
+      vspin = Math.abs(1 - VA * Math.cos(ph));      /* 0.03 ≈ 停住，1.97 ≈ 最快 */
+    }
+    else if (!down) {
+      if (vel.lengthSq() > .5) { rotateBy(vel.x * .35, vel.y * .35); vel.multiplyScalar(.9); snapQ = null; }
+      else { if (!snapQ) { var i = makeSnap(); if (i !== active) { active = i; setFace(discs[i].it); } }
+             group.quaternion.slerp(snapQ, 1 - Math.pow(.0001, dt)); }
+    }
+    spin *= Math.pow(.02, dt);
+    if (VIDEO && vspin < .3) { var vi = frontIndex(); if (vi !== active) { active = vi; setFace(discs[vi].it); } }
+    faceOff(VIDEO ? vspin > .3 : (down || spin > .012));
+    /* 拖得越猛，镜头退得越远（参照里 cameraTargetZ += 旋转速度×80） */
+    /* 转得越猛退得越远，让周围的圆片进画面。系数按目标反推：拖动时正面那张从 85% 降到 50% 左右，
+       对应后退 1.5–2.5 个单位。之前写 spin*60，拖起来 spin 能到 .25 → 后退 15 个单位，整个球被推成一小团。 */
+    var target = CAMZ + (down ? Math.min(2.5, spin * 6 + 1.0) : 0);
+    camZ += (target - camZ) * (1 - Math.pow(.02, dt));
+    cam.position.z = camZ; cam.lookAt(0, 0, 0);
+    /* 正面那张最亮最大，越往边上越淡 */
+    feedShader(dt);                              /* 旋转轴 / 速度喂给着色器，拉伸量由它算 */
+    var w2 = new T.Vector3();
+    discs.forEach(function (d) {
+      w2.copy(d.v).applyQuaternion(group.quaternion);
+      var f = w2.z / R;                          /* -1 背面 … 1 正面。淡出交给着色器，这里只管大小 */
+      d.mesh.scale.setScalar(DISC * (.4 + .6 * Math.abs(f)));   /* 照参照：|z|/R × 0.6 + 0.4，正背面都大、侧面最小 */
+      d.mesh.renderOrder = Math.round(f * 100);
+    });
+    renderer.render(scene, cam);
+  }
+  requestAnimationFrame(frame);
+  window.__case = {
+    /* 验收探针：把第 0 片的世界坐标读出来，拖动方向对不对用数说话 */
+    probe: function () { var w = new T.Vector3().copy(discs[0].v).applyQuaternion(group.quaternion); return { x: +w.x.toFixed(3), y: +w.y.toFixed(3), z: +w.z.toFixed(3) }; },
+    /* 验收：把正面那张和最靠边那张的屏上直径量出来，跟参照的比例对齐 */
+    sizes: function () {
+      var w = new T.Vector3(), out = [];
+      discs.forEach(function (d) {
+        w.copy(d.v).applyQuaternion(group.quaternion);
+        var f = w.z / R, world = d.mesh.scale.x * 2;
+        var dist = cam.position.z - w.z, halfH = Math.tan(cam.fov * Math.PI / 360) * dist;
+        out.push({ f: +f.toFixed(2), pct: +(world / (halfH * 2) * 100).toFixed(1) });
+      });
+      out.sort(function (a, b) { return b.f - a.f; });
+      return { 正面: out[0], 中间: out[Math.floor(out.length / 2)], 最边: out[out.length - 1], 视口占比说明: '圆片直径 / 该深度的可视高度' };
+    },
+    rv: function () { return +RAV.w.toFixed(5); },
+    /* 验收用：强行把旋转速度按住不放，单独验证形变到底有没有生效 */
+    forceRV: function (v, ax) { FORCE = v; if (ax) RAV.set(ax[0], ax[1], ax[2], v); },
+    drag: function (dx, dy) { rotateBy(dx, dy); },
+    cycle: function () { return VDUR; }, step: function (dt) { tick(dt); renderer.render(scene, cam); }, count: function () { return discs.length; }, front: function () { return discs[frontIndex()].it.text; }, ready: function () { return discs.every(function (d) { return d.mat.uniforms.uReady.value > 0; }); } };
+})();
+</script>
+</body>
+</html>

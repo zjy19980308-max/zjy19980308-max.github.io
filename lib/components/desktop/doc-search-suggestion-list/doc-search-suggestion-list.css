@@ -1,0 +1,25 @@
+cs-doc-search-suggestion-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-sem-spacing-content-inline);
+  padding: var(--cs-sem-spacing-comp-padding-xl);
+  border: var(--border-width) solid var(--cs-sem-border-secondary);
+  border-radius: var(--radius-xxl);
+  background: var(--cs-sem-bg-primary);
+}
+
+cs-doc-search-suggestion-list[data-state="empty"] {
+  align-items: center;
+  justify-content: center;
+}
+
+cs-doc-search-suggestion-list .suggestion-header {
+  font: var(--cs-typo-title-extra-large);
+  color: var(--cs-sem-text-primary);
+}
+
+cs-doc-search-suggestion-list .suggestion-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cs-sem-spacing-comp-gap-sm);
+}

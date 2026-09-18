@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-approval-item 审批列表项</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="approval-item.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .demo-section { margin-bottom: 32px; }
+    .demo-label { font: var(--typo-cn-12-medium); color: var(--cs-color-text-light2); margin-bottom: 12px; }
+    .demo-container { width: 360px; background: var(--cs-color-bg); padding: 16px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<div class="demo-section">
+  <div class="demo-label">待处理审批</div>
+  <div class="demo-container">
+    <cs-approval-item data-status="pending">
+      <span class="approval-icon">
+        <i class="cses-document"></i>
+      </span>
+      <div class="approval-content">
+        <span class="approval-title">张天天发起的"差旅费用报销"</span>
+        <span class="approval-desc">报销金额3000元，差旅申请</span>
+      </div>
+      <span class="approval-time">10:30</span>
+    </cs-approval-item>
+    <cs-approval-item data-status="pending">
+      <span class="approval-icon">
+        <i class="cses-renwu"></i>
+      </span>
+      <div class="approval-content">
+        <span class="approval-title">陈成发起的"采购审批申请"</span>
+        <span class="approval-desc">采购服务器设备一批</span>
+      </div>
+      <span class="approval-time">09:15</span>
+    </cs-approval-item>
+    <cs-approval-item data-status="pending">
+      <span class="approval-icon">
+        <i class="cses-rili"></i>
+      </span>
+      <div class="approval-content">
+        <span class="approval-title">刘松松发起的"补卡审批"</span>
+        <span class="approval-desc">3月12日忘记打卡</span>
+      </div>
+      <span class="approval-time">昨天</span>
+    </cs-approval-item>
+  </div>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">不同状态</div>
+  <div class="demo-container">
+    <cs-approval-item data-status="approved">
+      <span class="approval-icon">
+        <i class="cses-check_arrow"></i>
+      </span>
+      <div class="approval-content">
+        <span class="approval-title">已通过 — 年假申请</span>
+      </div>
+      <span class="approval-time">03-10</span>
+    </cs-approval-item>
+    <cs-approval-item data-status="rejected">
+      <span class="approval-icon">
+        <i class="cses-guanbi"></i>
+      </span>
+      <div class="approval-content">
+        <span class="approval-title">已拒绝 — 加班补贴申请</span>
+      </div>
+      <span class="approval-time">03-08</span>
+    </cs-approval-item>
+    <cs-approval-item data-status="cc">
+      <span class="approval-icon">
+        <i class="cses-fenxiang"></i>
+      </span>
+      <div class="approval-content">
+        <span class="approval-title">抄送 — 部门预算调整</span>
+      </div>
+      <span class="approval-time">03-05</span>
+    </cs-approval-item>
+  </div>
+</div>
+
+</body>
+</html>

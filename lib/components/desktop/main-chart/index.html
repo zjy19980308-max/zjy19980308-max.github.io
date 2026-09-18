@@ -1,0 +1,109 @@
+<!-- task_id: 学员看板（老师版）-2026-05-21-1430 · component: cs-main-chart · PLAN-004 ★ -->
+<section class="cs-main-chart" data-component="cs-main-chart" aria-label="50 学员今日学习时长">
+  <header class="cs-main-chart__head">
+    <div class="cs-main-chart__title-wrap">
+      <h3 class="cs-main-chart__title">50 学员今日学习时长</h3>
+      <span class="cs-main-chart__hint">点击柱体查看详情 · 拖选批量干预 · 双击图例隔离</span>
+    </div>
+    <div class="cs-main-chart__legend">
+      <button class="cs-legend-item" data-state="ok" data-active="true">
+        <i class="cs-legend-dot cs-legend-dot--ok" aria-hidden="true"></i>
+        <span>达标</span>
+        <span class="cs-legend-count">31</span>
+      </button>
+      <button class="cs-legend-item" data-state="warn" data-active="true">
+        <i class="cs-legend-dot cs-legend-dot--warn" aria-hidden="true"></i>
+        <span>警戒</span>
+        <span class="cs-legend-count">12</span>
+      </button>
+      <button class="cs-legend-item" data-state="bad" data-active="true">
+        <i class="cs-legend-dot cs-legend-dot--bad" aria-hidden="true"></i>
+        <span>卡壳</span>
+        <span class="cs-legend-count">7</span>
+      </button>
+      <span class="cs-main-chart__avg">
+        <i class="cs-legend-dash" aria-hidden="true"></i>
+        <span>班均 38min</span>
+      </span>
+    </div>
+  </header>
+
+  <div class="cs-main-chart__plot">
+    <div class="cs-main-chart__y-axis" aria-hidden="true">
+      <span>120</span>
+      <span>90</span>
+      <span>60</span>
+      <span>30</span>
+      <span>0</span>
+    </div>
+    <div class="cs-main-chart__canvas">
+      <div class="cs-main-chart__grid" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="cs-main-chart__avg-line" aria-hidden="true" style="--cs-avg:38%"></div>
+      <div class="cs-main-chart__bars">
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:62%" data-name="李雨" data-mins="74">
+          <span class="cs-chart-bar__tip">
+            <strong>李雨</strong>
+            <span>时长 74min · 完成 3 章 · 5 分钟前</span>
+          </span>
+          <span class="cs-chart-bar__fill"></span>
+        </button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:75%" data-name="张帆" data-mins="90"><span class="cs-chart-bar__tip"><strong>张帆</strong><span>时长 90min · 完成 4 章 · 2 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:48%" data-name="陈璐" data-mins="58"><span class="cs-chart-bar__tip"><strong>陈璐</strong><span>时长 58min · 完成 2 章 · 12 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="warn" style="--cs-bar-h:30%" data-name="孙浩" data-mins="36"><span class="cs-chart-bar__tip"><strong>孙浩</strong><span>时长 36min · 完成 1 章 · 1 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:85%" data-name="周晨" data-mins="102"><span class="cs-chart-bar__tip"><strong>周晨</strong><span>时长 102min · 完成 5 章 · 8 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:55%" data-name="吴桐" data-mins="66"><span class="cs-chart-bar__tip"><strong>吴桐</strong><span>时长 66min · 完成 3 章 · 18 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="bad" style="--cs-bar-h:8%" data-name="郑昊" data-mins="10"><span class="cs-chart-bar__tip"><strong>郑昊</strong><span>时长 10min · 卡壳第 3 章 · 6 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:70%" data-name="冯倩" data-mins="84"><span class="cs-chart-bar__tip"><strong>冯倩</strong><span>时长 84min · 完成 4 章 · 22 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:50%" data-name="褚明" data-mins="60"><span class="cs-chart-bar__tip"><strong>褚明</strong><span>时长 60min · 完成 2 章 · 9 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="warn" style="--cs-bar-h:25%" data-name="韩梅" data-mins="30"><span class="cs-chart-bar__tip"><strong>韩梅</strong><span>时长 30min · 完成 1 章 · 2 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:65%" data-name="沈宁" data-mins="78"><span class="cs-chart-bar__tip"><strong>沈宁</strong><span>时长 78min · 完成 3 章 · 14 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:80%" data-name="苏荷" data-mins="96"><span class="cs-chart-bar__tip"><strong>苏荷</strong><span>时长 96min · 完成 4 章 · 4 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="bad" style="--cs-bar-h:5%" data-name="魏然" data-mins="6"><span class="cs-chart-bar__tip"><strong>魏然</strong><span>时长 6min · 长期未活 · 7 天前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:58%" data-name="许文" data-mins="70"><span class="cs-chart-bar__tip"><strong>许文</strong><span>时长 70min · 完成 3 章 · 26 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="warn" style="--cs-bar-h:28%" data-name="何凯" data-mins="34"><span class="cs-chart-bar__tip"><strong>何凯</strong><span>时长 34min · 完成 1 章 · 1.5 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:72%" data-name="高远" data-mins="86"><span class="cs-chart-bar__tip"><strong>高远</strong><span>时长 86min · 完成 4 章 · 7 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:54%" data-name="罗静" data-mins="65"><span class="cs-chart-bar__tip"><strong>罗静</strong><span>时长 65min · 完成 2 章 · 16 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="bad" style="--cs-bar-h:12%" data-name="梁雯" data-mins="14"><span class="cs-chart-bar__tip"><strong>梁雯</strong><span>时长 14min · 卡壳第 4 章 · 4 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:88%" data-name="谢柏" data-mins="106"><span class="cs-chart-bar__tip"><strong>谢柏</strong><span>时长 106min · 完成 5 章 · 3 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:60%" data-name="董琳" data-mins="72"><span class="cs-chart-bar__tip"><strong>董琳</strong><span>时长 72min · 完成 3 章 · 19 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="warn" style="--cs-bar-h:32%" data-name="袁帆" data-mins="38"><span class="cs-chart-bar__tip"><strong>袁帆</strong><span>时长 38min · 完成 1 章 · 50 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:78%" data-name="石嘉" data-mins="94"><span class="cs-chart-bar__tip"><strong>石嘉</strong><span>时长 94min · 完成 4 章 · 11 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:52%" data-name="贾然" data-mins="62"><span class="cs-chart-bar__tip"><strong>贾然</strong><span>时长 62min · 完成 2 章 · 24 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:68%" data-name="范涛" data-mins="82"><span class="cs-chart-bar__tip"><strong>范涛</strong><span>时长 82min · 完成 3 章 · 13 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="bad" style="--cs-bar-h:9%" data-name="彭翔" data-mins="11"><span class="cs-chart-bar__tip"><strong>彭翔</strong><span>时长 11min · 长期未活 · 8 天前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:64%" data-name="任萱" data-mins="76"><span class="cs-chart-bar__tip"><strong>任萱</strong><span>时长 76min · 完成 3 章 · 17 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="warn" style="--cs-bar-h:27%" data-name="姚蕊" data-mins="32"><span class="cs-chart-bar__tip"><strong>姚蕊</strong><span>时长 32min · 完成 1 章 · 2.5 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:74%" data-name="廖元" data-mins="88"><span class="cs-chart-bar__tip"><strong>廖元</strong><span>时长 88min · 完成 4 章 · 6 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:46%" data-name="侯坤" data-mins="55"><span class="cs-chart-bar__tip"><strong>侯坤</strong><span>时长 55min · 完成 2 章 · 27 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="warn" style="--cs-bar-h:22%" data-name="阎莉" data-mins="26"><span class="cs-chart-bar__tip"><strong>阎莉</strong><span>时长 26min · 完成 1 章 · 3 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:82%" data-name="窦芹" data-mins="98"><span class="cs-chart-bar__tip"><strong>窦芹</strong><span>时长 98min · 完成 5 章 · 9 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:56%" data-name="毛冰" data-mins="67"><span class="cs-chart-bar__tip"><strong>毛冰</strong><span>时长 67min · 完成 3 章 · 21 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="bad" style="--cs-bar-h:14%" data-name="樊霖" data-mins="17"><span class="cs-chart-bar__tip"><strong>樊霖</strong><span>时长 17min · 卡壳第 2 章 · 5 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:66%" data-name="霍楠" data-mins="79"><span class="cs-chart-bar__tip"><strong>霍楠</strong><span>时长 79min · 完成 3 章 · 15 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:90%" data-name="季彦" data-mins="108"><span class="cs-chart-bar__tip"><strong>季彦</strong><span>时长 108min · 完成 5 章 · 1 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="warn" style="--cs-bar-h:29%" data-name="谷雪" data-mins="35"><span class="cs-chart-bar__tip"><strong>谷雪</strong><span>时长 35min · 完成 1 章 · 1.8 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:61%" data-name="鲍青" data-mins="73"><span class="cs-chart-bar__tip"><strong>鲍青</strong><span>时长 73min · 完成 3 章 · 20 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:76%" data-name="林乔" data-mins="91"><span class="cs-chart-bar__tip"><strong>林乔</strong><span>时长 91min · 完成 4 章 · 10 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="warn" style="--cs-bar-h:31%" data-name="项琪" data-mins="37"><span class="cs-chart-bar__tip"><strong>项琪</strong><span>时长 37min · 完成 1 章 · 55 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:84%" data-name="柯轩" data-mins="100"><span class="cs-chart-bar__tip"><strong>柯轩</strong><span>时长 100min · 完成 4 章 · 7 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:53%" data-name="谭佳" data-mins="63"><span class="cs-chart-bar__tip"><strong>谭佳</strong><span>时长 63min · 完成 2 章 · 23 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="bad" style="--cs-bar-h:7%" data-name="麦野" data-mins="8"><span class="cs-chart-bar__tip"><strong>麦野</strong><span>时长 8min · 长期未活 · 9 天前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:67%" data-name="云苏" data-mins="80"><span class="cs-chart-bar__tip"><strong>云苏</strong><span>时长 80min · 完成 3 章 · 12 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:71%" data-name="温然" data-mins="85"><span class="cs-chart-bar__tip"><strong>温然</strong><span>时长 85min · 完成 4 章 · 9 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="warn" style="--cs-bar-h:26%" data-name="景泽" data-mins="31"><span class="cs-chart-bar__tip"><strong>景泽</strong><span>时长 31min · 完成 1 章 · 2.2 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:63%" data-name="路琰" data-mins="75"><span class="cs-chart-bar__tip"><strong>路琰</strong><span>时长 75min · 完成 3 章 · 18 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:77%" data-name="花卓" data-mins="92"><span class="cs-chart-bar__tip"><strong>花卓</strong><span>时长 92min · 完成 4 章 · 8 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="bad" style="--cs-bar-h:13%" data-name="褚芷" data-mins="15"><span class="cs-chart-bar__tip"><strong>褚芷</strong><span>时长 15min · 卡壳第 1 章 · 3.5 小时前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:69%" data-name="乔伊" data-mins="83"><span class="cs-chart-bar__tip"><strong>乔伊</strong><span>时长 83min · 完成 3 章 · 14 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+        <button class="cs-chart-bar" data-state="ok" style="--cs-bar-h:59%" data-name="安以" data-mins="71"><span class="cs-chart-bar__tip"><strong>安以</strong><span>时长 71min · 完成 3 章 · 25 分钟前</span></span><span class="cs-chart-bar__fill"></span></button>
+      </div>
+    </div>
+  </div>
+  <footer class="cs-main-chart__footer">
+    <span class="cs-main-chart__x-label">← 按今日时长升序</span>
+    <span class="cs-main-chart__x-label">学员姓名 (50)</span>
+    <span class="cs-main-chart__x-label">按今日时长降序 →</span>
+  </footer>
+</section>

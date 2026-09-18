@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-leave-row 请假申请行 — 组件预览</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../checkbox/checkbox.css">
+  <link rel="stylesheet" href="../avatar/avatar.css">
+  <link rel="stylesheet" href="../tag/tag.css">
+  <link rel="stylesheet" href="../status-badge/status-badge.css">
+  <link rel="stylesheet" href="leave-row.css">
+  <style>
+    body { background: #fff; padding: 32px; }
+    h2 { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin: 24px 0 12px; }
+    h2:first-child { margin-top: 0; }
+    .preview-container { border: 1px solid var(--cs-color-border); border-radius: var(--radius-lg); overflow: hidden; }
+  </style>
+</head>
+<body>
+  <h2>默认（含复选框）</h2>
+  <div class="preview-container">
+    <cs-leave-row>
+      <span class="leave-checkbox">
+        <cs-checkbox>
+          <span class="checkbox-inner">
+            <i class="checkbox-icon cses-check_arrow"></i>
+          </span>
+        </cs-checkbox>
+      </span>
+      <span class="leave-employee">
+        <cs-avatar data-size="sm">张</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">张明</span>
+          <span class="employee-dept">产品部</span>
+        </span>
+      </span>
+      <span class="leave-type">
+        <cs-tag data-color="primary" data-size="sm">年假</cs-tag>
+      </span>
+      <span class="leave-date">03月28日 - 03月30日</span>
+      <span class="leave-duration">3天</span>
+      <span class="leave-reason">家中有事需要处理</span>
+      <span class="leave-status">
+        <cs-status-badge data-status="in-progress">
+          <span class="status-dot"></span>
+          <span class="status-text">待审批</span>
+        </cs-status-badge>
+      </span>
+      <span class="leave-actions">
+        <i class="cses-check_arrow" title="批准"></i>
+        <i class="cses-guanbi" title="驳回"></i>
+      </span>
+    </cs-leave-row>
+
+    <cs-leave-row>
+      <span class="leave-checkbox">
+        <cs-checkbox>
+          <span class="checkbox-inner">
+            <i class="checkbox-icon cses-check_arrow"></i>
+          </span>
+        </cs-checkbox>
+      </span>
+      <span class="leave-employee">
+        <cs-avatar data-size="sm">王</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">王芳</span>
+          <span class="employee-dept">设计部</span>
+        </span>
+      </span>
+      <span class="leave-type">
+        <cs-tag data-color="warning" data-size="sm">病假</cs-tag>
+      </span>
+      <span class="leave-date">04月01日 - 04月02日</span>
+      <span class="leave-duration">2天</span>
+      <span class="leave-reason">身体不适需就医</span>
+      <span class="leave-status">
+        <cs-status-badge data-status="in-progress">
+          <span class="status-dot"></span>
+          <span class="status-text">待审批</span>
+        </cs-status-badge>
+      </span>
+      <span class="leave-actions">
+        <i class="cses-check_arrow" title="批准"></i>
+        <i class="cses-guanbi" title="驳回"></i>
+      </span>
+    </cs-leave-row>
+  </div>
+
+  <h2>紧急请假（data-urgent）</h2>
+  <div class="preview-container">
+    <cs-leave-row data-urgent>
+      <span class="leave-employee">
+        <cs-avatar data-size="sm">李</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">李华</span>
+          <span class="employee-dept">技术部</span>
+        </span>
+      </span>
+      <span class="leave-type">
+        <cs-tag data-color="warning" data-size="sm">病假</cs-tag>
+      </span>
+      <span class="leave-date">03月30日 - 03月31日</span>
+      <span class="leave-duration">2天</span>
+      <span class="leave-reason">突发疾病急需就医</span>
+      <span class="leave-status">
+        <cs-status-badge data-status="in-progress">
+          <span class="status-dot"></span>
+          <span class="status-text">待审批</span>
+        </cs-status-badge>
+      </span>
+      <span class="leave-actions">
+        <i class="cses-check_arrow" title="批准"></i>
+        <i class="cses-guanbi" title="驳回"></i>
+      </span>
+    </cs-leave-row>
+  </div>
+
+  <h2>已批准</h2>
+  <div class="preview-container">
+    <cs-leave-row>
+      <span class="leave-employee">
+        <cs-avatar data-size="sm">赵</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">赵宇</span>
+          <span class="employee-dept">市场部</span>
+        </span>
+      </span>
+      <span class="leave-type">
+        <cs-tag data-color="default" data-size="sm">事假</cs-tag>
+      </span>
+      <span class="leave-date">03月20日 - 03月21日</span>
+      <span class="leave-duration">2天</span>
+      <span class="leave-reason">个人事务</span>
+      <span class="leave-status">
+        <cs-status-badge data-status="completed">
+          <span class="status-dot"></span>
+          <span class="status-text">已批准</span>
+        </cs-status-badge>
+      </span>
+    </cs-leave-row>
+  </div>
+
+  <h2>已驳回</h2>
+  <div class="preview-container">
+    <cs-leave-row>
+      <span class="leave-employee">
+        <cs-avatar data-size="sm">陈</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">陈刚</span>
+          <span class="employee-dept">运营部</span>
+        </span>
+      </span>
+      <span class="leave-type">
+        <cs-tag data-color="primary" data-size="sm">年假</cs-tag>
+      </span>
+      <span class="leave-date">04月10日 - 04月15日</span>
+      <span class="leave-duration">5天</span>
+      <span class="leave-reason">旅行计划</span>
+      <span class="leave-status">
+        <cs-status-badge data-status="overdue">
+          <span class="status-dot"></span>
+          <span class="status-text">已驳回</span>
+        </cs-status-badge>
+      </span>
+    </cs-leave-row>
+  </div>
+
+  <h2>多种假期类型</h2>
+  <div class="preview-container">
+    <cs-leave-row>
+      <span class="leave-employee">
+        <cs-avatar data-size="sm">周</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">周婷</span>
+          <span class="employee-dept">人事部</span>
+        </span>
+      </span>
+      <span class="leave-type">
+        <cs-tag data-color="success" data-size="sm">婚假</cs-tag>
+      </span>
+      <span class="leave-date">04月05日 - 04月18日</span>
+      <span class="leave-duration">10天</span>
+      <span class="leave-reason">结婚</span>
+      <span class="leave-status">
+        <cs-status-badge data-status="completed">
+          <span class="status-dot"></span>
+          <span class="status-text">已批准</span>
+        </cs-status-badge>
+      </span>
+    </cs-leave-row>
+
+    <cs-leave-row>
+      <span class="leave-employee">
+        <cs-avatar data-size="sm">吴</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">吴丽</span>
+          <span class="employee-dept">财务部</span>
+        </span>
+      </span>
+      <span class="leave-type">
+        <cs-tag data-color="info" data-size="sm">产假</cs-tag>
+      </span>
+      <span class="leave-date">05月01日 - 08月28日</span>
+      <span class="leave-duration">120天</span>
+      <span class="leave-reason">生育</span>
+      <span class="leave-status">
+        <cs-status-badge data-status="completed">
+          <span class="status-dot"></span>
+          <span class="status-text">已批准</span>
+        </cs-status-badge>
+      </span>
+    </cs-leave-row>
+
+    <cs-leave-row>
+      <span class="leave-employee">
+        <cs-avatar data-size="sm">孙</cs-avatar>
+        <span class="employee-info">
+          <span class="employee-name">孙强</span>
+          <span class="employee-dept">技术部</span>
+        </span>
+      </span>
+      <span class="leave-type">
+        <cs-tag data-color="default" data-size="sm">调休</cs-tag>
+      </span>
+      <span class="leave-date">03月29日 - 03月29日</span>
+      <span class="leave-duration">1天</span>
+      <span class="leave-reason">加班调休</span>
+      <span class="leave-status">
+        <cs-status-badge data-status="completed">
+          <span class="status-dot"></span>
+          <span class="status-text">已批准</span>
+        </cs-status-badge>
+      </span>
+    </cs-leave-row>
+  </div>
+</body>
+</html>

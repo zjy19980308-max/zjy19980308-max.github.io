@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-carousel 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="carousel.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .demo-stage { max-width: 720px; height: 240px; }
+    .slide-blue   { background: linear-gradient(135deg, #4857e2 0%, #6573ff 100%); color: #fff !important; }
+    .slide-green  { background: linear-gradient(135deg, #00c950 0%, #4ade80 100%); color: #fff !important; }
+    .slide-orange { background: linear-gradient(135deg, #ff6900 0%, #ff9a4a 100%); color: #fff !important; }
+    .slide-purple { background: linear-gradient(135deg, #ad46ff 0%, #c97bff 100%); color: #fff !important; }
+    .slide-red    { background: linear-gradient(135deg, #fb2c36 0%, #ff7173 100%); color: #fff !important; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 1. 三张自动轮播 ========== -->
+<div class="section">
+  <div class="section-title">3 张轮播 + 自动播放 + 指示点</div>
+  <div class="section-subtitle">data-count="3" data-autoplay — 9 秒一个完整循环</div>
+  <div class="demo-stage">
+    <cs-carousel data-count="3" data-autoplay data-pause-on-hover>
+      <div class="carousel-track">
+        <div class="carousel-slide slide-blue">第一张 · 团队协作</div>
+        <div class="carousel-slide slide-green">第二张 · 文档共享</div>
+        <div class="carousel-slide slide-orange">第三张 · 智能审批</div>
+      </div>
+      <div class="carousel-dots">
+        <button class="carousel-dot" data-active type="button" aria-label="第 1 张"></button>
+        <button class="carousel-dot" type="button" aria-label="第 2 张"></button>
+        <button class="carousel-dot" type="button" aria-label="第 3 张"></button>
+      </div>
+    </cs-carousel>
+  </div>
+</div>
+
+<!-- ========== 2. 四张轮播 + 翻页箭头 ========== -->
+<div class="section">
+  <div class="section-title">4 张轮播 + 翻页箭头</div>
+  <div class="section-subtitle">data-count="4" — 12 秒循环</div>
+  <div class="demo-stage">
+    <cs-carousel data-count="4" data-autoplay data-pause-on-hover>
+      <div class="carousel-track">
+        <div class="carousel-slide slide-blue">Slide 1</div>
+        <div class="carousel-slide slide-green">Slide 2</div>
+        <div class="carousel-slide slide-orange">Slide 3</div>
+        <div class="carousel-slide slide-purple">Slide 4</div>
+      </div>
+      <button class="carousel-arrow" data-direction="prev" type="button" aria-label="上一张">
+        <i class="cses-fanhui"></i>
+      </button>
+      <button class="carousel-arrow" data-direction="next" type="button" aria-label="下一张">
+        <i class="cses-qianjin"></i>
+      </button>
+      <div class="carousel-dots">
+        <button class="carousel-dot" data-active type="button" aria-label="第 1 张"></button>
+        <button class="carousel-dot" type="button" aria-label="第 2 张"></button>
+        <button class="carousel-dot" type="button" aria-label="第 3 张"></button>
+        <button class="carousel-dot" type="button" aria-label="第 4 张"></button>
+      </div>
+    </cs-carousel>
+  </div>
+</div>
+
+<!-- ========== 3. 五张轮播 ========== -->
+<div class="section">
+  <div class="section-title">5 张轮播</div>
+  <div class="section-subtitle">data-count="5" — 15 秒循环</div>
+  <div class="demo-stage" style="height: 180px;">
+    <cs-carousel data-count="5" data-autoplay data-pause-on-hover>
+      <div class="carousel-track">
+        <div class="carousel-slide slide-blue">公告 1</div>
+        <div class="carousel-slide slide-green">公告 2</div>
+        <div class="carousel-slide slide-orange">公告 3</div>
+        <div class="carousel-slide slide-purple">公告 4</div>
+        <div class="carousel-slide slide-red">公告 5</div>
+      </div>
+      <div class="carousel-dots">
+        <button class="carousel-dot" data-active type="button"></button>
+        <button class="carousel-dot" type="button"></button>
+        <button class="carousel-dot" type="button"></button>
+        <button class="carousel-dot" type="button"></button>
+        <button class="carousel-dot" type="button"></button>
+      </div>
+    </cs-carousel>
+  </div>
+</div>
+
+</body>
+</html>

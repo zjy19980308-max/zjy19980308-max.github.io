@@ -1,0 +1,149 @@
+/*
+ * 折叠面板组件 (Collapse)
+ * 标签：<cs-collapse>
+ *
+ * 作用：可折叠/展开的内容区域，常用于 FAQ、表单分组、属性面板。
+ * 对标 ng-zorro Collapse。基于原生 <details><summary>，零 JS。
+ *
+ * data 属性：
+ *   data-bordered  — 有边框（默认）
+ *   data-borderless — 无边框（透明背景）
+ *   data-ghost     — 极简幽灵风（无背景无边框）
+ *
+ * 子元素：
+ *   <details class="collapse-item">           — 单个折叠项
+ *     <summary class="collapse-header">       — 折叠头
+ *       <i class="collapse-arrow">            — 展开箭头
+ *       <span class="collapse-title">         — 标题
+ *       <span class="collapse-extra">         — 右侧附加信息
+ *     <div class="collapse-content">          — 折叠内容
+ */
+
+/* ========== 容器 ========== */
+cs-collapse {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: var(--line-width) solid var(--cs-color-border);
+  background: var(--cs-color-white);
+  box-sizing: border-box;
+}
+
+/* ========== 折叠项 ========== */
+cs-collapse .collapse-item {
+  border-top: var(--line-width) solid var(--cs-color-border);
+}
+
+cs-collapse .collapse-item:first-child {
+  border-top: 0;
+}
+
+/* ========== 折叠头 ========== */
+cs-collapse .collapse-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--cs-color-bg-light);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+cs-collapse .collapse-header::-webkit-details-marker {
+  display: none;
+}
+
+cs-collapse .collapse-header:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 箭头 ========== */
+cs-collapse .collapse-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  font-size: var(--font-size-sm);
+  color: var(--cs-color-text-light2);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+cs-collapse .collapse-item[open] .collapse-arrow {
+  transform: rotate(90deg);
+  color: var(--cs-color-text);
+}
+
+/* ========== 标题 + 右侧附加 ========== */
+cs-collapse .collapse-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+cs-collapse .collapse-extra {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+}
+
+/* ========== 内容区 ========== */
+cs-collapse .collapse-content {
+  padding: var(--space-md);
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text-light);
+  line-height: 1.7;
+  background: var(--cs-color-white);
+}
+
+/* ========== 无边框 ========== */
+cs-collapse[data-borderless] {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+cs-collapse[data-borderless] .collapse-item {
+  border-top: 0;
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+}
+
+cs-collapse[data-borderless] .collapse-header {
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+cs-collapse[data-borderless] .collapse-content {
+  background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ========== 幽灵风 ========== */
+cs-collapse[data-ghost] {
+  border: 0;
+  background: transparent;
+}
+
+cs-collapse[data-ghost] .collapse-item {
+  border-top: 0;
+  margin-bottom: var(--space-xs);
+}
+
+cs-collapse[data-ghost] .collapse-header {
+  background: transparent;
+  border-radius: var(--radius);
+}
+
+cs-collapse[data-ghost] .collapse-content {
+  background: transparent;
+}

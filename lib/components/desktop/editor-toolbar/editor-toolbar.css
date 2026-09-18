@@ -1,0 +1,143 @@
+/* ==========================================================
+   cs-editor-toolbar — 文档编辑工具栏（40px 单行）
+
+   data 属性：
+     data-disabled — 禁用整个工具栏（透明度降低 + 拒绝点击）
+   ========================================================== */
+
+cs-editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  width: 100%;
+  height: var(--spacing-40);
+  padding: 0 var(--space-sm);
+  background: var(--cs-color-bg);
+  border-bottom: 1px solid var(--cs-color-border);
+  box-sizing: border-box;
+  overflow-x: auto;
+  scrollbar-width: none;
+  user-select: none;
+}
+
+cs-editor-toolbar::-webkit-scrollbar { display: none; }
+
+cs-editor-toolbar[data-disabled] {
+  opacity: var(--cs-sem-opacity-disabled, 0.4);
+  pointer-events: none;
+}
+
+/* ---- 分组 ---- */
+.etb-group {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3xs);
+  flex-shrink: 0;
+}
+
+.etb-divider {
+  flex-shrink: 0;
+  width: 1px;
+  height: var(--space-md);
+  background: var(--cs-color-border);
+  margin: 0 var(--space-2xs);
+}
+
+/* ---- 通用按钮 ---- */
+.etb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3xs);
+  min-width: var(--spacing-32);
+  height: var(--spacing-32);
+  padding: 0 var(--space-2xs);
+  border: none;
+  border-radius: var(--radius);
+  background: transparent;
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text);
+  cursor: pointer;
+  transition:
+    background var(--motion-duration-fast) var(--motion-easing-standard),
+    color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.etb-btn:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+.etb-btn:active {
+  background: var(--cs-color-highlight);
+}
+
+.etb-btn:focus-visible {
+  outline: 2px solid var(--cs-color-primary);
+  outline-offset: -2px;
+}
+
+.etb-btn[data-variant="accent"] {
+  color: var(--cs-color-primary);
+}
+
+.etb-btn[data-variant="accent"]:hover {
+  background: var(--cs-color-primary-a2);
+}
+
+.etb-btn[data-variant="active"] {
+  background: var(--cs-color-selected);
+  color: var(--cs-color-primary);
+}
+
+.etb-btn[data-disabled] {
+  opacity: var(--cs-sem-opacity-disabled, 0.4);
+  pointer-events: none;
+}
+
+.etb-btn-icon {
+  font-size: var(--cs-sem-size-icon-md);
+  line-height: 1;
+}
+
+.etb-btn-label {
+  font: var(--typo-cn-12-regular);
+  padding: 0 var(--space-3xs);
+  line-height: 1;
+}
+
+.etb-btn-caret {
+  font-size: var(--cs-sem-size-icon-xs);
+  color: var(--cs-color-text-light2);
+  margin-left: var(--space-3xs);
+}
+
+/* ---- 下拉壳层（默认字体 / 标题1 / 24） ---- */
+.etb-select {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3xs);
+  height: var(--spacing-28);
+  padding: 0 var(--space-xs);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background var(--motion-duration-fast) var(--motion-easing-standard),
+    border-color var(--motion-duration-fast) var(--motion-easing-standard);
+}
+
+.etb-select:hover {
+  background: var(--cs-color-bg-hover);
+  border-color: var(--cs-color-border);
+}
+
+.etb-select-text {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+}
+
+.etb-spacer {
+  flex: 1;
+}

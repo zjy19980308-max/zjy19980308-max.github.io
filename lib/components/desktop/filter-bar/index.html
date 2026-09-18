@@ -1,0 +1,48 @@
+<!-- task_id: 学员看板（老师版）-2026-05-21-1430 · component: cs-filter-bar · PLAN-007 -->
+<section class="cs-filter-bar" data-component="cs-filter-bar" aria-label="学员列表筛选">
+  <div class="cs-filter-bar__left">
+    <div class="cs-filter-chips" role="tablist" aria-label="状态筛选">
+      <button class="cs-filter-chip" data-active="true">
+        <span>全部</span><span class="cs-filter-chip__count">50</span>
+      </button>
+      <button class="cs-filter-chip">
+        <span>在学</span><span class="cs-filter-chip__count">48</span>
+      </button>
+      <button class="cs-filter-chip">
+        <span>完成</span><span class="cs-filter-chip__count cs-filter-chip__count--ok">31</span>
+      </button>
+      <button class="cs-filter-chip cs-filter-chip--warn">
+        <span>卡壳</span><span class="cs-filter-chip__count cs-filter-chip__count--warn">7</span>
+      </button>
+      <button class="cs-filter-chip cs-filter-chip--danger">
+        <span>未活 7+</span><span class="cs-filter-chip__count cs-filter-chip__count--danger">4</span>
+      </button>
+    </div>
+    <div class="cs-segmented" role="tablist">
+      <button class="cs-segmented__item" data-active="false">今日</button>
+      <button class="cs-segmented__item" data-active="true">本周</button>
+      <button class="cs-segmented__item" data-active="false">本月</button>
+      <button class="cs-segmented__item" data-active="false">
+        <i class="cses-shaixuanxuanfu" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+  <div class="cs-filter-bar__right">
+    <label class="cs-search-input">
+      <i class="cses-search cs-search-input__icon" aria-hidden="true"></i>
+      <input type="search" placeholder="搜学员姓名 / 手机号" class="cs-search-input__field" />
+      <span class="cs-search-input__shortcut" aria-hidden="true">⌘K</span>
+    </label>
+    <div class="cs-btn-batch" data-disabled="false">
+      <button class="cs-btn-batch__main" type="button">
+        <i class="cses-check-circle" aria-hidden="true"></i>
+        <span>已选 <strong>3</strong> 人</span>
+      </button>
+      <span class="cs-btn-batch__divider" aria-hidden="true"></span>
+      <button class="cs-btn-batch__menu" type="button" aria-label="批量动作">
+        <span>批量动作</span>
+        <i class="cses-paixuxia" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</section>

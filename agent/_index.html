@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Workflow Agent · 全部页面</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  body{background:var(--surf)}
+  .wrap{max-width:1180px;margin:0 auto;padding:48px 24px 80px}
+  .hero{margin-bottom:34px}
+  .hero h1{font-size:28px;font-weight:800;letter-spacing:-.02em}
+  .hero p{font-size:13.5px;color:var(--ink-2);margin-top:10px;line-height:1.8;max-width:760px}
+  .hero .who{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .hero .who span{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:12.5px}
+  .hero .who i{width:20px;height:20px;border-radius:50%;background:var(--pri-100);color:#4857e2;font-size:10px;font-weight:700;display:grid;place-items:center;font-style:normal}
+  h2.sec{font-size:15px;font-weight:700;margin:34px 0 6px;display:flex;align-items:center;gap:10px}
+  h2.sec em{font-style:normal;font-size:12px;font-weight:500;color:var(--ink-3)}
+  .route{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sd)}
+  .route ol{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 28px}
+  .route li{counter-increment:s;display:flex;align-items:baseline;gap:10px;padding:7px 0;font-size:13px;border-bottom:1px solid var(--line-2)}
+  .route li::before{content:counter(s);font-family:var(--mono);font-size:11px;color:#4857e2;font-weight:700;min-width:18px}
+  .route li b{font-weight:600}
+  .route li span{color:var(--ink-3);font-size:12px}
+  .route li a{margin-left:auto;font-size:12px;color:#4857e2;white-space:nowrap}
+  .route li a:hover{text-decoration:underline;text-underline-offset:3px}
+  .g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:14px}
+  .p{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:var(--sd);display:flex;flex-direction:column;transition:border-color .16s,transform .16s,box-shadow .16s}
+  .p:hover{border-color:#8f99cf;transform:translateY(-1px);box-shadow:0 2px 4px rgba(0,0,0,.02),0 18px 32px -26px rgba(15,23,42,.5)}
+  .p__n{font-family:var(--mono);font-size:11px;color:var(--ink-3);font-weight:700}
+  .p h3{font-size:15px;font-weight:700;margin:6px 0 8px}
+  .p p{font-size:12.5px;color:var(--ink-2);line-height:1.75;min-height:44px}
+  .p ul{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:6px}
+  .p li{font-size:11.5px;background:var(--surf);border:1px solid var(--line-2);border-radius:5px;padding:3px 8px;color:var(--ink-2)}
+  .p li.hot{background:var(--pri-50);border-color:var(--pri-200);color:#4857e2;font-weight:600}
+  .p__f{display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-2)}
+  .p__f a{flex:1;text-align:center;padding:9px;border-radius:var(--r-s);border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--ink)}
+  .p__f a:hover{border-color:#4857e2;color:#4857e2;background:var(--pri-50)}
+  .p__f a.go{background:#4857e2;border-color:#4857e2;color:#fff}
+  .p__f a.go:hover{background:#393ed7;color:#fff}
+  .note{font-size:12px;color:var(--ink-3);line-height:1.8;margin-top:12px}
+  @media (max-width:980px){.g{grid-template-columns:repeat(2,minmax(0,1fr))}.route ol{grid-template-columns:1fr}}
+  @media (max-width:680px){.g{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <h1>AI Workflow Agent · 全部页面</h1>
+    <p>一个流程智能体产品，分成两个应用：<b>审批工作台</b>（全员用，发起和审批单子）和<b>流程中台</b>（流程管理员用，搭流程、体检、发布、看运行、处理异常）。右上角能互相切换，但只有带管理员角色的身份才看得见「流程后台」。</p>
+    <div class="who">
+      <span><i>孙</i>孙悦 · 应付会计 · 只能进前台</span>
+      <span><i>周</i>周宁 · 流程管理员 · 两边都能进</span>
+      <span>头像点开可以换身份</span>
+    </div>
+  </div>
+
+  <div class="route" style="margin-bottom:26px">
+    <ol style="grid-template-columns:1fr">
+      <li><b>逐页验收</b><span>每一页、每一个状态各一条，打通过 / 不通过、写意见，最后一次性导出给我</span><a href="_review.html">打开 →</a></li>
+    </ol>
+  </div>
+
+  <h2 class="sec">一条能走通的路线 <em>照这个顺序点一遍，22 步不断</em></h2>
+  <div class="route">
+    <ol>
+      <li><b>工作台</b><span>看待办</span><a href="workbench.html">打开 →</a></li>
+      <li><b>待我处理</b><span>点第一条的「去确认」</span><a href="approvals.html">打开 →</a></li>
+      <li><b>卡片悬浮</b><span>鼠标停在卡上才出现驳回/通过</span><a href="approvals.html">试 →</a></li>
+      <li><b>审批记录</b><span>点顶部锚点滚过去</span><a href="approvals.html">试 →</a></li>
+      <li><b>分支未定 ⋯</b><span>看第二张单，悬浮省略号</span><a href="approvals.html">试 →</a></li>
+      <li><b>完整流程图</b><span>点步进器打开</span><a href="approvals.html">试 →</a></li>
+      <li><b>发起申请</b><span>整页挑单：三大类 + 分组</span><a href="apply.html">打开 →</a></li>
+      <li><b>挑一张单</b><span>点「付款申请」进表单</span><a href="apply.html">试 →</a></li>
+      <li><b>填表提交</b><span>改金额看审批链变化</span><a href="form.html?t=%E4%BB%98%E6%AC%BE%E7%94%B3%E8%AF%B7">打开 →</a></li>
+      <li><b>换身份 → 流程后台</b><span>头像切周宁，右上角出现入口</span><a href="workbench.html">试 →</a></li>
+      <li><b>后台工作台</b><span>运行状态 + 需要你处理</span><a href="home.html">打开 →</a></li>
+      <li><b>流程管理</b><span>未发布置顶、开关、切版本</span><a href="flows.html">打开 →</a></li>
+      <li><b>流程配置 1·基础信息</b><span>三选一，分组跟着变</span><a href="builder.html?step=1">打开 →</a></li>
+      <li><b>流程配置 2·表单设计</b><span>左控件库、右属性，都是悬浮窗</span><a href="builder.html?step=2">打开 →</a></li>
+      <li><b>描述对话</b><span>追问在输入框上方</span><a href="chat.html">打开 →</a></li>
+      <li><b>生成流程草稿</b><span>在下方确认，不在右下角</span><a href="chat.html">试 →</a></li>
+      <li><b>流程配置</b><span>连线悬浮出加号</span><a href="builder.html">打开 →</a></li>
+      <li><b>提交体检</b><span>修完 3 项才能提交审阅</span><a href="check.html">打开 →</a></li>
+      <li><b>变更审阅</b><span>批准并发布</span><a href="review.html">打开 →</a></li>
+      <li><b>运行监控</b><span>点那条「异常」</span><a href="runs.html">打开 →</a></li>
+      <li><b>异常处理</b><span>写依据后确认放行</span><a href="exceptions.html">打开 →</a></li>
+      <li><b>版本与回退</b><span>三步回退 → 复盘 → 进检查项库</span><a href="versions.html">打开 →</a></li>
+    </ol>
+  </div>
+
+  <h2 class="sec">前台 · 审批工作台 <em>全员用</em></h2>
+  <div class="g" id="front"></div>
+
+  <h2 class="sec">后台 · 流程中台 <em>流程管理员用</em></h2>
+  <div class="g" id="admin"></div>
+
+  <p class="note">页面都是纯 HTML，双击就能开，不用起服务。外框开关在 <code>ui.js</code> 第 3 行 <code>var FRAME = true</code>，改成 false 就去掉平台外框。</p>
+</div>
+
+<script>
+(function () {
+  var FRONT = [
+    ['01', '工作台', 'workbench.html', '前台首页：等你处理的三条待办、发起一张单的四个快捷入口、我发起的进度条。',
+      ['三条待办可点进审批', '四个发起入口', '右上角身份切换', '周宁登录才有流程后台'], 2],
+    ['02', '待我处理', 'approvals.html', '审批详情：Agent 预审结论、表单、审批记录、关联任务。四个页签真的能切。',
+      ['卡片悬浮出按钮', '锚点滚动', '⋯ 悬浮看分支', '点步进器开流程图', '通过后自动跳下一张'], 5,
+      [['待我处理', 'approvals.html'], ['我已处理', 'approvals.html?tab=done'], ['我发起的', 'approvals.html?tab=mine'], ['抄送我的', 'approvals.html?tab=cc']]],
+    ['03', '发起申请', 'apply.html', '整页挑单：上边三大类（审批与工单 / 工作流 / 智能洞察），分组往下排，为您推荐置顶。未发布的草稿不会出现在这里。',
+      ['切三大类', '搜索实时筛', '折叠分组', '只看我常用的', '点一张单进表单'], 5],
+    ['04', '填写付款申请', 'form.html?t=%E4%BB%98%E6%AC%BE%E7%94%B3%E8%AF%B7', '表单填写：改金额会实时算大写、重算审批链、灰掉本档跳过的节点。',
+      ['金额改 600000 试试', '供应商选恒通机电', '提交前自检', '提交申请'], 4],
+    ['05', '搭建', 'build.html', '用一句话搭流程的入口页：输入框、三张入口卡、最近对话。',
+      ['输入后回车进对话', '点最近对话', '三张卡进模板库'], 3],
+    ['06', '模板库', 'templates.html', '工作流模板 / 审批模板两组，点任意一张开模板详情弹窗。',
+      ['切换两类模板', '点卡片开弹窗', '使用模板 → 配置'], 3,
+      [['工作流模板', 'templates.html'], ['审批模板', 'templates.html?tab=approve']]]
+  ];
+  var ADMIN = [
+    ['01', '工作台', 'home.html', '后台首页：今天的运行状态、需要你处理的三件事、正在跑的四条运行。',
+      ['五个运行状态', '三条待办可点进去', '四条运行带进度', '最近一次发布'], 4],
+    ['02', '流程管理', 'flows.html', '一句话搭流程的 Banner 在最上方；「未发布」= 草稿置顶且只有这一页看得到；分组往下排，每组一张表。',
+      ['Banner 输入回车', '一键添加推荐流程', '折叠分组', '开关停用流程', '切当前版本', '删除草稿', '新建流程分组'], 7],
+    ['03', '描述对话', 'chat.html', '把一句话拆成规则清单。追问和「生成草稿」都在输入框上方，正文只留结果。',
+      ['开场四个快捷入口', '三轮追问', '在下方确认生成', '右侧规则清单'], 4],
+    ['04', '流程配置', 'builder.html', '左 AI 助手、中画布、右配置。连线悬浮冒出加号，点开能加审批人/分支/自动化。',
+      ['连线悬浮出 ⊕', '加节点菜单 6 项', '审批人配置', '验证 Tab', '自动化模板 + 条件组', '测试（预演）'], 6],
+    ['05', '上线前体检', 'check.html', '3 项没过就上不了线。一键应用建议后，横幅与右侧的迷你流程图同步更新。',
+      ['一键应用建议 ×2', '确认保留', '豁免弹窗', '修完才能提交审阅'], 4],
+    ['06', '变更审阅', 'review.html', '流程图对比 / 逐条对比两个视图，批准并发布要走确认弹窗。',
+      ['切两种对比', '点逐条对比的行会定位', '驳回要写意见', '确认发布'], 4],
+    ['07', '运行监控', 'runs.html', '事件流：每步谁做的、产出什么、可逆等级。不给百分比。',
+      ['切换左侧运行', '展开三单匹配', '撤销 B 级动作', '点异常那条跳异常处理'], 4],
+    ['08', '异常处理', 'exceptions.html', '转人工时把证据和处理方式一次给全，Agent 只能建议。',
+      ['切两条异常', '四种处理方式', '勾选生成检查项', '必须写依据'], 4],
+    ['09', '版本与回退', 'versions.html', '回退三步走，先摊开影响，完成后自动生成复盘卡。',
+      ['点版本时间线', '回退三步弹窗', '复盘 → 加入检查项库'], 3],
+    ['10', '检查项库', 'rules.html', '每条检查项都写清楚是从哪次事故来的，待审批的要人批。',
+      ['只看待审批', '点行开抽屉', '批准生效 / 驳回'], 3]
+  ];
+  function card(p) {
+    var links = p[6] || [];
+    return '<div class="p"><div class="p__n">' + p[0] + '</div><h3>' + p[1] + '</h3><p>' + p[3] + '</p>'
+      + '<ul>' + p[4].map(function (t, i) { return '<li' + (i < p[5] && i < 2 ? ' class="hot"' : '') + '>' + t + '</li>'; }).join('') + '</ul>'
+      + '<div class="p__f"><a class="go" href="' + p[2] + '">打开这一页</a>'
+      + links.slice(1).map(function (l) { return '<a href="' + l[1] + '">' + l[0] + '</a>'; }).join('')
+      + '</div></div>';
+  }
+  document.getElementById('front').innerHTML = FRONT.map(card).join('');
+  document.getElementById('admin').innerHTML = ADMIN.map(card).join('');
+})();
+</script>
+</body>
+</html>

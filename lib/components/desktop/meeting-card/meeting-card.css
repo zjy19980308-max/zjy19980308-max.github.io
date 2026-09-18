@@ -1,0 +1,119 @@
+/*
+ * 会议卡片组件 (Meeting Card)
+ * 标签：<cs-meeting-card>
+ * 会议列表中的单条会议信息卡片
+ *
+ * data 属性：
+ *   data-active               — 当前进行中的会议（高亮）
+ *   data-past                 — 已结束的会议（降低透明度）
+ */
+
+/* ========== 容器 ========== */
+cs-meeting-card {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: var(--line-width) solid var(--cs-color-border);
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background 0.15s ease;
+}
+
+/* ========== 悬浮态 ========== */
+cs-meeting-card:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 进行中高亮 ========== */
+cs-meeting-card[data-active] {
+  background: var(--cs-color-bg-hover);
+}
+
+/* ========== 已结束 ========== */
+cs-meeting-card[data-past] {
+  opacity: var(--cs-opacity-disabled, 0.5);
+}
+
+/* ========== 左侧时间区 ========== */
+cs-meeting-card .meeting-time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: var(--spacing-48);
+  flex-shrink: 0;
+}
+
+cs-meeting-card .meeting-time .time-start {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+}
+
+cs-meeting-card .meeting-time .time-duration {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 内容区 ========== */
+cs-meeting-card .meeting-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+/* ========== 会议标题 ========== */
+cs-meeting-card .meeting-title {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ========== 会议元信息 ========== */
+cs-meeting-card .meeting-meta {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ========== 参会人头像组 ========== */
+cs-meeting-card .meeting-attendees {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+cs-meeting-card .meeting-attendees cs-avatar {
+  margin-left: calc(var(--space-2xs) * -1);
+}
+
+cs-meeting-card .meeting-attendees cs-avatar:first-child {
+  margin-left: 0;
+}
+
+/* ========== 右侧操作区 ========== */
+cs-meeting-card .meeting-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2xs);
+  flex-shrink: 0;
+}
+
+/* ========== 会议类型标签 ========== */
+cs-meeting-card .meeting-type {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-xs);
+  border-radius: var(--radius);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  background: var(--cs-color-bg-light);
+  white-space: nowrap;
+  user-select: none;
+}

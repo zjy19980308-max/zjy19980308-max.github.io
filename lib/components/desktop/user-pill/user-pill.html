@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-user-pill 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../avatar/avatar.css">
+  <link rel="stylesheet" href="user-pill.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 100px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- 基础用法 -->
+<div class="section">
+  <div class="section-title">基础用法 Basic</div>
+  <div class="section-subtitle">头像 + 名称药丸</div>
+
+  <div class="row">
+    <span class="row-label">文字头像</span>
+    <cs-user-pill>
+      <cs-avatar data-size="sm" data-color="blue"><span class="avatar-text">张</span></cs-avatar>
+      <span class="pill-name">张三</span>
+    </cs-user-pill>
+    <cs-user-pill>
+      <cs-avatar data-size="sm" data-color="orange"><span class="avatar-text">李</span></cs-avatar>
+      <span class="pill-name">李四</span>
+    </cs-user-pill>
+    <cs-user-pill>
+      <cs-avatar data-size="sm" data-color="green"><span class="avatar-text">王</span></cs-avatar>
+      <span class="pill-name">王五</span>
+    </cs-user-pill>
+  </div>
+
+  <div class="row">
+    <span class="row-label">图片头像</span>
+    <cs-user-pill>
+      <cs-avatar data-size="sm" data-color="red"><span class="avatar-text">赵</span></cs-avatar>
+      <span class="pill-name">赵六</span>
+    </cs-user-pill>
+  </div>
+</div>
+
+<!-- 可关闭 -->
+<div class="section">
+  <div class="section-title">可关闭 Closable</div>
+  <div class="section-subtitle">data-closable 属性显示关闭按钮</div>
+
+  <div class="row">
+    <span class="row-label">可关闭</span>
+    <cs-user-pill data-closable>
+      <cs-avatar data-size="sm" data-color="blue"><span class="avatar-text">张</span></cs-avatar>
+      <span class="pill-name">张三</span>
+      <button class="pill-close"><i class="cses-guanbi"></i></button>
+    </cs-user-pill>
+    <cs-user-pill data-closable>
+      <cs-avatar data-size="sm" data-color="orange"><span class="avatar-text">李</span></cs-avatar>
+      <span class="pill-name">李四</span>
+      <button class="pill-close"><i class="cses-guanbi"></i></button>
+    </cs-user-pill>
+  </div>
+</div>
+
+<!-- 溢出计数 -->
+<div class="section">
+  <div class="section-title">溢出计数 Overflow</div>
+  <div class="section-subtitle">data-type="overflow" 用于成员过多时的 +N 计数</div>
+
+  <div class="row">
+    <span class="row-label">成员组</span>
+    <cs-user-pill>
+      <cs-avatar data-size="sm" data-color="blue"><span class="avatar-text">张</span></cs-avatar>
+      <span class="pill-name">张三</span>
+    </cs-user-pill>
+    <cs-user-pill>
+      <cs-avatar data-size="sm" data-color="orange"><span class="avatar-text">李</span></cs-avatar>
+      <span class="pill-name">李四</span>
+    </cs-user-pill>
+    <cs-user-pill data-type="overflow">
+      <span class="pill-name">+3</span>
+    </cs-user-pill>
+  </div>
+</div>
+
+<!-- 长名称截断 -->
+<div class="section">
+  <div class="section-title">长名称截断 Overflow Ellipsis</div>
+
+  <div class="row">
+    <span class="row-label">长名称</span>
+    <cs-user-pill data-closable>
+      <cs-avatar data-size="sm" data-color="purple"><span class="avatar-text">超</span></cs-avatar>
+      <span class="pill-name">超级长的用户名称示例文本</span>
+      <button class="pill-close"><i class="cses-guanbi"></i></button>
+    </cs-user-pill>
+  </div>
+</div>
+
+</body>
+</html>

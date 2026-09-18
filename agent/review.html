@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>变更审阅与发布 · 流程中台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{max-width:1480px;margin:0 auto;padding-bottom:108px;position:relative}
+  .stepbar{display:flex;align-items:center;gap:10px;padding:11px 15px;border-radius:var(--r);background:var(--panel);border:1px solid var(--line);margin-bottom:14px;box-shadow:var(--sd)}
+  .stepbar .arw{color:var(--ink-3)}
+  .two{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start;margin-bottom:14px}
+  @media (max-width:1100px){.two{grid-template-columns:1fr}.diffcols{grid-template-columns:1fr}}
+  .sumline{font-size:13px;line-height:1.75}
+  .imp{list-style:none;margin:0;padding:0}
+  .imp li{display:flex;gap:9px;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:12.5px;line-height:1.6}
+  .imp li:last-child{border:0}
+  .imp b{font-weight:600}
+  .imp i{font-style:normal;width:5px;height:5px;border-radius:50%;background:var(--acc);margin-top:8px;flex:0 0 5px}
+  .diffcols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .col__h{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-3);margin-bottom:9px}
+  .dn{border:1px solid var(--line);border-radius:7px;padding:7px 10px;font-size:12px;margin-bottom:6px;background:var(--panel)}
+  .dn small{color:var(--ink-3);display:block;font-size:11px;margin-top:2px}
+  .dn.add{border-color:#BFE0CC;background:var(--ok-soft)}
+  .dn.mod{border-color:var(--warn-line);background:var(--warn-soft)}
+  .dn.gone{opacity:.45;text-decoration:line-through}
+  .dn.ind{margin-left:14px}
+  .dn.c{border-color:var(--risk-line);background:#FFFCFB}
+  .dn.is-on{box-shadow:0 0 0 3px rgba(19,111,99,.13);border-color:var(--acc)}
+  .lg{display:flex;gap:12px;font-size:11.5px;color:var(--ink-3);margin-top:10px}
+  .lg span{display:inline-flex;align-items:center;gap:5px}
+  .lg i{width:9px;height:9px;border-radius:3px;display:inline-block}
+  .actbar .inp{width:300px}
+  
+</style>
+</head>
+<body data-nav="review" data-title="变更审阅" data-back="flows.html" data-flow="供应商付款审批" data-ver="v3 → v4" data-state="待审阅" data-state-tone="warn">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div id="topActions"><span class="dim" style="font-size:11.5px">周宁 提交 · 今天 10:20</span></div>
+    <div class="page">
+
+      <div class="stepbar">
+        <div class="steps"><i class="done">✓ 配置</i><span class="arw">→</span><i class="done">✓ 体检</i><span class="arw">→</span><i class="now">审阅</i><span class="arw">→</span><i>发布</i></div>
+        <span class="dim" style="margin-left:auto;font-size:11.5px">提交人不能审批自己的变更，这一步由流程负责人陈立点</span>
+      </div>
+
+      <div class="two">
+        <div class="card">
+          <div class="card__h"><h3>变更摘要</h3><span class="agentic">✦ Agent 生成</span><div class="right"><span class="tag">3 处改动</span></div></div>
+          <div class="card__b">
+            <p class="sumline">本次把<b>金额分档阈值从 5 万提高到 10 万</b>，新增一个<b>供应商黑名单校验</b>节点放在所有审批之前，并给<b>财务总监审批</b>配上代理人。不可逆节点没有变化，仍然是「执行付款」一个，它前面的人工确认保留。</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__h"><h3>影响评估</h3><span class="sub">回放估算，非实际运行</span></div>
+          <div class="card__b" style="padding:6px 16px 12px">
+            <ul class="imp">
+              <li><i></i><span>按近 30 天 <b>186 笔</b>付款回放：<b>12 笔</b>原本要财务总监审批的（5–10 万），改后只需采购经理审批。</span></li>
+              <li><i></i><span><b>0 笔</b>会被新的黑名单校验拦下（近 30 天没有黑名单供应商）。</span></li>
+              <li><i></i><span>进行中的 <b>3 条</b>运行仍按 v3 跑完，新发起的走 v4。</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card__h">
+          <h3>差异</h3>
+          <div class="right">
+            <div class="tabs" data-tabs="#diffScope"><button class="is-on" data-tab="chart">流程图对比</button><button data-tab="table">逐条对比</button></div>
+          </div>
+        </div>
+        <div class="card__b" id="diffScope">
+          <div data-tab-panel="chart" class="is-on">
+            <div class="diffcols">
+              <div>
+                <div class="col__h"><span class="tag mono">v3</span>线上版本</div>
+                <div class="dn">提交付款申请<small>采购单验收后自动发起</small></div>
+                <div class="dn">发票与合同三单匹配</div>
+                <div class="dn">金额判断<small>&lt; 5 万 / 5–50 万 / &gt; 50 万</small></div>
+                <div class="dn ind">采购经理审批</div>
+                <div class="dn ind">财务总监审批<small>≥ 5 万 · 无代理人</small></div>
+                <div class="dn ind">CFO 审批<small>&gt; 50 万</small></div>
+                <div class="dn">生成付款指令</div>
+                <div class="dn">付款前人工确认</div>
+                <div class="dn c">执行付款 · C</div>
+                <div class="dn c">通知供应商 · C</div>
+              </div>
+              <div>
+                <div class="col__h"><span class="tag mono">v4</span>待发布</div>
+                <div class="dn">提交付款申请<small>采购单验收后自动发起</small></div>
+                <div class="dn add" data-row="1">供应商黑名单校验<small>新增 · 命中则退回发起人</small></div>
+                <div class="dn">发票与合同三单匹配</div>
+                <div class="dn mod" data-row="2">金额判断<small>修改 · &lt; 10 万 / 10–50 万 / &gt; 50 万</small></div>
+                <div class="dn ind">采购经理审批</div>
+                <div class="dn ind mod" data-row="3">财务总监审批<small>修改 · ≥ 10 万 · 代理人 刘恒</small></div>
+                <div class="dn ind">CFO 审批<small>&gt; 50 万</small></div>
+                <div class="dn">生成付款指令</div>
+                <div class="dn">付款前人工确认</div>
+                <div class="dn c">执行付款 · C</div>
+                <div class="dn c">通知供应商 · C</div>
+              </div>
+            </div>
+            <div class="lg"><span><i style="background:#BFE0CC"></i>新增</span><span><i style="background:#EBD9B4"></i>修改</span><span><i style="background:var(--risk-line)"></i>不可逆节点（本次未变）</span></div>
+          </div>
+
+          <div data-tab-panel="table">
+            <table class="tbl">
+              <thead><tr><th>位置</th><th>旧值（v3）</th><th>新值（v4）</th><th>来源</th><th>理由</th></tr></thead>
+              <tbody>
+                <tr class="clickable" data-row="1"><td>节点 2 · 新增</td><td class="dim">—</td><td><b>供应商黑名单校验</b></td><td><span class="agentic">✦ Agent 建议</span><br><span class="dim" style="font-size:11px">周宁已确认</span></td><td>v3 曾向已列入黑名单的供应商发起过 1 次付款</td></tr>
+                <tr class="clickable" data-row="2"><td>节点 4 · 金额判断</td><td>5 万分档</td><td><b>10 万分档</b></td><td>对话 · 周宁</td><td>采购经理审批权限上调，见《付款管理办法》2026 修订</td></tr>
+                <tr class="clickable" data-row="3"><td>节点 5b · 财务总监审批</td><td>无代理人</td><td><b>代理人：刘恒</b></td><td>体检建议 · 一键应用</td><td>陈立出差期间避免审批停滞</td></tr>
+              </tbody>
+            </table>
+            <p class="dim" style="font-size:11.5px;margin-top:10px">点击某一行，左侧的流程图对比会定位到该节点。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actbar"><div class="actbar__c">
+      <input class="inp" id="cmt" placeholder="填写审阅意见（驳回时必填）">
+      <div class="right">
+        <button class="obtn obtn--no" id="reject">驳回</button>
+        <button class="obtn obtn--yes" data-open="#pub">批准并发布</button>
+      </div>
+    </div></div>
+  </div>
+</div>
+
+<div class="modal" id="pub">
+  <div class="modal__h"><h3>发布 v4</h3><span class="tag mono">v3 → v4</span></div>
+  <div class="modal__b">
+    <div class="h-sec">生效时间</div>
+    <div data-optgroup>
+      <div class="opt is-on"><b>立即生效</b><p>发布完成后新发起的付款立刻按 v4 走。</p></div>
+      <div class="opt" style="margin-top:8px"><b>指定时间</b><p>选一个时间点自动切换，适合月末结账避开。</p></div>
+    </div>
+    <div class="h-sec" style="margin-top:16px">进行中的 3 条运行</div>
+    <div data-optgroup>
+      <div class="opt is-on"><b>按 v3 完成（推荐）</b><p>已经跑起来的付款不换规则，避免同一笔付款前后标准不一致。</p></div>
+      <div class="opt" style="margin-top:8px"><b>立即切到 v4</b><p>不推荐：审批人可能已经按旧规则批过了。</p></div>
+    </div>
+    <div class="banner banner--ok" style="margin-top:14px"><span>发布后自动把 v3 存成快照，出问题可以随时回退。</span></div>
+  </div>
+  <div class="modal__f"><span class="dim" style="font-size:11.5px">发布这一步只能人点，Agent 点不了</span><div class="right"><button class="btn" data-close>取消</button><button class="btn btn--p" id="doPub">确认发布</button></div></div>
+</div>
+
+<script src="ui.js"></script>
+<script>
+(function () {
+  document.querySelector('[data-tab-panel="table"]').addEventListener('click', function (e) {
+    var tr = e.target.closest('tr[data-row]'); if (!tr) return;
+    [].forEach.call(this.querySelectorAll('tr'), function (x) { x.classList.toggle('is-on', x === tr); });
+    document.querySelector('[data-tabs] button[data-tab="chart"]').click();
+    var n = document.querySelector('.dn[data-row="' + tr.dataset.row + '"]');
+    [].forEach.call(document.querySelectorAll('.dn'), function (x) { x.classList.remove('is-on'); });
+    if (n) { n.classList.add('is-on'); n.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+  });
+  document.getElementById('reject').addEventListener('click', function () {
+    var v = document.getElementById('cmt').value.trim();
+    if (!v) { document.getElementById('cmt').focus(); return AG.toast('驳回必须写意见，意见会带回配置页', 'warn'); }
+    AG.toast('已驳回 · 草稿退回配置，意见显示在页面顶部');
+  });
+  document.getElementById('doPub').addEventListener('click', function () {
+    AG.close(); AG.toast('v4 已发布 · v3 已存为快照');
+    setTimeout(function () { location.href = 'runs.html'; }, 1400);
+  });
+})();
+</script>
+</body>
+</html>

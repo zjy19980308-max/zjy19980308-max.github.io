@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-metric-card KPI 指标卡</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="metric-card.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .demo-section { margin-bottom: 32px; }
+    .demo-label { font: var(--typo-cn-12-medium); color: var(--cs-color-text-light2); margin-bottom: 12px; }
+    .demo-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<div class="demo-section">
+  <div class="demo-label">趋势上涨（绿色箭头）</div>
+  <div class="demo-row">
+    <cs-metric-card data-trend="up" data-color="primary" style="width: 180px;">
+      <span class="metric-label">总资产（万）</span>
+      <span class="metric-value">330,100</span>
+      <span class="metric-trend">
+        <i class="metric-arrow cses-arrow"></i>
+        <span class="metric-change">+23%</span>
+      </span>
+    </cs-metric-card>
+
+    <cs-metric-card data-trend="up" data-color="success" style="width: 180px;">
+      <span class="metric-label">贷款（万）</span>
+      <span class="metric-value">320,100</span>
+      <span class="metric-trend">
+        <i class="metric-arrow cses-arrow"></i>
+        <span class="metric-change">+24%</span>
+      </span>
+    </cs-metric-card>
+
+    <cs-metric-card data-trend="up" data-color="info" style="width: 180px;">
+      <span class="metric-label">利息营收（万）</span>
+      <span class="metric-value">28,000</span>
+      <span class="metric-trend">
+        <i class="metric-arrow cses-arrow"></i>
+        <span class="metric-change">+17%</span>
+      </span>
+    </cs-metric-card>
+  </div>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">趋势下跌（红色箭头）</div>
+  <div class="demo-row">
+    <cs-metric-card data-trend="down" data-color="warning" style="width: 180px;">
+      <span class="metric-label">存款（万）</span>
+      <span class="metric-value">10,000</span>
+      <span class="metric-trend">
+        <i class="metric-arrow cses-xiala"></i>
+        <span class="metric-change">-8%</span>
+      </span>
+    </cs-metric-card>
+
+    <cs-metric-card data-trend="down" data-color="danger" style="width: 180px;">
+      <span class="metric-label">客户（个）</span>
+      <span class="metric-value">42,800</span>
+      <span class="metric-trend">
+        <i class="metric-arrow cses-xiala"></i>
+        <span class="metric-change">-2%</span>
+      </span>
+    </cs-metric-card>
+  </div>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">无趋势</div>
+  <div class="demo-row">
+    <cs-metric-card style="width: 180px;">
+      <span class="metric-label">总用户</span>
+      <span class="metric-value">1,280</span>
+    </cs-metric-card>
+  </div>
+</div>
+
+</body>
+</html>

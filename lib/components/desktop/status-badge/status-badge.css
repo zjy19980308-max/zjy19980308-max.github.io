@@ -1,0 +1,89 @@
+/*
+ * 状态徽标组件 (Status Badge)
+ * 标签：<cs-status-badge>
+ * 数据来源：任务管理 Figma（内联药丸式标签）
+ *
+ * 结构：
+ *   <cs-status-badge data-status="in-progress">进行中</cs-status-badge>
+ *   文字为元素直接内容，无需内部子元素
+ *
+ * 规格：
+ *   布局：inline-flex, align center
+ *   字体：12px/400 → var(--typo-cn-12-regular)
+ *   内边距：var(--spacing-2) var(--space-xs)
+ *   圆角：var(--radius)（药丸形）
+ *   高度：auto（内容驱动）
+ *
+ * data 属性：
+ *   data-status="not-started"  — 灰色纯文字（未开始）
+ *   data-status="in-progress"  — 蓝色药丸（进行中）
+ *   data-status="completed"    — 绿色药丸（已完成）
+ *   data-status="overdue"      — 红色药丸（已逾期）
+ *   data-status="paused"       — 橙色药丸（已暂停）
+ */
+
+/* ========== 容器（默认 = not-started 纯文字） ========== */
+cs-status-badge {
+  display: inline-flex;
+  align-items: center;
+  font: var(--typo-cn-12-regular);
+  padding: var(--spacing-2) var(--space-xs);
+  border-radius: var(--radius);
+  color: var(--cs-color-text-light2);
+  background: transparent;
+  white-space: nowrap;
+}
+
+/* ========== 状态：not-started（灰色纯文字） ========== */
+cs-status-badge[data-status="not-started"] {
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 状态：in-progress（蓝色药丸） ========== */
+cs-status-badge[data-status="in-progress"] {
+  background: var(--cs-color-primary-a2);
+  color: var(--cs-color-primary);
+}
+
+/* ========== 状态：completed（绿色药丸） ========== */
+cs-status-badge[data-status="completed"] {
+  background: var(--cs-sem-bg-success);
+  color: var(--cs-sem-text-success);
+}
+
+/* ========== 状态：overdue（红色药丸） ========== */
+cs-status-badge[data-status="overdue"] {
+  background: var(--cs-sem-bg-error);
+  color: var(--cs-sem-text-error);
+}
+
+/* ========== 状态：paused（橙色药丸） ========== */
+cs-status-badge[data-status="paused"] {
+  background: var(--cs-sem-bg-warning);
+  color: var(--cs-sem-text-warning);
+}
+
+/* ========== 状态：pending（橙色药丸，待审批） ========== */
+cs-status-badge[data-status="pending"] {
+  background: var(--cs-sem-bg-warning);
+  color: var(--cs-color-warning);
+}
+
+/* ========== 状态：approved（绿色药丸，已批准） ========== */
+cs-status-badge[data-status="approved"] {
+  background: var(--cs-sem-bg-success);
+  color: var(--cs-color-success);
+}
+
+/* ========== 状态：rejected（红色药丸，已驳回） ========== */
+cs-status-badge[data-status="rejected"] {
+  background: var(--cs-sem-bg-error);
+  color: var(--cs-color-error);
+}
+
+/* ========== 状态：withdrawn（灰色药丸，已撤回） ========== */
+cs-status-badge[data-status="withdrawn"] {
+  background: var(--cs-color-bg-light);
+  color: var(--cs-color-text-light2);
+}

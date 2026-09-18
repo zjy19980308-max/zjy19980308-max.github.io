@@ -1,0 +1,44 @@
+/* =============================================================================
+   nav-icons · 一级导航图标字体（独立于 cses-icons，别动 cses）
+   来源：Figma fileKey=bZerotp4ghGEbPOJgDBKOj 节点 3:148「新图标」icon set
+   8 个图标 × 描边(默认)/实心(-fill) 两态 = 16 glyph
+   用法：<i class="cnav-工作台名"></i>，active 切 -fill 后缀实心版
+   ============================================================================= */
+@font-face {
+  font-family: "nav-icons";
+  src: url('nav-icons.woff2') format('woff2'),
+       url('nav-icons.ttf') format('truetype');
+  font-display: block;
+}
+
+[class^="cnav-"], [class*=" cnav-"] {
+  font-family: 'nav-icons' !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 工作台 */
+.cnav-gongzuotai::before      { content: "\ea02"; }
+.cnav-gongzuotai-fill::before { content: "\ea01"; }
+/* 消息 */
+.cnav-xiaoxi::before          { content: "\ea10"; }
+.cnav-xiaoxi-fill::before     { content: "\ea0f"; }
+/* 计划实施（项目管理图标 · 原项目运营）*/
+.cnav-xiangmu::before         { content: "\ea0e"; }
+.cnav-xiangmu-fill::before    { content: "\ea0d"; }
+/* 协同共创（会议图标）*/
+.cnav-huiyi::before           { content: "\ea04"; }
+.cnav-huiyi-fill::before      { content: "\ea03"; }
+/* 文档库 */
+.cnav-wendangku::before       { content: "\ea0a"; }
+.cnav-wendangku-fill::before  { content: "\ea09"; }
+/* 日程 */
+.cnav-richeng::before         { content: "\ea08"; }
+.cnav-richeng-fill::before    { content: "\ea07"; }
+/* 问卷 */
+.cnav-wenjuan::before         { content: "\ea0c"; }
+.cnav-wenjuan-fill::before    { content: "\ea0b"; }
+/* 智能人事 */
+.cnav-renshi::before          { content: "\ea06"; }
+.cnav-renshi-fill::before     { content: "\ea05"; }

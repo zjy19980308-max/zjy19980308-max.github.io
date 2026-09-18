@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-task-row-smart preview</title>
+  <link rel="stylesheet" href="../../../../css/base.css">
+  <link rel="stylesheet" href="../../../../fonts/cses-icons.css">
+  <link rel="stylesheet" href="../../../css/workspace.css">
+  <link rel="stylesheet" href="task-row-smart.css">
+  <style>body{padding:24px;background:#fff;font-family:PingFang SC;}.list{max-width:720px;background:#fff;border-radius:12px;border:1px solid #EBEDF3;padding:8px 16px;}</style>
+</head>
+<body>
+  <div class="list">
+    <cs-task-row-smart data-priority="overdue">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox"></span>
+      <div class="ts-body">
+        <div class="ts-title-row"><span class="ts-title">《Q1 数据分析》</span><span class="ts-tag" data-type="danger">即将逾期</span></div>
+        <div class="ts-meta"><span class="ts-deadline"><i class="cses-time"></i> 4h 截止</span><span class="ts-dep"><i class="cses-link"></i> 依赖王伟</span></div>
+      </div>
+      <div class="ts-actions"><button class="ts-action-btn" data-action="ai-decompose">🤖 AI 拆解</button><button class="ts-action-btn">⏩ 转交</button></div>
+    </cs-task-row-smart>
+    <cs-task-row-smart data-priority="ai-pick">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox"></span>
+      <div class="ts-body">
+        <div class="ts-title-row"><span class="ts-title">产品规划修订</span><span class="ts-tag" data-type="info">阻塞评审</span></div>
+        <div class="ts-meta"><span class="ts-deadline">今天 14:00 前</span><span>预估 2h</span></div>
+      </div>
+      <div class="ts-actions"><button class="ts-action-btn" data-action="ai-decompose">🤖 拆解</button></div>
+    </cs-task-row-smart>
+    <cs-task-row-smart data-priority="high">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox"></span>
+      <div class="ts-body">
+        <div class="ts-title-row"><span class="ts-title">对接接口优化</span></div>
+        <div class="ts-meta"><span>明天 18:00</span></div>
+      </div>
+      <div class="ts-actions"><button class="ts-action-btn" data-action="ai-decompose">🤖 拆解</button></div>
+    </cs-task-row-smart>
+    <cs-task-row-smart data-priority="normal">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox"></span>
+      <div class="ts-body">
+        <div class="ts-title-row"><span class="ts-title">完成首页设计</span></div>
+        <div class="ts-meta"><span class="ts-dep"><i class="cses-link"></i> 依赖王伟</span></div>
+      </div>
+      <div class="ts-actions"></div>
+    </cs-task-row-smart>
+    <cs-task-row-smart data-priority="low" data-completed="true">
+      <span class="ts-priority-bar"></span>
+      <span class="ts-checkbox"></span>
+      <div class="ts-body">
+        <div class="ts-title-row"><span class="ts-title">已完成的需求评审</span></div>
+        <div class="ts-meta"><span>10:30 完成</span></div>
+      </div>
+      <div class="ts-actions"></div>
+    </cs-task-row-smart>
+  </div>
+</body>
+</html>

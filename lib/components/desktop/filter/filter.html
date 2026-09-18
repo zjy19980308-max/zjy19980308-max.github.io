@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-filter 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../tag/tag.css">
+  <link rel="stylesheet" href="filter.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 80px; flex-shrink: 0; }
+    .filter-bar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  </style>
+</head>
+<body>
+
+<!-- 售后工单工作台 · 5 字段筛选实战 -->
+<div class="section">
+  <div class="section-title">售后工单工作台 · 5 字段筛选</div>
+  <div class="section-subtitle">业务场景：状态 / 优先级 / 客户 / 创建时间 / 负责人</div>
+  <div class="filter-bar">
+    <cs-filter data-type="select" data-active>
+      <span class="filter-label">状态</span>
+      <span class="filter-control">
+        <span class="filter-value">处理中</span>
+      </span>
+      <i class="filter-clear cses-guanbi"></i>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+
+    <cs-filter data-type="select" data-active>
+      <span class="filter-label">优先级</span>
+      <span class="filter-control">
+        <span class="filter-value">高</span>
+      </span>
+      <i class="filter-clear cses-guanbi"></i>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+
+    <cs-filter data-type="select">
+      <span class="filter-label">客户</span>
+      <span class="filter-control">
+        <span class="filter-placeholder">全部</span>
+      </span>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+
+    <cs-filter data-type="date-range" data-active>
+      <span class="filter-label">创建时间</span>
+      <span class="filter-control">
+        <span class="filter-value">2026-05-01 ~ 2026-05-19</span>
+      </span>
+      <i class="filter-clear cses-guanbi"></i>
+    </cs-filter>
+
+    <cs-filter data-type="multi-tag" data-active>
+      <span class="filter-label">负责人</span>
+      <span class="filter-control">
+        <cs-tag data-size="sm" data-color="info"><span class="tag-label">张三</span></cs-tag>
+        <cs-tag data-size="sm" data-color="info"><span class="tag-label">+2</span></cs-tag>
+      </span>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+</div>
+
+<!-- 4 状态 -->
+<div class="section">
+  <div class="section-title">4 状态 States</div>
+  <div class="section-subtitle">default / hover / focus(open) / active / disabled</div>
+
+  <div class="row">
+    <span class="row-label">默认</span>
+    <cs-filter data-type="select">
+      <span class="filter-label">状态</span>
+      <span class="filter-control">
+        <span class="filter-placeholder">全部</span>
+      </span>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+
+  <div class="row">
+    <span class="row-label">悬浮 hover</span>
+    <span class="section-subtitle" style="margin: 0;">将鼠标移到右侧 →</span>
+    <cs-filter data-type="select">
+      <span class="filter-label">状态</span>
+      <span class="filter-control">
+        <span class="filter-placeholder">全部</span>
+      </span>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+
+  <div class="row">
+    <span class="row-label">聚焦 open</span>
+    <cs-filter data-type="select" data-open>
+      <span class="filter-label">状态</span>
+      <span class="filter-control">
+        <span class="filter-placeholder">请选择</span>
+      </span>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+
+  <div class="row">
+    <span class="row-label">激活 active</span>
+    <cs-filter data-type="select" data-active>
+      <span class="filter-label">状态</span>
+      <span class="filter-control">
+        <span class="filter-value">处理中</span>
+      </span>
+      <i class="filter-clear cses-guanbi"></i>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+
+  <div class="row">
+    <span class="row-label">禁用 disabled</span>
+    <cs-filter data-type="select" data-disabled>
+      <span class="filter-label">状态</span>
+      <span class="filter-control">
+        <span class="filter-placeholder">全部</span>
+      </span>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+</div>
+
+<!-- 尺寸变体 -->
+<div class="section">
+  <div class="section-title">尺寸变体 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg"</div>
+
+  <div class="row">
+    <span class="row-label">sm (24px)</span>
+    <cs-filter data-size="sm" data-type="select" data-active>
+      <span class="filter-label">状态</span>
+      <span class="filter-control">
+        <span class="filter-value">处理中</span>
+      </span>
+      <i class="filter-clear cses-guanbi"></i>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+
+  <div class="row">
+    <span class="row-label">md (32px)</span>
+    <cs-filter data-type="select" data-active>
+      <span class="filter-label">状态</span>
+      <span class="filter-control">
+        <span class="filter-value">处理中</span>
+      </span>
+      <i class="filter-clear cses-guanbi"></i>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+
+  <div class="row">
+    <span class="row-label">lg (40px)</span>
+    <cs-filter data-size="lg" data-type="select" data-active>
+      <span class="filter-label">状态</span>
+      <span class="filter-control">
+        <span class="filter-value">处理中</span>
+      </span>
+      <i class="filter-clear cses-guanbi"></i>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+</div>
+
+<!-- 类型变体 -->
+<div class="section">
+  <div class="section-title">类型变体 Types</div>
+  <div class="section-subtitle">data-type="select | date-range | multi-tag"</div>
+
+  <div class="row">
+    <span class="row-label">select</span>
+    <cs-filter data-type="select" data-active>
+      <span class="filter-label">优先级</span>
+      <span class="filter-control">
+        <span class="filter-value">高</span>
+      </span>
+      <i class="filter-clear cses-guanbi"></i>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+
+  <div class="row">
+    <span class="row-label">date-range</span>
+    <cs-filter data-type="date-range" data-active>
+      <span class="filter-label">创建时间</span>
+      <span class="filter-control">
+        <span class="filter-value">2026-05-01 ~ 2026-05-19</span>
+      </span>
+      <i class="filter-clear cses-guanbi"></i>
+    </cs-filter>
+  </div>
+
+  <div class="row">
+    <span class="row-label">multi-tag</span>
+    <cs-filter data-type="multi-tag" data-active>
+      <span class="filter-label">负责人</span>
+      <span class="filter-control">
+        <cs-tag data-size="sm" data-color="info"><span class="tag-label">张三</span></cs-tag>
+        <cs-tag data-size="sm" data-color="info"><span class="tag-label">李四</span></cs-tag>
+        <cs-tag data-size="sm" data-color="info"><span class="tag-label">+3</span></cs-tag>
+      </span>
+      <i class="filter-arrow cses-xiala"></i>
+    </cs-filter>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-auto-complete 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="auto-complete.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; font-family: "PingFang SC", sans-serif; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: flex-start; gap: 24px; flex-wrap: wrap; min-height: 280px; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 96px; flex-shrink: 0; padding-top: 8px; }
+    .tip { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-top: 8px; padding: 8px 12px; background: #f9f9f9; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- 1. 基础用法 -->
+<div class="section">
+  <div class="section-title">基础用法 Basic</div>
+  <div class="section-subtitle">输入框 focus 弹出候选；点击候选 → 替换输入文本</div>
+  <div class="row">
+    <span class="row-label">搜索建议</span>
+    <cs-auto-complete>
+      <div class="ac-input-wrap">
+        <input class="ac-input" type="text" placeholder="搜索..." value="项目">
+        <button class="ac-clear" type="button"><i class="cses-guanbi"></i></button>
+      </div>
+      <div class="ac-dropdown">
+        <button class="ac-option" type="button">
+          <i class="ac-option-icon cses-sousuo"></i>
+          <span class="ac-option-label">项目管理</span>
+          <span class="ac-option-meta">12 结果</span>
+        </button>
+        <button class="ac-option" data-active type="button">
+          <i class="ac-option-icon cses-sousuo"></i>
+          <span class="ac-option-label">项目周报</span>
+          <span class="ac-option-meta">8 结果</span>
+        </button>
+        <button class="ac-option" type="button">
+          <i class="ac-option-icon cses-sousuo"></i>
+          <span class="ac-option-label">项目甘特图</span>
+          <span class="ac-option-meta">5 结果</span>
+        </button>
+        <button class="ac-option" type="button">
+          <i class="ac-option-icon cses-sousuo"></i>
+          <span class="ac-option-label">项目看板</span>
+          <span class="ac-option-meta">3 结果</span>
+        </button>
+      </div>
+    </cs-auto-complete>
+  </div>
+  <div class="tip">交互验证：① focus → 弹出 ② 点击候选 → 替换输入文本并收起 ③ 点外部 → 收起 ④ hover 输入框 → 显示清除按钮</div>
+</div>
+
+<!-- 2. 尺寸变体 -->
+<div class="section">
+  <div class="section-title">尺寸变体 Sizes</div>
+  <div class="section-subtitle">data-size="sm | md | lg"</div>
+  <div class="row">
+    <cs-auto-complete data-size="sm">
+      <div class="ac-input-wrap">
+        <input class="ac-input" type="text" placeholder="小尺寸">
+        <button class="ac-clear" type="button"><i class="cses-guanbi"></i></button>
+      </div>
+      <div class="ac-dropdown">
+        <button class="ac-option" type="button"><span class="ac-option-label">候选一</span></button>
+        <button class="ac-option" type="button"><span class="ac-option-label">候选二</span></button>
+      </div>
+    </cs-auto-complete>
+    <cs-auto-complete>
+      <div class="ac-input-wrap">
+        <input class="ac-input" type="text" placeholder="中尺寸">
+        <button class="ac-clear" type="button"><i class="cses-guanbi"></i></button>
+      </div>
+      <div class="ac-dropdown">
+        <button class="ac-option" type="button"><span class="ac-option-label">候选一</span></button>
+        <button class="ac-option" type="button"><span class="ac-option-label">候选二</span></button>
+      </div>
+    </cs-auto-complete>
+    <cs-auto-complete data-size="lg">
+      <div class="ac-input-wrap">
+        <input class="ac-input" type="text" placeholder="大尺寸">
+        <button class="ac-clear" type="button"><i class="cses-guanbi"></i></button>
+      </div>
+      <div class="ac-dropdown">
+        <button class="ac-option" type="button"><span class="ac-option-label">候选一</span></button>
+        <button class="ac-option" type="button"><span class="ac-option-label">候选二</span></button>
+      </div>
+    </cs-auto-complete>
+  </div>
+</div>
+
+<!-- 3. 空态 + 禁用 -->
+<div class="section">
+  <div class="section-title">空态 / 禁用</div>
+  <div class="row">
+    <cs-auto-complete>
+      <div class="ac-input-wrap">
+        <input class="ac-input" type="text" placeholder="无候选">
+      </div>
+      <div class="ac-dropdown">
+        <span class="ac-empty">暂无匹配结果</span>
+      </div>
+    </cs-auto-complete>
+    <cs-auto-complete data-disabled>
+      <div class="ac-input-wrap">
+        <input class="ac-input" type="text" placeholder="禁用">
+      </div>
+      <div class="ac-dropdown">
+        <button class="ac-option" type="button"><span class="ac-option-label">候选</span></button>
+      </div>
+    </cs-auto-complete>
+  </div>
+</div>
+
+<script src="auto-complete.js"></script>
+</body>
+</html>

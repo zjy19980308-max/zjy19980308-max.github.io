@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-view-switcher 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="view-switcher.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: center; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 100px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+
+<!-- 基础用法 -->
+<div class="section">
+  <div class="section-title">基础用法 Basic</div>
+  <div class="section-subtitle">图标切换组，data-active 标记选中项</div>
+
+  <div class="row">
+    <span class="row-label">列表/卡片</span>
+    <cs-view-switcher>
+      <span class="view-item" data-active><i class="cses-liebiao"></i></span>
+      <span class="view-item"><i class="cses-renwuguanli"></i></span>
+    </cs-view-switcher>
+  </div>
+
+  <div class="row">
+    <span class="row-label">三视图</span>
+    <cs-view-switcher>
+      <span class="view-item" data-active><i class="cses-liebiao"></i></span>
+      <span class="view-item"><i class="cses-renwuguanli"></i></span>
+      <span class="view-item"><i class="cses-renwuguanli"></i></span>
+    </cs-view-switcher>
+  </div>
+</div>
+
+<!-- 不同激活项 -->
+<div class="section">
+  <div class="section-title">不同激活项 Different Active</div>
+
+  <div class="row">
+    <span class="row-label">卡片激活</span>
+    <cs-view-switcher>
+      <span class="view-item"><i class="cses-liebiao"></i></span>
+      <span class="view-item" data-active><i class="cses-renwuguanli"></i></span>
+      <span class="view-item"><i class="cses-renwuguanli"></i></span>
+    </cs-view-switcher>
+  </div>
+
+  <div class="row">
+    <span class="row-label">网格激活</span>
+    <cs-view-switcher>
+      <span class="view-item"><i class="cses-liebiao"></i></span>
+      <span class="view-item"><i class="cses-renwuguanli"></i></span>
+      <span class="view-item" data-active><i class="cses-renwuguanli"></i></span>
+    </cs-view-switcher>
+  </div>
+</div>
+
+<!-- 使用场景 -->
+<div class="section">
+  <div class="section-title">使用场景 Usage Examples</div>
+
+  <div class="section-subtitle">任务管理视图切换</div>
+  <div class="row">
+    <cs-view-switcher>
+      <span class="view-item" data-active><i class="cses-liebiao"></i></span>
+      <span class="view-item"><i class="cses-renwuguanli"></i></span>
+    </cs-view-switcher>
+  </div>
+
+  <div class="section-subtitle">文档库视图切换</div>
+  <div class="row">
+    <cs-view-switcher>
+      <span class="view-item"><i class="cses-liebiao"></i></span>
+      <span class="view-item" data-active><i class="cses-renwuguanli"></i></span>
+    </cs-view-switcher>
+  </div>
+</div>
+
+</body>
+</html>

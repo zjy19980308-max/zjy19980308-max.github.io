@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-video-tile 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../avatar/avatar.css">
+  <link rel="stylesheet" href="cs-video-tile.css">
+  <style>
+    body { padding: var(--space-2xl); background: var(--cs-color-bg-light); font-family: "PingFang SC", sans-serif; }
+    .section { background: var(--cs-color-white); border-radius: var(--radius-lg); padding: var(--space-lg); margin-bottom: var(--space-lg); }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: var(--space-2xs); }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: var(--space-md); }
+    .grid-tiles { display: grid; grid-template-columns: repeat(4, 200px); gap: var(--space-md); }
+    .stage-large { max-width: 720px; }
+  </style>
+</head>
+<body>
+
+<!-- 状态 1 · 默认（小窗 200×150） -->
+<div class="section">
+  <div class="section-title">默认 Default · 200×150 小窗</div>
+  <div class="section-subtitle">视频区背景（cs-avatar 占位） + 顶右音量 icon + 底左 name pill + 底右 hover 露出操作</div>
+  <div class="grid-tiles">
+    <cs-video-tile>
+      <div class="tile-stage">
+        <cs-avatar data-size="lg"><span class="avatar-text">张</span></cs-avatar>
+      </div>
+      <div class="tile-status"><i class="cses-volume"></i></div>
+      <div class="tile-footer">
+        <span class="tile-name"><i class="cses-yuyin"></i>张总监</span>
+        <div class="tile-actions">
+          <button class="tile-action" type="button" aria-label="信号"><i class="cses-xinhao"></i></button>
+          <button class="tile-action" type="button" aria-label="更多"><i class="cses-more"></i></button>
+        </div>
+      </div>
+    </cs-video-tile>
+
+    <cs-video-tile>
+      <div class="tile-stage">
+        <cs-avatar data-size="lg"><span class="avatar-text">李</span></cs-avatar>
+      </div>
+      <div class="tile-status"><i class="cses-volume"></i></div>
+      <div class="tile-footer">
+        <span class="tile-name"><i class="cses-yuyin"></i>李工程师</span>
+        <div class="tile-actions">
+          <button class="tile-action" type="button" aria-label="信号"><i class="cses-xinhao"></i></button>
+          <button class="tile-action" type="button" aria-label="更多"><i class="cses-more"></i></button>
+        </div>
+      </div>
+    </cs-video-tile>
+
+    <cs-video-tile>
+      <div class="tile-stage">
+        <cs-avatar data-size="lg"><span class="avatar-text">陈</span></cs-avatar>
+      </div>
+      <div class="tile-status"><i class="cses-volume"></i></div>
+      <div class="tile-footer">
+        <span class="tile-name"><i class="cses-yuyin"></i>陈设计</span>
+        <div class="tile-actions">
+          <button class="tile-action" type="button" aria-label="信号"><i class="cses-xinhao"></i></button>
+          <button class="tile-action" type="button" aria-label="更多"><i class="cses-more"></i></button>
+        </div>
+      </div>
+    </cs-video-tile>
+
+    <cs-video-tile>
+      <div class="tile-stage">
+        <cs-avatar data-size="lg"><span class="avatar-text">刘</span></cs-avatar>
+      </div>
+      <div class="tile-status"><i class="cses-volume"></i></div>
+      <div class="tile-footer">
+        <span class="tile-name"><i class="cses-yuyin"></i>刘产品</span>
+        <div class="tile-actions">
+          <button class="tile-action" type="button" aria-label="信号"><i class="cses-xinhao"></i></button>
+          <button class="tile-action" type="button" aria-label="更多"><i class="cses-more"></i></button>
+        </div>
+      </div>
+    </cs-video-tile>
+  </div>
+</div>
+
+<!-- 状态 2 · 当前发言者（brand 高亮） -->
+<div class="section">
+  <div class="section-title">当前发言 Active · data-active</div>
+  <div class="section-subtitle">brand 色 box-shadow 高亮 + 操作区常驻显示</div>
+  <div class="grid-tiles">
+    <cs-video-tile data-active>
+      <div class="tile-stage">
+        <cs-avatar data-size="lg"><span class="avatar-text">王</span></cs-avatar>
+      </div>
+      <div class="tile-status"><i class="cses-volume"></i></div>
+      <div class="tile-footer">
+        <span class="tile-name"><i class="cses-yuyin"></i>王主持</span>
+        <div class="tile-actions">
+          <button class="tile-action" type="button" aria-label="信号"><i class="cses-xinhao"></i></button>
+          <button class="tile-action" type="button" aria-label="更多"><i class="cses-more"></i></button>
+        </div>
+      </div>
+    </cs-video-tile>
+  </div>
+</div>
+
+<!-- 状态 3 · 静音（error 红边） -->
+<div class="section">
+  <div class="section-title">静音 Muted · data-muted</div>
+  <div class="section-subtitle">error 色边框 + cses-yuyin_guanbi icon（顶右 + name pill 内同步）</div>
+  <div class="grid-tiles">
+    <cs-video-tile data-muted>
+      <div class="tile-stage">
+        <cs-avatar data-size="lg"><span class="avatar-text">赵</span></cs-avatar>
+      </div>
+      <div class="tile-status"><i class="cses-yuyin_guanbi"></i></div>
+      <div class="tile-footer">
+        <span class="tile-name"><i class="cses-yuyin_guanbi"></i>赵分析师</span>
+        <div class="tile-actions">
+          <button class="tile-action" type="button" aria-label="信号"><i class="cses-xinhao"></i></button>
+          <button class="tile-action" type="button" aria-label="更多"><i class="cses-more"></i></button>
+        </div>
+      </div>
+    </cs-video-tile>
+
+    <cs-video-tile data-active data-muted>
+      <div class="tile-stage">
+        <cs-avatar data-size="lg"><span class="avatar-text">钱</span></cs-avatar>
+      </div>
+      <div class="tile-status"><i class="cses-yuyin_guanbi"></i></div>
+      <div class="tile-footer">
+        <span class="tile-name"><i class="cses-yuyin_guanbi"></i>钱运营</span>
+        <div class="tile-actions">
+          <button class="tile-action" type="button" aria-label="信号"><i class="cses-xinhao"></i></button>
+          <button class="tile-action" type="button" aria-label="更多"><i class="cses-more"></i></button>
+        </div>
+      </div>
+    </cs-video-tile>
+  </div>
+</div>
+
+<!-- 状态 4 · 演讲者大屏（aspect-ratio 16/9 fill） -->
+<div class="section">
+  <div class="section-title">演讲者大屏 Speaker Large · data-size="large"</div>
+  <div class="section-subtitle">aspect-ratio 16/9 自适应宽度 · 多与 data-active 同时使用</div>
+  <div class="stage-large">
+    <cs-video-tile data-size="large" data-active>
+      <div class="tile-stage">
+        <cs-avatar data-size="xl"><span class="avatar-text">王</span></cs-avatar>
+      </div>
+      <div class="tile-status"><i class="cses-volume"></i></div>
+      <div class="tile-footer">
+        <span class="tile-name"><i class="cses-yuyin"></i>王主持 · 演讲中</span>
+        <div class="tile-actions">
+          <button class="tile-action" type="button" aria-label="信号"><i class="cses-xinhao"></i></button>
+          <button class="tile-action" type="button" aria-label="更多"><i class="cses-more"></i></button>
+        </div>
+      </div>
+    </cs-video-tile>
+  </div>
+</div>
+
+</body>
+</html>

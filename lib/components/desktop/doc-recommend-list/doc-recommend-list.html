@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cs-doc-recommend-list</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../doc-recommend-card/doc-recommend-card.css">
+  <link rel="stylesheet" href="./doc-recommend-list.css">
+  <style>
+    body {
+      margin: 0;
+      padding: var(--cs-sem-spacing-layout-gutter);
+      background: var(--cs-sem-bg-secondary);
+      font: var(--cs-typo-body-medium);
+    }
+
+    .preview-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--cs-sem-spacing-content-stack);
+      max-width: var(--cs-sem-size-content-3xl);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="preview-stack">
+    <cs-doc-recommend-list data-layout="grid">
+      <div class="recommend-header">推荐文档</div>
+      <div class="recommend-grid">
+        <cs-doc-recommend-card data-variant="feature">
+          <div class="card-top">
+            <span class="card-badge">推荐</span>
+          </div>
+          <div class="card-title">设计系统总览</div>
+          <div class="card-summary">覆盖变量、组件、布局与流程的统一入口。</div>
+          <div class="card-meta">8 分钟阅读</div>
+          <div class="card-action">立即查看</div>
+        </cs-doc-recommend-card>
+        <cs-doc-recommend-card>
+          <div class="card-top">
+            <span class="card-badge">常用</span>
+          </div>
+          <div class="card-title">组件契约说明</div>
+          <div class="card-summary">快速定位 class、data 属性与预览规范。</div>
+          <div class="card-meta">5 分钟阅读</div>
+          <div class="card-action">加入阅读队列</div>
+        </cs-doc-recommend-card>
+      </div>
+    </cs-doc-recommend-list>
+
+    <cs-doc-recommend-list data-layout="stack">
+      <div class="recommend-header">继续阅读</div>
+      <div class="recommend-grid">
+        <cs-doc-recommend-card>
+          <div class="card-top">
+            <span class="card-badge">更新</span>
+          </div>
+          <div class="card-title">文档库首页计划</div>
+          <div class="card-summary">查看文档库首页的正式计划边界、依赖与执行约束。</div>
+          <div class="card-meta">6 分钟阅读</div>
+          <div class="card-action">继续查看</div>
+        </cs-doc-recommend-card>
+      </div>
+    </cs-doc-recommend-list>
+  </div>
+</body>
+</html>

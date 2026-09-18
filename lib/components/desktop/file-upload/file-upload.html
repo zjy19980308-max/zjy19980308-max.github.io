@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-file-upload 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="../thumbnail/thumbnail.css">
+  <link rel="stylesheet" href="file-upload.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 16px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .row { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 16px; flex-wrap: wrap; }
+    .row-label { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); width: 100px; flex-shrink: 0; padding-top: 8px; }
+    cs-file-upload { width: 278px; }
+  </style>
+</head>
+<body>
+
+<!-- 默认状态 -->
+<div class="section">
+  <div class="section-title">默认状态</div>
+  <div class="section-subtitle">data-status="default" 或不设置</div>
+
+  <div class="row">
+    <span class="row-label">PDF 文件</span>
+    <cs-file-upload>
+      <cs-thumbnail class="upload-icon" data-type="file-icon" data-size="lg"><img src="../../../assets/filetype-pdf.svg" width="32" height="32" alt="PDF"></cs-thumbnail>
+      <div class="upload-info">
+        <span class="upload-name">项目需求文档 v2.1.pdf</span>
+        <span class="upload-size">2.4 MB</span>
+      </div>
+      <button class="upload-close"><i class="cses-guanbi"></i></button>
+    </cs-file-upload>
+  </div>
+
+  <div class="row">
+    <span class="row-label">长文件名</span>
+    <cs-file-upload>
+      <cs-thumbnail class="upload-icon" data-type="file-icon" data-size="lg"><img src="../../../assets/filetype-word.svg" width="32" height="32" alt="Word"></cs-thumbnail>
+      <div class="upload-info">
+        <span class="upload-name">这是一个非常非常长的文件名称用来测试溢出省略号效果.docx</span>
+        <span class="upload-size">1.8 MB</span>
+      </div>
+      <button class="upload-close"><i class="cses-guanbi"></i></button>
+    </cs-file-upload>
+  </div>
+</div>
+
+<!-- 上传中 -->
+<div class="section">
+  <div class="section-title">上传中</div>
+  <div class="section-subtitle">data-status="uploading"，显示进度条</div>
+
+  <div class="row">
+    <span class="row-label">上传中</span>
+    <cs-file-upload data-status="uploading">
+      <cs-thumbnail class="upload-icon" data-type="file-icon" data-size="lg"><img src="../../../assets/filetype-excel.svg" width="32" height="32" alt="Excel"></cs-thumbnail>
+      <div class="upload-info">
+        <span class="upload-name">数据报表 Q1.xlsx</span>
+        <span class="upload-size">5.2 MB</span>
+      </div>
+      <button class="upload-close"><i class="cses-guanbi"></i></button>
+    </cs-file-upload>
+  </div>
+
+  <div class="row">
+    <span class="row-label">即将完成</span>
+    <cs-file-upload data-status="uploading">
+      <cs-thumbnail class="upload-icon" data-type="file-icon" data-size="lg"><img src="../../../assets/filetype-ppt.svg" width="32" height="32" alt="PPT"></cs-thumbnail>
+      <div class="upload-info">
+        <span class="upload-name">季度汇报.pptx</span>
+        <span class="upload-size">12.1 MB</span>
+      </div>
+      <button class="upload-close"><i class="cses-guanbi"></i></button>
+    </cs-file-upload>
+  </div>
+</div>
+
+<!-- 完成 -->
+<div class="section">
+  <div class="section-title">上传完成</div>
+  <div class="section-subtitle">data-status="done"，显示勾选图标替代关闭按钮</div>
+
+  <div class="row">
+    <span class="row-label">完成</span>
+    <cs-file-upload data-status="done">
+      <cs-thumbnail class="upload-icon" data-type="file-icon" data-size="lg"><img src="../../../assets/filetype-pdf.svg" width="32" height="32" alt="PDF"></cs-thumbnail>
+      <div class="upload-info">
+        <span class="upload-name">设计规范 v3.pdf</span>
+        <span class="upload-size">3.7 MB</span>
+      </div>
+      <button class="upload-close"><i class="cses-guanbi"></i></button>
+      <i class="upload-done-icon cses-check-circle"></i>
+    </cs-file-upload>
+  </div>
+</div>
+
+<!-- 错误 -->
+<div class="section">
+  <div class="section-title">上传失败</div>
+  <div class="section-subtitle">data-status="error"，红色边框 + 重试图标</div>
+
+  <div class="row">
+    <span class="row-label">错误</span>
+    <cs-file-upload data-status="error">
+      <cs-thumbnail class="upload-icon" data-type="file-icon" data-size="lg"><img src="../../../assets/filetype-zip.svg" width="32" height="32" alt="ZIP"></cs-thumbnail>
+      <div class="upload-info">
+        <span class="upload-name">备份文件.zip</span>
+        <span class="upload-size">58.3 MB</span>
+      </div>
+      <button class="upload-close"><i class="cses-guanbi"></i></button>
+      <i class="upload-retry-icon cses-refresh"></i>
+    </cs-file-upload>
+  </div>
+</div>
+
+</body>
+</html>

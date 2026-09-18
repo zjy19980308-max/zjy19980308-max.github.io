@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>CSES 共用组件库</title>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link rel="stylesheet" href="../../css/base.css">
+  <link rel="stylesheet" href="../../fonts/cses-icons.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--cs-color-bg-light);
+      font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--cs-color-text);
+      overflow: hidden;
+    }
+
+    /* ===== 顶部栏 ===== */
+    .doc-topbar {
+      height: 56px;
+      background: var(--cs-color-white);
+      border-bottom: 1px solid var(--cs-color-border);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--spacing-24);
+      flex-shrink: 0;
+      gap: var(--space-md);
+    }
+    .doc-topbar-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font: var(--typo-cn-16-medium);
+      font-weight: var(--font-weight-semibold);
+      color: var(--cs-color-text);
+      text-decoration: none;
+    }
+    .doc-topbar-logo-dot {
+      width: 20px; height: 20px;
+      border-radius: 6px;
+      background: var(--cs-color-success);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+    }
+    .doc-topbar-divider { width: 1px; height: 16px; background: var(--cs-color-border); }
+    .doc-topbar-subtitle { font: var(--typo-cn-13-regular); color: var(--cs-color-text-light2); }
+    .doc-topbar-link {
+      margin-left: auto;
+      display: flex; align-items: center; gap: var(--space-2xs);
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-primary);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .doc-topbar-link:hover { opacity: 0.75; }
+
+    /* ===== 主体 ===== */
+    .doc-layout { flex: 1; display: flex; overflow: hidden; }
+
+    /* ===== 左侧导航 ===== */
+    .doc-sidebar {
+      width: 240px; flex-shrink: 0;
+      background: var(--cs-color-white);
+      border-right: 1px solid var(--cs-color-border);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .doc-search-wrap {
+      padding: var(--space-xs) var(--space-md);
+      border-bottom: 1px solid var(--cs-color-border);
+      flex-shrink: 0;
+    }
+    .doc-search-container { position: relative; }
+    .doc-search {
+      width: 100%; height: 32px;
+      border: 1px solid var(--cs-color-border);
+      border-radius: var(--radius-lg);
+      background: var(--cs-color-bg-light);
+      padding: 0 var(--space-xs) 0 32px;
+      font: var(--typo-cn-13-regular); color: var(--cs-color-text);
+      outline: none; transition: border-color 0.2s;
+    }
+    .doc-search:focus { border-color: var(--cs-color-primary); background: var(--cs-color-white); }
+    .doc-search-icon {
+      position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+      color: var(--cs-color-text-light2); font-size: 13px; pointer-events: none;
+    }
+    .doc-nav-scroll {
+      flex: 1; overflow-y: auto; padding: var(--space-xs) 0 var(--space-md);
+    }
+    .doc-nav-scroll::-webkit-scrollbar { width: 4px; }
+    .doc-nav-scroll::-webkit-scrollbar-thumb { background: var(--cs-color-border); border-radius: 2px; }
+    .doc-nav-empty {
+      padding: var(--space-md);
+      font: var(--typo-cn-12-regular);
+      color: var(--cs-color-text-light2);
+      text-align: center;
+    }
+    .doc-nav-section-title {
+      padding: var(--space-xs) var(--space-md) var(--space-2xs);
+      font-size: 11px; font-weight: var(--font-weight-semibold);
+      color: var(--cs-color-text-light2);
+      letter-spacing: 0.6px; text-transform: uppercase;
+    }
+
+    /* ===== 右侧内容区 ===== */
+    .doc-content { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+
+    /* ===== 空态 / 欢迎页 ===== */
+    .empty-page {
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: var(--space-md);
+      padding: var(--spacing-48);
+    }
+    .empty-icon {
+      width: 80px; height: 80px;
+      border-radius: 20px;
+      background: var(--cs-color-bg-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px;
+      color: var(--cs-color-text-light2);
+    }
+    .empty-title {
+      font: var(--typo-cn-16-medium);
+      font-weight: var(--font-weight-semibold);
+      color: var(--cs-color-text);
+    }
+    .empty-desc {
+      font: var(--typo-cn-13-regular);
+      color: var(--cs-color-text-light2);
+      text-align: center;
+      max-width: 400px;
+      line-height: 1.7;
+    }
+    .empty-rule-list {
+      background: var(--cs-color-white);
+      border: 1px solid var(--cs-color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-md);
+      width: 100%; max-width: 480px;
+    }
+    .empty-rule-title {
+      font: var(--typo-cn-13-regular);
+      font-weight: var(--font-weight-medium);
+      color: var(--cs-color-text);
+      margin-bottom: var(--space-xs);
+    }
+    .empty-rule-item {
+      display: flex; align-items: flex-start; gap: var(--space-xs);
+      font: var(--typo-cn-12-regular); color: var(--cs-color-text-light);
+      padding: var(--space-2xs) 0; line-height: 1.6;
+    }
+    .empty-rule-item::before { content: '·'; color: var(--cs-color-text-light2); flex-shrink: 0; }
+    .empty-cta {
+      display: inline-flex; align-items: center; gap: var(--space-xs);
+      padding: var(--space-xs) var(--space-md);
+      background: var(--cs-color-primary);
+      color: var(--cs-color-white);
+      font: var(--typo-cn-13-regular); font-weight: var(--font-weight-medium);
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .empty-cta:hover { opacity: 0.85; }
+    .empty-badge {
+      display: inline-flex; align-items: center; gap: var(--space-2xs);
+      padding: 3px 10px;
+      background: var(--cs-sem-bg-warning, rgba(250,173,20,0.1));
+      border: 1px solid var(--cs-color-warning);
+      color: var(--cs-color-warning);
+      font: var(--typo-cn-12-regular);
+      border-radius: var(--radius-xl);
+    }
+  </style>
+</head>
+<body>
+
+<div class="doc-topbar">
+  <div class="doc-topbar-logo">
+    <div class="doc-topbar-logo-dot">S</div>
+    CSES 共用组件库
+  </div>
+  <div class="doc-topbar-divider"></div>
+  <span class="doc-topbar-subtitle">两端共用 · shared/</span>
+  <a class="doc-topbar-link" href="../desktop/index.html">
+    <i class="cses-external_link" style="font-size:12px;"></i> 桌面端组件库
+  </a>
+</div>
+
+<div class="doc-layout">
+  <!-- 左侧导航 -->
+  <div class="doc-sidebar">
+    <div class="doc-search-wrap">
+      <div class="doc-search-container">
+        <i class="doc-search-icon cses-sousuo"></i>
+        <input class="doc-search" type="text" placeholder="搜索组件…" id="docSearch" disabled>
+      </div>
+    </div>
+    <div class="doc-nav-scroll">
+      <div class="doc-nav-section-title">全部组件</div>
+      <div class="doc-nav-empty">暂无组件</div>
+    </div>
+  </div>
+
+  <!-- 右侧内容区 -->
+  <div class="doc-content">
+    <div class="empty-page">
+      <div class="empty-icon"><i class="cses-settings" style="font-size:36px;"></i></div>
+      <div class="empty-badge">
+        <i class="cses-time" style="font-size:12px;"></i> 等待第一个共用组件
+      </div>
+      <div class="empty-title">shared/ 组件库还没有内容</div>
+      <div class="empty-desc">
+        放在这里的组件需要桌面端和移动端都能使用。<br>
+        当前所有组件都在桌面端组件库中。
+      </div>
+
+      <div class="empty-rule-list">
+        <div class="empty-rule-title">添加共用组件的规则</div>
+        <div class="empty-rule-item">新组件默认放 shared/，除非明确只属于某一端</div>
+        <div class="empty-rule-item">每个组件需包含 {name}.css、{name}.html、RULES.md 三个文件</div>
+        <div class="empty-rule-item">样式全部引用 CSS 变量，禁止硬编码颜色/间距</div>
+        <div class="empty-rule-item">添加后运行 node scripts/build-index.mjs 重新生成索引</div>
+        <div class="empty-rule-item">在 components/RULES.md 和 components/shared/index.html 的 COMPONENTS 对象中登记</div>
+      </div>
+
+      <a class="empty-cta" href="../desktop/index.html">
+        <i class="cses-liebiao" style="font-size:14px;"></i>
+        查看桌面端组件库
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

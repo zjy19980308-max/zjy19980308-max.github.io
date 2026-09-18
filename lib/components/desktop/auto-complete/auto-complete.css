@@ -1,0 +1,199 @@
+/*
+ * 自动完成 (AutoComplete)
+ * 标签：<cs-auto-complete>
+ *
+ * 作用：输入框 focus 时弹出候选列表，输入时根据输入过滤；点击候选项替换整段输入。
+ * 对标 ng-zorro AutoComplete。由 auto-complete.js 控制 focus / blur 弹窗。
+ *
+ * data 属性：
+ *   data-size="sm" / "md"(默认) / "lg"
+ *   data-placement="bottom"(默认) / "top"
+ *   data-open    — 展开态（auto-complete.js 切换）
+ *   data-disabled
+ *
+ * 子元素：
+ *   .ac-input         — 输入框
+ *   .ac-clear         — 清除按钮（hover 时显示）
+ *   .ac-dropdown      — 候选下拉
+ *   .ac-option        — 候选项
+ *   .ac-option-icon
+ *   .ac-option-label
+ *   .ac-option-meta
+ *   .ac-empty         — 空态
+ */
+
+cs-auto-complete {
+  position: relative;
+  display: inline-block;
+  width: calc(var(--spacing-160) * 1.5);
+}
+
+/* ========== 输入框包装（用于装清除按钮） ========== */
+cs-auto-complete .ac-input-wrap {
+  position: relative;
+  display: block;
+}
+
+/* ========== 输入框 ========== */
+cs-auto-complete .ac-input {
+  width: 100%;
+  height: var(--cs-sem-size-interactive-sm);
+  padding: 0 var(--space-sm);
+  padding-right: var(--spacing-32);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius);
+  background: var(--cs-color-bg);
+  color: var(--cs-color-text);
+  font: var(--typo-cn-14-regular);
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+cs-auto-complete[data-size="sm"] .ac-input {
+  height: var(--cs-sem-size-interactive-xs);
+  padding: 0 var(--space-xs);
+  padding-right: var(--spacing-24);
+  font: var(--typo-cn-12-regular);
+}
+
+cs-auto-complete[data-size="lg"] .ac-input {
+  height: var(--cs-sem-size-interactive-md);
+  padding: 0 var(--space-md);
+  padding-right: var(--spacing-32);
+}
+
+cs-auto-complete .ac-input::placeholder {
+  color: var(--cs-color-text-light2);
+}
+
+cs-auto-complete .ac-input:hover {
+  border-color: var(--cs-color-primary);
+}
+
+cs-auto-complete .ac-input:focus,
+cs-auto-complete[data-open] .ac-input {
+  border-color: var(--cs-color-primary);
+}
+
+cs-auto-complete[data-disabled] .ac-input {
+  background: var(--cs-color-bg-disabled);
+  color: var(--cs-color-text-light2);
+  cursor: not-allowed;
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* ========== 清除按钮 ========== */
+cs-auto-complete .ac-clear {
+  position: absolute;
+  right: var(--space-xs);
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--cs-color-text-light2);
+  font-size: var(--font-size-xs);
+}
+
+cs-auto-complete .ac-input-wrap:hover .ac-clear,
+cs-auto-complete[data-open] .ac-clear {
+  display: inline-flex;
+}
+
+cs-auto-complete .ac-clear:hover {
+  color: var(--cs-color-text);
+}
+
+/* ========== 下拉 ========== */
+cs-auto-complete .ac-dropdown {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  left: 0;
+  right: 0;
+  padding: var(--space-2xs) 0;
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--cs-shadow-card);
+  max-height: calc(var(--spacing-160) * 1.5);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+cs-auto-complete[data-open] .ac-dropdown {
+  display: block;
+}
+
+cs-auto-complete .ac-dropdown,
+cs-auto-complete[data-placement="bottom"] .ac-dropdown {
+  top: calc(100% + var(--space-2xs));
+}
+
+cs-auto-complete[data-placement="top"] .ac-dropdown {
+  bottom: calc(100% + var(--space-2xs));
+  top: auto;
+}
+
+/* ========== 候选项 ========== */
+cs-auto-complete .ac-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  width: 100%;
+  height: var(--cs-sem-size-interactive-sm);
+  padding: 0 var(--space-sm);
+  background: transparent;
+  border: 0;
+  color: var(--cs-color-text);
+  font: var(--typo-cn-14-regular);
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.15s ease;
+}
+
+cs-auto-complete .ac-option:hover,
+cs-auto-complete .ac-option[data-active] {
+  background: var(--cs-color-bg-light);
+}
+
+cs-auto-complete .ac-option-icon {
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cs-color-text-light2);
+  font-size: var(--font-size-md);
+  flex-shrink: 0;
+}
+
+cs-auto-complete .ac-option-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+cs-auto-complete .ac-option-meta {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+}
+
+/* ========== 空态 ========== */
+cs-auto-complete .ac-empty {
+  display: block;
+  padding: var(--space-sm) var(--space-md);
+  text-align: center;
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}

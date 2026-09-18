@@ -1,0 +1,86 @@
+/* cs-video-tile · 4 状态：默认 200×150 / [data-active] brand 高亮 / [data-muted] error 红边 / [data-size=large] 16:9 fill */
+cs-video-tile {
+  position: relative;
+  display: block;
+  width: 200px;
+  height: 150px;
+  background: var(--cs-color-bg-app-dark);
+  border: var(--line-width) solid var(--cs-color-border-on-dark);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+cs-video-tile[data-active] {
+  border-color: var(--cs-color-primary);
+  box-shadow: 0 0 0 var(--space-2xs) var(--cs-color-primary-a2);
+}
+
+cs-video-tile[data-muted] { border-color: var(--cs-color-error); }
+cs-video-tile[data-muted] .tile-status { color: var(--cs-color-error); }
+
+cs-video-tile[data-size="large"] {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+cs-video-tile .tile-stage {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--cs-color-bg-app-dark);
+}
+
+cs-video-tile .tile-status {
+  position: absolute; top: var(--space-xs); right: var(--space-xs);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--space-lg); height: var(--space-lg);
+  border-radius: var(--radius-full);
+  background: var(--cs-color-bg-on-dark-hover);
+  color: var(--cs-color-text-dark-strong);
+  font-size: var(--space-sm);
+}
+
+cs-video-tile .tile-footer {
+  position: absolute;
+  left: var(--space-xs); right: var(--space-xs); bottom: var(--space-xs);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-xs);
+  pointer-events: none;
+}
+
+cs-video-tile .tile-name {
+  display: inline-flex; align-items: center; gap: var(--space-2xs);
+  max-width: 70%;
+  padding: var(--space-2xs) var(--space-xs);
+  background: var(--cs-color-bg-on-dark-hover);
+  border-radius: var(--radius-sm);
+  color: var(--cs-color-text-dark-strong);
+  font: var(--typo-cn-12-regular);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  pointer-events: auto;
+}
+
+cs-video-tile .tile-actions {
+  display: inline-flex; align-items: center; gap: var(--space-2xs);
+  opacity: var(--opacity-0);
+  transition: opacity 0.15s ease;
+  pointer-events: auto;
+}
+
+cs-video-tile:hover .tile-actions,
+cs-video-tile[data-active] .tile-actions { opacity: var(--opacity-100); }
+
+cs-video-tile .tile-action {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: var(--space-lg); height: var(--space-lg);
+  background: var(--cs-color-bg-on-dark-hover);
+  border: 0; border-radius: var(--radius-sm);
+  color: var(--cs-color-text-dark-strong);
+  font-size: var(--space-sm);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+cs-video-tile .tile-action:hover { background: var(--cs-color-primary); }

@@ -1,0 +1,75 @@
+/*
+ * 聊天头部组件 (Chat Header)
+ * 标签：<cs-chat-header>
+ * 数据来源：消息设计稿 Figma（右上角工具栏 256x40）
+ *
+ * Figma 实测：
+ *   容器: height 48, padding 0 16, flex row, align center
+ *   边框: border-bottom 1px #e5e6eb → var(--cs-color-border)
+ *   背景: #ffffff → var(--cs-color-white)
+ *   标题: 16px/500 PingFang SC, color #1d2129 → var(--cs-color-text)
+ *   图标按钮: 40x40, icon 20px, color #8c8c8d, hover bg
+ *
+ * data 属性：（无）
+ */
+
+/* ========== 基础样式 ========== */
+cs-chat-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: var(--spacing-48);
+  padding: 0 var(--space-md);
+  border-bottom: var(--spacing-1) solid var(--cs-color-border);
+  background: var(--cs-color-white);
+  box-sizing: border-box;
+}
+
+/* ========== 标题区 ========== */
+cs-chat-header .header-title {
+  flex: 1;
+  font: var(--typo-cn-16-medium);
+  color: var(--cs-color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+/* ========== 操作区 ========== */
+cs-chat-header .header-actions {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-2xs);
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ========== 单个操作按钮 ========== */
+cs-chat-header .header-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-40);
+  height: var(--spacing-40);
+  border: none;
+  background: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--cs-transition-fast);
+  padding: 0;
+}
+
+cs-chat-header .header-action i {
+  font-size: var(--spacing-20);
+  color: var(--cs-color-text-light2);
+  line-height: 1;
+}
+
+cs-chat-header .header-action:hover {
+  background: var(--cs-color-bg-hover);
+}
+
+cs-chat-header .header-action:hover i {
+  color: var(--cs-color-text);
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-meeting-control-bar 组件预览</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="cs-meeting-control-bar.css">
+  <style>
+    body { padding: 32px; background: #f5f5f5; margin: 0; }
+    .section { background: #fff; border-radius: 8px; padding: 24px; margin-bottom: 24px; }
+    .section-title { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin-bottom: 8px; }
+    .section-subtitle { font: var(--typo-cn-12-regular); color: var(--cs-color-text-light2); margin-bottom: 16px; }
+    .preview-stage { background: var(--cs-color-bg-app-dark); border-radius: 8px; padding: 0; overflow: hidden; }
+  </style>
+</head>
+<body>
+
+<!-- default 默认态：所有按钮均常态 -->
+<div class="section">
+  <div class="section-title">默认态 default</div>
+  <div class="section-subtitle">所有 toggle 按钮处于常态（白半透明）</div>
+  <div class="preview-stage">
+    <cs-meeting-control-bar data-timer="00:42:18">
+      <span class="mcb-timer">00:42:18</span>
+      <div class="mcb-center">
+        <button class="mcb-btn" aria-label="麦克风"><i class="cses-volume"></i></button>
+        <button class="mcb-btn" aria-label="摄像头"><i class="cses-video-on"></i></button>
+        <button class="mcb-btn" aria-label="共享屏幕"><i class="cses-screen_sharing"></i></button>
+        <button class="mcb-btn" aria-label="举手"><i class="cses-add_a_member"></i></button>
+        <button class="mcb-btn" aria-label="聊天"><i class="cses-message_normal"></i></button>
+        <button class="mcb-btn" aria-label="参会人列表"><i class="cses-people_list_collapsed"></i></button>
+        <button class="mcb-btn" aria-label="录制"><i class="cses-record"></i></button>
+        <button class="mcb-btn" aria-label="更多"><i class="cses-more"></i></button>
+      </div>
+      <button class="mcb-leave">
+        <i class="cses-close-circle"></i><span>离开</span>
+      </button>
+    </cs-meeting-control-bar>
+  </div>
+</div>
+
+<!-- 业务真实态：mic muted + 屏幕共享 active + 录制中 -->
+<div class="section">
+  <div class="section-title">业务态 · 麦克风静音 + 屏幕共享中 + 录制中</div>
+  <div class="section-subtitle">data-muted（红） · data-toggled（绿） · data-recording（红点闪烁）</div>
+  <div class="preview-stage">
+    <cs-meeting-control-bar data-timer="01:23:45">
+      <span class="mcb-timer">01:23:45</span>
+      <div class="mcb-center">
+        <button class="mcb-btn" data-muted aria-label="麦克风（已静音）"><i class="cses-volume"></i></button>
+        <button class="mcb-btn" aria-label="摄像头"><i class="cses-video-on"></i></button>
+        <button class="mcb-btn" data-toggled aria-label="共享屏幕（共享中）"><i class="cses-screen_sharing"></i></button>
+        <button class="mcb-btn" data-toggled aria-label="举手（已举手）"><i class="cses-add_a_member"></i></button>
+        <button class="mcb-btn" aria-label="聊天"><i class="cses-message_normal"></i></button>
+        <button class="mcb-btn" aria-label="参会人列表"><i class="cses-people_list_collapsed"></i></button>
+        <button class="mcb-btn" data-recording aria-label="录制（录制中）"><i class="cses-record"></i></button>
+        <button class="mcb-btn" aria-label="更多"><i class="cses-more"></i></button>
+      </div>
+      <button class="mcb-leave">
+        <i class="cses-close-circle"></i><span>离开</span>
+      </button>
+    </cs-meeting-control-bar>
+  </div>
+</div>
+
+<!-- toggled 全激活态展示 -->
+<div class="section">
+  <div class="section-title">所有 toggle 状态展示</div>
+  <div class="section-subtitle">用于排版校验：default / toggled(绿) / muted(红) / recording(红闪)</div>
+  <div class="preview-stage">
+    <cs-meeting-control-bar data-timer="00:05:32">
+      <span class="mcb-timer">00:05:32</span>
+      <div class="mcb-center">
+        <button class="mcb-btn" data-muted aria-label="麦克风 muted"><i class="cses-volume"></i></button>
+        <button class="mcb-btn" data-muted aria-label="摄像头 muted"><i class="cses-video-on"></i></button>
+        <button class="mcb-btn" data-toggled aria-label="屏幕共享 active"><i class="cses-screen_sharing"></i></button>
+        <button class="mcb-btn" data-toggled aria-label="举手 active"><i class="cses-add_a_member"></i></button>
+        <button class="mcb-btn" data-toggled aria-label="聊天 active"><i class="cses-message_normal"></i></button>
+        <button class="mcb-btn" data-toggled aria-label="参会人列表 active"><i class="cses-people_list_collapsed"></i></button>
+        <button class="mcb-btn" data-recording aria-label="录制中"><i class="cses-record"></i></button>
+        <button class="mcb-btn" aria-label="更多"><i class="cses-more"></i></button>
+      </div>
+      <button class="mcb-leave">
+        <i class="cses-close-circle"></i><span>离开</span>
+      </button>
+    </cs-meeting-control-bar>
+  </div>
+</div>
+
+</body>
+</html>

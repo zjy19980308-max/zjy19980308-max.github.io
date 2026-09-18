@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>检查项库 · 流程中台</title>
+<link rel="stylesheet" href="ui.css">
+<style>
+  .page{max-width:none}
+  .hd{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .hd h2{font-size:19px;font-weight:700;letter-spacing:-.01em}
+  .hd .dim{font-size:12.5px;font-variant-numeric:tabular-nums}
+  .hd .right{margin-left:auto}
+  .fil{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:14px 0}
+  .chip{height:26px;padding:0 10px;border-radius:6px;border:1px solid var(--line);background:var(--panel);font-size:11.5px;color:var(--ink-2);cursor:pointer}
+  .chip.is-on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .fil .sp{width:1px;height:16px;background:var(--line);margin:0 3px}
+  @media (max-width:1000px){.tbl th:nth-child(3),.tbl td:nth-child(3),.tbl th:nth-child(6),.tbl td:nth-child(6),.tbl th:nth-child(7),.tbl td:nth-child(7){display:none}}
+  .src{font-size:11.5px;color:var(--ink-3)}
+  .src b{color:var(--ink-2);font-weight:500}
+  .pend{background:var(--warn-soft)}
+  .pend:hover{background:#F7EAD2!important}
+  .drawer__b .h-sec{margin-top:18px}
+  .drawer__b .h-sec:first-child{margin-top:0}
+  .logic{font-family:var(--mono);font-size:11.5px;line-height:1.75;background:var(--panel-2);border:1px solid var(--line-2);border-radius:7px;padding:10px 11px;color:var(--ink-2)}
+  .trace{border-left:2px solid var(--warn);padding:2px 0 2px 11px;font-size:12.5px;line-height:1.7}
+  .hitlist div{display:flex;gap:8px;font-size:12px;padding:7px 0;border-bottom:1px solid var(--line-2)}
+  .hitlist div:last-child{border:0}
+  .hitlist span{margin-left:auto;color:var(--ink-3);font-size:11.5px}
+</style>
+</head>
+<body data-nav="rules" data-title="检查项库">
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <header class="top" id="top"></header>
+    <div id="topActions"><button class="btn btn--p btn--s" data-toast="新建检查项：写清楚检查什么、为什么，Agent 转成可执行规则后先试运行">＋ 新建检查项</button></div>
+    <div class="page">
+      <div class="hd">
+        <h2>检查项库</h2>
+        <span class="dim">18 条生效 · 2 条待审批</span>
+      </div>
+
+      <div class="banner" style="margin-bottom:6px">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3.4M8 10.6h.01"/></svg>
+        <span><b>2 条由复盘和异常生成的检查项等待审批</b> · 批准后从下一次体检开始生效，已上线的流程不会被自动下线</span>
+        <div class="right"><button class="btn btn--s" id="only">只看待审批</button></div>
+      </div>
+
+      <div class="fil">
+        <button class="chip is-on">全部分类</button><button class="chip">结构完整</button><button class="chip">条件与分支</button><button class="chip">人员与权限</button><button class="chip">可逆与风险</button><button class="chip">外部依赖</button>
+        <span class="sp"></span>
+        <button class="chip">阻断</button><button class="chip">需确认</button>
+        <span class="sp"></span>
+        <button class="chip">来自复盘</button><button class="chip">来自异常</button>
+      </div>
+
+      <div class="card">
+        <div class="card__b card__b--flush">
+          <table class="tbl">
+            <thead><tr><th>编号</th><th>检查项</th><th>分类</th><th>级别</th><th>来源</th><th>适用流程</th><th>近 30 天拦截</th><th>状态</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+      <p class="dim" style="font-size:11.5px;margin-top:12px">内置检查项不能删除，只能停用；其中「不可逆节点前必须有人工确认」不能停用——这条是这个产品的底线。</p>
+    </div>
+  </div>
+</div>
+
+<div class="drawer" id="dw">
+  <div class="drawer__h"><h3 id="dwT">CK-07</h3><span class="tag" id="dwS">生效</span><button class="x" data-close>✕</button></div>
+  <div class="drawer__b" id="dwB"></div>
+  <div class="drawer__f" id="dwF"></div>
+</div>
+
+<script src="ui.js"></script>
+<script>
+(function () {
+  var R = [
+    { id: 'CK-01', t: '不可逆节点前必须有人工确认', c: '可逆与风险', lv: '阻断', src: '内置', srcT: '', flow: '全部', hit: '1 次', st: '生效', lock: 1,
+      why: '不可逆的动作一旦执行就收不回来。这条是整个产品的底线，不能停用。',
+      logic: '遍历所有节点 → 找出可逆等级为 C 的节点 → 检查它的所有前驱路径上是否存在「人工确认」类型节点 → 任意一条路径缺失则不通过',
+      fix: '在这个节点前面加入人工确认，或把它降级为 B 级（仅当它确实可撤销）。',
+      trace: '产品设计之初就定下的规则。', hits: [['供应商付款审批 v4 体检', '8 月 21 日']] },
+    { id: 'CK-02', t: '所有审批节点必须设置超时与超时处理', c: '人员与权限', lv: '阻断', src: '内置', srcT: '', flow: '全部', hit: '0 次', st: '生效',
+      why: '没有超时的审批节点会无声地卡住，直到有人发现。', logic: '对每个类型为「审批」的节点，检查 timeout 与 onTimeout 是否都有值', fix: '设置等待时长和超时后的处理方式（催办 / 转人工 / 转代理人）。', trace: '内置规则。', hits: [] },
+    { id: 'CK-07', t: '条件分档的边界值必须明确归属', c: '条件与分支', lv: '阻断', src: '来自复盘', srcT: '2026-08 付款停滞', flow: '全部', hit: '2 次', st: '生效',
+      why: '边界金额如果两档都命中或都不命中，付款会走错审批人，或者直接卡住没人知道。',
+      logic: '对每个类型为「条件」的节点 → 取出所有分档的上下限 → 检查区间是否连续且不重叠 → 若某个值同时命中 0 个或多个分档，判定不通过',
+      fix: '把边界值明确归入某一档（建议归入更严格的那一档），或补一个默认分支。',
+      trace: '2026-08-21 · v3（5 万分档）· PAY-0017 金额恰为 50,000 元，未命中任何一档，运行停滞 31 小时才被发现。',
+      hits: [['供应商付款审批 v4 体检', '9 月 15 日'], ['客户退款审批 v1 体检', '9 月 14 日']] },
+    { id: 'CK-11', t: '审批人需配置代理人', c: '人员与权限', lv: '阻断', src: '来自异常', srcT: 'PAY-0039', flow: '付款类', hit: '1 次', st: '生效',
+      why: '审批人出差、休假时没有兜底路径，流程就停在那里。', logic: '对每个「审批」节点，检查是否配置 delegate；若审批人日程状态为出差/休假且无 delegate，判定不通过',
+      fix: '给这个节点配代理人，或把超时处理设为「转上一级」。',
+      trace: '2026-09-14 · PAY-0039 · 财务总监陈立出差，一笔 ¥152,000 付款停了 26 小时。', hits: [['供应商付款审批 v4 体检', '9 月 15 日']] },
+    { id: 'CK-14', t: 'Agent 建议的节点须经人工确认', c: '结构完整', lv: '需确认', src: '内置', srcT: '', flow: '全部', hit: '3 次', st: '生效',
+      why: 'Agent 加的节点会改变流程走向，上线前必须由人点头。', logic: '找出所有 source = agent 且 confirmedBy 为空的节点', fix: '在体检页逐个「确认保留」或删除。', trace: '内置规则。', hits: [['供应商付款审批 v4 体检', '9 月 15 日']] },
+    { id: 'CK-19', t: '依赖外部数据源的校验需声明更新频率', c: '外部依赖', lv: '需确认', src: '来自复盘', srcT: 'v4 回退', flow: '全部', hit: '—', st: '待审批', pend: 1,
+      why: '读的是副本还是实时数据，决定了这个校验到底拦不拦得住。',
+      logic: '对每个读取外部数据源的节点，检查是否声明 refreshInterval；若间隔大于 1 小时且节点为拦截类，要求补人工复核',
+      fix: '声明数据更新频率；低于每小时的，在后面加一道人工复核。',
+      trace: '2026-09-16 · v4 回退 · 黑名单库每日凌晨同步，白天新增的黑名单供应商当天拦不住。', hits: [] },
+    { id: 'CK-20', t: '同一母子公司主体视为匹配', c: '条件与分支', lv: '需确认', src: '来自异常', srcT: 'PAY-0041', flow: '供应商付款审批', hit: '—', st: '待审批', pend: 1,
+      why: '子公司开票、母公司签合同是常见做法，每次都转人工太费事。',
+      logic: '三单匹配时，若抬头不一致，查询工商关系；确认为母子公司且历史有成功付款记录的，视为匹配并留痕',
+      fix: '批准后，这类情况不再转人工，但会在事件流里标注「按 CK-20 放行」。',
+      trace: '2026-09-15 · PAY-0041 · 发票抬头「华东物流（上海）有限公司」与合同主体「华东物流有限公司」不一致，人工确认后放行。', hits: [] }
+  ];
+  function rows(list) {
+    document.getElementById('rows').innerHTML = list.map(function (r, i) {
+      return '<tr class="clickable' + (r.pend ? ' pend' : '') + '" data-i="' + R.indexOf(r) + '">'
+        + '<td class="mono">' + r.id + '</td><td><b style="font-weight:500">' + r.t + '</b></td><td class="dim">' + r.c + '</td>'
+        + '<td><span class="tag tag--' + (r.lv === '阻断' ? 'risk' : 'warn') + '">' + r.lv + '</span></td>'
+        + '<td class="src"><b>' + r.src + '</b>' + (r.srcT ? '<br>' + r.srcT : '') + '</td>'
+        + '<td class="dim">' + r.flow + '</td><td class="dim" style="font-variant-numeric:tabular-nums">' + r.hit + '</td>'
+        + '<td>' + (r.st === '待审批' ? '<span class="tag tag--warn"><i class="dot"></i>待审批</span>' : '<span class="tag tag--ok"><i class="dot"></i>生效</span>') + '</td></tr>';
+    }).join('');
+  }
+  rows(R);
+  var onlyPend = false;
+  document.getElementById('only').addEventListener('click', function () {
+    onlyPend = !onlyPend; this.textContent = onlyPend ? '看全部' : '只看待审批';
+    rows(onlyPend ? R.filter(function (r) { return r.pend; }) : R);
+  });
+  document.getElementById('rows').addEventListener('click', function (e) {
+    var tr = e.target.closest('tr'); if (!tr) return;
+    var r = R[+tr.dataset.i];
+    document.getElementById('dwT').textContent = r.id;
+    var s = document.getElementById('dwS'); s.textContent = r.st; s.className = 'tag tag--' + (r.pend ? 'warn' : 'ok');
+    document.getElementById('dwB').innerHTML = '<div style="font-size:14px;font-weight:600;line-height:1.55;margin-bottom:10px">' + r.t + '</div>'
+      + '<div style="display:flex;gap:6px;flex-wrap:wrap"><span class="tag">' + r.c + '</span><span class="tag tag--' + (r.lv === '阻断' ? 'risk' : 'warn') + '">' + r.lv + '</span><span class="tag">适用：' + r.flow + '</span></div>'
+      + '<div class="h-sec">检查什么、为什么</div><p style="font-size:12.5px;line-height:1.75">' + r.why + '</p>'
+      + '<div class="h-sec">判定逻辑</div><div class="logic">' + r.logic + '</div>'
+      + '<div class="h-sec">不通过时给的修复建议</div><p style="font-size:12.5px;line-height:1.75">' + r.fix + '</p>'
+      + '<div class="h-sec">这条规则是怎么来的</div><div class="trace">' + r.trace + '</div>'
+      + '<div class="h-sec">近 30 天拦下了什么</div>'
+      + (r.hits.length ? '<div class="hitlist">' + r.hits.map(function (h) { return '<div>' + h[0] + '<span>' + h[1] + '</span></div>'; }).join('') + '</div>' : '<p class="dim" style="font-size:12px">还没有拦截记录。</p>');
+    document.getElementById('dwF').innerHTML = r.pend
+      ? '<button class="btn" data-close data-toast="已驳回 · 会退回给提出人">驳回</button><button class="btn btn--acc" data-close data-toast="已批准生效 · 下一次体检开始使用">批准生效</button>'
+      : (r.lock ? '<span class="dim" style="font-size:11.5px;margin-right:auto;align-self:center">底线规则，不能停用</span><button class="btn" data-close>关闭</button>'
+        : '<button class="btn btn--ghost" data-toast="停用需要填理由">停用</button><button class="btn" data-close>关闭</button><button class="btn btn--p" data-close data-toast="已保存">保存</button>');
+    AG.open(document.getElementById('dw'));
+  });
+  document.querySelector('.fil').addEventListener('click', function (e) {
+    var c = e.target.closest('.chip'); if (!c) return; c.classList.toggle('is-on');
+  });
+})();
+</script>
+</body>
+</html>

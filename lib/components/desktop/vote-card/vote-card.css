@@ -1,0 +1,158 @@
+/*
+ * 投票卡片组件 (Vote Card)
+ * 标签：<cs-vote-card>
+ * 数据来源：消息投票功能设计稿
+ *
+ * data 属性：
+ *   data-multiple              — 多选模式（复选框），默认单选（单选按钮）
+ *   data-closed                — 已结束，显示结果模式，隐藏投票控件
+ *
+ * 子元素：
+ *   .vote-title                — 投票标题
+ *   .vote-options              — 选项列表容器
+ *   .vote-option               — 单个选项行
+ *   .vote-option-input         — 单选/复选控件
+ *   .vote-option-label         — 选项文本
+ *   .vote-option-count         — 票数/百分比
+ *   .vote-option-bar           — 结果进度条
+ *   .vote-option-bar-fill      — 结果进度条填充
+ *   .vote-footer               — 底部区域
+ *   .vote-meta                 — 参与人数 + 倒计时
+ *   .vote-actions              — 操作按钮区
+ *   .vote-btn                  — 操作按钮
+ */
+
+/* ========== 容器 ========== */
+cs-vote-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  background: var(--cs-color-white);
+  border: var(--line-width) solid var(--cs-color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+/* ========== 标题 ========== */
+cs-vote-card .vote-title {
+  font: var(--typo-cn-14-medium);
+  color: var(--cs-color-text);
+}
+
+/* ========== 选项列表 ========== */
+cs-vote-card .vote-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+/* ========== 单个选项 ========== */
+cs-vote-card .vote-option {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+cs-vote-card .vote-option-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* ========== 单选/复选控件 ========== */
+cs-vote-card .vote-option-input {
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  flex-shrink: 0;
+  accent-color: var(--cs-color-primary);
+  cursor: pointer;
+  margin: 0;
+}
+
+/* ========== 选项文本 ========== */
+cs-vote-card .vote-option-label {
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+  flex: 1;
+}
+
+/* ========== 票数/百分比 ========== */
+cs-vote-card .vote-option-count {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* ========== 结果进度条 ========== */
+cs-vote-card .vote-option-bar {
+  height: var(--space-2xs);
+  background: var(--cs-color-bg-light);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+cs-vote-card .vote-option-bar-fill {
+  height: var(--cs-sem-size-content-full, 100%);
+  background: var(--cs-color-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+/* ========== 底部区域 ========== */
+cs-vote-card .vote-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ========== 元信息（人数 + 倒计时）========== */
+cs-vote-card .vote-meta {
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 操作按钮区 ========== */
+cs-vote-card .vote-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* ========== 操作按钮 ========== */
+cs-vote-card .vote-btn {
+  font: var(--typo-cn-12-medium);
+  color: var(--cs-color-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+cs-vote-card .vote-btn:hover {
+  text-decoration: underline;
+}
+
+cs-vote-card .vote-btn[data-variant="primary"] {
+  color: var(--cs-color-white);
+  background: var(--cs-color-primary);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2xs) var(--space-xs);
+}
+
+cs-vote-card .vote-btn[data-variant="primary"]:hover {
+  background: var(--cs-color-primary-hover);
+  text-decoration: none;
+}
+
+/* ========== 已结束模式 ========== */
+cs-vote-card[data-closed] .vote-option-input {
+  display: none;
+}
+
+cs-vote-card[data-closed] .vote-btn {
+  display: none;
+}

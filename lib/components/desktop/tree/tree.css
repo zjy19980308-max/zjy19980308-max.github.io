@@ -1,0 +1,153 @@
+/*
+ * 树形控件 (Tree)
+ * 标签：<cs-tree>
+ *
+ * 作用：通用树形数据展示，支持展开/折叠、选中、复选。
+ * 对标 ng-zorro Tree / antd Tree。
+ *
+ * 用 <details> 原生展开/折叠，零 JS。
+ *
+ * data 属性：
+ *   data-size="sm|md|lg"
+ *   data-show-line     — 显示连接线
+ *   data-block-node    — 节点撑满宽度
+ *
+ * 子元素：
+ *   .tree-node          — 节点（<details> 用于父节点，<div> 用于叶子）
+ *   .tree-node-summary  — 节点标题行（<summary>）
+ *   .tree-node-icon     — 展开箭头图标
+ *   .tree-node-label    — 节点文字
+ *   .tree-node-extra    — 节点右侧附加（数量、操作）
+ *   .tree-node-children — 子节点容器
+ *
+ * tree-node 状态：
+ *   data-selected — 选中
+ *   data-disabled — 禁用
+ */
+
+cs-tree {
+  display: block;
+  font: var(--typo-cn-14-regular);
+  color: var(--cs-color-text);
+}
+
+cs-tree .tree-node {
+  display: block;
+}
+
+/* details 默认 marker 隐藏 */
+cs-tree details.tree-node {
+  display: block;
+}
+
+cs-tree details.tree-node > summary.tree-node-summary {
+  list-style: none;
+}
+cs-tree details.tree-node > summary.tree-node-summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ========== 节点标题行 ========== */
+cs-tree .tree-node-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-xs);
+  border-radius: var(--radius);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+cs-tree .tree-node-summary:hover {
+  background: var(--cs-color-bg-light);
+}
+
+/* ========== 展开箭头 ========== */
+cs-tree .tree-node-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cs-sem-size-icon-md);
+  height: var(--cs-sem-size-icon-md);
+  flex-shrink: 0;
+  font-size: var(--font-size-xs);
+  color: var(--cs-color-text-light2);
+  transition: transform 0.2s ease;
+}
+
+cs-tree details[open] > .tree-node-summary > .tree-node-icon {
+  transform: rotate(90deg);
+}
+
+/* 叶子节点占位（保持对齐） */
+cs-tree .tree-node:not(details) > .tree-node-summary > .tree-node-icon {
+  visibility: hidden;
+}
+
+/* ========== 节点文字 ========== */
+cs-tree .tree-node-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+cs-tree .tree-node-extra {
+  flex-shrink: 0;
+  margin-left: var(--space-xs);
+  font: var(--typo-cn-12-regular);
+  color: var(--cs-color-text-light2);
+}
+
+/* ========== 子节点容器 ========== */
+cs-tree .tree-node-children {
+  padding-left: var(--spacing-20);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== 选中态 ========== */
+cs-tree .tree-node[data-selected] > .tree-node-summary {
+  background: var(--cs-color-selected, var(--cs-color-bg-light));
+  color: var(--cs-color-primary);
+}
+
+cs-tree .tree-node[data-selected] > .tree-node-summary .tree-node-label {
+  color: var(--cs-color-primary);
+}
+
+/* ========== 禁用态 ========== */
+cs-tree .tree-node[data-disabled] > .tree-node-summary {
+  color: var(--cs-color-text-light2);
+  opacity: var(--cs-sem-opacity-disabled);
+  pointer-events: none;
+}
+
+/* ========== 显示连线 ========== */
+cs-tree[data-show-line] .tree-node-children {
+  border-left: var(--line-width) dashed var(--cs-color-border);
+  margin-left: var(--space-sm);
+  padding-left: var(--space-sm);
+}
+
+/* ========== 尺寸 ========== */
+cs-tree[data-size="sm"] {
+  font: var(--typo-cn-13-regular);
+}
+cs-tree[data-size="sm"] .tree-node-summary {
+  padding: 2px var(--space-xs);
+}
+
+cs-tree[data-size="lg"] {
+  font: var(--typo-cn-16-regular);
+}
+cs-tree[data-size="lg"] .tree-node-summary {
+  padding: var(--space-xs) var(--space-sm);
+}
+
+/* ========== block-node 撑满 ========== */
+cs-tree[data-block-node] .tree-node-summary {
+  width: 100%;
+}

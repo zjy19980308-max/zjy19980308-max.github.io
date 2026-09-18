@@ -1,0 +1,15 @@
+/* =====================================================
+   文档库业务变量 / Doc Library Module Variables
+   模块前缀: --dl-
+   位置: staging（非正式库）
+   ===================================================== */
+
+:root {
+  /* ---- 语义色 ---- */
+  --dl-color-folder-icon: var(--cs-color-warning);
+
+  /* ---- 布局 ---- */
+  --dl-nav-width: 240px;
+  --dl-content-padding: var(--space-md);
+  --dl-list-gap: var(--space-xs);
+}

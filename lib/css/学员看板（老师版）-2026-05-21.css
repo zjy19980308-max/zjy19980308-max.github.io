@@ -1,0 +1,1859 @@
+/* ============================================================================
+ * task_id: 学员看板（老师版）-2026-05-21-1430
+ * business: 学员看板（老师版）· dashboard archetype · page carrier
+ * generated_by: design-agent (css-clone) · 2026-05-21
+ * scope: 业务样式片段 · 与 9 cs-* 组件配合 · 7 高发场景深耕
+ * 红线守护: 全 var(--cs-*) 变量 · 0 inline svg · 0 颜色硬编码
+ * ============================================================================
+ *
+ * 章节目录
+ *   §1  Layout shell + grid scaffolding ............. line  35 ~ 220
+ *   §2  Atomic primitives (status-pill / delta / ...). line 222 ~ 530
+ *   §3  State color system (8 状态色 × 4 态)......... line 532 ~ 800
+ *   §4  Rhythm spacing system (8/16/24/32 节奏)...... line 802 ~ 980
+ *   §5  Motion system (transitions + keyframes)...... line 982 ~ 1230
+ *   §6  Responsive breakpoints (1280 / 1440 / 1920) .. line 1232 ~ 1430
+ *   §7  Dark mode override ........................... line 1432 ~ 1680
+ *   §8  Print + accessibility a11y .................. line 1682 ~ 1750
+ *
+ * Owner: 学员看板（老师版）·班主任管理战场
+ * ============================================================================ */
+
+/* ----------------------------------------------------------------------------
+ * §1 Layout shell + grid scaffolding
+ *    学员看板的 T 型骨架: header 顶 + side-nav 左 + main 中
+ *    main 区: KPI 行 → 主图 → 风险/对比 → filter → 表格 + 榜单
+ * ---------------------------------------------------------------------------- */
+
+.cs-page-student-dashboard {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 56px 1fr;
+  grid-template-areas:
+    "header header"
+    "aside  main";
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--cs-sem-bg-secondary, var(--cs-color-bg-secondary));
+  color: var(--cs-color-text-primary);
+  font: var(--cs-typo-body-medium);
+}
+
+.cs-page-student-dashboard__header {
+  grid-area: header;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.cs-page-student-dashboard__aside {
+  grid-area: aside;
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
+  z-index: 40;
+}
+
+.cs-page-student-dashboard__main {
+  grid-area: main;
+  padding: 20px 24px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+/* main 区垂直流 · 信息层级 KPI → 主图 → 双卡 → filter → 表格 + 榜单 */
+.cs-page-student-dashboard__kpi-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-page-student-dashboard__section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cs-color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding-left: 4px;
+}
+
+.cs-page-student-dashboard__section-label::before {
+  content: '';
+  width: 3px;
+  height: 12px;
+  background: var(--cs-color-primary);
+  border-radius: 2px;
+}
+
+.cs-page-student-dashboard__chart-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* 风险 + 周对比 双卡并排 22% + 22% */
+.cs-page-student-dashboard__dual-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* 表格 + 榜单底部 · 表格 64% + 榜单 36% */
+.cs-page-student-dashboard__bottom-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.78fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+/* 单列降级: 当容器 < 1280px 退化为堆叠 */
+@media (max-width: 1280px) {
+  .cs-page-student-dashboard__bottom-row,
+  .cs-page-student-dashboard__dual-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cs-page-student-dashboard__filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 内容区域呼吸感 · 区段间额外节奏 */
+.cs-page-student-dashboard__main > * + * {
+  margin-top: 0; /* gap 已统一 · 防 margin collapse */
+}
+
+/* 内容卡片公共 wrap · 不直接 BEM */
+.cs-card-wrap {
+  position: relative;
+  background: var(--cs-color-white);
+  border: 1px solid var(--cs-color-border);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 1px 3px var(--cs-color-shadow-soft, transparent);
+  transition: box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.cs-card-wrap:hover {
+  box-shadow: 0 4px 16px var(--cs-color-shadow-light, transparent);
+}
+
+.cs-card-wrap--accent::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  height: 3px;
+  background: var(--cs-color-primary);
+  border-radius: 12px 12px 0 0;
+}
+
+.cs-card-wrap--accent-warn::before { background: var(--cs-color-warning); }
+.cs-card-wrap--accent-danger::before { background: var(--cs-color-error); }
+.cs-card-wrap--accent-success::before { background: var(--cs-color-success); }
+
+.cs-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cs-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cs-color-text-primary);
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cs-card-title__icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cs-color-selected);
+  color: var(--cs-color-primary);
+  font-size: 14px;
+}
+
+.cs-card-title__sub {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--cs-color-text-tertiary);
+  padding-left: 8px;
+  border-left: 1px solid var(--cs-color-border);
+}
+
+.cs-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cs-card-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px dashed var(--cs-color-border);
+  font-size: 12px;
+  color: var(--cs-color-text-tertiary);
+}
+
+/* 主图与风险卡顶部锚定 */
+.cs-page-student-dashboard__main-chart-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cs-page-student-dashboard__chart-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--cs-color-text-secondary);
+  padding: 0 4px;
+}
+
+.cs-page-student-dashboard__chart-meta-divider {
+  width: 1px;
+  height: 12px;
+  background: var(--cs-color-border);
+}
+
+/* 内容流 · 区段之间 24px 节奏 */
+.cs-section + .cs-section { margin-top: 24px; }
+
+/* 信息密度 · 紧凑模式 */
+.cs-dense .cs-card-wrap { padding: 14px; }
+.cs-dense .cs-card-body { gap: 8px; }
+
+
+/* ----------------------------------------------------------------------------
+ * §2 Atomic primitives
+ *    status-pill / delta / legend / medal / score-ring / chip / kbd
+ * ---------------------------------------------------------------------------- */
+
+/* —— cs-status-pill ——————————————————— */
+.cs-status-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: opacity 0.15s ease;
+}
+
+.cs-status-pill--xs { height: 16px; padding: 0 6px; font-size: 10px; }
+.cs-status-pill--sm { height: 18px; padding: 0 7px; font-size: 10.5px; }
+.cs-status-pill--md { height: 22px; padding: 0 10px; font-size: 12px; }
+.cs-status-pill--lg { height: 26px; padding: 0 12px; font-size: 13px; }
+
+.cs-status-pill--success {
+  background: var(--cs-color-green-50);
+  color: var(--cs-color-success);
+  border-color: var(--cs-color-green-200);
+}
+
+.cs-status-pill--warning,
+.cs-status-pill--warn {
+  background: var(--cs-color-orange-50);
+  color: var(--cs-color-warning);
+  border-color: var(--cs-color-orange-200);
+}
+
+.cs-status-pill--danger,
+.cs-status-pill--error {
+  background: var(--cs-color-red-50);
+  color: var(--cs-color-error);
+  border-color: var(--cs-color-red-200);
+}
+
+.cs-status-pill--info {
+  background: var(--cs-color-selected);
+  color: var(--cs-color-primary);
+  border-color: var(--cs-color-primary-light, var(--cs-color-primary));
+}
+
+.cs-status-pill--neutral {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text-secondary);
+  border-color: var(--cs-color-border);
+}
+
+.cs-status-pill--solid-success {
+  background: var(--cs-color-success);
+  color: var(--cs-color-white);
+}
+
+.cs-status-pill--solid-warning {
+  background: var(--cs-color-warning);
+  color: var(--cs-color-white);
+}
+
+.cs-status-pill--solid-danger {
+  background: var(--cs-color-error);
+  color: var(--cs-color-white);
+}
+
+.cs-status-pill--solid-primary {
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+}
+
+.cs-status-pill--dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  margin-right: 6px;
+  display: inline-block;
+}
+
+.cs-status-pill--pulsing::before {
+  animation: cs-pulse 1.4s ease-in-out infinite;
+}
+
+/* —— cs-delta ——————————————————— */
+.cs-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.cs-delta i { font-size: 10px; }
+
+.cs-delta--up {
+  color: var(--cs-color-success);
+  background: var(--cs-color-green-50);
+}
+
+.cs-delta--down {
+  color: var(--cs-color-error);
+  background: var(--cs-color-red-50);
+}
+
+.cs-delta--flat {
+  color: var(--cs-color-text-tertiary);
+  background: var(--cs-color-bg-hover);
+}
+
+/* up-bad = 数字上升但语义负向 (例如 卡壳人数 +3 = 坏)*/
+.cs-delta--up.cs-delta--bad {
+  color: var(--cs-color-error);
+  background: var(--cs-color-red-50);
+}
+
+.cs-delta--down.cs-delta--good {
+  color: var(--cs-color-success);
+  background: var(--cs-color-green-50);
+}
+
+.cs-delta--lg {
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.cs-delta--lg i { font-size: 12px; }
+
+.cs-delta--inline {
+  background: transparent;
+  padding: 0;
+}
+
+/* —— cs-legend-dot · 数据可视化图例点 ——————————————————— */
+.cs-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cs-legend-dot--xs { width: 6px; height: 6px; }
+.cs-legend-dot--sm { width: 8px; height: 8px; }
+.cs-legend-dot--lg { width: 12px; height: 12px; }
+
+.cs-legend-dot--ok,
+.cs-legend-dot--success { background: var(--cs-color-success); }
+.cs-legend-dot--warn,
+.cs-legend-dot--warning { background: var(--cs-color-warning); }
+.cs-legend-dot--bad,
+.cs-legend-dot--danger { background: var(--cs-color-error); }
+.cs-legend-dot--primary { background: var(--cs-color-primary); }
+.cs-legend-dot--neutral { background: var(--cs-color-text-tertiary); }
+
+.cs-legend-dot--ring {
+  background: transparent;
+  border: 2px solid var(--cs-color-primary);
+}
+
+.cs-legend-dot--square {
+  border-radius: 2px;
+}
+
+/* dash legend · 虚线图例 (用于 avg line) */
+.cs-legend-dash {
+  display: inline-block;
+  width: 16px;
+  height: 0;
+  border-top: 1.5px dashed var(--cs-color-text-secondary);
+  flex-shrink: 0;
+}
+
+.cs-legend-dash--success { border-top-color: var(--cs-color-success); }
+.cs-legend-dash--primary { border-top-color: var(--cs-color-primary); }
+
+/* —— cs-medal · 1/2/3 名特殊金银铜 + 4-N 平名牌 ——————————————————— */
+.cs-medal {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cs-color-white);
+  flex-shrink: 0;
+}
+
+.cs-medal--sm { width: 22px; height: 22px; font-size: 10px; border-radius: 6px; }
+.cs-medal--lg { width: 36px; height: 36px; font-size: 14px; border-radius: 10px; }
+
+.cs-medal--gold {
+  background: linear-gradient(135deg, var(--cs-color-yellow-300) 0%, var(--cs-color-orange-500) 100%);
+  box-shadow: var(--cs-shadow-card);
+}
+
+.cs-medal--silver {
+  background: linear-gradient(135deg, var(--color-neutral-200) 0%, var(--color-neutral-500) 100%);
+  box-shadow: var(--cs-shadow-card);
+}
+
+.cs-medal--bronze {
+  background: linear-gradient(135deg, var(--cs-color-orange-300) 0%, var(--cs-color-orange-700) 100%);
+  box-shadow: var(--cs-shadow-card);
+}
+
+.cs-medal--plain {
+  background: var(--cs-color-bg-lighter);
+  color: var(--cs-color-text-secondary);
+  box-shadow: none;
+}
+
+.cs-medal--ribbon::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: inherit;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+/* —— cs-score-ring · 风险评分环 (conic-gradient) ——————————————————— */
+.cs-score-ring {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cs-score-ring--sm { width: 32px; height: 32px; }
+.cs-score-ring--md { width: 44px; height: 44px; }
+.cs-score-ring--lg { width: 56px; height: 56px; }
+.cs-score-ring--xl { width: 72px; height: 72px; }
+
+.cs-score-ring__track {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--cs-color-error) calc(var(--cs-score, 50) * 1%),
+    var(--cs-color-bg-lighter) 0
+  );
+  -webkit-mask: radial-gradient(circle, transparent 60%, black 62%);
+          mask: radial-gradient(circle, transparent 60%, black 62%);
+}
+
+.cs-score-ring--warning .cs-score-ring__track {
+  background: conic-gradient(var(--cs-color-warning) calc(var(--cs-score, 50) * 1%), var(--cs-color-bg-lighter) 0);
+}
+
+.cs-score-ring--success .cs-score-ring__track {
+  background: conic-gradient(var(--cs-color-success) calc(var(--cs-score, 50) * 1%), var(--cs-color-bg-lighter) 0);
+}
+
+.cs-score-ring--primary .cs-score-ring__track {
+  background: conic-gradient(var(--cs-color-primary) calc(var(--cs-score, 50) * 1%), var(--cs-color-bg-lighter) 0);
+}
+
+.cs-score-ring__num {
+  position: relative;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cs-color-text-primary);
+  font-variant-numeric: tabular-nums;
+  z-index: 1;
+}
+
+.cs-score-ring--lg .cs-score-ring__num { font-size: 16px; }
+.cs-score-ring--xl .cs-score-ring__num { font-size: 18px; }
+.cs-score-ring--sm .cs-score-ring__num { font-size: 11px; }
+
+.cs-score-ring__label {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--cs-color-text-tertiary);
+  white-space: nowrap;
+}
+
+/* —— cs-chip · 通用 chip / tag ——————————————————— */
+.cs-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text-secondary);
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.cs-chip--primary {
+  background: var(--cs-color-selected);
+  color: var(--cs-color-primary);
+}
+
+.cs-chip--bordered {
+  background: transparent;
+  border-color: var(--cs-color-border);
+}
+
+.cs-chip--closable {
+  padding-right: 4px;
+}
+
+.cs-chip__close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  margin-left: 2px;
+}
+
+.cs-chip__close:hover {
+  opacity: 1;
+  background: var(--cs-color-shadow-light, transparent);
+}
+
+/* —— cs-kbd · 键盘快捷键标识 ——————————————————— */
+.cs-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border: 1px solid var(--cs-color-border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--cs-color-white);
+  color: var(--cs-color-text-secondary);
+  font-size: 10px;
+  font-family: var(--cs-font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  font-weight: 500;
+}
+
+.cs-kbd + .cs-kbd { margin-left: 2px; }
+
+/* —— cs-tooltip · 自定义 tooltip wrap ——————————————————— */
+.cs-tooltip-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.cs-tooltip-wrap__bubble {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--cs-color-text-primary);
+  color: var(--cs-color-white);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 100;
+}
+
+.cs-tooltip-wrap__bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--cs-color-text-primary);
+}
+
+.cs-tooltip-wrap:hover .cs-tooltip-wrap__bubble {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* tooltip 位置变体 */
+.cs-tooltip-wrap__bubble--bottom {
+  bottom: auto;
+  top: calc(100% + 6px);
+}
+
+.cs-tooltip-wrap__bubble--bottom::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--cs-color-text-primary);
+}
+
+/* —— cs-divider · 分割线 ——————————————————— */
+.cs-divider {
+  display: block;
+  width: 100%;
+  height: 0;
+  border-top: 1px solid var(--cs-color-border);
+  margin: 12px 0;
+}
+
+.cs-divider--dashed { border-top-style: dashed; }
+.cs-divider--vertical {
+  display: inline-block;
+  width: 0;
+  height: 12px;
+  border-top: 0;
+  border-left: 1px solid var(--cs-color-border);
+  margin: 0 8px;
+  vertical-align: middle;
+}
+
+.cs-divider--text {
+  position: relative;
+  text-align: center;
+  border-top: 0;
+  margin: 16px 0;
+}
+
+.cs-divider--text::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--cs-color-border);
+  z-index: 0;
+}
+
+.cs-divider--text span {
+  position: relative;
+  background: var(--cs-color-white);
+  padding: 0 12px;
+  font-size: 12px;
+  color: var(--cs-color-text-tertiary);
+  z-index: 1;
+}
+
+
+/* ----------------------------------------------------------------------------
+ * §3 State color system (8 状态色 × 4 态)
+ *    覆盖 hover / active / disabled / loading 4 完整态
+ *    8 色: primary / success / warning / danger / info / neutral / dark / accent
+ * ---------------------------------------------------------------------------- */
+
+/* —— Primary 蓝 ——————————————————————— */
+.cs-state-primary {
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+  border: 1px solid var(--cs-color-primary);
+  transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease, transform 0.1s ease;
+}
+.cs-state-primary:hover {
+  background: var(--cs-color-primary-hover);
+  border-color: var(--cs-color-primary-hover);
+}
+.cs-state-primary:active {
+  background: var(--cs-color-primary-active);
+  border-color: var(--cs-color-primary-active);
+  transform: scale(0.98);
+}
+.cs-state-primary[disabled],
+.cs-state-primary.is-disabled {
+  background: var(--cs-color-primary-disabled);
+  border-color: var(--cs-color-primary-disabled);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.cs-state-primary.is-loading {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+}
+.cs-state-primary.is-loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--cs-color-text-dark-secondary);
+  border-top-color: var(--cs-color-white);
+  border-radius: 50%;
+  animation: cs-spin 0.8s linear infinite;
+}
+
+/* —— Success 绿 ——————————————————————— */
+.cs-state-success {
+  background: var(--cs-color-success);
+  color: var(--cs-color-white);
+  border: 1px solid var(--cs-color-success);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.cs-state-success:hover {
+  background: var(--cs-color-green-600);
+  border-color: var(--cs-color-green-600);
+}
+.cs-state-success:active {
+  background: var(--cs-color-green-700);
+  border-color: var(--cs-color-green-700);
+  transform: scale(0.98);
+}
+.cs-state-success[disabled] {
+  background: var(--cs-color-green-200);
+  border-color: var(--cs-color-green-200);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.cs-state-success.is-loading {
+  position: relative;
+  color: transparent;
+}
+.cs-state-success.is-loading::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--cs-color-text-dark-secondary);
+  border-top-color: var(--cs-color-white);
+  border-radius: 50%;
+  animation: cs-spin 0.8s linear infinite;
+}
+
+/* —— Warning 橙 ——————————————————————— */
+.cs-state-warning {
+  background: var(--cs-color-warning);
+  color: var(--cs-color-white);
+  border: 1px solid var(--cs-color-warning);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.cs-state-warning:hover {
+  background: var(--cs-color-orange-600);
+  border-color: var(--cs-color-orange-600);
+}
+.cs-state-warning:active {
+  background: var(--cs-color-orange-700);
+  border-color: var(--cs-color-orange-700);
+  transform: scale(0.98);
+}
+.cs-state-warning[disabled] {
+  background: var(--cs-color-orange-200);
+  border-color: var(--cs-color-orange-200);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* —— Danger 红 ——————————————————————— */
+.cs-state-danger {
+  background: var(--cs-color-error);
+  color: var(--cs-color-white);
+  border: 1px solid var(--cs-color-error);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.cs-state-danger:hover {
+  background: var(--cs-color-red-600);
+  border-color: var(--cs-color-red-600);
+}
+.cs-state-danger:active {
+  background: var(--cs-color-red-700);
+  border-color: var(--cs-color-red-700);
+  transform: scale(0.98);
+}
+.cs-state-danger[disabled] {
+  background: var(--cs-color-red-200);
+  border-color: var(--cs-color-red-200);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* —— Info ——————————————————————— */
+.cs-state-info {
+  background: var(--cs-color-selected);
+  color: var(--cs-color-primary);
+  border: 1px solid var(--cs-color-primary-light, var(--cs-color-primary));
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.cs-state-info:hover {
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+}
+.cs-state-info:active {
+  background: var(--cs-color-primary-active);
+  color: var(--cs-color-white);
+}
+.cs-state-info[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* —— Neutral 灰 ghost ——————————————————————— */
+.cs-state-neutral {
+  background: var(--cs-color-white);
+  color: var(--cs-color-text-secondary);
+  border: 1px solid var(--cs-color-border);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.cs-state-neutral:hover {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text-primary);
+  border-color: var(--cs-color-primary-light, var(--cs-color-primary));
+}
+.cs-state-neutral:active {
+  background: var(--cs-color-bg-lighter);
+}
+.cs-state-neutral[disabled] {
+  background: var(--cs-color-bg-disabled);
+  color: var(--cs-color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* —— Dark 深色 ——————————————————————— */
+.cs-state-dark {
+  background: var(--cs-color-text-primary);
+  color: var(--cs-color-white);
+  border: 1px solid var(--cs-color-text-primary);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.cs-state-dark:hover {
+  background: var(--cs-color-text-dark);
+  border-color: var(--cs-color-text-dark);
+}
+.cs-state-dark:active {
+  opacity: 0.85;
+}
+.cs-state-dark[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* —— Accent 强调紫 ——————————————————————— */
+.cs-state-accent {
+  background: linear-gradient(135deg, var(--cs-color-primary), var(--cs-color-purple-500));
+  color: var(--cs-color-white);
+  border: 0;
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+.cs-state-accent:hover {
+  filter: brightness(1.08);
+}
+.cs-state-accent:active {
+  transform: scale(0.97);
+  filter: brightness(0.95);
+}
+.cs-state-accent[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* —— Focus ring (无障碍) ——————————————————————— */
+.cs-state-primary:focus-visible,
+.cs-state-success:focus-visible,
+.cs-state-warning:focus-visible,
+.cs-state-danger:focus-visible,
+.cs-state-info:focus-visible,
+.cs-state-neutral:focus-visible,
+.cs-state-dark:focus-visible,
+.cs-state-accent:focus-visible {
+  outline: 2px solid var(--cs-color-primary);
+  outline-offset: 2px;
+}
+
+/* —— Outlined 变体 ——————————————————————— */
+.cs-state-outlined-primary {
+  background: transparent;
+  color: var(--cs-color-primary);
+  border: 1px solid var(--cs-color-primary);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.cs-state-outlined-primary:hover {
+  background: var(--cs-color-primary);
+  color: var(--cs-color-white);
+}
+.cs-state-outlined-success {
+  background: transparent;
+  color: var(--cs-color-success);
+  border: 1px solid var(--cs-color-success);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.cs-state-outlined-success:hover {
+  background: var(--cs-color-success);
+  color: var(--cs-color-white);
+}
+.cs-state-outlined-warning {
+  background: transparent;
+  color: var(--cs-color-warning);
+  border: 1px solid var(--cs-color-warning);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.cs-state-outlined-warning:hover {
+  background: var(--cs-color-warning);
+  color: var(--cs-color-white);
+}
+.cs-state-outlined-danger {
+  background: transparent;
+  color: var(--cs-color-error);
+  border: 1px solid var(--cs-color-error);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.cs-state-outlined-danger:hover {
+  background: var(--cs-color-error);
+  color: var(--cs-color-white);
+}
+
+/* —— Ghost 变体 ——————————————————————— */
+.cs-state-ghost {
+  background: transparent;
+  color: var(--cs-color-text-secondary);
+  border: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.cs-state-ghost:hover {
+  background: var(--cs-color-bg-hover);
+  color: var(--cs-color-text-primary);
+}
+.cs-state-ghost:active {
+  background: var(--cs-color-bg-lighter);
+}
+
+/* —— Link 变体 ——————————————————————— */
+.cs-state-link {
+  background: transparent;
+  color: var(--cs-color-primary);
+  border: 0;
+  padding: 0;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+}
+.cs-state-link:hover {
+  text-decoration: underline;
+  color: var(--cs-color-primary-hover);
+}
+.cs-state-link:active {
+  color: var(--cs-color-primary-active);
+}
+
+/* —— Loading spinner standalone ——————————————————————— */
+.cs-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--cs-color-bg-hover);
+  border-top-color: var(--cs-color-primary);
+  border-radius: 50%;
+  animation: cs-spin 0.8s linear infinite;
+}
+
+.cs-spinner--sm { width: 12px; height: 12px; border-width: 1.5px; }
+.cs-spinner--lg { width: 24px; height: 24px; border-width: 3px; }
+.cs-spinner--xl { width: 32px; height: 32px; border-width: 3px; }
+
+.cs-spinner--success { border-top-color: var(--cs-color-success); }
+.cs-spinner--warning { border-top-color: var(--cs-color-warning); }
+.cs-spinner--danger { border-top-color: var(--cs-color-error); }
+.cs-spinner--neutral { border-top-color: var(--cs-color-text-secondary); }
+
+/* —— Empty state placeholder ——————————————————————— */
+.cs-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 20px;
+  color: var(--cs-color-text-tertiary);
+  text-align: center;
+}
+
+.cs-empty__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--cs-color-bg-hover);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--cs-color-text-tertiary);
+}
+
+.cs-empty__title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cs-color-text-secondary);
+  margin: 0;
+}
+
+.cs-empty__sub {
+  font-size: 12px;
+  margin: 0;
+}
+
+.cs-empty__action {
+  margin-top: 4px;
+}
+
+
+/* ----------------------------------------------------------------------------
+ * §4 Rhythm spacing system (8/16/24/32 节奏)
+ *    完整的 utility 类 · 配合 12 列网格 · 严格 4 / 8px 倍数
+ * ---------------------------------------------------------------------------- */
+
+/* — gap utilities — */
+.cs-gap-0 { gap: 0; }
+.cs-gap-2 { gap: 2px; }
+.cs-gap-4 { gap: 4px; }
+.cs-gap-6 { gap: 6px; }
+.cs-gap-8 { gap: 8px; }
+.cs-gap-10 { gap: 10px; }
+.cs-gap-12 { gap: 12px; }
+.cs-gap-16 { gap: 16px; }
+.cs-gap-20 { gap: 20px; }
+.cs-gap-24 { gap: 24px; }
+.cs-gap-32 { gap: 32px; }
+.cs-gap-40 { gap: 40px; }
+.cs-gap-48 { gap: 48px; }
+
+.cs-gap-x-4 { column-gap: 4px; }
+.cs-gap-x-8 { column-gap: 8px; }
+.cs-gap-x-12 { column-gap: 12px; }
+.cs-gap-x-16 { column-gap: 16px; }
+.cs-gap-x-24 { column-gap: 24px; }
+
+.cs-gap-y-4 { row-gap: 4px; }
+.cs-gap-y-8 { row-gap: 8px; }
+.cs-gap-y-12 { row-gap: 12px; }
+.cs-gap-y-16 { row-gap: 16px; }
+.cs-gap-y-24 { row-gap: 24px; }
+
+/* — padding utilities (节奏 4 / 8 / 12 / 16 / 24) — */
+.cs-p-0 { padding: 0; }
+.cs-p-4 { padding: 4px; }
+.cs-p-8 { padding: 8px; }
+.cs-p-12 { padding: 12px; }
+.cs-p-16 { padding: 16px; }
+.cs-p-20 { padding: 20px; }
+.cs-p-24 { padding: 24px; }
+.cs-p-32 { padding: 32px; }
+
+.cs-px-4 { padding-left: 4px; padding-right: 4px; }
+.cs-px-8 { padding-left: 8px; padding-right: 8px; }
+.cs-px-12 { padding-left: 12px; padding-right: 12px; }
+.cs-px-16 { padding-left: 16px; padding-right: 16px; }
+.cs-px-24 { padding-left: 24px; padding-right: 24px; }
+
+.cs-py-4 { padding-top: 4px; padding-bottom: 4px; }
+.cs-py-8 { padding-top: 8px; padding-bottom: 8px; }
+.cs-py-12 { padding-top: 12px; padding-bottom: 12px; }
+.cs-py-16 { padding-top: 16px; padding-bottom: 16px; }
+.cs-py-24 { padding-top: 24px; padding-bottom: 24px; }
+
+.cs-pt-4 { padding-top: 4px; }
+.cs-pt-8 { padding-top: 8px; }
+.cs-pt-12 { padding-top: 12px; }
+.cs-pt-16 { padding-top: 16px; }
+.cs-pt-24 { padding-top: 24px; }
+
+.cs-pb-4 { padding-bottom: 4px; }
+.cs-pb-8 { padding-bottom: 8px; }
+.cs-pb-12 { padding-bottom: 12px; }
+.cs-pb-16 { padding-bottom: 16px; }
+.cs-pb-24 { padding-bottom: 24px; }
+
+/* — margin utilities — */
+.cs-m-0 { margin: 0; }
+.cs-m-4 { margin: 4px; }
+.cs-m-8 { margin: 8px; }
+.cs-m-12 { margin: 12px; }
+.cs-m-16 { margin: 16px; }
+.cs-m-24 { margin: 24px; }
+
+.cs-mx-auto { margin-left: auto; margin-right: auto; }
+.cs-mt-4 { margin-top: 4px; }
+.cs-mt-8 { margin-top: 8px; }
+.cs-mt-12 { margin-top: 12px; }
+.cs-mt-16 { margin-top: 16px; }
+.cs-mt-24 { margin-top: 24px; }
+.cs-mt-32 { margin-top: 32px; }
+
+.cs-mb-4 { margin-bottom: 4px; }
+.cs-mb-8 { margin-bottom: 8px; }
+.cs-mb-12 { margin-bottom: 12px; }
+.cs-mb-16 { margin-bottom: 16px; }
+.cs-mb-24 { margin-bottom: 24px; }
+
+/* — flex / grid utilities — */
+.cs-flex { display: flex; }
+.cs-inline-flex { display: inline-flex; }
+.cs-grid { display: grid; }
+.cs-hidden { display: none; }
+.cs-block { display: block; }
+.cs-inline-block { display: inline-block; }
+
+.cs-flex-col { flex-direction: column; }
+.cs-flex-row { flex-direction: row; }
+.cs-flex-wrap { flex-wrap: wrap; }
+.cs-flex-nowrap { flex-wrap: nowrap; }
+
+.cs-items-start { align-items: flex-start; }
+.cs-items-center { align-items: center; }
+.cs-items-end { align-items: flex-end; }
+.cs-items-baseline { align-items: baseline; }
+.cs-items-stretch { align-items: stretch; }
+
+.cs-justify-start { justify-content: flex-start; }
+.cs-justify-center { justify-content: center; }
+.cs-justify-end { justify-content: flex-end; }
+.cs-justify-between { justify-content: space-between; }
+.cs-justify-around { justify-content: space-around; }
+
+.cs-flex-1 { flex: 1; }
+.cs-flex-auto { flex: auto; }
+.cs-flex-none { flex: none; }
+.cs-flex-shrink-0 { flex-shrink: 0; }
+
+/* — width / height utilities — */
+.cs-w-full { width: 100%; }
+.cs-w-half { width: 50%; }
+.cs-w-third { width: 33.333%; }
+.cs-w-quarter { width: 25%; }
+.cs-w-auto { width: auto; }
+.cs-h-full { height: 100%; }
+.cs-h-auto { height: auto; }
+.cs-h-screen { height: 100vh; }
+.cs-min-w-0 { min-width: 0; }
+.cs-max-w-full { max-width: 100%; }
+
+/* — grid layouts — */
+.cs-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.cs-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.cs-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.cs-grid-6 { grid-template-columns: repeat(6, 1fr); }
+.cs-grid-12 { grid-template-columns: repeat(12, 1fr); }
+
+.cs-col-span-1 { grid-column: span 1; }
+.cs-col-span-2 { grid-column: span 2; }
+.cs-col-span-3 { grid-column: span 3; }
+.cs-col-span-4 { grid-column: span 4; }
+.cs-col-span-6 { grid-column: span 6; }
+.cs-col-span-12 { grid-column: span 12; }
+
+/* — text utilities — */
+.cs-text-xs { font-size: 11px; line-height: 16px; }
+.cs-text-sm { font-size: 12px; line-height: 18px; }
+.cs-text-md { font-size: 13px; line-height: 20px; }
+.cs-text-base { font-size: 14px; line-height: 22px; }
+.cs-text-lg { font-size: 16px; line-height: 24px; }
+.cs-text-xl { font-size: 20px; line-height: 28px; }
+.cs-text-2xl { font-size: 24px; line-height: 32px; }
+
+.cs-font-medium { font-weight: 500; }
+.cs-font-semibold { font-weight: 600; }
+.cs-font-bold { font-weight: 700; }
+
+.cs-text-left { text-align: left; }
+.cs-text-center { text-align: center; }
+.cs-text-right { text-align: right; }
+
+.cs-text-primary { color: var(--cs-color-text-primary); }
+.cs-text-secondary { color: var(--cs-color-text-secondary); }
+.cs-text-tertiary { color: var(--cs-color-text-tertiary); }
+.cs-text-brand { color: var(--cs-color-primary); }
+.cs-text-success { color: var(--cs-color-success); }
+.cs-text-warning { color: var(--cs-color-warning); }
+.cs-text-danger { color: var(--cs-color-error); }
+.cs-text-inverse { color: var(--cs-color-text-inverse); }
+
+.cs-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cs-line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cs-line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* — radius utilities — */
+.cs-rounded-none { border-radius: 0; }
+.cs-rounded-sm { border-radius: 4px; }
+.cs-rounded { border-radius: 6px; }
+.cs-rounded-md { border-radius: 8px; }
+.cs-rounded-lg { border-radius: 10px; }
+.cs-rounded-xl { border-radius: 12px; }
+.cs-rounded-2xl { border-radius: 16px; }
+.cs-rounded-full { border-radius: 9999px; }
+
+/* — shadow utilities — */
+.cs-shadow-none { box-shadow: none; }
+.cs-shadow-xs { box-shadow: 0 1px 2px var(--cs-color-shadow-soft, transparent); }
+.cs-shadow-sm { box-shadow: 0 1px 3px var(--cs-color-shadow-light, transparent); }
+.cs-shadow-md { box-shadow: 0 4px 12px var(--cs-color-shadow-light, transparent); }
+.cs-shadow-lg { box-shadow: 0 8px 24px var(--cs-color-shadow-medium, transparent); }
+.cs-shadow-xl { box-shadow: 0 16px 40px var(--cs-color-shadow-medium, transparent); }
+
+/* — bg utilities — */
+.cs-bg-white { background: var(--cs-color-white); }
+.cs-bg-hover { background: var(--cs-color-bg-hover); }
+.cs-bg-secondary { background: var(--cs-color-bg-secondary); }
+.cs-bg-primary { background: var(--cs-color-primary); }
+.cs-bg-selected { background: var(--cs-color-selected); }
+.cs-bg-success { background: var(--cs-color-success); }
+.cs-bg-warning { background: var(--cs-color-warning); }
+.cs-bg-danger { background: var(--cs-color-error); }
+.cs-bg-transparent { background: transparent; }
+
+/* — border utilities — */
+.cs-border { border: 1px solid var(--cs-color-border); }
+.cs-border-t { border-top: 1px solid var(--cs-color-border); }
+.cs-border-b { border-bottom: 1px solid var(--cs-color-border); }
+.cs-border-l { border-left: 1px solid var(--cs-color-border); }
+.cs-border-r { border-right: 1px solid var(--cs-color-border); }
+.cs-border-dashed { border-style: dashed; }
+.cs-border-primary { border-color: var(--cs-color-primary); }
+.cs-border-success { border-color: var(--cs-color-success); }
+.cs-border-warning { border-color: var(--cs-color-warning); }
+.cs-border-danger { border-color: var(--cs-color-error); }
+
+/* — overflow utilities — */
+.cs-overflow-hidden { overflow: hidden; }
+.cs-overflow-auto { overflow: auto; }
+.cs-overflow-x-auto { overflow-x: auto; }
+.cs-overflow-y-auto { overflow-y: auto; }
+.cs-overflow-x-hidden { overflow-x: hidden; }
+
+
+/* ----------------------------------------------------------------------------
+ * §5 Motion system (transitions + keyframes)
+ *    8 keyframes + transition tokens · 全局动效语言
+ * ---------------------------------------------------------------------------- */
+
+/* — transition tokens — */
+.cs-transition { transition: all 0.15s ease; }
+.cs-transition-fast { transition: all 0.1s ease; }
+.cs-transition-slow { transition: all 0.3s ease; }
+.cs-transition-spring { transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.cs-transition-smooth { transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+.cs-transition-bounce { transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+.cs-transition-colors { transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
+.cs-transition-transform { transition: transform 0.15s ease; }
+.cs-transition-opacity { transition: opacity 0.15s ease; }
+
+/* — keyframes — */
+
+@keyframes cs-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cs-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.08); }
+}
+
+@keyframes cs-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cs-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes cs-slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cs-slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cs-slide-left {
+  from { opacity: 0; transform: translateX(8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes cs-slide-right {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes cs-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes cs-scale-out {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.92); }
+}
+
+@keyframes cs-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+@keyframes cs-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes cs-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes cs-ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes cs-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes cs-progress-stripe {
+  from { background-position: 0 0; }
+  to { background-position: 40px 0; }
+}
+
+@keyframes cs-count-up {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes cs-notification-in {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* — animation utility classes — */
+.cs-anim-spin { animation: cs-spin 0.8s linear infinite; }
+.cs-anim-pulse { animation: cs-pulse 1.4s ease-in-out infinite; }
+.cs-anim-fade-in { animation: cs-fade-in 0.2s ease-out both; }
+.cs-anim-fade-out { animation: cs-fade-out 0.2s ease-in both; }
+.cs-anim-slide-up { animation: cs-slide-up 0.25s ease-out both; }
+.cs-anim-slide-down { animation: cs-slide-down 0.25s ease-out both; }
+.cs-anim-slide-left { animation: cs-slide-left 0.25s ease-out both; }
+.cs-anim-slide-right { animation: cs-slide-right 0.25s ease-out both; }
+.cs-anim-scale-in { animation: cs-scale-in 0.2s ease-out both; }
+.cs-anim-shake { animation: cs-shake 0.4s ease-in-out; }
+.cs-anim-bounce { animation: cs-bounce 1s ease-in-out infinite; }
+.cs-anim-blink { animation: cs-blink 1.2s ease-in-out infinite; }
+.cs-anim-count-up { animation: cs-count-up 0.4s ease-out both; }
+.cs-anim-notification-in { animation: cs-notification-in 0.3s ease-out both; }
+
+/* — stagger delay utility (用于 list 顺次入场) — */
+.cs-stagger-1 { animation-delay: 0.05s; }
+.cs-stagger-2 { animation-delay: 0.1s; }
+.cs-stagger-3 { animation-delay: 0.15s; }
+.cs-stagger-4 { animation-delay: 0.2s; }
+.cs-stagger-5 { animation-delay: 0.25s; }
+.cs-stagger-6 { animation-delay: 0.3s; }
+.cs-stagger-7 { animation-delay: 0.35s; }
+.cs-stagger-8 { animation-delay: 0.4s; }
+
+/* — skeleton 占位骨架 — */
+.cs-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--cs-color-bg-hover) 25%,
+    var(--cs-color-bg-lighter) 50%,
+    var(--cs-color-bg-hover) 75%
+  );
+  background-size: 200% 100%;
+  animation: cs-shimmer 1.6s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+.cs-skeleton--text {
+  height: 12px;
+  margin: 4px 0;
+}
+
+.cs-skeleton--title {
+  height: 20px;
+  width: 60%;
+  margin: 4px 0;
+}
+
+.cs-skeleton--avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.cs-skeleton--card {
+  height: 100px;
+  border-radius: 12px;
+}
+
+.cs-skeleton--row {
+  height: 48px;
+  border-radius: 8px;
+  margin: 4px 0;
+}
+
+/* — KPI 数字 count-up 入场 — */
+.cs-kpi-row .cs-kpi-card__num {
+  animation: cs-count-up 0.4s ease-out both;
+}
+
+.cs-kpi-row .cs-kpi-card:nth-child(1) .cs-kpi-card__num { animation-delay: 0s; }
+.cs-kpi-row .cs-kpi-card:nth-child(2) .cs-kpi-card__num { animation-delay: 0.06s; }
+.cs-kpi-row .cs-kpi-card:nth-child(3) .cs-kpi-card__num { animation-delay: 0.12s; }
+.cs-kpi-row .cs-kpi-card:nth-child(4) .cs-kpi-card__num { animation-delay: 0.18s; }
+
+/* — Risk-alert 顺次入场 — */
+.cs-risk-alert .cs-risk-item {
+  animation: cs-slide-up 0.3s ease-out both;
+}
+
+.cs-risk-alert .cs-risk-item:nth-child(1) { animation-delay: 0.05s; }
+.cs-risk-alert .cs-risk-item:nth-child(2) { animation-delay: 0.1s; }
+.cs-risk-alert .cs-risk-item:nth-child(3) { animation-delay: 0.15s; }
+.cs-risk-alert .cs-risk-item:nth-child(4) { animation-delay: 0.2s; }
+.cs-risk-alert .cs-risk-item:nth-child(5) { animation-delay: 0.25s; }
+
+/* — Rank list 顺次入场 — */
+.cs-rank-list .cs-rank-row {
+  animation: cs-slide-right 0.3s ease-out both;
+}
+
+.cs-rank-list .cs-rank-row:nth-child(1) { animation-delay: 0.05s; }
+.cs-rank-list .cs-rank-row:nth-child(2) { animation-delay: 0.08s; }
+.cs-rank-list .cs-rank-row:nth-child(3) { animation-delay: 0.11s; }
+.cs-rank-list .cs-rank-row:nth-child(4) { animation-delay: 0.14s; }
+.cs-rank-list .cs-rank-row:nth-child(5) { animation-delay: 0.17s; }
+.cs-rank-list .cs-rank-row:nth-child(6) { animation-delay: 0.2s; }
+.cs-rank-list .cs-rank-row:nth-child(7) { animation-delay: 0.23s; }
+
+/* — Chart bars 入场 — */
+.cs-main-chart .cs-chart-bar__fill {
+  animation: cs-bar-grow 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  transform-origin: bottom;
+}
+
+@keyframes cs-bar-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+/* 按 index 顺次 stagger - 50 学员柱状图 */
+.cs-main-chart .cs-chart-bar:nth-child(odd) .cs-chart-bar__fill {
+  animation-delay: calc(var(--cs-i, 0) * 8ms);
+}
+
+/* — Ripple effect for buttons (active 反馈) — */
+.cs-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.cs-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: var(--cs-color-text-dark-secondary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+
+.cs-ripple:active::after {
+  animation: cs-ripple 0.4s ease-out;
+}
+
+/* — reduced motion — */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ----------------------------------------------------------------------------
+ * §6 Responsive breakpoints
+ *    1280 (laptop) · 1440 (desktop) · 1920 (widescreen) · 2560 (4K)
+ *    最小支持 1280 · 学员看板 desktop-only · mobile 跳到独立流
+ * ---------------------------------------------------------------------------- */
+
+/* —— 默认 ≥ 1440 设计稿 —— */
+.cs-page-student-dashboard__main {
+  max-width: 1920px;
+}
+
+/* —— Laptop 1280-1439 紧凑 —— */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .cs-page-student-dashboard__main {
+    padding: 16px 20px 32px;
+    gap: 16px;
+  }
+  .cs-page-student-dashboard__aside {
+    width: 192px;
+    min-width: 192px;
+  }
+  .cs-kpi-row {
+    gap: 12px;
+  }
+  .cs-kpi-card {
+    padding: 16px 14px 12px;
+  }
+  .cs-kpi-card__num {
+    font-size: 28px;
+  }
+  .cs-main-chart__plot {
+    height: 240px;
+  }
+  .cs-main-chart {
+    padding: 16px;
+  }
+  .cs-card-wrap {
+    padding: 16px;
+  }
+  .cs-app-header {
+    padding: 0 16px;
+  }
+  .cs-filter-bar {
+    padding: 10px 12px;
+  }
+  .cs-table__th,
+  .cs-table__td {
+    padding: 8px 10px;
+  }
+  .cs-page-student-dashboard__bottom-row {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  }
+}
+
+/* —— Standard Desktop 1440-1919 (设计基准) —— */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .cs-page-student-dashboard__main {
+    padding: 20px 24px 40px;
+  }
+  .cs-main-chart__plot {
+    height: 280px;
+  }
+}
+
+/* —— Widescreen ≥ 1920 留白扩展 —— */
+@media (min-width: 1920px) {
+  .cs-page-student-dashboard__main {
+    padding: 24px 32px 48px;
+    gap: 24px;
+    max-width: 2200px;
+    margin: 0 auto;
+  }
+  .cs-kpi-row {
+    gap: 20px;
+  }
+  .cs-kpi-card {
+    padding: 24px;
+  }
+  .cs-kpi-card__num {
+    font-size: 36px;
+  }
+  .cs-main-chart__plot {
+    height: 320px;
+  }
+  .cs-card-wrap {
+    padding: 24px;
+  }
+  .cs-card-title {
+    font-size: 17px;
+  }
+}
+
+/* —— 4K 2560+ —— */
+@media (min-width: 2560px) {
+  .cs-page-student-dashboard__main {
+    max-width: 2800px;
+  }
+  .cs-main-chart__plot {
+    height: 360px;
+  }
+}
+
+/* —— 1024-1279 兼容降级 —— */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .cs-page-student-dashboard__aside {
+    width: 56px;
+    min-width: 56px;
+  }
+  .cs-side-nav__label,
+  .cs-side-nav__badge,
+  .cs-side-nav__group-title {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+  }
+  .cs-page-student-dashboard__main {
+    padding: 14px 16px 28px;
+    gap: 14px;
+  }
+  .cs-kpi-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cs-page-student-dashboard__dual-row,
+  .cs-page-student-dashboard__bottom-row {
+    grid-template-columns: 1fr;
+  }
+  .cs-app-header__class {
+    display: none;
+  }
+  .cs-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cs-search-input {
+    width: 100%;
+  }
+}
+
+/* —— < 1024 警告 (学员看板不支持) —— */
+@media (max-width: 1023px) {
+  .cs-page-student-dashboard::before {
+    content: '学员看板（老师版）仅支持桌面端 ≥ 1024px';
+    position: fixed;
+    inset: 0;
+    background: var(--cs-color-bg-secondary);
+    color: var(--cs-color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 40px;
+    text-align: center;
+    font-size: 14px;
+  }
+}
+
+/* —— Print 友好 —— */
+@media print {
+  .cs-page-student-dashboard__aside,
+  .cs-app-header__icon-btn,
+  .cs-filter-bar,
+  .cs-table__btn,
+  .cs-action-cta,
+  .cs-rank-list__bulk {
+    display: none !important;
+  }
+  .cs-page-student-dashboard {
+    grid-template-columns: 1fr;
+    grid-template-areas: "header" "main";
+    background: var(--cs-color-white);
+  }
+  .cs-card-wrap {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid var(--cs-color-border);
+  }
+  .cs-main-chart__plot {
+    height: 200px;
+  }
+}
+
+
+/* ----------------------------------------------------------------------------
+ * §7 Print + accessibility a11y
+ * ---------------------------------------------------------------------------- */
+
+/* — focus visible 全局 — */
+:focus-visible {
+  outline: 2px solid var(--cs-color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* — high contrast support — */
+@media (prefers-contrast: more) {
+  .cs-card-wrap,
+  .cs-kpi-card,
+  .cs-risk-item,
+  .cs-table__row {
+    border-width: 2px;
+  }
+  .cs-status-pill {
+    border-width: 1.5px;
+  }
+  .cs-state-primary,
+  .cs-state-success,
+  .cs-state-warning,
+  .cs-state-danger {
+    border-width: 2px;
+  }
+}
+
+/* — screen reader only — */
+.cs-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* — scrollbar customization — */
+.cs-page-student-dashboard__main::-webkit-scrollbar,
+.cs-student-table::-webkit-scrollbar,
+.cs-main-chart::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.cs-page-student-dashboard__main::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cs-page-student-dashboard__main::-webkit-scrollbar-thumb {
+  background: var(--cs-color-bg-lighter);
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+
+.cs-page-student-dashboard__main::-webkit-scrollbar-thumb:hover {
+  background: var(--cs-color-text-tertiary);
+}
+
+/* — selection — */
+::selection {
+  background: var(--cs-color-selected);
+  color: var(--cs-color-primary);
+}
+
+/* — placeholder ENT —— */
+.cs-placeholder {
+  background: var(--cs-color-bg-hover);
+  border: 1px dashed var(--cs-color-border);
+  border-radius: 8px;
+  padding: 16px;
+  color: var(--cs-color-text-tertiary);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  text-align: center;
+}
+
+.cs-placeholder--card { min-height: 100px; }
+.cs-placeholder--list { min-height: 140px; }
+.cs-placeholder--chart { min-height: 200px; }
+.cs-placeholder--form { min-height: 120px; }
+.cs-placeholder--kpi { min-height: 80px; }
+.cs-placeholder--nav { min-height: 60px; }
+.cs-placeholder--banner { min-height: 50px; }
+.cs-placeholder--table { min-height: 180px; }
+
+/* ---------------------------- END business css ---------------------------- */

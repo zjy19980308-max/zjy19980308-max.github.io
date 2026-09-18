@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-banner 横幅</title>
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="banner.css">
+  <style>
+    body { padding: 32px; background: var(--cs-color-bg-light); }
+    .demo-section { margin-bottom: 32px; }
+    .demo-label { font: var(--typo-cn-12-medium); color: var(--cs-color-text-light2); margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+<div class="demo-section">
+  <div class="demo-label">默认横幅（纯色背景 + 文字）</div>
+  <cs-banner>
+    <div class="banner-content">
+      <span class="banner-title">大力支持实体经济发展 六大行齐发力</span>
+      <span class="banner-subtitle">了解更多银行业务动态</span>
+    </div>
+  </cs-banner>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">小尺寸 sm</div>
+  <cs-banner data-size="sm">
+    <div class="banner-content">
+      <span class="banner-title">欢迎回来，开始高效办公</span>
+    </div>
+  </cs-banner>
+</div>
+
+<div class="demo-section">
+  <div class="demo-label">大尺寸 lg</div>
+  <cs-banner data-size="lg">
+    <div class="banner-content">
+      <span class="banner-title">2024 年度总结报告已发布</span>
+      <span class="banner-subtitle">点击查看详细数据分析</span>
+    </div>
+  </cs-banner>
+</div>
+
+
+<div class="demo-section">
+  <div class="demo-label">Welcome 变体（浅色背景左右布局）</div>
+  <cs-banner data-variant="welcome">
+    <div class="banner-content">
+      <div class="banner-left">
+        <span class="banner-title">早上好，张明</span>
+        <span class="banner-subtitle">今天有 5 项待办需要处理</span>
+      </div>
+      <div class="banner-right">
+        <span>2026年3月30日 周一</span>
+        <i class="cses-rili"></i>
+      </div>
+    </div>
+  </cs-banner>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>cs-leave-balance-card 假期余额卡片 — 组件预览</title>
+  <link rel="stylesheet" href="../../../css/token.css">
+  <link rel="stylesheet" href="../../../css/variable.css">
+  <link rel="stylesheet" href="../../../css/base.css">
+  <link rel="stylesheet" href="../../../fonts/cses-icons.css?v=101">
+  <link rel="stylesheet" href="leave-balance-card.css">
+  <style>
+    body { background: #f5f5f5; padding: 32px; }
+    h2 { font: var(--typo-cn-16-medium); color: var(--cs-color-text); margin: 24px 0 12px; }
+    h2:first-child { margin-top: 0; }
+    .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  </style>
+</head>
+<body>
+  <h2>假期余额卡片（各主题色）</h2>
+  <div class="card-grid">
+    <cs-leave-balance-card data-color="primary">
+      <div class="balance-header">
+        <i class="balance-icon cses-rili"></i>
+        <span class="balance-title">年假</span>
+      </div>
+      <div class="balance-remaining">
+        <span class="balance-number">7</span>
+        <span class="balance-unit">天</span>
+      </div>
+      <div class="balance-progress">
+        <div class="balance-progress-fill" style="width: 30%"></div>
+      </div>
+      <div class="balance-detail">
+        <span class="balance-used">已用 3 天</span>
+        <span class="balance-total">共 10 天</span>
+      </div>
+    </cs-leave-balance-card>
+
+    <cs-leave-balance-card data-color="warning">
+      <div class="balance-header">
+        <i class="balance-icon cses-rili"></i>
+        <span class="balance-title">病假</span>
+      </div>
+      <div class="balance-remaining">
+        <span class="balance-number">3</span>
+        <span class="balance-unit">天</span>
+      </div>
+      <div class="balance-progress">
+        <div class="balance-progress-fill" style="width: 40%"></div>
+      </div>
+      <div class="balance-detail">
+        <span class="balance-used">已用 2 天</span>
+        <span class="balance-total">共 5 天</span>
+      </div>
+    </cs-leave-balance-card>
+
+    <cs-leave-balance-card data-color="success">
+      <div class="balance-header">
+        <i class="balance-icon cses-rili"></i>
+        <span class="balance-title">调休</span>
+      </div>
+      <div class="balance-remaining">
+        <span class="balance-number">2</span>
+        <span class="balance-unit">天</span>
+      </div>
+      <div class="balance-progress">
+        <div class="balance-progress-fill" style="width: 60%"></div>
+      </div>
+      <div class="balance-detail">
+        <span class="balance-used">已用 3 天</span>
+        <span class="balance-total">共 5 天</span>
+      </div>
+    </cs-leave-balance-card>
+
+    <cs-leave-balance-card data-color="info">
+      <div class="balance-header">
+        <i class="balance-icon cses-rili"></i>
+        <span class="balance-title">婚假</span>
+      </div>
+      <div class="balance-remaining">
+        <span class="balance-number">10</span>
+        <span class="balance-unit">天</span>
+      </div>
+      <div class="balance-progress">
+        <div class="balance-progress-fill" style="width: 0%"></div>
+      </div>
+      <div class="balance-detail">
+        <span class="balance-used">已用 0 天</span>
+        <span class="balance-total">共 10 天</span>
+      </div>
+    </cs-leave-balance-card>
+  </div>
+
+  <h2>额度用完（data-exhausted）</h2>
+  <div class="card-grid">
+    <cs-leave-balance-card data-color="danger" data-exhausted>
+      <div class="balance-header">
+        <i class="balance-icon cses-rili"></i>
+        <span class="balance-title">事假</span>
+      </div>
+      <div class="balance-remaining">
+        <span class="balance-number">0</span>
+        <span class="balance-unit">天</span>
+      </div>
+      <div class="balance-progress">
+        <div class="balance-progress-fill" style="width: 100%"></div>
+      </div>
+      <div class="balance-detail">
+        <span class="balance-used">已用 5 天</span>
+        <span class="balance-total">共 5 天</span>
+      </div>
+    </cs-leave-balance-card>
+  </div>
+</body>
+</html>

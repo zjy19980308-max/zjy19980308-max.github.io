@@ -1,0 +1,72 @@
+/* ============================================================
+ * cs-section-header — 模块标题（3px 色条 + H2 + 全部 >）
+ *
+ * data 属性：
+ *   data-color:
+ *     - primary  (默认)     主色条
+ *     - warning             橙色（即将到期等）
+ *     - danger              红色（逾期/紧急等）
+ *     - success             绿色（本周已完成等）
+ *     - info                蓝色（数据看板等）
+ *     - cyan                青色（最近文档等）
+ *     - orange              橙金色（权益/活动等）
+ *
+ * 子元素 data 属性：
+ *   .sh-right[data-action]:
+ *     - view-all / view-more / 自定义动作 ID（如 create-doc）
+ * ============================================================ */
+
+cs-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin-bottom: var(--cs-space-ws-md);
+}
+cs-section-header .sh-left {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cs-space-ws-sm);
+}
+cs-section-header .sh-bar {
+  display: inline-block;
+  width: 3px;
+  height: 16px;
+  border-radius: 2px;
+  background: var(--cs-color-ws-primary);
+  flex-shrink: 0;
+}
+cs-section-header[data-color="primary"] .sh-bar { background: var(--cs-color-ws-primary); }
+cs-section-header[data-color="warning"] .sh-bar { background: var(--cs-color-ws-warning); }
+cs-section-header[data-color="danger"]  .sh-bar { background: var(--cs-color-ws-danger); }
+cs-section-header[data-color="success"] .sh-bar { background: var(--cs-color-ws-success); }
+cs-section-header[data-color="info"]    .sh-bar { background: var(--cs-color-ws-info); }
+cs-section-header[data-color="cyan"]    .sh-bar { background: var(--cs-color-ws-cyan); }
+cs-section-header[data-color="orange"]  .sh-bar { background: var(--cs-color-ws-orange); }
+
+cs-section-header .sh-title {
+  font-size: var(--cs-fs-ws-h2);
+  font-weight: 600;
+  color: var(--cs-color-ws-text-primary);
+}
+cs-section-header .sh-count {
+  font-size: var(--cs-fs-ws-caption);
+  color: var(--cs-color-ws-text-secondary);
+  margin-left: 4px;
+}
+
+cs-section-header .sh-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--cs-fs-ws-body);
+  color: var(--cs-color-ws-primary);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+cs-section-header .sh-right:hover {
+  text-decoration: underline;
+}
+cs-section-header .sh-right i {
+  font-size: var(--cs-fs-ws-caption);
+}
