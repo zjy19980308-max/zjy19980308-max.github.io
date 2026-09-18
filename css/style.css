@@ -122,7 +122,7 @@ a{color:inherit;text-decoration:none}
 
 @media (prefers-reduced-motion:reduce){.line,.container__titles--reveal .title{transform:none!important}.loaderBlock{display:none}.navbarBlock{opacity:1;transition:none}}
 @media (max-width:1024px){.t-14,.navbarBlock__left .left__title,.navbarBlock__left .left__infos,.navbarBlock__right .right__links,.heroBlock__top .top__city,.heroBlock__top .infos__text,.heroBlock__top .agencies__text,.beeBlock .indication,.headerBlock__content .content__scrollIndication,.loaderBlock .title__content,.loaderBlock .infos__content,.loaderBlock .progress__content{font-size:14px}.headerBlock__content .content__description{font-size:24px}.introBlock__top .top__baseline{font-size:22px}.introBlock__bottom .bottom__text{font-size:18px}}
-@media (max-width:760px){.gridWrapper{grid-template-columns:repeat(8,1fr);grid-column-gap:8px}.loaderBlock__container .container__title,.loaderBlock__container .container__infos{grid-column:1/-1;text-align:center}.loaderBlock__container .container__bottom{grid-column:1/-1;justify-self:center}.navbarBlock__left .left__infos,.navbarBlock__right .right__links{display:none}.headerBlock{height:100dvh}.headerBlock__content{grid-column:1/9;bottom:0;margin-left:0}.heroBlock__top .top__city{grid-column:1/9;text-align:center;justify-self:center}.heroBlock__top .top__star{grid-column:1/9;justify-self:center}.heroBlock__top .top__infos{grid-column:1/9;justify-self:center;text-align:center;margin-top:48px}.titles__wrapper .title{font-size:48px}.introBlock__top .top__baseline{grid-column:1/9;width:auto}.introBlock__bottom .bottom__stars{grid-column:1/2}.introBlock__bottom .bottom__text{grid-column:2/9;width:auto;margin-top:0}.introBlock__bottom .bottom__video{grid-column:1/9;width:100%;margin-top:20px}}
+@media (max-width:760px){.gridWrapper{grid-template-columns:repeat(8,1fr);grid-column-gap:8px}.loaderBlock__container .container__title,.loaderBlock__container .container__infos{grid-column:1/-1;text-align:center}.loaderBlock__container .container__bottom{grid-column:1/-1;justify-self:center}.navbarBlock__left .left__infos{display:none}.navbarBlock__right .right__links{grid-column:4/9;gap:1.1rem;font-size:13px}.headerBlock{height:100dvh}.headerBlock__content{grid-column:1/9;bottom:0;margin-left:0}.heroBlock__top .top__city{grid-column:1/9;text-align:center;justify-self:center}.heroBlock__top .top__star{grid-column:1/9;justify-self:center}.heroBlock__top .top__infos{grid-column:1/9;justify-self:center;text-align:center;margin-top:48px}.titles__wrapper .title{font-size:48px}.introBlock__top .top__baseline{grid-column:1/9;width:auto}.introBlock__bottom .bottom__stars{grid-column:1/2}.introBlock__bottom .bottom__text{grid-column:2/9;width:auto;margin-top:0}.introBlock__bottom .bottom__video{grid-column:1/9;width:100%;margin-top:20px}}
 
 .tk{display:inline}
 
@@ -242,7 +242,7 @@ html.pt-arriving #loader{display:none}
 @media (max-width:1280px){.archivesBlock__items .items__title{grid-column:1/7}.archivesBlock__items .items__roles{display:none}.archivesBlock__items .items__text{grid-column:2/6}}
 @media (max-width:1025px){.projectBlock{min-height:unset}.informations__top .top__title{grid-column:1/9;margin-bottom:20px}.informations__top .top__recognitions,.informations__top .top__date,.informations__bottom .bottom__left .left__number{display:none}.informations__top .top__team{grid-column:5/9}}
 @media (max-width:847px){.projectBlock__title .title__text,.archivesBlock__title .title__text{font-size:24px}.archivesBlock{padding-top:100px}.media__soon{font-size:14px}.media__soon b{font-size:28px}}
-@media (max-width:760px){.projectBlock__slider{height:56vw}.slider__media{width:86vw}.informations__bottom .bottom__left,.informations__bottom .bottom__roles{grid-column:1/-1}.informations__bottom .bottom__roles{margin-top:12px}.statementBlock{height:130dvh}.statementBlock__text{grid-column:1/-1;max-width:none;font-size:13vw}.archivesBlock__items .items__date,.archivesBlock__items .items__agency{display:none}.archivesBlock__items .items__title{grid-column:1/8}.archivesBlock__items .items__arrow{grid-column:8/9}.archivesBlock__items .items__text,.archivesBlock__items .items__media{grid-column:1/-1;grid-row:auto;width:100%;margin-bottom:20px}.archivesBlock__items .items__media{height:52vw}}
+@media (max-width:760px){.projectBlock__slider{height:56vw}.slider__media{width:86vw}.informations__bottom .bottom__left,.informations__bottom .bottom__roles{grid-column:1/-1}.informations__bottom .bottom__roles{margin-top:12px}.statementBlock{height:130dvh}.statementBlock__text{grid-column:1/-1;max-width:none;font-size:13vw}.archivesBlock__items .items__date,.archivesBlock__items .items__agency{display:none}.archivesBlock__items .text__infos{display:none}.archivesBlock__items .items__title{grid-column:1/8}.archivesBlock__items .items__arrow{grid-column:8/9}.archivesBlock__items .items__text,.archivesBlock__items .items__media{grid-column:1/-1;grid-row:auto;width:100%;margin-bottom:20px}.archivesBlock__items .items__media{height:52vw}}
 
 /* v1「关于我」三块的排法（张竞元作品集/dist/assets/system.css 的 .about-meta / .about-str-list / .about-exp-item），换成 v7 深绿 + 米色 */
 .v1Head{grid-column:1/-1;display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid rgba(238,214,200,.18);padding-bottom:1.2rem;margin-bottom:2.8rem}
@@ -572,6 +572,21 @@ html.pt-arriving #loader{display:none}
 .pjBA .pjPreview iframe{width:200%;height:200%;transform:scale(.5)}
 /* 修：大图层带 hidden 属性时必须真隐藏——之前 display:flex 盖过了 hidden，透明层压在整页上，返回等所有点击都失效 */
 .pjLightbox[hidden]{display:none!important}
+/* owner 2026-09-18：手机上点开图太小。实测 390px 宽里，左右 padding 56 + gap 39 + 两个 48px 按钮 96
+   一共吃掉 191px，只剩 199px 给图。移动端改成图占满宽度，翻页按钮浮到图上。 */
+@media (max-width:760px){
+  .pjLightbox{padding:0;gap:0}
+  .lb__figure{max-width:100vw;width:100vw;gap:.7rem}
+  .lb__img{max-width:100vw;width:100vw;max-height:76vh;object-fit:contain;border-radius:0;
+    touch-action:none;transform-origin:center center;will-change:transform}
+  .pjLightbox .lb__prev,.pjLightbox .lb__next{position:absolute;top:50%;transform:translateY(-50%);
+    width:42px;height:42px;font-size:20px;z-index:2;
+    background:rgba(2,32,22,.55);border-color:rgba(238,214,200,.45);backdrop-filter:blur(6px)}
+  .pjLightbox .lb__prev{left:10px}
+  .pjLightbox .lb__next{right:10px}
+  .pjLightbox .lb__close{top:12px;right:12px;width:40px;height:40px;background:rgba(2,32,22,.55);backdrop-filter:blur(6px)}
+  .lb__cap{padding:0 16px;font-size:12.5px}
+}
 
 /* ════════ 首页精选项目：v5 卡片错落网格（js/work.js）· 文字封面 ════════ */
 .workCards{position:relative;background:var(--bg);color:var(--fg);padding-bottom:8.5416666667vw}

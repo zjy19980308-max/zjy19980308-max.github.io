@@ -65,7 +65,7 @@
   /* ── 平滑滚动：原站 Lenis，桌面 lerp .085 ── */
   var lenis = null;
   if (!reduce && window.Lenis) {
-    lenis = new Lenis({ lerp: .085, smoothWheel: true, syncTouch: true, wheelMultiplier: .45 })   /* wheelMultiplier 滚轮倍率（owner 2026-09-18：滚一下别翻太多页）。
+    lenis = new Lenis({ lerp: .085, smoothWheel: true, syncTouch: !matchMedia('(pointer:coarse)').matches, wheelMultiplier: .45 })   /* wheelMultiplier 滚轮倍率（owner 2026-09-18：滚一下别翻太多页）。
        触控板一次手势会连发几十个 wheel 事件，累计位移很大，这个系数整体缩放。
        js/app.js · about.js · lab.js · project.js 四处要一起改。 */;
     window.__v7lenis = lenis;

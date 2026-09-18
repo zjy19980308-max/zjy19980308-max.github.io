@@ -137,7 +137,7 @@
 
   /* ── 平滑滚动（原站 Lenis lerp .085） ── */
   var lenis = null;
-  if (!reduce && window.Lenis) { lenis = new Lenis({ lerp: .085, smoothWheel: true, syncTouch: true, wheelMultiplier: .45 }); window.__v7lenis = lenis; gsap.ticker.add(function (t) { lenis.raf(t * 1000); }); gsap.ticker.lagSmoothing(0); }
+  if (!reduce && window.Lenis) { lenis = new Lenis({ lerp: .085, smoothWheel: true, syncTouch: !matchMedia('(pointer:coarse)').matches, wheelMultiplier: .45 }); window.__v7lenis = lenis; gsap.ticker.add(function (t) { lenis.raf(t * 1000); }); gsap.ticker.lagSmoothing(0); }
   function scrollY() { return lenis ? lenis.animatedScroll : window.scrollY; }
 
   /* ── 文字进场（原站 TextComponent：yPercent 110 → 0，1.125s，交错 .1，reveal） ── */

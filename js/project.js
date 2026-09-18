@@ -468,17 +468,83 @@
 
   /* ── 大图 ── */
   var lb = q('pjLightbox'), lbImg = lb.querySelector('.lb__img'), lbCap = lb.querySelector('.lb__cap'), lbSet = 0, lbI = 0;
-  function showLb() { var s = gallerySets[lbSet][lbI]; if (!s) return; lbImg.src = s[0]; lbImg.alt = s[1] || ''; lbCap.textContent = (s[1] || '') + '　' + (lbI + 1) + ' / ' + gallerySets[lbSet].length; lb.querySelector('.lb__prev').hidden = lb.querySelector('.lb__next').hidden = gallerySets[lbSet].length < 2; }
+  function showLb() { var s = gallerySets[lbSet][lbI]; if (!s) return; if (typeof zReset === 'function') zReset(false); lbImg.src = s[0]; lbImg.alt = s[1] || ''; lbCap.textContent = (s[1] || '') + '　' + (lbI + 1) + ' / ' + gallerySets[lbSet].length; lb.querySelector('.lb__prev').hidden = lb.querySelector('.lb__next').hidden = gallerySets[lbSet].length < 2; }
   function openLb(set, i) { lbSet = set; lbI = i; showLb(); lb.hidden = false; lenis && lenis.stop(); requestAnimationFrame(function () { lb.classList.add('is-on'); }); }
-  function closeLb() { lb.classList.remove('is-on'); lenis && lenis.start(); setTimeout(function () { lb.hidden = true; }, 300); }
+  function closeLb() { if (typeof zReset === 'function') zReset(false); lb.classList.remove('is-on'); lenis && lenis.start(); setTimeout(function () { lb.hidden = true; }, 300); }
   function stepLb(d) { var n = gallerySets[lbSet].length; lbI = (lbI + d + n) % n; showLb(); }
   root.addEventListener('click', function (e) { var b = e.target.closest('.pjShot'); if (b) openLb(+b.getAttribute('data-set'), +b.getAttribute('data-i')); });
   lb.addEventListener('click', function (e) { if (e.target === lb || e.target.closest('.lb__close')) closeLb(); else if (e.target.closest('.lb__prev')) stepLb(-1); else if (e.target.closest('.lb__next')) stepLb(1); });
   addEventListener('keydown', function (e) { if (lb.hidden) return; if (e.key === 'Escape') closeLb(); if (e.key === 'ArrowLeft') stepLb(-1); if (e.key === 'ArrowRight') stepLb(1); });
 
+  /* ── 灯箱里的缩放（owner 2026-09-18：手机上点开 UI 截图看不清） ──
+     浏览器原生的双指缩放碰上 position:fixed 的覆盖层会跳，所以这里自己接手势：
+     双指缩放（以两指中点为锚）、放大后单指拖动、双击在 1x / 2.6x 之间切。
+     换图和关闭时都要复位，否则下一张会带着上一张的缩放进来。 */
+  var zS = 1, zX = 0, zY = 0, zS0 = 1, zX0 = 0, zY0 = 0, zD0 = 0, zCX = 0, zCY = 0, zTap = 0, zMoved = false;
+  var ZMAX = 5;
+  function zApply(anim) {
+    lbImg.style.transition = anim ? 'transform .26s cubic-bezier(.23,1,.32,1)' : 'none';
+    lbImg.style.transform = 'translate(' + zX.toFixed(1) + 'px,' + zY.toFixed(1) + 'px) scale(' + zS.toFixed(3) + ')';
+  }
+  function zClamp() {
+    var ow = Math.max(0, (lbImg.offsetWidth * zS - innerWidth) / 2);
+    var oh = Math.max(0, (lbImg.offsetHeight * zS - innerHeight) / 2);
+    zX = Math.max(-ow, Math.min(ow, zX));
+    zY = Math.max(-oh, Math.min(oh, zY));
+  }
+  function zReset(anim) { zS = 1; zX = zY = 0; zApply(anim); }
+  function zTo(s, px, py) {            /* 以 (px,py) 这个屏幕点为锚缩放 */
+    var r = lbImg.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    var k = s / zS;
+    zX = px - (px - (zX + cx)) * k - cx;
+    zY = py - (py - (zY + cy)) * k - cy;
+    zS = s; zClamp(); zApply(true);
+  }
+  function zDist(t) { return Math.hypot(t[0].clientX - t[1].clientX, t[0].clientY - t[1].clientY); }
+
+  lbImg.addEventListener('touchstart', function (e) {
+    zMoved = false; zS0 = zS; zX0 = zX; zY0 = zY;
+    if (e.touches.length === 2) {
+      zD0 = zDist(e.touches);
+      zCX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      zCY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+    } else if (e.touches.length === 1) {
+      zCX = e.touches[0].clientX; zCY = e.touches[0].clientY;
+      var now = Date.now();
+      if (now - zTap < 300) { zMoved = true; zS > 1.05 ? zReset(true) : zTo(2.6, zCX, zCY); }
+      zTap = now;
+    }
+  }, { passive: true });
+
+  lbImg.addEventListener('touchmove', function (e) {
+    if (e.touches.length === 2) {
+      e.preventDefault(); zMoved = true;
+      var d = zDist(e.touches);
+      if (zD0 > 0) {
+        var k = Math.max(1, Math.min(ZMAX, zS0 * d / zD0));
+        var cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        var cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        var r = lbImg.getBoundingClientRect(), ix = r.left + r.width / 2, iy = r.top + r.height / 2;
+        var kk = k / zS0;
+        zX = cx - (zCX - (zX0 + ix)) * kk - ix;
+        zY = cy - (zCY - (zY0 + iy)) * kk - iy;
+        zS = k; zClamp(); zApply(false);
+      }
+    } else if (e.touches.length === 1 && zS > 1.02) {
+      e.preventDefault(); zMoved = true;
+      zX = zX0 + (e.touches[0].clientX - zCX);
+      zY = zY0 + (e.touches[0].clientY - zCY);
+      zClamp(); zApply(false);
+    }
+  }, { passive: false });
+
+  lbImg.addEventListener('touchend', function () { if (zS < 1.02) zReset(true); }, { passive: true });
+  /* 拖动/捏合之后浏览器还会补一个 click，别让它冒泡上去把灯箱关了 */
+  lbImg.addEventListener('click', function (e) { if (zMoved) { e.stopPropagation(); e.preventDefault(); } }, true);
+
   /* ── 平滑滚动 ── */
   var lenis = null;
-  if (!reduce && window.Lenis) { lenis = new Lenis({ lerp: .085, smoothWheel: true, syncTouch: true, wheelMultiplier: .45 }); window.__v7lenis = lenis; gsap.ticker.add(function (t) { lenis.raf(t * 1000); }); gsap.ticker.lagSmoothing(0); }
+  if (!reduce && window.Lenis) { lenis = new Lenis({ lerp: .085, smoothWheel: true, syncTouch: !matchMedia('(pointer:coarse)').matches, wheelMultiplier: .45 }); window.__v7lenis = lenis; gsap.ticker.add(function (t) { lenis.raf(t * 1000); }); gsap.ticker.lagSmoothing(0); }
   /* 进项目页一律从顶上开始（owner：有时进来不在最上方）：Lenis 建好后、load 后、从后退缓存回来时各压一次；带锚点进来除外 */
   /* 设计系统横滚：鼠标拖动 + 竖滚轮转横滚（不抢页面滚动，到头就放手） */
   function bindDsScroll() {
